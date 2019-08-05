@@ -9,6 +9,7 @@ interface IMovieListProps {
     year: number,
     image: string,
     duration: string,
+    genres: Array<string>,
     cast: Array<string>
   }>
 }
