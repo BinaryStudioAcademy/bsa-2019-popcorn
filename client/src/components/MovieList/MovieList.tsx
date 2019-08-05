@@ -19,9 +19,11 @@ const MovieList: React.FC<IMovieListProps> = ({ movies }) => {
     return <MovieListItem key={movie.id} movie={movie}/>;
   });
   
-  return (<div className='movie-list'>
-    { movieListItems }
-  </div>);
+  return (
+    <div className='movie-list'>
+      { movieListItems }
+    </div>
+  );
 };
   
 export default MovieList;
