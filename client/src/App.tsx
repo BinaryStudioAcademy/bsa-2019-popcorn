@@ -1,9 +1,7 @@
 import React from "react";
 import { Switch, Route, Redirect } from 'react-router-dom';
-import "./styles/App.scss";
-
 import User from './components/UserPage/UserPage';
-
+import "./styles/App.scss";
 
 const App: React.FC = () => {
   return (
