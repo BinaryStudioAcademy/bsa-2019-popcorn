@@ -11,13 +11,15 @@ interface RequestInit {
 
 export default async (args: RequestInit) => {
     try {
-        const result =  await fetch(
+        const res =  await fetch(
             getUrl(args),
             getArgs(args)
         );
 
-        return result;
+        await handlerError(res);
         
+        return res;
+
     } catch (err) {
         throw err;
     }
@@ -50,4 +52,16 @@ const getArgs = (args: any): object => {
         headers,
         ...(args.method === 'GET' ? {} : {body})
     };
+};
+
+const handlerError = async (res : Response) => {
+    if (!res.ok) {
+        let parsedException = 'Something went wrong with request!';
+        try {
+            parsedException = await res.json();
+        } catch (err) {
+            parsedException = err.message;
+        }
+        throw parsedException;
+    }
 };
