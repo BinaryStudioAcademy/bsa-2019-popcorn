@@ -27,7 +27,7 @@ const plusSvg = <svg width="32" height="31" viewBox="0 0 32 31" fill="none" xmln
     <path d="M24.1554 14.8429H16.418V7.10437C16.418 6.74791 16.1296 6.45947 15.7732 6.45947C15.4168 6.45947 15.1284 6.74791 15.1284 7.10437V14.8429H7.3909C7.0345 14.8429 6.74609 15.1313 6.74609 15.4878C6.74609 15.8442 7.0345 16.1327 7.3909 16.1327H15.1284V23.8712C15.1284 24.2277 15.4168 24.5161 15.7732 24.5161C16.1296 24.5161 16.418 24.2277 16.418 23.8712V16.1327H24.1554C24.5118 16.1327 24.8002 15.8442 24.8002 15.4878C24.8002 15.1313 24.5118 14.8429 24.1554 14.8429Z" fill="black" />
 </svg>
 const stokeSvg = <svg width="100%" height="2" viewBox="0 0 802 2" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M0.487305 1.43213H801.512" stroke="black" stroke-opacity="0.11" />
+    <path d="M0.487305 1.43213H801.512" stroke="black" strokeOpacity="0.11" />
 </svg>
 
 const FeedItem = ({ feedItem:{author, authorImage, postDate, postImage} }: IFeedItemProps) => {

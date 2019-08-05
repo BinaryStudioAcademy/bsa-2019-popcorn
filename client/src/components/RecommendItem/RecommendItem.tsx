@@ -19,7 +19,7 @@ const staredSvg = <svg width="10" height="8" viewBox="0 0 10 8" fill="none" xmln
 </svg>
 
 const notStaredSvg = <svg width="9" height="8" viewBox="0 0 9 8" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M4.7128 0.131771L5.85759 2.65737L8.7884 2.89206C8.99167 2.90843 9.07436 3.14484 8.92006 3.26929L6.69701 5.06456L7.36318 7.73528C7.40938 7.92088 7.19364 8.06686 7.01901 7.96825L4.50029 6.55236L1.98157 7.96825C1.80648 8.06643 1.59119 7.92045 1.63739 7.73528L2.30357 5.06456L0.0800529 3.26886C-0.0742488 3.14441 0.00798382 2.908 0.211717 2.89163L3.14253 2.65694L4.28731 0.131771C4.36678 -0.0439235 4.63334 -0.0439235 4.7128 0.131771Z" fill="black" fill-opacity="0.5" />
+    <path d="M4.7128 0.131771L5.85759 2.65737L8.7884 2.89206C8.99167 2.90843 9.07436 3.14484 8.92006 3.26929L6.69701 5.06456L7.36318 7.73528C7.40938 7.92088 7.19364 8.06686 7.01901 7.96825L4.50029 6.55236L1.98157 7.96825C1.80648 8.06643 1.59119 7.92045 1.63739 7.73528L2.30357 5.06456L0.0800529 3.26886C-0.0742488 3.14441 0.00798382 2.908 0.211717 2.89163L3.14253 2.65694L4.28731 0.131771C4.36678 -0.0439235 4.63334 -0.0439235 4.7128 0.131771Z" fill="black" fillOpacity="0.5" />
 </svg>
 
 const likeSvg = <svg width="1.5em" height="1.5em" viewBox="0 0 36 32" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -49,7 +49,7 @@ const RecommendItem = ({recommendItem:{ image, name, date }}: RecommendItemProps
             <div className='recommend-item-row'>
                 <div>
                     <span className='recommend-item-date'>{date} <svg width="2" height="11" viewBox="0 0 2 11" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M1 0V11" stroke="black" stroke-opacity="0.11" />
+                        <path d="M1 0V11" stroke="black" strokeOpacity="0.11" />
                     </svg>
                         Variety
                     </span>
