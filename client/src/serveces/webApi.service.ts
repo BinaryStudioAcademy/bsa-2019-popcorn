@@ -3,21 +3,23 @@ import qs from 'qs';
 
 interface RequestInit {
     endpoint: string,
-    query?: any,
+    query?: object,
     method: string,
     skipAuthorization?: boolean,
-    body?: any
+    body?: object
 }
 
 export default async (args: RequestInit) => {
     try {
-        const res =  await fetch(
+        let res: Response = await fetch(
             getUrl(args),
             getArgs(args)
         );
 
-        await handlerError(res);
-        
+        res = await res.json();
+
+        handlerError(res);
+
         return res;
 
     } catch (err) {
@@ -25,15 +27,19 @@ export default async (args: RequestInit) => {
     }
 };
 
-const getUrl = (args: any): string => args.endpoint + (args.query ? `?${qs.stringify(args.query)}` : '');
+const getUrl = (args: RequestInit): string => args.endpoint + (args.query ? `?${qs.stringify(args.query)}` : '');
 
 
-const getArgs = (args: any): object => {
-    const headers: any = {};
+const getArgs = (args: RequestInit): object => {
+    const headers: {
+        'Authorization'? : string,
+        'Content-Type'? : string,
+        'Accept'? : string
+    } = {};
 
     const token = localStorage.getItem('token');
     if (token && !args.skipAuthorization) {
-        headers['Authorization']  = `Bearer ${token}`;
+        headers['Authorization'] = `Bearer ${token}`;
     }
 
     let body = {};
@@ -54,14 +60,8 @@ const getArgs = (args: any): object => {
     };
 };
 
-const handlerError = async (res : Response) => {
+const handlerError = (res: Response) => {
     if (!res.ok) {
-        let parsedException = 'Something went wrong with request!';
-        try {
-            parsedException = await res.json();
-        } catch (err) {
-            parsedException = err.message;
-        }
-        throw parsedException;
+        throw res.status || 'Something went wrong with request!';
     }
 };
