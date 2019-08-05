@@ -1,7 +1,7 @@
 // @ts-ignore
 import qs from 'qs';
 
-interface RequestInit {
+interface IRequestInit{
     endpoint: string,
     query?: object,
     method: string,
@@ -9,7 +9,7 @@ interface RequestInit {
     body?: object
 }
 
-export default async (args: RequestInit) => {
+export default async (args: IRequestInit) => {
     try {
         let res: Response = await fetch(
             getUrl(args),
@@ -27,14 +27,14 @@ export default async (args: RequestInit) => {
     }
 };
 
-const getUrl = (args: RequestInit): string => args.endpoint + (args.query ? `?${qs.stringify(args.query)}` : '');
+const getUrl = (args: IRequestInit): RequestInfo => args.endpoint + (args.query ? `?${qs.stringify(args.query)}` : '');
 
 
-const getArgs = (args: RequestInit): object => {
+const getArgs = (args: IRequestInit): object => {
     const headers: {
-        'Authorization'? : string,
-        'Content-Type'? : string,
-        'Accept'? : string
+        'Authorization'?: string,
+        'Content-Type'?: string,
+        'Accept'?: string
     } = {};
 
     const token = localStorage.getItem('token');
