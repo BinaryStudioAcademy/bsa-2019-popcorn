@@ -7,7 +7,7 @@ interface IMovieListItemProps {
   movie: { 
     id: string, 
     title: string,
-    year: number,
+    releaseDate: Date,
     image: string,
     duration: string,
     genres: Array<string>,
@@ -23,9 +23,9 @@ const MovieListItem: React.FC<IMovieListItemProps> = ({ movie }) => {
       <img className='movie-poster' alt='movie-poster' src={movie.image}/>
     </div>
     <div className='movie-info'>
-      <div className='movie-title'>{movie.title} ({movie.year})</div>
+      <div className='movie-title'>{movie.title} ({movie.releaseDate.getFullYear()})</div>
       <div> 
-        <span className='movie-genre'><GenreIcon/>{movie.genres.join(', ')}</span>
+        <span className='movie-genre'><GenreIcon/>{movie.genres.slice(0,3).join(', ')}</span>
         <span className='movie-duration'><DurationIcon/>{movie.duration}</span>
       </div>
       <div className='movie-cast'><b>Main cast:</b> {movie.cast.join(', ')}</div>
