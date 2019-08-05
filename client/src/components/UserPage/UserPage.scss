@@ -1,0 +1,42 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+$black: #000;
+
+$user-tab-border-radius: 10px;
+$user-tab-space: 10px;
+
+.user {
+    width: 70%;
+    margin: 2% auto 0;
+    display: flex;
+    flex-direction: column;
+}
+
+.user-tabs {
+    margin-bottom: $user-tab-space;
+    
+    .user-tab-list {
+        list-style-type: none;
+        display: flex;
+        justify-content: space-around;
+        
+        .user-tab {
+            padding: $user-tab-space;
+            text-decoration: none;
+        }
+
+        .user-tab-active {
+            border: 1px solid $black;
+            border-top-left-radius: $user-tab-border-radius;
+            border-top-right-radius: $user-tab-border-radius;
+        }
+    }
+}
+
+.user-tab-body {
+    border: 1px solid $black;
+}
