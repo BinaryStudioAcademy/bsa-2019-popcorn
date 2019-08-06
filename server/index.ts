@@ -1,8 +1,10 @@
 import * as express from 'express';
 import * as bodyParser from 'body-parser';
-import connect from './connection';
 
-const connection = connect();
+
+import {createConnection} from "typeorm";
+import db_config from "./config/orm.config";
+import "reflect-metadata";
 
 
 const app = express();
@@ -21,4 +23,8 @@ router.post('/', (req, res) => {
 
 const SERVER_PORT = 5000;
 
-app.listen(SERVER_PORT, () => console.log(`Server is running on http://localhost:${SERVER_PORT}`));
+createConnection(db_config)
+    .then(() => {
+        app.listen(SERVER_PORT, () => console.log(`Server is running on http://localhost:${SERVER_PORT}`));
+    })
+    .catch(e => console.log(e.message));
