@@ -1,8 +1,8 @@
 import React from "react";
 
 interface IPostStoryEditorProps {
-  post_id?: string,
-  story_id?: string
+  id?: string,
+  type: 'story' | 'post'
 }
 
 interface IPostStoryEditorState {
@@ -24,19 +24,28 @@ class PostStoryEditor extends React.Component<IPostStoryEditorProps, IPostStoryE
   }
 
   componentDidMount() {
-    if (this.props.post_id) {
-      // fetch post by id
-      this.setState({
-        ...this.state,
-        body: 'test post'
-      });
-    }
-    if (this.props.story_id) {
-      // fetch story by id
-      this.setState({
-        ...this.state,
-        body: 'test story'
-      });
+    if (this.props.id) {
+      switch(this.props.type) {
+
+        case 'post':
+          // fetch post by id
+          this.setState({
+            ...this.state,
+            body: 'test post'
+          });
+          break;
+
+        case 'story':
+          // fetch story by id
+          this.setState({
+            ...this.state,
+            body: 'test story'
+          });
+          break;
+        
+        default:
+          break;
+      }
     }
   }
 
@@ -50,15 +59,42 @@ class PostStoryEditor extends React.Component<IPostStoryEditorProps, IPostStoryE
   }
 
   onCancel() {
+    this.setState({
+      ...this.state,
+      image: undefined,
+      body: ''
+    });
+    console.log('redirected');
+    //redirect to main page
   }
 
   onSave() {
+    switch(this.props.type) {
+
+      case 'post':
+        this.props.id
+          ? console.log(this.state, 'post updated') //this.props.updatePost(this.props.id, this.state);
+          : console.log(this.state, 'post created'); //this.props.addPost(this.state);
+        break;
+
+      case 'story':
+        this.props.id
+          ? console.log(this.state, 'story updated') //this.props.updateStory(this.props.id, this.state);
+          : console.log(this.state, 'story created'); //this.props.addStory(this.state);
+        break;
+  
+      default:
+        break;
+    }
+    this.onCancel();
   }
 
   render() {
     return (
       <div>
         <input type='text' value={this.state.body} onChange={e => this.onChangeData(e, 'body')}/>
+        <button onClick={this.onCancel}>Cancel</button>
+        <button onClick={this.onSave}>Save</button>
       </div>
     );
   }
