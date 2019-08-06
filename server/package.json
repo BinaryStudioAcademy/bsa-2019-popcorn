@@ -4,8 +4,13 @@
   "main": "index.js",
   "license": "MIT",
   "dependencies": {
+    "@types/passport-jwt": "^3.0.1",
     "body-parser": "^1.19.0",
     "express": "^4.17.1",
+    "jsonwebtoken": "^8.5.1",
+    "passport": "^0.4.0",
+    "passport-jwt": "^4.0.0",
+    "passport-local": "^1.0.0",
     "ts-node": "^8.3.0",
     "typescript": "^3.5.3"
   },
@@ -13,6 +18,7 @@
     "start-server": "ts-node ./"
   },
   "devDependencies": {
+    "@types/passport-local": "^1.0.33",
     "prettier": "1.18.2"
   }
 }
