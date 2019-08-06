@@ -7,10 +7,9 @@ export default async () => {
     let connection;
     try {
         connection = await createConnection(db_config);
+        console.log("Connect to db");
     } catch (e) {
-        console.log(e)
+        console.log(e.message)
     }
-
-    console.log(connection);
     return connection;
 }

@@ -1,4 +1,5 @@
 import {ConnectionOptions} from "typeorm";
+import entities from '../entities/index';
 
 const db_config : ConnectionOptions = {
   type: "postgres",
@@ -9,9 +10,7 @@ const db_config : ConnectionOptions = {
   database: "popcorn",
   synchronize: true,
   logging: false,
-  entities: [
-    "entities/*.ts"
-  ]
+  entities
 };
 
 
