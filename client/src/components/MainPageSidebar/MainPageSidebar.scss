@@ -1,16 +1,18 @@
+@import "../../styles/variables.scss";
 @import url('https://rsms.me/inter/inter.css');
+
 
 .left-sidebar {
     padding-top: 88px;
     display: flex;
     flex-direction: column;
-    background-color: #F2F2F2;
-    color: #122737;
+    background-color: $background-gray;
+    color: $text-base-color;
     font-weight: 600;
-    font-size: 14px;
+    font-size: $menu-font-size;
+    font-family: $base-font-family;
     line-height: 17px;
-    letter-spacing: 0.4px;
-    font-family: Inter;
+    letter-spacing: $base-letter-spacing;
     font-style: normal;
 
     .avatar {
@@ -61,13 +63,13 @@
             .notifications {
                 width: 31px;
                 height: 14px;
-                background: #FB8700;
+                background: $orange;
                 border-radius: 5px;
                 font-weight: bold;
                 font-size: 12px;
                 line-height: 15px;
                 text-align: center;
-                color: #FFFFFF;
+                color: $white;
                 text-align: center;
                 margin: 0;
                 margin-left: 22px;
