@@ -39,7 +39,6 @@ class ProfileComponent extends Component<ProfileProps> {
 	
 	render(){
 		const { name, location, about, male, female } = this.props.profileInfo;
-		console.log('this.props', this.props.profileInfo);
 		
 		return (
 			<div className="UserProfileComponent">
