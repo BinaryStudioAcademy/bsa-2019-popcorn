@@ -1,5 +1,6 @@
 import React from "react";
 import "./styles/App.scss";
+import FilmBasicTab from "./components/FilmBasicTabComponent/FilmBasicTabComponent";
 
 const App: React.FC = () => {
   return (
@@ -17,6 +18,7 @@ const App: React.FC = () => {
           Learn React
         </a>
       </header>
+      <FilmBasicTab />
     </div>
   );
 };
