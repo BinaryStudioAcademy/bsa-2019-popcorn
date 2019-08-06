@@ -15,7 +15,7 @@ const UserPageTabs: React.SFC<IProps> = ({ mainPath }) => {
                         <li key={index}>
                             <NavLink
                                 exact={!index}
-                                to={mainPath + (!index ? '' : `/${tab.link}`)}
+                                to={mainPath + tab.link}
                                 className="user-tab"
                                 activeClassName="user-tab-active"
                             >

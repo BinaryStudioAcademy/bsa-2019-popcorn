@@ -1,34 +1,34 @@
 [
     {
-        "link": "profile",
+        "link": "",
         "label": "Profile"
     },
     {
-        "link": "activity",
+        "link": "/activity",
         "label": "Activity"
     },
     {
-        "link": "reviews",
+        "link": "/reviews",
         "label": "Reviews"
     },
     {
-        "link": "events",
+        "link": "/events",
         "label": "Events"
     },
     {
-        "link": "surveys",
+        "link": "/surveys",
         "label": "Surveys"
     },
     {
-        "link": "tops",
+        "link": "/tops",
         "label": "Tops"
     },
     {
-        "link": "lists",
+        "link": "/lists",
         "label": "Lists"
     },
     {
-        "link": "watched",
+        "link": "/watched",
         "label": "Watched"
     }
 ]
