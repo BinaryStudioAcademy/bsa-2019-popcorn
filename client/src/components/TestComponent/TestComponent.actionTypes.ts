@@ -1,1 +1,1 @@
-export default {}
+export const ADD_TEST = "TEST_ACTION:ADD_TEST"; 
