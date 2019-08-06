@@ -15,11 +15,11 @@ const UserPageTabs: React.SFC<IProps> = ({ mainPath }) => {
                         <li key={index}>
                             <NavLink
                                 exact={!index}
-                                to={mainPath + (!index ? '' : `/${tab}`)}
+                                to={mainPath + (!index ? '' : `/${tab.link}`)}
                                 className="user-tab"
                                 activeClassName="user-tab-active"
                             >
-                                {tab[0].toUpperCase() + tab.slice(1)}
+                                {tab.label}
                             </NavLink>
                         </li>
                     )
