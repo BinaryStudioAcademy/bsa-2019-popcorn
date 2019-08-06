@@ -18,6 +18,7 @@
 
 .headerButtons {
 	height: 100%;
+	position: relative;
 	outline: none;
 	border: none;
 	background: white;
@@ -121,12 +122,38 @@
 		margin: 2px;
 	}
 }
-
+.headerButtons:hover {
+	.modal {
+		transform: scaleY(1);
+	}
+}
 .modal {
+	font-family: Inter;
 	background: #f7f8f9;
 	border: 1px solid rgba(0, 0, 0, 0.11);
 	box-shadow: 2px 1px 8px rgba(0, 0, 0, 0.038);
 	border-radius: 3px;
+	position: absolute;
+	top: 100%;
+	left: 0;
+	z-index: 10;
+	transform: scaleY(0);
+	transform-origin: 0 0;
+	transition: 0.5s ease-in-out;
+	text-align: left;
+	cursor: default;
+	font-size: 12px;
+	line-height: 15px;
+	width: 150px;
+	padding: 10px;
+
+	div {
+		padding-top: 10px;
+	}
+}
+
+.inactive {
+	color: rgba(0, 0, 0, 0.4);
 }
 
 @media (max-width: 915px) {
@@ -142,6 +169,7 @@
 		margin-left: 0px;
 	}
 }
+
 @media (max-width: 765px) {
 	.headerButtons {
 		display: none;
