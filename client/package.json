@@ -12,7 +12,6 @@
     "@types/react-dom": "16.8.5",
     "@types/react-router-dom": "^4.3.4",
     "@types/yup": "^0.26.22",
-
     "formik": "^1.5.8",
     "node-sass": "^4.12.0",
     "onchange": "^6.0.0",
