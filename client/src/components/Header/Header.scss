@@ -1,0 +1,156 @@
+@import url('https://rsms.me/inter/inter.css');
+
+.header {
+	font-family: Inter;
+	display: flex;
+	height: 72px;
+	justify-content: space-around;
+	align-items: center;
+	border: 1px solid rgba(0, 0, 0, 0.1);
+	box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.034);
+}
+
+.title {
+	font-weight: 900;
+	font-size: 24px;
+	letter-spacing: 0.917885px;
+}
+
+.headerButtons {
+	height: 100%;
+	outline: none;
+	border: none;
+	background: white;
+}
+
+.headerButtons,
+.userInfo {
+	font-weight: 600;
+	font-size: 14px;
+	line-height: 17px;
+	align-items: center;
+	text-align: center;
+	letter-spacing: 0.4px;
+	color: #122737;
+}
+
+.headerButtons:hover {
+	background: #f7f8f9;
+}
+
+.arrowDown {
+	margin-left: 4px;
+}
+
+.userInfo {
+	display: flex;
+
+	span {
+		color: rgba(0, 0, 0, 0.7);
+		margin-left: 10px;
+		margin-top: 15px;
+	}
+	img {
+		width: 55px;
+	}
+}
+
+.filter {
+	border: 1px solid rgba(0, 0, 0, 0.2);
+	box-shadow: 0px 0px 11px rgba(0, 0, 0, 0.05);
+	border-bottom-right-radius: 2px;
+	border-top-right-radius: 2px;
+	border-bottom-left-radius: 0px;
+	border-top-left-radius: 0px;
+	display: inline-block;
+	border-left: none;
+	padding: 6px;
+	width: 78px;
+	font-size: 12px;
+	line-height: 15px;
+	align-items: center;
+	letter-spacing: 0.533333px;
+	color: rgba(0, 0, 0, 0.7);
+}
+
+.searchArea {
+	display: flex;
+	margin-left: 5%;
+
+	.search {
+		border: 1px solid rgba(0, 0, 0, 0.2);
+		box-shadow: 0px 0px 11px rgba(0, 0, 0, 0.05);
+		border-bottom-left-radius: 2px;
+		border-top-left-radius: 2px;
+		border-bottom-right-radius: 0px;
+		border-top-right-radius: 0px;
+		font-size: 12px;
+		line-height: 15px;
+		align-items: center;
+		letter-spacing: 0.533333px;
+		color: rgba(0, 0, 0, 0.5);
+
+		.searchInput {
+			border: none;
+			margin-bottom: 5px;
+			width: 240px;
+		}
+		.searchInput:focus {
+			outline: none;
+		}
+		.searchIcon {
+			margin: 6px 10px 0px 10px;
+		}
+	}
+}
+
+.hover:hover {
+	cursor: pointer;
+}
+
+.notifications {
+	display: flex;
+
+	.notifyIcon {
+		display: grid;
+		margin-left: 21px;
+		justify-items: center;
+	}
+
+	.messageIcon {
+		margin: 2px;
+	}
+}
+
+.modal {
+	background: #f7f8f9;
+	border: 1px solid rgba(0, 0, 0, 0.11);
+	box-shadow: 2px 1px 8px rgba(0, 0, 0, 0.038);
+	border-radius: 3px;
+}
+
+@media (max-width: 915px) {
+	.title {
+		display: none;
+	}
+	.notifications {
+		.notifyIcon {
+			margin-left: 5px;
+		}
+	}
+	.searchArea {
+		margin-left: 0px;
+	}
+}
+@media (max-width: 765px) {
+	.headerButtons {
+		display: none;
+	}
+	.searchArea {
+		.search {
+			.searchInput {
+				width: 180px;
+			}
+		}
+	}
+}
