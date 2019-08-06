@@ -1,7 +1,7 @@
 import * as React from "react";
 import { Form, Formik, Field, ErrorMessage } from "formik";
 import * as Yup from 'yup';
-import "./style.scss";
+import "./Registration.scss";
 
 interface Values {
   name: String,
@@ -47,7 +47,7 @@ class Registration extends React.Component<IProps, IState> {
                 onSubmit={async (values, actions) => {
                   const { isLoading } = this.state;
                   if (isLoading) {
-                    console.log('wait');
+                    // block button 
                     return;
                   }
                   this.setState({ ...this.state, isLoading: true });
@@ -117,7 +117,7 @@ class Registration extends React.Component<IProps, IState> {
                           type="submit"
                           className={`form-btn ${isLoading ? 'disabled' : ''}`}
                         >
-                          Sign UP
+                          Sign Up
                         </button>
                         {isLoading ? "loading..." : null}
                       </div>
@@ -127,6 +127,7 @@ class Registration extends React.Component<IProps, IState> {
               />
               <div className="form-hint">
                 Already have an account?
+                &nbsp;
               <a href='#' className="form-hint-link">
                 login
               </a>
