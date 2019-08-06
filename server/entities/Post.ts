@@ -15,7 +15,7 @@ export class Post {
     @Column()
     image_url: string;
 
-    @OneToOne(type => User, user => user.id)
+    @OneToOne(type => User)
     @JoinColumn()
     userId: User;
 }
