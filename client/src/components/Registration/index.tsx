@@ -63,7 +63,7 @@ class Registration extends React.Component<IProps, IState> {
                     .max(20, 'Its too long Name')
                     .required('Name is required'),
                   email: Yup.string()
-                    .max(40, 'Its too long email')
+                    .max(254, 'Its too long email')
                     .email('Email is invalid')
                     .required('Email is required'),
                   password: Yup.string()
