@@ -12,9 +12,9 @@ export class PostReactions {
 
     @OneToOne(type => Post, post => post.id)
     @JoinColumn()
-    postId: Post;
+    post: Post;
 
     @OneToOne(type => User, user => user.id)
     @JoinColumn()
-    userId: User;
+    user: User;
 }

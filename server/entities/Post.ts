@@ -17,5 +17,5 @@ export class Post {
 
     @OneToOne(type => User)
     @JoinColumn()
-    userId: User;
+    user: User;
 }

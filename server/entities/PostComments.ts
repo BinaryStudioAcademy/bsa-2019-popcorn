@@ -12,9 +12,9 @@ export class PostComments {
 
     @OneToOne(type => User, user => user.id)
     @JoinColumn()
-    userId: User;
+    user: User;
 
     @OneToOne(type => Post, post => post.id)
     @JoinColumn()
-    postId: Post;
+    post: Post;
 }
