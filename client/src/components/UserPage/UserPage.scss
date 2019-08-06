@@ -4,16 +4,23 @@
     box-sizing: border-box;
 }
 
-$black: #000;
-
-$user-tab-border-radius: 10px;
+$user-tab-active-line: 3px;
 $user-tab-space: 10px;
+$user-tab-list-space-top: $user-tab-space + $user-tab-active-line;
+
+$text-base-color: #122737;
+$text-secondary-color: rgba($text-base-color, .5);
+$base-font-family: 'Inter', sans-serif;
+$header-medium: 18px;
+$base-letter-spacing: .4px;
+$orange: #FB8700;
 
 .user {
     width: 70%;
     margin: 2% auto 0;
     display: flex;
     flex-direction: column;
+    color: $text-base-color;
 }
 
 .user-tabs {
@@ -22,21 +29,26 @@ $user-tab-space: 10px;
     .user-tab-list {
         list-style-type: none;
         display: flex;
-        justify-content: space-around;
+        justify-content: space-between;
+        margin-top: $user-tab-list-space-top;
         
         .user-tab {
             padding: $user-tab-space;
             text-decoration: none;
+            color: $text-secondary-color;
+            letter-spacing: $base-letter-spacing;
+            font-weight: 600;
         }
 
         .user-tab-active {
-            border: 1px solid $black;
-            border-top-left-radius: $user-tab-border-radius;
-            border-top-right-radius: $user-tab-border-radius;
+            border-top: $user-tab-active-line solid $orange;
+            border-radius: 2px;
+            color: $text-base-color;
+            font-size: $header-medium;
         }
     }
 }
 
 .user-tab-body {
-    border: 1px solid $black;
+    border: 1px solid #000;
 }
