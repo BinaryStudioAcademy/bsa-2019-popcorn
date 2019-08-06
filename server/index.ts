@@ -1,5 +1,9 @@
 import * as express from 'express';
 import * as bodyParser from 'body-parser';
+import connect from './connection';
+
+const connection = connect();
+
 
 const app = express();
 const router = express.Router();
