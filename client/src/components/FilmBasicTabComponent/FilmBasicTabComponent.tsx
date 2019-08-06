@@ -22,12 +22,18 @@ interface IProps {
     }
 }
 
-const solidStar = () => (<FontAwesomeIcon icon={faStar} />);
+const solidStar = (key: number, type: boolean) => (
+    <FontAwesomeIcon
+        icon={faStar}
+        className={type ? "yellowStar" : "greyStar"}
+        key={key}
+    />
+);
 
 const rateBlock = (rate: number) => {
     const res = [];
     for (let i = 0; i < 5; i++) {
-        i <= rate ? res.push(solidStar()) : res.push(solidStar())
+        i < rate ? res.push(solidStar(i, true)) : res.push(solidStar(i, false))
     }
     return res;
 }
@@ -47,7 +53,7 @@ const FilmBasicTab = (props: IProps) => {
     return (
         <section className="filmSection">
             <div className="posterWrapper">
-                <img src={imageLink} alt={title} />
+                <img src={imageLink} alt={title} className="poster" />
             </div>
             <div className="descriptionWrapper">
                 <ul className="descriptionList">
