@@ -82,14 +82,14 @@ class PostStoryEditor extends React.Component<IPostStoryEditorProps, IPostStoryE
     switch(this.props.type) {
 
       case 'post':
-        if (this.state.checkboxValue)
-          console.log(this.state, 'story created'); //this.props.addStory(this.state);
         this.props.id
           ? console.log(this.state, 'post updated') //this.props.updatePost(this.props.id, this.state);
           : console.log(this.state, 'post created'); //this.props.addPost(this.state);
         break;
 
       case 'story':
+        if (this.state.checkboxValue)
+          console.log(this.state, 'post created'); //this.props.addPost(this.state);
         this.props.id
           ? console.log(this.state, 'story updated') //this.props.updateStory(this.props.id, this.state);
           : console.log(this.state, 'story created'); //this.props.addStory(this.state);
@@ -106,7 +106,7 @@ class PostStoryEditor extends React.Component<IPostStoryEditorProps, IPostStoryE
       <div>
         <input type='text' value={this.state.body} onChange={e => this.onChangeData(e, 'body')}/>
         { this.state.image && <img alt='poster' src={this.state.image}/> }
-        { this.props.type === 'post' && <input type='checkbox' onChange={this.onToggleCheckbox}/> }
+        { this.props.type === 'story' && <input type='checkbox' onChange={this.onToggleCheckbox}/> }
         <button onClick={this.onCancel}>Cancel</button>
         <button onClick={this.onSave}>Save</button>
       </div>
