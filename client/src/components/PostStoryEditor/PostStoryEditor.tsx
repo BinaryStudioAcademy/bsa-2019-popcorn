@@ -1,4 +1,5 @@
 import React from "react";
+import "./PostStoryEditor.scss";
 
 interface IPostStoryEditorProps {
   id?: string,
@@ -34,7 +35,8 @@ class PostStoryEditor extends React.Component<IPostStoryEditorProps, IPostStoryE
           // fetch post by id
           this.setState({
             ...this.state,
-            body: 'test post'
+            body: 'test post',
+            image: 'http://cdn.collider.com/wp-content/uploads/2017/02/the-avengers-group-image.jpg'
           });
           break;
 
@@ -42,7 +44,8 @@ class PostStoryEditor extends React.Component<IPostStoryEditorProps, IPostStoryE
           // fetch story by id
           this.setState({
             ...this.state,
-            body: 'test story'
+            body: 'test story',
+            image: 'https://cdn.vox-cdn.com/thumbor/tJEzzwFxLxji_Eg8IGDAKy39_wM=/0x0:7040x3520/1200x800/filters:focal(2826x809:3952x1935)/cdn.vox-cdn.com/uploads/chorus_image/image/64683486/ST3_Production_Still_2.0.jpg'
           });
           break;
         
@@ -72,7 +75,8 @@ class PostStoryEditor extends React.Component<IPostStoryEditorProps, IPostStoryE
     this.setState({
       ...this.state,
       image: undefined,
-      body: ''
+      body: '',
+      checkboxValue: false
     });
     console.log('redirected');
     //redirect to main page
@@ -103,12 +107,21 @@ class PostStoryEditor extends React.Component<IPostStoryEditorProps, IPostStoryE
 
   render() {
     return (
-      <div>
-        <input type='text' value={this.state.body} onChange={e => this.onChangeData(e, 'body')}/>
+      <div className='edit-form'>
+
         { this.state.image && <img alt='poster' src={this.state.image}/> }
-        { this.props.type === 'story' && <input type='checkbox' onChange={this.onToggleCheckbox}/> }
-        <button onClick={this.onCancel}>Cancel</button>
-        <button onClick={this.onSave}>Save</button>
+        {/* {image uploader} */}
+
+        <input placeholder='Type a text here...' type='text' value={this.state.body} onChange={e => this.onChangeData(e, 'body')}/>
+
+        <div className='footer'>
+          { this.props.type === 'story' && <p className='checker'>Create post also <input type='checkbox' checked={this.state.checkboxValue} onChange={this.onToggleCheckbox}/></p> }
+          <div>
+            <button className='cancel-btn' onClick={this.onCancel}>Cancel</button>
+            <button className='save-btn' onClick={this.onSave}>Save</button>
+          </div>
+        </div>
+
       </div>
     );
   }

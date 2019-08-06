@@ -1,0 +1,79 @@
+@import '~../../styles/variables';
+
+.edit-form {
+  font-family: $base-font-family;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border: 1px solid $border-color;
+  margin: 0 auto;
+  padding: 50px;
+  box-sizing: border-box;
+
+  img {
+    max-width: 100%;
+  }
+
+  input[type='text'] {
+    height: 43px;
+    margin-bottom: 50px;
+    outline: none;
+    width: 100%;
+    color: $text-base-color;
+    box-sizing: border-box;
+    font-size: $form-font-size;
+    letter-spacing: $input-letter-spacing;
+    box-shadow: 0px 0px 10px $input-shadow-color;
+    border: 1px solid $border-color;
+    border-radius: 3px;
+    padding: 12px 15px;
+
+    &::placeholder {
+      color: $input-placeholder-color
+    }
+
+    &:focus {
+      border: 1px solid $border-focus-color;
+    }
+  }
+
+  button {
+    height: 43px;
+    border-radius: 55px;
+    width: 100px;
+    border: none;
+    outline: none;
+    font-size: $header-medium;
+    font-weight: bold;
+  }
+
+  .footer {
+    align-self: stretch;
+    height: 43px;
+
+    .checker {
+      float: left;
+      color: $text-secondary-color;
+    }
+
+    div {
+      float: right;
+    }
+
+    .save-btn {
+      background-color: $button-background;
+      color: $white;
+      box-shadow: 0px 5px 12px $button-shadow-color;
+      &:hover {
+        background-color: rgb(216, 86, 0);
+      }
+    }
+
+    .cancel-btn {
+      color: $text-secondary-color;
+      &:hover {
+        background-color: $background-gray;
+      }
+    }
+  }
+}
