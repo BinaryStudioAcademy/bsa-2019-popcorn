@@ -7,7 +7,8 @@ interface IPostStoryEditorProps {
 
 interface IPostStoryEditorState {
   image?: string,
-  body: string
+  body: string,
+  checkboxValue: boolean
 }
 
 class PostStoryEditor extends React.Component<IPostStoryEditorProps, IPostStoryEditorState> {
@@ -15,12 +16,14 @@ class PostStoryEditor extends React.Component<IPostStoryEditorProps, IPostStoryE
     super(props);
     this.state = {
       image: undefined,
-      body: ''
+      body: '',
+      checkboxValue: false
     };
 
     this.onCancel = this.onCancel.bind(this);
     this.onSave = this.onSave.bind(this);
     this.onChangeData = this.onChangeData.bind(this);
+    this.onToggleCheckbox = this.onToggleCheckbox.bind(this);
   }
 
   componentDidMount() {
@@ -58,6 +61,13 @@ class PostStoryEditor extends React.Component<IPostStoryEditorProps, IPostStoryE
     });
   }
 
+  onToggleCheckbox() {
+    this.setState({
+      ...this.state,
+      checkboxValue: !this.state.checkboxValue
+    });
+  }
+
   onCancel() {
     this.setState({
       ...this.state,
@@ -72,6 +82,8 @@ class PostStoryEditor extends React.Component<IPostStoryEditorProps, IPostStoryE
     switch(this.props.type) {
 
       case 'post':
+        if (this.state.checkboxValue)
+          console.log(this.state, 'story created'); //this.props.addStory(this.state);
         this.props.id
           ? console.log(this.state, 'post updated') //this.props.updatePost(this.props.id, this.state);
           : console.log(this.state, 'post created'); //this.props.addPost(this.state);
@@ -93,6 +105,8 @@ class PostStoryEditor extends React.Component<IPostStoryEditorProps, IPostStoryE
     return (
       <div>
         <input type='text' value={this.state.body} onChange={e => this.onChangeData(e, 'body')}/>
+        { this.state.image && <img alt='poster' src={this.state.image}/> }
+        { this.props.type === 'post' && <input type='checkbox' onChange={this.onToggleCheckbox}/> }
         <button onClick={this.onCancel}>Cancel</button>
         <button onClick={this.onSave}>Save</button>
       </div>
