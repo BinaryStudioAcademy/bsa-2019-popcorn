@@ -115,7 +115,7 @@ class Registration extends React.Component<IProps, IState> {
                       <div className="form-btn-wrapper">
                         <button
                           type="submit"
-                          className="form-btn"
+                          className={`form-btn ${isLoading ? 'disabled' : ''}`}
                         >
                           Sign UP
                         </button>
