@@ -17,7 +17,10 @@
     "react-dom": "^16.8.6",
     "react-router-dom": "^5.0.1",
     "react-scripts": "3.0.1",
-    "typescript": "3.5.3",
+    "redux": "^4.0.4",
+    "redux-saga": "^1.0.5",
+    "redux-saga-routines": "^3.2.0",
+    "typescript": "3.5.3"
     "yup": "^0.27.0"
   },
   "scripts": {
