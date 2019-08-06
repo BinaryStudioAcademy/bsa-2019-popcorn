@@ -1,4 +1,4 @@
-$font: Inter;
+@import "../../styles/variables.scss";
 
 .recommend-item{
     background: #FFFFFF;
@@ -8,6 +8,13 @@ $font: Inter;
     border-radius: 2px;
     margin-top: 1em;
     overflow: hidden;
+    font-family: $base-font-family;
+    font-style: normal;
+    font-weight: normal;
+    font-size: $secondary-info-font-size; 
+    line-height: 11px;
+    letter-spacing: $base-letter-spacing;
+    color: $black;
     button{
         background-color: #FFFFFF;
         border:none;
@@ -23,13 +30,6 @@ $font: Inter;
         flex-direction: row;
         position: relative;
         padding:1em;
-        font-family: $font;
-        font-style: normal;
-        font-weight: normal;
-        font-size: 9px; 
-        line-height: 11px;
-        letter-spacing: 0.4px;
-        color: #000000;
         align-items: center;
     }
 
@@ -58,31 +58,16 @@ $font: Inter;
     }
 
     .recommend-item-name{
-        font-family: $font;
-        font-style: normal;
-        font-weight: 600;
-        font-size: 12px;
+        font-size: $base-font-size;
         line-height: 15px;
-        letter-spacing: 0.4px;
-        color: #000000;
     }
     .recommend-item-percent{
-        font-family: $font;
-        font-style: normal;
-        font-weight: 600;
-        font-size: 12px;
+        font-size: $base-font-size;
         line-height: 15px;
-        letter-spacing: 0.4px;
     }
     .recommend-item-date{
-        font-family: $font;
-        font-style: normal;
-        font-weight: normal;
-        font-size: 9px;
-        line-height: 11px;
-        letter-spacing: 0.4px;
         text-transform: uppercase;
-        color: rgba(0, 0, 0, 0.5);
+        color: $border-focus-color;
 
         svg{
             margin-left: 1em;

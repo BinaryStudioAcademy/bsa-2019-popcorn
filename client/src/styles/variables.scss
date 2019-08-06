@@ -1,0 +1,37 @@
+// colors
+$black: #000;
+$white: #FFF;
+$orange: #FB8700;
+$orange-light: #FFAB07;
+
+$background-gray: #F2F2F2;
+$button-background: #FF6501;
+
+$button-publish-color: rgba(12, 81, 146, 0.5);
+$button-shadow-color: rgba($orange-light, 0.4);
+
+$text-base-color: #122737;
+$text-secondary-color: rgba($text-base-color, .5);
+
+$border-color: rgba($black, .11);
+$border-focus-color: rgba($black, .4);
+
+$input-shadow-color: rgba($black, .04);
+$input-placeholder-color: rgba($black, .3);
+
+// font
+$base-font-family: 'Inter', sans-serif;
+
+$header-large: 36px;
+$header-medium: 18px;
+
+$post-font-size: 16px;
+$form-font-size: 16px;
+$menu-font-size: 14px;
+$base-font-size: 12px;
+$message-font-size: 10px;
+$secondary-info-font-size: 9px;
+
+$header-letter-spacing: .9px;
+$input-letter-spacing: .5px;
+$base-letter-spacing: .4px;

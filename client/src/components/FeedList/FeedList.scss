@@ -1,12 +1,14 @@
+@import "../../styles/variables.scss";
+
 .feed-list{
     grid-area: feed-list;
     padding: 15px;
 }
 .feed-heading{
-    font-family: Inter;
+    font-family: $base-font-family;
     font-style: normal;
     font-weight: bold;
-    font-size: 18px;
+    font-size: $header-medium;
     line-height: 22px;
     text-align: left;
 }

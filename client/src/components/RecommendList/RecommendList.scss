@@ -1,3 +1,5 @@
+@import "../../styles/variables.scss";
+
 .recommend-list{
     grid-area: recommend-list;
     padding:15px;
@@ -5,10 +7,10 @@
     
 }
 .recommend-heading{
-    font-family: Inter;
+    font-family: $base-font-family;
     font-style: normal;
     font-weight: bold;
-    font-size: 18px;
+    font-size: $header-medium;
     line-height: 22px;
     text-align: left;
     }
