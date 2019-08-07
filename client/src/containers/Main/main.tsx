@@ -85,6 +85,7 @@ const Main = () => {
                 <Switch>
                     <Route exact path={`/`} component={MainPage} />
                     <Route path={`/user-page`} component={UserPage} />
+                    <Route path={`/movie-series`} component={MovieSeriesPage} />
                     <Route path={`/movie-list`} render={() => <MovieList movies={movies}/>}/>
                 </Switch>
             </div>
