@@ -13,8 +13,6 @@ import {createConnection} from "typeorm";
 import db_config from "./config/orm.config";
 import "reflect-metadata";
 
-import imageRouter from "./routers/image.router";
-
 const app = express();
 
 app.use(bodyParser.json());
@@ -22,9 +20,6 @@ app.use(passport.initialize());
 app.use('/api/', authorizationMiddleware(routesWhiteList));
 
 routes(app);
-
-app.use('/image', imageRouter);
-
 
 
 const SERVER_PORT = 5000;
