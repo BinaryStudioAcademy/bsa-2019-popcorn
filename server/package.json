@@ -4,15 +4,31 @@
   "main": "index.js",
   "license": "MIT",
   "dependencies": {
+    "@types/passport-jwt": "^3.0.1",
+    "@types/dotenv": "^6.1.1",
+    "@types/node": "^12.6.9",
     "body-parser": "^1.19.0",
+    "dotenv": "^8.0.0",
     "express": "^4.17.1",
+    "jsonwebtoken": "^8.5.1",
+    "passport": "^0.4.0",
+    "passport-jwt": "^4.0.0",
+    "passport-local": "^1.0.0",
+    "fs": "^0.0.1-security",
+    "multiparty": "^4.2.1",
+    "pg": "^7.12.0",
+    "reflect-metadata": "^0.1.13",
     "ts-node": "^8.3.0",
-    "typescript": "^3.5.3"
+    "typeorm": "^0.2.18",
+    "typescript": "^3.5.3",
+    "uuid": "^3.3.2"
   },
   "scripts": {
     "start-server": "ts-node ./"
   },
   "devDependencies": {
+    "@types/passport-local": "^1.0.33",
+    "@types/multiparty": "^0.0.32",
     "prettier": "1.18.2"
   }
 }
