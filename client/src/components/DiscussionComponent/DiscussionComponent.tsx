@@ -32,30 +32,29 @@ class DiscussionComponent extends Component<IDiscussionProps, IDiscussionState> 
 	private newMessage = createRef<HTMLTextAreaElement>();
 	private userPhoto = createRef<HTMLImageElement>();
 	inputChange = () => {
-		if (this.newMessage.current && this.newMessage.current.value.match(/^(?!\s*$).*/)){
+		if (this.newMessage.current){
+			let checkInput = this.newMessage.current.value.match(/^(?!\s*$).*/) ? false : true;
 			this.setState({
-				inputIsEmpty: false
-			});
-		} else {
-			this.setState({
-				inputIsEmpty: true
+				inputIsEmpty: checkInput
 			});
 		}
+	}
+	getDateString():string {
+		let date = new Date();
+		return [date.getFullYear(),
+			this.pad(date.getMonth()+1),
+			this.pad(date.getDate())
+			   ].join('-')+' '+
+			  [this.pad(date.getHours()),
+			   this.pad(date.getMinutes()),
+			   this.pad(date.getSeconds())].join(':');
 	}
 	pad(n:number) {
 		return n < 10 ? '0' + n : n;
 	};
 	addMessage = () => {
 		if (this.newMessage.current && this.userPhoto.current){
-			const date = new Date();
-			let dateString = [date.getFullYear(),
-				this.pad(date.getMonth()+1),
-				this.pad(date.getDate())
-               	].join('-')+' '+
-              	[this.pad(date.getHours()),
-               	this.pad(date.getMinutes()),
-				   this.pad(date.getSeconds())].join(':');
-
+			let dateString = this.getDateString();
 			let newMessageItem = {
 				id: (Math.random() * (9000 - 1) + 1).toString(),
 				name: 'Me',
