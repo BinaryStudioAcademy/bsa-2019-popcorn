@@ -25,6 +25,7 @@ router.post('/', (req, res) => {
 const SERVER_PORT = 5000;
 
 createConnection(db_config)
+    .then((connection) => connection.runMigrations())
     .then(() => {
         app.listen(SERVER_PORT, () => console.log(`Server is running on http://localhost:${SERVER_PORT}`));
     })

@@ -1,5 +1,6 @@
 import {ConnectionOptions} from "typeorm";
 import entities from '../entities/index';
+import migrations from '../seed/index';
 
 const db_config : ConnectionOptions = {
   type: "postgres",
@@ -10,7 +11,8 @@ const db_config : ConnectionOptions = {
   database: process.env.DB_NAME,
   synchronize: true,
   logging: false,
-  entities
+  entities,
+  migrations
 };
 
 
