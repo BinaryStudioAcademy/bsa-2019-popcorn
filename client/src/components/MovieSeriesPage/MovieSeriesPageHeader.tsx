@@ -1,4 +1,6 @@
 import React from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faStar } from '@fortawesome/free-solid-svg-icons';
 
 interface IProps {
     movieSeriesData: {
@@ -16,7 +18,10 @@ const MovieSeriesPageHeader: React.FC<IProps> = ({ movieSeriesData }) => {
             <div className="info">
                 <span className="info-item">{movieSeriesData.releaseYear}</span>
                 <span className="info-item">{movieSeriesData.genre.join(', ')}</span> 
-                <span className="info-item">{movieSeriesData.rating}</span>
+                <span className="info-item">
+                    <FontAwesomeIcon className="icon-star" icon={faStar} />
+                    {movieSeriesData.rating}
+                </span>
             </div>
         </header>
     );
