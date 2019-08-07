@@ -1,0 +1,95 @@
+$titleColor : #545454;
+$contentColor: #545454;
+$svgColor: #000;
+$bcgColor: rgb(251, 238, 239);
+
+.UserProfileComponent{
+	background-color: $bcgColor;
+	padding: 2% 2%;
+}
+h2 {
+	
+	width: 100%;
+	color: $titleColor;
+	text-align: center;
+	border-bottom: 1px solid $titleColor;
+	line-height: 0.1em;
+	margin: 10px 0 20px;
+	text-transform: uppercase;
+	font-weight: lighter;
+	span {
+		background: $bcgColor;
+		padding: 0 10px;
+	}
+}
+
+.ProfileWrap {
+	display: flex;
+	align-items: flex-start;
+	
+	.profilePhotoWrap{
+		width: 40%;
+		.fontAwesomeIcon{
+			font-size: 35px;
+			color: $titleColor;
+			&:hover{
+				transform: scale(1.1, 1.0);
+				cursor: pointer;
+			}
+		}
+	}
+	.ProfileInfo{
+		width: 60%;
+	}
+	svg {
+		fill: #000;
+		width: 100%;
+		height: auto;
+	}
+	.profileRow:first-child {
+		border:none;
+	}
+	.profileRow {
+		font-size: 18px;
+		display: flex;
+		justify-content: space-between;
+		padding: 1rem;
+		color: white;
+		border-width: 3px;
+		border-style: solid;
+		border-image: 
+		  linear-gradient(
+			to left, 
+			darken($bcgColor,10%),
+			rgba(0, 0, 0, 0)
+		  ) 100% 1;
+		.title {
+			color: $titleColor;
+			text-transform: uppercase;
+			width: 30%;
+			text-align: left;
+			font-weight: 800;
+			position: relative;
+		}
+		.content {
+			color: $contentColor;
+			font-weight: lighter;
+			text-align: right;
+			width: 70%;
+			font-weight: 300;
+			p {
+				background-color: #00000030;
+				padding: 1% 1%;
+				margin: 1% 1%;
+				display: inline-block;
+				line-height: 1.3em;
+			}
+			p:hover {
+				background-color: #fff;
+				cursor: pointer;
+			}
+		}
+	}
+}
+
+// the :export directive is the magic sauce for webpack
