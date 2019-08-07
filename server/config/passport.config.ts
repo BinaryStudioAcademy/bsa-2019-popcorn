@@ -31,7 +31,7 @@ passport.use(
     'register',
     new LocalStrategy(
         { passReqToCallback: true },
-        async ({ body: { email, aboutMe, location, name } }, username, password, done) => {
+        async ({ body: { email, aboutMe, location } }, username, password, done) => {
             try {
                 const userByEmail = await userService.getByEmail(email);
                 if (userByEmail) {
@@ -40,7 +40,7 @@ passport.use(
 
                 return await userService.getByUserName(username)
                     ? done({ status: 401, message: 'Username is already taken.' }, null)
-                    : done(null, { email, name, username, password, aboutMe, location });
+                    : done(null, { email, username, password, aboutMe, location });
             } catch (err) {
                 return done(err);
             }

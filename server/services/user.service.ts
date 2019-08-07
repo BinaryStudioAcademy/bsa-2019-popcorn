@@ -22,7 +22,7 @@ export const getByEmail = async (email): Promise<User> => {
     .findOne({email});
 }
 
-export const getByUserName = async (name): Promise<User> => {
+export const getByUserName = async (username): Promise<User> => {
     return await getCustomRepository(UserRepository)
-    .findOne({ name });
+    .findOne({ username });
 }
