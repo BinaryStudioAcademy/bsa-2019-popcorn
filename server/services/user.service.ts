@@ -12,5 +12,17 @@ export const getUsers = async (): Promise<User[]> => {
         .find();
 };
 
+export const getById = async (id): Promise<User> => {
+    return await getCustomRepository(UserRepository)
+    .findOne({id});
+}
 
+export const getByEmail = async (email): Promise<User> => {
+    return await getCustomRepository(UserRepository)
+    .findOne({email});
+}
 
+export const getByUserName = async (name): Promise<User> => {
+    return await getCustomRepository(UserRepository)
+    .findOne({ name });
+}
