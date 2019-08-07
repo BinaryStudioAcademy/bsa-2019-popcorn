@@ -31,9 +31,12 @@ $header-letter-spacing: .9px;
         letter-spacing: $header-letter-spacing;
     }
 
-    .info {
-        display: flex;
-        flex-direction: column;
+    .info-item {
+        margin-right: 20px;
+    }
+
+    .info-item:last-child {
+        margin-right: 0;
     }
 }
 
