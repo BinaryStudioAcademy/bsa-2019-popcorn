@@ -4,13 +4,12 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faChevronDown} from "@fortawesome/free-solid-svg-icons";
 import React, {useState} from "react";
 import MovieList from "../MovieList/MovieList";
-import {fetchFilms} from "../Header/actions";
 
 const MovieSearch = ({movies, fetchFilms, alreadySearch}) => {
     const [value, setValue] = useState('');
 
     const startFetchFilms = () => {
-        if(value.trim() !== "") {
+        if (value.trim() !== "") {
             console.log(value);
             fetchFilms(value.trim())
         }
@@ -27,10 +26,11 @@ const MovieSearch = ({movies, fetchFilms, alreadySearch}) => {
                     Filter
                     <FontAwesomeIcon icon={faChevronDown}/>
                 {alreadySearch ?
-                    (movies && movies.length > 0 ?
-                <div className="modal">
+                    <div className="modal">
+                        {movies && movies.length > 0 ?
                         <MovieList movies={movies}/>
-                </div> : <span>Nothing was found</span>)
+                        : <span>Nothing was found</span>}
+                    </div>
                     : null}
                 </span>
         </div>
