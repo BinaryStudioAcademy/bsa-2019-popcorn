@@ -21,6 +21,7 @@ app.use('/api/', authorizationMiddleware(routesWhiteList));
 
 routes(app);
 
+app.use(bodyParser.urlencoded({extended:false}));
 
 const SERVER_PORT = 5000;
 app.use(errorHandlerMiddleware);
