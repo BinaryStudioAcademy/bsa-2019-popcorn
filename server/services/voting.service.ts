@@ -8,11 +8,11 @@ import { User } from '../models/UserModel';
 interface IRequestBody {
   userId: string,
   voting: Voting, 
-  options: Array<VotingOption>
+  votingOptions: Array<VotingOption>
 }
 
 export const createVoting = async (body: IRequestBody): Promise<Voting> => {
-  return await getCustomRepository(VotingRepository).createVoting(body.userId, body.voting)
+  return await getCustomRepository(VotingRepository).createVoting(body.userId, body.voting, body.votingOptions);
 };
 
 export const getVotingById = async (id: string): Promise<Voting> => {

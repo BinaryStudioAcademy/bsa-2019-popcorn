@@ -1,5 +1,6 @@
-import {Entity, PrimaryGeneratedColumn, Column, ManyToOne} from "typeorm";
+import {Entity, PrimaryGeneratedColumn, Column, ManyToOne, OneToMany} from "typeorm";
 import {User} from "./User";
+import { VotingOption } from "./VotingOption";
 
 @Entity()
 export class Voting {
@@ -11,4 +12,7 @@ export class Voting {
 
     @ManyToOne(type => User)
     user: User;
+
+    @OneToMany(type => VotingOption, votingOption => votingOption.voting)
+    votingOptions: VotingOption[];
 }

@@ -2,13 +2,18 @@ import {EntityRepository, Repository} from "typeorm";
 import {Voting} from "../entities/Voting";
 import UserRepository from "./user.repository";
 import {getCustomRepository} from "typeorm";
+import { VotingOption } from "models/VotingOptionModel";
+import VotingOptionRepository from "./votingOption.repository";
+
 
 @EntityRepository(Voting)
 class VotingRepository extends Repository<Voting> {
 
-  async createVoting(id: string, voting: Voting) {
+  async createVoting(id: string, voting: Voting, votingOptions: Array<VotingOption>) {
     voting.user = await getCustomRepository(UserRepository).findOne(id); 
-    return await this.save(voting);;
+    await Promise.all(votingOptions.map(votingOption => getCustomRepository(VotingOptionRepository).createVotingOption(votingOption)));
+    voting.votingOptions = votingOptions;
+    return await this.save(voting);
   }
 
   async getVotings() {
