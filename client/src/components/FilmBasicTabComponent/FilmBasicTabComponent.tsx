@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { ReactElement } from 'react';
 import PropTypes from 'prop-types';
 import './FilmBasicTabComponent.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -30,13 +30,20 @@ const solidStar = (key: number, type: boolean) => (
     />
 );
 
-const rateBlock = (rate: number) => {
+const rateBlock = (rate: number): ReactElement[] => {
     const res = [];
     for (let i = 0; i < 5; i++) {
         i < rate ? res.push(solidStar(i, true)) : res.push(solidStar(i, false))
     }
     return res;
 }
+
+const descriptionItem = (title: string, body: string | ReactElement[] | number) => (
+    <li className="descriptionItem">
+        <p className="descriptionTitle">{title}:</p>
+        <p className="descriptionBody">{body}</p>
+    </li>
+);
 
 const FilmBasicTab = (props: IProps) => {
     const {
@@ -57,42 +64,27 @@ const FilmBasicTab = (props: IProps) => {
             </div>
             <div className="descriptionWrapper">
                 <ul className="descriptionList">
-                    <li className="descriptionItem">
-                        <p className="descriptionTitle">Original title:</p>
-                        <p className="descriptionBody">{title}</p>
-                    </li>
-                    <li className="descriptionItem">
-                        <p className="descriptionTitle">Release year:</p>
-                        <p className="descriptionBody">{releaseYear}</p>
-                    </li>
-                    <li className="descriptionItem">
-                        <p className="descriptionTitle">{genres.length > 1 ? "Genres" : "Genre"}:</p>
-                        <p className="descriptionBody">
-                            {
-                                genres.join(', ')
-                            }
-                        </p>
-                    </li>
-                    <li className="descriptionItem">
-                        <p className="descriptionTitle">Duration:</p>
-                        <p className="descriptionBody">{duration}</p>
-                    </li>
-                    <li className="descriptionItem">
-                        <p className="descriptionTitle">Description:</p>
-                        <p className="descriptionBody">{description}</p>
-                    </li>
-                    <li className="descriptionItem">
-                        <p className="descriptionTitle">Rating:</p>
-                        <p className="descriptionBody">
-                            {
-                                rateBlock(rate)
-                            }
-                        </p>
-                    </li>
-                    <li className="descriptionItem">
-                        <p className="descriptionTitle">Budget:</p>
-                        <p className="descriptionBody">{budget}$</p>
-                    </li>
+                    {
+                        descriptionItem("Original title", title)
+                    }
+                    {
+                        descriptionItem("Release year", releaseYear)
+                    }
+                    {
+                        descriptionItem((genres.length > 1 ? "Genres" : "Genre"), genres.join(', '))
+                    }
+                    {
+                        descriptionItem("Duration", duration)
+                    }
+                    {
+                        descriptionItem("Description", description)
+                    }
+                    {
+                        descriptionItem("Rating", rateBlock(rate))
+                    }
+                    {
+                        descriptionItem("Budget", `${budget}$`)
+                    }
                 </ul>
             </div>
             <div className="videoWrapper">
