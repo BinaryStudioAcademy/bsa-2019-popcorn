@@ -7,20 +7,22 @@ import {createConnection} from "typeorm";
 import db_config from "./config/orm.config";
 import "reflect-metadata";
 
-import  routes from './routers';
+
+import  routers from './routers';
 
 const app = express();
 
 app.use(bodyParser.json());
+
 app.use(bodyParser.urlencoded({extended:false}));
 
-routes(app);
- 
+routers(app);
 
 
 const SERVER_PORT = 5000;
 
 createConnection(db_config)
+    .then((connection) => connection.runMigrations())
     .then(() => {
         app.listen(SERVER_PORT, () => console.log(`Server is running on http://localhost:${SERVER_PORT}`));
     })
