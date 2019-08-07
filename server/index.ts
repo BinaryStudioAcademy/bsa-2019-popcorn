@@ -13,8 +13,6 @@ import {createConnection} from "typeorm";
 import db_config from "./config/orm.config";
 import "reflect-metadata";
 
-import imageRouter from "./routers/image.router";
-
 const app = express();
 
 app.use(bodyParser.json());
@@ -23,9 +21,7 @@ app.use('/api/', authorizationMiddleware(routesWhiteList));
 
 routes(app);
 
-app.use('/image', imageRouter);
-
-
+app.use(bodyParser.urlencoded({extended:false}));
 
 const SERVER_PORT = 5000;
 app.use(errorHandlerMiddleware);
