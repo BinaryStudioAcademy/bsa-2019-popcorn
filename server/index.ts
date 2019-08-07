@@ -7,13 +7,18 @@ import {createConnection} from "typeorm";
 import db_config from "./config/orm.config";
 import "reflect-metadata";
 
+import  routes from './routes';
 
 const app = express();
 const router = express.Router();
 
 app.use(bodyParser.json());
+
+app.use(bodyParser.urlencoded({extended:false}));
 app.use('/', router);
 
+routes(app);
+ 
 router.get('/', (req, res) => {
     res.send('Sup');
 });

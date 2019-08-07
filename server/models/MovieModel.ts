@@ -1,8 +1,8 @@
 export class Movie {
     id: string;
     title: string;
-    year: string;
+    year: number;
     description: string;
-    duration: string | number;
+    duration: number;
     preview: string;
 }
