@@ -1,6 +1,9 @@
+import {Post} from "./PostModel";
+import {User} from "./UserModel";
+
 export class PostReactions{
     id: string;
     smile: boolean;
-    postId: string;
-    userId: string;
+    post: Post;
+    user: User;
 }

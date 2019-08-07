@@ -10,11 +10,11 @@ export class PostReactions {
     @Column()
     smile:boolean;
 
-    @OneToOne(type => Post, post => post.id)
+    @OneToOne(type => Post)
     @JoinColumn()
     post: Post;
 
-    @OneToOne(type => User, user => user.id)
+    @OneToOne(type => User)
     @JoinColumn()
     user: User;
 }

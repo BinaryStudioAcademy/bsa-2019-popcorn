@@ -10,11 +10,11 @@ export class PostComments {
     @Column()
     text: string;
 
-    @OneToOne(type => User, user => user.id)
+    @OneToOne(type => User)
     @JoinColumn()
     user: User;
 
-    @OneToOne(type => Post, post => post.id)
+    @OneToOne(type => Post)
     @JoinColumn()
     post: Post;
 }
