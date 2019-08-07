@@ -1,13 +1,19 @@
 import React from "react";
 import "./PostStoryEditor.scss";
 
+// example:
+{/* <PostStoryEditor id={'1'} type={'story'} uploadImage={event}/> */}
+
 interface IPostStoryEditorProps {
   id?: string,
-  type: 'story' | 'post'
+  type: 'story' | 'post',
+  uploadImage: (s:any) => any;
 }
 
 interface IPostStoryEditorState {
-  image?: string,
+  imageUrl?: string,
+  errorMsg?: string,
+  isUploading: boolean,
   body: string,
   checkboxValue: boolean
 }
@@ -16,7 +22,9 @@ class PostStoryEditor extends React.Component<IPostStoryEditorProps, IPostStoryE
   constructor(props: IPostStoryEditorProps) {
     super(props);
     this.state = {
-      image: undefined,
+      imageUrl: undefined,
+      errorMsg: '',
+      isUploading: false,
       body: '',
       checkboxValue: false
     };
@@ -25,6 +33,7 @@ class PostStoryEditor extends React.Component<IPostStoryEditorProps, IPostStoryE
     this.onSave = this.onSave.bind(this);
     this.onChangeData = this.onChangeData.bind(this);
     this.onToggleCheckbox = this.onToggleCheckbox.bind(this);
+    this.handleUploadFile = this.handleUploadFile.bind(this);
   }
 
   componentDidMount() {
@@ -35,8 +44,7 @@ class PostStoryEditor extends React.Component<IPostStoryEditorProps, IPostStoryE
           // fetch post by id
           this.setState({
             ...this.state,
-            body: 'test post',
-            image: 'http://cdn.collider.com/wp-content/uploads/2017/02/the-avengers-group-image.jpg'
+            body: 'test post'
           });
           break;
 
@@ -44,11 +52,10 @@ class PostStoryEditor extends React.Component<IPostStoryEditorProps, IPostStoryE
           // fetch story by id
           this.setState({
             ...this.state,
-            body: 'test story',
-            image: 'https://cdn.vox-cdn.com/thumbor/tJEzzwFxLxji_Eg8IGDAKy39_wM=/0x0:7040x3520/1200x800/filters:focal(2826x809:3952x1935)/cdn.vox-cdn.com/uploads/chorus_image/image/64683486/ST3_Production_Still_2.0.jpg'
+            body: 'test story'
           });
           break;
-        
+
         default:
           break;
       }
@@ -74,7 +81,7 @@ class PostStoryEditor extends React.Component<IPostStoryEditorProps, IPostStoryE
   onCancel() {
     this.setState({
       ...this.state,
-      image: undefined,
+      imageUrl: undefined,
       body: '',
       checkboxValue: false
     });
@@ -83,8 +90,8 @@ class PostStoryEditor extends React.Component<IPostStoryEditorProps, IPostStoryE
   }
 
   onSave() {
+    if (this.state.body.trim() === '') return;
     switch(this.props.type) {
-
       case 'post':
         this.props.id
           ? console.log(this.state, 'post updated') //this.props.updatePost(this.props.id, this.state);
@@ -98,25 +105,57 @@ class PostStoryEditor extends React.Component<IPostStoryEditorProps, IPostStoryE
           ? console.log(this.state, 'story updated') //this.props.updateStory(this.props.id, this.state);
           : console.log(this.state, 'story created'); //this.props.addStory(this.state);
         break;
-  
+
       default:
         break;
     }
     this.onCancel();
   }
 
+   handleUploadFile({ target }) {
+    this.setState({ isUploading: true, errorMsg: '' });
+
+    if(target.files[0] && target.files[0].size > 1048576*3){
+      target.value = "";
+      this.setState({ isUploading: false, errorMsg: 'File is too big! (max 3MB)' });
+      return;
+    }
+
+    const data = new FormData();
+    data.append('file', target.files[0]);
+
+    this.props.uploadImage(data)
+    .then(({imageUrl})=> {
+      this.setState({ imageUrl, isUploading: false, errorMsg: '' });
+    })
+    .catch((error) => {
+      this.setState({ isUploading: false, errorMsg: error.message });
+    });
+    target.value = "";
+  }
+
   render() {
     return (
       <div className='edit-form'>
 
-        { this.state.image && <img alt='poster' src={this.state.image}/> }
-        {/* {image uploader} */}
+        { this.state.imageUrl && <img alt='poster' src={this.state.imageUrl}/> }
 
         <input placeholder='Type a text here...' type='text' value={this.state.body} onChange={e => this.onChangeData(e, 'body')}/>
 
         <div className='footer'>
           { this.props.type === 'story' && <p className='checker'>Create post also <input type='checkbox' checked={this.state.checkboxValue} onChange={this.onToggleCheckbox}/></p> }
           <div>
+            { this.state.errorMsg && <span className="upload-error">{this.state.errorMsg}</span>}
+            <input
+              name='image'
+              type='file'
+              onChange={this.handleUploadFile}
+              className='upload-image'
+              id='image'
+              accept=".jpg, .jpeg, .png"
+              disabled={this.state.isUploading}
+              />
+            <label htmlFor='image' className='upload-image-button'>Upload image</label>
             <button className='cancel-btn' onClick={this.onCancel}>Cancel</button>
             <button className='save-btn' onClick={this.onSave}>Save</button>
           </div>
