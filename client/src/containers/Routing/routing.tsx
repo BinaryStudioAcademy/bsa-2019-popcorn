@@ -12,9 +12,9 @@ const Routing = () => {
             <Switch>
                 <Route exact path="/login" component={Login} />
                 <Route exact path="/registration" component={Registration} />
-                <Route path="/app" component={Main} />
+                <Route path="/" component={Main} />
                 {/* Not found route */}
-                {/* <Route component={NotFound} /> */}
+                <Route component={Main} />
             </Switch>
         </div>
 

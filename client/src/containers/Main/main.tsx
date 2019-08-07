@@ -20,15 +20,6 @@ const { userInfo, notifications } = {
     }
 }
 
-const profileInfo = {
-    name: "Sofi Dub",
-    male: false,
-    female: true,
-    location: "KIev",
-    about: "Give me films",
-    photoSvg:  "https://s3-alpha-sig.figma.com/img/919e/1a5a/da4f250d469108191ad9d4af68b2a639?Expires=1566172800&Signature=Kou41Z8bd8ig~9nLibgCH5gfaOc0K~9Io82-umabjJnomveXbPcqMWfD911bHy6h77reHT6ecNYFHCzmXkQNy3vEF-OzgJYgV875TI2rX~cPt1FaSJC5wCeybEfTrlBlCcdzSFn8iVcP~C8GTx-l6CIjyugGAhvr7xJ-hfAdlf~5Mll0Sy92dSKn8q7OkJdfsMvEEFVQ3rGHn8GGQZg1a60gif0VaQhuVX1gcRgwrsak~cerS1bnDvo93B1lFOIk85wlhY2hPwQrmCtI9A-qaAtbIxmzmxkRpuVUpDrX6Jd4hXpksbd7urSJ91Dg7tv9WzRZvIkLnPXflCfmPw~slw__&Key-Pair-Id=APKAINTVSUGEWH5XD5UA"
-}
-
 const movies = [
     {
       id: '8c0bb20f-fc81-473b-8a73-5ae2125fe603', 
@@ -86,18 +77,15 @@ const movies = [
     }
   ];
 
-const Main = ({ match }) => {
-    const { path } = match;
+const Main = () => {
     return (
         <div className="main-page">
             <MainPageSidebar userInfo={userInfo} notifications={notifications} />
             <div>
                 <Switch>
-                    <Route exact path={`${path}`} component={MainPage} />
-                    <Route path={`${path}/user-page`} component={UserPage} />
-                    <Route path={`${path}/movie-series`} component={MovieSeriesPage} />
-                    <Route path={`${path}/movie-list`} render={() => <MovieList movies={movies}/>}/>
-                    <Route path={`${path}/user-profile`} render={() => <ProfileComponent profileInfo={profileInfo}/>}/>
+                    <Route exact path={`/`} component={MainPage} />
+                    <Route path={`/user-page`} component={UserPage} />
+                    <Route path={`/movie-list`} render={() => <MovieList movies={movies}/>}/>
                 </Switch>
             </div>
         </div>
