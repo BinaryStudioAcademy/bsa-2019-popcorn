@@ -12,8 +12,8 @@ class StoryListItem extends Component<IStoryListItemProps>{
         return (
             <div className="story-list-item-wrapper">
                 <div className="card">
-                    <img className="avatar" src={avatar}></img>
-                    <img className="story-pic" src={imageUrl}></img>
+                    <img alt="avatar" className="avatar" src={avatar}></img>
+                    <img alt="story-pic" className="story-pic" src={imageUrl}></img>
                 </div>
                 <div className="story-name">
                     {name}

@@ -1,11 +1,8 @@
 import React from "react";
 import "./styles/App.scss";
-import "./components/story-list-component"
-import StoryList from "./components/story-list-component";
 const App: React.FC = () => {
   return (
     <div className="App">
-      <StoryList/>
       <header className="App-header">
         <p>
           Edit <code>src/App.tsx</code> and save to reload.
