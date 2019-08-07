@@ -32,3 +32,14 @@ export const deleteById = async (id: string): Promise<IResponse> => {
     return await getCustomRepository(UserRepository)
         .deleteById(id);
 };
+
+export const getByEmail = async (email): Promise<User> => {
+    return await getCustomRepository(UserRepository)
+    .findOne({email});
+}
+
+export const getByUserName = async (name): Promise<User> => {
+    return await getCustomRepository(UserRepository)
+    .findOne({ name });
+}
+
