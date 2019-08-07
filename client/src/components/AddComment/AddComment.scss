@@ -1,0 +1,30 @@
+@import "../../styles/variables.scss";
+
+.comment-form{
+    padding: 1em;
+    text-align: left;
+    position: relative;
+}
+.comment-input{
+    border: none;    
+    height: 100%;
+    font-family: $base-font-family;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 19px;
+    letter-spacing: 0.4px;
+    color: $text-secondary-color;
+    outline: none;
+}
+.publish-button{
+    position: absolute;
+    right: 1em;
+    font-family: $base-font-family;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 19px;
+    letter-spacing: 0.4px;
+    color: $button-publish-color;
+}
