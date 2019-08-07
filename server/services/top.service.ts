@@ -1,6 +1,6 @@
 import { Top } from '../models/TopModel';
 import TopRepository from '../repository/top.repository';
-import { getRepository, getCustomRepository } from "typeorm";
+import { getCustomRepository } from "typeorm";
 
 export const getTops = async (): Promise<Top[]> =>
     await getCustomRepository(TopRepository).find();
@@ -8,7 +8,7 @@ export const getTops = async (): Promise<Top[]> =>
 export const getTopById = async (topId: number): Promise<Top> =>
     await getCustomRepository(TopRepository).findOne(topId);
 
-export const createTop = async (top: Top): Promise<Top> =>
+export const createTop = async (top: Top): Promise<Top> => 
     await getCustomRepository(TopRepository).save(top);
 
 export const updateTop = async (updatedTop: Top): Promise<Top> => {

@@ -1,4 +1,5 @@
-import { Entity, PrimaryGeneratedColumn, Column, OneToOne, JoinColumn, ManyToOne } from "typeorm";
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from "typeorm";
+import { User } from './User';
 
 @Entity()
 export class Top {
@@ -11,9 +12,12 @@ export class Top {
     @Column()
     description: string;
 
-    @Column()
-    userId: number;
+    @Column({ nullable: true })
+    genreId: string;
 
-    @Column()
-    genreId: number;
+    @Column({ nullable: true })
+    userId: string;
+
+    @ManyToOne(type => User, user => user.tops)
+    user: User;
 }
