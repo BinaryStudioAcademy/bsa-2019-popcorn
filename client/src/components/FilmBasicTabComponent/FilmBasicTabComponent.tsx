@@ -22,7 +22,7 @@ interface IProps {
     }
 }
 
-const solidStar = (key: number, type: boolean) => (
+const solidStar = (key: number, type: boolean) : any=> (
     <FontAwesomeIcon
         icon={faStar}
         className={type ? "yellowStar" : "greyStar"}
@@ -31,7 +31,7 @@ const solidStar = (key: number, type: boolean) => (
 );
 
 const rateBlock = (rate: number): ReactElement[] => {
-    const res = [];
+    const res :any = [];
     for (let i = 0; i < 5; i++) {
         i < rate ? res.push(solidStar(i, true)) : res.push(solidStar(i, false))
     }
