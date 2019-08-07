@@ -1,9 +1,10 @@
 const passport = require('passport');
 import { Strategy as LocalStrategy } from 'passport-local';
 import { Strategy as JwtStrategy, ExtractJwt } from 'passport-jwt';
+import { Strategy as GoogleStrategy } from 'passport-google-oauth2';
 import { secret } from './jwt.config';
 import * as userService from '../services/user.service';
-
+import * as googleConfig from './google.config';
 const options = {
     jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
     secretOrKey: secret
@@ -59,3 +60,27 @@ passport.use('jwt', new JwtStrategy(options, async ({ id }, done) => {
         return done(err);
     }
 }));
+
+passport.use(
+    'google',
+    new GoogleStrategy(
+        {
+            clientID: googleConfig.clientID,
+            clientSecret: googleConfig.clientSecret,
+            callbackURL: googleConfig.callbackURL,
+            passReqToCallback: true
+        },
+        async (req, accessToken, refreshToken, data, done) => {
+            try {
+                const { email } = data;
+                const user = await userService.getByEmail(email);
+                if (!user) {
+                    return done({ status: 401, message: 'You dont have an account with this email.' }, false);
+                }
+                return done(null, user)
+            } catch (err) {
+                return done(err);
+            }
+        }
+    )
+);
