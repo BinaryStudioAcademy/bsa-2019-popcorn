@@ -1,7 +1,13 @@
 require('dotenv').config();
 
+const passport = require('passport');
 import * as express from 'express';
 import * as bodyParser from 'body-parser';
+
+import routes from './controllers/root.controller';
+import authorizationMiddleware from './middlewares/authorization.middleware';
+import errorHandlerMiddleware from './middlewares/error-handler.middleware';
+import routesWhiteList from './config/routes-white-list.config';
 
 import {createConnection} from "typeorm";
 import db_config from "./config/orm.config";
@@ -9,21 +15,15 @@ import "reflect-metadata";
 
 
 const app = express();
-const router = express.Router();
 
 app.use(bodyParser.json());
-app.use('/', router);
+app.use(passport.initialize());
+app.use('/api/', authorizationMiddleware(routesWhiteList));
 
-router.get('/', (req, res) => {
-    res.send('Sup');
-});
-
-router.post('/', (req, res) => {
-    res.send(req.body);
-});
+routes(app);
 
 const SERVER_PORT = 5000;
-
+app.use(errorHandlerMiddleware);
 createConnection(db_config)
     .then(() => {
         app.listen(SERVER_PORT, () => console.log(`Server is running on http://localhost:${SERVER_PORT}`));
