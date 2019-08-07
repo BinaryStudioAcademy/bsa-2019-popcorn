@@ -1,5 +1,5 @@
 import {Event} from "./EventModel";
-import {EventComment} from "./EventComment";
-import {EventVisitor} from "./EventVisitor";
+import {EventComment} from "./EventCommentModel";
+import {EventVisitor} from "./EventVisitorModel";
 
 export {Event,EventComment,EventVisitor};

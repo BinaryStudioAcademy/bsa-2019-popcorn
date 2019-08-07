@@ -1,7 +1,7 @@
 export class EventComment {
     id: string;
     userId: string;
-    event: string;
+    eventId: string;
     text: string;
     createdAt: Date;  
 }

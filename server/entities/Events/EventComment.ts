@@ -1,4 +1,4 @@
-import { Entity, PrimaryGeneratedColumn, Column, OneToOne, JoinColumn, Timestamp } from "entities/Events/node_modules/typeorm";
+import { Entity, PrimaryGeneratedColumn, Column,ManyToOne, JoinColumn } from "typeorm";
 import { User } from "../User";
 import { Event } from "./Event";
 
@@ -7,11 +7,11 @@ export class EventComment {
     @PrimaryGeneratedColumn('uuid')
     id: string;
 
-    @OneToOne(type => User)
+    @ManyToOne(type => User, user => user.id)
     @JoinColumn()
     user: User;
 
-    @OneToOne(type => Event)
+    @ManyToOne(type => Event, event => event.eventComments)
     @JoinColumn()
     event: string;
 
@@ -19,6 +19,11 @@ export class EventComment {
     text: string;
 
     @Column()
-    createdAt: Timestamp;
-   
+    createdAt: Date;
+
+    @Column()
+    userId:string;
+    
+    @Column()
+    eventId:string;
 }

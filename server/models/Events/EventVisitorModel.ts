@@ -1,6 +1,6 @@
 export class EventVisitor {
     id: string;
-    user: string;
-    event: string;
+    userId: string;
+    eventId: string;
     status: string;   
 }

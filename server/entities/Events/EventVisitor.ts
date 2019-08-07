@@ -1,4 +1,4 @@
-import { Entity, PrimaryGeneratedColumn, Column, OneToOne, JoinColumn } from "entities/Events/node_modules/typeorm";
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn } from "typeorm";
 import { User } from "../User";
 import { Event } from "./Event";
 
@@ -7,15 +7,20 @@ export class EventVisitor {
     @PrimaryGeneratedColumn('uuid')
     id: string;
 
-    @OneToOne(type => User)
+    @ManyToOne(type => User, user => user.id)
     @JoinColumn()
     user: User;
 
-    @OneToOne(type => Event)
+    @ManyToOne(type => Event, event => event.eventVisitors)
     @JoinColumn()
     event: string;
 
     @Column()
-    status: string;  
-   
+    status: string;
+
+    @Column()
+    userId:string;
+    
+    @Column()
+    eventId:string;
 }
