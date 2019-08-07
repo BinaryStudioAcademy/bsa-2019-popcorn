@@ -7,20 +7,15 @@ import {createConnection} from "typeorm";
 import db_config from "./config/orm.config";
 import "reflect-metadata";
 
+import imageRouter from "./routers/image.router";
 
 const app = express();
-const router = express.Router();
 
 app.use(bodyParser.json());
-app.use('/', router);
 
-router.get('/', (req, res) => {
-    res.send('Sup');
-});
+app.use('/image', imageRouter);
 
-router.post('/', (req, res) => {
-    res.send(req.body);
-});
+
 
 const SERVER_PORT = 5000;
 
