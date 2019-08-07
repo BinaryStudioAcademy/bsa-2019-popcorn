@@ -9,4 +9,4 @@ export const createPost = async (post: Post): Promise<Post> =>
 
 export const getPosts = async (): Promise<Post[]> =>
     await getCustomRepository(PostRepository)
-        .find();
+        .find({ relations: ["user"] });
