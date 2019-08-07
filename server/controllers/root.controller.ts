@@ -1,8 +1,10 @@
 import authRoutes from './auth.controller';
-import movieRoutes from './movie.contoller';
+import imageRouters from "./image.controller";
+import movieRouter from './movie.controller';
 
 // register all routes
 export default (app) => {
     app.use('/api/auth', authRoutes);
-    app.use('/movies', movieRoutes);
+    app.use('/image', imageRouters)
+    app.use('/movies', movieRouter);
 };
