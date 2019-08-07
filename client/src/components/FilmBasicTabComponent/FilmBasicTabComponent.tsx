@@ -57,6 +57,31 @@ const FilmBasicTab = (props: IProps) => {
         image: { link: imageLink },
         video: { link: videoLink }
     } = props.film;
+
+    const movieData = [{
+        label: "Original title",
+        value: title
+    }, {
+        label: "Release year",
+        value: releaseYear,
+    }, {
+        label: (genres.length > 1 ? "Genres" : "Genre"),
+        value: genres.join(', '),
+    }, {
+        label: "Duration",
+        value: duration,
+    }, {
+        label: "Description",
+        value: description,
+    }, {
+        label: "Rating",
+        value: rateBlock(rate),
+    }, {
+        label: "Budget",
+        value: `${budget}$`,
+    }
+    ]
+    
     return (
         <section className="filmSection">
             <div className="posterWrapper">
@@ -65,25 +90,7 @@ const FilmBasicTab = (props: IProps) => {
             <div className="descriptionWrapper">
                 <ul className="descriptionList">
                     {
-                        descriptionItem("Original title", title)
-                    }
-                    {
-                        descriptionItem("Release year", releaseYear)
-                    }
-                    {
-                        descriptionItem((genres.length > 1 ? "Genres" : "Genre"), genres.join(', '))
-                    }
-                    {
-                        descriptionItem("Duration", duration)
-                    }
-                    {
-                        descriptionItem("Description", description)
-                    }
-                    {
-                        descriptionItem("Rating", rateBlock(rate))
-                    }
-                    {
-                        descriptionItem("Budget", `${budget}$`)
+                        movieData.map(({label, value}) => descriptionItem(label, value))
                     }
                 </ul>
             </div>
