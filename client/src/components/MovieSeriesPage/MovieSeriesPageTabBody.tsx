@@ -7,6 +7,7 @@ import MovieSeriesReviews from '../MovieSeriesReviews/MovieSeriesReviews';
 import MovieSeriesPosts from '../MovieSeriesPosts/MovieSeriesPosts';
 import MovieSeriesAwards from '../MovieSeriesAwards/MovieSeriesAwards';
 import MovieSeriesStatistics from '../MovieSeriesStatistics/MovieSeriesStatistics';
+import StaffCast from '../StaffCast/StaffCast';
 
 const messages =
         [{
@@ -26,7 +27,7 @@ const MovieSeriesPageTabBody: React.SFC<IProps> = ({ mainPath }) => {
         <div className="movie-series-page-tab-body">
             <Switch>
                 <Route exact path={`${mainPath}`} component={FilmBasicTabComponent} />
-                <Route path={`${mainPath}/cast-crew`} component={MovieSeriesCastCrew} />
+                <Route path={`${mainPath}/cast-crew`} component={StaffCast} />
                 <Route path={`${mainPath}/reviews`} component={MovieSeriesReviews} />
                 <Route path={`${mainPath}/posts`} component={MovieSeriesPosts} />
                 <Route path={`${mainPath}/awards`} component={MovieSeriesAwards} />
