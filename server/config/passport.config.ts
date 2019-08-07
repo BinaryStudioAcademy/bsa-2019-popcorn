@@ -20,7 +20,7 @@ passport.use(
 
             return (password === user.password)
                 ? done(null, user)
-                : done({ status: 401, message: 'Passwords do not match.' }, null, { message: "false"});
+                : done({ status: 401, message: 'Passwords do not match.' }, null, { message: "false" });
         } catch (err) {
             return done(err);
         }
@@ -30,7 +30,10 @@ passport.use(
 passport.use(
     'register',
     new LocalStrategy(
-        { passReqToCallback: true },
+        {
+            passReqToCallback: true,
+            usernameField: "name"
+        },
         async ({ body: { email, aboutMe, location } }, username, password, done) => {
             try {
                 const userByEmail = await userService.getByEmail(email);
@@ -40,7 +43,7 @@ passport.use(
 
                 return await userService.getByUserName(username)
                     ? done({ status: 401, message: 'Username is already taken.' }, null)
-                    : done(null, { email, username, password, aboutMe, location });
+                    : done(null, { email, name: username, password, aboutMe, location });
             } catch (err) {
                 return done(err);
             }
