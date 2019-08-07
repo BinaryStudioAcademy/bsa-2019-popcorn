@@ -1,0 +1,20 @@
+import { Router } from 'express';
+import * as votingService from '../services/voting.service';
+
+const router = Router();
+
+router
+  .get('/', (req, res, next) => votingService.getVotings()
+    .then(result => res.send(result))
+    .catch(next))
+  .get('/:id', (req, res, next) => votingService.getVotingById(req.params.id)
+    .then(result => res.send(result))
+    .catch(next))
+  .get('/user/:id', (req, res, next) => votingService.getVotingByUserId(req.params.id)
+    .then(result => res.send(result))
+    .catch(next))
+  .post('/', (req, res, next) => votingService.createVoting(req.body)
+    .then(result => res.send(result))
+    .catch(next))
+
+ export default router;

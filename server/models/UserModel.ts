@@ -1,3 +1,5 @@
+import { Voting } from "./VotingModel";
+
 export class User {
     id: string;
     name: string;
@@ -5,4 +7,5 @@ export class User {
     password: string;
     location:string;
     aboutMe: string;
+    votings: Voting[]
 }
