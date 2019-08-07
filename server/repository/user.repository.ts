@@ -5,41 +5,64 @@ import {User} from "../entities/User";
 class UserRepository extends Repository<User> {
 
   async getUserById(id: string) {
+    let data: { user?: User } = {};
+    let error = '';
+    let success = true;
     try {
-      const user = await this.findOne({ where: { id } });
-      return user;
-    } catch(error) {
-      console.log(error.message);
+      data.user = await this.findOne({ where: { id } });
+      if (!data.user)
+        throw new Error(`User with ${id} id is not found`);
+    } catch(err) {
+      error = err.message;
+      success = false;
     }
+    return { data, error, success };
   }
 
   async getUsers() {
+    let data: { users?: User[] } = {};
+    let error = '';
+    let success = true;
     try {
-      const users = await this.find();
-      return users;
-    } catch(error) {
-      console.error(error.message);
+      data.users = await this.find();
+    } catch(err) {
+      error = err.message;
+      success = false;
     }
+    return { data, error, success };
   }
 
-  async updateById(id, data) {
-    try {
-      await this.update({ id }, data);
-      return { success: true };
-    } catch(error) {
-      console.error(error.message);
+  async updateById(id, newData) {
+    let data: { user?: User } = {};
+    let error = '';
+    let success = true;
+    try { 
+      await this.update({ id }, newData); 
+      data.user = await this.findOne({ where: { id } });
+      if (!data.user)
+        throw new Error(`User with ${id} id is not found`);
+    } catch(err) {
+      error = err.message;
+      success = false;
     }
+    return { data, error, success };
   }
 
   async deleteById(id) {
+    let data = {};
+    let error = '';
+    let success = true;
     try {
+      const user = await this.findOne({ where: { id } });
+      if (!user)
+        throw new Error(`User with ${id} id is not found`);
       await this.delete({ id });
-      return { success: true };
-    } catch(error) {
-      console.error(error.message);
+    } catch(err) {
+      error = err.message;
+      success = false;
     }
+    return { data, error, success };
   }
 }
-
 
 export default UserRepository;
