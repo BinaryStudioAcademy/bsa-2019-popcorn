@@ -13,9 +13,6 @@ import {createConnection} from "typeorm";
 import db_config from "./config/orm.config";
 import "reflect-metadata";
 
-
-import  routers from './routers';
-
 const app = express();
 
 app.use(bodyParser.json());
@@ -25,9 +22,6 @@ app.use('/api/', authorizationMiddleware(routesWhiteList));
 routes(app);
 
 app.use(bodyParser.urlencoded({extended:false}));
-
-routers(app);
-
 
 const SERVER_PORT = 5000;
 app.use(errorHandlerMiddleware);
