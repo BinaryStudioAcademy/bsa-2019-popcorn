@@ -13,10 +13,10 @@
 .title {
 	font-weight: 900;
 	font-size: 24px;
-	letter-spacing:$header-letter-spacing;
+	letter-spacing: $header-letter-spacing;
 }
 
-.headerButtons {
+.header-buttons {
 	height: 100%;
 	position: relative;
 	outline: none;
@@ -24,8 +24,8 @@
 	background: $white;
 }
 
-.headerButtons,
-.userInfo {
+.header-buttons,
+.user-info {
 	font-weight: 600;
 	font-size: $menu-font-size;
 	line-height: 17px;
@@ -35,19 +35,22 @@
 	color: $text-base-color;
 }
 
-.headerButtons:hover {
+.header-buttons:hover {
 	background: #f7f8f9;
+	
 }
 
-.arrowDown {
+.fa-chevron-down {
 	margin-left: 4px;
+	width: 8px !important;
+	vertical-align: bottom;
 }
 
-.userInfo {
+.user-info {
 	display: flex;
 
 	span {
-		color:$text-base-color;
+		color: $text-base-color;
 		margin-left: 10px;
 		margin-top: 15px;
 	}
@@ -70,11 +73,11 @@
 	font-size: $base-font-size;
 	line-height: 15px;
 	align-items: center;
-	letter-spacing:$input-letter-spacing;
+	letter-spacing: $input-letter-spacing;
 	color: $text-base-color;
 }
 
-.searchArea {
+.search-area {
 	display: flex;
 	margin-left: 5%;
 
@@ -85,21 +88,21 @@
 		border-top-left-radius: 2px;
 		border-bottom-right-radius: 0px;
 		border-top-right-radius: 0px;
-		font-size:$base-font-size;
+		font-size: $base-font-size;
 		line-height: 15px;
 		align-items: center;
 		letter-spacing: $input-letter-spacing;
 		color: $input-placeholder-color;
 
-		.searchInput {
+		.search-input {
 			border: none;
 			margin-bottom: 5px;
 			width: 240px;
 		}
-		.searchInput:focus {
+		.search-input:focus {
 			outline: none;
 		}
-		.searchIcon {
+		.search-icon {
 			margin: 6px 10px 0px 10px;
 		}
 	}
@@ -112,17 +115,17 @@
 .notifications {
 	display: flex;
 
-	.notifyIcon {
+	.notify-icon {
 		display: grid;
 		margin-left: 21px;
 		justify-items: center;
 	}
 
-	.messageIcon {
+	.message-icon {
 		margin: 2px;
 	}
 }
-.headerButtons:hover {
+.header-buttons:hover {
 	.modal {
 		transform: scaleY(1);
 	}
@@ -142,7 +145,7 @@
 	transition: 0.5s ease-in-out;
 	text-align: left;
 	cursor: default;
-	font-size:$base-font-size;
+	font-size: $base-font-size;
 	line-height: 15px;
 	width: 150px;
 	padding: 10px;
@@ -156,27 +159,27 @@
 	color: $text-secondary-color;
 }
 
-@media (max-width: 915px) {
+@media (max-width: 925px) {
 	.title {
 		display: none;
 	}
 	.notifications {
-		.notifyIcon {
+		.notify-icon {
 			margin-left: 5px;
 		}
 	}
-	.searchArea {
+	.search-area {
 		margin-left: 0px;
 	}
 }
 
 @media (max-width: 765px) {
-	.headerButtons {
+	.header-buttons {
 		display: none;
 	}
-	.searchArea {
+	.search-area {
 		.search {
-			.searchInput {
+			.search-input {
 				width: 180px;
 			}
 		}
