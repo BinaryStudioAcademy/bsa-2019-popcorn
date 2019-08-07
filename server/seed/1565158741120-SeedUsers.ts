@@ -7,7 +7,7 @@ export class SeedUsers1565158741120 implements MigrationInterface {
 
     public async up(queryRunner: QueryRunner): Promise<any> {
         const user = new User();
-        user.name = "admin";
+        user.username = "admin";
         user.password = 'admin';
         user.id = uuid();
         user.email="test@gmail.com";
