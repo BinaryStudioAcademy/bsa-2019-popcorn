@@ -8,16 +8,20 @@
     "body-parser": "^1.19.0",
     "dotenv": "^8.0.0",
     "express": "^4.17.1",
+    "fs": "^0.0.1-security",
+    "multiparty": "^4.2.1",
     "pg": "^7.12.0",
     "reflect-metadata": "^0.1.13",
     "ts-node": "^8.3.0",
     "typeorm": "^0.2.18",
-    "typescript": "^3.5.3"
+    "typescript": "^3.5.3",
+    "uuid": "^3.3.2"
   },
   "scripts": {
     "start-server": "ts-node ./"
   },
   "devDependencies": {
+    "@types/multiparty": "^0.0.32",
     "prettier": "1.18.2"
   }
 }
