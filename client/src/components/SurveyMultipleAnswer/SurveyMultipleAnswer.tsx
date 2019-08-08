@@ -10,22 +10,29 @@ interface IAnswer {
 interface IProps {
     questionInfo: {
         id: string,
-        question: string,
-        options: Array<{
-            text: string,
-            id: string
-        }>
+            survey_id: string,
+            title: string,
+            firstLabel: string,
+            lastLabel: string,
+            type: string,
+            image_link: string,
+            required: boolean,
+            options: Array<{
+                id: string,
+                question_id: string,
+                value: string
+            }>
     },
     setAnswer: (data: IAnswer) => void
 };
 
 const SurveyMultipleAnswer = (props: IProps) => {
     const { questionInfo } = props;
-    const { id, question, options } = questionInfo;
+    const { id, title, options } = questionInfo;
 
     return (
         <div className="multiple question-container">
-            <p className="survey-question">{question}</p>
+            <p className="survey-question">{title}</p>
             {
                 options.map((option, i) => (
                     <p key={i}>
@@ -34,7 +41,7 @@ const SurveyMultipleAnswer = (props: IProps) => {
                                 type="checkbox" 
                                 name={id}
                                 key={i} 
-                                value={option.text} 
+                                value={option.value} 
                                 onChange={(event) => {
                                     props.setAnswer({
                                         questionId: id,
@@ -44,7 +51,7 @@ const SurveyMultipleAnswer = (props: IProps) => {
                                 }}
                             /> 
                             <span className="checkmark"></span>
-                            {option.text}
+                            {option.value}
                         </label>
                     </p>
                 ))

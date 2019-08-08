@@ -9,22 +9,29 @@ interface IAnswer {
 interface IProps {
     questionInfo: {
         id: string,
-        question: string,
+        survey_id: string,
+        title: string,
+        firstLabel: string,
+        lastLabel: string,
+        type: string,
+        image_link: string,
+        required: boolean,
         options: Array<{
-            text: string,
-            id: string
-        }>
+               id: string,
+                question_id: string,
+                value: string
+            }>
     },
     setAnswer: (data : IAnswer) => void
 };
 
 const SurveySingleAnswer = (props: IProps) => {
     const { questionInfo } = props;
-    const { id, question, options } = questionInfo;
+    const { id, title, options } = questionInfo;
 
     return (
         <div className="question-container single">
-            <p className="survey-question">{question}</p>
+            <p className="survey-question">{title}</p>
             {
                 options.map((option, i) => (
                     <p key={i}>
@@ -33,14 +40,14 @@ const SurveySingleAnswer = (props: IProps) => {
                                 type="radio" 
                                 name={id} 
                                 key={i} 
-                                value={option.text} 
+                                value={option.value} 
                                 onChange={() => {props.setAnswer({
                                     questionId: id,
                                     optionId: option.id
                                 })}}
                             /> 
                             <span className="checkmark"></span>
-                            {option.text}
+                            {option.value}
                         </label>
                     </p>
                 ))

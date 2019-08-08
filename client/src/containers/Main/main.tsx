@@ -24,7 +24,7 @@ const movies = [
     {
       id: '8c0bb20f-fc81-473b-8a73-5ae2125fe603', 
       title: 'Titanic',
-      releaseDate: new Date(),
+      year: new Date(),
       image: 'https://images-na.ssl-images-amazon.com/images/I/51gEpO63aRL.jpg',
       duration: '3h 21min',
       genres: ['Drama', 'Action', 'Family'],
@@ -33,7 +33,7 @@ const movies = [
     {
       id: '8c0bb1ef-fc81-473b-8a73-5ae2125fe603', 
       title: 'Forrest Gump',
-      releaseDate: new Date(),
+      year: new Date(),
       image: 'https://posteritati.com/posters/000/000/053/106/forrest-gump-md-web.jpg',
       duration: '1h 33min',
       genres: ['Drama'],
@@ -42,7 +42,7 @@ const movies = [
     {
       id: '8c0bb20f-fc81-423b-8a73-5ae2125fe603', 
       title: 'Titanic1',
-      releaseDate: new Date(),
+      year: new Date(),
       image: 'https://images-na.ssl-images-amazon.com/images/I/51gEpO63aRL.jpg',
       duration: '3h 21min',
       genres: ['Drama', 'Action', 'Family'],
@@ -51,7 +51,7 @@ const movies = [
     {
       id: '8c0bb1ef-fc11-473b-8a73-5ae2125fe603', 
       title: 'Forrest Gump12',
-      releaseDate: new Date(),
+      year: new Date(),
       image: 'https://posteritati.com/posters/000/000/053/106/forrest-gump-md-web.jpg',
       duration: '1h 13min',
       genres: ['Drama'],
@@ -60,7 +60,7 @@ const movies = [
     {
       id: '8c0bb20f-fc81-473b-8a73-5ae2121fe603', 
       title: 'Titanic',
-      releaseDate: new Date(),
+      year: new Date(),
       image: 'https://images-na.ssl-images-amazon.com/images/I/51gEpO63aRL.jpg',
       duration: '3h 21min',
       genres: ['Drama', 'Action', 'Family'],
@@ -69,7 +69,7 @@ const movies = [
     {
       id: '8c0bb1ef-fc81-473b-8a73-5ae2125fe60a', 
       title: 'Forrest Gump',
-      releaseDate: new Date(),
+      year: new Date(),
       image: 'https://posteritati.com/posters/000/000/053/106/forrest-gump-md-web.jpg',
       duration: '1h 33min',
       genres: ['Drama'],
