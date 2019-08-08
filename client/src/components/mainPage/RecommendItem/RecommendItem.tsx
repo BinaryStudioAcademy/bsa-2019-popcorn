@@ -1,10 +1,10 @@
 import React from "react";
 import "./RecommendItem.scss"
-import { ReactComponent as SettingIcon } from '../../../assets/icons/settings.svg';
-import { ReactComponent as LikeIcon } from '../../../assets/icons/likeIcon.svg';
-import { ReactComponent as StaredIcon } from '../../../assets/icons/staredIcon.svg';
-import { ReactComponent as PlusIcon } from '../../../assets/icons/plusIcon.svg';
-import { ReactComponent as NotStaredIcon } from '../../../assets/icons/notStaredIcon.svg';
+import { ReactComponent as SettingIcon } from '../../../assets/icons/general/settings.svg';
+import { ReactComponent as LikeIcon } from '../../../assets/icons/general/likeIcon.svg';
+import { ReactComponent as StaredIcon } from '../../../assets/icons/general/movie/staredIcon.svg';
+import { ReactComponent as PlusIcon } from '../../../assets/icons/general/plusIcon.svg';
+import { ReactComponent as NotStaredIcon } from '../../../assets/icons/general/movie/notStaredIcon.svg';
 
 type RecommendItemProps = {
     recommendItem: {

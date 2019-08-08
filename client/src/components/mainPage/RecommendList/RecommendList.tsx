@@ -1,7 +1,7 @@
 import React from "react";
 import RecommendItem from '../RecommendItem/RecommendItem'
 import "./RecommendList.scss"
-import { ReactComponent as StaredIcon } from '../../../assets/icons/staredIcon.svg';
+import { ReactComponent as StaredIcon } from '../../../assets/icons/general/movie/staredIcon.svg';
 
 type RecommendList={
 

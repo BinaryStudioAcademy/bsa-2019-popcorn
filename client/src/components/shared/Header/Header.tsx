@@ -2,9 +2,9 @@ import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronDown, faSearch, faBell } from '@fortawesome/free-solid-svg-icons';
 import "./Header.scss";
-import messageIcon from '../../../assets/icons/header/message-icon.svg';
-import searchIcon from '../../../assets/icons/header/search-icon.svg';
-import notifyIcon from '../../../assets/icons/header/notify-icon.svg';
+import messageIcon from '../../../assets/icons/general/header/message-icon.svg';
+import searchIcon from '../../../assets/icons/general/header/search-icon.svg';
+import notifyIcon from '../../../assets/icons/general/header/notify-icon.svg';
 import { NavLink } from 'react-router-dom';
 
 interface IProps {

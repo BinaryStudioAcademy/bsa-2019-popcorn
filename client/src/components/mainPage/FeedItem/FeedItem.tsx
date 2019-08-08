@@ -1,11 +1,11 @@
 import React from "react";
 import AddComment from "../../shared/AddComment/AddComment"
 import "./FeedItem.scss"
-import { ReactComponent as SettingIcon } from '../../../assets/icons/settings.svg';
-import { ReactComponent as LikeIcon } from '../../../assets/icons/likeIcon.svg';
-import { ReactComponent as CommentIcon } from '../../../assets/icons/commentIcon.svg';
-import { ReactComponent as PlusIcon } from '../../../assets/icons/plusIcon.svg';
-import { ReactComponent as HorizontalStroke } from '../../../assets/icons/horizontalStroke.svg';
+import { ReactComponent as SettingIcon } from '../../../assets/icons/general/settings.svg';
+import { ReactComponent as LikeIcon } from '../../../assets/icons/general/likeIcon.svg';
+import { ReactComponent as CommentIcon } from '../../../assets/icons/general/commentIcon.svg';
+import { ReactComponent as PlusIcon } from '../../../assets/icons/general/plusIcon.svg';
+import { ReactComponent as HorizontalStroke } from '../../../assets/icons/general/horizontalStroke.svg';
 
 
 type IFeedItemProps = {

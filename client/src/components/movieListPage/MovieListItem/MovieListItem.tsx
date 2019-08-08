@@ -1,7 +1,7 @@
 import React from "react";
 import "./MovieListItem.scss";
-import { ReactComponent as GenreIcon } from '../../../assets/icons/movieList/genre-icon.svg';
-import { ReactComponent as DurationIcon } from '../../../assets/icons/movieList/duration-icon.svg';
+import { ReactComponent as GenreIcon } from '../../../assets/icons/general/movie/genre-icon.svg';
+import { ReactComponent as DurationIcon } from '../../../assets/icons/general/movie/duration-icon.svg';
 import { NavLink } from 'react-router-dom';
 
 interface IMovieListItemProps {
