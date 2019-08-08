@@ -1,7 +1,7 @@
 import { Post } from '../models/PostModel';
 import PostRepository from '../repository/post.repository';
 import UserRepository from '../repository/user.repository'
-import { getRepository, getCustomRepository } from "typeorm";
+import { getCustomRepository } from "typeorm";
 
 export const createPost = async (post: any): Promise<Post> => {
 
