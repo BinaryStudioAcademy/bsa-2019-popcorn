@@ -1,7 +1,7 @@
 import { Router, NextFunction, Request, Response } from 'express';
 import * as eventService from '../services/event.service';
 
-import { Event,EventComment,EventVisitor } from '../models/Events';
+import { Event, EventComment, EventVisitor } from '../models/Events';
 import { Event as EventEntity } from '../entities/Events';
 
 const router = Router();
@@ -26,8 +26,26 @@ router
     .post('/comment', (req: Request, res: Response, next: NextFunction) => eventService.createComment(req.body)
         .then((response: EventComment[]) => res.send(response))
         .catch(next))
+    .get('/:id/comment', (req: Request, res: Response, next: NextFunction) => eventService.getCommentsByEventId(req.params.id)
+        .then((response: EventComment[]) => res.send(response))
+        .catch(next))
+    .delete('/comment/:id', (req: Request, res: Response, next: NextFunction) => eventService.deleteCommentById(req.params.id)
+        .then((response: EventComment) => res.send(response))
+        .catch(next))
+    .put('/comment', (req: Request, res: Response, next: NextFunction) => eventService.updateComment(req.body)
+        .then((response: EventComment[]) => res.send(response))
+        .catch(next))
     //visitors
     .post('/visitor', (req: Request, res: Response, next: NextFunction) => eventService.createVisitor(req.body)
+        .then((response: EventVisitor[]) => res.send(response))
+        .catch(next))
+    .get('/:id/visitor', (req: Request, res: Response, next: NextFunction) => eventService.getVisitorsByEventId(req.params.id)
+        .then((response: EventVisitor[]) => res.send(response))
+        .catch(next))
+    .delete('/visitor/:id', (req: Request, res: Response, next: NextFunction) => eventService.deleteVisitorById(req.params.id)
+        .then((response: EventVisitor) => res.send(response))
+        .catch(next))
+    .put('/visitor', (req: Request, res: Response, next: NextFunction) => eventService.updateVisitor(req.body)
         .then((response: EventVisitor[]) => res.send(response))
         .catch(next))
 export default router;
