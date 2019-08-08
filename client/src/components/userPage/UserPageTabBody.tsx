@@ -28,7 +28,6 @@ interface IProps {
 }
 
 const UserPageTabs: React.SFC<IProps> = ({ mainPath, uploadAvatar }) => {
-    console.log('user page', uploadAvatar)
     return (
         <div className={"user-tab-body"}>
             <Switch>
