@@ -23,7 +23,6 @@
     display: flex;
     flex-direction: row;
     overflow-x: scroll;
-    border-top: 2px solid $text-secondary-color;
 }
 .cast-items-container::before, .cast-items-container::after{
     content: '';

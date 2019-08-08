@@ -7,7 +7,6 @@
     font-size: $base-font-size; 
     line-height: 14px;
     letter-spacing: $base-letter-spacing;
-    margin-top: 2em;
     display: flex;
     flex-direction: column;
 }
@@ -20,10 +19,25 @@
 }
 
 .staff-items-container{
-    padding: 1em; 
+    padding: 2em;
     display: flex;
     flex-direction: column;
-    border-top: 2px solid $text-secondary-color;
-    align-items: center;
+}
+
+.cross-line{
+    width: calc(100% - 2em);
+    color: #545454;
+    text-align: center;
+    border-bottom: 1px solid #545454;
+    line-height: 0.1em;
+    margin: 10px auto 20px;
+    text-transform: uppercase;
+    font-weight: lighter;
+    span{
+        background: $background-gray;
+        padding: 0 10px;
+        color: #122737;
+        font-weight: 600;
+    }
 }
 
