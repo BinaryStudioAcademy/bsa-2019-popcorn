@@ -35,11 +35,6 @@
 	color: $text-base-color;
 }
 
-.header-buttons:hover {
-	background: #f7f8f9;
-	
-}
-
 .fa-chevron-down {
 	margin-left: 4px;
 	width: 8px !important;
@@ -52,7 +47,6 @@
 	span {
 		color: $text-base-color;
 		margin-left: 10px;
-		margin-top: 15px;
 	}
 	img {
 		width: 55px;
@@ -62,11 +56,7 @@
 .filter {
 	border: 1px solid $border-color;
 	box-shadow: 0px 0px 11px $input-shadow-color;
-	border-bottom-right-radius: 2px;
-	border-top-right-radius: 2px;
-	border-bottom-left-radius: 0px;
-	border-top-left-radius: 0px;
-	display: inline-block;
+	border-radius: 0px 2px 2px 0px;
 	border-left: none;
 	padding: 6px;
 	width: 78px;
@@ -75,6 +65,8 @@
 	align-items: center;
 	letter-spacing: $input-letter-spacing;
 	color: $text-base-color;
+	display: flex;
+	justify-content: center;
 }
 
 .search-area {
@@ -148,10 +140,11 @@
 	font-size: $base-font-size;
 	line-height: 15px;
 	width: 150px;
-	padding: 10px;
+	padding: 0 10px 10px 10px;
 
 	div {
-		padding-top: 10px;
+		padding-top: 15px;
+		line-height: 20px;
 	}
 }
 
