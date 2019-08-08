@@ -9,6 +9,8 @@ import UserTops from './UserTops/UserTops';
 import UserLists from './UserLists/UserLists';
 import UserWatched from './UserWatched/UserWatched';
 import ProfileComponent from './ProfileComponent/ProfileComponent';
+import UserSurveysNav from '../UserSurveys/UserSurveysNav';
+import mock from '../Survey/mock';
 
 const profileInfo = {
     name: "Sofi Dub",
@@ -64,11 +66,7 @@ const surveyInfo = {
     ]
 }
 
-const surveys = [
-    { ...surveyInfo },
-    { ...surveyInfo, id: '2' },
-    { ...surveyInfo, id: '3' }
-]
+const surveys = mock;
 
 interface IProps {
     mainPath: string

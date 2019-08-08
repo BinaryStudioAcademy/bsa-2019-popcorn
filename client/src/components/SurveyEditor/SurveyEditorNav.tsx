@@ -8,22 +8,37 @@ import { NavLink, Route, Switch } from 'react-router-dom';
 interface IProps {
     mainPath: string,
     surveyInfo : {
-        created_at: Date
-        name: string,
-        userInfo: {
-            name: string,
-            image_url: string
-        },
+        id: string,
+        created_at: string,
+        title: string,
         description: string,
+        user_id: string,
+        user: {
+            name: string,
+            image_link: string
+        },
         participants: number,
         questions: Array<{
             id: string,
-            question: string,
+            survey_id: string,
+            title: string,
+            firstLabel: string,
+            lastLabel: string,
+            type: string,
+            image_link: string,
+            required: boolean,
             options: Array<{
-                text: string,
-                id: string
+                id: string,
+                question_id: string,
+                value: string
             }>,
-            type: string
+            answers: Array<{
+                id: string,
+                question_id: string,
+                option_id: string,
+                user_id: string,
+                value: string
+            }>
         }>
     }
 }

@@ -1,4 +1,4 @@
-[
+export default [
     {
       "id": "1",
       "created_at": "Sun Jun 07 1998 20:58:45 GMT+0300 (Eastern European Summer Time)",
