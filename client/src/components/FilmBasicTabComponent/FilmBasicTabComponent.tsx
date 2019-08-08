@@ -80,10 +80,10 @@ const FilmBasicTab = (props: IProps) => {
         label: "Budget",
         value: `${budget}$`,
     }
-    ]
+    ];
 
     return (
-        <div>
+        <div className={"film-basic-wrp"}>
             <section className="filmSection">
                 <div className="posterWrapper">
                     <img src={imageLink} alt={title} className="poster"/>
