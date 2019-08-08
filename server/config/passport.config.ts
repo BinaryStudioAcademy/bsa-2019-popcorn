@@ -75,10 +75,11 @@ passport.use(
         },
         async (req, accessToken, refreshToken, data, done) => {
             try {
-                const { email } = data;
+                const { email, displayName: name } = data;
                 const user = await userService.getByEmail(email);
                 if (!user) {
-                    return done({ status: 401, message: 'You dont have an account with this email.' }, false);
+                    const user = await userService.createUser({ name, email });
+                    return done(null, user);
                 }
                 return done(null, user)
             } catch (err) {
@@ -99,10 +100,11 @@ passport.use(
         },
         async (req, accessToken, refreshToken, data, done) => {
             try {
-                const { email } = data;
+                const { email, displayName: name } = data;
                 const user = await userService.getByEmail(email);
                 if (!user) {
-                    return done({ status: 401, message: 'You dont have an account with this email.' }, false);
+                    const user = await userService.createUser({ name, email });
+                    return done(null, user);
                 }
                 return done(null, user)
             } catch (err) {
