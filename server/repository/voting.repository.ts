@@ -9,45 +9,88 @@ import VotingOptionRepository from "./votingOption.repository";
 @EntityRepository(Voting)
 class VotingRepository extends Repository<Voting> {
 
-  async createVoting(id: string, voting: Voting, votingOptions: Array<VotingOption>) {
-    voting.user = await getCustomRepository(UserRepository).findOne(id); 
-    await Promise.all(votingOptions.map(votingOption => getCustomRepository(VotingOptionRepository).createVotingOption(votingOption)));
-    voting.votingOptions = votingOptions;
-    return await this.save(voting);
+  async createVoting(id: string, voting: Voting, votingOptions: Array<VotingOption>, next?) {
+    try {
+      const user = await getCustomRepository(UserRepository).findOne(id); 
+      if (!user) 
+        return next({status: 404, message: 'User is not found'}, null);
+      voting.user = user;
+
+      await Promise.all(votingOptions.map(votingOption => getCustomRepository(VotingOptionRepository).createVotingOption(votingOption, next)));
+
+      voting.votingOptions = votingOptions;
+      return await this.save(voting);
+    } catch(err) {
+      return next({status: err.status, message: err.message}, null);
+    }
   }
 
-  async getVotings() {
-    return await this.find();
+  async getVotings(next?) {
+    try {
+      return await this.find();
+    } catch(err) {
+      return next({status: err.status, message: err.message}, null);
+    }
   }
 
-  async getVotingById(id: string) {
-    return await this.findOne(id);
+  async getVotingById(id: string, next?) {
+    try {
+      const voting = await this.findOne(id);
+      if (!voting) 
+        return next({status: 404, message: 'Voting is not found'}, null);
+      return await this.findOne(id);
+    } catch(err) {
+      return next({status: err.status, message: err.message}, null);
+    } 
   }
 
-  async getVotingByUserId(id: string) {
-    const user = await getCustomRepository(UserRepository).findOne(id);
-    return await this.find({user});
+  async getVotingByUserId(id: string, next?) {
+    try {
+      const user = await getCustomRepository(UserRepository).findOne(id);
+      if (!user)
+        return next({status: 404, message: 'User is not found'}, null);
+      return await this.find({user});
+    } catch(err) {
+      return next({status: err.status, message: err.message}, null);
+    }
   }
 
-  async updateVotingById(id: string, voting: Voting) {
-    await this.update({ id }, voting);
-    const updatedVoting = await this.getVotingById(id);
-    return updatedVoting
-      ? updatedVoting
-      : { success: false };
+  async updateVotingById(id: string, voting: Voting, next?) {
+    try {
+      await this.update({ id }, voting);
+      const updatedVoting = await this.getVotingById(id, next);
+      return updatedVoting
+        ? updatedVoting
+        : next({status: 404, message: 'Voiting is not found'}, null);
+    } catch(err) {
+      return next({status: err.status, message: err.message}, null);
+    }
   }
 
-  async deleteVotingById(id: string) {
-    await this.delete({ id });
-    return { success: true };
+  async deleteVotingById(id: string, next?) {
+    try {
+      const voting = await this.getVotingById(id, next);
+      if (!voting)
+        return next({status: 404, message: 'Voiting is not found'}, null);
+      await this.delete({ id });
+      return {};
+    } catch(err) {
+      return next({status: err.status, message: err.message}, null);
+    }
   }
 
-  async createVotingOptionByVotingId(id: string, votingOption: VotingOption) {
-    const voting = await this.getVotingById(id);
-    const newOption = await getCustomRepository(VotingOptionRepository).createVotingOption(votingOption, voting);
-    voting.votingOptions = await getCustomRepository(VotingOptionRepository).getVotingOptionByVotingId(id);
-    await this.save(voting);
-    return newOption;
+  async createVotingOptionByVotingId(id: string, votingOption: VotingOption, next?) {
+    try {
+      const voting = await this.getVotingById(id, next);
+      if (!voting)
+        return next({status: 404, message: 'Voiting is not found'}, null);
+      const newOption = await getCustomRepository(VotingOptionRepository).createVotingOption(votingOption, next, voting);
+      voting.votingOptions = await getCustomRepository(VotingOptionRepository).getVotingOptionByVotingId(id, next);
+      await this.save(voting);
+      return newOption;
+    } catch(err) {
+      return next({status: err.status, message: err.message}, null);
+    }
   }
 }
 
