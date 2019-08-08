@@ -5,6 +5,7 @@ import authenticationMiddleware from '../middlewares/authentication.middleware';
 import registrationMiddleware from '../middlewares/registration.middleware';
 import jwtMiddleware from '../middlewares/jwt.middleware';
 import { googleMiddleware, googleCallbackMiddleware } from "./../middlewares/google.middleware";
+import { facebookMiddleware, facebookCallbackMiddleware } from "./../middlewares/facebook.middleware";
 
 const router = Router();
 
@@ -14,6 +15,10 @@ router
         .catch(next))
     .get('/google', googleMiddleware)
     .get('/google/redirect', googleCallbackMiddleware, (req, res, next) => authService.login(req.user)
+        .then(data => res.send(data))
+        .catch(next))
+    .get('/facebook', facebookMiddleware)
+    .get('/facebook/redirect', facebookCallbackMiddleware, (req, res, next) => authService.login(req.user)
         .then(data => res.send(data))
         .catch(next))
     .post('/login', authenticationMiddleware, (req, res, next) => authService.login(req.user)
