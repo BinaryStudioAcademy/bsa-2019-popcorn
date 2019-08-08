@@ -18,7 +18,7 @@ app.use(cors());
 app.use(express.static('public'));
 app.use(bodyParser.json());
 app.use(passport.initialize());
-app.use('/api/', authorizationMiddleware(routesWhiteList));
+// app.use('/api/', authorizationMiddleware(routesWhiteList));
 routes(app);
 
 app.use(bodyParser.urlencoded({extended:false}));

@@ -3,7 +3,7 @@ import UserRepository from "../repository/user.repository";
 import {User} from "../models/UserModel";
 const uuid = require('uuid/v4');
 
-export class SeedUsers1565158741120 implements MigrationInterface {
+export class SeedUsers1565158741121 implements MigrationInterface {
 
     public async up(queryRunner: QueryRunner): Promise<any> {
         const user = new User();
@@ -13,6 +13,7 @@ export class SeedUsers1565158741120 implements MigrationInterface {
         user.email="test@gmail.com";
         user.location='location';
         user.aboutMe='something';
+        user.avatar = '';
 
         await getCustomRepository(UserRepository)
             .save(user);
