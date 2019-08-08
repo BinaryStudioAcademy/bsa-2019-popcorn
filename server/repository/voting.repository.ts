@@ -29,6 +29,17 @@ class VotingRepository extends Repository<Voting> {
     return await this.find({user});
   }
 
+  async updateVotingById(id: string, voting: Voting) {
+    await this.update({ id }, voting);
+    const updatedVoting = await this.getVotingById(id);
+    return updatedVoting
+      ? updatedVoting
+      : { success: false };
+  }
+
+  async deleteVotingById(id: string) {
+    await getCustomRepository(VotingOptionRepository).getVotingOptionByVotingId(id);
+  }
 }
 
 export default VotingRepository;

@@ -26,3 +26,16 @@ export const getVotingByUserId = async (id: string): Promise<Voting[]> => {
 export const getVotings = async (): Promise<Voting[]> => {
     return await getCustomRepository(VotingRepository).getVotings();
 };
+
+export const updateVotingById = async (id: string, voting: Voting): Promise<Voting | { success: boolean }> => {
+  return await getCustomRepository(VotingRepository).updateVotingById(id, voting);
+}
+
+//to do: update options
+//to do: add options
+//to do: delete options
+
+export const deleteVotingById = async (id: string): Promise<{ success: boolean }> => {
+  const res =  await getCustomRepository(VotingRepository).delete({id});
+  return { success: true };
+}
