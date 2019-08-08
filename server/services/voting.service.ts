@@ -35,8 +35,6 @@ export const createVotingOptionByVotingId = async (id: string, votingOption: Vot
   return await getCustomRepository(VotingRepository).createVotingOptionByVotingId(id, votingOption);
 }
 
-//to do: add options to voting
-
 export const deleteVotingById = async (id: string): Promise<{ success: boolean }> => {
   return await getCustomRepository(VotingRepository).deleteVotingById(id);
 }

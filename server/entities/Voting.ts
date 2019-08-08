@@ -10,7 +10,7 @@ export class Voting {
     @Column()
     body: string;
 
-    @ManyToOne(type => User)
+    @ManyToOne(type => User, { onDelete: 'CASCADE' })
     user: User;
 
     @OneToMany(type => VotingOption, votingOption => votingOption.voting)
