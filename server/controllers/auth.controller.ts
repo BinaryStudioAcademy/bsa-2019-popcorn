@@ -14,7 +14,7 @@ router
     .post('/login', authenticationMiddleware, (req, res, next) => authService.login(req.user)
         .then(data => res.send(data))
         .catch(next))
-    .get('/user', jwtMiddleware, (req, res, next) => userService.getById(req.user.id)
+    .get('/user', jwtMiddleware, (req, res, next) => userService.getUserById(req.user.id)
         .then(data => res.send(data))
         .catch(next));
 
