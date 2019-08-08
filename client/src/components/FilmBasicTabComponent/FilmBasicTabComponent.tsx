@@ -36,7 +36,7 @@ const rateBlock = (rate: number): ReactElement[] => {
         i < rate ? res.push(solidStar(i, true)) : res.push(solidStar(i, false))
     }
     return res;
-}
+};
 
 const descriptionItem = (title: string, body: string | ReactElement[] | number) => (
     <li className="descriptionItem">

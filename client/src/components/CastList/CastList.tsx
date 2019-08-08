@@ -26,9 +26,9 @@ const castListMock = [{
     }];
 
 const CastList = () => {
-    return <div className='cast-list'>
-        <div className='cast-list-header cross-line'><span>Main cast</span></div>
-        <div className='cast-items-container'>
+    return <div className={'cast-list'}>
+        <div className={'cast-list-header cross-line'}><span>Main cast</span></div>
+        <div className={'cast-items-container'}>
             {
                 castListMock.map(el => {
                     return <CastItem castItemInfo={el}/>
@@ -36,6 +36,6 @@ const CastList = () => {
             }
         </div>
     </div>
-}
+};
 
 export default CastList;

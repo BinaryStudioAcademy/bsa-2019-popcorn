@@ -3,9 +3,9 @@
 
 .staff-cast {
   background-color: $background-gray;
-  width: 70%;
-  float: left;
+  width: 100%;
   display: flex;
   justify-content: center;
   flex-direction: column;
+  min-height: 500px;
 }
