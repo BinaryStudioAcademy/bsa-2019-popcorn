@@ -2,6 +2,7 @@ import * as React from "react";
 import { Form, Formik, Field, ErrorMessage } from "formik";
 import * as Yup from 'yup';
 import "./Registration.scss";
+import { NavLink } from 'react-router-dom';
 
 interface Values {
   name: String,
@@ -128,9 +129,9 @@ class Registration extends React.Component<IProps, IState> {
               <div className="form-hint">
                 Already have an account?
                 &nbsp;
-              <a href='#' className="form-hint-link">
-                login
-              </a>
+                <NavLink to={"/login"} className="form-hint-link">
+                  Login
+                </NavLink>
               <i className="icon icon-arrow-right"> > </i>
               </div>
             </div>

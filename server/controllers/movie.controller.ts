@@ -8,7 +8,14 @@ const router = Router();
 router
     .get('/', (req: Request, res: Response, next: NextFunction) => movieService.getMovies()
         .then((movies: Movie[]) => res.send(movies))
-        .catch(next))
+		.catch(next))
+	.get('/find', (req, res, next) => movieService.getByTitle(req.query.title)
+	.then(movies =>	res.send(movies))
+	.catch(e => {
+		console.log(e.message);
+		res.send({message: e.message});
+	})
+	.catch(next))
     .get('/:id', (req: Request, res: Response, next: NextFunction) => movieService.getMovieById(req.params.id)
         .then((movie: Movie) => res.send(movie))
         .catch(next))
