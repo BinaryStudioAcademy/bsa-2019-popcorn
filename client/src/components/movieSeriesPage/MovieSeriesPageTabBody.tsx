@@ -39,7 +39,7 @@ interface IProps {
 
 const MovieSeriesPageTabBody: React.SFC<IProps> = ({ mainPath }) => {
     return (
-        <div className="movie-series-page-tab-body">
+        <div className={"movie-series-page-tab-body"}>
             <Switch>
                 <Route exact path={`${mainPath}`} component={FilmBasicTabComponent} />
                 <Route path={`${mainPath}/cast-crew`} component={StaffCast} />
@@ -51,6 +51,6 @@ const MovieSeriesPageTabBody: React.SFC<IProps> = ({ mainPath }) => {
             <DiscussionComponent messages={messages}/>
         </div>
     );
-}
+};
 
 export default MovieSeriesPageTabBody;

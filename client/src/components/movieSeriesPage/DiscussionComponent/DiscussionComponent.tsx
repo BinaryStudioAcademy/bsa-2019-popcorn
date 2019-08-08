@@ -1,25 +1,28 @@
 import React, { Component, createRef } from 'react';
 import { ReactComponent as SendLogo } from "../../../assets/icons/general/messager/paper-plane.svg";
+
 import "./DiscussionComponent.scss";
 
 interface IDiscussionProps {
-	messages: {
-		id: string,
-		name: string,
-		body: string,
-		photo: string,
-		date: string
-	}[]
+    messages: {
+        id: string,
+        name: string,
+        body: string,
+        photo: string,
+        date: string
+    }[]
 }
 
 interface IDiscussionState {
-    messagesState:  {id: string,
-		name: string,
-		body: string,
-		photo: string,
-		date: string}[],
-	inputIsEmpty: boolean
-	
+    messagesState: {
+        id: string,
+        name: string,
+        body: string,
+        photo: string,
+        date: string
+    }[],
+    inputIsEmpty: boolean
+
 }
 
 class DiscussionComponent extends Component<IDiscussionProps, IDiscussionState> {

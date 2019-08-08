@@ -1,14 +1,18 @@
 import React from "react";
 import "./styles/App.scss";
 import Routing from "./containers/Routing/routing";
-import { BrowserRouter as Router } from 'react-router-dom';
+import {BrowserRouter as Router} from 'react-router-dom';
+import {Provider} from "react-redux";
+import store from './redux/store';
 
 const App: React.FC = () => {
-  return (
-    <Router>
-      <Routing />
-    </Router>
-  );
+    return (
+        <Provider store={store}>
+            <Router>
+                <Routing/>
+            </Router>
+        </Provider>
+    );
 };
 
 export default App;
@@ -19,4 +23,5 @@ export default App;
   <Route path="/movie-series-page" component={MovieSeriesPage} />
   <Redirect to="/" />
 </Switch>
-</div> */}
+</div> */
+}
