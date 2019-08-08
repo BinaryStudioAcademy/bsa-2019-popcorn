@@ -7,7 +7,6 @@ export const createPost = async (post: any): Promise<Post> => {
 
     post.user = await getCustomRepository(UserRepository).findOne(post.userId);
     delete post.userId;
-    console.log(post);
     return await getCustomRepository(PostRepository)
         .save(post);
 }
@@ -22,3 +21,6 @@ export const deletePostById = async (postId: number): Promise<Post> => {
     const post = await getCustomRepository(PostRepository).findOne(postId);
     return await getCustomRepository(PostRepository).remove(post);
 }
+
+export const getPostsById = async(postId: number): Promise<Post> => 
+    await getCustomRepository(PostRepository).findOne(postId);
