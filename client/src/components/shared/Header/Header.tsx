@@ -10,6 +10,7 @@ import {bindActionCreators} from 'redux';
 import {fetchFilms} from '../Header/actions';
 import { NavLink } from 'react-router-dom';
 
+
 interface IProps {
     userInfo?: { //temporary put ? to use mocks inside component
         name: string,
@@ -38,14 +39,16 @@ const user = {
 
 const mock = ["Movies in cinema", "Top movies", "On DVD"];
 
+
 const Header = ({userInfo = user, movies = mock, tv = mock, ratings = mock, moviesSearch, fetchFilms, alreadySearch}: IProps) => {
-    console.log(moviesSearch);
+
+
     return (
         <div className="header">
             <div className="title">Pop Corn</div>
             <button className="header-buttons hover">
-                <NavLink to={"/movie-list"} style={{ textDecoration: "none"}} className="header-buttons">Movies</NavLink>
-                <FontAwesomeIcon icon={faChevronDown} />
+                <NavLink to={"/movie-list"} style={{textDecoration: "none"}} className="header-buttons">Movies</NavLink>
+                <FontAwesomeIcon icon={faChevronDown}/>
                 <div className="modal">
                     {movies.map(movie => <div key={movie} className="hover">{movie}</div>)}
                 </div>
@@ -67,14 +70,13 @@ const Header = ({userInfo = user, movies = mock, tv = mock, ratings = mock, movi
             </button>
 
             <MovieSearch movies={moviesSearch} fetchFilms={fetchFilms} alreadySearch={alreadySearch}/>
-
             <div className="notifications">
                 <img className="message-icon hover" src={messageIcon} alt="message"/>
                 <img className="notify-icon hover" src={notifyIcon} alt="bell"/>
             </div>
             <NavLink to={"/user-page"} className="user-info hover">
-                    <img src={userInfo.image} alt="avatar" />
-                    <span className="user-name">{userInfo.name}</span>
+                <img src={userInfo.image} alt="avatar"/>
+                <span className="user-name">{userInfo.name}</span>
             </NavLink>
         </div>
     );

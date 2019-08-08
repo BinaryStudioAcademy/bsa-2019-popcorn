@@ -31,35 +31,31 @@ const MainPageSidebar = ({ userInfo, notifications }: IProps) => {
                 <img src={userInfo.image} alt="avatar" />
                 <FontAwesomeIcon icon={faChevronDown} />
             </div>
-            <p className="user-name">{userInfo.name}</p>
+            <p className="user-name"><span>{userInfo.name}</span></p>
             <div className="menu">
                 <div>
-                    <MessageIcon />
                     <NavLink to={"/"}>Home</NavLink>
                 </div>
                 <div>
-                    <MessageIcon />
                     <p>Friends</p>
                     {
                         notifications.newFriends !== 0 && 
-                        <p className="notifications">{notifications.newFriends}</p>
+                        <p className="notifications"><span>{notifications.newFriends}</span></p>
                     }
                 </div>
                 <div>
-                    <MessageIcon />
                     <p>Messages</p>
                     {
                         notifications.newMessages !== 0 && 
-                        <p className="notifications">{notifications.newMessages}</p>
+                        <p className="notifications"><span>{notifications.newMessages}</span></p>
                     }
                 </div>
 
                 <div>
-                    <MessageIcon />
                     <p>Events</p>
                     {
                         notifications.newEvents !== 0 &&
-                        <p className="notifications">{notifications.newEvents}</p>
+                        <p className="notifications"><span>{notifications.newEvents}</span></p>
                     }
                 </div>
                 <div>
