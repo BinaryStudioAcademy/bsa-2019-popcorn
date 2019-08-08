@@ -1,10 +1,11 @@
+@import '~../../styles/variables';
+
 $titleColor : #545454;
 $contentColor: #545454;
 $svgColor: #000;
-$bcgColor: rgb(251, 238, 239);
+$bcgColor: $background-gray;
 
 .UserProfileComponent{
-	background-color: $bcgColor;
 	padding: 2% 2%;
 }
 h2 {
@@ -12,7 +13,6 @@ h2 {
 	width: 100%;
 	color: $titleColor;
 	text-align: center;
-	border-bottom: 1px solid $titleColor;
 	line-height: 0.1em;
 	margin: 10px 0 20px;
 	text-transform: uppercase;
@@ -28,9 +28,9 @@ h2 {
 	align-items: flex-start;
 	
 	.profilePhotoWrap{
-		width: 40%;
+		width: 35%;
 		.fontAwesomeIcon{
-			font-size: 35px;
+			font-size: 30px;
 			color: $titleColor;
 			&:hover{
 				transform: scale(1.1, 1.0);
@@ -63,20 +63,16 @@ h2 {
 			darken($bcgColor,10%),
 			rgba(0, 0, 0, 0)
 		  ) 100% 1;
-		.title {
+		.field {
 			color: $titleColor;
-			text-transform: uppercase;
 			width: 30%;
 			text-align: left;
-			font-weight: 800;
 			position: relative;
 		}
 		.content {
 			color: $contentColor;
-			font-weight: lighter;
 			text-align: right;
 			width: 70%;
-			font-weight: 300;
 			p {
 				background-color: #00000030;
 				padding: 1% 1%;
