@@ -1,5 +1,6 @@
-import {Entity, PrimaryGeneratedColumn, Column, OneToMany} from "typeorm";
+import {Entity, PrimaryGeneratedColumn, Column, OneToMany } from "typeorm";
 import { Top } from './Top';
+import {Story} from './Story'
 
 @Entity()
 export class User {
@@ -23,4 +24,7 @@ export class User {
 
     @OneToMany(type => Top, top => top.user)
     tops: Top[];
+
+    @OneToMany(type => Story, story=> story.user)
+    stories: Story[];
 }

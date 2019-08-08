@@ -1,4 +1,4 @@
-import { Entity, PrimaryGeneratedColumn, Column, OneToOne, JoinColumn, OneToMany } from "typeorm";
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn } from "typeorm";
 import { User } from "./User";
 
 @Entity()
@@ -9,7 +9,7 @@ export class Story {
     @Column()
     image_url: string;
 
-    @OneToOne(type => User)
+    @ManyToOne(type => User)
     @JoinColumn()
     user: User;
 }
