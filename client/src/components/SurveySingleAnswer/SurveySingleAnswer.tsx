@@ -11,12 +11,12 @@ interface IProps {
         id: string,
         survey_id: string,
         title: string,
-        firstLabel: string,
-        lastLabel: string,
+        firstLabel?: string,
+        lastLabel?: string,
         type: string,
-        image_link: string,
+        image_link?: string,
         required: boolean,
-        options: Array<{
+        options?: Array<{
                id: string,
                 question_id: string,
                 value: string
@@ -32,7 +32,7 @@ const SurveySingleAnswer = (props: IProps) => {
     return (
         <div className="question-container single">
             <p className="survey-question">{title}</p>
-            {
+            {   options!==undefined &&
                 options.map((option, i) => (
                     <p key={i}>
                         <label>

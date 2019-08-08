@@ -7,7 +7,7 @@ interface IProps {
     mainPath: string,
     surveyInfo : {
         id: string,
-        created_at: string,
+        created_at: Date,
         title: string,
         description: string,
         user_id: string,
@@ -20,12 +20,12 @@ interface IProps {
             id: string,
             survey_id: string,
             title: string,
-            firstLabel: string,
-            lastLabel: string,
+            firstLabel?: string,
+            lastLabel?: string,
             type: string,
-            image_link: string,
+            image_link?: string,
             required: boolean,
-            options: Array<{
+            options?: Array<{
                 id: string,
                 question_id: string,
                 value: string
@@ -33,7 +33,7 @@ interface IProps {
             answers: Array<{
                 id: string,
                 question_id: string,
-                option_id: string,
+                option_id?: string,
                 user_id: string,
                 value: string
             }>
