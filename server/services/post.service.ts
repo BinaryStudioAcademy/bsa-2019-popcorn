@@ -22,5 +22,10 @@ export const deletePostById = async (postId: number): Promise<Post> => {
     return await getCustomRepository(PostRepository).remove(post);
 }
 
-export const getPostsById = async(postId: number): Promise<Post> => 
-    await getCustomRepository(PostRepository).findOne(postId);
+export const getPostById = async (postId: number): Promise<Post> =>
+    await getCustomRepository(PostRepository)
+        .findOne(postId);
+
+export const getPostsByUserId = async (userId: number): Promise<Post[]> =>
+    await getCustomRepository(PostRepository)
+        .find({ relations: ['user'], where: { user: { id: userId } } });
