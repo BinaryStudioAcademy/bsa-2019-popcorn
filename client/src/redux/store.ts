@@ -1,4 +1,5 @@
 import { createStore, applyMiddleware, compose } from "redux";
+// @ts-ignore
 import createSagaMiddleware from 'redux-saga';
 import rootReducer from "./rootReducer";
 import rootSaga from './saga';

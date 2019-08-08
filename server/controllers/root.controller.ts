@@ -7,6 +7,6 @@ import topRouter from './top.controller';
 export default (app) => {
     app.use('/api/auth', authRoutes);
     app.use('/image', imageRouters)
-    app.use('/api/movie', movieRouter);
+    app.use('/movies', movieRouter);
     app.use('/api/top', topRouter);
 };

@@ -1,6 +1,6 @@
 import { Movie } from '../models/MovieModel';
 import MovieRepository from '../repository/movie.repository';
-import { getRepository, getCustomRepository } from "typeorm";
+import { getRepository, getCustomRepository, Like } from "typeorm";
 
 export const getMovies = async (): Promise<Movie[]> =>
     await getCustomRepository(MovieRepository).find();
@@ -20,4 +20,9 @@ export const updateMovie = async (updatedMovie: Movie): Promise<Movie[]> => {
 export const deleteMovieById = async (movieId: number): Promise<Movie> => {
     const movie = await getCustomRepository(MovieRepository).findOne(movieId);
     return await getCustomRepository(MovieRepository).remove(movie);
+}
+
+export const getByTitle = async (title:string): Promise<Movie[]> => {
+    return await getCustomRepository(MovieRepository)
+	.find({where: {title: Like('%'+title+'%')}});
 }
