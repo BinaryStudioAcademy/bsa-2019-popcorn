@@ -1,6 +1,9 @@
+import {Post} from "./PostModel";
+import {User} from "./UserModel";
+
 export class PostCommentsModel{
     id: string;
-    userId: string;
-    postId: string;
+    user: User;
+    post: Post;
     text: string;
 }
