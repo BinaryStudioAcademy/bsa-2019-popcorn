@@ -78,13 +78,13 @@ class Login extends React.Component<IProps, IState, IValues> {
         />
         <div className="form-hint">Already have an account?
             &nbsp;
-            {/* <NavLink to={"/registration"} className="form-hint-link">Register
-            </NavLink> */}
+            <NavLink to={"/registration"} className="form-hint-link">Register
+            </NavLink>
           <i className="icon icon-arrow-right">></i>
         </div>
       </div>
     )
-      //   : <Redirect to="/" />;
+        // : <Redirect to="/" />;
       : <div>redirect</div>;
   };
 };

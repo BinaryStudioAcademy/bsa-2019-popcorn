@@ -1,5 +1,7 @@
-import {Entity, PrimaryGeneratedColumn, Column, OneToMany} from "typeorm";
-import {Voting} from "../entities/Voting"
+import {Entity, PrimaryGeneratedColumn, Column, OneToMany } from "typeorm";
+import { Top } from './Top';
+import {Story} from './Story'
+import {Voting} from "../entities/Voting";
 import { VotingOptionReaction } from "../entities/VotingOptionReaction";
 
 @Entity()
@@ -27,4 +29,10 @@ export class User {
 
     @OneToMany(type => VotingOptionReaction, votingOptionReaction => votingOptionReaction.user)
     votingOptionReactions: VotingOptionReaction[];
+
+    @OneToMany(type => Top, top => top.user)
+    tops: Top[];
+
+    @OneToMany(type => Story, story=> story.user)
+    stories: Story[];
 }
