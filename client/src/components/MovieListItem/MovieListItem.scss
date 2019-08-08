@@ -39,7 +39,10 @@
       font-weight: bold;
       text-transform: uppercase;
     }
-
+    .movie-link {
+      text-decoration: none;
+      color: $text-base-color;
+    }
     .movie-genre,
     .movie-duration {
       font-size: $base-font-size;
