@@ -9,7 +9,7 @@ export class SeedUsers1565158741120 implements MigrationInterface {
         const user = new User();
         user.name = "admin";
         user.password = 'admin';
-        user.id = uuid();
+        user.id = "7f13634d-c353-433c-98fe-ead99e1252c7"; //uuid();
         user.email="test@gmail.com";
         user.location='location';
         user.aboutMe='something';
