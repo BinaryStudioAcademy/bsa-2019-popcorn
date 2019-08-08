@@ -9,6 +9,9 @@ import UserTops from './UserTops/UserTops';
 import UserLists from './UserLists/UserLists';
 import UserWatched from './UserWatched/UserWatched';
 import ProfileComponent from './ProfileComponent/ProfileComponent';
+import {uploadAvatar} from './actions';
+import {connect} from 'react-redux';
+import {bindActionCreators} from 'redux';
 
 const profileInfo = {
     name: "Sofi Dub",
@@ -20,14 +23,16 @@ const profileInfo = {
 }
 
 interface IProps {
-    mainPath: string
+    mainPath: string,
+    uploadAvatar: (FormData) => any
 }
 
-const UserPageTabs: React.SFC<IProps> = ({ mainPath }) => {
+const UserPageTabs: React.SFC<IProps> = ({ mainPath, uploadAvatar }) => {
+    console.log('user page', uploadAvatar)
     return (
-        <div className="user-tab-body">
+        <div className={"user-tab-body"}>
             <Switch>
-                <Route exact path={`${mainPath}`} render={() => <ProfileComponent profileInfo={profileInfo}/>} />
+                <Route exact path={`${mainPath}`} render={() => <ProfileComponent uploadAvatar={uploadAvatar} profileInfo={profileInfo}/>} />
                 <Route path={`${mainPath}/activity`} component={UserActivity} />
                 <Route path={`${mainPath}/reviews`} component={UserReviews} />
                 <Route path={`${mainPath}/events`} component={UserEvents} />
@@ -38,6 +43,19 @@ const UserPageTabs: React.SFC<IProps> = ({ mainPath }) => {
             </Switch>
         </div>
     );
-}
+};
 
-export default UserPageTabs;
+const mapStateToProps = (rootState, props) => ({
+    ...props
+});
+
+const actions = {
+    uploadAvatar
+};
+
+const mapDispatchToProps = dispatch => bindActionCreators(actions, dispatch);
+
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(UserPageTabs);
