@@ -1,6 +1,6 @@
 import React from "react";
-import "./MovieList.scss";
-import MovieListItem from "../MovieListItem/MovieListItem";
+import "./MovieListPage.scss";
+import MovieListItem from "./MovieListItem/MovieListItem";
 
 interface IMovieListProps {
   movies: Array<{ 

@@ -4,7 +4,7 @@ import MainPage from "../../components/mainPage/MainPage";
 import UserPage from "../../components/userPage/UserPage";
 import MovieSeriesPage from "../../components/movieSeriesPage/MovieSeriesPage";
 import MainPageSidebar from "../../components/shared/MainSidebar/MainPageSidebar";
-import MovieList from '../../components/movieListPage/MovieList/MovieList';
+import MovieList from '../../components/movieListPage/MovieListPage';
 import ProfileComponent from '../../components/userPage/ProfileComponent/ProfileComponent';
 import "./MainContainer.scss";
 
