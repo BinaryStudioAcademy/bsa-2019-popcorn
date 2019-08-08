@@ -1,14 +1,14 @@
 import React from 'react';
 import { Switch, Route } from 'react-router-dom';
-import UserProfile from '../UserProfile/UserProfile';
-import UserActivity from '../UserActivity/UserActivity';
-import UserReviews from '../UserReviews/UserReviews';
-import UserEvents from '../UserEvents/UserEvents';
-import UserSurveys from '../UserSurveys/UserSurveys';
-import UserTops from '../UserTops/UserTops';
-import UserLists from '../UserLists/UserLists';
-import UserWatched from '../UserWatched/UserWatched';
-import ProfileComponent from '../ProfileComponent/ProfileComponent';
+import UserProfile from './UserProfile/UserProfile';
+import UserActivity from './UserActivity/UserActivity';
+import UserReviews from './UserReviews/UserReviews';
+import UserEvents from './UserEvents/UserEvents';
+import UserSurveys from './UserSurveys/UserSurveys';
+import UserTops from './UserTops/UserTops';
+import UserLists from './UserLists/UserLists';
+import UserWatched from './UserWatched/UserWatched';
+import ProfileComponent from './ProfileComponent/ProfileComponent';
 
 const profileInfo = {
     name: "Sofi Dub",

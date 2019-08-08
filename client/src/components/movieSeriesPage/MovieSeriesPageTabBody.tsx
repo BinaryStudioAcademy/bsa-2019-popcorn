@@ -1,13 +1,13 @@
 import React from 'react';
 import { Switch, Route } from 'react-router-dom';
-import DiscussionComponent from '../DiscussionComponent/DiscussionComponent';
-import FilmBasicTabComponent from '../FilmBasicTabComponent/FilmBasicTabComponent';
-import MovieSeriesCastCrew from '../MovieSeriesCastCrew/MovieSeriesCastCrew';
-import MovieSeriesReviews from '../MovieSeriesReviews/MovieSeriesReviews';
-import MovieSeriesPosts from '../MovieSeriesPosts/MovieSeriesPosts';
-import MovieSeriesAwards from '../MovieSeriesAwards/MovieSeriesAwards';
-import MovieSeriesStatistics from '../MovieSeriesStatistics/MovieSeriesStatistics';
-import StaffCast from '../StaffCast/StaffCast';
+import DiscussionComponent from './DiscussionComponent/DiscussionComponent';
+import FilmBasicTabComponent from './FilmBasicTabComponent/FilmBasicTabComponent';
+import MovieSeriesCastCrew from './MovieSeriesCastCrew/MovieSeriesCastCrew';
+import MovieSeriesReviews from './MovieSeriesReviews/MovieSeriesReviews';
+import MovieSeriesPosts from './MovieSeriesPosts/MovieSeriesPosts';
+import MovieSeriesAwards from './MovieSeriesAwards/MovieSeriesAwards';
+import MovieSeriesStatistics from './MovieSeriesStatistics/MovieSeriesStatistics';
+import StaffCast from './StaffCast/StaffCast';
 
 const messages =
         [{

@@ -1,6 +1,6 @@
 import React from 'react';
-import "./MainComponent.scss";
-import FeedBlock from "../FeedBlock/FeedBlock";
+import "./MainPage.scss";
+import FeedBlock from "./FeedBlock/FeedBlock";
 //mock
 
 const MainPage = (props: object) => {
