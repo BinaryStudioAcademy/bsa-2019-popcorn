@@ -45,6 +45,7 @@ interface IState {
 class Survey extends PureComponent<IProps, IState> {
     constructor(props: IProps) {
         super(props);
+        console.log(props);
         this.state = {
             answers: props.surveyInfo.questions.map(question => ({
                 questionId: question.id,

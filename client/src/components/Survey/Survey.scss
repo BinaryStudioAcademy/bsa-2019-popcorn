@@ -2,6 +2,7 @@
 @import url('https://rsms.me/inter/inter.css');
 
 .survey {
+    position: relative;
     display: flex;
     justify-content: center;
     background-color: $background-gray;
@@ -90,6 +91,7 @@
 
         .info {
             margin-top: 10px;
+            margin-bottom: 30px;
             display: flex;
             align-items: center;
             font-size: $menu-font-size;
