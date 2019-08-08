@@ -3,7 +3,7 @@ require('dotenv').config();
 const passport = require('passport');
 import * as express from 'express';
 import * as bodyParser from 'body-parser';
-
+const cors = require('cors');
 import routes from './controllers/root.controller';
 import authorizationMiddleware from './middlewares/authorization.middleware';
 import errorHandlerMiddleware from './middlewares/error-handler.middleware';
@@ -14,7 +14,7 @@ import db_config from "./config/orm.config";
 import "reflect-metadata";
 
 const app = express();
-
+app.use(cors())
 app.use(bodyParser.json());
 app.use(passport.initialize());
 app.use('/api/', authorizationMiddleware(routesWhiteList));

@@ -8,7 +8,7 @@ interface IMovieListItemProps {
   movie: { 
     id: string, 
     title: string,
-    releaseDate: Date,
+    year?: Date,
     image: string,
     duration: string,
     genres: Array<string>,
@@ -21,17 +21,19 @@ const MovieListItem: React.FC<IMovieListItemProps> = ({ movie }) => {
   return (
     <div className='movie-item'>
       <div className='movie-poster-wrp'>
-        <img className='movie-poster' alt='movie-poster' src={movie.image}/>
+        <img className='movie-poster' alt='movie-poster' src={"https://st.kp.yandex.net/images/film_iphone/iphone360_841700.jpg"}/>
       </div>
       <div className='movie-info'>
         <NavLink to={"/movie-series"} className='movie-link'>
-          <div className='movie-title'>{movie.title} ({movie.releaseDate.getFullYear()})</div>
+          <div className='movie-title'>{movie.title} ({movie.year})</div>
         </NavLink>
-        <div> 
-          <span className='movie-genre'><GenreIcon/>{movie.genres.slice(0,3).join(', ')}</span>
+        <div>
+          {/*movie.genres.slice(0,3).join(', ')*/}
+          <span className='movie-genre'><GenreIcon/>{"Action, Drama, Horror"}</span>
           <span className='movie-duration'><DurationIcon/>{movie.duration}</span>
         </div>
-        <div className='movie-cast'><b>Main cast:</b> {movie.cast.join(', ')}</div>
+        {/*movie.cast.join(', ')*/}
+        <div className='movie-cast'><b>Main cast:</b> {"Matt Damon, Jessica Chastain, Kristen Wiig"}</div>
       </div>
     </div>
   );
