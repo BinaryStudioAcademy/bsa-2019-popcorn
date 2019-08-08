@@ -70,6 +70,7 @@
 }
 
 .search-area {
+	position: relative;
 	display: flex;
 	margin-left: 5%;
 
@@ -120,6 +121,12 @@
 .header-buttons:hover {
 	.modal {
 		transform: scaleY(1);
+	}
+}
+.search-area:hover{
+	.modal{
+		transform: scale(1);
+		width: 150%;
 	}
 }
 .modal {
