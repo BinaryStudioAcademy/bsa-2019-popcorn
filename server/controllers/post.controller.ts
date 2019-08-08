@@ -11,5 +11,8 @@ router
   .post('/', (req, res, next) => postService.createPost(req.body)
     .then( (response) => res.send(response) )
     .catch(next))
+  .delete('/:id', (req, res, next) => postService.deletePostById(req.params.id)
+    .then((response: Post) => res.send(response))
+    .catch(next))
 
 export default router;

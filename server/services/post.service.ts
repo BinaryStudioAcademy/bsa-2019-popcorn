@@ -10,9 +10,13 @@ export const createPost = async (post: any): Promise<Post> => {
         .save(post);
 }
 
-    
 export const getPosts = async (): Promise<Post[]> =>
     await getCustomRepository(PostRepository)
         .createQueryBuilder('post')
         .leftJoinAndSelect('post.user', 'user')
         .getMany()
+
+export const deletePostById = async (postId: number): Promise<Post> => {
+    const post = await getCustomRepository(PostRepository).findOne(postId);
+    return await getCustomRepository(PostRepository).remove(post);
+}
