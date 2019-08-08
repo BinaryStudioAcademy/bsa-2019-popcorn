@@ -38,7 +38,16 @@ class VotingRepository extends Repository<Voting> {
   }
 
   async deleteVotingById(id: string) {
-    await getCustomRepository(VotingOptionRepository).getVotingOptionByVotingId(id);
+    await this.delete({ id });
+    return { success: true };
+  }
+
+  async createVotingOptionByVotingId(id: string, votingOption: VotingOption) {
+    const voting = await this.getVotingById(id);
+    const newOption = await getCustomRepository(VotingOptionRepository).createVotingOption(votingOption, voting);
+    voting.votingOptions = await getCustomRepository(VotingOptionRepository).getVotingOptionByVotingId(id);
+    await this.save(voting);
+    return newOption;
   }
 }
 

@@ -31,11 +31,12 @@ export const updateVotingById = async (id: string, voting: Voting): Promise<Voti
   return await getCustomRepository(VotingRepository).updateVotingById(id, voting);
 }
 
-//to do: update options
-//to do: add options
-//to do: delete options
+export const createVotingOptionByVotingId = async (id: string, votingOption: VotingOption): Promise<VotingOption> => {
+  return await getCustomRepository(VotingRepository).createVotingOptionByVotingId(id, votingOption);
+}
+
+//to do: add options to voting
 
 export const deleteVotingById = async (id: string): Promise<{ success: boolean }> => {
-  const res =  await getCustomRepository(VotingRepository).delete({id});
-  return { success: true };
+  return await getCustomRepository(VotingRepository).deleteVotingById(id);
 }
