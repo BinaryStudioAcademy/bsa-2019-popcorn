@@ -92,7 +92,6 @@ class DiscussionComponent extends Component<IDiscussionProps, IDiscussionState> 
 				)}
 				</div>
 				<div className="messageItem newMessageItem" tabIndex={0} id="anchor">
-					<img src="https://i.pravatar.cc/300?img=59" alt="userPhoto" ref={this.userPhoto}/>
 					<div className="messageBody">
 						<div className="newMessage">
 							<textarea className="newMessageInput" wrap="off" ref={this.newMessage} placeholder="Type a message" onChange={this.inputChange}></textarea>
