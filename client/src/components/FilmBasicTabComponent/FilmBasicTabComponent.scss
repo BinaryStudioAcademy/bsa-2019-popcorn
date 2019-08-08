@@ -1,7 +1,7 @@
 @import "../../styles/variables.scss";
 
 .filmSection {
-    width: 70%;
+    width: 100%;
     display: grid;
     grid-template-rows: auto;
     grid-template-columns: .3fr .7fr;
@@ -9,7 +9,7 @@
     border: 1px solid $border-color;
     border-radius: 3px;
     padding: 20px 30px;
-    float: left;
+    min-height: 500px;
 }
 
 .poster{
@@ -29,8 +29,8 @@
 }
 
 .descriptionItem {
-    display: flex;
-    justify-content: space-between;
+    display: grid;
+    grid-template-columns: .4fr .6fr;
 }
 
 .descriptionTitle {
@@ -42,7 +42,6 @@
 
 .descriptionBody {
     text-align: left;
-    width: 72%;
     font-family: $base-font-family;
     font-size: $header-medium;
     color: $text-base-color;
@@ -58,11 +57,19 @@
 }
 
 .videoWrapper {
-    margin-top: 35px;
     grid-column: span 2;
+    background-color: $background-gray;
+    border: 1px solid $border-color;
+    border-radius: 3px;
+    padding: 20px 30px;
 }
 
 .video {
     width: 100%;
     height: 30vw;
+}
+.descriptionWrapper{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
 }

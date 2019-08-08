@@ -68,6 +68,7 @@ $header-letter-spacing: .9px;
 }
 
 .movie-series-page-tab-body {
+    position: relative;
     border: 1px solid #000;
     display: grid;
     grid-template-columns: .7fr .3fr;
