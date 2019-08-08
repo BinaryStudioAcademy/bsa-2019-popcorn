@@ -1,7 +1,7 @@
 export default [
     {
       "id": "1",
-      "created_at": "Sun Jun 07 1998 20:58:45 GMT+0300 (Eastern European Summer Time)",
+      "created_at": new Date(2019, 7, 4, 5),
       "title": "Do velit esse esse est in eu magna.",
       "description": "Duis sunt fugiat consequat cillum culpa ex labore mollit magna proident. Consequat aliqua aute laboris aliqua.",
       "user_id": "1",
@@ -108,7 +108,7 @@ export default [
     },
     {
       "id": "2",
-      "created_at": "Sat Dec 30 2006 02:06:29 GMT+0200 (Eastern European Standard Time)",
+      "created_at": new Date(19, 7, 8, 23),
       "title": "Mollit fugiat commodo duis excepteur occaecat deserunt nulla.",
       "description": "Enim quis enim officia duis irure. Minim anim magna quis laboris et.",
       "user_id": "5d4c7cb849b0ad1df1c42593",
