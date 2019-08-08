@@ -1,4 +1,4 @@
-import {Entity, PrimaryGeneratedColumn, Column, OneToOne, JoinColumn} from "typeorm";
+import {Entity, PrimaryGeneratedColumn, Column, ManyToOne} from "typeorm";
 import {User} from "./User";
 import {Post} from "./Post";
 
@@ -10,11 +10,9 @@ export class PostReactions {
     @Column()
     smile:boolean;
 
-    @OneToOne(type => Post)
-    @JoinColumn()
+    @ManyToOne(type => Post, post => post.id)
     post: Post;
 
-    @OneToOne(type => User)
-    @JoinColumn()
+    @ManyToOne(type => User, user => user.id)
     user: User;
 }
