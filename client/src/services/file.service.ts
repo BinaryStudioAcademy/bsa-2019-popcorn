@@ -1,11 +1,12 @@
 
 
 export const uploadFile = async (file: FormData) => {
-    let response = await fetch('/upload',{
+    let response = await fetch('http://localhost:5000/api/image/upload',{
+        headers:{
+            "Authorization":`Bearer ${localStorage.getItem('token')}`
+        },
         method: "POST",
         body:file
     });
-
-    response = await response.json();
-    return response.data;
+    return await response.json();
 };
