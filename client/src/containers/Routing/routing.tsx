@@ -1,8 +1,8 @@
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
-import Login from "./../../components/Login/Login";
-import Registration from "./../../components/Registration/index";
-import Header from "./../../components/Header/Header";
+import Login from "../../components/authorizationPage/Login/Login";
+import Registration from "../../components/authorizationPage/Registration/index";
+import Header from "../../components/shared/Header/Header";
 import Main from "./../Main/main";
 
 const Routing = () => {
