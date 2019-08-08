@@ -1,5 +1,5 @@
 // @ts-ignore
-import searchIcon from "../../assets/icons/header/search-icon.svg";
+import searchIcon from "../../assets/icons/general/header/search-icon.svg";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faChevronDown} from "@fortawesome/free-solid-svg-icons";
 import React, {useState} from "react";

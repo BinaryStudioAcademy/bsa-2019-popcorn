@@ -5,6 +5,7 @@ import postRouter from './post.controller';
 import eventRouter from './event.controller';
 import topRouter from './top.controller';
 
+
 // register all routes
 export default (app) => {
     app.use('/api/auth', authRoutes);
