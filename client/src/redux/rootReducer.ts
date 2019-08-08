@@ -8,4 +8,4 @@ const reducers = {
 export default combineReducers({
     ...reducers,
     header: headerReducer
-})
+});
