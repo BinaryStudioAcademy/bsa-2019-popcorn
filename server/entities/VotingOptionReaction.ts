@@ -10,9 +10,9 @@ export class VotingOptionReaction {
     @Column({ default: false })
     isChosen: boolean;
 
-    @ManyToOne(type => VotingOption)
+    @ManyToOne(type => VotingOption, { onDelete: 'CASCADE' })
     votingOption: VotingOption;
 
-    @ManyToOne(type => User)
+    @ManyToOne(type => User, { onDelete: 'CASCADE' })
     user: User;
 }

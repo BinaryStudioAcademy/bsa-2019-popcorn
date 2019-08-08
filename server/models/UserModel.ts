@@ -1,4 +1,5 @@
 import { Voting } from "./VotingModel";
+import { VotingOptionReaction } from "./VotingOptionReaction";
 
 export class User {
     id: string;
@@ -7,5 +8,6 @@ export class User {
     password: string;
     location:string;
     aboutMe: string;
-    votings: Voting[]
+    votings: Voting[];
+    votingOptionReactions: VotingOptionReaction[];
 }

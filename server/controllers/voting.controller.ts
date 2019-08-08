@@ -24,6 +24,9 @@ router
   .delete('/options/:id', errorHandlerMiddleware, (req, res, next) => votingOptionService.deleteVotingOptionById(req.params.id, next)
     .then(result => res.send(result))
     .catch(next))
+  .put('/options/:optionId/react', errorHandlerMiddleware, (req, res, next) => votingOptionService.setVotingReaction(req.params.optionId, req.body, next) // req.body: {userId: string, isChosen: boolean}
+    .then(result => res.send(result))
+    .catch(next))
   .get('/user/:id', errorHandlerMiddleware, (req, res, next) => votingService.getVotingByUserId(req.params.id, next)
     .then(result => res.send(result))
     .catch(next))

@@ -1,9 +1,7 @@
 import {Voting} from '../models/VotingModel';
 import {VotingOption} from '../models/VotingOptionModel';
 import VotingRepository from '../repository/voting.repository';
-import UserRepository from '../repository/user.repository';
 import {getCustomRepository} from "typeorm";
-import { User } from '../models/UserModel';
 
 interface IRequestBody {
   userId: string,

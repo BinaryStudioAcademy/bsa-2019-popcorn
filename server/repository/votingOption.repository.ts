@@ -1,9 +1,9 @@
 import {EntityRepository, Repository} from "typeorm";
 import {VotingOption as VotingOptionEntity} from "../entities/VotingOption";
 import {getCustomRepository} from "typeorm";
-import { VotingOption } from "models/VotingOptionModel";
+import { VotingOption } from "../models/VotingOptionModel";
 import VotingRepository from "./voting.repository";
-import { Voting } from "models/VotingModel";
+import { Voting } from "../models/VotingModel";
 
 @EntityRepository(VotingOptionEntity)
 class VotingOptionRepository extends Repository<VotingOption> {
@@ -44,9 +44,9 @@ class VotingOptionRepository extends Repository<VotingOption> {
 
   async deleteVotingOptionById(id: string, next?) {
     try {
-      const voting = await getCustomRepository(VotingRepository).getVotingById(id, next);
-      if(!voting) {
-        return next({status: 404, message: 'Voting is not found'}, null);
+      const votingOption = await this.findOne(id);
+      if(!votingOption) {
+        return next({status: 404, message: 'Voting Option is not found'}, null);
       }
       await this.delete({ id });
       return {};

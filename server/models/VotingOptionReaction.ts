@@ -1,6 +1,9 @@
+import { VotingOption } from "./VotingOptionModel";
+import { User } from "./UserModel";
+
 export class VotingOptionReaction {
   id: string;
   isChosen: boolean;
-  votingOptionId: string;
-  userId: string;
+  votingOption: VotingOption;
+  user: User;
 }
