@@ -30,7 +30,6 @@ a:focus {
 
 .UserDiscussionComponent::-webkit-scrollbar-thumb {
     border-radius: 8px;
-    border: 2px solid $background-gray;
     background-color: rgba(0, 0, 0, .5);
 }
 
@@ -38,77 +37,121 @@ a:focus {
 	display: flex;
 	flex-direction: column;
 	justify-content: space-between;
-	height: 400px;
-	overflow-y: scroll;
-	background-color: $background-gray;
+	border: 1px solid $border-color;
 	color: $text-base-color;
 	font-family: $base-font-family;
-	padding: 2% 2%;
+	padding: 10px;
 	width: 300px;
 
-	
+	.MessageContainer {
+			overflow-y: scroll;
+	}
+
 	.messageItem {
+		border: 1px solid $border-color;
+		border-left: 3px solid rgba($button-background, 0.4);
+		padding: 10px;
 		display: flex;
 		align-items: center;
 		text-align: left;
-		border: 2px solid $text-base-color;
-		padding: 2% 3%;
 		margin-bottom: 20px;
-		max-width: 100%;
-		overflow-wrap: break-word;
-		word-break: break-all;
+		width: 100%;
+
+		&:hover {
+			border-left: 3px solid rgba($button-background, 0.6);
+		}
 
 		img {
-			width: 10%;
+			align-self: flex-start;
+			width: 15%;
 			height: auto;
-			margin-right: 20px;
+			margin-right: 10px;
+			border-radius: 5px;
 		}
 
 		.messageBody {
-			width: 90%;
-			white-space: pre-line;
-			font-size: $message-font-size;
+			width: 100%;
+			box-sizing: border-box;
+			font-size: $base-font-size;
+			
+		.body {
+			white-space: normal; 
+		}
 
-			.newMessage {
-				display: flex;
-				align-items: center;
-				padding: 2% 2%;
-				border: 2px solid $text-base-color;
+		.name {
+			font-weight: bold;
+			letter-spacing: $base-letter-spacing;
+		}
 
-				textarea {
-					background-color: #fff;
-					resize: none;
-					border: none;
-					height: 20px;
-					overflow-y: scroll;
-					background-color: transparent;
-				}
+		.newMessage {
+			display: flex;
+			align-items: center;
+			padding: 2% 2%;
 
-				button {
-					width: 25%;
-					height: 25px;
-					padding: 0;
+			textarea {
+				background-color: #fff;
+				resize: none;
+				margin-right: 10px;
+				border: none;
+				height: 20px;
+				overflow-y: scroll;
+				background-color: transparent;
+			}
+
+			button {
+				background-color: $button-background;
+				color: $white;
+				box-shadow: 0px 5px 12px $button-shadow-color;
+				border-radius: 15px;
+				width: 30px;
+				height: 30px;
+				border: none;
+				outline: none;
+				font-weight: bold;
+				&:hover {
+					background-color: rgb(216, 86, 0);
 				}
 			}
 		}
+	}
 
 		.messageInfo {
-			font-size: $base-font-size;
+			margin-bottom: 5px;
 			display: flex;
 			justify-content: space-between;
 
 			.date {
 				color: change-color($text-base-color, $lightness: 30%, $alpha: 0.5);
+				font-size: $message-font-size
 			}
 		}
 
 		.newMessageInput {
-			width: 100%;
+			&::placeholder {
+				color: $input-placeholder-color;
+			}
+			box-sizing: border-box;
+			width: 80%;
+			height: 100%;
+			margin-top: 5px;
 		}
 	}
 
 	.newMessageItem {
+		box-shadow: 2px 2px 2px $input-shadow-color;
+		box-sizing: border-box;
+		border: 1px solid $border-color;
+		&:hover {
+			border: 1px solid $border-focus-color;
+		}
+		outline: none;
 		margin-bottom: 0;
 	}
 
+	svg {
+		width: 15px;
+		height: 15px;
+		fill: white;
+		margin-right: 3px;
+	}
 }

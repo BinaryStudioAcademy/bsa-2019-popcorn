@@ -1,4 +1,5 @@
 import React, { Component, createRef } from 'react';
+import { ReactComponent as SendLogo } from "../../../assets/icons/general/messager/paper-plane.svg";
 import "./DiscussionComponent.scss";
 
 interface IDiscussionProps {
@@ -90,12 +91,12 @@ class DiscussionComponent extends Component<IDiscussionProps, IDiscussionState> 
 					</div>
 				)}
 				</div>
-				<div className="messageItem newMessageItem" id="anchor">
-					<img src="https://img.icons8.com/wired/64/000000/user-male-circle.png" alt="userPhoto" ref={this.userPhoto}/>
+				<div className="messageItem newMessageItem" tabIndex={0} id="anchor">
+					<img src="https://i.pravatar.cc/300?img=59" alt="userPhoto" ref={this.userPhoto}/>
 					<div className="messageBody">
 						<div className="newMessage">
 							<textarea className="newMessageInput" wrap="off" ref={this.newMessage} placeholder="Type a message" onChange={this.inputChange}></textarea>
-							<button onClick={this.addMessage} disabled={this.state.inputIsEmpty}>SEND</button>
+							<button onClick={this.addMessage} disabled={this.state.inputIsEmpty}><SendLogo/></button>
 						</div>
 					</div>
 				</div>

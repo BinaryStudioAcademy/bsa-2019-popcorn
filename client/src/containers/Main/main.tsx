@@ -1,11 +1,11 @@
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
-import MainPage from "../../components/MainPage/MainPage";
-import UserPage from "../../components/UserPage/UserPage";
-import MovieSeriesPage from "../../components/MovieSeriesPage/MovieSeriesPage";
 import MainPageSidebar from "../../components/shared/MainSidebar/MainPageSidebar";
 import MovieList from '../../components/MovieList/MovieList';
 import "./MainContainer.scss";
+import MainPage from "../../components/mainPage/MainPage";
+import UserPage from "../../components/userPage/UserPage";
+import MovieSeriesPage from "../../components/movieSeriesPage/MovieSeriesPage";
 
 const { userInfo, notifications } = {
     userInfo: {
