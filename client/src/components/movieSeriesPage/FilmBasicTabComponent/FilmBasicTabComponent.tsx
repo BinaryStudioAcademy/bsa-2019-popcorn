@@ -1,8 +1,8 @@
-import React, { ReactElement } from 'react';
+import React, {ReactElement} from 'react';
 import PropTypes from 'prop-types';
 import './FilmBasicTabComponent.scss';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faStar } from '@fortawesome/free-solid-svg-icons';
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import {faStar} from '@fortawesome/free-solid-svg-icons';
 
 interface IProps {
     film: {
@@ -37,13 +37,13 @@ const rateBlock = (rate: number): ReactElement[] => {
         i < rate ? res.push(solidStar(i, true)) : res.push(solidStar(i, false))
     }
     return res;
-}
+};
 
 const descriptionItem = (title: string, body: string | ReactElement[] | number) => (
-    <li className="descriptionItem">
-        <p className="descriptionTitle">{title}:</p>
-        <p className="descriptionBody">{body}</p>
-    </li>
+    <p className="descriptionItem">
+        <span className="descriptionTitle">{title}:</span>
+        <span className="descriptionBody">{body}</span>
+    </p>
 );
 
 const FilmBasicTab = (props: IProps) => {
@@ -55,8 +55,8 @@ const FilmBasicTab = (props: IProps) => {
         description,
         rate,
         budget,
-        image: { link: imageLink },
-        video: { link: videoLink }
+        image: {link: imageLink},
+        video: {link: videoLink}
     } = props.film;
 
     const movieData = [{
@@ -81,30 +81,31 @@ const FilmBasicTab = (props: IProps) => {
         label: "Budget",
         value: `${budget}$`,
     }
-    ]
-    
+    ];
+
     return (
-        <section className="filmSection">
-            <div className="posterWrapper">
-                <img src={imageLink} alt={title} className="poster" />
-            </div>
-            <div className="descriptionWrapper">
-                <ul className="descriptionList">
-                    {
-                        movieData.map(({label, value}) => descriptionItem(label, value))
-                    }
-                </ul>
-            </div>
-            <div className="videoWrapper">
-                <iframe
-                    className="video"
-                    src={videoLink}
-                    frameBorder="0"
-                    title={videoLink}
-                >
-                </iframe>
-            </div>
-        </section>
+        <div className={"film-basic-wrp"}>
+            <section className="filmSection">
+                <div className="posterWrapper">
+                    <img src={imageLink} alt={title} className="poster"/>
+                </div>
+                <div className="descriptionWrapper">
+                    {movieData.map(({label, value}) => descriptionItem(label, value))}
+                </div>
+            </section>
+            <section>
+                <div className="videoWrapper">
+                    <iframe
+                        className="video"
+                        src={videoLink}
+                        frameBorder="0"
+                        title={videoLink}
+                    >
+                    </iframe>
+                </div>
+            </section>
+        </div>
+
     );
 };
 

@@ -65,8 +65,7 @@ class ProfileComponent extends Component<ProfileProps> {
 		
 		return (
 			<div className="UserProfileComponent">
-				
-				<h2><span>Personal Info</span></h2>
+
 				<div className="ProfileWrap">
 					<div className="profilePhotoWrap">
 						<UserLogo />
@@ -75,24 +74,24 @@ class ProfileComponent extends Component<ProfileProps> {
 
 					<div className="ProfileInfo">
 						<div className="profileRow">
-							<p className="title">Name: </p>
+							<p className="field">Name: </p>
 							<div className="content">{name}</div>
 						</div>
 						<div className="profileRow">
-							<p className="title">Gender: </p>
+							<p className="field">Gender: </p>
 							{ male && <div className="content">Male</div> }
 							{ female && <div className="content">Female</div> }
 						</div>
 						<div className="profileRow">
-							<p className="title">Location: </p>
+							<p className="field">Location: </p>
 							<div className="content">{location}</div>
 						</div>
 						<div className="profileRow">
-							<p className="title">About: </p>
+							<p className="field">About: </p>
 							<div className="content">{about}</div>
 						</div>
 						<div className="profileRow">
-							<p className="title">Favorite movies: </p>
+							<p className="field">Favorite movies: </p>
 							<div className="content">
 								{favMovies.map(movie =>
 									<p key={movie.id}>{movie.movie} <span>&#10006;</span></p>
@@ -101,7 +100,7 @@ class ProfileComponent extends Component<ProfileProps> {
 							</div>
 						</div>
 						<div className="profileRow">
-							<p className="title">Favorite TV-shows: </p>
+							<p className="field">Favorite TV-shows: </p>
 							<div className="content">
 								{favShows.map(movie =>
 									<p key={movie.id}>{movie.movie} <span>&#10006;</span></p>

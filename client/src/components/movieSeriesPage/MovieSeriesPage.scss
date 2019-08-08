@@ -1,3 +1,4 @@
+@import "../../styles/variables.scss";
 
 $tab-active-line: 3px;
 $tab-space: 10px;
@@ -12,7 +13,7 @@ $orange: #FB8700;
 $header-letter-spacing: .9px;
 
 .movie-series-page {
-    width: 70%;
+    width: 85%;
     margin: 2% auto 0;
     display: flex;
     flex-direction: column;
@@ -20,10 +21,11 @@ $header-letter-spacing: .9px;
 }
 
 .movie-series-page-header {
-    margin-bottom: 25px;
+    margin-bottom: 15px;
     text-align: left;
 
     .title {
+        display: block;
         margin-bottom: 5px;
         text-transform: uppercase;
         font-size: 22px;
@@ -58,7 +60,7 @@ $header-letter-spacing: .9px;
         }
 
         .movie-series-page-tab-active {
-            border-top: $tab-active-line solid $orange;
+            border-top: 3px solid $orange;
             border-radius: 2px;
             color: $text-base-color;
             font-size: $header-medium;
@@ -67,5 +69,8 @@ $header-letter-spacing: .9px;
 }
 
 .movie-series-page-tab-body {
-    border: 1px solid #000;
+    position: relative;
+    display: grid;
+    grid-template-columns: .7fr .3fr;
+    grid-gap: 10px;
 }
