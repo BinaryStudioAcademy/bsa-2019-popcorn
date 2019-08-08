@@ -6,6 +6,8 @@ import { getRepository, getCustomRepository } from "typeorm";
 export const createPost = async (post: any): Promise<Post> => {
 
     post.user = await getCustomRepository(UserRepository).findOne(post.userId);
+    delete post.userId;
+    console.log(post);
     return await getCustomRepository(PostRepository)
         .save(post);
 }
