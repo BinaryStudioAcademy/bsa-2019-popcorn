@@ -41,6 +41,9 @@ const SurveyEditorNav: React.FC<IProps> = (props: IProps) => {
                 <Route exact path={`${mainPath}/responses`} render={() => (
                     <SurveyEditorBody mainPath={mainPath} surveyInfo={surveyInfo} />
                 )} />
+                <Route exact path={`${mainPath}/responses/individual`} render={() => (
+                    <SurveyEditorBody mainPath={mainPath} surveyInfo={surveyInfo} />
+                )} />
                 <Route exact path={`${mainPath}/preview`} render={() => (
                     <div>
                         <NavLink to={mainPath}>go back</NavLink>

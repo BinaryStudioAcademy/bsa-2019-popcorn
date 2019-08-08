@@ -1,6 +1,7 @@
 import React from 'react';
 import SurveyEditor from './SurveyEditor';
 import { NavLink, Route, Switch } from 'react-router-dom';
+import  SurveyReplies from '../SurveyReplies/SurveyReplies';
 
 interface IProps {
     mainPath: string,
@@ -40,7 +41,7 @@ const SurveyEditorBody: React.FC<IProps> = (props: IProps) => {
                     <SurveyEditor mainPath={mainPath} surveyInfo={surveyInfo} />
                 )} />
                 <Route path={`${mainPath}/responses`} render={() => (
-                    <div>responses</div>
+                    <SurveyReplies mainPath={`${mainPath}/responses`} />
                 )} />
             </Switch>
         </div>
