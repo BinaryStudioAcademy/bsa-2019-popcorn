@@ -5,6 +5,7 @@ import "./Header.scss";
 import messageIcon from '../../assets/icons/header/message-icon.svg';
 import searchIcon from '../../assets/icons/header/search-icon.svg';
 import notifyIcon from '../../assets/icons/header/notify-icon.svg';
+import { NavLink } from 'react-router-dom';
 
 interface IProps {
     userInfo?: { //temporary put ? to use mocks inside component
@@ -28,7 +29,7 @@ const Header = ({ userInfo = user, movies = mock, tv = mock, ratings = mock }: I
         <div className="header">
             <div className="title">Pop Corn</div>
             <button className="header-buttons hover">
-                Movies
+                <NavLink to={"/movie-list"} style={{ textDecoration: "none"}} className="header-buttons">Movies</NavLink>
                 <FontAwesomeIcon icon={faChevronDown} />
                 <div className="modal">
                     {movies.map(movie => <div key={movie} className="hover">{movie}</div>)}
@@ -63,10 +64,10 @@ const Header = ({ userInfo = user, movies = mock, tv = mock, ratings = mock }: I
                 <img className="message-icon hover" src={messageIcon} alt="message" />
                 <img className="notify-icon hover" src={notifyIcon} alt="bell" />
             </div>
-            <div className="user-info hover">
-                <img src={userInfo.image} alt="avatar" />
-                <span className="user-name">{userInfo.name}</span>
-            </div>
+            <NavLink to={"/user-page"} className="user-info hover">
+                    <img src={userInfo.image} alt="avatar" />
+                    <span className="user-name">{userInfo.name}</span>
+            </NavLink>
         </div>
     );
 }

@@ -1,4 +1,4 @@
-import {Entity, PrimaryGeneratedColumn, Column, OneToOne, JoinColumn} from "typeorm";
+import {Column, Entity, ManyToOne, PrimaryGeneratedColumn} from "typeorm";
 import {User} from "./User";
 
 @Entity()
@@ -15,7 +15,6 @@ export class Post {
     @Column()
     image_url: string;
 
-    @OneToOne(type => User)
-    @JoinColumn()
+    @ManyToOne(type => User, user => user.id)
     user: User;
 }
