@@ -80,74 +80,40 @@ class DiscussionComponent extends Component<IDiscussionProps, IDiscussionState> 
         }
     };
 
-    // render() {
-    //     const messages = this.state.messagesState;
-    //     return (
-    //         <div className={"UserDiscussionComponent-wrp"} id="scroller">
-    //             <div className={"MessageContainer UserDiscussionComponent"}>
-    //                 {messages.map(message =>
-    //                     <div className={"messageItem"} key={message.id}>
-    //                         <img src={message.photo} alt={"userPhoto"}/>
-    //                         <div className={"messageBody"}>
-    //                             <div className={"messageInfo"}>
-    //                                 <div className={"name"}>{message.name}</div>
-    //                                 <div className={"date"}>{message.date}</div>
-    //                             </div>
-    //                             <div className="body">{message.body}</div>
-    //                         </div>
-    //                     </div>
-    //                 )}
-    //             </div>
-    //             <div className={"messageItem newMessageItem"} id={"anchor"}>
-    //                 <img src="https://img.icons8.com/wired/64/000000/user-male-circle.png" alt="userPhoto"
-    //                      ref={this.userPhoto}/>
-    //                 <div className={"messageBody"}>
-    //                     <div className={"newMessage"}>
-    //                         <textarea className="newMessageInput" wrap="off" ref={this.newMessage}
-    //                                   placeholder="Type a message" onChange={this.inputChange}/>
-    //                         <button onClick={this.addMessage} disabled={this.state.inputIsEmpty}
-    //                                 className={"chat-btn"}>SEND
-    //                         </button>
-    //                     </div>
-    //                 </div>
-    //             </div>
-    //         </div>
-    //
-    //     );
-    // }
     render() {
         const messages = this.state.messagesState;
         return (
-            <div className={"discussion-wrp"} id="scroller">
-                <div className={"MessageContainer UserDiscussionComponent"}>
-                    {messages.map(message =>
-                        <div className={"messageItem"} key={message.id}>
-                            <img src={message.photo} alt={"userPhoto"}/>
-                            <div className={"messageBody"}>
-                                <div className={"messageInfo"}>
-                                    <div className={"name"}>{message.name}</div>
-                                    <div className={"date"}>{message.date}</div>
+            <div style={{width: "100%", position: "relative", maxWidth: "100%"}}>
+                <div className={"discussion-wrp"} id="scroller">
+                    <div className={"MessageContainer UserDiscussionComponent"}>
+                        {messages.map(message =>
+                            <div className={"messageItem"} key={message.id}>
+                                <img src={message.photo} alt={"userPhoto"}/>
+                                <div className={"messageBody"}>
+                                    <div className={"messageInfo"}>
+                                        <div className={"name"}>{message.name}</div>
+                                        <div className={"date"}>{message.date}</div>
+                                    </div>
+                                    <div className="body">{message.body}</div>
                                 </div>
-                                <div className="body">{message.body}</div>
                             </div>
-                        </div>
-                    )}
-                </div>
-                <div className={"messageItem newMessageItem"} id={"anchor"}>
-                    <img src="https://img.icons8.com/wired/64/000000/user-male-circle.png" alt="userPhoto"
-                         ref={this.userPhoto}/>
-                    <div className={"messageBody"}>
-                        <div className={"newMessage"}>
+                        )}
+                    </div>
+                    <div className={"messageItem newMessageItem"} id={"anchor"}>
+                        <img src="https://img.icons8.com/wired/64/000000/user-male-circle.png" alt="userPhoto"
+                             ref={this.userPhoto}/>
+                        <div className={"messageBody"}>
+                            <div className={"newMessage"}>
                             <textarea className="newMessageInput" wrap="off" ref={this.newMessage}
                                       placeholder="Type a message" onChange={this.inputChange}/>
-                            <button onClick={this.addMessage} disabled={this.state.inputIsEmpty}
-                                    className={"chat-btn"}>SEND
-                            </button>
+                                <button onClick={this.addMessage} disabled={this.state.inputIsEmpty}
+                                        className={"chat-btn"}>SEND
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-
         );
     }
 }

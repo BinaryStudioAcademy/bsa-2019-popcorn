@@ -47,6 +47,7 @@ a:focus {
   background-color: $background-gray;
   color: $text-base-color;
   font-family: $base-font-family;
+  max-width: inherit;
   width: 100%;
   box-sizing: border-box;
   position: relative;
