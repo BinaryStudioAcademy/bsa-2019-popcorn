@@ -7,20 +7,20 @@
     font-size: $base-font-size; 
     line-height: 14px;
     letter-spacing: $base-letter-spacing;
-    margin: .5em;
-    box-shadow: 2px 1px 5px $border-focus-color;
     padding: .5em;
     border-radius: 10px;
     width: 100px;
+    text-align: center;
 }
 
 .cast-item-image{
-    width: 70px;
-    height: 70px; 
+    width: 60px;
+    height: 60px;
+    border-radius: 10px;
 }
 
 .cast-item-name{
-    
+    text-align: center;
     color: $text-base-color;
     border-bottom: 1px solid $border-color;
 }

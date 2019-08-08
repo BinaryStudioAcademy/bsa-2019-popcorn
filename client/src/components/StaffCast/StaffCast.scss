@@ -1,5 +1,11 @@
-.staff-cast{
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
+@import '../../styles/variables.scss';
+
+
+.staff-cast {
+  background-color: $background-gray;
+  width: 70%;
+  float: left;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
 }
