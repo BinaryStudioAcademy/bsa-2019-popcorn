@@ -1,3 +1,4 @@
+@import "../../styles/variables.scss";
 
 $tab-active-line: 3px;
 $tab-space: 10px;
@@ -59,7 +60,7 @@ $header-letter-spacing: .9px;
         }
 
         .movie-series-page-tab-active {
-            border-top: $tab-active-line solid $orange;
+            border-top: 3px solid $orange;
             border-radius: 2px;
             color: $text-base-color;
             font-size: $header-medium;
@@ -69,7 +70,7 @@ $header-letter-spacing: .9px;
 
 .movie-series-page-tab-body {
     position: relative;
-    border: 1px solid #000;
     display: grid;
     grid-template-columns: .7fr .3fr;
+    grid-gap: 10px;
 }

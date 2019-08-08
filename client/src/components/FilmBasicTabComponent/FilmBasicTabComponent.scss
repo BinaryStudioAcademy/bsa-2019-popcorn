@@ -12,10 +12,10 @@
   grid-template-rows: auto;
   grid-template-columns: .3fr .7fr;
   background-color: $background-gray;
-  border: 1px solid $border-color;
   border-radius: 3px;
   padding: 20px 30px;
   min-height: 500px;
+  grid-gap: 10px;
 }
 
 .poster {
