@@ -12,7 +12,7 @@ export const createTop = async (top: Top): Promise<Top> =>
     await getCustomRepository(TopRepository).save(top);
 
 export const updateTop = async (updatedTop: Top): Promise<Top> => {
-    let top = await getCustomRepository(TopRepository).findOne(updatedTop.id);
+    let top: Top = await getCustomRepository(TopRepository).findOne(updatedTop.id);
     top = updatedTop;
     return await getCustomRepository(TopRepository).save(top);
 }
