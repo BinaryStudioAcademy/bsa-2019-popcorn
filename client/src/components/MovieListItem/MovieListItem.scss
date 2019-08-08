@@ -1,9 +1,9 @@
-@import '~../../styles/variables';
+@import '../../styles/variables';
 
 .movie-item {
   border: 1px $border-color solid;
   margin: 10px;
-  height: 100px;
+  //height: 100px;
   display: flex;
   flex-direction: row;
 

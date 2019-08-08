@@ -1,11 +1,14 @@
 import {Entity, PrimaryGeneratedColumn, Column, OneToOne, JoinColumn} from "typeorm";
+
 @Entity()
 export class Movie {
     @PrimaryGeneratedColumn('uuid')
-    id: string;
-
-    @Column()
-    title: string;
+	id: string;
+	
+	@Column({
+        length: 255
+	})
+	title: string;
 
     @Column()
     year: number;
@@ -16,6 +19,8 @@ export class Movie {
     @Column()
     duration: number;
 
-    @Column()
+	@Column({
+        length: 255
+	})
     preview: string;
 }
