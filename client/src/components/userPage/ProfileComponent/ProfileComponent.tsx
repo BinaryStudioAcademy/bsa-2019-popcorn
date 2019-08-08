@@ -1,17 +1,19 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import "./ProfileComponent.scss";
-import { faCamera } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {faCamera} from "@fortawesome/free-solid-svg-icons";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 
 type ProfileProps = {
 	profileInfo: {
+		id:string,
 		name: string,
 		male: boolean,
 		female: boolean,
 		location: string,
 		about: string,
-		photoSvg: string
-	}
+		avatar: string
+	},
+	uploadAvatar? : (FormData, string) => any
 }
 const favMovies = [
 	{
@@ -66,17 +68,20 @@ class ProfileComponent extends Component<ProfileProps> {
 	handleUploadFile(e){
 		const data = new FormData();
 		data.append('file', e.target.files[0]);
-		this.props.uploadAvatar(data);
+		if(this.props.uploadAvatar)
+		this.props.uploadAvatar(data, this.props.profileInfo.id);
+		else
+			console.log('no uploadAvatar method')
 	}
 	render(){
-		const { name, location, about, male, female } = this.props.profileInfo;
+		const { name, location, about, male, female, avatar } = this.props.profileInfo;
 		
 		return (
 			<div className="UserProfileComponent">
 
 				<div className="ProfileWrap">
 					<div className="profilePhotoWrap">
-						<UserLogo />
+						<img src={avatar} style={{width:"100%", height: "100%"}} alt=""/>
 						<input
 							name='image'
 							type='file'
