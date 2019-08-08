@@ -58,8 +58,16 @@ const UserLogo = () => (
 class ProfileComponent extends Component<ProfileProps> {
 	constructor(props:ProfileProps){
 		super(props);
+		this.state = {
+			isUploading:false
+		}
 	}
-	
+
+	handleUploadFile(e){
+		const data = new FormData();
+		data.append('file', e.target.files[0]);
+		this.props.uploadAvatar(data);
+	}
 	render(){
 		const { name, location, about, male, female } = this.props.profileInfo;
 		
@@ -69,7 +77,19 @@ class ProfileComponent extends Component<ProfileProps> {
 				<div className="ProfileWrap">
 					<div className="profilePhotoWrap">
 						<UserLogo />
-						<FontAwesomeIcon icon={faCamera} className="fontAwesomeIcon"/>
+						<input
+							name='image'
+							type='file'
+							onChange={(e) => this.handleUploadFile(e)}
+							className='upload-image'
+							id='image'
+							accept=".jpg, .jpeg, .png"
+							disabled={false}
+							hidden
+						/>
+						<label htmlFor='image' className='upload-image-button'>
+							<FontAwesomeIcon icon={faCamera} className="fontAwesomeIcon"/>
+						</label>
 					</div>
 
 					<div className="ProfileInfo">
