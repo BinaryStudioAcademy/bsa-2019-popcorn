@@ -6,12 +6,21 @@ import Header from "../../components/shared/Header/Header";
 import Main from "./../Main/main";
 import NotFound from './../../components/NotFound/NotFound';
 
-const Routing = () => {
+import {connect} from 'react-redux';
+import {bindActionCreators} from 'redux';
+import {authorize} from '../../components/authorization/actions';
+
+interface IValues {
+    email: string;
+    password: string;
+}
+
+const Routing = ({isAuthorized, authorize}: {isAuthorized:boolean, authorize: (values: IValues) => any}) => {
     return (
         <div>
             <Header />
             <Switch>
-                <Route exact path="/login" component={Login} />
+                <Route exact path="/login" component={() => <Login isAuthorized={isAuthorized} onSubmit={authorize}/>} />
                 <Route exact path="/registration" component={Registration} />
                 <Route path="/" component={Main} />
                 {/* Not found route */}
@@ -22,4 +31,20 @@ const Routing = () => {
     );
 };
 
-export default Routing;
+
+const mapStateToProps = (rootState, props) => ({
+    ...props,
+    isAuthorized: null
+    //rootState.profile.profileInfo
+});
+
+const actions = {
+    authorize
+};
+
+const mapDispatchToProps = dispatch => bindActionCreators(actions, dispatch);
+
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(Routing);

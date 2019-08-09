@@ -84,8 +84,7 @@ class Login extends React.Component<IProps, IState, IValues> {
         </div>
       </div>
     )
-        // : <Redirect to="/" />;
-      : <div>redirect</div>;
+        : <Redirect to="/" />;
   };
 };
 
