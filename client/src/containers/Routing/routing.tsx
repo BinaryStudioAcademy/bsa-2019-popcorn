@@ -10,6 +10,7 @@ import {bindActionCreators} from 'redux';
 import {authorize, fetchByToken, registration} from '../../components/authorization/actions';
 
 import Spinner from '../../components/shared/Spinner/index';
+import Header from "../../components/shared/Header/Header";
 
 interface IValues {
     email: string;
@@ -29,10 +30,11 @@ const Routing = ({isAuthorized, authorize,fetchByToken, registration}: {registra
     }
     return (
         <div>
+            <Header/>
             <Switch>
                 <Route exact path="/login" component={() => <Login isAuthorized={isAuthorized} onSubmit={authorize}/>} />
                 <Route exact path="/registration" component={ () => <Registration isAuthorized={isAuthorized} registration={registration}/>} />
-                <Route path="/" component={Main} />
+                <Route path="/" component={ () => <Main isAuthorized={isAuthorized}/>} />
                 {/* Not found route */}
                 <Route path="*" exact component={NotFound} />
             </Switch>

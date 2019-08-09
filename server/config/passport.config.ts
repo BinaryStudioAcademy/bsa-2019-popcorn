@@ -36,6 +36,7 @@ passport.use(
         },
         async ({ body: { email, aboutMe, location } }, username, password, done) => {
             try {
+
                 const userByEmail = await userService.getByEmail(email);
                 if (userByEmail) {
                     return done({ status: 401, message: 'Email is already taken.' }, null);

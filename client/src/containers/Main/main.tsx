@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route, Switch } from 'react-router-dom';
+import {Redirect, Route, Switch} from 'react-router-dom';
 import MainPageSidebar from "../../components/shared/MainSidebar/MainPageSidebar";
 import MovieList from '../../components/MovieList/MovieList';
 
@@ -80,7 +80,9 @@ const movies = [
     }
 ];
 
-const Main = () => {
+const Main = ({isAuthorized} : {isAuthorized: boolean}) => {
+    if(!isAuthorized || !localStorage.getItem('token'))
+        return <Redirect to="/login"/>;
     return (
         <div className="main-page">
             <MainPageSidebar userInfo={userInfo} notifications={notifications}/>

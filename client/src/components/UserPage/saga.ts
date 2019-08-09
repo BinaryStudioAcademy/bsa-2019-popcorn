@@ -74,7 +74,7 @@ export function* fetchUser(action) {
 
 export function* fetchRegistration(action){
     try{
-        const res = yield call(axios.post, config.API_URL + "/api/auth/registration", {user:{...action.payload.user}})
+        const res = yield call(axios.post, config.API_URL + "/api/auth/register", {user:{...action.payload}});
         console.log(res);
     }catch (e) {
         console.log('user saga fetch registration:', e.message);
