@@ -1,5 +1,5 @@
 import {EntityRepository, Repository} from "typeorm";
-import {Voting} from "../entities/Voting";
+import {Voting} from "../models/VotingModel";
 import UserRepository from "./user.repository";
 import {getCustomRepository} from "typeorm";
 import { VotingOption } from "../models/VotingOptionModel";
