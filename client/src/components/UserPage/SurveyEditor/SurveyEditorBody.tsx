@@ -56,7 +56,7 @@ const SurveyEditorBody: React.FC<IProps> = (props: IProps) => {
                     <SurveyEditor mainPath={mainPath} surveyInfo={surveyInfo} />
                 )} />
                 <Route path={`${mainPath}/responses`} render={() => (
-                    <SurveyReplies mainPath={`${mainPath}/responses`} />
+                    <SurveyReplies mainPath={`${mainPath}/responses`} surveyInfo={surveyInfo}/>
                 )} />
             </Switch>
         </div>
