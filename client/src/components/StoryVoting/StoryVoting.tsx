@@ -52,6 +52,8 @@ class StoryVoting extends React.Component<StoryVotingProps, StoryVotingState>{
         this.onAnswerSelect = this.onAnswerSelect.bind(this);
         this.handleDragHead = this.handleDragHead.bind(this);
         this.handleDragOptionBlock = this.handleDragOptionBlock.bind(this)
+        this.calculatePositions = this.calculatePositions.bind(this)
+        this.createStoryVotingOptions = this.createStoryVotingOptions.bind(this)
     }
 
     onAnswerSelect() {
@@ -81,24 +83,46 @@ class StoryVoting extends React.Component<StoryVotingProps, StoryVotingState>{
         });
     }
 
-    render() {
-        const allVotes = storyVotingOptionsMock.reduce((a, b) => a + (b['voted'] || 0), 0);
+    calculatePositions(){
         const headerPosition = { top: 0 + this.state.deltaPositionHead.y, left: 0 + this.state.deltaPositionHead.x }
         const buttonsPosition = { top: 0 + this.state.deltaPositionOptionBlock.y, left: 0 + this.state.deltaPositionOptionBlock.x }
-        console.log(headerPosition)
-        return <div className='story-voting' style={{background:this.props.backImage?`url(${this.props.backImage})`:`rgba(${this.props.backColor.r},${this.props.backColor.b},${this.props.backColor.g},${this.props.backColor.a})`}}>
+        const positions = {
+            headerPosition,
+            buttonsPosition
+        }
+        return positions;
+    }
+
+    createStoryVotingOptions(){
+        const allVotes = this.calculateAllVotes();
+        const votingOptions= this.props.options.map((el, index) => {
+            if (index === 0)
+                return <StoryVotingOption allVotesCount={allVotes} radius={firstRadius} storyVotingOptionInfo={el} key={index} />
+            else if (index === this.props.options.length - 1)
+                return <StoryVotingOption allVotesCount={allVotes} radius={lastRadius} storyVotingOptionInfo={el} key={index} />
+            else
+                return <StoryVotingOption allVotesCount={allVotes} storyVotingOptionInfo={el} key={index} />
+        })
+        return votingOptions;
+    }
+
+    calculateAllVotes(){
+        const allVotes = storyVotingOptionsMock.reduce((a, b) => a + (b['voted'] || 0), 0);
+        return allVotes;
+    }
+
+    render() {
+        const positions = this.calculatePositions();
+        const backgroundStyle = {background:this.props.backImage?`url(${this.props.backImage})`:`rgba(${this.props.backColor.r},${this.props.backColor.b},${this.props.backColor.g},${this.props.backColor.a})`};
+        
+        return <div className='story-voting' style={backgroundStyle}>
             <button onClick={() => this.props.backToEditor(this.state.deltaPositionHead, this.state.deltaPositionOptionBlock)} className='back-to-editor-button'><CrossIcon width="3em" height="3em" /></button>
-            <Draggable bounds=".story-voting" defaultPosition={{ x: headerPosition.left, y: headerPosition.top }} onDrag={this.handleDragHead} disabled={this.state.inEditor ? false : true} ><div className='story-voting-header'>{this.props.header}</div></Draggable>
-            <Draggable bounds=".story-voting" defaultPosition={{ x: buttonsPosition.left, y: buttonsPosition.top }} onDrag={this.handleDragOptionBlock} disabled={this.state.inEditor ? false : true}>
+            <Draggable bounds=".story-voting" defaultPosition={{ x: positions.headerPosition.left, y: positions.headerPosition.top }} onDrag={this.handleDragHead} disabled={this.state.inEditor ? false : true} ><div className='story-voting-header'>{this.props.header}</div></Draggable>
+            <Draggable bounds=".story-voting" defaultPosition={{ x: positions.buttonsPosition.left, y: positions.buttonsPosition.top }} onDrag={this.handleDragOptionBlock} disabled={this.state.inEditor ? false : true}>
                 <div className='story-voting-options-list'>
-                    {this.props.options.map((el, index) => {
-                        if (index === 0)
-                            return <StoryVotingOption allVotesCount={allVotes} radius={firstRadius} storyVotingOptionInfo={el} key={index} />
-                        else if (index === this.props.options.length - 1)
-                            return <StoryVotingOption allVotesCount={allVotes} radius={lastRadius} storyVotingOptionInfo={el} key={index} />
-                        else
-                            return <StoryVotingOption allVotesCount={allVotes} storyVotingOptionInfo={el} key={index} />
-                    })}
+                    {
+                        this.createStoryVotingOptions()
+                    }
                 </div>
             </Draggable>
         </div>

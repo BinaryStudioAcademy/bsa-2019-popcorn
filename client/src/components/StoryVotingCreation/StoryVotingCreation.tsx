@@ -56,6 +56,8 @@ class StoryVotingCreation extends React.Component<{ uploadImage:(data:any)=>any 
         this.handleColorChange = this.handleColorChange.bind(this);
         this.handleShowColorPicker = this.handleShowColorPicker.bind(this);
         this.handleHideColorPicker = this.handleHideColorPicker.bind(this);
+        this.createInputs = this.createInputs.bind(this);
+        
     }
 
     handleShowPreview = () => {
@@ -160,33 +162,42 @@ class StoryVotingCreation extends React.Component<{ uploadImage:(data:any)=>any 
 
     handleCancelClick=()=>{}
 
+    createInputs=()=>{
+        const inputs = this.state.inputs.map((el, idx) => (
+            <div className="story-voting-option-with-button">
+                <input
+                    className="story-voting-option-input"
+                    type="text"
+                    style={{outline:this.state.errorMsg===''?'none':'1px solid red'}}
+                    placeholder={`Option ${idx + 1} `}
+                    value={el.text}
+                    onChange={this.handleInputTextChange(idx)}
+                />
+                {idx > 1 ? <button
+                    type="button"
+                    onClick={this.handleRemoveInput(idx)}
+                    className="delete-input-button"
+                >
+                    <CrossIcon />
+                </button> : null}
+            </div>
+        ))
+        return inputs;
+    }
+    
     render() {
+        const styles={
+            errorsStyle:{outline:this.state.errorMsg===''?'none':'1px solid red'},
+            backStyle:{background:`rgba(${this.state.backgroundColor.r},${this.state.backgroundColor.g},${this.state.backgroundColor.b},${this.state.backgroundColor.a})`}
+        }
         return (this.state.previewIsShown ? <StoryVoting backColor={this.state.backgroundColor} backImage={this.state.imageUrl} deltaPositionForOptionBlock={this.state.deltaPositionOptionBlock} deltaPositionForHeader={this.state.deltaPositionHeader} backToEditor={this.handleShowEditor} header={this.state.header} options={this.state.inputs} /> 
         : <div className='story-voting-creation-form'>
             <div className='head'>
             <img className='author' src='https://pbs.twimg.com/profile_images/1088129693390385152/oYJSGsdq_400x400.jpg'></img>
-            <input className="story-voting-header-input" style={{outline:this.state.errorMsg===''?'none':'1px solid red'}} type="text" placeholder={"Ask a question..."} value={this.state.header} onChange={this.handleHeaderInputChange}></input>
+            <input className="story-voting-header-input" style={styles.errorsStyle} type="text" placeholder={"Ask a question..."} value={this.state.header} onChange={this.handleHeaderInputChange}></input>
             </div>
             <div className='story-voting-option-input-container'>
-                {this.state.inputs.map((el, idx) => (
-                    <div className="story-voting-option-with-button">
-                        <input
-                            className="story-voting-option-input"
-                            type="text"
-                            style={{outline:this.state.errorMsg===''?'none':'1px solid red'}}
-                            placeholder={`Option ${idx + 1} `}
-                            value={el.text}
-                            onChange={this.handleInputTextChange(idx)}
-                        />
-                        {idx > 1 ? <button
-                            type="button"
-                            onClick={this.handleRemoveInput(idx)}
-                            className="delete-input-button"
-                        >
-                            <CrossIcon />
-                        </button> : null}
-                    </div>
-                ))}
+                {this.createInputs()}
             </div>
             <button
                 className='add-option-button'
@@ -197,7 +208,7 @@ class StoryVotingCreation extends React.Component<{ uploadImage:(data:any)=>any 
         <div className="color-picker">
         <label className="color-picker-label">Select back color:</label>
             <div onClick={this.handleShowColorPicker} className="color-picker-btn">
-               <div  style={{background:`rgba(${this.state.backgroundColor.r},${this.state.backgroundColor.g},${this.state.backgroundColor.b},${this.state.backgroundColor.a})`}} className="color-picker-btn-preview"></div>
+               <div  style={styles.backStyle} className="color-picker-btn-preview"></div>
             </div>
             {this.state.displayColorPicker?<div className='color-picker-popover'>
           <div className='color-picker-cover' onClick={this.handleHideColorPicker}/>
