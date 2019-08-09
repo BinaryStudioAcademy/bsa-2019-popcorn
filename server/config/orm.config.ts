@@ -15,5 +15,13 @@ const db_config : ConnectionOptions = {
   migrations
 };
 
+const url_db_config : ConnectionOptions =  {
+    type: 'postgres',
+    url: `postgresql://${process.env.URL_DB_USERNAME}:${process.env.URL_DB_PASSWORD}@${process.env.URL_DB_HOST}/${process.env.URL_DB_NAME}`,
+    synchronize: true,
+    logging: false,
+    entities,
+    migrations
+}
 
-export default db_config;
+export default url_db_config;
