@@ -6,7 +6,7 @@ interface IMovieListProps {
   movies: Array<{ 
     id: string, 
     title: string,
-    year?: Date,
+    year?: number,
     image: string,
     duration: string,
     genres: Array<string>,
