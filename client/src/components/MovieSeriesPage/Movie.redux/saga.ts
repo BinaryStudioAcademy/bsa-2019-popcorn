@@ -1,5 +1,5 @@
 import { all, takeEvery, put, call } from 'redux-saga/effects';
-import {FINISH_FETCH_SEARCH_FILMS, START_FETCH_SEARCH_FILMS} from './actionTypes';
+import {FINISH_FETCH_SEARCH_FILMS, START_FETCH_SEARCH_FILMS} from '../../shared/Header/actionTypes';
 import axios from 'axios';
 
 export function* fetchFilms(action){

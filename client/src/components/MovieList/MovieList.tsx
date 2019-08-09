@@ -3,8 +3,8 @@ import "./MovieList.scss";
 import MovieListItem from "./MovieListItem/MovieListItem";
 
 interface IMovieListProps {
-  movies : Array<{
-    id: string, 
+  movies : null | Array<{
+    id: string,
     title: string,
     year?: number,
     image: string,
@@ -15,6 +15,8 @@ interface IMovieListProps {
 }
 
 const MovieList: React.FC<IMovieListProps> = ({ movies }) => {
+  if(!movies)
+    return <div>Any movie in list</div>
   const movieListItems = movies.map((movie) => {
     return <MovieListItem key={movie.id} movie={movie}/>;
   });

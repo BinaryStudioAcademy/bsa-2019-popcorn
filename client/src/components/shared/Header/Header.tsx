@@ -86,8 +86,8 @@ const Header = ({userInfo = user, movies = mock, tv = mock, ratings = mock, movi
 
 
 const mapStateToProps = (rootState, props) => ({
-    moviesSearch: rootState.header.moviesSearch,
-    alreadySearch: rootState.header.alreadySearch,
+    moviesSearch: rootState.movie.moviesSearch,
+    alreadySearch: rootState.movie.alreadySearch,
     ...props
 });
 

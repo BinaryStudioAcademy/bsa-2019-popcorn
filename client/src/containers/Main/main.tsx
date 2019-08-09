@@ -12,6 +12,7 @@ import MovieSeriesPage from "../../components/MovieSeriesPage/MovieSeriesPage";
 
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
+import Spinner from "../../components/shared/Spinner";
 
 const {notifications} = {
     notifications: {
@@ -19,71 +20,30 @@ const {notifications} = {
         newMessages: 0,
         newEvents: 2
     }
+};
+type Movie = {
+    id: string,
+    title: string,
+    year?: number,
+    image: string,
+    duration: string,
+    genres: Array<string>,
+    cast: Array<string>
 }
-
 type userInfo = {
     name: string,
     image: string,
     any
 }
-const movies = [
-    {
-        id: '8c0bb20f-fc81-473b-8a73-5ae2125fe603',
-        title: 'Titanic',
-        year: 1975,
-        image: 'https://images-na.ssl-images-amazon.com/images/I/51gEpO63aRL.jpg',
-        duration: '3h 21min',
-        genres: ['Drama', 'Action', 'Family'],
-        cast: ['leonardo dicaprio', 'leonardo dicaprio', 'leonardo dicaprio', 'leonardo dicaprio', 'leonardo dicaprio']
-    },
-    {
-        id: '8c0bb1ef-fc81-473b-8a73-5ae2125fe603',
-        title: 'Forrest Gump',
-        year: 1975,
-        image: 'https://posteritati.com/posters/000/000/053/106/forrest-gump-md-web.jpg',
-        duration: '1h 33min',
-        genres: ['Drama'],
-        cast: ['leonardo dicaprio', 'leonardo dicaprio', 'leonardo dicaprio', 'leonardo dicaprio', 'leonardo dicaprio']
-    },
-    {
-        id: '8c0bb20f-fc81-423b-8a73-5ae2125fe603',
-        title: 'Titanic1',
-        year: 1975,
-        image: 'https://images-na.ssl-images-amazon.com/images/I/51gEpO63aRL.jpg',
-        duration: '3h 21min',
-        genres: ['Drama', 'Action', 'Family'],
-        cast: ['leonardo dicaprio', 'leonardo dicaprio', 'leonardo dicaprio', 'leonardo dicaprio', 'leonardo dicaprio']
-    },
-    {
-        id: '8c0bb1ef-fc11-473b-8a73-5ae2125fe603',
-        title: 'Forrest Gump12',
-        year: 1975,
-        image: 'https://posteritati.com/posters/000/000/053/106/forrest-gump-md-web.jpg',
-        duration: '1h 13min',
-        genres: ['Drama'],
-        cast: ['leonardo dicaprio', 'leonardo dicaprio', 'leonardo dicaprio', 'leonardo dicaprio', 'leonardo dicaprio']
-    },
-    {
-        id: '8c0bb20f-fc81-473b-8a73-5ae2121fe603',
-        title: 'Titanic',
-        year: 1975,
-        image: 'https://images-na.ssl-images-amazon.com/images/I/51gEpO63aRL.jpg',
-        duration: '3h 21min',
-        genres: ['Drama', 'Action', 'Family'],
-        cast: ['leonardo dicaprio', 'leonardo dicaprio', 'leonardo dicaprio', 'leonardo dicaprio', 'leonardo dicaprio']
-    },
-    {
-        id: '8c0bb1ef-fc81-473b-8a73-5ae2125fe60a',
-        title: 'Forrest Gump',
-        year: 1975,
-        image: 'https://posteritati.com/posters/000/000/053/106/forrest-gump-md-web.jpg',
-        duration: '1h 33min',
-        genres: ['Drama'],
-        cast: ['leonardo dicaprio', 'leonardo dicaprio', 'leonardo dicaprio', 'leonardo dicaprio', 'leonardo dicaprio']
-    }
-];
 
-const Main = ({isAuthorized, userInfo}: { isAuthorized: boolean, userInfo: userInfo}) => {
+
+const MovieListRender = (movieList) => {
+    if(!movieList) {
+        return <Spinner/>
+    }
+    return <MovieList movies={movieList}/>
+};
+const Main = ({isAuthorized, userInfo, movieList}: { isAuthorized: boolean, userInfo: userInfo, movieList: null | Array<Movie>}) => {
     if (!isAuthorized || !localStorage.getItem('token'))
         return <Redirect to="/login"/>;
     return (
@@ -94,7 +54,7 @@ const Main = ({isAuthorized, userInfo}: { isAuthorized: boolean, userInfo: userI
                     <Route exact path={`/`} component={MainPage}/>
                     <Route path={`/user-page`} component={UserPage}/>
                     <Route path={`/movie-series`} component={MovieSeriesPage}/>
-                    <Route path={`/movie-list`} render={() => <MovieList movies={movies}/>}/>
+                    <Route path={`/movie-list`} render={() => MovieListRender(movieList)}/>
                     <Route path={`/*`} exact component={NotFound}/>
                 </Switch>
             </div>
@@ -106,7 +66,8 @@ const Main = ({isAuthorized, userInfo}: { isAuthorized: boolean, userInfo: userI
 const mapStateToProps = (rootState, props) => ({
     ...props,
     isAuthorized: !!rootState.profile.profileInfo,
-    userInfo: rootState.profile.profileInfo
+    userInfo: rootState.profile.profileInfo,
+    movieList: rootState.movie.movieList
 });
 
 
