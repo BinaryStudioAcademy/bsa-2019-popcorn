@@ -47,7 +47,7 @@ const SurveyEditorBody: React.FC<IProps> = (props: IProps) => {
     return (
         <div>
             <header>
-                <NavLink to='/userpage/surveys'>go back</NavLink>
+                <NavLink to='/user-page/surveys'>go back</NavLink>
                 <NavLink to={mainPath}>QUESTIONS</NavLink>
                 <NavLink to={`${mainPath}/responses`}>RESPONSES</NavLink>
             </header>
