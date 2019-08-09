@@ -10,17 +10,17 @@ export const uploadAvatar = (file: FormData, id: string): any => {
     }
 };
 
-export const cancelAvatar = ()=>{
+export const cancelAvatar = () => {
     return {
         type: CANCEL_TEMP_AVATAR
     }
 };
 
-export const setAvatar = (url)=>{
-    return{
+export const setAvatar = (url, id): any => {
+    return {
         type: SET_AVATAR,
-        payload:{
-            url
+        payload: {
+            url, id
         }
     }
 };

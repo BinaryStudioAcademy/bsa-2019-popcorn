@@ -8,7 +8,7 @@ import UserTops from './UserTops/UserTops';
 import UserLists from './UserLists/UserLists';
 import UserWatched from './UserWatched/UserWatched';
 import ProfileComponent from './ProfileComponent/ProfileComponent';
-import {cancelAvatar, uploadAvatar} from './actions';
+import {cancelAvatar, setAvatar, uploadAvatar} from './actions';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 
@@ -26,10 +26,11 @@ interface IProps {
         avatar: string
     },
     uploadUrl?: string,
-    cancelAvatar: () => any
+    cancelAvatar: () => any,
+    setAvatar: (url: string, id: string) => any
 }
 
-const UserPageTabs: React.SFC<IProps> = ({mainPath, uploadAvatar, profileInfo, uploadUrl, cancelAvatar}) => {
+const UserPageTabs: React.SFC<IProps> = ({mainPath, uploadAvatar, profileInfo, uploadUrl, cancelAvatar, setAvatar}) => {
 
     return (
         <div className={"user-tab-body"}>
@@ -37,7 +38,7 @@ const UserPageTabs: React.SFC<IProps> = ({mainPath, uploadAvatar, profileInfo, u
                 <Route exact path={`${mainPath}`}
                        render={() => <ProfileComponent uploadAvatar={uploadAvatar} profileInfo={profileInfo}
                                                        uploadUrl={uploadUrl}
-                                                       cancelAvatar={cancelAvatar}/>}/>
+                                                       cancelAvatar={cancelAvatar} setAvatar={setAvatar}/>}/>
                 <Route path={`${mainPath}/activity`} component={UserActivity}/>
                 <Route path={`${mainPath}/reviews`} component={UserReviews}/>
                 <Route path={`${mainPath}/events`} component={UserEvents}/>
@@ -58,7 +59,8 @@ const mapStateToProps = (rootState, props) => ({
 
 const actions = {
     uploadAvatar,
-    cancelAvatar
+    cancelAvatar,
+    setAvatar
 };
 
 const mapDispatchToProps = dispatch => bindActionCreators(actions, dispatch);

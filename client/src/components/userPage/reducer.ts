@@ -19,7 +19,8 @@ export default function (state = initialState, action) {
         case FINISH_UPLOAD_AVATAR:
             return{
                 ...state,
-                profileInfo: action.payload.user
+                profileInfo: action.payload.user,
+                uploadUrl: ''
             };
         case SET_TEMP_AVATAR:{
             return{
@@ -28,7 +29,6 @@ export default function (state = initialState, action) {
             }
         }
         case CANCEL_TEMP_AVATAR:{
-            console.log('tyt');
             return{
                 ...state,
                 uploadUrl: ''
