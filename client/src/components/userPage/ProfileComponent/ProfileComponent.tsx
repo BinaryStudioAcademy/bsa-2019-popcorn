@@ -79,7 +79,7 @@ class ProfileComponent extends Component<ProfileProps> {
     render() {
         const {name, location, about, male, female, avatar, id} = this.props.profileInfo;
         const {uploadUrl, cancelAvatar, setAvatar} = this.props;
-        
+
         return (
             <div className={"UserProfileComponent"}>
                 <div className={"ProfileWrap"}>
