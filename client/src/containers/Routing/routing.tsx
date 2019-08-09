@@ -34,8 +34,8 @@ const Routing = ({isAuthorized, authorize}: {isAuthorized:boolean, authorize: (v
 
 const mapStateToProps = (rootState, props) => ({
     ...props,
-    isAuthorized: null
-    //rootState.profile.profileInfo
+    isAuthorized: rootState.profile.profileInfo
+
 });
 
 const actions = {

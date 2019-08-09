@@ -1,54 +1,64 @@
-import { all, takeEvery, put, call } from 'redux-saga/effects';
+import {all, call, put, takeEvery} from 'redux-saga/effects';
 import {FINISH_UPLOAD_AVATAR, SET_AVATAR, SET_TEMP_AVATAR, START_UPLOAD_AVATAR} from "./actionTypes";
 import {uploadFile} from "../../services/file.service";
 import axios from 'axios';
-import {FETCH_LOGIN} from "../authorization/actionTypes";
+import {FETCH_LOGIN, LOGIN} from "../authorization/actionTypes";
+import config from '../../config';
 
 export function* uploadAvatar(action) {
     try {
         const data = yield call(uploadFile, action.payload.file);
 
         // remove public in order to save public path to img in server
-        let url =  (data.imageUrl).split(`\\`);
+        let url = (data.imageUrl).split(`\\`);
         url.shift();
 
-        yield put({type: SET_TEMP_AVATAR, payload:{uploadUrl:"http://localhost:5000/"+url.join('/')}})
-    }catch (e) {
+        yield put({type: SET_TEMP_AVATAR, payload: {uploadUrl: config.API_URL + url.join('/')}})
+    } catch (e) {
         console.log("user page saga catch: uploadAvatar", e.message);
     }
 }
 
 
-export function* setAvatar(action){
+export function* setAvatar(action) {
     try {
-        const res = yield call(axios.put, `http://localhost:5000/api/user/${action.payload.id}`, {avatar: action.payload.url});
+        const res = yield call(axios.put, config.API_URL + action.payload.id, {avatar: action.payload.url});
 
         yield put({type: FINISH_UPLOAD_AVATAR, payload: {user: res.data.data.user}});
-    }catch(e){
+    } catch (e) {
         console.log("user page saga catch: setAvatar", e.message);
     }
 }
 
 
-export function* fetchLogin(action){
-    try{
-        
+export function* fetchLogin(action) {
+    try {
+        const {data: data} = yield call(axios.post, config.API_URL + "/api/auth/login", {...action.payload});
+
+        localStorage.setItem('token', data.token);
+
+        yield put({
+            type: LOGIN,
+            payload: {user: data.user[0]}
+        });
+
+    } catch (e) {
+        console.log('user saga login', e.message)
     }
 }
 
 
-function* watchFetchFilms(){
+function* watchFetchFilms() {
     yield takeEvery(START_UPLOAD_AVATAR, uploadAvatar);
 }
 
-function* watchSetAvatar(){
+function* watchSetAvatar() {
     yield takeEvery(SET_AVATAR, setAvatar)
 }
 
-function* watchFetchLogin(){
+function* watchFetchLogin() {
     yield takeEvery(FETCH_LOGIN, fetchLogin)
 }
-
 
 
 export default function* header() {
@@ -56,5 +66,5 @@ export default function* header() {
         watchFetchFilms(),
         watchSetAvatar(),
         watchFetchLogin()
-        ])
+    ])
 }
