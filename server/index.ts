@@ -1,5 +1,7 @@
 require('dotenv').config();
 
+const path = require('path');
+import fs from 'fs';
 const passport = require('passport');
 import * as express from 'express';
 import * as bodyParser from 'body-parser';
@@ -23,6 +25,14 @@ app.use(passport.initialize());
 routes(app);
 
 app.use(bodyParser.urlencoded({extended:false}));
+
+const staticPath = path.resolve(`${__dirname}/../client/build`);
+app.use(express.static(staticPath));
+
+app.get('*', (req, res) => {
+    res.write(fs.readFileSync(`${__dirname}/../client/build/index.html`));
+    res.end();
+});
 
 const SERVER_PORT = 5000;
 app.use(errorHandlerMiddleware);
