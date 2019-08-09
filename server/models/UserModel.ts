@@ -11,5 +11,6 @@ export class User {
     aboutMe: string;
     votings: Voting[];
     votingOptionReactions: VotingOptionReaction[];
+    avatar: string;
     tops: Top[];
 }

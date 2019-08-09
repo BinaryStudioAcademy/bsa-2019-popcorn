@@ -1,0 +1,30 @@
+@import '../../../styles/variables.scss';
+
+.cast-item{
+    font-family: $base-font-family;
+    font-style: normal;
+    font-weight: normal;
+    font-size: $base-font-size; 
+    line-height: 14px;
+    letter-spacing: $base-letter-spacing;
+    padding: .5em;
+    border-radius: 10px;
+    width: 100px;
+    text-align: center;
+}
+
+.cast-item-image{
+    width: 60px;
+    height: 60px;
+    border-radius: 10px;
+}
+
+.cast-item-name{
+    text-align: center;
+    color: $text-base-color;
+    border-bottom: 1px solid $border-color;
+}
+
+.cast-item-role{
+    color: $text-secondary-color
+}

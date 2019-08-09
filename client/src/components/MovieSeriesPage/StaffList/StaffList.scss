@@ -1,0 +1,43 @@
+@import '../../../styles/variables.scss';
+
+.staff-list{
+    font-family: $base-font-family;
+    font-style: normal;
+    font-weight: normal;
+    font-size: $base-font-size; 
+    line-height: 14px;
+    letter-spacing: $base-letter-spacing;
+    display: flex;
+    flex-direction: column;
+}
+
+.staff-list-header{
+    font-size:$header-medium;
+    margin-bottom: 1em;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.staff-items-container{
+    padding: 2em;
+    display: flex;
+    flex-direction: column;
+}
+
+.cross-line{
+    width: calc(100% - 2em);
+    color: #545454;
+    text-align: center;
+    border-bottom: 1px solid #545454;
+    line-height: 0.1em;
+    margin: 10px auto 20px;
+    text-transform: uppercase;
+    font-weight: lighter;
+    span{
+        background: $background-gray;
+        padding: 0 10px;
+        color: #122737;
+        font-weight: 600;
+    }
+}
+

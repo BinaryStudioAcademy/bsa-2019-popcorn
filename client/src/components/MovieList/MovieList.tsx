@@ -1,12 +1,12 @@
 import React from "react";
 import "./MovieList.scss";
-import MovieListItem from "../MovieListItem/MovieListItem";
+import MovieListItem from "./MovieListItem/MovieListItem";
 
 interface IMovieListProps {
   movies: Array<{ 
     id: string, 
     title: string,
-    year: Date,
+    year?: number,
     image: string,
     duration: string,
     genres: Array<string>,
