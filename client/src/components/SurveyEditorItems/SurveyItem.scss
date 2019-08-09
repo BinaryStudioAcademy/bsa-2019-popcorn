@@ -1,0 +1,23 @@
+.survey-question {
+    display: flex;
+    flex-direction: column;
+
+    .option-container {
+        display: grid;
+        grid-template-columns: max-content auto;
+        align-items: center;
+        margin: 20px;
+        .option-icon {
+            width: 20px;
+            height: 20px;
+            border: 1px solid black;
+            margin-right: 20px;
+        }
+    }
+}
+
+.Multi {
+    .option-icon {
+        border-radius: 50%;
+    }
+}
