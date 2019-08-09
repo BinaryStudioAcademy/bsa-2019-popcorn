@@ -3,7 +3,6 @@ import './UserEventsEditor.scss';
 
 interface IUserEventsEditorProps {
   id?: string,
-  history: any;
 }
 
 interface IUserEventsEditorState {
@@ -11,7 +10,8 @@ interface IUserEventsEditorState {
   description: string,
   location: string,
   date: Date,
-  isPrivate: boolean
+  isPrivate: boolean,
+  isDropDownOpen: boolean
 }
 
 class UserEventsEditor extends React.Component<IUserEventsEditorProps, IUserEventsEditorState> {
@@ -22,8 +22,14 @@ class UserEventsEditor extends React.Component<IUserEventsEditorProps, IUserEven
       description: '',
       location: '',
       date: new Date(),
-      isPrivate: false
+      isPrivate: false,
+      isDropDownOpen: false
     };
+
+    this.onCancel = this.onCancel.bind(this);
+    this.onSave = this.onSave.bind(this);
+    this.onChangeData = this.onChangeData.bind(this);
+    this.onToggleDropDown = this.onToggleDropDown.bind(this);
   }
 
   componentDidMount() {
@@ -35,12 +41,12 @@ class UserEventsEditor extends React.Component<IUserEventsEditorProps, IUserEven
         description: 'This event is created only for testing',
         location: 'Kyiv, Independence Square',
         date: new Date(),
-        isPrivate: false
+        isPrivate: true
       });
     }
   }
 
-  onChangeData(e: React.FormEvent<HTMLInputElement>, keyword: string) {
+  onChangeData(e: any, keyword: string) {
     const target = e.target as HTMLTextAreaElement;
     const value = target.value;
     this.setState({
@@ -49,14 +55,86 @@ class UserEventsEditor extends React.Component<IUserEventsEditorProps, IUserEven
     });
   }
 
-  render()  {
+  onToggleDropDown() {
+    this.setState({
+      isDropDownOpen: !this.state.isDropDownOpen
+    });
+  }
+
+  onChangePrivacy = (isPrivate) => {
+    this.setState({
+      isPrivate
+    })
+  }
+
+  onSave() {
+    if (
+      this.state.title.trim() === '' ||
+      this.state.description.trim() === '' ||
+      this.state.location.trim() === '' 
+    ) return;
+
+    this.props.id
+      ? console.log(this.state, 'event updated') //this.props.updateEvent(this.props.id, this.state);
+      : console.log(this.state, 'event created'); //this.props.addEvent(this.state);      
+    this.onCancel();
+  }
+
+  onCancel() {
+    this.setState({
+      title: '',
+      description: '',
+      location: '',
+      date: new Date(),
+      isPrivate: false
+    });
+    console.log('redirected');
+  }
+
+  render() {
+    const DROPDOWN_LABEL = this.state.isPrivate
+      ? 'Private'
+      : 'Public';
+    
     return (
       <div className='event-editor'>
-        <button onClick={() => this.props.history.push('/user-page/events/')}>Back</button>
+        <button className='back-btn' onClick={this.onCancel}>Back</button>
+        <div className="inputs">
 
-        <input type="text" value={this.state.title} onChange={e => this.onChangeData(e, 'title')}/>
-        <input type="text" value={this.state.description} onChange={e => this.onChangeData(e, 'description')}/>
-        <button type='button'>Save</button>
+          <label>Title: 
+            <input type="text" value={this.state.title} onChange={e => this.onChangeData(e, 'title')}/>
+          </label>
+
+          <label>Location: 
+            <input type="text" value={this.state.location} onChange={e => this.onChangeData(e, 'location')}/>
+          </label>
+
+          <label>Date and Time: 
+            <input type="text" value={this.state.date.toString()} onChange={e => this.onChangeData(e, 'date')}/>
+          </label>
+
+          <label>Description: 
+            <textarea value={this.state.description} onChange={e => this.onChangeData(e, 'description')}></textarea>
+          </label>
+
+          <div
+            className={this.state.isDropDownOpen ? "dropdown active" : "dropdown"}
+            onClick={this.onToggleDropDown} >
+            <div className="dropdown__text">
+              { DROPDOWN_LABEL }
+            </div>
+            <div className="dropdown__items">
+              <div onClick={() => this.onChangePrivacy(false)} className="dropdown__item">
+                Public (All authorized users can see and participate)
+              </div>
+              <div onClick={() => this.onChangePrivacy(true)} className="dropdown__item">
+                Private (by invitation only)
+              </div>
+            </div>
+          </div>
+        </div>
+        <button onClick={this.onCancel} type='button'>Cancel</button>
+        <button onClick={this.onSave} type='button'>Save</button>
       </div>
     );
   }
