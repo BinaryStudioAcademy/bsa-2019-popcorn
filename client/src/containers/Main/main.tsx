@@ -2,6 +2,9 @@ import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 import MainPageSidebar from "../../components/shared/MainSidebar/MainPageSidebar";
 import MovieList from '../../components/MovieList/MovieList';
+
+
+import NotFound from './../../components/NotFound/NotFound';
 import "./MainContainer.scss";
 import MainPage from "../../components/MainPage/MainPage";
 import UserPage from "../../components/UserPage/UserPage";
@@ -87,6 +90,7 @@ const Main = () => {
                     <Route path={`/user-page`} component={UserPage}/>
                     <Route path={`/movie-series`} component={MovieSeriesPage}/>
                     <Route path={`/movie-list`} render={() => <MovieList movies={movies}/>}/>
+                    <Route path={`/*`} exact component={NotFound} />
                 </Switch>
             </div>
         </div>
