@@ -4,7 +4,7 @@ import axios from 'axios';
 
 export function* fetchFilms(action){
     try {
-        let films = yield call(axios.get, `http://localhost:5000/movies/find?title=${action.payload.text}`);
+        let films = yield call(axios.get, `http://localhost:5000/api/movie/find?title=${action.payload.text}`);
 
         yield put({
             type:FINISH_FETCH_SEARCH_FILMS,

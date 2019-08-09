@@ -8,7 +8,7 @@ interface IMovieListItemProps {
   movie: { 
     id: string, 
     title: string,
-    year?: Date,
+    year?: number,
     image: string,
     duration: string,
     genres: Array<string>,
@@ -25,7 +25,7 @@ const MovieListItem: React.FC<IMovieListItemProps> = ({ movie }) => {
       </div>
       <div className='movie-info'>
         <NavLink to={"/movie-series"} className='movie-link'>
-          <div className='movie-title'>{movie.title} ({movie.year})</div>
+          <div className='movie-title'>{movie.title} {movie.year}</div>
         </NavLink>
         <div>
           {/*movie.genres.slice(0,3).join(', ')*/}

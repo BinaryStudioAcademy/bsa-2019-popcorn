@@ -10,7 +10,6 @@ const MovieSearch = ({movies, fetchFilms, alreadySearch}) => {
 
     const startFetchFilms = () => {
         if (value.trim() !== "") {
-            console.log(value);
             fetchFilms(value.trim())
         }
     };
