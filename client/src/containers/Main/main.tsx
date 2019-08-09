@@ -13,7 +13,7 @@ import MovieSeriesPage from "../../components/MovieSeriesPage/MovieSeriesPage";
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import Spinner from "../../components/shared/Spinner";
-import {fetchMovieList} from "../../components/MovieSeriesPage/Movie.redux/actions";
+import {fetchMovieList, setMovieSeries} from "../../components/MovieSeriesPage/Movie.redux/actions";
 
 const {notifications} = {
     notifications: {
@@ -41,17 +41,20 @@ interface IProps {
     isAuthorized: boolean,
     userInfo: userInfo,
     movieList: null | Array<Movie>,
-    fetchMovieList: () => any
+    fetchMovieList: () => any,
+    setMovieSeries: (movie: any) => any,
+    movieSeries: null | Movie
 }
 
-const MovieListRender = (movieList, fetchMovieList) => {
+const MovieListRender = (movieList, fetchMovieList, setMovieSeries) => {
     if (!movieList) {
         fetchMovieList();
         return <Spinner/>
     }
-    return <MovieList movies={movieList}/>
+    return <MovieList movies={movieList} setMovieSeries={setMovieSeries}/>
 };
-const Main = ({isAuthorized, userInfo, movieList, fetchMovieList}: IProps) => {
+const Main = ({isAuthorized, userInfo, movieList, fetchMovieList, setMovieSeries, movieSeries}: IProps) => {
+
     if (!isAuthorized || !localStorage.getItem('token'))
         return <Redirect to="/login"/>;
     return (
@@ -61,8 +64,8 @@ const Main = ({isAuthorized, userInfo, movieList, fetchMovieList}: IProps) => {
                 <Switch>
                     <Route exact path={`/`} component={MainPage}/>
                     <Route path={`/user-page`} component={UserPage}/>
-                    <Route path={`/movie-series`} component={MovieSeriesPage}/>
-                    <Route path={`/movie-list`} render={() => MovieListRender(movieList, fetchMovieList)}/>
+                    <Route path={`/movie-series`} component={() => <MovieSeriesPage movie={movieSeries}/>}/>
+                    <Route path={`/movie-list`} render={() => MovieListRender(movieList, fetchMovieList, setMovieSeries)}/>
                     <Route path={`/*`} exact component={NotFound}/>
                 </Switch>
             </div>
@@ -75,12 +78,14 @@ const mapStateToProps = (rootState, props) => ({
     ...props,
     isAuthorized: !!rootState.profile.profileInfo,
     userInfo: rootState.profile.profileInfo,
-    movieList: rootState.movie.movieList
+    movieList: rootState.movie.movieList,
+    movieSeries: rootState.movie.movieSeries
 });
 
 
 const actions = {
-    fetchMovieList
+    fetchMovieList,
+    setMovieSeries
 };
 
 const mapDispatchToProps = dispatch => bindActionCreators(actions, dispatch);

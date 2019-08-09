@@ -14,17 +14,19 @@ interface IMovieListItemProps {
     genres: Array<string>,
     cast: Array<string>
   },
-  key: string
+  key: string,
+  setMovieSeries: (movie: any) => any
 }
 
-const MovieListItem: React.FC<IMovieListItemProps> = ({ movie }) => {
+const MovieListItem: React.FC<IMovieListItemProps> = ({ movie,setMovieSeries }) => {
+
   return (
     <div className='movie-item'>
       <div className='movie-poster-wrp'>
         <img className='movie-poster' alt='movie-poster' src={"https://st.kp.yandex.net/images/film_iphone/iphone360_841700.jpg"}/>
       </div>
       <div className='movie-info'>
-        <NavLink to={"/movie-series"} className='movie-link'>
+        <NavLink to={"/movie-series"} className='movie-link' onClick={() =>setMovieSeries(movie)}>
           <div className='movie-title'>{movie.title} {movie.year}</div>
         </NavLink>
         <div>

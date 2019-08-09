@@ -1,5 +1,5 @@
 import {FINISH_FETCH_SEARCH_FILMS} from "../../shared/Header/actionTypes";
-import {SET_MOVIE_LIST} from "./actionTypes";
+import {SET_MOVIE_LIST, SET_MOVIE_SERIES} from "./actionTypes";
 
 type Movie = {
         id: string,
@@ -11,10 +11,11 @@ type Movie = {
         cast: Array<string>
 }
 
-const initialState: {moviesSearch: Array<Movie>, alreadySearch:boolean, movieList: null | Array<Movie>} = {
+const initialState: {moviesSearch: Array<Movie>, alreadySearch:boolean, movieList: null | Array<Movie>, movieSeries: null | Movie} = {
     moviesSearch: [],
     alreadySearch: false,
-    movieList: null
+    movieList: null,
+    movieSeries: null
 };
 
 export default function (state = initialState, action) {
@@ -29,7 +30,12 @@ export default function (state = initialState, action) {
             return{
                 ...state,
                 movieList: action.payload.movies
-            }
+            };
+        case SET_MOVIE_SERIES:
+            return{
+                ...state,
+                movieSeries: action.payload.movie
+            };
         default:
             return state;
     }
