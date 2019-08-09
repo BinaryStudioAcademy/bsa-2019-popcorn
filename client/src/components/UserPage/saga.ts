@@ -9,7 +9,13 @@ import {
 } from "./actionTypes";
 import {uploadFile} from "../../services/file.service";
 import axios from 'axios';
-import {FETCH_LOGIN, FETCH_USER_BY_TOKEN, LOGIN, FETCH_REGISTRATION} from "../authorization/actionTypes";
+import {
+    FETCH_LOGIN,
+    FETCH_USER_BY_TOKEN,
+    LOGIN,
+    FETCH_REGISTRATION,
+    SET_LOGIN_ERROR, SET_REGISTER_ERROR
+} from "../authorization/actionTypes";
 import config from '../../config';
 import webApi from '../../services/webApi.service';
 
@@ -52,6 +58,12 @@ export function* fetchLogin(action) {
 
     } catch (e) {
         console.log('user saga login', e.message)
+        yield put({
+            type: SET_LOGIN_ERROR,
+            payload:{
+                loginError: e.message
+            }
+        })
     }
 }
 
@@ -92,6 +104,12 @@ export function* fetchRegistration(action){
         });
     }catch (e) {
         console.log('user saga fetch registration:', e.message);
+        yield put({
+            type: SET_REGISTER_ERROR,
+            payload:{
+                registerError: e.message
+            }
+        })
     }
 }
 

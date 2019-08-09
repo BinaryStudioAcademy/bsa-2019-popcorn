@@ -23,7 +23,16 @@ interface Values {
     name: string
 }
 
-const Routing = ({isAuthorized, authorize, fetchByToken, registration}: { registration: (values: Values) => any, isAuthorized: boolean, authorize: (values: IValues) => any, fetchByToken: (token: string) => any }) => {
+interface IProps {
+    registration: (values: Values) => any,
+    isAuthorized: boolean,
+    authorize: (values: IValues) => any,
+    fetchByToken: (token: string) => any,
+    loginError: string | null,
+    registerError: string | null
+}
+
+const Routing = ({isAuthorized, authorize, fetchByToken, registration, loginError, registerError}: IProps) => {
     const token = localStorage.getItem('token');
     if (token && !isAuthorized) {
         fetchByToken(token);
@@ -33,7 +42,7 @@ const Routing = ({isAuthorized, authorize, fetchByToken, registration}: { regist
         <div>
             <Header/>
             <Switch>
-                <Route exact path="/login" component={() => <Login isAuthorized={isAuthorized} onSubmit={authorize}/>}/>
+                <Route exact path="/login" component={() => <Login loginError={loginError} isAuthorized={isAuthorized} onSubmit={authorize}/>}/>
                 <Route exact path="/registration"
                        component={() => <Registration isAuthorized={isAuthorized} registration={registration}/>}/>
                 <Route path="/" component={Main}/>
@@ -48,7 +57,9 @@ const Routing = ({isAuthorized, authorize, fetchByToken, registration}: { regist
 
 const mapStateToProps = (rootState, props) => ({
     ...props,
-    isAuthorized: !!rootState.profile.profileInfo
+    isAuthorized: !!rootState.profile.profileInfo,
+    loginError: rootState.profile.loginError,
+    registerError: rootState.profile.registerError
 
 });
 
