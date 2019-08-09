@@ -11,7 +11,7 @@ import authorizationMiddleware from './middlewares/authorization.middleware';
 import errorHandlerMiddleware from './middlewares/error-handler.middleware';
 import routesWhiteList from './config/routes-white-list.config';
 
-import {createConnection} from "typeorm";
+import {createConnections} from "typeorm";
 import db_config from "./config/orm.config";
 import "reflect-metadata";
 
@@ -36,8 +36,8 @@ app.get('*', (req, res) => {
 
 const SERVER_PORT = 5000;
 app.use(errorHandlerMiddleware);
-createConnection(db_config)
-    .then((connection) => connection.runMigrations())
+createConnections(db_config)
+    .then(connections => connections.forEach(connection => connection.runMigrations()))
     .then(() => {
         app.listen(SERVER_PORT, () => console.log(`Server is running on http://localhost:${SERVER_PORT}`));
     })

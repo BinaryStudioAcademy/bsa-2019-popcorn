@@ -24,4 +24,4 @@ const url_db_config : ConnectionOptions =  {
     migrations
 }
 
-export default url_db_config;
+export default [db_config, url_db_config];
