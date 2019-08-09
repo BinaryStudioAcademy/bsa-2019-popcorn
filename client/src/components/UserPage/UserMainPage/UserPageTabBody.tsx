@@ -1,6 +1,7 @@
 import React from 'react';
-import {Route, Switch} from 'react-router-dom';
-import UserActivity from '../UserActivity/UserActivity';
+import { Switch, Route } from 'react-router-dom';
+import UserProfile from '../UserProfile/UserProfile';
+import UserPosts from '../UserPosts/UserPosts';
 import UserReviews from '../UserReviews/UserReviews';
 import UserEvents from '../UserEvents/UserEvents';
 import UserSurveys from '../UserSurveys/UserSurveys';
@@ -37,14 +38,14 @@ const UserPageTabs: React.SFC<IProps> = ({mainPath}) => {
     return (
         <div className="user-tab-body">
             <Switch>
-                <Route exact path={`${mainPath}`} render={() => <ProfileComponent profileInfo={profileInfo}/>}/>
-                <Route path={`${mainPath}/activity`} component={UserActivity}/>
-                <Route path={`${mainPath}/reviews`} component={UserReviews}/>
-                <Route path={`${mainPath}/events`} component={UserEvents}/>
-                <Route path={`${mainPath}/surveys`} component={UserSurveys}/>
-                <Route path={`${mainPath}/tops`} component={UserTops}/>
-                <Route path={`${mainPath}/lists`} component={UserLists}/>
-                <Route path={`${mainPath}/watched`} component={UserWatched}/>
+                <Route exact path={`${mainPath}`} render={() => <ProfileComponent profileInfo={profileInfo}/>} />
+                <Route path={`${mainPath}/posts`} component={UserPosts} />
+                <Route path={`${mainPath}/reviews`} component={UserReviews} />
+                <Route path={`${mainPath}/events`} component={UserEvents} />
+                <Route path={`${mainPath}/surveys`} component={UserSurveys} />
+                <Route path={`${mainPath}/tops`} component={UserTops} />
+                <Route path={`${mainPath}/lists`} component={UserLists} />
+                <Route path={`${mainPath}/watched`} component={UserWatched} />
             </Switch>
         </div>
     );
