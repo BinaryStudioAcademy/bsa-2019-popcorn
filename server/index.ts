@@ -14,7 +14,8 @@ import db_config from "./config/orm.config";
 import "reflect-metadata";
 
 const app = express();
-app.use(cors())
+app.use(cors());
+app.use(express.static('public'));
 app.use(bodyParser.json());
 app.use(passport.initialize());
 // app.use('/api/', authorizationMiddleware(routesWhiteList));
