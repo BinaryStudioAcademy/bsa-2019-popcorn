@@ -10,12 +10,10 @@ import MainPage from "../../components/MainPage/MainPage";
 import UserPage from "../../components/UserPage/UserPage";
 import MovieSeriesPage from "../../components/MovieSeriesPage/MovieSeriesPage";
 
+import {bindActionCreators} from 'redux';
+import {connect} from 'react-redux';
 
-const {userInfo, notifications} = {
-    userInfo: {
-        name: "Sofi Dub",
-        image: "https://s3-alpha-sig.figma.com/img/919e/1a5a/da4f250d469108191ad9d4af68b2a639?Expires=1566172800&Signature=Kou41Z8bd8ig~9nLibgCH5gfaOc0K~9Io82-umabjJnomveXbPcqMWfD911bHy6h77reHT6ecNYFHCzmXkQNy3vEF-OzgJYgV875TI2rX~cPt1FaSJC5wCeybEfTrlBlCcdzSFn8iVcP~C8GTx-l6CIjyugGAhvr7xJ-hfAdlf~5Mll0Sy92dSKn8q7OkJdfsMvEEFVQ3rGHn8GGQZg1a60gif0VaQhuVX1gcRgwrsak~cerS1bnDvo93B1lFOIk85wlhY2hPwQrmCtI9A-qaAtbIxmzmxkRpuVUpDrX6Jd4hXpksbd7urSJ91Dg7tv9WzRZvIkLnPXflCfmPw~slw__&Key-Pair-Id=APKAINTVSUGEWH5XD5UA"
-    },
+const {notifications} = {
     notifications: {
         newFriends: 12,
         newMessages: 0,
@@ -23,6 +21,11 @@ const {userInfo, notifications} = {
     }
 }
 
+type userInfo = {
+    name: string,
+    image: string,
+    any
+}
 const movies = [
     {
         id: '8c0bb20f-fc81-473b-8a73-5ae2125fe603',
@@ -80,8 +83,8 @@ const movies = [
     }
 ];
 
-const Main = ({isAuthorized} : {isAuthorized: boolean}) => {
-    if(!isAuthorized || !localStorage.getItem('token'))
+const Main = ({isAuthorized, userInfo}: { isAuthorized: boolean, userInfo: userInfo}) => {
+    if (!isAuthorized || !localStorage.getItem('token'))
         return <Redirect to="/login"/>;
     return (
         <div className="main-page">
@@ -92,11 +95,26 @@ const Main = ({isAuthorized} : {isAuthorized: boolean}) => {
                     <Route path={`/user-page`} component={UserPage}/>
                     <Route path={`/movie-series`} component={MovieSeriesPage}/>
                     <Route path={`/movie-list`} render={() => <MovieList movies={movies}/>}/>
-                    <Route path={`/*`} exact component={NotFound} />
+                    <Route path={`/*`} exact component={NotFound}/>
                 </Switch>
             </div>
         </div>
     );
 };
 
-export default Main;
+
+const mapStateToProps = (rootState, props) => ({
+    ...props,
+    isAuthorized: !!rootState.profile.profileInfo,
+    userInfo: rootState.profile.profileInfo
+});
+
+
+const actions = {};
+
+const mapDispatchToProps = dispatch => bindActionCreators(actions, dispatch);
+
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(Main);

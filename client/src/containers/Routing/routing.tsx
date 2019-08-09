@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route, Switch } from 'react-router-dom';
+import {Route, Switch} from 'react-router-dom';
 import Login from "../../components/authorization/Login/Login";
 import Registration from "../../components/authorization/Registration/index";
 import Main from "./../Main/main";
@@ -16,15 +16,17 @@ interface IValues {
     email: string;
     password: string;
 }
+
 interface Values {
     email: string;
     password: string;
     name: string
 }
 
-const Routing = ({isAuthorized, authorize,fetchByToken, registration}: {registration: (values: Values) => any, isAuthorized:boolean, authorize: (values: IValues) => any, fetchByToken: (token:string) => any}) => {
+const Routing = ({isAuthorized, authorize, fetchByToken, registration}: { registration: (values: Values) => any, isAuthorized: boolean, authorize: (values: IValues) => any, fetchByToken: (token: string) => any }) => {
     const token = localStorage.getItem('token');
-    if(token && !isAuthorized){
+    console.log(token, isAuthorized)
+    if (token && !isAuthorized) {
         fetchByToken(token);
         return <Spinner/>
     }
@@ -32,11 +34,12 @@ const Routing = ({isAuthorized, authorize,fetchByToken, registration}: {registra
         <div>
             <Header/>
             <Switch>
-                <Route exact path="/login" component={() => <Login isAuthorized={isAuthorized} onSubmit={authorize}/>} />
-                <Route exact path="/registration" component={ () => <Registration isAuthorized={isAuthorized} registration={registration}/>} />
-                <Route path="/" component={ () => <Main isAuthorized={isAuthorized}/>} />
+                <Route exact path="/login" component={() => <Login isAuthorized={isAuthorized} onSubmit={authorize}/>}/>
+                <Route exact path="/registration"
+                       component={() => <Registration isAuthorized={isAuthorized} registration={registration}/>}/>
+                <Route path="/" component={Main}/>
                 {/* Not found route */}
-                <Route path="*" exact component={NotFound} />
+                <Route path="*" exact component={NotFound}/>
             </Switch>
         </div>
 
