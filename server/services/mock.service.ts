@@ -18,12 +18,12 @@ async function asyncForEach(array, callback) {
 }
 
 export const getMovieList = async (pageNum: number = 1): Promise < Movie[] > => {
-	return await api(`https://api.themoviedb.org/3/movie/popular?api_key=11d5b4ce87f77b5efa7ddaef0cadb6b3&language=en-US&page=${pageNum}`)
+	return await api(`https://api.themoviedb.org/3/movie/popular?api_key=${process.env.MOCK_API_KEY}&language=en-US&page=${pageNum}`)
 		.then(async (movies) => {
 			let newMovies = [];
 			const startForeach = async () => {
 				await asyncForEach(movies.results, async (element) => {
-					let movieDetails = await api(`https://api.themoviedb.org/3/movie/${element.id}?api_key=11d5b4ce87f77b5efa7ddaef0cadb6b3&language=en-US`);
+					let movieDetails = await api(`https://api.themoviedb.org/3/movie/${element.id}?api_key=${process.env.MOCK_API_KEY}&language=en-US`);
 					let newMovie = new Movie;
 					newMovie.title = element.title;
 					newMovie.year = Number(element.release_date.split('-')[0]);
