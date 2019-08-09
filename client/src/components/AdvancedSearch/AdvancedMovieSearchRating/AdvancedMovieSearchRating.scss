@@ -1,0 +1,11 @@
+@import '../../styles/variables.scss';
+@import '../AdvancedMovieSearch/CustomRange.scss';
+
+.rating-header{
+    align-self:center;
+    font-size: $header-large;
+}
+
+.slider-wrp{
+    padding-bottom:30px;
+}

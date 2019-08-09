@@ -16,6 +16,7 @@
     "formik": "^1.5.8",
     "node-sass": "^4.12.0",
     "onchange": "^6.0.0",
+    "rc-slider": "^8.6.13",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "react-player": "^1.11.1",

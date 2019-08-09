@@ -1,0 +1,18 @@
+@import '../../styles/variables.scss';
+@import '../AdvancedMovieSearch/CustomCheckbox.scss';
+
+.search-country{
+    display: flex;
+    flex-direction: column;
+
+}
+
+.country-header{
+    font-size: $header-large;
+    align-self: center;
+}
+
+.country-block{
+    max-height: 240px;
+    overflow-x: hidden;
+}

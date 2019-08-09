@@ -1,0 +1,14 @@
+@import '../../styles/variables.scss';
+@import '../AdvancedMovieSearch/CustomRadio.scss';
+
+.search-budget{
+    display: flex;
+    flex-direction: column;
+    padding-bottom:5px; 
+    border-bottom: 1px solid $border-color;
+}
+
+.budget-header{
+    font-size: $header-large;
+    align-self: center;
+}

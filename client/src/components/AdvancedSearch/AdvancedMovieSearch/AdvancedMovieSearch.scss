@@ -1,0 +1,31 @@
+@import '../../styles/variables.scss';
+
+.advanced-movie-search{
+    display: flex;
+    flex-direction: column;
+    box-shadow: 2px 1px 8px $border-focus-color;
+    max-width: 300px;
+    min-height: 100vh;
+    
+}
+
+.advanced-movie-search-block{
+    display: flex;
+    flex-direction: column; 
+    border-bottom: 1px solid $orange-light;
+    padding: 10px;
+}
+
+.search-button{
+    margin-top: 10px;
+    color:$white; 
+    background: $button-background;
+    border: 1px solid $border-color;
+    box-shadow: 5px 5px 5px $button-shadow-color;
+    padding: .5em;
+    font-size: 12px;
+}
+
+.search-button:hover{
+    cursor: pointer;
+}
