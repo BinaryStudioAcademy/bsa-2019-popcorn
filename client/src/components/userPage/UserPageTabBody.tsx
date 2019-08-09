@@ -26,15 +26,16 @@ interface IProps {
         about: string,
         avatar: string
     },
+    uploadUrl?:string
 }
 
-const UserPageTabs: React.SFC<IProps> = ({mainPath, uploadAvatar, profileInfo}) => {
+const UserPageTabs: React.SFC<IProps> = ({mainPath, uploadAvatar, profileInfo, uploadUrl}) => {
 
     return (
         <div className={"user-tab-body"}>
             <Switch>
                 <Route exact path={`${mainPath}`}
-                       render={() => <ProfileComponent uploadAvatar={uploadAvatar} profileInfo={profileInfo}/>}/>
+                       render={() => <ProfileComponent uploadAvatar={uploadAvatar} profileInfo={profileInfo} uploadUrl={uploadUrl}/>}/>
                 <Route path={`${mainPath}/activity`} component={UserActivity}/>
                 <Route path={`${mainPath}/reviews`} component={UserReviews}/>
                 <Route path={`${mainPath}/events`} component={UserEvents}/>
@@ -49,7 +50,8 @@ const UserPageTabs: React.SFC<IProps> = ({mainPath, uploadAvatar, profileInfo}) 
 
 const mapStateToProps = (rootState, props) => ({
     ...props,
-    profileInfo: rootState.profile.profileInfo
+    profileInfo: rootState.profile.profileInfo,
+    uploadUrl: rootState.profile.uploadUrl
 });
 
 const actions = {

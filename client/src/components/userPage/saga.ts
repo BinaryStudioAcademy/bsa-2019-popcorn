@@ -1,5 +1,5 @@
 import { all, takeEvery, put, call } from 'redux-saga/effects';
-import {FINISH_UPLOAD_AVATAR, START_UPLOAD_AVATAR} from "./actionTypes";
+import {FINISH_UPLOAD_AVATAR, SET_TEMP_AVATAR, START_UPLOAD_AVATAR} from "./actionTypes";
 import {uploadFile} from "../../services/file.service";
 import axios from 'axios';
 
@@ -11,11 +11,11 @@ export function* uploadAvatar(action) {
         let url =  (data.imageUrl).split(`\\`);
         url.shift();
 
+        console.log("http://localhost:5000/"+url.join('/'));
+        yield put({type: SET_TEMP_AVATAR, payload:{uploadUrl:"http://localhost:5000/"+url.join('/')}})
+        // const res = yield call(axios.put, `http://localhost:5000/api/user/${action.payload.id}`, {avatar: "http://localhost:5000/"+url.join('/')});
 
-        
-        const res = yield call(axios.put, `http://localhost:5000/api/user/${action.payload.id}`, {avatar: "http://localhost:5000/"+url.join('/')});
-
-        yield put({type: FINISH_UPLOAD_AVATAR,payload:{user: res.data.data.user}});
+        // yield put({type: FINISH_UPLOAD_AVATAR,payload:{user: res.data.data.user}});
     }catch (e) {
         console.log("user page saga catch", e.message);
     }
