@@ -174,7 +174,7 @@ export default [
             {
               "id": "10",
               "question_id": "4",
-              "value": ""
+              "value": "good"
             }
         ],
           "answers": [
