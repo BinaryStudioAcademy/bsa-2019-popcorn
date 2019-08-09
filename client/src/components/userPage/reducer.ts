@@ -28,6 +28,7 @@ export default function (state = initialState, action) {
             }
         }
         case CANCEL_TEMP_AVATAR:{
+            console.log('tyt');
             return{
                 ...state,
                 uploadUrl: ''

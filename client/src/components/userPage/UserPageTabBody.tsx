@@ -1,6 +1,5 @@
 import React from 'react';
-import {Switch, Route} from 'react-router-dom';
-import UserProfile from './UserProfile/UserProfile';
+import {Route, Switch} from 'react-router-dom';
 import UserActivity from './UserActivity/UserActivity';
 import UserReviews from './UserReviews/UserReviews';
 import UserEvents from './UserEvents/UserEvents';
@@ -9,7 +8,7 @@ import UserTops from './UserTops/UserTops';
 import UserLists from './UserLists/UserLists';
 import UserWatched from './UserWatched/UserWatched';
 import ProfileComponent from './ProfileComponent/ProfileComponent';
-import {uploadAvatar} from './actions';
+import {cancelAvatar, uploadAvatar} from './actions';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 
@@ -26,16 +25,19 @@ interface IProps {
         about: string,
         avatar: string
     },
-    uploadUrl?:string
+    uploadUrl?: string,
+    cancelAvatar: () => any
 }
 
-const UserPageTabs: React.SFC<IProps> = ({mainPath, uploadAvatar, profileInfo, uploadUrl}) => {
+const UserPageTabs: React.SFC<IProps> = ({mainPath, uploadAvatar, profileInfo, uploadUrl, cancelAvatar}) => {
 
     return (
         <div className={"user-tab-body"}>
             <Switch>
                 <Route exact path={`${mainPath}`}
-                       render={() => <ProfileComponent uploadAvatar={uploadAvatar} profileInfo={profileInfo} uploadUrl={uploadUrl}/>}/>
+                       render={() => <ProfileComponent uploadAvatar={uploadAvatar} profileInfo={profileInfo}
+                                                       uploadUrl={uploadUrl}
+                                                       cancelAvatar={cancelAvatar}/>}/>
                 <Route path={`${mainPath}/activity`} component={UserActivity}/>
                 <Route path={`${mainPath}/reviews`} component={UserReviews}/>
                 <Route path={`${mainPath}/events`} component={UserEvents}/>
@@ -55,7 +57,8 @@ const mapStateToProps = (rootState, props) => ({
 });
 
 const actions = {
-    uploadAvatar
+    uploadAvatar,
+    cancelAvatar
 };
 
 const mapDispatchToProps = dispatch => bindActionCreators(actions, dispatch);

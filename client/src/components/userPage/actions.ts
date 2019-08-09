@@ -1,4 +1,4 @@
-import {CANCEL_TEMP_AVATAR, START_UPLOAD_AVATAR} from "./actionTypes";
+import {CANCEL_TEMP_AVATAR, SET_AVATAR, START_UPLOAD_AVATAR} from "./actionTypes";
 
 
 export const uploadAvatar = (file: FormData, id: string): any => {
@@ -14,4 +14,13 @@ export const cancelAvatar = ()=>{
     return {
         type: CANCEL_TEMP_AVATAR
     }
-}
+};
+
+export const setAvatar = (url)=>{
+    return{
+        type: SET_AVATAR,
+        payload:{
+            url
+        }
+    }
+};

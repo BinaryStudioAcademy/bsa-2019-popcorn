@@ -14,7 +14,8 @@ type ProfileProps = {
         avatar: string
     },
     uploadAvatar?: (FormData, string) => any,
-    uploadUrl?: string
+    uploadUrl?: string,
+    cancelAvatar?: () => any
 }
 const favMovies = [
     {
@@ -60,7 +61,6 @@ const UserLogo = () => (
 );
 
 
-
 class ProfileComponent extends Component<ProfileProps> {
     constructor(props: ProfileProps) {
         super(props);
@@ -77,18 +77,21 @@ class ProfileComponent extends Component<ProfileProps> {
 
     render() {
         const {name, location, about, male, female, avatar} = this.props.profileInfo;
-        const {uploadUrl} = this.props;
+        const {uploadUrl, cancelAvatar} = this.props;
 
         console.log(uploadUrl);
         return (
             <div className={"UserProfileComponent"}>
-
                 <div className={"ProfileWrap"}>
                     {uploadUrl ?
                         <div className={"profilePhotoWrap"}>
                             <img src={uploadUrl} style={{width: "100%", height: "100%"}} alt=""/>
                             <FontAwesomeIcon icon={faCheckCircle} className="fontAwesomeIcon"/>
-                            <FontAwesomeIcon icon={faTimesCircle} className={"fontAwesomeIcon"}/>
+                            <span onClick={() => {
+                                if (cancelAvatar) cancelAvatar()
+                            }}>
+                                <FontAwesomeIcon icon={faTimesCircle} className={"fontAwesomeIcon"}/>
+                            </span>
                         </div> :
                         <div className={"profilePhotoWrap"}>
                             <img src={avatar} style={{width: "100%", height: "100%"}} alt=""/>
