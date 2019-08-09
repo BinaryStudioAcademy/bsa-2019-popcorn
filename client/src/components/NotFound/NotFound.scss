@@ -1,0 +1,36 @@
+@import '../../styles/variables';
+
+.notFound-container {
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.notFound-main {
+    background-color: $background-gray;
+    padding: 35px 40px;
+    border-radius: 3px;
+    border: 1px solid $border-color;
+    box-shadow: 2px 1px 8px $border-focus-color;
+}
+
+.notFound-title {
+    font-family: $base-font-family;
+    font-size: 60px;
+    line-height: 1.4;
+    letter-spacing: $header-letter-spacing;
+    color: $text-base-color;
+}
+
+.notFound-body {
+    font-family: $base-font-family;
+    font-size: $header-medium;
+    letter-spacing: $header-letter-spacing;
+    color: $text-base-color;
+}
+
+.notFound-link {
+    text-decoration: none;
+    color: $orange;
+}
