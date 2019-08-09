@@ -30,8 +30,8 @@ export class User {
     @OneToMany(type => VotingOptionReaction, votingOptionReaction => votingOptionReaction.user)
     votingOptionReactions: VotingOptionReaction[];
 
-    @Column()
-    avatar: string;
+	@Column({ default: "" })
+	avatar: string;
 
     @OneToMany(type => Top, top => top.user)
     tops: Top[];
