@@ -4,7 +4,7 @@ import {faChevronDown} from '@fortawesome/free-solid-svg-icons';
 import "./Header.scss";
 import messageIcon from '../../../assets/icons/general/header/message-icon.svg';
 import notifyIcon from '../../../assets/icons/general/header/notify-icon.svg';
-import MovieSearch from '../../MovieSearch/index';
+import MovieSearch from '../../MovieList/MovieSearch/index';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import {fetchFilms} from '../Header/actions';
