@@ -25,7 +25,6 @@ interface Values {
 
 const Routing = ({isAuthorized, authorize, fetchByToken, registration}: { registration: (values: Values) => any, isAuthorized: boolean, authorize: (values: IValues) => any, fetchByToken: (token: string) => any }) => {
     const token = localStorage.getItem('token');
-    console.log(token, isAuthorized)
     if (token && !isAuthorized) {
         fetchByToken(token);
         return <Spinner/>
