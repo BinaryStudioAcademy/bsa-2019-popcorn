@@ -1,5 +1,5 @@
 import React, { PureComponent } from 'react';
-
+import Example from "./Chart";
 class SurveyStatistics extends PureComponent {
     constructor(props){
         super(props);
@@ -8,7 +8,7 @@ class SurveyStatistics extends PureComponent {
     render() {
         return (
             <div>
-                statistics
+                <Example />
             </div>
         );  
     }
