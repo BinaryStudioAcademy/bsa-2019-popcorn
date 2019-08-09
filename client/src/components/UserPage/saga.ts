@@ -2,7 +2,7 @@ import {all, call, put, takeEvery} from 'redux-saga/effects';
 import {FINISH_UPLOAD_AVATAR, SET_AVATAR, SET_TEMP_AVATAR, START_UPLOAD_AVATAR} from "./actionTypes";
 import {uploadFile} from "../../services/file.service";
 import axios from 'axios';
-import {FETCH_LOGIN, FETCH_USER_BY_TOKEN, LOGIN} from "../authorization/actionTypes";
+import {FETCH_LOGIN, FETCH_USER_BY_TOKEN, LOGIN, FETCH_REGISTRATION} from "../authorization/actionTypes";
 import config from '../../config';
 
 export function* uploadAvatar(action) {
@@ -49,29 +49,38 @@ export function* fetchLogin(action) {
 
 
 export function* fetchUser(action) {
-    const init: RequestInit  = {
-        headers:{Authorization: `Bearer ${action.payload.token}`}
+    const init: RequestInit = {
+        headers: {Authorization: `Bearer ${action.payload.token}`}
     };
 
-    try{
+    try {
         let user = yield call(fetch, config.API_URL + '/api/auth/user', init);
 
-        console.log(user);
-        if(!user.ok){
+        if (!user.ok) {
             localStorage.setItem('token', '');
             // TODO re-render
+        } else {
+            user = yield call(user.json.bind(user));
+
+            yield put({
+                type: LOGIN,
+                payload: {user: user.data.user}
+            });
         }
-        user = yield call(user.json.bind(user));
-
-        yield put({
-            type: LOGIN,
-            payload: {user: user.data.user}
-        });
-
-    }catch (e) {
-        console.log('user saga fetchUser:',e.message);
+    } catch (e) {
+        console.log('user saga fetchUser:', e.message);
     }
 };
+
+export function* fetchRegistration(action){
+    try{
+        const res = yield call(axios.post, config.API_URL + "/api/auth/registration", {user:{...action.payload.user}})
+        console.log(res);
+    }catch (e) {
+        console.log('user saga fetch registration:', e.message);
+    }
+}
+
 
 function* watchFetchFilms() {
     yield takeEvery(START_UPLOAD_AVATAR, uploadAvatar);
@@ -85,16 +94,19 @@ function* watchFetchLogin() {
     yield takeEvery(FETCH_LOGIN, fetchLogin)
 }
 
-function* watchFetchUser(){
+function* watchFetchUser() {
     yield takeEvery(FETCH_USER_BY_TOKEN, fetchUser)
 }
 
-
+function* watchFetchRegistration(){
+    yield takeEvery(FETCH_REGISTRATION, fetchRegistration)
+}
 export default function* header() {
     yield all([
         watchFetchFilms(),
         watchSetAvatar(),
         watchFetchLogin(),
-        watchFetchUser()
+        watchFetchUser(),
+        watchFetchRegistration()
     ])
 }

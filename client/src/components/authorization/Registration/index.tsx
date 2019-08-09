@@ -5,7 +5,7 @@ import "./Registration.scss";
 import { NavLink } from 'react-router-dom';
 
 interface Values {
-  name: String,
+  name: string,
   email: string,
   password: string
 }
