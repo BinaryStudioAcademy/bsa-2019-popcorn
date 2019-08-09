@@ -22,6 +22,9 @@ export class User {
     @Column()
     aboutMe: string;
 
+    @Column()
+    avatar: string;
+
     @OneToMany(type => Top, top => top.user)
     tops: Top[];
 

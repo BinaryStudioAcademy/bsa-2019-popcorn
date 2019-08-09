@@ -7,5 +7,6 @@ export class User {
     password: string;
     location:string;
     aboutMe: string;
+    avatar: string;
     tops: Top[];
 }

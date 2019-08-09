@@ -3,10 +3,13 @@ import { Route, Switch } from 'react-router-dom';
 import MainPageSidebar from "../../components/shared/MainSidebar/MainPageSidebar";
 import MovieList from '../../components/MovieList/MovieList';
 
+
+import NotFound from './../../components/NotFound/NotFound';
 import "./MainContainer.scss";
 import MainPage from "../../components/MainPage/MainPage";
 import UserPage from "../../components/UserPage/UserPage";
 import MovieSeriesPage from "../../components/MovieSeriesPage/MovieSeriesPage";
+
 
 const {userInfo, notifications} = {
     userInfo: {
@@ -24,7 +27,7 @@ const movies = [
     {
         id: '8c0bb20f-fc81-473b-8a73-5ae2125fe603',
         title: 'Titanic',
-        year: new Date(),
+        year: 1975,
         image: 'https://images-na.ssl-images-amazon.com/images/I/51gEpO63aRL.jpg',
         duration: '3h 21min',
         genres: ['Drama', 'Action', 'Family'],
@@ -33,7 +36,7 @@ const movies = [
     {
         id: '8c0bb1ef-fc81-473b-8a73-5ae2125fe603',
         title: 'Forrest Gump',
-        year: new Date(),
+        year: 1975,
         image: 'https://posteritati.com/posters/000/000/053/106/forrest-gump-md-web.jpg',
         duration: '1h 33min',
         genres: ['Drama'],
@@ -42,7 +45,7 @@ const movies = [
     {
         id: '8c0bb20f-fc81-423b-8a73-5ae2125fe603',
         title: 'Titanic1',
-        year: new Date(),
+        year: 1975,
         image: 'https://images-na.ssl-images-amazon.com/images/I/51gEpO63aRL.jpg',
         duration: '3h 21min',
         genres: ['Drama', 'Action', 'Family'],
@@ -51,7 +54,7 @@ const movies = [
     {
         id: '8c0bb1ef-fc11-473b-8a73-5ae2125fe603',
         title: 'Forrest Gump12',
-        year: new Date(),
+        year: 1975,
         image: 'https://posteritati.com/posters/000/000/053/106/forrest-gump-md-web.jpg',
         duration: '1h 13min',
         genres: ['Drama'],
@@ -60,7 +63,7 @@ const movies = [
     {
         id: '8c0bb20f-fc81-473b-8a73-5ae2121fe603',
         title: 'Titanic',
-        year: new Date(),
+        year: 1975,
         image: 'https://images-na.ssl-images-amazon.com/images/I/51gEpO63aRL.jpg',
         duration: '3h 21min',
         genres: ['Drama', 'Action', 'Family'],
@@ -69,7 +72,7 @@ const movies = [
     {
         id: '8c0bb1ef-fc81-473b-8a73-5ae2125fe60a',
         title: 'Forrest Gump',
-        year: new Date(),
+        year: 1975,
         image: 'https://posteritati.com/posters/000/000/053/106/forrest-gump-md-web.jpg',
         duration: '1h 33min',
         genres: ['Drama'],
@@ -87,6 +90,7 @@ const Main = () => {
                     <Route path={`/user-page`} component={UserPage}/>
                     <Route path={`/movie-series`} component={MovieSeriesPage}/>
                     <Route path={`/movie-list`} render={() => <MovieList movies={movies}/>}/>
+                    <Route path={`/*`} exact component={NotFound} />
                 </Switch>
             </div>
         </div>
