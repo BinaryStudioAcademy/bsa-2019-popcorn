@@ -5,9 +5,10 @@ import { faStar } from '@fortawesome/free-solid-svg-icons';
 interface IProps {
     movieSeriesData: {
         title: string,
-        releaseYear: number,
-        genre: string[],
-        rating: number
+        year?: number,
+        genre?: string[],
+        rating?: number,
+        any?
     }
 }
 
@@ -16,11 +17,11 @@ const MovieSeriesPageHeader: React.FC<IProps> = ({ movieSeriesData }) => {
         <header className="movie-series-page-header">
             <div className="title">{movieSeriesData.title}</div>
             <div className="info">
-                <span className="info-item">{movieSeriesData.releaseYear}</span>
-                <span className="info-item">{movieSeriesData.genre.join(', ')}</span> 
+                <span className="info-item">{movieSeriesData.year}</span>
+                <span className="info-item">{movieSeriesData.genre && movieSeriesData.genre.join(', ')}</span>
                 <span className="info-item">
                     <FontAwesomeIcon className="icon-star" icon={faStar} />
-                    {movieSeriesData.rating}
+                    {movieSeriesData.rating || 3.5}
                 </span>
             </div>
         </header>

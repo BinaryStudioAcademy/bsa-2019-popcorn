@@ -64,7 +64,7 @@ const Main = ({isAuthorized, userInfo, movieList, fetchMovieList, setMovieSeries
                 <Switch>
                     <Route exact path={`/`} component={MainPage}/>
                     <Route path={`/user-page`} component={UserPage}/>
-                    <Route path={`/movie-series`} component={() => <MovieSeriesPage movie={movieSeries}/>}/>
+                    <Route path={`/movie-series`} render={() => <MovieSeriesPage movie={movieSeries}/>}/>
                     <Route path={`/movie-list`} render={() => MovieListRender(movieList, fetchMovieList, setMovieSeries)}/>
                     <Route path={`/*`} exact component={NotFound}/>
                 </Switch>
