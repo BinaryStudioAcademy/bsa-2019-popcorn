@@ -34,17 +34,15 @@ passport.use(
             passReqToCallback: true,
             usernameField: "name"
         },
-        async ({ body: { email, aboutMe, location } }, username, password, done) => {
+        async ({ body }, username, password, done) => {
             try {
-
-                const userByEmail = await userService.getByEmail(email);
+                const userByEmail = await userService.getByEmail(body.email);
                 if (userByEmail) {
                     return done({ status: 401, message: 'Email is already taken.' }, null);
                 }
-
                 return await userService.getByUserName(username)
                     ? done({ status: 401, message: 'Username is already taken.' }, null)
-                    : done(null, { email, name: username, password, aboutMe, location });
+                    : done(null, { ...body, name: username, password });
             } catch (err) {
                 return done(err);
             }

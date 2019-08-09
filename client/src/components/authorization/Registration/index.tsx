@@ -37,8 +37,8 @@ class Registration extends React.Component<IProps, IState> {
     const { isLoading } = this.state;
 
     return (
-      <div className="form-wrapper">
-        { (isAuthorized === true)
+      <div className={"form-wrapper"}>
+        { isAuthorized
           ? null /* <Redirect to="/main"> */ :
           (
             <div>
@@ -52,12 +52,12 @@ class Registration extends React.Component<IProps, IState> {
                     return;
                   }
                   this.setState({ ...this.state, isLoading: true });
-                  await registration({ ...values })  // { name, email, password } --- will update props isAuthorized
-                    .then((s: any) => { return 0 })
-                    .catch((error: any) => {
-                      actions.setFieldError('email', error.message);
-                      this.setState({ isLoading: false });
-                    });
+                  registration({ ...values })  // { name, email, password } --- will update props isAuthorized
+                    // .then((s: any) => { return 0 })
+                    // .catch((error: any) => {
+                    //   actions.setFieldError('email', error.message);
+                    //   this.setState({ isLoading: false });
+                    // });
                 }}
                 validationSchema={Yup.object().shape({
                   name: Yup.string()

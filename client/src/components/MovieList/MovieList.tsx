@@ -3,7 +3,7 @@ import "./MovieList.scss";
 import MovieListItem from "./MovieListItem/MovieListItem";
 
 interface IMovieListProps {
-  movies: Array<{ 
+  movies : Array<{
     id: string, 
     title: string,
     year?: number,
