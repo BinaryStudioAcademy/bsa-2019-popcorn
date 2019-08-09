@@ -13,6 +13,7 @@ import MovieSeriesPage from "../../components/MovieSeriesPage/MovieSeriesPage";
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import Spinner from "../../components/shared/Spinner";
+import {fetchMovieList} from "../../components/MovieSeriesPage/Movie.redux/actions";
 
 const {notifications} = {
     notifications: {
@@ -36,14 +37,21 @@ type userInfo = {
     any
 }
 
+interface IProps {
+    isAuthorized: boolean,
+    userInfo: userInfo,
+    movieList: null | Array<Movie>,
+    fetchMovieList: () => any
+}
 
-const MovieListRender = (movieList) => {
-    if(!movieList) {
+const MovieListRender = (movieList, fetchMovieList) => {
+    if (!movieList) {
+        fetchMovieList();
         return <Spinner/>
     }
     return <MovieList movies={movieList}/>
 };
-const Main = ({isAuthorized, userInfo, movieList}: { isAuthorized: boolean, userInfo: userInfo, movieList: null | Array<Movie>}) => {
+const Main = ({isAuthorized, userInfo, movieList, fetchMovieList}: IProps) => {
     if (!isAuthorized || !localStorage.getItem('token'))
         return <Redirect to="/login"/>;
     return (
@@ -54,7 +62,7 @@ const Main = ({isAuthorized, userInfo, movieList}: { isAuthorized: boolean, user
                     <Route exact path={`/`} component={MainPage}/>
                     <Route path={`/user-page`} component={UserPage}/>
                     <Route path={`/movie-series`} component={MovieSeriesPage}/>
-                    <Route path={`/movie-list`} render={() => MovieListRender(movieList)}/>
+                    <Route path={`/movie-list`} render={() => MovieListRender(movieList, fetchMovieList)}/>
                     <Route path={`/*`} exact component={NotFound}/>
                 </Switch>
             </div>
@@ -71,7 +79,9 @@ const mapStateToProps = (rootState, props) => ({
 });
 
 
-const actions = {};
+const actions = {
+    fetchMovieList
+};
 
 const mapDispatchToProps = dispatch => bindActionCreators(actions, dispatch);
 
