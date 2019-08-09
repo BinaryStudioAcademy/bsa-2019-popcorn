@@ -1,7 +1,7 @@
 import React from 'react';
 import { Switch, Route } from 'react-router-dom';
 import UserProfile from '../UserProfile/UserProfile';
-import UserActivity from '../UserActivity/UserActivity';
+import UserPosts from '../UserPosts/UserPosts';
 import UserReviews from '../UserReviews/UserReviews';
 import UserEvents from '../UserEvents/UserEvents';
 import UserSurveys from '../UserSurveys/UserSurveys';
@@ -28,7 +28,7 @@ const UserPageTabs: React.SFC<IProps> = ({ mainPath }) => {
         <div className="user-tab-body">
             <Switch>
                 <Route exact path={`${mainPath}`} render={() => <ProfileComponent profileInfo={profileInfo}/>} />
-                <Route path={`${mainPath}/activity`} component={UserActivity} />
+                <Route path={`${mainPath}/posts`} component={UserPosts} />
                 <Route path={`${mainPath}/reviews`} component={UserReviews} />
                 <Route path={`${mainPath}/events`} component={UserEvents} />
                 <Route path={`${mainPath}/surveys`} component={UserSurveys} />
