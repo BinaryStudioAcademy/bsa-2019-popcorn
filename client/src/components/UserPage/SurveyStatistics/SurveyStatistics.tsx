@@ -1,5 +1,7 @@
 import React, { PureComponent } from 'react';
 import BarChart from "./BarChart";
+import PieChart from "./PieChart";
+import './../Survey/Survey.scss';
 import './SurveyStatistics.scss';
 
 
@@ -16,19 +18,6 @@ interface IAnswer {
     user_id: string,
     value: string
 };
-
-// interface IQuestion {
-//     id: string,
-//     survey_id: string,
-//     title: string,
-//     firstLabel?: string,
-//     lastLabel?: string,
-//     type: string,
-//     image_link?: string,
-//     required: boolean,
-//     options: Array<IOption>,
-//     answers: Array<IAnswer>
-// };
 
 interface IProps {
     questions: Array<{
@@ -54,31 +43,51 @@ interface IProps {
 const SurveyStatistics: React.FC<IProps> = (props: IProps) => {
     const { questions } = props;
 
-    const getOptionsId = (arr: IOption[]) => arr.map(item => item.id);
-    const convertData = (item) => {
+    const getOptionsKeys = (arr: IOption[]) => arr.map(item => item.value);
+    const convertDataForBarChart = (item) => {
         const { answers, options } = item;
-        const res = options.map(({ id }) => ({ id, value: 0 }));
+        const res = options.map(({ id, value }) => ({ id, [value]: 0, label: value }));
         answers.map(({ option_id }) => {
             const index = res.findIndex(item => item.id === option_id);
-            ++res[index].value;
+            const value = Object.keys(res[index])[1];
+            ++res[index][value];
         })
         return res;
     }
+
+    const convertDataForPieChart = (item) => {
+        const { answers, options } = item;
+        const res = options.map(({ id, value }) => ({ id: value, label: value, value: 0, option_id: id }));
+        answers.map(({ option_id }) => {
+            const index = res.findIndex(item => item.option_id === option_id);
+            ++res[index].value;
+        })
+        return res;
+    };
+
     return (
-        <div className="questions-list">
-            {
-                questions.map(question => (
-                    question.options && (
-                        <div key={question.id} className="barChart">
-                            {question.title}
-                            <BarChart
-                                keys={getOptionsId(question.options)}
-                                data={convertData(question)}
-                            />
-                        </div>
-                    )
-                ))
-            }
+        <div className="survey">
+            <div className="survey-background">
+                <div className="survey-statistics">
+                    {
+                        questions.map(question => (
+                            question.options && (
+                                <div key={question.id}>
+                                    <p>Question</p>
+                                    <h3>{question.title}</h3>
+                                    <p>{question.answers.length} responses</p>
+                                    <BarChart
+                                        keys={getOptionsKeys(question.options)}
+                                        data={convertDataForBarChart(question)}
+                                    />
+                                    <PieChart data={convertDataForPieChart(question)} />
+                                </div>
+                            )
+                        ))
+                    }
+                </div>
+
+            </div>
         </div>
     );
 };
