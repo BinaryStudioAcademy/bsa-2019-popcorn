@@ -1,8 +1,8 @@
 import React from 'react';
 import "./MainPageSidebar.scss";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faChevronDown } from '@fortawesome/free-solid-svg-icons';
-import { NavLink } from 'react-router-dom';
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import {faChevronDown} from '@fortawesome/free-solid-svg-icons';
+import {NavLink} from 'react-router-dom';
 import config from "../../../config";
 
 interface IProps {
@@ -18,12 +18,12 @@ interface IProps {
 };
 
 
-const MainPageSidebar = ({ userInfo, notifications }: IProps) => {
+const MainPageSidebar = ({userInfo, notifications}: IProps) => {
     return (
         <div className="left-sidebar">
             <div className="avatar">
-                <img src={userInfo.image || config.DEFAULT_AVATAR} alt="avatar" />
-                <FontAwesomeIcon icon={faChevronDown} />
+                <img src={userInfo.image || config.DEFAULT_AVATAR} alt="avatar"/>
+                <FontAwesomeIcon icon={faChevronDown}/>
             </div>
             <p className="user-name"><span>{userInfo.name}</span></p>
             <div className="menu">
@@ -33,14 +33,14 @@ const MainPageSidebar = ({ userInfo, notifications }: IProps) => {
                 <div>
                     <p>Friends</p>
                     {
-                        notifications.newFriends !== 0 && 
+                        notifications.newFriends !== 0 &&
                         <p className="notifications"><span>{notifications.newFriends}</span></p>
                     }
                 </div>
                 <div>
                     <p>Messages</p>
                     {
-                        notifications.newMessages !== 0 && 
+                        notifications.newMessages !== 0 &&
                         <p className="notifications"><span>{notifications.newMessages}</span></p>
                     }
                 </div>

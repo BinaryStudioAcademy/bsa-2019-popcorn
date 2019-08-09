@@ -1,9 +1,17 @@
 import {all, call, put, takeEvery} from 'redux-saga/effects';
-import {FINISH_UPLOAD_AVATAR, SET_AVATAR, SET_TEMP_AVATAR, START_UPLOAD_AVATAR} from "./actionTypes";
+import {
+    FINISH_UPLOAD_AVATAR,
+    SET_AVATAR,
+    SET_TEMP_AVATAR,
+    SET_USER_POSTS,
+    START_UPLOAD_AVATAR,
+    USER_POSTS
+} from "./actionTypes";
 import {uploadFile} from "../../services/file.service";
 import axios from 'axios';
 import {FETCH_LOGIN, FETCH_USER_BY_TOKEN, LOGIN, FETCH_REGISTRATION} from "../authorization/actionTypes";
 import config from '../../config';
+import webApi from '../../services/webApi.service';
 
 export function* uploadAvatar(action) {
     try {
@@ -87,7 +95,21 @@ export function* fetchRegistration(action){
     }
 }
 
+export function* fetchPosts(action) {
+    try{
+        const data = yield call(webApi, {endpoint: config.API_URL + '/api/post/user/'+action.payload.id, method:"GET"})
 
+        yield put({
+            type: SET_USER_POSTS,
+            payload:{
+                userPosts: data
+            }
+        })
+
+    }catch(e){
+        console.log("profile saga fetch posts:", e.message)
+    }
+}
 function* watchFetchFilms() {
     yield takeEvery(START_UPLOAD_AVATAR, uploadAvatar);
 }
@@ -104,15 +126,20 @@ function* watchFetchUser() {
     yield takeEvery(FETCH_USER_BY_TOKEN, fetchUser)
 }
 
+function* watchFetchPosts(){
+    yield takeEvery(USER_POSTS, fetchPosts);
+}
+
 function* watchFetchRegistration(){
     yield takeEvery(FETCH_REGISTRATION, fetchRegistration)
 }
-export default function* header() {
+export default function* profile() {
     yield all([
         watchFetchFilms(),
         watchSetAvatar(),
         watchFetchLogin(),
         watchFetchUser(),
-        watchFetchRegistration()
+        watchFetchRegistration(),
+        watchFetchPosts()
     ])
 }

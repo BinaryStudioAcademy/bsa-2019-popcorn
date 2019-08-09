@@ -1,9 +1,10 @@
-import {CANCEL_TEMP_AVATAR, FINISH_UPLOAD_AVATAR, SET_TEMP_AVATAR} from "./actionTypes";
+import {CANCEL_TEMP_AVATAR, FINISH_UPLOAD_AVATAR, SET_TEMP_AVATAR, SET_USER_POSTS} from "./actionTypes";
 import {LOGIN} from "../authorization/actionTypes";
 
 const initialState = {
     profileInfo:null,
-    uploadUrl: ''
+    uploadUrl: '',
+    userPosts: null
 };
 
 
@@ -31,6 +32,11 @@ export default function (state = initialState, action) {
             return{
                 ...state,
                 profileInfo: action.payload.user
+            };
+        case SET_USER_POSTS:
+            return{
+                ...state,
+                userPosts: action.payload.userPosts
             };
         default:
             return state;
