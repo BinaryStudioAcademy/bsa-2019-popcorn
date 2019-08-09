@@ -15,10 +15,16 @@
     flex-direction: column;
     align-items: flex-end;
 
-    input, textarea {
+    input {
+      width: 200px;
+    }
+
+    input.text-input, textarea {
       width: 400px;
       outline: none;
     }
+
+    
 
     textarea {
       vertical-align: top;
@@ -104,4 +110,21 @@
 .dropdown__item:hover {
   color: white;
   background: #3a4143;
+}
+
+.react-datepicker__time-list-item {
+  box-sizing: border-box;
+  width: 90%;
+  border-radius: 5px;
+  margin: 0 auto;
+  padding-left: 0 !important; 
+  padding-right: 0 !important;
+}
+
+.react-datepicker-time__header {
+  margin-top: 13px;
+}
+
+.react-datepicker__header {
+  height: 60px;
 }

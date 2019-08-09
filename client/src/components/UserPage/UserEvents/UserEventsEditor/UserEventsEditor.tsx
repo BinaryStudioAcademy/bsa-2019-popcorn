@@ -1,5 +1,9 @@
 import React from 'react';
+import DatePicker from "react-datepicker";
+ 
+import "react-datepicker/dist/react-datepicker.css";
 import './UserEventsEditor.scss';
+
 
 interface IUserEventsEditorProps {
   id?: string,
@@ -9,7 +13,10 @@ interface IUserEventsEditorState {
   title: string,
   description: string,
   location: string,
-  date: Date,
+  dateRange: {
+    startDate: Date | undefined,
+    endDate: Date | undefined
+  },
   isPrivate: boolean,
   isDropDownOpen: boolean
 }
@@ -21,7 +28,10 @@ class UserEventsEditor extends React.Component<IUserEventsEditorProps, IUserEven
       title: '',
       description: '',
       location: '',
-      date: new Date(),
+      dateRange: {
+        startDate: undefined,
+        endDate: undefined
+      },
       isPrivate: false,
       isDropDownOpen: false
     };
@@ -29,6 +39,7 @@ class UserEventsEditor extends React.Component<IUserEventsEditorProps, IUserEven
     this.onCancel = this.onCancel.bind(this);
     this.onSave = this.onSave.bind(this);
     this.onChangeData = this.onChangeData.bind(this);
+    this.onChangeDate = this.onChangeDate.bind(this);
     this.onToggleDropDown = this.onToggleDropDown.bind(this);
   }
 
@@ -40,7 +51,10 @@ class UserEventsEditor extends React.Component<IUserEventsEditorProps, IUserEven
         title: 'Test Event',
         description: 'This event is created only for testing',
         location: 'Kyiv, Independence Square',
-        date: new Date(),
+        dateRange: {
+          startDate: new Date(2019, 11, 12),
+          endDate: new Date(2019, 11, 13)
+        },
         isPrivate: true
       });
     }
@@ -52,6 +66,17 @@ class UserEventsEditor extends React.Component<IUserEventsEditorProps, IUserEven
     this.setState({
         ...this.state,
         [keyword]: value
+    });
+  }
+
+  onChangeDate(newDate) {
+    console.log(newDate);
+    this.setState({
+        ...this.state,
+        dateRange: {
+          ...this.state.dateRange,
+          ...newDate
+        }
     });
   }
 
@@ -85,7 +110,10 @@ class UserEventsEditor extends React.Component<IUserEventsEditorProps, IUserEven
       title: '',
       description: '',
       location: '',
-      date: new Date(),
+      dateRange: {
+        startDate: undefined,
+        endDate: undefined
+      },
       isPrivate: false
     });
     console.log('redirected');
@@ -95,26 +123,48 @@ class UserEventsEditor extends React.Component<IUserEventsEditorProps, IUserEven
     const DROPDOWN_LABEL = this.state.isPrivate
       ? 'Private'
       : 'Public';
-    
-    return (
+
+      return (
       <div className='event-editor'>
         <button className='back-btn' onClick={this.onCancel}>Back</button>
         <div className="inputs">
 
           <label>Title: 
-            <input type="text" value={this.state.title} onChange={e => this.onChangeData(e, 'title')}/>
+            <input type="text" className='text-input' value={this.state.title} onChange={e => this.onChangeData(e, 'title')}/>
           </label>
 
           <label>Location: 
-            <input type="text" value={this.state.location} onChange={e => this.onChangeData(e, 'location')}/>
+            <input type="text" className='text-input' value={this.state.location} onChange={e => this.onChangeData(e, 'location')}/>
           </label>
 
-          <label>Date and Time: 
-            <input type="text" value={this.state.date.toString()} onChange={e => this.onChangeData(e, 'date')}/>
-          </label>
+          <div>
+            <DatePicker
+                selected={this.state.dateRange.startDate}
+                selectsStart
+                startDate={this.state.dateRange.startDate}
+                endDate={this.state.dateRange.endDate}
+                onChange={(date) => this.onChangeDate({ startDate: date })}
+                minDate={new Date()}
+                maxDate={this.state.dateRange.endDate}
+                showDisabledMonthNavigation
+                showTimeSelect
+                dateFormat="MMMM d, yyyy h:mm aa"
+            />
 
+            <DatePicker
+                selected={this.state.dateRange.endDate}
+                selectsEnd
+                startDate={this.state.dateRange.startDate}
+                endDate={this.state.dateRange.endDate}
+                onChange={(date) => this.onChangeDate({ endDate: date })}
+                minDate={this.state.dateRange.startDate}
+                showDisabledMonthNavigation
+                showTimeSelect
+                dateFormat="MMMM d, yyyy h:mm aa"
+            />
+          </div>
           <label>Description: 
-            <textarea value={this.state.description} onChange={e => this.onChangeData(e, 'description')}></textarea>
+            <textarea value={this.state.description} className='text-input' onChange={e => this.onChangeData(e, 'description')}></textarea>
           </label>
 
           <div
