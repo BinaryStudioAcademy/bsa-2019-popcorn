@@ -72,7 +72,9 @@ const Header = ({userInfo = user, movies = mock, tv = mock, ratings = mock, movi
             <MovieSearch movies={moviesSearch} fetchFilms={fetchFilms} alreadySearch={alreadySearch}/>
             <div className="notifications">
                 <img className="message-icon hover" src={messageIcon} alt="message"/>
-                <img className="notify-icon hover" src={notifyIcon} alt="bell"/>
+                <NavLink to={"/user-activity"}>
+                    <img className="notify-icon hover" src={notifyIcon} alt="bell"/>
+                </NavLink>
             </div>
             <NavLink to={"/user-page"} className="user-info hover">
                 <img src={userInfo.image} alt="avatar"/>

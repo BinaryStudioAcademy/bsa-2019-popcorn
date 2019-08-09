@@ -1,6 +1,8 @@
 import {Entity, PrimaryGeneratedColumn, Column, OneToMany } from "typeorm";
 import { Top } from './Top';
 import {Story} from './Story'
+import {Voting} from "../entities/Voting";
+import { VotingOptionReaction } from "../entities/VotingOptionReaction";
 
 @Entity()
 export class User {
@@ -22,8 +24,14 @@ export class User {
     @Column()
     aboutMe: string;
 
-    @Column()
-    avatar: string;
+    @OneToMany(type => Voting, voting => voting.user)
+    votings: Voting[];
+
+    @OneToMany(type => VotingOptionReaction, votingOptionReaction => votingOptionReaction.user)
+    votingOptionReactions: VotingOptionReaction[];
+
+	@Column({ default: "" })
+	avatar: string;
 
     @OneToMany(type => Top, top => top.user)
     tops: Top[];
