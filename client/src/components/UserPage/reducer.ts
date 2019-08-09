@@ -28,11 +28,10 @@ export default function (state = initialState, action) {
             }
         }
         case LOGIN:
-            console.log(action.payload.user);
             return{
                 ...state,
                 profileInfo: action.payload.user
-            }
+            };
         default:
             return state;
     }

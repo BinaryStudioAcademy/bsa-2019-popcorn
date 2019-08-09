@@ -35,27 +35,27 @@ class Login extends React.Component<IProps, IState, IValues> {
           onSubmit={(values, actions) => {
             this.setState({
               isLoading: true
-            })
+            });
             onSubmit(values)
-              .then(() => {
-                //redirect if ok
-              })
-              .catch((error: any) => {
-                actions.setFieldError('email', error.message);
-              })
-              .finally(() => {
-                actions.setSubmitting(false);
-                this.setState({
-                  isLoading: false
-                })
-              });
+              // .then(() => {
+              //   //redirect if ok
+              // })
+              // .catch((error: any) => {
+              //   actions.setFieldError('email', error.message);
+              // })
+              // .finally(() => {
+              //   actions.setSubmitting(false);
+              //   this.setState({
+              //     isLoading: false
+              //   })
+              // });
           }}
           validationSchema={Yup.object().shape({
             email: Yup.string()
               .email('Email is invalid')
               .required('Email is required'),
             password: Yup.string()
-              .min(6, 'Password must be at least 6 characters')
+              .min(5, 'Password must be at least 6 characters')
               .required('Password is required'),
           })}
           render={({ errors, status, touched }) => (

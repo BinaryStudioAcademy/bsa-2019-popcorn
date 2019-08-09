@@ -1,4 +1,4 @@
-import {FETCH_LOGIN} from "./actionTypes";
+import {FETCH_LOGIN, FETCH_USER_BY_TOKEN} from "./actionTypes";
 
 interface IValues {
     email: string;
@@ -10,6 +10,16 @@ export const authorize = (values: IValues): any => {
         type: FETCH_LOGIN,
         payload:{
             ...values
+        }
+    }
+};
+
+
+export const fetchByToken = (token : string):any => {
+    return {
+        type: FETCH_USER_BY_TOKEN,
+        payload:{
+            token
         }
     }
 };

@@ -8,17 +8,25 @@ import NotFound from './../../components/NotFound/NotFound';
 
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
-import {authorize} from '../../components/authorization/actions';
+import {authorize, fetchByToken} from '../../components/authorization/actions';
+
+import Spinner from '../../components/shared/Spinner/index';
 
 interface IValues {
     email: string;
     password: string;
 }
 
-const Routing = ({isAuthorized, authorize}: {isAuthorized:boolean, authorize: (values: IValues) => any}) => {
+const Routing = ({isAuthorized, authorize,fetchByToken}: {isAuthorized:boolean, authorize: (values: IValues) => any, fetchByToken: (token:string) => any}) => {
+    const token = localStorage.getItem('token');
+    if(token && !isAuthorized){
+        fetchByToken(token);
+        return <Spinner/>
+    }
     return (
         <div>
-            <Header />
+            {/*<Header />*/}
+
             <Switch>
                 <Route exact path="/login" component={() => <Login isAuthorized={isAuthorized} onSubmit={authorize}/>} />
                 <Route exact path="/registration" component={Registration} />
@@ -34,12 +42,13 @@ const Routing = ({isAuthorized, authorize}: {isAuthorized:boolean, authorize: (v
 
 const mapStateToProps = (rootState, props) => ({
     ...props,
-    isAuthorized: rootState.profile.profileInfo
+    isAuthorized: !!rootState.profile.profileInfo
 
 });
 
 const actions = {
-    authorize
+    authorize,
+    fetchByToken
 };
 
 const mapDispatchToProps = dispatch => bindActionCreators(actions, dispatch);
