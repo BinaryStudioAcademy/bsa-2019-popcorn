@@ -7,6 +7,7 @@ import "./MainContainer.scss";
 import MainPage from "../../components/MainPage/MainPage";
 import UserPage from "../../components/UserPage/UserPage";
 import MovieSeriesPage from "../../components/MovieSeriesPage/MovieSeriesPage";
+import EventPage from '../../components/EventPage/EventPage';
 
 const {userInfo, notifications} = {
     userInfo: {
@@ -87,6 +88,7 @@ const Main = () => {
                     <Route path={`/user-page`} component={UserPage}/>
                     <Route path={`/movie-series`} component={MovieSeriesPage}/>
                     <Route path={`/movie-list`} render={() => <MovieList movies={movies}/>}/>
+                    <Route path={`/event-page`} component={EventPage}/>
                 </Switch>
             </div>
         </div>
