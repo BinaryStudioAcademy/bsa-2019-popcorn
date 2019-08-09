@@ -6,7 +6,9 @@ import { Movie } from './Movie';
 import { Top } from './Top';
 import {Story} from "./Story";
 import { Event, EventComment, EventVisitor } from './Events';
-
+import {Voting} from './Voting';
+import {VotingOption} from './VotingOption';
+import {VotingOptionReaction} from './VotingOptionReaction';
 
 export default [
     User,
@@ -18,5 +20,8 @@ export default [
     Story,
     Event,
     EventComment,
-    EventVisitor
+    EventVisitor, 
+    Voting, 
+    VotingOption, 
+    VotingOptionReaction
 ];
