@@ -4,15 +4,17 @@
     margin: 0 auto;
     width: 90%;
     height: 300px;
-    font-size: 20px;
 }
 
-.question-title {
-    border-bottom: 2px $text-secondary-color solid;
+.pieChart {
+    margin: 0 auto;
+    width: 90%;
+    height: 350px;
 }
 
 .responses-info {
     color: $text-secondary-color;
+    margin-bottom: 10px;
 }
 
 .survey-statistics {
@@ -20,5 +22,5 @@
 }
 
 .question-title {
-    margin-bottom: 20px;
+    margin-bottom: 5px;
 }

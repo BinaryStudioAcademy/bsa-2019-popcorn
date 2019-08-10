@@ -81,7 +81,9 @@ const SurveyStatistics: React.FC<IProps> = (props: IProps) => {
                                         data={convertDataForBarChart(question)}
                                     />
                                 </div>
-                                <PieChart data={convertDataForPieChart(question)} />
+                                <div className="pieChart">
+                                    <PieChart data={convertDataForPieChart(question)} />
+                                </div>
                             </div>
                         )
                     ))
