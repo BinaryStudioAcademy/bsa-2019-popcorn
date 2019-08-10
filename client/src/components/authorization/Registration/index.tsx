@@ -12,18 +12,20 @@ interface Values {
 
 interface IProps {
   registration: (values: Values) => any,
-  isAuthorized: boolean
+  isAuthorized: boolean,
+  registerError: string | null
 }
 
 interface IState {
-  isLoading: boolean
+  isLoading: boolean,
+
 }
 
 const initialFormikValues = {
   name: "",
   email: "",
   password: ""
-}
+};
 
 class Registration extends React.Component<IProps, IState> {
 
@@ -33,7 +35,7 @@ class Registration extends React.Component<IProps, IState> {
 
   public render() {
 
-    const { registration, isAuthorized } = this.props;
+    const { registration, isAuthorized, registerError } = this.props;
     const { isLoading } = this.state;
 
     return (
@@ -113,6 +115,7 @@ class Registration extends React.Component<IProps, IState> {
                           className="form-input-error"
                         />
                       </label>
+                      {registerError}
                       <div className="form-btn-wrapper">
                         <button
                           type="submit"

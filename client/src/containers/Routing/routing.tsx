@@ -44,7 +44,7 @@ const Routing = ({isAuthorized, authorize, fetchByToken, registration, loginErro
             <Switch>
                 <Route exact path="/login" component={() => <Login loginError={loginError} isAuthorized={isAuthorized} onSubmit={authorize}/>}/>
                 <Route exact path="/registration"
-                       component={() => <Registration isAuthorized={isAuthorized} registration={registration}/>}/>
+                       component={() => <Registration registerError={registerError} isAuthorized={isAuthorized} registration={registration}/>}/>
                 <Route path="/" component={Main}/>
                 {/* Not found route */}
                 <Route path="*" exact component={NotFound}/>
