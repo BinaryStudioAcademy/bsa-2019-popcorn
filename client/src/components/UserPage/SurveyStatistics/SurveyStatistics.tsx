@@ -67,26 +67,25 @@ const SurveyStatistics: React.FC<IProps> = (props: IProps) => {
 
     return (
         <div className="survey">
-            <div className="survey-background">
-                <div className="survey-statistics">
-                    {
-                        questions.map(question => (
-                            question.options && (
-                                <div key={question.id}>
-                                    <p>Question</p>
-                                    <h3>{question.title}</h3>
-                                    <p>{question.answers.length} responses</p>
+            <div className="survey-background"></div>
+            <div className="survey-statistics">
+                {
+                    questions.map(question => (
+                        question.options && (
+                            <div key={question.id} className="question-container">
+                                <h3 className="survey-question question-title">{question.title}</h3>
+                                <p className="responses-info">{question.answers.length} responses</p>
+                                <div className="barChart">
                                     <BarChart
                                         keys={getOptionsKeys(question.options)}
                                         data={convertDataForBarChart(question)}
                                     />
-                                    <PieChart data={convertDataForPieChart(question)} />
                                 </div>
-                            )
-                        ))
-                    }
-                </div>
-
+                                <PieChart data={convertDataForPieChart(question)} />
+                            </div>
+                        )
+                    ))
+                }
             </div>
         </div>
     );
