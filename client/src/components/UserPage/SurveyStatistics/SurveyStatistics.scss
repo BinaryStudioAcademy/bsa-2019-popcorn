@@ -1,9 +1,24 @@
-.chart {
-    width: 60vw;
-    height: 50vh;
-}
+@import "../../../styles/variables.scss";
 
 .barChart {
-    width: 60vw;
-    height: 50vh;
+    margin: 0 auto;
+    width: 90%;
+    height: 300px;
+    font-size: 20px;
+}
+
+.question-title {
+    border-bottom: 2px $text-secondary-color solid;
+}
+
+.responses-info {
+    color: $text-secondary-color;
+}
+
+.survey-statistics {
+    padding-top: 40px;
+}
+
+.question-title {
+    margin-bottom: 20px;
 }
