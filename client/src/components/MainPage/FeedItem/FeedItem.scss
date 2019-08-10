@@ -16,20 +16,45 @@
     button{
         background-color: $white;
         border:none;
-    outline: none;
+		outline: none;
     }
     
     button:hover{
         cursor: pointer;
-    }
- 
+	}
+	.feed-item-content{
+		padding: 0.5em 1em;
+		svg {
+			width: 31px;
+			height: 31px;
+			&:hover{
+				cursor: pointer;
+			}
+		}
+		.expand-post-content{
+			display: flex;
+			align-items: center;
+			justify-content: flex-end;
+			margin-bottom: 10px;
+			span{
+				display: block;
+				margin-right: 5px;
+			}
+		}
+	}
+	.tag-items{
+		padding: 0.5em 1em;
+		display: flex;
+		flex-wrap: wrap;
+	}
+
 }
 
 .feed-item-header{
     display: flex;
     flex-direction: row;
     align-items: center;
-    padding:1em;
+	padding: 0.5em 1em;
     position: relative;
 }
 
@@ -38,8 +63,8 @@
 }
 
 .feed-item-avatar {
-    width:3em;
-    height:3em;
+    width:2.5em;
+    height:2.5em;
     border-radius:50%; 
 }
 
@@ -67,17 +92,30 @@
 .feed-item-action-buttons{
     display: flex;
     text-align: left;
-    position: relative;
+	position: relative;
+	padding: 0.5em 1em;
+	button{
+		margin-right: 10px;
+	}
+	button svg{
+		width: 31px;
+		height: 31px;
+	}
+	button:last-child{
+		margin-left: auto;
+		margin-right: 0;
+	}
 }
-.feed-item-action-plus{
-    position: absolute;
-    right: 1em;
-}
+// .feed-item-action-plus{
+//     position: absolute;
+//     right: 1em;
+// }
 
 .feed-item-last-reaction{
-    display: flex;
+	display: flex;
+	align-items: center;
     text-align: left;
-    padding: 1em;
+	padding: 0.5em 1em;
     flex-direction: row;
 }
 
