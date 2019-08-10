@@ -1,5 +1,15 @@
 @import "../../../styles/variables.scss";
 
+.required-label {
+    margin: 10px;
+    color: #D93025;
+} 
+
+.required-true:after {
+    content: '*';
+    color: #D93025;
+}
+
 .survey-editor {
     a {
         margin: 20px;
