@@ -6,7 +6,7 @@ const BarChart = ({ data, keys }) => (
       data={data}
       keys={keys}
       indexBy="label"
-      margin={{ top: 50, right: 130, bottom: 50, left: 60 }}
+      margin={{ top: 10, right: 50, bottom: 50, left: 100 }}
       padding={0.3}
       layout="horizontal"
       colors={{ scheme: 'nivo' }}
