@@ -51,7 +51,6 @@ const { id, userInfo } = {
     }
 }
 
-const newSurveyConfig = { ...newSurvey(), user_id: id, user: { ...userInfo } };
 
 const UserSurveysNav: React.FC<IProps> = (props: IProps) => {
     const { surveys, mainPath } = props;
@@ -92,7 +91,11 @@ const UserSurveysNav: React.FC<IProps> = (props: IProps) => {
             <Route path={`${mainPath}/create`} render={() => (
                 <SurveyEditorNav 
                     mainPath={`${mainPath}/create`} 
-                    surveyInfo={newSurveyConfig}
+                    surveyInfo={{ 
+                        ...newSurvey(), 
+                        user_id: id, 
+                        user: { ...userInfo } 
+                    }}
                     updateInfo={updateInfo} 
                 />
             )} />

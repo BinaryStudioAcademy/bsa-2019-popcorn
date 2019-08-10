@@ -1,8 +1,10 @@
 import { v4 as uuid } from 'uuid';
-const surveyId = uuid();
-const questionId = uuid();
 
-export default () => ({
+export default () => {
+  const surveyId = uuid();
+  const questionId = uuid();
+
+  return {
     "id": surveyId,
     "created_at": new Date(),
     "title": "",
@@ -41,4 +43,6 @@ export default () => ({
         ]
       }
     ]
-})
+  }
+}
+

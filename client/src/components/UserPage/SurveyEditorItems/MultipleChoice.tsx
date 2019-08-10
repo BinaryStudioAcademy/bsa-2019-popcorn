@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import { v4 as uuid } from 'uuid';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import './SurveyItem.scss';
 
 interface IQuestion {
@@ -30,8 +32,11 @@ class MultipleChoice extends Component<IProps, IQuestion> {
     }
 
     componentWillReceiveProps(nextProps) {
-        if (this.state.type !== nextProps.questionInfo.type) {
-            this.setState({ ...nextProps.questionInfo });
+        const { questionInfo: newQuestion } = nextProps;
+        const { title: newTitle, type: newType } = nextProps;
+        const { title, type } = this.state;
+        if  (title !== newTitle || type !== newType) {
+            this.setState({ ...newQuestion });
         }
     }
 
@@ -51,6 +56,13 @@ class MultipleChoice extends Component<IProps, IQuestion> {
         this.setState({ ...this.state, options });
     }
 
+    deleteOption = (i) => {
+        if (!this.state.options) return;
+        const options = this.state.options;
+        options.splice(i, 1);
+        this.props.changeQuestion({ ...this.state, options });
+    }
+
     changeInput = (event, id) => {
         let { options } = this.state;
         if (!options) return;
@@ -60,8 +72,8 @@ class MultipleChoice extends Component<IProps, IQuestion> {
             }
             return option;
         });
-
-        this.setState({ ...this.state, options });
+        
+        this.props.changeQuestion({ ...this.state, options });
     }
 
     render() {
@@ -82,6 +94,9 @@ class MultipleChoice extends Component<IProps, IQuestion> {
                                 className="option"
                                 placeholder="option*"
                             />
+                            <span onClick={() => { this.deleteOption(i) }}>
+                                <FontAwesomeIcon icon={faTimes} />
+                            </span>
                         </div>
                     ))
                 }
