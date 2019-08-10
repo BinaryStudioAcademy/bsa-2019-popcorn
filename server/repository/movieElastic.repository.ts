@@ -16,7 +16,7 @@ export const getAll = async () => {
 
 
 export const getByTitle = async () => {
-    const response = await fetch(process.env.ELASTIC_API_URL + "/popcorn._search", {
+    const response = await fetch(process.env.ELASTIC_API_URL + "/popcorn/_search", {
         method: "POST",
         body: JSON.stringify({
             "query": {
