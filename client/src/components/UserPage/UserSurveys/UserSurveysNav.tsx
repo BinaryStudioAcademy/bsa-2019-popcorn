@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Switch, Route } from 'react-router-dom';
 import SurveyEditorNav from '../SurveyEditor/SurveyEditorNav';
 import UserSurveys from './UserSurveys';
+import newSurvey from './newSurveyConfig';
 
 interface IProps {
     mainPath: string,
@@ -9,6 +10,7 @@ interface IProps {
         id: string,
         created_at: Date,
         title: string,
+        type: string,
         description: string,
         user_id: string,
         user: {
@@ -41,21 +43,67 @@ interface IProps {
     }>
 }
 
+const { id, userInfo } = {
+    "id": "1",
+    userInfo: {
+        "name": "Parsons",
+        "image_link": "https://i.pravatar.cc/300?img=5"
+    }
+}
+
+const newSurveyConfig = { ...newSurvey(), user_id: id, user: { ...userInfo } };
+
 const UserSurveysNav: React.FC<IProps> = (props: IProps) => {
     const { surveys, mainPath } = props;
+
+    const [ state, setState ] = useState([...surveys]);
+
+    const updateInfo = newSurvey => {
+        const survey = state.some(survey => survey.id === newSurvey.id);
+
+        if (!survey) setState([...state, newSurvey]);
+        else {
+            const newState = state.map(survey => {
+                if (survey.id === newSurvey.id) return newSurvey;
+                return survey;
+            });
+    
+            setState([...newState]);
+        }
+    }
+
+    const deleteSurvey = deletedSurvey => {
+        const index = state.indexOf(deletedSurvey);
+        const newState = [...state];
+        newState.splice(index, 1);
+        setState(newState);
+    }
 
     return (
         <Switch>
             <Route exact path={mainPath} render={(props) => (
-                <UserSurveys surveys={surveys} mainPath={mainPath} />
+                <UserSurveys 
+                    updateInfo={updateInfo} 
+                    surveys={state} 
+                    mainPath={mainPath} 
+                    deleteSurvey={deleteSurvey}
+                />
             )} />
             <Route path={`${mainPath}/create`} render={() => (
-                <SurveyEditorNav mainPath={`${mainPath}/create`} surveyInfo={surveys[0]}/>
+                <SurveyEditorNav 
+                    mainPath={`${mainPath}/create`} 
+                    surveyInfo={newSurveyConfig}
+                    updateInfo={updateInfo} 
+                />
             )} />
             {
-                surveys.map((survey, i) => (
+                state.map((survey, i) => (
                     <Route key={i} path={`${mainPath}/${survey.id}`} render={() => (
-                        <SurveyEditorNav mainPath={`${mainPath}/${survey.id}`} surveyInfo={survey} /> 
+                        <SurveyEditorNav 
+                            updateInfo={updateInfo} 
+                            mainPath={`${mainPath}/${survey.id}`} 
+                            surveyInfo={survey} 
+                        /> 
                     )} />
                 ))
             }

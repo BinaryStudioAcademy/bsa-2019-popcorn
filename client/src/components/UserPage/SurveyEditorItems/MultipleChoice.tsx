@@ -20,6 +20,7 @@ interface IQuestion {
 
 interface IProps { 
     questionInfo: IQuestion
+    changeQuestion: (IQuestion) => void
 };
 
 class MultipleChoice extends Component<IProps, IQuestion> {
@@ -35,16 +36,18 @@ class MultipleChoice extends Component<IProps, IQuestion> {
     }
 
     addOption = () => {
+        const options = this.state.options;
+        if (!options) return;
+        const value = options.length + 1;
         const newOption = {
             id: uuid(),
             question_id: this.state.id,
-            value: 'Option'
+            value: ``
         };
 
-        const options = this.state.options;
-        if (!options) return;
         options.push(newOption);
 
+        this.props.changeQuestion({ ...this.state, options });
         this.setState({ ...this.state, options });
     }
 
@@ -66,7 +69,7 @@ class MultipleChoice extends Component<IProps, IQuestion> {
         console.log()
 
         return (
-            <div className={`${type.slice(0, 5)} survey-question`}> 
+            <div className={`${type.slice(0, 5)} question-body`}> 
                 {   
                     options !== undefined &&
                     options.map((option, i) => (
@@ -77,13 +80,14 @@ class MultipleChoice extends Component<IProps, IQuestion> {
                                 type="text" 
                                 value={option.value} 
                                 className="option"
+                                placeholder="option*"
                             />
                         </div>
                     ))
                 }
                 <div className="option-container">
                     <p className="option-icon"></p>
-                    <input id={uuid()} type="text" onClick={this.addOption} placeholder="Add option" />
+                    <button type="button" onClick={this.addOption}>Add option</button>
                 </div>
             </div>
         )

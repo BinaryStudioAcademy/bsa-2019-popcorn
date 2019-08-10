@@ -1,12 +1,14 @@
 import React, { PureComponent } from 'react';
 import './Survey.scss';
-import SurveySingleAnswer from '../SurveySingleAnswer/SurveySingleAnswer';
-import SurveyMultipleAnswer from '../SurveyMultipleAnswer/SurveyMultipleAnswer';
+import SurveySingleAnswer from '../SurveyItems/SurveySingleAnswer/SurveySingleAnswer';
+import SurveyMultipleAnswer from '../SurveyItems/SurveyMultipleAnswer/SurveyMultipleAnswer';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUsers } from '@fortawesome/free-solid-svg-icons';
 import ReactTimeAgo from 'react-time-ago';
 import JavascriptTimeAgo from 'javascript-time-ago';
 import en from 'javascript-time-ago/locale/en';
+import SurveyShortAnswer from '../SurveyItems/SurveyShortAnswer/SurveyShortAnswer';
+import SurveyLinearScale from '../SurveyItems/SurveyLinearScale/SurveyLinearScale';
 JavascriptTimeAgo.locale(en);
 
 
@@ -15,6 +17,7 @@ interface IProps {
         id: string,
         created_at: Date,
         title: string,
+        type: string,
         description: string,
         user_id: string,
         user: {
@@ -60,7 +63,6 @@ interface IState {
 class Survey extends PureComponent<IProps, IState> {
     constructor(props: IProps) {
         super(props);
-        console.log(props);
         this.state = {
             answers: props.surveyInfo.questions.map(question => ({
                 questionId: question.id,
@@ -139,6 +141,7 @@ class Survey extends PureComponent<IProps, IState> {
                     <header>
                         <h1>{title}</h1>
                         <p>{description}</p>
+                        <p className="required-label" >*required</p>
                     </header>
                     {   
                         questions.map((question, i) => {
@@ -151,19 +154,38 @@ class Survey extends PureComponent<IProps, IState> {
                                     />
                                 );
                             }
-                            return (
-                                <SurveyMultipleAnswer 
-                                    key={i} 
-                                    questionInfo={question} 
-                                    setAnswer={this.setMultipleAnswer}
+                            else if (question.type === 'Checkboxes') {
+                                return (
+                                    <SurveyMultipleAnswer 
+                                        key={i} 
+                                        questionInfo={question} 
+                                        setAnswer={this.setMultipleAnswer}
+                                    />
+                                )
+                            }
+
+                            else if (question.type === 'Short Answer') {
+                                return (
+                                    <SurveyShortAnswer
+                                        key={i}
+                                        questionInfo={question}
+                                    />
+                                )
+                            }
+
+                            else return (
+                                <SurveyLinearScale 
+                                    key={i}
+                                    questionInfo={question}
                                 />
                             )
+                            
                         })
                     }
-                    <div className="button" >
+                    {/* <div className="button" >
                         {this.state.isShown && (<p>Oops, seems like you didn't answer some questions. Fix it!</p>)}
-                        <button type="button" onClick={this.sendAnswer}>Send</button>
-                    </div>
+                        <button disabled type="button" onClick={this.sendAnswer}>Send</button>
+                    </div> */}
                 </form>
             </div>
         )

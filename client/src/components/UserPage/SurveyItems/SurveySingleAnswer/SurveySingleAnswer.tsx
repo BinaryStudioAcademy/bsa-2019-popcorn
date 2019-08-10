@@ -27,11 +27,11 @@ interface IProps {
 
 const SurveySingleAnswer = (props: IProps) => {
     const { questionInfo } = props;
-    const { id, title, options } = questionInfo;
+    const { id, title, options, required, image_link } = questionInfo;
 
     return (
         <div className="question-container single">
-            <p className="survey-question">{title}</p>
+            <p className={`survey-question required-${required}`}>{title}</p>
             {   options!==undefined &&
                 options.map((option, i) => (
                     <p key={i}>
@@ -51,6 +51,10 @@ const SurveySingleAnswer = (props: IProps) => {
                         </label>
                     </p>
                 ))
+            }
+            {
+                image_link &&
+                <img className="question-image" alt="" src={image_link} />
             }
         </div>
     )
