@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import './add-story-item.scss';
-import { ReactComponent as PlusIcon } from '../../../assets/icons/storyList/plus-icon.svg';
+import { ReactComponent as PlusIcon } from '../../../../assets/icons/storyList/plus-icon.svg'
 interface AddStoryItemProps {
     avatar: string,
     onOpenPopupClick: () => void,
