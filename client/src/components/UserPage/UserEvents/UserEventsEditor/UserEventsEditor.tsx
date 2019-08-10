@@ -1,9 +1,8 @@
 import React from 'react';
 import DatePicker from "react-datepicker";
- 
 import "react-datepicker/dist/react-datepicker.css";
 import './UserEventsEditor.scss';
-
+import MapWithASearchBox from '../EventMap/EventMapSearch';
 
 interface IUserEventsEditorProps {
   id?: string,
@@ -127,15 +126,17 @@ class UserEventsEditor extends React.Component<IUserEventsEditorProps, IUserEven
       return (
       <div className='event-editor'>
         <button className='back-btn' onClick={this.onCancel}>Back</button>
+        
         <div className="inputs">
 
           <label>Title: 
             <input type="text" className='text-input' value={this.state.title} onChange={e => this.onChangeData(e, 'title')}/>
           </label>
-
+          
           <label>Location: 
             <input type="text" className='text-input' value={this.state.location} onChange={e => this.onChangeData(e, 'location')}/>
           </label>
+          <MapWithASearchBox/>
 
           <div>
             <DatePicker
@@ -187,8 +188,7 @@ class UserEventsEditor extends React.Component<IUserEventsEditorProps, IUserEven
         <button onClick={this.onSave} type='button'>Save</button>
       </div>
     );
-  }
-    
+  }  
 }
 
 export default UserEventsEditor;

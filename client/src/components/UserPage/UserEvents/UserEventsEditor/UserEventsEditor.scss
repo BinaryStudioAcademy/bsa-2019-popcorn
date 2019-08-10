@@ -3,8 +3,8 @@
 .event-editor {
   border: 1px solid $border-color;
   display: flex;
+  min-height: 100%;
   flex-direction: column;
-  align-items: center;
 
   .back-btn {
     align-self: flex-start;
@@ -23,8 +23,6 @@
       width: 400px;
       outline: none;
     }
-
-    
 
     textarea {
       vertical-align: top;
