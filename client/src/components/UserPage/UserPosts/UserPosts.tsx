@@ -1,12 +1,22 @@
 import React from 'react';
-import FeedList from '../../MainPage/FeedList/FeedList';
+import PostList from '../../MainPage/PostList/PostList';
+import Spinner from "../../shared/Spinner";
+interface IProps {
+    userPosts?:any,// todo
+    getUsersPosts: () => any
+}
 
-const UserPosts: React.FC = () => {
+
+const UserPosts: React.FC<IProps> = ({userPosts, getUsersPosts}) => {
+    if(!userPosts) {
+        getUsersPosts();
+        return <Spinner/>
+    }
     return (
         <div className="UserPosts">
-            <FeedList/>
+            <PostList/>
         </div>
     );
-}
+};
 
 export default UserPosts;

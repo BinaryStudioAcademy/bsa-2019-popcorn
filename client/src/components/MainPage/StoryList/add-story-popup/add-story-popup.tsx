@@ -9,7 +9,7 @@ class AddStoryPopup extends Component<IAddStoryPopupProps> {
 
     getAddStoryPopupContent = () => {
         return (
-            <div className="modal">
+            <div className="modal modal-story">
                 <p>mock data</p>
                 <button onClick={this.props.onClosePopupClick}>Cancel</button>
             </div>

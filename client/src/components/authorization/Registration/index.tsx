@@ -2,28 +2,30 @@ import * as React from "react";
 import { Form, Formik, Field, ErrorMessage } from "formik";
 import * as Yup from 'yup';
 import "./Registration.scss";
-import { NavLink } from 'react-router-dom';
+import { NavLink, Redirect } from 'react-router-dom';
 
 interface Values {
-  name: String,
+  name: string,
   email: string,
   password: string
 }
 
 interface IProps {
   registration: (values: Values) => any,
-  isAuthorized: boolean
+  isAuthorized: boolean,
+  registerError: string | null
 }
 
 interface IState {
-  isLoading: boolean
+  isLoading: boolean,
+
 }
 
 const initialFormikValues = {
   name: "",
   email: "",
   password: ""
-}
+};
 
 class Registration extends React.Component<IProps, IState> {
 
@@ -33,13 +35,13 @@ class Registration extends React.Component<IProps, IState> {
 
   public render() {
 
-    const { registration, isAuthorized } = this.props;
+    const { registration, isAuthorized, registerError } = this.props;
     const { isLoading } = this.state;
 
     return (
-      <div className="form-wrapper">
-        { (isAuthorized === true)
-          ? null /* <Redirect to="/main"> */ :
+      <div className={"form-wrapper"}>
+        { isAuthorized
+          ? <Redirect to="/" /> :
           (
             <div>
               <h1 className="form-heading">Join Pop Corn</h1>
@@ -52,12 +54,12 @@ class Registration extends React.Component<IProps, IState> {
                     return;
                   }
                   this.setState({ ...this.state, isLoading: true });
-                  await registration({ ...values })  // { name, email, password } --- will update props isAuthorized
-                    .then((s: any) => { return 0 })
-                    .catch((error: any) => {
-                      actions.setFieldError('email', error.message);
-                      this.setState({ isLoading: false });
-                    });
+                  registration({ ...values })  // { name, email, password } --- will update props isAuthorized
+                    // .then((s: any) => { return 0 })
+                    // .catch((error: any) => {
+                    //   actions.setFieldError('email', error.message);
+                    //   this.setState({ isLoading: false });
+                    // });
                 }}
                 validationSchema={Yup.object().shape({
                   name: Yup.string()
@@ -113,6 +115,7 @@ class Registration extends React.Component<IProps, IState> {
                           className="form-input-error"
                         />
                       </label>
+                      {registerError}
                       <div className="form-btn-wrapper">
                         <button
                           type="submit"

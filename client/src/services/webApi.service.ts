@@ -18,8 +18,6 @@ export default async (args: IRequestInit) => {
 
         res = await res.json();
 
-        handlerError(res);
-
         return res;
 
     } catch (err) {

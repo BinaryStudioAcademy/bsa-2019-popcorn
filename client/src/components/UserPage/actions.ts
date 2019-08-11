@@ -1,4 +1,4 @@
-import {CANCEL_TEMP_AVATAR, SET_AVATAR, START_UPLOAD_AVATAR} from "./actionTypes";
+import {CANCEL_TEMP_AVATAR, SET_AVATAR, START_UPLOAD_AVATAR, USER_POSTS} from "./actionTypes";
 
 
 export const uploadAvatar = (file: FormData, id: string): any => {
@@ -22,5 +22,12 @@ export const setAvatar = (url, id): any => {
         payload: {
             url, id
         }
+    }
+};
+
+export const getUsersPosts = (id: string): any => {
+    return{
+        type:USER_POSTS,
+        payload:{id}
     }
 };
