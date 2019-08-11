@@ -14,7 +14,7 @@ const posts = [{
 			description: `Lorem ipsum dolor sit amet,
 				consectetur adipiscing elit, sed do eiusmod
 				tempor incididunt ut labore et dolore magna aliqua.
-				Ut enim ad minim veniam, quis incididunt... `,
+				... `,
 			link: "#"
 		},
 		
@@ -72,8 +72,7 @@ const posts = [{
 			image: "http://media.altpress.com/uploads/2018/11/the_lion_king_comparison.jpg",
 			description: `Lorem ipsum dolor sit amet,
 				consectetur adipiscing elit, sed do eiusmod
-				tempor incididunt ut labore et dolore magna aliqua.
-				Ut enim ad minim veniam, quis incididunt... `,
+				tempor incididunt ut labore et dolore magna ... `,
 			link: "#"
 		},
 		tags: [{id: "1addsfghndd2",
