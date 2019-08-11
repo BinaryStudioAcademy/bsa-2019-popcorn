@@ -1,10 +1,10 @@
 import React from 'react';
-import FeedList from '../../MainPage/FeedList/FeedList';
+import PostList from '../../MainPage/PostList/PostList';
 
 const UserPosts: React.FC = () => {
     return (
         <div className="UserPosts">
-            <FeedList/>
+            <PostList/>
         </div>
     );
 }
