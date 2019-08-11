@@ -6,8 +6,10 @@
   "engines": {
     "node": "10.x"
   },
-  "dependencies": {},
-  "devDependencies": {},
+  "dependencies": {
+    "concurrently": "^4.1.1",
+    "rimraf": "^2.6.3"
+  },
   "scripts": {
     "build": "concurrently \"cd client && npm run build\"",
     "heroku-postbuild": "npm run build",
