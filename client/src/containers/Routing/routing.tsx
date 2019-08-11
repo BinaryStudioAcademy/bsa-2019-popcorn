@@ -1,9 +1,10 @@
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
-import Login from "../../components/authorizationPage/Login/Login";
-import Registration from "../../components/authorizationPage/Registration/index";
+import Login from "../../components/authorization/Login/Login";
+import Registration from "../../components/authorization/Registration/index";
 import Header from "../../components/shared/Header/Header";
 import Main from "./../Main/main";
+import NotFound from './../../components/NotFound/NotFound';
 
 const Routing = () => {
     return (
@@ -14,7 +15,7 @@ const Routing = () => {
                 <Route exact path="/registration" component={Registration} />
                 <Route path="/" component={Main} />
                 {/* Not found route */}
-                <Route component={Main} />
+                <Route path="*" exact component={NotFound} />
             </Switch>
         </div>
 

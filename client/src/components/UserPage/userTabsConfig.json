@@ -1,0 +1,34 @@
+[
+    {
+        "link": "",
+        "label": "Profile"
+    },
+    {
+        "link": "/posts",
+        "label": "Posts"
+    },
+    {
+        "link": "/reviews",
+        "label": "Reviews"
+    },
+    {
+        "link": "/events",
+        "label": "Events"
+    },
+    {
+        "link": "/surveys",
+        "label": "Surveys"
+    },
+    {
+        "link": "/tops",
+        "label": "Tops"
+    },
+    {
+        "link": "/lists",
+        "label": "Lists"
+    },
+    {
+        "link": "/watched",
+        "label": "Watched"
+    }
+]

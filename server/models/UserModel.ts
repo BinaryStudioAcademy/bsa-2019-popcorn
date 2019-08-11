@@ -1,3 +1,5 @@
+import { Voting } from "./VotingModel";
+import { VotingOptionReaction } from "./VotingOptionReaction";
 import {Top} from './TopModel';
 
 export class User {
@@ -7,5 +9,8 @@ export class User {
     password: string;
     location:string;
     aboutMe: string;
+    votings: Voting[];
+    votingOptionReactions: VotingOptionReaction[];
+    avatar: string;
     tops: Top[];
 }
