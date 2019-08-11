@@ -49,7 +49,7 @@ const mockReviews = [
             name: "Anastasiia",
             avatar: "https://i.pravatar.cc/300?img=20"
         },
-        reviewText: 'A poor yet passionate young man falls in love with a rich young woman, giving her a sense of freedom, but they are soon separated because of their social differences. A poor yet passionate young man falls in love with a rich young woman, giving her a sense of freedom, but they are soon separated because of their social differences. A poor yet passionate young man falls in love with a rich young woman, giving her a sense of freedom, but they are soon separated because of their social differences. A poor yet passionate young man falls in love with a rich young woman, giving her a sense of freedom, but they are soon separated because of their social differences. A poor yet passionate young man falls in love with a rich young woman, giving her a sense of freedom, but they are soon separated because of their social differences. A poor yet passionate young man falls in love with a rich young woman, giving her a sense of freedom, but they are soon separated because of their social differences. A poor yet passionate young man falls in love with a rich young woman, giving her a sense of freedom, but they are soon separated because of their social differences. A poor yet passionate young man falls in love with a rich young woman, giving her a sense of freedom, but they are soon separated because of their social differences.',
+        reviewText: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Animi, amet. Expedita repellat fugit numquam aliquid sit, incidunt soluta eos rerum quisquam, corporis distinctio necessitatibus quas aspernatur, minima repudiandae inventore similique.",
         created_at: "July 28",
         rating: 4
     },
@@ -59,8 +59,7 @@ const mockReviews = [
             name: "Mike",
             avatar: "https://i.pravatar.cc/300?img=22"
         },
-        reviewText: 'Bad film',
-        created_at: "July 21",
+        reviewText: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequatur tempore non ducimus sunt. Quae, molestiae reprehenderit! Vitae maxime architecto esse fugit ut labore sed tenetur. Modi possimus quod odit eius.Doloremque quasi aperiam nam. Architecto nulla debitis explicabo officia amet. Eligendi magnam voluptates, impedit expedita porro amet beatae praesentium, ea placeat consequuntur nemo iusto. Accusantium laboriosam eum sed ab illo?Harum ea quasi eaque eligendi nisi est eveniet in itaque id aut consectetur mollitia, nulla inventore doloremque adipisci nesciunt placeat ex dicta quo quam accusantium. Tempora provident repellendus veritatis ipsam!Animi quae temporibus iste illo. Nihil earum nisi labore voluptatem autem hic? Iure in minus praesentium error, similique qui inventore eligendi aperiam nulla autem commodi dolorum obcaecati et eveniet consectetur. Consequatur tempore non ducimus sunt. Quae, molestiae reprehenderit! Vitae maxime architecto esse fugit ut labore sed tenetur. Modi possimus quod odit eius.Doloremque quasi aperiam nam. Architecto nulla debitis explicabo officia amet. Eligendi magnam voluptates, impedit expedita porro amet beatae praesentium, ea placeat consequuntur nemo iusto. Accusantium laboriosam eum sed ab illo?Harum ea quasi eaque eligendi nisi est eveniet in itaque id aut consectetur mollitia, nulla inventore doloremque adipisci nesciunt placeat ex dicta quo quam accusantium. Tempora provident repellendus veritatis ipsam!Animi quae temporibus iste illo. Nihil earum nisi labore voluptatem autem hic? Iure in minus praesentium error, similique qui inventore eligendi aperiam nulla autem commodi dolorum obcaecati et eveniet consectetur.",created_at: "July 21",
         rating: 1
     },
     {
@@ -69,7 +68,7 @@ const mockReviews = [
             name: "Anastasiia",
             avatar: "https://i.pravatar.cc/300?img=20"
         },
-        reviewText: 'Comment comment comment comment comment comment comment comment comment comment  comment comment comment ',
+        reviewText: 'Tra-la-la',
         created_at: "July 28",
         rating: 4
     }

@@ -1,16 +1,18 @@
-import React, { ReactElement } from 'react';
+import React, { ReactElement} from 'react';
 import "./ReviewItem.scss";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar } from '@fortawesome/free-solid-svg-icons';
 import { faChevronDown, faChevronUp } from '@fortawesome/free-solid-svg-icons';
+import { IReview } from '../MovieSeriesReviews';
 
 interface IProps {
-  review: any
+  review: IReview
 }
 
 interface IState {
-  showFullReview: boolean,
+  showFullReview: boolean
   textBlockHeight: string
+  isBigBlock: boolean
 }
 
 const solidStar = (key: number, type: boolean): any => (
@@ -34,16 +36,17 @@ class ReviewItem extends React.Component<IProps, IState> {
 
   state: IState = {
     showFullReview: false,
-    textBlockHeight: "auto"
+    textBlockHeight: "auto",
+    isBigBlock: false
   }
 
   public divRef = React.createRef();
 
   componentDidMount() {
-    const styles = getComputedStyle(this.divRef.current as any)
+    const styles = getComputedStyle(this.divRef.current as any);
     const height = parseInt(styles.height as string);
     if (height > 90) {
-      this.setState({ ...this.state, textBlockHeight: "90px" });
+      this.setState({ ...this.state, textBlockHeight: `not-auto`, isBigBlock: true });
     }
   }
 
@@ -51,10 +54,9 @@ class ReviewItem extends React.Component<IProps, IState> {
     this.setState({
       ...this.state,
       showFullReview: this.state.showFullReview ? false : true,
-      textBlockHeight: this.state.showFullReview ? "90px" : "auto"
+      textBlockHeight: this.state.showFullReview ? "not-auto" : "auto"
     })
   }
-
 
   public render() {
     const {
@@ -66,7 +68,8 @@ class ReviewItem extends React.Component<IProps, IState> {
 
     const {
       showFullReview,
-      textBlockHeight
+      textBlockHeight,
+      isBigBlock
     } = this.state;
 
     return (
@@ -92,8 +95,8 @@ class ReviewItem extends React.Component<IProps, IState> {
           </div>
           <div
             ref={this.divRef as any}
-            className="review-item-text"
-            style={{ height: textBlockHeight }}
+            className={`review-item-text ${(isBigBlock ? "review-item-text-big" : null)} 
+              ${showFullReview ? "review-item-text-big-show-full" : null}`}
           >
             {reviewText}
             {(textBlockHeight !== 'auto' && !showFullReview)
@@ -104,7 +107,7 @@ class ReviewItem extends React.Component<IProps, IState> {
               : null
             }
           </div>
-          {(textBlockHeight !== 'auto' || showFullReview)
+          {(isBigBlock)
             ? <div
                 className="read-more-btn"
                 onClick={() => this.handleClickShowMore()}
@@ -113,12 +116,10 @@ class ReviewItem extends React.Component<IProps, IState> {
               </div>
             : null
           }
-
         </div>
       </div>
     )
   }
-
 }
 
 export default ReviewItem;
