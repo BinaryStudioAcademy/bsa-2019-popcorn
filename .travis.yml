@@ -1,9 +1,19 @@
 language: node_js
 
-cache:
-  directories:
-    - node_modules
+node_js:
+- "10.x"
 
+branches:
+  only:
+  - deploy-aws
+
+install:
+  - cd client/
+  - npm install
+  - cd ../server/
+  - npm install
+  - cd ..
+  
 deploy:
 - provider: s3
   access_key_id: $AWS_ACCESS_KEY
@@ -26,6 +36,10 @@ deploy:
   on: *2
 
 script:
+  - export SKIP_PREFLIGHT_CHECK=true
+  - cd client/
+  - npm run build
+  - cd ..
   - zip -r latest *
   - mkdir -p dpl_cd_upload
   - mv latest.zip dpl_cd_upload/latest.zip
