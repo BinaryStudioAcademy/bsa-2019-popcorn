@@ -9,6 +9,7 @@ interface IProps {
         id: string,
         created_at: Date,
         title: string,
+        type: string,
         description: string,
         user_id: string,
         user: {
@@ -55,7 +56,7 @@ const SurveyReplies: React.FC<IProps> = (props: IProps) => {
                     <SurveyStatistics questions={surveyInfo.questions}/>
                 )} />
                 <Route path={`${mainPath}/individual`} render={() => (
-                    <SurveyIndividual />
+                    <SurveyIndividual surveyInfo={surveyInfo}/>
                 )} />
             </Switch>
         </div>
