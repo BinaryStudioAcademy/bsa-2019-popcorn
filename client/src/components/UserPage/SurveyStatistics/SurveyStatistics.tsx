@@ -43,10 +43,10 @@ interface IProps {
 const SurveyStatistics: React.FC<IProps> = (props: IProps) => {
     const { questions } = props;
 
-    const getOptionsKeys = (arr: IOption[]) => arr.map(item => item.value);
+    const getOptionsKeys = (arr: IOption[]) => arr.map(item => ` ${item.value}`);
     const convertDataForBarChart = (item) => {
         const { answers, options } = item;
-        const res = options.map(({ id, value }) => ({ id, [value]: 0, label: value }));
+        const res = options.map(({ id, value }) => ({ id, [` ${value}`]: 0, label: ` ${value}` }));
         answers.map(({ option_id }) => {
             const index = res.findIndex(item => item.id === option_id);
             const value = Object.keys(res[index])[1];
