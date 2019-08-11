@@ -7,6 +7,14 @@ interface IAnswer {
     value: boolean
 };
 
+interface IReadyAnswer {
+    id: string,
+    question_id: string,
+    option_id?: string,
+    user_id: string,
+    value: string
+};
+
 interface IProps {
     questionInfo: {
         id: string,
@@ -23,13 +31,15 @@ interface IProps {
                 value: string
             }>
     },
-    setAnswer: (data: IAnswer) => void
+    setAnswer: (data: IAnswer) => void,
+    disable?: boolean,
+    answers?: Array<IReadyAnswer>
 };
 
 const SurveyMultipleAnswer = (props: IProps) => {
-    const { questionInfo } = props;
+    const { questionInfo, disable, answers } = props;
     const { id, title, options, required, image_link } = questionInfo;
-
+    
     return (
         <div className="multiple question-container">
             <p className={`survey-question required-${required}`}>{title}</p>
@@ -42,7 +52,11 @@ const SurveyMultipleAnswer = (props: IProps) => {
                                 type="checkbox" 
                                 name={id}
                                 key={i} 
-                                value={option.value} 
+                                value={option.value}
+                                disabled={disable || false}
+                                checked={
+                                    answers && answers.some(answer => (answer.option_id === option.id))
+                                }
                                 onChange={(event) => {
                                     props.setAnswer({
                                         questionId: id,

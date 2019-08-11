@@ -1,6 +1,14 @@
 import React from 'react';
 import './SurveyLinearScale.scss';
 
+interface IReadyAnswer {
+    id: string,
+    question_id: string,
+    option_id?: string,
+    user_id: string,
+    value: string
+};
+
 interface IProps {
     questionInfo: {
         id: string,
@@ -16,11 +24,13 @@ interface IProps {
             question_id: string,
             value: string
         }>
-    }
+    },
+    disable?: boolean,
+    answer?: IReadyAnswer
 };
 
 const SurveyLinearScale = (props: IProps) => {
-    const { questionInfo } = props;
+    const { questionInfo, disable, answer } = props;
     const { id, title, options, lastLabel, firstLabel, required, image_link } = questionInfo;
 
     return (
@@ -39,6 +49,8 @@ const SurveyLinearScale = (props: IProps) => {
                                     name={id}
                                     key={i} 
                                     value={option.value} 
+                                    disabled={disable || false}
+                                    checked={answer && (answer.option_id  === option.id)}
                                 /> 
                                 <span className="checkmark"></span>
                             </label>
