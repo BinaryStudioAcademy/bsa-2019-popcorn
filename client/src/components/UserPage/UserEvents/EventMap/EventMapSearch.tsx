@@ -1,4 +1,5 @@
-import React, { Component }  from 'react';
+import React from 'react';
+import './EventMapSearch.scss';
 /* eslint-disable no-undef */
 
 const _ = require("lodash");
@@ -15,9 +16,9 @@ const { SearchBox } = require("react-google-maps/lib/components/places/SearchBox
 const MapWithASearchBox = compose(
   withProps({
     googleMapURL: "https://maps.googleapis.com/maps/api/js?key=&v=3.exp&libraries=geometry,drawing,places",
-    loadingElement: <div style={{ height: `300px`,width:'500px', position:'static' }} />,
-    containerElement: <div style={{ height: `300px` ,width:'500px', position:'static', alignSelf:'center'}} />,
-    mapElement: <div style={{ height: `300px`, position:'static' }} />,
+    loadingElement: <div className='map-loading'/>,
+    containerElement: <div className='map-container'/>,
+    mapElement: <div className='map'/>,
   }),
   lifecycle({
     componentWillMount() {
@@ -69,20 +70,18 @@ const MapWithASearchBox = compose(
           });
           const position = refs.marker.getPosition();
           this.props.onLocationChanged({lat: position.lat(), lng: position.lng()});
-
           refs.map.fitBounds(bounds);
-        },
-        
+        },  
       })
     },
     componentWillReceiveProps(nextProps) {
       if (Array.isArray(this.state.marker) && nextProps.defaultMarkerPosition) {
         this.setState({
-        center: {
-          ...nextProps.defaultMarkerPosition
-        },
-        defaultMarkerPosition: nextProps.defaultMarkerPosition,
-      });
+          center: {
+            ...nextProps.defaultMarkerPosition
+          },
+          defaultMarkerPosition: nextProps.defaultMarkerPosition,
+        });
       }
     }
   }),
@@ -103,20 +102,8 @@ const MapWithASearchBox = compose(
     >
       <input
         type="text"
-        placeholder="Customized your placeholder"
-        style={{
-          boxSizing: `border-box`,
-          border: `1px solid transparent`,
-          width: `240px`,
-          height: `32px`,
-          marginTop: `27px`,
-          padding: `0 12px`,
-          borderRadius: `3px`,
-          boxShadow: `0 2px 6px rgba(0, 0, 0, 0.3)`,
-          fontSize: `14px`,
-          outline: `none`,
-          textOverflow: `ellipses`,
-        }}
+        placeholder="Choose a event location..."
+        className='search-box'
       />
     </SearchBox>
     <Marker 
