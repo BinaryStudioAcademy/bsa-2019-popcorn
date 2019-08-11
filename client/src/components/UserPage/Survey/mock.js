@@ -172,25 +172,16 @@ export default [
           "type": "Short Answer",
           "image_link": "",
           "required": true,
-          "options": [
-            {
-              "id": "10",
-              "question_id": "4",
-              "value": "good"
-            }
-        ],
           "answers": [
             {
               "id": "12",
               "question_id": "4",
-              "option_id": "10",
               "user_id": "1",
               "value": "Cool"
             },
             {
               "id": "13",
               "question_id": "4",
-              "option_id": "10",
               "user_id": "2",
               "value": "Worst"
             }
