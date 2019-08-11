@@ -64,7 +64,7 @@ class UserEventsEditor extends React.Component<IUserEventsEditorProps, IUserEven
     }
   }
 
-  onChangeData(e: any, keyword: string) {
+  onChangeData(e, keyword: string) {
     const target = e.target as HTMLTextAreaElement;
     const value = target.value;
     this.setState({
@@ -110,7 +110,9 @@ class UserEventsEditor extends React.Component<IUserEventsEditorProps, IUserEven
     if (
       this.state.title.trim() === '' ||
       this.state.description.trim() === '' ||
-      !this.state.location 
+      !this.state.location ||
+      !this.state.dateRange.startDate ||
+      !this.state.dateRange.endDate
     ) return;
 
     this.props.id
