@@ -5,7 +5,8 @@
   "license": "MIT",
   "scripts": {
     "start": "nodemon",
-    "start-server": "ts-node ./"
+    "start-server": "ts-node ./",
+    "lint": "tslint -c tslint.json -p tsconfig.json --exclude **/*.d.ts"
   },
   "nodemonConfig": {
     "ignore": [
@@ -19,6 +20,11 @@
     ],
     "exec": "./node_modules/.bin/ts-node ./index.ts",
     "ext": "ts"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "pretty-quick --staged"
+    }
   },
   "dependencies": {
     "@types/dotenv": "^6.1.1",
@@ -44,8 +50,12 @@
     "uuid": "^3.3.2"
   },
   "devDependencies": {
-    "@types/passport-local": "^1.0.33",
     "@types/multiparty": "^0.0.32",
-    "prettier": "1.18.2"
+    "@types/passport-local": "^1.0.33",
+    "husky": "^3.0.3",
+    "prettier": "1.18.2",
+    "pretty-quick": "^1.11.1",
+    "tslint": "^5.18.0",
+    "tslint-config-prettier": "^1.18.0"
   }
 }
