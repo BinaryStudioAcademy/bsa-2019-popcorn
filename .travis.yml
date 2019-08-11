@@ -13,7 +13,7 @@ install:
   - cd ../server/
   - npm install
   - cd ..
-  
+
 deploy:
 - provider: s3
   access_key_id: $AWS_ACCESS_KEY
@@ -36,7 +36,6 @@ deploy:
   on: *2
 
 script:
-  - export SKIP_PREFLIGHT_CHECK=true
   - cd client/
   - npm run build
   - cd ..
