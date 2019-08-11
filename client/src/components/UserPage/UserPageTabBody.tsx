@@ -1,6 +1,5 @@
 import React from 'react';
-import { Switch, Route } from 'react-router-dom';
-import UserProfile from './UserProfile/UserProfile';
+import {Route, Switch} from 'react-router-dom';
 import UserPosts from './UserPosts/UserPosts';
 import UserReviews from './UserReviews/UserReviews';
 import UserEvents from './UserEvents/UserEvents';
@@ -9,7 +8,7 @@ import UserTops from './UserTops/UserTops';
 import UserLists from './UserLists/UserLists';
 import UserWatched from './UserWatched/UserWatched';
 import ProfileComponent from './ProfileComponent/ProfileComponent';
-import {cancelAvatar, setAvatar, uploadAvatar} from './actions';
+import {cancelAvatar, getUsersPosts, setAvatar, uploadAvatar} from './actions';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 
@@ -28,10 +27,12 @@ interface IProps {
     },
     uploadUrl?: string,
     cancelAvatar: () => any,
-    setAvatar: (url: string, id: string) => any
+    setAvatar: (url: string, id: string) => any,
+    userPosts? : any, //todo
+    getUsersPosts: (id: string) => any
 }
 
-const UserPageTabs: React.SFC<IProps> = ({mainPath, uploadAvatar, profileInfo, uploadUrl, cancelAvatar, setAvatar}) => {
+const UserPageTabs: React.SFC<IProps> = ({mainPath, uploadAvatar, profileInfo, uploadUrl, cancelAvatar, setAvatar, userPosts, getUsersPosts}) => {
 
     return (
         <div className={"user-tab-body"}>
@@ -40,7 +41,8 @@ const UserPageTabs: React.SFC<IProps> = ({mainPath, uploadAvatar, profileInfo, u
                        render={() => <ProfileComponent uploadAvatar={uploadAvatar} profileInfo={profileInfo}
                                                        uploadUrl={uploadUrl}
                                                        cancelAvatar={cancelAvatar} setAvatar={setAvatar}/>}/>
-                <Route path={`${mainPath}/posts`} component={UserPosts} />
+                <Route path={`${mainPath}/posts`} component={() => <UserPosts userPosts={userPosts}
+                                                                              getUsersPosts={() => getUsersPosts(profileInfo.id)}/>} />
                 <Route path={`${mainPath}/reviews`} component={UserReviews}/>
                 <Route path={`${mainPath}/events`} component={UserEvents}/>
                 <Route path={`${mainPath}/surveys`} component={UserSurveys}/>
@@ -55,13 +57,15 @@ const UserPageTabs: React.SFC<IProps> = ({mainPath, uploadAvatar, profileInfo, u
 const mapStateToProps = (rootState, props) => ({
     ...props,
     profileInfo: rootState.profile.profileInfo,
-    uploadUrl: rootState.profile.uploadUrl
+    uploadUrl: rootState.profile.uploadUrl,
+    userPosts: rootState.profile.userPosts
 });
 
 const actions = {
     uploadAvatar,
     cancelAvatar,
-    setAvatar
+    setAvatar,
+    getUsersPosts
 };
 
 const mapDispatchToProps = dispatch => bindActionCreators(actions, dispatch);
