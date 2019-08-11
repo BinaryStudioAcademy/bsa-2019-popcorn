@@ -95,12 +95,11 @@ export function* fetchUser(action) {
 export function* fetchRegistration(action){
     try{
         const data = yield call(axios.post, config.API_URL + "/api/auth/register", {...action.payload});
-
-        localStorage.setItem('token', data.token);
+        localStorage.setItem('token', data.data.token);
 
         yield put({
             type: LOGIN,
-            payload: {user: data.user[0]}
+            payload: {user: data.data.user[0]}
         });
     }catch (e) {
         console.log('user saga fetch registration:', e.message);
