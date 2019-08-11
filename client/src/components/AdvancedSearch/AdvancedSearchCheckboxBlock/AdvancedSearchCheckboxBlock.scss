@@ -1,36 +1,28 @@
-@import '../../styles/variables.scss';
+@import '../../../styles/variables.scss';
 @import '../AdvancedMovieSearch/CustomCheckbox.scss';
 
-.search-genres{
-    display: flex;
-    flex-direction: column;
-    padding-bottom:5px; 
-    border-bottom: 1px solid $border-color;
-    
-}
-
-.genres-block{
+.checkbox-block{
     font-family: $base-font-family;
     max-height: 240px;
     overflow-y: scroll;
 }
 
-.genres-header{
+.checkbox-header{
     font-size: $header-large;
     align-self: center;
 }
 
-.genres-block::-webkit-scrollbar {
+.checkbox-block::-webkit-scrollbar {
     width: 4px;
   }
   
   /* Handle */
-  .genres-block::-webkit-scrollbar-thumb {
+  .checkbox-block::-webkit-scrollbar-thumb {
     background: rgba($black, 0.5) ; 
     border-radius: 10px;
   }
 
-  .genres-input{
+  .checkbox-input{
     font-family: $base-font-family;
     font-size: 16px;
     line-height: 19px;
