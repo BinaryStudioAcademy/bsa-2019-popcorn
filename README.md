@@ -25,5 +25,9 @@
  ~~~
  npm install
  npm run start-server
- ~~~ 
-    
+ ~~~
+9. To watch server file changes, instead of previous command, run in server directory:
+~~~
+npm i -g nodemon
+nodemon
+~~~

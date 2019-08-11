@@ -34,10 +34,20 @@ const messages = [
 ];
 
 interface IProps {
-    mainPath: string
+    mainPath: string,
+    movie: null | Movie
 }
-
-const MovieSeriesPageTabBody: React.SFC<IProps> = ({ mainPath }) => {
+type Movie = {
+    id: string,
+    title: string,
+    year?: number,
+    image: string,
+    duration: string,
+    genres: Array<string>,
+    cast: Array<string>,
+    any?
+}
+const MovieSeriesPageTabBody: React.SFC<IProps> = ({ mainPath, movie }) => {
     return (
         <div className={"movie-series-page-tab-body"}>
             <Switch>
