@@ -42,6 +42,7 @@ class UserEventsEditor extends React.Component<IUserEventsEditorProps, IUserEven
     this.onSave = this.onSave.bind(this);
     this.onChangeData = this.onChangeData.bind(this);
     this.onChangeDate = this.onChangeDate.bind(this);
+    this.validateDateRange = this.validateDateRange.bind(this);
     this.onToggleDropDown = this.onToggleDropDown.bind(this);
     this.onLocationChanged = this.onLocationChanged.bind(this);
   }
@@ -80,13 +81,17 @@ class UserEventsEditor extends React.Component<IUserEventsEditorProps, IUserEven
   }
 
   onChangeDate(newDate) {
-    this.setState({
+    const dateRange = {...this.state.dateRange, ...newDate};
+    if (this.validateDateRange(dateRange)) {
+      this.setState({
         ...this.state,
-        dateRange: {
-          ...this.state.dateRange,
-          ...newDate
-        }
-    });
+        dateRange
+      });
+    } 
+  }
+
+  validateDateRange({startDate, endDate}) {
+    return endDate > startDate || !startDate || !endDate;
   }
 
   onToggleDropDown() {
@@ -150,28 +155,28 @@ class UserEventsEditor extends React.Component<IUserEventsEditorProps, IUserEven
 
           <div>
             <DatePicker
-                selected={this.state.dateRange.startDate}
-                selectsStart
-                startDate={this.state.dateRange.startDate}
-                endDate={this.state.dateRange.endDate}
-                onChange={(date) => this.onChangeDate({ startDate: date })}
-                minDate={new Date()}
-                maxDate={this.state.dateRange.endDate}
-                showDisabledMonthNavigation
-                showTimeSelect
-                dateFormat="MMMM d, yyyy h:mm aa"
+              selected={this.state.dateRange.startDate}
+              selectsStart
+              startDate={this.state.dateRange.startDate}
+              endDate={this.state.dateRange.endDate}
+              onChange={(date) => this.onChangeDate({ startDate: date })}
+              minDate={new Date()}
+              maxDate={this.state.dateRange.endDate}
+              showDisabledMonthNavigation
+              showTimeSelect
+              dateFormat="MMMM d, yyyy h:mm aa"
             />
 
             <DatePicker
-                selected={this.state.dateRange.endDate}
-                selectsEnd
-                startDate={this.state.dateRange.startDate}
-                endDate={this.state.dateRange.endDate}
-                onChange={(date) => this.onChangeDate({ endDate: date })}
-                minDate={this.state.dateRange.startDate}
-                showDisabledMonthNavigation
-                showTimeSelect
-                dateFormat="MMMM d, yyyy h:mm aa"
+              selected={this.state.dateRange.endDate}
+              selectsEnd
+              startDate={this.state.dateRange.startDate}
+              endDate={this.state.dateRange.endDate}
+              onChange={(date) => this.onChangeDate({ endDate: date })}
+              minDate={this.state.dateRange.startDate}
+              showDisabledMonthNavigation
+              showTimeSelect
+              dateFormat="MMMM d, yyyy h:mm aa"
             />
           </div>
           <label>Description: 
