@@ -11,52 +11,128 @@
   }
 
   .inputs {
+    align-self: center;
     display: flex;
     flex-direction: column;
-    align-items: flex-end;
+    width: 80%;
 
-    input {
-      width: 200px;
+    .input-wrp {
+      margin-bottom: 20px;
+      &:first-child {
+        margin-top: 20px;
+      }
     }
-
-    input.text-input, textarea {
-      width: 400px;
+    .label {
+      display: inline-block;
+      margin-top: 12px;
+      margin-bottom: 12px;
+    }
+    .time-picker {
+      width: 80%;
+      float: right;
+    }
+    input.text-input, textarea, .time-picker input {
+      float: right;
+      width: 80%;
       outline: none;
+      height: 43px;
+      margin-left: 20px;
+      color: $text-base-color;
+      box-sizing: border-box;
+      font-size: $form-font-size;
+      letter-spacing: $input-letter-spacing;
+      box-shadow: 0px 0px 10px $input-shadow-color;
+      border: 1px solid $border-color;
+      border-radius: 3px;
+      padding: 12px 15px;
     }
-
+    .privacy {
+      width: 80%;
+      float: right;
+    }
+    .react-datepicker-wrapper {
+      width: 49%;
+      &:nth-child(2) {
+        float: right;
+      }
+    }
+    .time-picker input,.react-datepicker__input-container {
+      margin: 0;
+      width: 100%
+    }
     textarea {
       vertical-align: top;
       height: 100px;
       resize: none;
     }
   }
+
+  .back-btn {
+    height: 43px;
+    border-radius: 55px;
+    width: 80px;
+    border: none;
+    outline: none;
+    font-size: $header-medium;
+    font-weight: bold;
+    color: $text-secondary-color;
+    &:hover {
+      color: rgba($text-base-color, .7)
+    }
+  }
+
+  .footer {
+    align-self: flex-end;
+    margin-bottom: 20px;
+    margin-right: 20px;
+
+    button {
+      height: 43px;
+      border-radius: 55px;
+      width: 100px;
+      border: none;
+      outline: none;
+      font-size: $header-medium;
+      font-weight: bold;
+      &.save-btn {
+        background-color: $button-background;
+        color: $white;
+        box-shadow: 0px 5px 12px $button-shadow-color;
+        &:hover {
+          background-color: rgb(216, 86, 0);
+        }
+      }
+  
+      &.cancel-btn {
+        color: $text-secondary-color;
+        &:hover {
+          background-color: $background-gray;
+          color: rgba($text-base-color, .7)
+        }
+      }
+    }
+  }
 }
 
 .dropdown {
-  // position: relative;
+  float: left;
   top: 50px;
   margin: 0 auto;
   border: 1px solid #666;
-  background: #475154;
+  background-color: $background-gray;
 }
 
 .dropdown__text {
-  color: white;
   padding: 10px 16px;
   cursor: pointer;
   height: auto;
 }
 
-.dropdown__text:hover {
-  color: white;
-  background: #475154;
-}
-
 .dropdown__text:after {
   content: "";
   transition: all .3s;
-  border: solid #ccc;
-  border-width: 0 1px 1px 0;
+  border: solid $orange;
+  border-width: 0 3px 3px 0;
   float: right;
   margin-top: 8px;
   margin-right: 6px;
@@ -83,31 +159,31 @@
 .dropdown__text,
 .dropdown, .active {
   box-sizing: border-box;
-  width: 420px;
+  width: 250px;
   border: none;
 }
 
 .dropdown.active .dropdown__items {
   visibility: visible;
-  border-top: 1px solid #666;
+  border-top: 1px solid rgba($text-base-color, .5);
   height: auto;
   max-height: 290px;
   opacity: 1;
-  transition: max-height 0.7s, opacity 3s, visibility 4s ease;
+  transition: max-height 0.7s, opacity 1s, visibility 1s ease;
 }
 
 .dropdown__item {
   cursor: pointer;
   padding: 10px 18px;
+  background-color: rgba($background-gray, .5)
 }
 
 .dropdown__item:not(:last-child) {
-  border-bottom: 1px solid #666;
+  border-bottom: 1px solid rgba($text-base-color, .5);
 }
 
 .dropdown__item:hover {
-  color: white;
-  background: #3a4143;
+  background: #e6e6e6;
 }
 
 .react-datepicker__time-list-item {
@@ -146,4 +222,8 @@ li.react-datepicker__time-list-item--selected,
   background-color: $orange !important;
 }
 
-
+.react-datepicker__day--range-start {
+  font-weight: bold !important;
+  color:white !important;
+  border-radius: 0.3rem !important;
+}

@@ -53,7 +53,7 @@ class UserEventsEditor extends React.Component<IUserEventsEditorProps, IUserEven
       this.setState({
         ...this.state,
         title: 'Test Event',
-        description: 'This event is created only for testing',
+        description: 'This event was created only for testing',
         location: {lat: 43.45302254999737, lng: -3.842123892834479},
         dateRange: {
           startDate: new Date(2019, 11, 12),
@@ -146,16 +146,17 @@ class UserEventsEditor extends React.Component<IUserEventsEditorProps, IUserEven
         
         <div className="inputs">
 
-          <label>Title: 
-            <input type="text" className='text-input' value={this.state.title} onChange={e => this.onChangeData(e, 'title')}/>
+          <label className='input-wrp'><span className='label'>Title: </span> 
+            <input type="text" className='text-input' placeholder='Enter event title here...' value={this.state.title} onChange={e => this.onChangeData(e, 'title')}/>
+          </label>
+
+          <label className='input-wrp'><span className='label'>Details: </span> 
+            <textarea value={this.state.description} className='text-input' placeholder='Add more info here...' onChange={e => this.onChangeData(e, 'description')}></textarea>
           </label>
           
-          <MapWithASearchBox 
-            onLocationChanged={this.onLocationChanged} 
-            defaultMarkerPosition={this.state.location}
-          />
-
-          <div>
+          <div className='input-wrp'>
+            <span className='label'>Time: </span> 
+            <div className='time-picker'>
             <DatePicker
               selected={this.state.dateRange.startDate}
               selectsStart
@@ -180,29 +181,45 @@ class UserEventsEditor extends React.Component<IUserEventsEditorProps, IUserEven
               showTimeSelect
               dateFormat="MMMM d, yyyy h:mm aa"
             />
+            </div>
           </div>
-          <label>Description: 
-            <textarea value={this.state.description} className='text-input' onChange={e => this.onChangeData(e, 'description')}></textarea>
-          </label>
-
-          <div
-            className={this.state.isDropDownOpen ? "dropdown active" : "dropdown"}
-            onClick={this.onToggleDropDown} >
-            <div className="dropdown__text">
-              { DROPDOWN_LABEL }
-            </div>
-            <div className="dropdown__items">
-              <div onClick={() => this.onChangePrivacy(false)} className="dropdown__item">
-                Public (All authorized users can see and participate)
+          
+          <div className='input-wrp'>
+            <span className='label'>Location: </span> 
+            <MapWithASearchBox 
+              onLocationChanged={this.onLocationChanged} 
+              defaultMarkerPosition={this.state.location}
+            />
+          </div>
+          
+          <div className='input-wrp'>
+            <span className='label'>Privacy: </span> 
+            <div className='privacy'>
+              <div
+                className={this.state.isDropDownOpen ? "dropdown active" : "dropdown"}
+                onClick={this.onToggleDropDown} 
+              >
+                <div className="dropdown__text">
+                  { DROPDOWN_LABEL }
+                </div>
+                <div className="dropdown__items">
+                  <div onClick={() => this.onChangePrivacy(false)} className="dropdown__item">
+                    Public
+                  </div>
+                  <div onClick={() => this.onChangePrivacy(true)} className="dropdown__item">
+                    Private
+                  </div>
+                </div>
               </div>
-              <div onClick={() => this.onChangePrivacy(true)} className="dropdown__item">
-                Private (by invitation only)
-              </div>
             </div>
+            
           </div>
         </div>
-        <button onClick={this.onCancel} type='button'>Cancel</button>
-        <button onClick={this.onSave} type='button'>Save</button>
+        <div className='footer'>
+          <button className='cancel-btn' onClick={this.onCancel} type='button'>Cancel</button>
+          <button className='save-btn' onClick={this.onSave} type='button'>Save</button>
+        </div>
+        
       </div>
     );
   }  
