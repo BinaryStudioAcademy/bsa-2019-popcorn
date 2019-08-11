@@ -6,7 +6,7 @@ import TopList from "../TopList/TopList";
 
 const FeedBlock =()=>{
         return <div className="feed-block">
-            <FeedList />
+            <FeedList posts={null}/>{/* TODO posts from api*/}
             <RecommendList />
             <TopList/>
         </div>
