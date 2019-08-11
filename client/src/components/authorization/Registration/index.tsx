@@ -2,7 +2,7 @@ import * as React from "react";
 import { Form, Formik, Field, ErrorMessage } from "formik";
 import * as Yup from 'yup';
 import "./Registration.scss";
-import { NavLink } from 'react-router-dom';
+import { NavLink, Redirect } from 'react-router-dom';
 
 interface Values {
   name: string,
@@ -41,7 +41,7 @@ class Registration extends React.Component<IProps, IState> {
     return (
       <div className={"form-wrapper"}>
         { isAuthorized
-          ? null /* <Redirect to="/main"> */ :
+          ? <Redirect to="/" /> :
           (
             <div>
               <h1 className="form-heading">Join Pop Corn</h1>
