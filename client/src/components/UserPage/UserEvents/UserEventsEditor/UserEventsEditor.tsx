@@ -3,6 +3,7 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import './UserEventsEditor.scss';
 import MapWithASearchBox from '../EventMap/EventMapSearch';
+import { ReactComponent as PhotoIcon } from '../../../../assets/icons/general/photoIcon.svg';
 
 interface IUserEventsEditorProps {
   id?: string,
@@ -148,6 +149,10 @@ class UserEventsEditor extends React.Component<IUserEventsEditorProps, IUserEven
 
           <label className='input-wrp'><span className='label'>Title: </span> 
             <input type="text" className='text-input' placeholder='Enter event title here...' value={this.state.title} onChange={e => this.onChangeData(e, 'title')}/>
+          </label>
+
+          <label className='input-wrp'><span className='label'>Image: </span> 
+            <div className='img-uploader'><PhotoIcon/></div>
           </label>
 
           <label className='input-wrp'><span className='label'>Details: </span> 
