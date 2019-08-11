@@ -16,6 +16,9 @@
     flex-direction: column;
     width: 80%;
 
+    .event-image {
+      max-width: 100%;
+    }
     .input-wrp {
       margin-bottom: 20px;
       &:first-child {

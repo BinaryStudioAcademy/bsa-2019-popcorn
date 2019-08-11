@@ -20,6 +20,7 @@ interface IUserEventsEditorState {
     startDate: Date | undefined,
     endDate: Date | undefined
   },
+  image: string,
   isPrivate: boolean,
   isDropDownOpen: boolean
 }
@@ -35,6 +36,7 @@ class UserEventsEditor extends React.Component<IUserEventsEditorProps, IUserEven
         startDate: undefined,
         endDate: undefined
       },
+      image: '',
       isPrivate: false,
       isDropDownOpen: false
     };
@@ -60,6 +62,7 @@ class UserEventsEditor extends React.Component<IUserEventsEditorProps, IUserEven
           startDate: new Date(2019, 11, 12),
           endDate: new Date(2019, 11, 13)
         },
+        image: 'https://www.trbimg.com/img-576176c0/turbine/bal-baltimore-summer-outdoor-movie-festivals-2016-lineup-20160615',
         isPrivate: true
       });
     }
@@ -156,7 +159,10 @@ class UserEventsEditor extends React.Component<IUserEventsEditorProps, IUserEven
           </label>
 
           <label className='input-wrp'><span className='label'>Image: </span> 
-            <div className='img-uploader'><PhotoIcon/></div>
+            <div className='img-uploader'>
+              {this.state.image && <img alt='event image' src={this.state.image} className='event-image'/>}
+              <PhotoIcon/>
+            </div>
           </label>
 
           <label className='input-wrp'><span className='label'>Details: </span> 
