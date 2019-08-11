@@ -6,6 +6,13 @@
 	.comment-date{
 		margin-top: 4px;
 		text-transform: uppercase;
+		display: flex;
 		color: rgba(18, 39, 55, 0.5);
+		button{
+			margin-left: auto;
+			font: inherit;
+			color: inherit;
+			text-transform: inherit;
+		}
 	}
 }

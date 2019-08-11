@@ -2,10 +2,10 @@ import React from "react";
 import './AddComment.scss'
 
  interface IAddCommentProps{
-     
+     parentId?: string
 }
 
-class AddComment extends React.Component {
+class AddComment extends React.Component<IAddCommentProps> {
     constructor(props:IAddCommentProps) {
         super(props);
         this.state = {
