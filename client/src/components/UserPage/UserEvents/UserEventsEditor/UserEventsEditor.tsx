@@ -98,7 +98,6 @@ class UserEventsEditor extends React.Component<IUserEventsEditorProps, IUserEven
     const now = new Date();
     const isValidateDate = startDate ? startDate > now : true && endDate ? endDate > now : true;
     const isValidateRange = endDate > startDate || !startDate || !endDate;
-    console.log(isValidateDate, isValidateDate)
     return isValidateDate && isValidateRange;
   }
 
@@ -138,6 +137,7 @@ class UserEventsEditor extends React.Component<IUserEventsEditorProps, IUserEven
         startDate: undefined,
         endDate: undefined
       },
+      image: '',
       isPrivate: false
     });
     console.log('redirected');
