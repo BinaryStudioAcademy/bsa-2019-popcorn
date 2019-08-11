@@ -92,7 +92,11 @@ class UserEventsEditor extends React.Component<IUserEventsEditorProps, IUserEven
   }
 
   validateDateRange({startDate, endDate}) {
-    return endDate > startDate || !startDate || !endDate;
+    const now = new Date();
+    const isValidateDate = startDate ? startDate > now : true && endDate ? endDate > now : true;
+    const isValidateRange = endDate > startDate || !startDate || !endDate;
+    console.log(isValidateDate, isValidateDate)
+    return isValidateDate && isValidateRange;
   }
 
   onToggleDropDown() {

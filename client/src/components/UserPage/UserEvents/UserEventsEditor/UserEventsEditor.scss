@@ -61,8 +61,8 @@
     }
     .react-datepicker-wrapper {
       width: 49%;
-      &:nth-child(2) {
-        float: right;
+      &:first-child {
+        margin-right: 2%;
       }
     }
     .time-picker input,.react-datepicker__input-container {
