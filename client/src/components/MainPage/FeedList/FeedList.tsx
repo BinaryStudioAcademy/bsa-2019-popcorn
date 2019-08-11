@@ -2,13 +2,29 @@ import React from "react";
 import FeedItem from "../FeedItem/FeedItem";
 import "./FeedList.scss"
 
-const FeedList = ()=>{
-    return <div className='feed-list'>
-        <div className='feed-heading'>News feed</div>
-        <FeedItem feedItem={{author:"Doug Walker", postDate:"2 hours ago", postImage:"https://ichef.bbci.co.uk/news/660/cpsprodpb/462C/production/_107846971_lion_king_disney.jpg", authorImage:"https://pbs.twimg.com/profile_images/1088129693390385152/oYJSGsdq_400x400.jpg"}}></FeedItem>
-        <FeedItem feedItem={{author:"Doug Walker", postDate:"2 hours ago", postImage:"https://ichef.bbci.co.uk/news/660/cpsprodpb/462C/production/_107846971_lion_king_disney.jpg", authorImage:"https://pbs.twimg.com/profile_images/1088129693390385152/oYJSGsdq_400x400.jpg"}}></FeedItem>
-        <FeedItem feedItem={{author:"Doug Walker", postDate:"2 hours ago", postImage:"https://ichef.bbci.co.uk/news/660/cpsprodpb/462C/production/_107846971_lion_king_disney.jpg", authorImage:"https://pbs.twimg.com/profile_images/1088129693390385152/oYJSGsdq_400x400.jpg"}}></FeedItem>
-        </div>
+interface IPosts {
+    posts : null | Array<{id: string
+    user:{
+        name : string,
+        avatar: string
+    },
+    //created_At,
+    imageUrl: string}>
 }
+const FeedList = ({posts} : IPosts) => {
+    return <div className={"feed-list"}>
+        <div className={"feed-heading"}>News feed</div>
+        {posts ?
+            posts.map(post =>
+                <FeedItem key={post.id} feedItem={{
+                    author: post.user.name,
+                    postDate: "2 hours ago", //post.created_At
+                    postImage: post.imageUrl,
+                    authorImage: post.user.avatar
+                }}/>)
+            :
+            <div>There is no post</div>}
+    </div>
+};
 
 export default FeedList;

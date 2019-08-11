@@ -1,0 +1,38 @@
+@import '../../../styles/variables.scss';
+@import '../AdvancedMovieSearch/CustomCheckbox.scss';
+
+.checkbox-block{
+    font-family: $base-font-family;
+    max-height: 240px;
+    overflow-y: scroll;
+}
+
+.checkbox-header{
+    font-size: $header-large;
+    align-self: center;
+}
+
+.checkbox-block::-webkit-scrollbar {
+    width: 4px;
+  }
+  
+  /* Handle */
+  .checkbox-block::-webkit-scrollbar-thumb {
+    background: rgba($black, 0.5) ; 
+    border-radius: 10px;
+  }
+
+  .checkbox-input{
+    font-family: $base-font-family;
+    font-size: 16px;
+    line-height: 19px;
+    box-shadow: rgba($black, .04);
+    border-radius: 3px;
+    background: $white;
+    padding:.5em;
+    margin-bottom: .5em;
+    outline:none;
+    border: 1px solid rgba(0, 0, 0, 0.11);
+  }
+
+  
