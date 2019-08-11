@@ -33,7 +33,7 @@ app.get('*', (req, res) => {
     res.end();
 });
 
-const SERVER_PORT = 5000;
+const SERVER_PORT = process.env.PORT || 5000;
 app.use(errorHandlerMiddleware);
 createConnection(db_config)
     .then(connection => connection.runMigrations())
