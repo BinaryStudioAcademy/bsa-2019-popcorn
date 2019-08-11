@@ -76,9 +76,19 @@ export function* fetchUser(action) {
     try {
         let user = yield call(fetch, config.API_URL + '/api/auth/user', init);
 
+        console.log(user);
+
         if (!user.ok) {
             localStorage.setItem('token', '');
-            // TODO re-render
+
+            yield put({
+                type: SET_LOGIN_ERROR,
+                payload:{
+                    loginError: "You have been absent for a long time"
+                }
+
+            });
+
         } else {
             user = yield call(user.json.bind(user));
 
