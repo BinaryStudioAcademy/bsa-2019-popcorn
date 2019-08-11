@@ -76,7 +76,6 @@ export function* fetchUser(action) {
     try {
         let user = yield call(fetch, config.API_URL + '/api/auth/user', init);
 
-        console.log(user);
 
         if (!user.ok) {
             localStorage.setItem('token', '');

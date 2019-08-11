@@ -31,7 +31,6 @@ export default function (state = initialState, action) {
             }
         }
         case LOGIN:
-            console.log(action.payload);
             return {
                 ...state,
                 profileInfo: action.payload.user
