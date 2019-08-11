@@ -76,9 +76,18 @@ export function* fetchUser(action) {
     try {
         let user = yield call(fetch, config.API_URL + '/api/auth/user', init);
 
+
         if (!user.ok) {
             localStorage.setItem('token', '');
-            // TODO re-render
+
+            yield put({
+                type: SET_LOGIN_ERROR,
+                payload:{
+                    loginError: "You have been absent for a long time"
+                }
+
+            });
+
         } else {
             user = yield call(user.json.bind(user));
 
@@ -95,12 +104,11 @@ export function* fetchUser(action) {
 export function* fetchRegistration(action){
     try{
         const data = yield call(axios.post, config.API_URL + "/api/auth/register", {...action.payload});
-
-        localStorage.setItem('token', data.token);
+        localStorage.setItem('token', data.data.token);
 
         yield put({
             type: LOGIN,
-            payload: {user: data.user[0]}
+            payload: {user: data.data.user[0]}
         });
     }catch (e) {
         console.log('user saga fetch registration:', e.message);
