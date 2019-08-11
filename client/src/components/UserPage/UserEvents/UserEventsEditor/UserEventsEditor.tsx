@@ -173,7 +173,7 @@ class UserEventsEditor extends React.Component<IUserEventsEditorProps, IUserEven
               startDate={this.state.dateRange.startDate}
               endDate={this.state.dateRange.endDate}
               onChange={(date) => this.onChangeDate({ endDate: date })}
-              minDate={this.state.dateRange.startDate}
+              minDate={this.state.dateRange.startDate || new Date()}
               showDisabledMonthNavigation
               showTimeSelect
               dateFormat="MMMM d, yyyy h:mm aa"
