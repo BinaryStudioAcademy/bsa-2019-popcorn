@@ -1,5 +1,5 @@
 import React from 'react';
-import FeedList from '../../MainPage/FeedList/FeedList';
+import PostList from '../../MainPage/PostList/PostList';
 import Spinner from "../../shared/Spinner";
 interface IProps {
     userPosts?:any,// todo
@@ -13,8 +13,8 @@ const UserPosts: React.FC<IProps> = ({userPosts, getUsersPosts}) => {
         return <Spinner/>
     }
     return (
-        <div className={"UserPosts"}>
-            <FeedList posts={userPosts}/>
+        <div className="UserPosts">
+            <PostList/>
         </div>
     );
 };
