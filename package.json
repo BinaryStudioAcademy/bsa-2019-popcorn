@@ -9,10 +9,10 @@
   "dependencies": {},
   "devDependencies": {},
   "scripts": {
-    "build": "concurrently \"cd client && yarn build\"",
+    "build": "concurrently \"cd client && npm run build\"",
     "heroku-postbuild": "npm run build",
-    "install": "(cd client && yarn) && (cd server && npm i)",
-    "start": "concurrently \"cd client && PORT=3000 yarn start\" \"cd server && PORT=5000 npm run start-server\""
+    "install": "(cd client && npm i) && (cd server && npm i)",
+    "start": "concurrently \"cd client && PORT=3000 npm run start\" \"cd server && PORT=5000 npm run start-server\""
   },
   "repository": {
     "type": "git",
