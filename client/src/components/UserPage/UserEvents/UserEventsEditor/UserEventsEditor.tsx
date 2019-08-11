@@ -73,7 +73,10 @@ class UserEventsEditor extends React.Component<IUserEventsEditorProps, IUserEven
   }
 
   onLocationChanged(newCord) {
-    console.log('onLocationChanged',newCord);
+    this.setState({
+      ...this.state,
+      location: newCord
+    });
   }
 
   onChangeDate(newDate) {
@@ -101,8 +104,8 @@ class UserEventsEditor extends React.Component<IUserEventsEditorProps, IUserEven
   onSave() {
     if (
       this.state.title.trim() === '' ||
-      this.state.description.trim() === '' 
-      // !this.state.location 
+      this.state.description.trim() === '' ||
+      !this.state.location 
     ) return;
 
     this.props.id
