@@ -1,4 +1,4 @@
-import React, { PureComponent } from 'react';
+import React from 'react';
 import BarChart from "./BarChart";
 import PieChart from "./PieChart";
 import './../Survey/Survey.scss';
@@ -72,7 +72,7 @@ const SurveyStatistics: React.FC<IProps> = (props: IProps) => {
         questions.forEach(({ answers }) => {
             if (!answers.length) haveAnswers = false
         })
-        return false;
+        return haveAnswers;
     }
 
     return (
