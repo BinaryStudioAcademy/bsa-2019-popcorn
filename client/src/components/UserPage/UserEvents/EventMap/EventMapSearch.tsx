@@ -76,12 +76,14 @@ const MapWithASearchBox = compose(
       })
     },
     componentWillReceiveProps(nextProps) {
-      this.setState({
+      if (Array.isArray(this.state.marker) && nextProps.defaultMarkerPosition) {
+        this.setState({
         center: {
           ...nextProps.defaultMarkerPosition
         },
         defaultMarkerPosition: nextProps.defaultMarkerPosition,
       });
+      }
     }
   }),
   withScriptjs,

@@ -102,7 +102,7 @@ class UserEventsEditor extends React.Component<IUserEventsEditorProps, IUserEven
     if (
       this.state.title.trim() === '' ||
       this.state.description.trim() === '' 
-      // this.state.location.trim() === '' 
+      // !this.state.location 
     ) return;
 
     this.props.id
