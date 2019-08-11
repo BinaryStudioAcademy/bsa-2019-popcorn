@@ -11,7 +11,10 @@ interface IUserEventsEditorProps {
 interface IUserEventsEditorState {
   title: string,
   description: string,
-  location: string,
+  location: {
+    lat: number,
+    lng: number
+  } | undefined,
   dateRange: {
     startDate: Date | undefined,
     endDate: Date | undefined
@@ -26,7 +29,7 @@ class UserEventsEditor extends React.Component<IUserEventsEditorProps, IUserEven
     this.state = {
       title: '',
       description: '',
-      location: '',
+      location: undefined,
       dateRange: {
         startDate: undefined,
         endDate: undefined
@@ -40,6 +43,7 @@ class UserEventsEditor extends React.Component<IUserEventsEditorProps, IUserEven
     this.onChangeData = this.onChangeData.bind(this);
     this.onChangeDate = this.onChangeDate.bind(this);
     this.onToggleDropDown = this.onToggleDropDown.bind(this);
+    this.onLocationChanged = this.onLocationChanged.bind(this);
   }
 
   componentDidMount() {
@@ -49,7 +53,7 @@ class UserEventsEditor extends React.Component<IUserEventsEditorProps, IUserEven
         ...this.state,
         title: 'Test Event',
         description: 'This event is created only for testing',
-        location: 'Kyiv, Independence Square',
+        location: {lat: 43.45302254999737, lng: -3.842123892834479},
         dateRange: {
           startDate: new Date(2019, 11, 12),
           endDate: new Date(2019, 11, 13)
@@ -68,8 +72,11 @@ class UserEventsEditor extends React.Component<IUserEventsEditorProps, IUserEven
     });
   }
 
+  onLocationChanged(newCord) {
+    console.log('onLocationChanged',newCord);
+  }
+
   onChangeDate(newDate) {
-    console.log(newDate);
     this.setState({
         ...this.state,
         dateRange: {
@@ -94,8 +101,8 @@ class UserEventsEditor extends React.Component<IUserEventsEditorProps, IUserEven
   onSave() {
     if (
       this.state.title.trim() === '' ||
-      this.state.description.trim() === '' ||
-      this.state.location.trim() === '' 
+      this.state.description.trim() === '' 
+      // this.state.location.trim() === '' 
     ) return;
 
     this.props.id
@@ -108,7 +115,7 @@ class UserEventsEditor extends React.Component<IUserEventsEditorProps, IUserEven
     this.setState({
       title: '',
       description: '',
-      location: '',
+      location: undefined,
       dateRange: {
         startDate: undefined,
         endDate: undefined
@@ -133,10 +140,10 @@ class UserEventsEditor extends React.Component<IUserEventsEditorProps, IUserEven
             <input type="text" className='text-input' value={this.state.title} onChange={e => this.onChangeData(e, 'title')}/>
           </label>
           
-          <label>Location: 
-            <input type="text" className='text-input' value={this.state.location} onChange={e => this.onChangeData(e, 'location')}/>
-          </label>
-          <MapWithASearchBox/>
+          <MapWithASearchBox 
+            onLocationChanged={this.onLocationChanged} 
+            defaultMarkerPosition={this.state.location}
+          />
 
           <div>
             <DatePicker

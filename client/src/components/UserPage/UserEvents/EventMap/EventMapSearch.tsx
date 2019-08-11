@@ -27,17 +27,17 @@ const MapWithASearchBox = compose(
         center: {
           lat: 41.9, lng: -87.624
         },
-        markers: [],
+        marker: [],
+        defaultMarkerPosition: this.props.defaultMarkerPosition,
         onMapMounted: ref => {
           refs.map = ref;
         },
         onMarkerMounted: ref => {
-          console.log('marker mounted')
           refs.marker = ref;
         },
         onPositionChanged: () => {
           const position = refs.marker.getPosition();
-          console.log(position.toString());
+          this.props.onLocationChanged({lat: position.lat(), lng: position.lng()});
         },
         onBoundsChanged: () => {
           this.setState({
@@ -65,12 +65,24 @@ const MapWithASearchBox = compose(
 
           this.setState({
             center: nextCenter,
-            markers: nextMarkers,
+            marker: nextMarkers[0],
           });
-          // refs.map.fitBounds(bounds);
+          const position = refs.marker.getPosition();
+          this.props.onLocationChanged({lat: position.lat(), lng: position.lng()});
+
+          refs.map.fitBounds(bounds);
         },
+        
       })
     },
+    componentWillReceiveProps(nextProps) {
+      this.setState({
+        center: {
+          ...nextProps.defaultMarkerPosition
+        },
+        defaultMarkerPosition: nextProps.defaultMarkerPosition,
+      });
+    }
   }),
   withScriptjs,
   withGoogleMap
@@ -105,16 +117,12 @@ const MapWithASearchBox = compose(
         }}
       />
     </SearchBox>
-    {props.markers.map((marker, index) =>{
-        return <Marker 
+    <Marker 
           ref={props.onMarkerMounted}
-          key={index} 
-          position={marker.position} 
+          position={props.marker.position || props.defaultMarkerPosition} 
           draggable={true}
           onPositionChanged={props.onPositionChanged}
         />
-      }    
-    )}
   </GoogleMap>
 });
 
