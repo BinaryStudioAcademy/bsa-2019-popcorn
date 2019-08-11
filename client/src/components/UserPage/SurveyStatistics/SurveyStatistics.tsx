@@ -19,25 +19,27 @@ interface IAnswer {
     value: string
 };
 
-interface IProps {
-    questions: Array<{
+interface IQuesstion {
+    id: string,
+    survey_id: string,
+    title: string,
+    firstLabel?: string,
+    lastLabel?: string,
+    type: string,
+    image_link?: string,
+    required: boolean,
+    options?: Array<IOption>,
+    answers: Array<{
         id: string,
-        survey_id: string,
-        title: string,
-        firstLabel?: string,
-        lastLabel?: string,
-        type: string,
-        image_link?: string,
-        required: boolean,
-        options?: Array<IOption>,
-        answers: Array<{
-            id: string,
-            question_id: string,
-            option_id?: string,
-            user_id: string,
-            value: string
-        }>
+        question_id: string,
+        option_id?: string,
+        user_id: string,
+        value: string
     }>
+};
+
+interface IProps {
+    questions: Array<IQuesstion>
 };
 
 const SurveyStatistics: React.FC<IProps> = (props: IProps) => {
@@ -65,28 +67,40 @@ const SurveyStatistics: React.FC<IProps> = (props: IProps) => {
         return res;
     };
 
+    const checkForAnswers = (questions: IQuesstion[]) => {
+        let haveAnswers = true;
+        questions.forEach(({ answers }) => {
+            if (!answers.length) haveAnswers = false
+        })
+        return false;
+    }
+
     return (
         <div className="survey">
             <div className="survey-background"></div>
             <div className="survey-statistics">
                 {
-                    questions.map(question => (
-                        question.options && (
-                            <div key={question.id} className="question-container">
-                                <h3 className="survey-question question-title">{question.title}</h3>
-                                <p className="responses-info">{question.answers.length} responses</p>
-                                <div className="barChart">
-                                    <BarChart
-                                        keys={getOptionsKeys(question.options)}
-                                        data={convertDataForBarChart(question)}
-                                    />
+                    checkForAnswers(questions) ? (
+                        questions.map(question => (
+                            question.options && (
+                                <div key={question.id} className="question-container">
+                                    <h3 className="survey-question question-title">{question.title}</h3>
+                                    <p className="responses-info">{question.answers.length} responses</p>
+                                    <div className="barChart">
+                                        <BarChart
+                                            keys={getOptionsKeys(question.options)}
+                                            data={convertDataForBarChart(question)}
+                                        />
+                                    </div>
+                                    <div className="pieChart">
+                                        <PieChart data={convertDataForPieChart(question)} />
+                                    </div>
                                 </div>
-                                <div className="pieChart">
-                                    <PieChart data={convertDataForPieChart(question)} />
-                                </div>
-                            </div>
+                            )
+                        ))
+                    ) : (
+                            <h3>This survey doesnt have any responses</h3>
                         )
-                    ))
                 }
             </div>
         </div>
