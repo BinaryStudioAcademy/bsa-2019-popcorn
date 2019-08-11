@@ -25,7 +25,7 @@ const MovieSeriesPage: React.SFC<IProps> = ({ movie }) => {
     return (
         movie ?
         <div className="movie-series-page">
-            <MovieSeriesPageHeader movieSeriesData={{title: movie.title, year: movie.year, genre: [], rating: 3.5}} />
+            <MovieSeriesPageHeader movieSeriesData={movie} />
             <MovieSeriesPageTabs mainPath={mainPath}/>
             <MovieSeriesPageTabBody mainPath={mainPath} movie={movie}/>
         </div>
