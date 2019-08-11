@@ -3,6 +3,8 @@ import SurveySingleAnswer from '../SurveyItems/SurveySingleAnswer/SurveySingleAn
 import SurveyMultipleAnswer from '../SurveyItems/SurveyMultipleAnswer/SurveyMultipleAnswer';
 import SurveyShortAnswer from '../SurveyItems/SurveyShortAnswer/SurveyShortAnswer';
 import SurveyLinearScale from '../SurveyItems/SurveyLinearScale/SurveyLinearScale';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faArrowCircleLeft, faArrowCircleRight } from '@fortawesome/free-solid-svg-icons';
 import './../Survey/Survey.scss';
 import "./SurveyIndividual.scss";
 
@@ -95,12 +97,16 @@ class SurveyIndividual extends PureComponent<IProps, IState> {
             <div className="survey">
                 <div className="survey-background" />
                 <form>
-                    <p>
-                        <span onClick={() => this.moveToPrevUser()}>prev</span>
-                        {currUserIndex + 1} of {usersIdList.length}
-                        <span onClick={() => this.moveToNextUser()}>next</span>
-                    </p>
                     <div className="form-header" />
+                    <p className="page-control-wrapper">
+                        <span onClick={() => this.moveToPrevUser()} className="page-control page-control--left">
+                            <FontAwesomeIcon icon={faArrowCircleLeft} />
+                        </span>
+                        {currUserIndex + 1} of {usersIdList.length}
+                        <span onClick={() => this.moveToNextUser()} className="page-control page-control--right">
+                            <FontAwesomeIcon icon={faArrowCircleRight}/>
+                        </span>
+                    </p>
                     {
                         questions.map((question, i) => {
                             if (question.type === 'Multiple choice') {
@@ -128,7 +134,7 @@ class SurveyIndividual extends PureComponent<IProps, IState> {
                                         }
                                     />
                                 );
-    
+
                             }
 
                             else if (question.type === 'Short Answer') {

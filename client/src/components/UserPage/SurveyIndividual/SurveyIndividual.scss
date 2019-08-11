@@ -1,3 +1,25 @@
+@import "../../../styles/variables.scss";
+
 .survey-individual {
     padding-top: 40px;
+}
+.page-control-wrapper{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    margin: 30px 0 40px 0;
+    font-family: $base-font-family;
+    color: $text-base-color;
+    font-size: 23px;
+}
+
+.page-control {
+    color: $button-background;
+    cursor: pointer;
+    &--left {
+        margin-right: 40px;
+    }
+    &--right {
+        margin-left: 40px;
+    }
 }
