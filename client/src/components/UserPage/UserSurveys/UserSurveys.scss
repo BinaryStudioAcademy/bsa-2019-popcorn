@@ -1,6 +1,86 @@
+@import '../../../styles/variables.scss';
+@import url('https://rsms.me/inter/inter.css');
+
 .userSurveys {
+    display: flex;
+    flex-direction: column;
+    color: $text-base-color;
+    font-family: $base-font-family;
+    margin-top: 10px;
+
+    .create-button {
+        width: 100%;
+        margin: 0;
+
+        button {
+            width: 100%;
+            background-color: $background-gray;
+            height: 40px;
+            cursor: pointer;
+            font-size: $header-medium;
+            border: none;
+            box-shadow: 0 1px 4px 0 rgba(0,0,0,0.37);
+            font-weight: bold;
+            color: $text-base-color;
+    
+            &:hover {
+                box-shadow: 0 2px 4px 0 rgba(0,0,0,0.37);
+            }
+        }
+    }
+
     a {
         margin: 20px;
+        text-decoration: none;
+        color: $text-base-color;
+        font-size: $header-medium;
+    }
+
+    .survey-list-item {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        box-shadow: 0 1px 4px 0 rgba(0,0,0,0.37);
+        padding: 20px;
+
+        &:hover {
+            box-shadow: 1px 3px 5px 1px rgba(0,0,0,0.37);
+        }
+
+        span {
+            width: 65%;
+        }
+
+        .buttons {
+            width: 30%;
+            text-align: center;
+        }
+
+        button {
+            margin-left: 5px;
+            margin-bottom: 2px;
+            background-color: $button-background;
+            color: $white;
+            box-shadow: 0px 5px 12px $button-shadow-color;
+            border: none;
+            padding: 7px;
+            height: 43px;
+            border-radius: 55px;
+            cursor: pointer;
+            width: 105px;
+            border: none;
+            outline: none;
+            font-size: $menu-font-size;
+            font-weight: bold;
+            &:hover {
+                background-color: rgb(216, 86, 0);
+            }
+        }
+
+        .delete-bttn {
+            width: 43px;
+        }
     }
 
     .modal-delete-container {
@@ -15,12 +95,40 @@
         top: 0;
 
         .modal-delete {
-            width: 300px;
-            height: 300px;
+            width: 400px;
             display: flex;
             flex-direction: column;
-            background-color: white;
-            padding: 20px;
+            background-color: $white;
+            padding: 30px;
+            -moz-border-radius: 15px;
+            border-radius: 15px;
+
+            p {
+                text-align: center;
+            }
+
+            button {
+                display: block;
+                border: none;
+                height: 50px;
+                width: 100%;
+                background-color: transparent;
+                border-bottom: 0.5px solid rgba($color: $black, $alpha: .3);
+                font-size: $menu-font-size;
+                font-family: $base-font-family;
+                font-weight: 600;
+                color: $text-base-color;
+                cursor: pointer;
+            }
+    
+            button:active, 
+            button:focus {
+                outline: none;
+            }
+    
+            .delete {
+                color: #ED4956;
+            }
         }
     }
 }

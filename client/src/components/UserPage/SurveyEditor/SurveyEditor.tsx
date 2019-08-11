@@ -6,7 +6,7 @@ import ShortAnswer from '../SurveyEditorItems/ShortAnswer';
 import LinearScale from '../SurveyEditorItems/LinearScale';
 import { Snackbar } from '@material-ui/core';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTimesCircle } from '@fortawesome/free-solid-svg-icons';
+import { faTimesCircle, faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
  
 const QUESTION_TYPES = [ "Multiple choice", "Checkboxes", "Short Answer", "Linear scale" ];
 
@@ -138,10 +138,12 @@ class SurveyEditor extends Component<IProps, IState> {
     }
 
     changeType = (event, id) => {
-        let result, type = event.target.value;
+        let type = event.target.value;
+        let result;
     
         const questions = this.state.surveyInfo.questions.map(question => {
             if (question.id === id) {
+                result = { type };
                 if (question.type === 'Linear scale') 
                     result = { 
                         ...result, 
@@ -153,7 +155,7 @@ class SurveyEditor extends Component<IProps, IState> {
                             question_id: question.id,
                             value: ''
                         }] 
-                    };
+                    }; 
                 else if (question.type === 'Short Answer') 
                     result = {
                         ...result,
@@ -183,8 +185,6 @@ class SurveyEditor extends Component<IProps, IState> {
                         }
                     ]
                 }
-
-                else result = { type };
                 return { ...question, ...result }
             };
             return question;
@@ -194,6 +194,7 @@ class SurveyEditor extends Component<IProps, IState> {
             ...this.state.surveyInfo,
             questions 
         }});
+
     }
 
     changeRequirement = (id) => {
@@ -308,24 +309,29 @@ class SurveyEditor extends Component<IProps, IState> {
     render() {
         const { mainPath } = this.props;
         const { title, description, questions } = this.state.surveyInfo;
+        console.log(questions);
 
         return (
             <div>
                 {
                     this.validateSurvey() &&
                     <NavLink
+                        className="preview link" 
                         to={`${mainPath}/preview`}
                     >
-                        <div>preview</div>
+                        <div><FontAwesomeIcon icon={faEye} />Preview?</div>
                     </NavLink>
                 }
 
                 {
                     !this.validateSurvey() && 
-                    <div>Fill in all required fields to see preview</div>
+                    <div className="preview">
+                        <FontAwesomeIcon icon={faEyeSlash} />
+                        Fill in all required fields to see preview
+                    </div>
                 }
                 
-                <form>
+                <form className="survey-editor-form">
                     <p className="required-label">*required</p>
                     <input 
                         type="text" 

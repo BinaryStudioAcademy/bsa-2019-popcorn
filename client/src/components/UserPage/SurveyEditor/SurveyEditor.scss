@@ -1,4 +1,5 @@
 @import "../../../styles/variables.scss";
+@import url('https://rsms.me/inter/inter.css');
 
 .required-label {
     margin: 10px;
@@ -11,16 +12,58 @@
 }
 
 .survey-editor {
-    a {
+    font-family: $base-font-family;
+
+    .nav-header {
+        display: flex;
+        justify-content: space-around;
         margin: 20px;
     }
 
-    form {
+    a {
+        text-decoration: none;
+        color: $text-base-color;
+        font-weight: 600;
+        font-size: $header-medium;
+    }
+
+    .preview {
+        margin-top: 20px;
+        font-size: $form-font-size;
+        display: flex;
+        justify-content: center;
+        background-color: $background-gray;
+        box-shadow: 0 1px 4px 0 rgba(0,0,0,0.37);
+        padding: 10px;
+
+        svg {
+            margin-right: 5px;
+        }
+
+        div {
+            width: fit-content;
+        }
+    }
+
+    .link:hover {
+        box-shadow: 0 2px 4px 0 rgba(0,0,0,0.37);
+    }
+
+    .survey-editor-form {
         display: flex;
         flex-direction: column;
 
         input {
+            font-size: $form-font-size;
             padding: 5px;
+            margin: 20px;
+            border: none;
+            border-bottom: 1px solid $input-placeholder-color;
+        }
+    
+        input:focus {
+            border-bottom: 2px solid $orange-light;
+            outline: none;
         }
 
         > * {

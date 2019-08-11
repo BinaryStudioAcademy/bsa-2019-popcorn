@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Switch, Route } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPlus } from '@fortawesome/free-solid-svg-icons';
+import { faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 import { NavLink } from 'react-router-dom';
 import "./UserSurveys.scss";
 
@@ -116,7 +116,7 @@ const UserSurveys: React.FC<IProps> = (props: IProps) => {
             <div className="modal-delete-container">
                 <div className="modal-delete">
                     <p>Are you sure you want to delete this survey?</p>
-                    <button onClick={deleteSurvey}>Delete</button>
+                    <button className="delete" onClick={deleteSurvey}>Delete</button>
                     <button onClick={() => { setDeletedSurvey(-1) }}>Cancel</button>
                 </div>
             </div>
@@ -127,9 +127,9 @@ const UserSurveys: React.FC<IProps> = (props: IProps) => {
         <div className="userSurveys">
             <NavLink
                 to={`${mainPath}/create`}
+                className="create-button"
             >
                 <button>
-                    <FontAwesomeIcon icon={faPlus} />
                     Create survey
                 </button>
             </NavLink>
@@ -142,12 +142,17 @@ const UserSurveys: React.FC<IProps> = (props: IProps) => {
                                 exact={!i}
                                 to={`${mainPath}/${survey.id}`}
                             >
-                                <div>
+                                <div className="survey-list-item">
                                     <span>{survey.title}</span>
-                                    { typeSurveyBttn(survey) }
-                                    <button onClick={(event) => { showModal(event,i) }}>
-                                        Delete
-                                    </button>
+                                    <p className="buttons">
+                                        { typeSurveyBttn(survey) }
+                                        <button 
+                                            className="delete-bttn" 
+                                            onClick={(event) => { showModal(event,i) }
+                                        }>
+                                            <FontAwesomeIcon icon={faTrashAlt} />
+                                        </button>
+                                    </p>
                                 </div>
                             </NavLink>
                         )
