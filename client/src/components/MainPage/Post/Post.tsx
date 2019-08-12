@@ -5,8 +5,8 @@ import { ReactComponent as SettingIcon } from '../../../assets/icons/general/set
 import { ReactComponent as LikeIcon } from '../../../assets/icons/general/likeIcon.svg';
 import { ReactComponent as CommentIcon } from '../../../assets/icons/general/commentIcon.svg';
 import { ReactComponent as ShareIcon } from '../../../assets/icons/general/shareIcon.svg';
-// import Comment from "";
-// import Tag from "../Tag/Tag";
+import Comment from "";
+import Tag from "../Tag/Tag";
 import PostEditModal from '../PostEditModal/PostEditModal';
 import PostContent from '../PostContent/PostContent';
 
@@ -72,7 +72,7 @@ class Post extends PureComponent<IPostProps, IPostState> {
 		} = this.props;
 		return (
 			<div className="post-item">
-				{/* <div className='post-item-header'>
+				<div className='post-item-header'>
 					<img className='post-item-avatar' src={authorImage} alt="author" />
 					<div className='post-item-info'>
 						<div className='post-item-author-name'>{author}</div>
@@ -123,7 +123,7 @@ class Post extends PureComponent<IPostProps, IPostState> {
 				</div>
 				}
 				<div className="horizontal-stroke"></div>
-				<AddComment></AddComment> */}
+				<AddComment></AddComment>
 			</div>
 		);
 	}
