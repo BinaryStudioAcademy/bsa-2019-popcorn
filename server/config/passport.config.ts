@@ -78,6 +78,7 @@ passport.use(
   })
 );
 
+/*
 passport.use(
   "google",
   new GoogleStrategy(
@@ -135,3 +136,4 @@ passport.use(
     }
   )
 );
+*/
