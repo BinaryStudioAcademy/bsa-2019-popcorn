@@ -2,6 +2,7 @@ import tokenHelper from "./../helpers/token.helper";
 import userRepository from "./../repository/user.repository";
 import { getCustomRepository } from "typeorm";
 import { User } from "../models/UserModel";
+import { sendToken } from "./email.service";
 
 const crypto = require("crypto");
 
@@ -25,7 +26,7 @@ export const reset = async (email: string) => {
     reset_token: token
   });
 
-  //send to email
+  await sendToken(email, token);
 };
 
 export const restore = async (password: string, token: string) => {
