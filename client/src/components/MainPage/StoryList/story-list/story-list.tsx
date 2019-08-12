@@ -5,9 +5,6 @@ import StoryListSlider from "../story-list-slider/story-list-slider";
 import AddStoryPopup from "../add-story-popup/add-story-popup";
 
 import './story-list.scss';
-import {bindActionCreators} from 'redux';
-import {connect} from 'react-redux';
-import {fetchStories} from "../story.redux/actions";
 import Spinner from "../../../shared/Spinner";
 
 interface IStoryListItem {
@@ -116,17 +113,4 @@ class StoryList extends Component<IStoryListProps> {
     }
 };
 
-const mapStateToProps = (rootState, props) => ({
-    ...props,
-    stories: rootState.story.stories
-});
-
-const actions = {
-    fetchStories
-};
-const mapDispatchToProps = dispatch => bindActionCreators(actions, dispatch);
-
-export default connect(
-    mapStateToProps,
-    mapDispatchToProps
-)(StoryList);
+export default StoryList;
