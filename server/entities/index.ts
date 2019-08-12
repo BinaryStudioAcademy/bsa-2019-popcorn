@@ -6,6 +6,10 @@ import { Movie } from './Movie';
 import { Top } from './Top';
 import {Story} from "./Story";
 import { Event, EventComment, EventVisitor } from './Events';
+import {Surveys} from './Surveys';
+import {SurveysQuestion} from './SurveysQuestion';
+import {SurveysQuestionAnswer} from './SurveysQuestionAnswer';
+import {SurveysQuestionOption} from './SurveysQuestionOption';
 
 
 export default [
@@ -18,5 +22,9 @@ export default [
     Story,
     Event,
     EventComment,
-    EventVisitor
+    EventVisitor,
+    Surveys, 
+    SurveysQuestion, 
+    SurveysQuestionAnswer,
+    SurveysQuestionOption
 ];
