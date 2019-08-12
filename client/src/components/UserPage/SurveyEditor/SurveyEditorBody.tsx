@@ -58,7 +58,7 @@ const SurveyEditorBody: React.FC<IProps> = (props: IProps) => {
                 >
                     Go back
                 </NavLink>
-                <NavLink to={mainPath}
+                <NavLink to={`${mainPath}/questions`}
                     className="user-tab"
                     activeClassName="user-tab-active"
                 >
@@ -72,7 +72,7 @@ const SurveyEditorBody: React.FC<IProps> = (props: IProps) => {
                 </NavLink>
             </header>
             <Switch>
-                <Route exact path={mainPath} render={() => {
+                <Route exact path={`${mainPath}/questions`} render={() => {
                     return (
                         <div>
                             {

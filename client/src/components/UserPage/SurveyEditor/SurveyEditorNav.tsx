@@ -5,7 +5,7 @@ import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 import Survey from '../Survey/Survey';
 import "./SurveyEditor.scss";
 
-import { NavLink, Route, Switch } from 'react-router-dom';
+import { NavLink, Route, Switch, Redirect } from 'react-router-dom';
 
 interface ISurvey {
     id: string,
@@ -62,7 +62,7 @@ const SurveyEditorNav: React.FC<IProps> = (props: IProps) => {
         <div className="survey-editor">
 
             <Switch>
-                <Route exact path={mainPath} render={() => (
+                <Route exact path={`${mainPath}/questions`} render={() => (
                     <SurveyEditorBody 
                         updateInfo={updateInfo} 
                         saveInfo={props.updateInfo}
@@ -99,6 +99,7 @@ const SurveyEditorNav: React.FC<IProps> = (props: IProps) => {
                         <Survey surveyInfo={survey} />
                     </div>
                 )} />
+                <Redirect to={`${mainPath}/questions`}/>
             </Switch>
         </div>
     )
