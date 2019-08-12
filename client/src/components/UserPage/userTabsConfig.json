@@ -4,8 +4,8 @@
         "label": "Profile"
     },
     {
-        "link": "/activity",
-        "label": "Activity"
+        "link": "/posts",
+        "label": "Posts"
     },
     {
         "link": "/reviews",

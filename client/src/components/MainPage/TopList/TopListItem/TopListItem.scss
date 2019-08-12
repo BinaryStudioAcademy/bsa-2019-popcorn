@@ -1,0 +1,29 @@
+@import "../../../../styles/variables.scss";
+
+.top-list-item {
+	margin-top: 28px;
+}
+
+.top-list-item-row {
+	display: flex;
+	justify-content: space-between;
+}
+
+.top-list-item-info {
+    font-size:$secondary-info-font-size;
+    display: flex;
+    letter-spacing: $base-letter-spacing;
+    text-transform: uppercase;
+    margin-top: 6px;
+}
+
+.top-list-item-percent,
+.top-list-item-name {
+	font-weight: 600;
+	font-size:$base-font-size;
+	letter-spacing: $base-letter-spacing;
+}
+
+.top-star-icon {
+	margin-left: 5px;
+}

@@ -5,12 +5,11 @@ import {faChevronDown} from "@fortawesome/free-solid-svg-icons";
 import React, {useState} from "react";
 import MovieList from "../MovieList";
 
-const MovieSearch = ({movies, fetchFilms, alreadySearch}) => {
+const MovieSearch = ({movies, fetchFilms, alreadySearch, setMovieSeries}) => {
     const [value, setValue] = useState('');
 
     const startFetchFilms = () => {
         if (value.trim() !== "") {
-            console.log(value);
             fetchFilms(value.trim())
         }
     };
@@ -28,7 +27,7 @@ const MovieSearch = ({movies, fetchFilms, alreadySearch}) => {
                 {alreadySearch ?
                     <div className="modal">
                         {movies && movies.length > 0 ?
-                        <MovieList movies={movies}/>
+                        <MovieList movies={movies} setMovieSeries={setMovieSeries}/>
                         : <span>Nothing was found</span>}
                     </div>
                     : null}
