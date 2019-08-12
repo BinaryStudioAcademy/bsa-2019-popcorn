@@ -7,13 +7,14 @@ interface IRequestInit {
 	method: string;
 	skipAuthorization?: boolean;
 	body?: object;
+	parse?: boolean;
 }
 
 export default async (args: IRequestInit) => {
 	try {
 		let res: Response = await fetch(getUrl(args), getArgs(args));
 
-		res = await res.json();
+		if (args.parse === undefined || args.parse) return await res.json();
 
 		return res;
 	} catch (err) {

@@ -1,7 +1,7 @@
-import {FETCH_POSTS} from "./actionTypes";
+import { FETCH_POSTS } from './actionTypes';
 
-export const fetchPosts = () =>{
-    return {
-        type: FETCH_POSTS
-    }
+export const fetchPosts = () => {
+	return {
+		type: FETCH_POSTS
+	};
 };
