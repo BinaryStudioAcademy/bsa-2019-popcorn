@@ -1,19 +1,25 @@
 import StoryListItem from '../story-list-item/story-list-item';
-import React, { Component } from 'react';
+import React, {Component} from 'react';
+
 interface IStoryListItem {
-    name: string,
-    imageUrl: string,
-    avatar: string,
+    caption: string,
+    image_url: string,
+    user: {
+        avatar: string,
+        any
+    },
+    any
 };
 
 interface IStoryListItemsProps {
     storyListItems: Array<IStoryListItem>
 }
 
-class StoryListContent extends Component<IStoryListItemsProps>{
+class StoryListContent extends Component<IStoryListItemsProps> {
     render() {
-        const { storyListItems } = this.props;
-        const storyList = storyListItems.map(item => <StoryListItem imageUrl={item.imageUrl} name={item.name} avatar={item.avatar} />);
+        const {storyListItems} = this.props;
+        const storyList = storyListItems.map(item => <StoryListItem imageUrl={item.image_url} name={item.caption}
+                                                                    avatar={item.user.avatar}/>);
         return (storyList);
     }
 }

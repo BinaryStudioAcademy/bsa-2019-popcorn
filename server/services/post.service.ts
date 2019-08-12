@@ -13,9 +13,7 @@ export const createPost = async (post: any): Promise<Post> => {
 
 export const getPosts = async (): Promise<Post[]> =>
     await getCustomRepository(PostRepository)
-        .createQueryBuilder('post')
-        .leftJoinAndSelect('post.user', 'user')
-        .getMany()
+        .find({ relations: ['user']});
 
 export const deletePostById = async (postId: number): Promise<Post> => {
     const post = await getCustomRepository(PostRepository).findOne(postId);

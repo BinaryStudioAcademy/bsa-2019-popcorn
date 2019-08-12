@@ -1,7 +1,7 @@
 import React from 'react';
 import "./MainPage.scss";
 import FeedBlock from "./FeedBlock/FeedBlock";
-import StoryList from "./StoryList";
+import StoryList from "./StoryList/index";
 //mock
 
 const MainPage = (props: object) => {
