@@ -4,4 +4,10 @@ os: linux
 
 files:
   - source: ./
-    destination: /home/ubuntu/project
+    destination: /home/ubuntu/bsa-2019-popcorn
+
+hooks:
+  AfterInstall:
+    - location: scripts/after-install.sh
+  ApplicationStart:
+    - location: scripts/app-start.sh
