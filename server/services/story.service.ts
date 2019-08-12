@@ -2,7 +2,7 @@ import { Story } from '../models/StoryModel'
 import { getRepository, getCustomRepository } from "typeorm";
 import StoryRepository from '../repository/story.repository'
 
-export const getStories = async():Promise<Array<Story>> => await getCustomRepository(StoryRepository).find();
+export const getStories = async():Promise<Array<Story>> => await getCustomRepository(StoryRepository).find({relations: ['user']});
 
 export const getStorybyId = async(storyId:string):Promise<Story> => await getCustomRepository(StoryRepository).findOne(storyId);
 

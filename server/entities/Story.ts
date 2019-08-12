@@ -9,6 +9,10 @@ export class Story {
     @Column()
     image_url: string;
 
+    @Column()
+    caption: string;
+
+
     @ManyToOne(type => User)
     @JoinColumn()
     user: User;
