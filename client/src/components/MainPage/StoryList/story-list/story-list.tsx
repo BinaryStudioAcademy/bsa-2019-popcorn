@@ -78,7 +78,9 @@ class StoryList extends Component<IStoryListProps, IState> {
 		storyListItems: null | Array<IStoryListItem>,
 		index: number
 	) => {
-		return storyListItems ? storyListItems.slice(index, index + 9) : [];
+		return storyListItems
+			? Array.from(storyListItems).slice(index, index + 9)
+			: [];
 	};
 
 	render() {
