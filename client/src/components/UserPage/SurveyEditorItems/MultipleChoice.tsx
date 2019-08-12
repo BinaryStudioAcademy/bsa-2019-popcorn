@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { v4 as uuid } from 'uuid';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
+import { isEqual } from 'lodash';
 import './SurveyItem.scss';
 
 interface IQuestion {
@@ -32,11 +33,8 @@ class MultipleChoice extends Component<IProps, IQuestion> {
     }
 
     componentWillReceiveProps(nextProps) {
-        const { questionInfo: newQuestion } = nextProps;
-        const { title: newTitle, type: newType } = nextProps;
-        const { title, type } = this.state;
-        if  (title !== newTitle || type !== newType) {
-            this.setState({ ...newQuestion });
+        if (!isEqual(nextProps.questionInfo, this.state)){
+            this.setState({ ...nextProps.questionInfo });
         }
     }
 
@@ -47,7 +45,7 @@ class MultipleChoice extends Component<IProps, IQuestion> {
         const newOption = {
             id: uuid(),
             question_id: this.state.id,
-            value: ``
+            value: `Option ${value}`
         };
 
         options.push(newOption);
@@ -66,9 +64,11 @@ class MultipleChoice extends Component<IProps, IQuestion> {
     changeInput = (event, id) => {
         let { options } = this.state;
         if (!options) return;
-        options = options.map(option => {
+        let value = event.target.value;
+
+        options = options.map((option, i) => {
             if (id === option.id) {
-                option.value = event.target.value;
+                option.value = value;
             }
             return option;
         });
@@ -78,7 +78,6 @@ class MultipleChoice extends Component<IProps, IQuestion> {
 
     render() {
         const { options, type } = this.state;
-        console.log()
 
         return (
             <div className={`${type.slice(0, 5)} question-body`}> 
@@ -92,17 +91,20 @@ class MultipleChoice extends Component<IProps, IQuestion> {
                                 type="text" 
                                 value={option.value} 
                                 className="option"
-                                placeholder="option*"
+                                placeholder="Option*"
                             />
-                            <span onClick={() => { this.deleteOption(i) }}>
-                                <FontAwesomeIcon icon={faTimes} />
-                            </span>
+                            {
+                                options.length !== 1 &&
+                                <span onClick={() => { this.deleteOption(i) }}>
+                                    <FontAwesomeIcon icon={faTimes} />
+                                </span>
+                            }
                         </div>
                     ))
                 }
                 <div className="option-container">
                     <p className="option-icon"></p>
-                    <button type="button" onClick={this.addOption}>Add option</button>
+                    <p className="add-bttn" onClick={this.addOption}>Add option</p>
                 </div>
             </div>
         )

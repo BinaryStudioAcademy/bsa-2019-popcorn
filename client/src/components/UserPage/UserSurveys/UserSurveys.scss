@@ -36,52 +36,60 @@
         font-size: $header-medium;
     }
 
-    .survey-list-item {
-        width: 100%;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        box-shadow: 0 1px 4px 0 rgba(0,0,0,0.37);
-        padding: 20px;
+    .survey-list {
+        margin-top: 20px;
 
-        &:hover {
-            box-shadow: 1px 3px 5px 1px rgba(0,0,0,0.37);
-        }
+        .survey-list-item {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 1px 4px 0 rgba(0,0,0,0.37);
+            padding: 20px;
 
-        span {
-            width: 65%;
-        }
-
-        .buttons {
-            width: 30%;
-            text-align: center;
-        }
-
-        button {
-            margin-left: 5px;
-            margin-bottom: 2px;
-            background-color: $button-background;
-            color: $white;
-            box-shadow: 0px 5px 12px $button-shadow-color;
-            border: none;
-            padding: 7px;
-            height: 43px;
-            border-radius: 55px;
-            cursor: pointer;
-            width: 105px;
-            border: none;
-            outline: none;
-            font-size: $menu-font-size;
-            font-weight: bold;
             &:hover {
-                background-color: rgb(216, 86, 0);
+                box-shadow: 1px 3px 5px 1px rgba(0,0,0,0.37);
+            }
+    
+            .buttons {
+                min-width: 190px;
+                text-align: center;
+            }
+    
+            button {
+                margin-left: 10px;
+                margin-bottom: 2px;
+                background-color: $button-background;
+                color: $white;
+                box-shadow: 0px 5px 12px $button-shadow-color;
+                border: none;
+                padding: 7px;
+                height: 43px;
+                border-radius: 55px;
+                cursor: pointer;
+                width: 105px;
+                border: none;
+                outline: none;
+                font-size: $menu-font-size;
+                font-weight: bold;
+                &:hover {
+                    background-color: rgb(216, 86, 0);
+                }
+            }
+    
+            .delete-bttn {
+                width: 43px;
+                background-color: #ED4956;
+                border-radius: 50%;
+
+                &:hover {
+                    background-color: rgb(195, 59, 70)
+                }
             }
         }
-
-        .delete-bttn {
-            width: 43px;
-        }
     }
+
+    
 
     .modal-delete-container {
         position: absolute;
@@ -100,8 +108,10 @@
             flex-direction: column;
             background-color: $white;
             padding: 30px;
+            padding-bottom: 0;
             -moz-border-radius: 15px;
             border-radius: 15px;
+            font-weight: 500;
 
             p {
                 text-align: center;
@@ -113,7 +123,6 @@
                 height: 50px;
                 width: 100%;
                 background-color: transparent;
-                border-bottom: 0.5px solid rgba($color: $black, $alpha: .3);
                 font-size: $menu-font-size;
                 font-family: $base-font-family;
                 font-weight: 600;
@@ -127,7 +136,11 @@
             }
     
             .delete {
+                margin-top: 30px;
                 color: #ED4956;
+                border-bottom: 0.5px solid rgba($color: $black, $alpha: .3);
+                border-top: 0.5px solid rgba($color: $black, $alpha: .3);
+
             }
         }
     }

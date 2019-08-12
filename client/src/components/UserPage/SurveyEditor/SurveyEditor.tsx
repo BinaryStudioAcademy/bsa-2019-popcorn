@@ -1,14 +1,15 @@
 import React, { Component } from 'react';
 import { NavLink } from 'react-router-dom';
 import { v4 as uuid } from 'uuid';
-import MultipleChoice from '../SurveyEditorItems/MultipleChoice';
-import ShortAnswer from '../SurveyEditorItems/ShortAnswer';
-import LinearScale from '../SurveyEditorItems/LinearScale';
 import { Snackbar } from '@material-ui/core';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTimesCircle, faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
- 
-const QUESTION_TYPES = [ "Multiple choice", "Checkboxes", "Short Answer", "Linear scale" ];
+import { faEye } from '@fortawesome/free-solid-svg-icons';
+import SurveyQuestion from '../SurveyEditorItems/SurveyQuestion';
+import SurveyMultipleAnswers from '../SurveyItems/SurveyMultipleAnswer/SurveyMultipleAnswer';
+import SurveyCheckboxes from '../SurveyItems/SurveyCheckboxes/SurveyCheckboxes';
+import SurveyShortAnswer from '../SurveyItems/SurveyShortAnswer/SurveyShortAnswer';
+import SurveyLinearScale from '../SurveyItems/SurveyLinearScale/SurveyLinearScale';
+import '../Survey/Survey.scss';
 
 interface IQuestion { 
     id: string,
@@ -59,7 +60,7 @@ interface IState {
     snackbar: boolean,
     surveyInfo: ISurvey,
     isUploading: boolean,
-    imageError: string
+    currentElement: number
 }
 
 
@@ -70,19 +71,43 @@ class SurveyEditor extends Component<IProps, IState> {
             snackbar: false,
             surveyInfo: props.surveyInfo,
             isUploading: false,
-            imageError: ''
+            currentElement: -1,
         }
     }
 
-    componentDidUpdate() {
-        const validate = this.validateSurvey();
-        if (validate) this.props.updateInfo(this.state.surveyInfo);
+    validateData = () => {
+        let { currentElement, surveyInfo } = this.state;
+        let question = surveyInfo.questions[currentElement];
+
+        if (currentElement === -1) {
+            if (surveyInfo.title.trim() === '') surveyInfo.title = 'New survey';
+        }
+        else surveyInfo = this.validateQuestion(question);
+
+        this.props.updateInfo({ ...this.state.surveyInfo });
+    }
+
+    validateQuestion = newQuestion => {
+        if (newQuestion.title.trim() === '') newQuestion.title = 'Untitled question';
+        newQuestion.options = newQuestion.options.map((option, i) => {
+            if (option.value.trim() === '') return { ...option, value: `Option ${i + 1}` };
+            return option;
+        });
+
+        const questions = this.state.surveyInfo.questions.map(question => {
+            if (question.id === newQuestion.id) return newQuestion;
+            return question;
+        });
+
+        return { ...this.state.surveyInfo, questions };
+
     }
 
     onChangeTitle = (event) => {
+        let title = event.target.value;
         this.setState({surveyInfo: { 
             ...this.state.surveyInfo, 
-            title: event.target.value 
+            title
         }});
     }
 
@@ -98,134 +123,74 @@ class SurveyEditor extends Component<IProps, IState> {
         const newQuestion: IQuestion = {
             id,
             survey_id: this.state.surveyInfo.id,
-            title: '',
+            title: 'Untitled question',
             type: 'Multiple choice',
             required: false,
             options: [{
                 id: uuid(),
                 question_id: id,
-                value: ''
+                value: 'Option 1'
             }],
             answers: []
         };
 
         const questions = this.state.surveyInfo.questions;
         questions.push(newQuestion);
-        this.setState({ surveyInfo: { 
-            ...this.state.surveyInfo, 
-            questions 
-        }});
+        this.setState({ 
+            currentElement: questions.length - 1, 
+            surveyInfo: { 
+                ...this.state.surveyInfo, 
+                questions 
+            }
+        });
     }
 
     duplicateQuestion = (question) => {
         const questions = this.state.surveyInfo.questions;
         questions.push({ ...question, id: uuid() });
 
-        this.setState({ surveyInfo: {
-            ...this.state.surveyInfo, 
-            questions 
-        }});
+        this.setState({ 
+                surveyInfo: {
+                ...this.state.surveyInfo,
+                questions
+            }
+        });
+
+        this.changeCurrentElement(questions.length - 1);
     } 
 
-    deleteQuestion = (index) => {
+    deleteQuestion = (question) => {
         let { questions } = this.state.surveyInfo;
+        const index = questions.indexOf(question);
         questions.splice(index, 1);
 
-        this.setState({ surveyInfo: {
-            ...this.state.surveyInfo, 
-            questions 
-        }});
-    }
+        if (questions.length === 0) {
+            const id = uuid();
+            questions = [{
+                id,
+                survey_id: this.state.surveyInfo.id,
+                title: 'Untitled question',
+                type: 'Multiple choice',
+                required: false,
+                options: [{
+                    id: uuid(),
+                    question_id: id,
+                    value: 'Option 1'
+                }],
+                answers: []
+            }];
+        }
 
-    changeType = (event, id) => {
-        let type = event.target.value;
-        let result;
+        this.setState({ 
+            surveyInfo: {
+                ...this.state.surveyInfo, 
+                questions 
+            },
+            currentElement: index - 1
+        });
+    }
     
-        const questions = this.state.surveyInfo.questions.map(question => {
-            if (question.id === id) {
-                result = { type };
-                if (question.type === 'Linear scale') 
-                    result = { 
-                        ...result, 
-                        type,
-                        firstLabel: '',
-                        secondLabel: '',
-                        options: [{
-                            id: uuid(),
-                            question_id: question.id,
-                            value: ''
-                        }] 
-                    }; 
-                else if (question.type === 'Short Answer') 
-                    result = {
-                        ...result,
-                        type,
-                        options: [{
-                            id: uuid(),
-                            question_id: question.id,
-                            value: ''
-                        }]
-                    };
-                if (type === 'Short Answer') result = {
-                    type,
-                    options: []
-                };
-                else if (type === 'Linear scale') result = {
-                    type,
-                    options: [
-                        {
-                            id: uuid(),
-                            question_id: question.id,
-                            value: '1'
-                        },
-                        {
-                            id: uuid(),
-                            question_id: question.id,
-                            value: '2'
-                        }
-                    ]
-                }
-                return { ...question, ...result }
-            };
-            return question;
-        });
-
-        this.setState({ surveyInfo: {
-            ...this.state.surveyInfo,
-            questions 
-        }});
-
-    }
-
-    changeRequirement = (id) => {
-        const questions = this.state.surveyInfo.questions.map(question => {
-            if (question.id === id) {
-                return { ...question, required: !question.required }
-            };
-            return question;
-        });
-
-        this.setState({ surveyInfo: { 
-            ...this.state.surveyInfo, 
-            questions 
-        }});
-    }
-
-    changeQuestionTitle = (event, id) => {
-        const questions = this.state.surveyInfo.questions.map(question => {
-            if (question.id === id) {
-                return { ...question, title: event.target.value }
-            };
-            return question;
-        });
-
-        this.setState({ surveyInfo: {
-            ...this.state.surveyInfo, 
-            questions 
-        }});
-    }
-
-    changeQuestion = (newQuestion) => {
+    changeQuestion = (newQuestion) => {        
         const questions = this.state.surveyInfo.questions.map(question => {
             if (question.id === newQuestion.id) {
                 return newQuestion
@@ -239,210 +204,145 @@ class SurveyEditor extends Component<IProps, IState> {
         }});
     }
 
-    validateSurvey = () => {
-        const { surveyInfo } = this.state;
+    changeCurrentElement = (i) => {
+        let { currentElement, surveyInfo } = this.state;
+        let question = surveyInfo.questions[currentElement];
 
-        if(surveyInfo.questions.length === 0) return false;
-        if (surveyInfo.title.trim() === '') return false;
-        const error = surveyInfo.questions.some(question => {
-            if (question.title.trim() === '') return true;
-            if (question.options !== undefined) {
-                return question.options.some(option => option.value.trim() === '');
-            }
-        });
-
-        if (error) return false;
-        return true;
-    }
-
-    handleUploadFile({ target }, id) {
-        this.setState({ isUploading: true, imageError: '' });
-    
-        if(target.files[0] && target.files[0].size > 1048576*3){
-          target.value = "";
-          this.setState({ isUploading: false, imageError: 'File is too big! (max 3MB)' });
-          return;
+        if (currentElement === -1) {
+            if (surveyInfo.title.trim() === '') surveyInfo.title = 'New survey';
         }
-
-        const questions = this.state.surveyInfo.questions.map(question => {
-            if (question.id === id) {
-                return { ...question, image_link: `https://www.belightsoft.com/products/imagetricks/img/intro-video-poster@2x.jpg` }
-            };
-            return question;
-        });
-
-        this.setState({ 
-            surveyInfo: {
-                ...this.state.surveyInfo, 
-                questions
-            },
-            isUploading: false
-        });
-    }
-
-    deleteImg = id => {
-        const questions = this.state.surveyInfo.questions.map(question => {
-            if (question.id === id) {
-                return { ...question, image_link: ''}
-            };
-            return question;
-        });
-
-        this.setState({ 
-            surveyInfo: {
-                ...this.state.surveyInfo, 
-                questions
-            }}
-        );
-    }
-
-    onSave = () => {
-        const validate = this.validateSurvey();
-        if (!validate) {
-            console.log("wrong data");
-            return;
+        else {
+            if (!question) return;
+            surveyInfo = this.validateQuestion(surveyInfo.questions[currentElement]);
         }
-        this.setState({ snackbar: true });
+        this.setState({ surveyInfo, currentElement: i });
+    }
+
+    onSave = () => {        
+        let { currentElement, surveyInfo } = this.state;
+        if (currentElement === -1) {
+            if (surveyInfo.title.trim() === '') surveyInfo.title = 'New survey';
+        }
+        else surveyInfo = this.validateQuestion(surveyInfo.questions[currentElement]);
+        this.setState({ snackbar: true, surveyInfo });
         this.props.saveInfo(this.state.surveyInfo);
     }
 
     render() {
         const { mainPath } = this.props;
         const { title, description, questions } = this.state.surveyInfo;
-        console.log(questions);
 
         return (
-            <div>
-                {
-                    this.validateSurvey() &&
-                    <NavLink
-                        className="preview link" 
-                        to={`${mainPath}/preview`}
-                    >
-                        <div><FontAwesomeIcon icon={faEye} />Preview?</div>
-                    </NavLink>
-                }
-
-                {
-                    !this.validateSurvey() && 
-                    <div className="preview">
-                        <FontAwesomeIcon icon={faEyeSlash} />
-                        Fill in all required fields to see preview
+            <div className="survey survey-editor-container">   
+                <NavLink
+                    className="preview link" 
+                    to={`${mainPath}/preview`}
+                    onClick={this.validateData}
+                >
+                    <div><FontAwesomeIcon icon={faEye} />
+                        <span>Preview?</span>
                     </div>
-                }
-                
+                </NavLink>
+                <div className="survey-background" />
                 <form className="survey-editor-form">
-                    <p className="required-label">*required</p>
-                    <input 
-                        type="text" 
-                        value={title} 
-                        placeholder="Title*" 
-                        className="survey-title" 
-                        onChange={this.onChangeTitle} 
-                    />
-                    <textarea 
-                        onChange={this.onChangeDescription} 
-                        placeholder="Description" 
-                        value={description} 
-                    />
                     {
+                        this.state.currentElement === -1 && 
+                        <header className='editor-question editor-header'>
+                            <textarea 
+                                value={title} 
+                                placeholder="Title*" 
+                                className="survey-title" 
+                                onChange={this.onChangeTitle} 
+                                autoFocus
+                            />
+                            <textarea 
+                                onChange={this.onChangeDescription}
+                                className="survey-description" 
+                                placeholder="Description" 
+                                value={description} 
+                            />
+                        </header>
+                    }
+                    {
+                        this.state.currentElement !== -1 &&
+                        <header onClick={() => { this.changeCurrentElement(-1) }}>
+                            <h1>{title}</h1>
+                            <p>{description}</p>
+                        </header>
+                    }
+                    {  
                         questions.map((question, i) => {
-                            let element; 
+                            if (this.state.currentElement === i) {
+                                return (
+                                    <div key={i} className="editor-question">
+                                        <SurveyQuestion 
+                                            questionInfo={question}
+                                            changeQuestion={this.changeQuestion}
+                                            duplicateQuestion={this.duplicateQuestion}
+                                            deleteQuestion={this.deleteQuestion}
+                                        />
+                                    </div>
+                                )
+                            }
                             if (question.type === 'Multiple choice')
-                                element = (<MultipleChoice 
-                                        questionInfo={question} 
-                                        changeQuestion={this.changeQuestion}
-                                    />);
-                            else if (question.type === 'Checkboxes')
-                                element = (<MultipleChoice 
-                                        questionInfo={question} 
-                                        changeQuestion={this.changeQuestion}
-                                    />);
-                            else if (question.type === 'Linear scale')
-                                element = (<LinearScale 
-                                        questionInfo={question} 
-                                        changeQuestion={this.changeQuestion} 
-                                        />);
-                            else element = (<ShortAnswer />);
-
-                            return (
-                                <div key={i}>
-                                <input 
-                                        type="text" 
-                                        className="question-title"
-                                        onChange={(event) => { this.changeQuestionTitle(event, question.id) }} 
-                                        value={question.title} 
-                                        placeholder="question*" 
-                                />
-                                    <select 
-                                        className="question-type"
-                                        value={question.type} 
-                                        onChange={(event) => { this.changeType(event, question.id) }}
-                                    >
-                                        {
-                                            QUESTION_TYPES.map((type, i) => (
-                                                <option 
-                                                    key={i}
-                                                    value={type} 
-                                                >
-                                                    {type}
-                                                </option>
-                                            ))
-                                        }
-                                    </select>
-                                    {element}    
-                                    {
-                                        question.image_link &&
-                                        <div> 
-                                            <p onClick={() => { this.deleteImg(question.id) }} >
-                                                <FontAwesomeIcon icon={faTimesCircle} />
-                                            </p>
-                                            <img src={question.image_link} alt="" width="300px" />
-                                        </div>
-                                    }
-                                    {
-                                        this.state.imageError !== '' &&
-                                        <div>{this.state.imageError}</div>
-                                    }
-                                    <button type="button" onClick={() => {this.duplicateQuestion(question)}}>
-                                        Duplicate question
-                                    </button>
-                                    <button type="button" onClick={() => {this.deleteQuestion(i)}}>
-                                        Delete
-                                    </button>
-                                    <input
-                                        name='image'
-                                        type='file'
-                                        onChange={(ev) => { this.handleUploadFile(ev, question.id) }}
-                                        className='upload-image'
-                                        id='image'
-                                        accept=".jpg, .jpeg, .png"
-                                        disabled={this.state.isUploading}
+                                return <div  
+                                    key={i} 
+                                    onClick={() => { this.changeCurrentElement(i) }}
+                                    className="question-view"
+                                >
+                                    <SurveyMultipleAnswers
+                                        questionInfo={question}
                                     />
-                                    <label htmlFor='image' className='upload-image-button'>Upload image</label>
-                                    <label>
-                                        <input 
-                                            type="checkbox" 
-                                            checked={question.required} 
-                                            onChange={() => { this.changeRequirement(question.id) }} />
-                                        Required
-                                    </label>
                                 </div>
-                            )
+                            if (question.type === 'Checkboxes')
+                                return <div 
+                                    key={i} 
+                                    onClick={() => { this.changeCurrentElement(i) }}
+                                    className="question-view"
+                                >
+                                    <SurveyCheckboxes
+                                        questionInfo={question}
+                                    />
+                                </div>
+                            if (question.type === 'Linear scale')
+                                return <div 
+                                    key={i} 
+                                    onClick={() => { this.changeCurrentElement(i) }}
+                                    className="question-view"
+                                >
+                                    <SurveyLinearScale
+                                        questionInfo={question}
+                                    />
+                                </div>
+                            if (question.type === 'Short Answer')
+                                return <div 
+                                    key={i} 
+                                    onClick={() => { this.changeCurrentElement(i) }}
+                                    className="question-view"
+                                >
+                                    <SurveyShortAnswer
+                                        questionInfo={question}
+                                    />
+                                </div>
                         })
+                            
                     }
-                    <button type="button" onClick={this.addQuestion}>Add question</button>
-                    {
-                        this.validateSurvey() &&
-                        <button type="button" onClick={this.onSave}>Save</button>
-                    }
-                    {
-                        !this.validateSurvey() && 
-                        <div>
-                            <div>Please, fill in all required fields.</div>
-                            <button type="button" disabled>Save</button>
-                        </div>
-                    }    
+                    <div className="buttons">
+                        <button 
+                            type="button" 
+                            onClick={this.addQuestion}
+                            className="add-question-bttn"
+                        >
+                            Add question
+                        </button>                    
+                        <button 
+                            type="button" 
+                            onClick={this.onSave}
+                            className="save-question-bttn"
+                        >
+                            Save
+                        </button> 
+                    </div>
                     <Snackbar 
                         anchorOrigin={{ horizontal: 'right', vertical: 'top' }}
                         open={this.state.snackbar}

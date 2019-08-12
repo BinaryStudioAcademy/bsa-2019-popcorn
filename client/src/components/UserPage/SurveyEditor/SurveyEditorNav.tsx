@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import SurveyEditorBody from './SurveyEditorBody';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 import Survey from '../Survey/Survey';
 import "./SurveyEditor.scss";
 
@@ -83,8 +85,10 @@ const SurveyEditorNav: React.FC<IProps> = (props: IProps) => {
                     />
                 )} />
                 <Route exact path={`${mainPath}/preview`} render={() => (
-                    <div>
-                        <NavLink to={mainPath}>Go back</NavLink>
+                    <div className="preview-container">
+                        <NavLink to={mainPath} className="preview-back">
+                            <FontAwesomeIcon icon={faArrowLeft} />
+                        </NavLink>
                         <Survey surveyInfo={survey} />
                     </div>
                 )} />

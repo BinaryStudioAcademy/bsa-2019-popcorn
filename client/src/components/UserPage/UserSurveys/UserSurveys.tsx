@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
-import { Switch, Route } from 'react-router-dom';
+import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrashAlt } from '@fortawesome/free-solid-svg-icons';
+import { isEqual } from 'lodash';
 import { NavLink } from 'react-router-dom';
 import "./UserSurveys.scss";
 
@@ -48,29 +48,41 @@ interface IProps {
     surveys: Array<ISurvey>
 }
 
-const UserSurveys: React.FC<IProps> = (props: IProps) => {
-    const { mainPath } = props;
+interface IState {
+    deletedSurvey: number,
+    surveys: Array<ISurvey>
+}
 
-    const [ state, setState ] = useState([ ...props.surveys ]);
-    const [ deletedSurvey, setDeletedSurvey ] = useState(-1);
-
-    const showModal = (event, id) => { 
-        event.preventDefault();
-        setDeletedSurvey(id) 
-    };
-
-    const deleteSurvey = () => {
-        const newState = [ ...state ];
-        props.deleteSurvey(state[deletedSurvey]);
-        newState.splice(deletedSurvey, 1);
-        setState(newState);
-        setDeletedSurvey(-1);
+class UserSurveys extends React.Component<IProps, IState> {
+    constructor(props: IProps) {
+        super(props);
+        this.state = {
+            surveys: props.surveys,
+            deletedSurvey: -1
+        }
     }
 
-    const typeSurveyBttn = (survey) => {
+    componentWillReceiveProps(nextProps) {
+        if (!isEqual(nextProps.surveys, this.state.surveys)) {
+            this.setState({ surveys: nextProps.surveys });
+        }
+    }
+
+    showModal = (event, id) => { 
+        event.preventDefault();
+        this.setState({ deletedSurvey: id}); 
+    }
+
+    deleteSurvey = () => {
+        const { surveys, deletedSurvey } = this.state;
+        this.props.deleteSurvey(surveys[deletedSurvey]);
+        this.setState({ deletedSurvey: -1 });
+    }
+
+    typeSurveyBttn = (survey) => {
         if (survey.type === 'Close') return (
             <button 
-                onClick={(event) => { openSurvey(event, survey.id) }}
+                onClick={(event) => { this.openSurvey(event, survey.id) }}
                 type="button"
             >
                 Open survey
@@ -78,90 +90,91 @@ const UserSurveys: React.FC<IProps> = (props: IProps) => {
         );
         return (
             <button 
-                    onClick={(event) => { closeSurvey(event, survey.id) }}
-                    type="button"
-                >
-                    Close survey
+                onClick={(event) => { this.closeSurvey(event, survey.id) }}
+                type="button"
+            >
+                Close survey
             </button>
         );
     }
 
-    const openSurvey = (event, id) => {
+    openSurvey = (event, id) => {
         event.preventDefault();
-        const newState = state.map(survey => {
+        this.state.surveys.forEach(survey => {
             if (survey.id === id) {
-                props.updateInfo({ ...survey, type: 'Open' })
-                return { ...survey, type: 'Open' };
+                this.props.updateInfo({ ...survey, type: 'Open' })
             }
-            return survey;
         });
-        setState(newState);
     }
 
-    const closeSurvey = (event, id) => {
+    closeSurvey = (event, id) => {
         event.preventDefault();
-        const newState = state.map(survey => {
+        this.state.surveys.forEach(survey => {
             if (survey.id === id) {
-                props.updateInfo({ ...survey, type: 'Close' })
-                return { ...survey, type: 'Close' };
+                this.props.updateInfo({ ...survey, type: 'Close' })
             }
-            return survey;
         });
-        setState(newState);
     }
 
-    const modalIsShown = () => {
-        if ( deletedSurvey === -1 ) return null;
+    modalIsShown = () => {
+        if ( this.state.deletedSurvey === -1 ) return null;
         return (
             <div className="modal-delete-container">
                 <div className="modal-delete">
                     <p>Are you sure you want to delete this survey?</p>
-                    <button className="delete" onClick={deleteSurvey}>Delete</button>
-                    <button onClick={() => { setDeletedSurvey(-1) }}>Cancel</button>
+                    <button className="delete" onClick={this.deleteSurvey}>Delete</button>
+                    <button onClick={() => { this.setState({ deletedSurvey: -1 }) }}>
+                        Cancel
+                    </button>
                 </div>
             </div>
         );
     }
 
-    return (
-        <div className="userSurveys">
-            <NavLink
-                to={`${mainPath}/create`}
-                className="create-button"
-            >
-                <button>
-                    Create survey
-                </button>
-            </NavLink>
-            <div className="survey-list">
-                {
-                    state.map((survey, i) => {
-                        return (
-                            <NavLink 
-                                key={i}
-                                exact={!i}
-                                to={`${mainPath}/${survey.id}`}
-                            >
-                                <div className="survey-list-item">
-                                    <span>{survey.title}</span>
-                                    <p className="buttons">
-                                        { typeSurveyBttn(survey) }
-                                        <button 
-                                            className="delete-bttn" 
-                                            onClick={(event) => { showModal(event,i) }
-                                        }>
-                                            <FontAwesomeIcon icon={faTrashAlt} />
-                                        </button>
-                                    </p>
-                                </div>
-                            </NavLink>
-                        )
-                    })
-                }
+    render() {
+        const { surveys } = this.state;
+        const { mainPath } = this.props;
+
+        return (
+            <div className="userSurveys">
+                <NavLink
+                    to={`${mainPath}/create`}
+                    className="create-button"
+                >
+                    <button>
+                        Create survey
+                    </button>
+                </NavLink>
+                <div className="survey-list">
+                    {
+                        surveys.map((survey, i) => {
+                            return (
+                                <NavLink 
+                                    key={i}
+                                    exact={!i}
+                                    to={`${mainPath}/${survey.id}`}
+                                >
+                                    <div className="survey-list-item">
+                                        <span>{survey.title}</span>
+                                        <p className="buttons">
+                                            { this.typeSurveyBttn(survey) }
+                                            <button 
+                                                className="delete-bttn" 
+                                                onClick={(event) => { this.showModal(event,i) }
+                                            }>
+                                                <FontAwesomeIcon icon={faTrashAlt} />
+                                            </button>
+                                        </p>
+                                    </div>
+                                </NavLink>
+                            )
+                        })
+                    }
+                </div>
+                { this.modalIsShown() }
             </div>
-            { modalIsShown() }
-        </div>
-    );
+        );
+    }
 }
 
 export default UserSurveys;

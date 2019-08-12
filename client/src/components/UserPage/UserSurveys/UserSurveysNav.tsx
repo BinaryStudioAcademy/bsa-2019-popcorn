@@ -60,13 +60,12 @@ const UserSurveysNav: React.FC<IProps> = (props: IProps) => {
     const updateInfo = newSurvey => {
         const survey = state.some(survey => survey.id === newSurvey.id);
 
-        if (!survey) setState([...state, newSurvey]);
+        if (!survey) setState([ newSurvey, ...state ]);
         else {
             const newState = state.map(survey => {
                 if (survey.id === newSurvey.id) return newSurvey;
                 return survey;
             });
-    
             setState([...newState]);
         }
     }

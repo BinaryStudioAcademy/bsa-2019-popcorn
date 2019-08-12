@@ -7,7 +7,7 @@ export default () => {
   return {
     "id": surveyId,
     "created_at": new Date(),
-    "title": "",
+    "title": "New survey",
     "description": "",
     "type": "Open",
     "user_id": "",
@@ -19,7 +19,7 @@ export default () => {
       {
         "id": questionId,
         "survey_id": surveyId,
-        "title": "",
+        "title": "Untitled question",
         "firstLabel": "",
         "lastLabel": "",
         "type": "Multiple choice",
@@ -29,7 +29,7 @@ export default () => {
           {
             "id": uuid(),
             "question_id": questionId,
-            "value": ""
+            "value": "Option 1"
           }
         ],
         "answers": [

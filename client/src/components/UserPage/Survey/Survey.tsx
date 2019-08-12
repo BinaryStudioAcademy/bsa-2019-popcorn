@@ -1,14 +1,15 @@
 import React, { PureComponent } from 'react';
 import './Survey.scss';
-import SurveySingleAnswer from '../SurveyItems/SurveySingleAnswer/SurveySingleAnswer';
-import SurveyMultipleAnswer from '../SurveyItems/SurveyMultipleAnswer/SurveyMultipleAnswer';
+import SurveyMultipleAnswers from '../SurveyItems/SurveyMultipleAnswer/SurveyMultipleAnswer';
+import Checkboxes from '../SurveyItems/SurveyCheckboxes/SurveyCheckboxes';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import SurveyShortAnswer from '../SurveyItems/SurveyShortAnswer/SurveyShortAnswer';
+import SurveyLinearScale from '../SurveyItems/SurveyLinearScale/SurveyLinearScale';
 import { faUsers } from '@fortawesome/free-solid-svg-icons';
 import ReactTimeAgo from 'react-time-ago';
 import JavascriptTimeAgo from 'javascript-time-ago';
 import en from 'javascript-time-ago/locale/en';
-import SurveyShortAnswer from '../SurveyItems/SurveyShortAnswer/SurveyShortAnswer';
-import SurveyLinearScale from '../SurveyItems/SurveyLinearScale/SurveyLinearScale';
+
 JavascriptTimeAgo.locale(en);
 
 
@@ -147,7 +148,7 @@ class Survey extends PureComponent<IProps, IState> {
                         questions.map((question, i) => {
                             if (question.type === 'Multiple choice') {
                                 return (
-                                    <SurveySingleAnswer 
+                                    <SurveyMultipleAnswers 
                                         key={i} 
                                         questionInfo={question} 
                                         setAnswer={this.setSingleAnswer}
@@ -156,7 +157,7 @@ class Survey extends PureComponent<IProps, IState> {
                             }
                             else if (question.type === 'Checkboxes') {
                                 return (
-                                    <SurveyMultipleAnswer 
+                                    <Checkboxes 
                                         key={i} 
                                         questionInfo={question} 
                                         setAnswer={this.setMultipleAnswer}
