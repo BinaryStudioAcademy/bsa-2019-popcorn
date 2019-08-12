@@ -1,0 +1,107 @@
+$event-tab-active-line: 3px;
+$event-tab-space: 10px;
+$event-tab-list-space-top: $event-tab-space + $event-tab-active-line;
+
+$text-base-color: #122737;
+$text-secondary-color: rgba($text-base-color, .5);
+$base-font-family: 'Inter', sans-serif;
+$header-medium: 18px;
+$base-letter-spacing: .4px;
+$orange: #FB8700;
+
+.event-page-header {
+    margin-bottom: 30px;
+
+    .header-photo {
+        width: 100%;
+        height: 200px;
+        background-position: 100% center;
+        background-size: cover;
+        background-repeat: no-repeat;
+    }
+
+    .header-basic {
+        .header-title {
+            display: block;
+            margin: 10px 0;
+            font-size: 22px;
+
+        }
+        
+        .header-meta-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            .meta-info-left {
+                display: flex;
+                justify-content: left;
+                align-items: center;
+
+                .meta-info-item {
+                    &:last-child {
+                        border-left: none;
+                    }
+                }
+            }
+
+            .meta-info-item {
+                padding: 5px 10px;
+                display: flex;
+                align-items: center;
+                border: 1px solid silver;
+                cursor: pointer;
+
+                &:last-child {
+                    margin-right: 0;
+                }
+
+                &:hover {
+                    background-color: #f9f9f9;
+                }
+
+                .meta-info-name {
+                    margin-left: 10px;
+                }
+            }
+        }
+    }
+}
+
+.event-page-main {
+    margin-top: 5px;
+}
+
+.event-page {
+    width: 70%;
+    margin: 2% auto 0;
+    display: flex;
+    flex-direction: column;
+    color: $text-base-color;
+}
+
+.event-page-tabs {
+    margin-bottom: 20px;
+    
+    .event-page-tab-list {
+        list-style-type: none;
+        display: flex;
+        justify-content: space-between;
+        margin-top: $event-tab-list-space-top;
+        
+        .event-page-tab {
+            padding: $event-tab-space;
+            text-decoration: none;
+            color: $text-secondary-color;
+            letter-spacing: $base-letter-spacing;
+            font-weight: 600;
+        }
+
+        .event-page-tab-active {
+            border-top: $event-tab-active-line solid $orange;
+            border-radius: 2px;
+            color: $text-base-color;
+            font-size: $header-medium;
+        }
+    }
+}

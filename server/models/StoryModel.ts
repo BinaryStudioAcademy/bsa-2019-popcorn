@@ -1,8 +1,8 @@
-import {User} from "./UserModel";
+import { User } from "./UserModel";
 
 export class Story {
-    id: string;
-    image_url: string;
-    caption: string;
-    user:User;
+  id: string;
+  image_url: string;
+  caption: string;
+  user: User;
 }

@@ -1,18 +1,18 @@
 import StoryListItem from '../story-list-item/story-list-item';
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 
 interface IStoryListItem {
-    caption: string,
-    image_url: string,
-    user: {
-        avatar: string,
-        any
-    },
-    any
-};
+	caption: string;
+	image_url: string;
+	user: {
+		avatar: string;
+		any;
+	};
+	any;
+}
 
 interface IStoryListItemsProps {
-    storyListItems: Array<IStoryListItem>
+	storyListItems: Array<IStoryListItem>;
 }
 
 class StoryListContent extends Component<IStoryListItemsProps> {

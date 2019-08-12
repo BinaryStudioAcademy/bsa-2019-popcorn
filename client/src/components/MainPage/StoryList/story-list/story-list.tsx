@@ -3,24 +3,24 @@ import StoryListContent from '../story-list-content/story-list-content';
 import AddStoryItem from '../add-story-item/add-story-item';
 import AddStoryPopup from "../add-story-popup/add-story-popup";
 import './story-list.scss';
-import Spinner from "../../../shared/Spinner";
-import config from "../../../../config";
+import Spinner from '../../../shared/Spinner';
+import config from '../../../../config';
 
 interface IStoryListItem {
-    caption: string,
-    image_url: string,
-    user: {
-        avatar: string,
-        any
-    },
-    any
-};
+	caption: string;
+	image_url: string;
+	user: {
+		avatar: string;
+		any;
+	};
+	any;
+}
 
 interface IStoryListProps {
-    scrollStep: number,
-    stories: null | Array<IStoryListItem>,
-    fetchStories: () => any,
-    avatar: null | string
+	scrollStep: number;
+	stories: null | Array<IStoryListItem>;
+	fetchStories: () => any;
+	avatar: null | string;
 }
 
 interface IState {
