@@ -1,5 +1,6 @@
 import React from 'react';
-import EventPageHeader from './EventPageHeader';
+// import EventPageHeader from './EventPageHeader';
+import EventPageHeader from './EventPageHeader2';
 import EventPageTabs from './EventPageTabs';
 import EventPageTabBody from './EventPageTabBody';
 import './EventPage.scss';

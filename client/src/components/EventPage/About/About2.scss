@@ -1,0 +1,53 @@
+.about-event {
+    margin: 0 10px;
+    .date {
+        display: flex;
+        align-items: center;
+        margin-bottom: 15px;
+    }
+
+    .location {
+        margin-bottom: 15px;
+
+        .location-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            line-height: 22px;
+        }
+
+        .location-btn {
+            display: block;
+            width: 100px;
+            cursor: pointer;
+            font-size: 14px;
+            color: #777;
+
+            &:hover {
+                color: #555;
+            }
+        }
+    }
+
+    .icon {
+        width: 30px;
+    }
+
+    .map-loading-elem {
+        height: 100%;
+    }
+    .map-container {
+        width: 300px;
+        // margin: 10px auto 0;
+        margin: 10px 0;
+        height: 150px;
+    }
+    .map-elem {
+        height: 100%;
+    }
+
+    .details {
+        max-height: 100px;
+        line-height: 22px;
+    }
+}

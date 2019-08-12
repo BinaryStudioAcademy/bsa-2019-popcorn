@@ -18,13 +18,15 @@ const EventPageHeader: React.FC<IProps> = ({ event }) => {
             <div className="header-basic">
                 <span className="header-title">{event.title}</span>
                 <div className="header-meta-info">
-                    <div className="meta-info-item">
-                        <FontAwesomeIcon icon={faStar} />
-                        <span className="meta-info-name">Interested</span>
-                    </div>
-                    <div className="meta-info-item">
-                        <FontAwesomeIcon icon={faPlus} />
-                        <span className="meta-info-name">Going</span>
+                    <div className="meta-info-left">
+                        <div className="meta-info-item">
+                            <FontAwesomeIcon icon={faStar} />
+                            <span className="meta-info-name">Interested</span>
+                        </div>
+                        <div className="meta-info-item">
+                            <FontAwesomeIcon icon={faPlus} />
+                            <span className="meta-info-name">Going</span>
+                        </div>
                     </div>
                     <div className="meta-info-item">
                         <FontAwesomeIcon icon={faEnvelope} />

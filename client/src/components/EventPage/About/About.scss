@@ -1,0 +1,88 @@
+.about {
+    width: 96%;
+    padding: 0 2%;
+    margin: 0 auto;
+    
+    .meta-data {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        .date-location {
+            width: 50%;
+            
+
+            .date {
+                padding: 10px;
+                border: 1px solid #000;
+                border-radius: 4px;
+                margin-bottom: 10px;
+
+            }
+
+            .location {
+                padding: 10px;
+                border: 1px solid #000;
+                border-radius: 4px;
+
+                .location-title {
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+
+                    .location-btn-show {
+                        cursor: pointer;
+                        color: #555;
+
+                        &:hover {
+                            text-decoration: underline;
+                        }
+                    }
+                }
+
+                .map-loading-elem {
+                    height: 100%;
+                }
+                .map-container {
+                    margin-top: 10px;
+                    height: 400px;
+                }
+                .map-elem {
+                    height: 100%;
+                }
+            }
+        }
+
+        .guests {
+            width: 30%;
+            padding: 10px;
+            border: 1px solid #000;
+            border-radius: 4px;
+
+            .guests-title {
+                display: block;
+                margin-bottom: 15px;
+            }
+
+            .guests-info {
+                display: flex;
+                justify-content: space-around;
+
+                & > * {
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                    justify-content: center;
+                }
+            }
+        }
+    }
+
+    .details {
+        margin-top: 40px;
+        max-height: 100px;
+        padding: 10px;
+        border: 1px solid #000;
+        border-radius: 4px;
+    }
+}
