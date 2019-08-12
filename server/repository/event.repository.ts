@@ -1,5 +1,5 @@
 import { EntityRepository, Repository } from "typeorm";
-import { Event,EventComment } from "../entities/Events";
+import { Event, EventComment, EventVisitor } from "../entities/Events";
 import { getRepository, createQueryBuilder } from "typeorm";
 
 
@@ -13,8 +13,15 @@ class EventRepository extends Repository<Event> {
             .where("event.id = :id", { id: eventId })
             .getOne();
     }
+    async getEventsByVisitorId(userId: string): Promise<EventVisitor[]> {
+        return await getRepository(EventVisitor)
+            .createQueryBuilder('event_visitor')
+            .leftJoinAndSelect('event_visitor.event', 'event')
+            .where("event_visitor.userId = :id", { id: userId })
+            .getMany();
+    }
 
-    
+
 }
 
 

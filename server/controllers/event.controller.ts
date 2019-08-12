@@ -7,7 +7,7 @@ import { Event as EventEntity } from '../entities/Events';
 const router = Router();
 
 router
-    .get('/', (req: Request, res: Response, next: NextFunction) => eventService.getEvents()
+    .get('/', (req: Request, res: Response, next: NextFunction) => eventService.getEvents(req.query.id)
         .then((events: Event[]) => res.send(events))
         .catch(next))
     .get('/:id', (req: Request, res: Response, next: NextFunction) => eventService.getEventById(req.params.id)
@@ -40,6 +40,9 @@ router
         .then((response: EventVisitor[]) => res.send(response))
         .catch(next))
     .get('/:id/visitor', (req: Request, res: Response, next: NextFunction) => eventService.getVisitorsByEventId(req.params.id)
+        .then((response: EventVisitor[]) => res.send(response))
+        .catch(next))
+    .get('/visitor/:id', (req: Request, res: Response, next: NextFunction) => eventService.getEventsByVisitorId(req.params.id)
         .then((response: EventVisitor[]) => res.send(response))
         .catch(next))
     .delete('/visitor/:id', (req: Request, res: Response, next: NextFunction) => eventService.deleteVisitorById(req.params.id)
