@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, {Component, ReactInstance} from 'react';
 import StoryListContent from '../story-list-content/story-list-content';
 import AddStoryItem from '../add-story-item/add-story-item';
 import StoryListSlider from "../story-list-slider/story-list-slider";
@@ -28,7 +28,10 @@ interface IStoryListProps {
 interface IState {
     index: number,
     isPopupShown: boolean,
-    scrollStep: number
+    scrollStep: number,
+    isDown: boolean,
+    startX: number,
+    scrollLeft: number
 }
 
 class StoryList extends Component<IStoryListProps, IState> {
@@ -38,7 +41,10 @@ class StoryList extends Component<IStoryListProps, IState> {
         this.state = {
             index: 0,
             isPopupShown: false,
-            scrollStep: props.scrollStep || 1
+            scrollStep: props.scrollStep || 1,
+            isDown: false,
+            startX: 0,
+            scrollLeft: 0
         }
     }
 
@@ -49,6 +55,27 @@ class StoryList extends Component<IStoryListProps, IState> {
 
     onClosePopupClick = () => {
         this.setState({isPopupShown: false});
+    }
+
+    onMouseDown = (event) => {
+        const scroll: any = this.refs.scroll; 
+        const startX = event.pageX - scroll.offsetLeft;
+        const scrollLeft = scroll.scrollLeft;
+        this.setState({ startX, scrollLeft, isDown: true });
+    }
+
+    onMouseLeave = (event) => {
+        this.setState({ isDown: false });
+    }
+
+    onMouseMove = (event) => {
+        const { startX, scrollLeft, isDown } = this.state;
+        const scroll: any = this.refs.scroll; 
+        if (!isDown) return;
+        event.preventDefault();
+        const x = event.pageX - scroll.offsetLeft;
+        const walk = (x - startX); 
+        scroll.scrollLeft = scrollLeft - walk;
     }
 
     scrollLeft = () => {
@@ -94,7 +121,16 @@ class StoryList extends Component<IStoryListProps, IState> {
             <StoryListSlider scrollLeft={this.scrollLeft} scrollRight={this.scrollRight}/>
             <div className="story-list">
                 <AddStoryItem onOpenPopupClick={this.onOpenPopupClick} avatar={this.props.avatar || config.DEFAULT_AVATAR}/>
-                <StoryListContent storyListItems={this.getStoryRange(this.props.stories, this.state.index)}/>
+                <div 
+                    ref="scroll"
+                    className="story-list-scroll"
+                    onMouseDown={this.onMouseDown}
+                    onMouseLeave={this.onMouseLeave}
+                    onMouseUp={this.onMouseLeave}
+                    onMouseMove={this.onMouseMove}
+                >
+                    <StoryListContent storyListItems={this.getStoryRange(this.props.stories, this.state.index)}/>
+                </div>
             </div>
         </div>);
     }

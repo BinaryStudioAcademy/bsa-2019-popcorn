@@ -1,14 +1,33 @@
 .story-list-wrapper {
-    width: 1300px;
+    width: 100%;
     margin: auto;
     display: grid;
     grid-template-rows: 27px 1fr;
     grid-gap: 14px;
     align-content: right;
+    overflow: hidden;
 }
 
 .story-list {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
-    grid-gap: 10px;
+    display: flex;
+    overflow: hidden;
+
+    .story-list-scroll {
+        display: flex;
+        width: 100%;
+        position: relative;
+        overflow-x: scroll;
+        overflow-y: hidden;
+        white-space: nowrap;
+        transition: all 0.2s;
+        transform: scale(0.98);
+        will-change: transform;
+        user-select: none;
+        cursor: pointer;
+
+        > * {
+            margin-left: 10px;
+        }
+    }
 }
+

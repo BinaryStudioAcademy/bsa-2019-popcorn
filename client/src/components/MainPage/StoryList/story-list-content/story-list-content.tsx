@@ -18,8 +18,12 @@ interface IStoryListItemsProps {
 class StoryListContent extends Component<IStoryListItemsProps> {
     render() {
         const {storyListItems} = this.props;
-        const storyList = storyListItems.map(item => <StoryListItem imageUrl={item.image_url} name={item.caption}
-                                                                    avatar={item.user.avatar}/>);
+        const storyList = storyListItems.map((item, i) => <StoryListItem 
+            key={i} 
+            imageUrl={item.image_url} 
+            name={item.caption}
+            avatar={item.user.avatar}/>
+        );
         return (storyList);
     }
 }
