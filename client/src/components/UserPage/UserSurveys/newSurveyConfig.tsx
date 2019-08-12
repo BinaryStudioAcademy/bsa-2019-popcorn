@@ -32,15 +32,7 @@ export default () => {
             "value": "Option 1"
           }
         ],
-        "answers": [
-          {
-            "id": "1",
-              "question_id": "1",
-              "option_id": "2",
-              "user_id": "2",
-              "value": ""
-          }
-        ]
+        "answers": []
       }
     ]
   }
