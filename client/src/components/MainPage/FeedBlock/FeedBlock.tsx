@@ -1,12 +1,12 @@
 import React from "react";
-import FeedList from "../FeedList/FeedList"
+import PostList from "../PostList/PostList"
 import RecommendList from "../RecommendList/RecommendList"
 import "./FeedBlock.scss"
 import TopList from "../TopList/TopList";
 
 const FeedBlock =()=>{
         return <div className="feed-block">
-            <FeedList />
+            <PostList />
             <RecommendList />
             <TopList/>
         </div>

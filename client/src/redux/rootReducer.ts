@@ -1,13 +1,11 @@
-import { combineReducers } from "redux";
-import headerReducer from '../components/shared/Header/Header.reducer';
+import { combineReducers } from 'redux';
+import movieReducer from '../components/MovieSeriesPage/Movie.redux/reducer';
 import profileHeader from '../components/UserPage/reducer';
 
-const reducers = {
-    
-};
+const reducers = {};
 
 export default combineReducers({
-    ...reducers,
-    header: headerReducer,
-    profile:profileHeader
+	...reducers,
+	movie: movieReducer,
+	profile: profileHeader
 });
