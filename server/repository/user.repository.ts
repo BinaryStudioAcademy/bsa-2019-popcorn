@@ -1,18 +1,16 @@
-import {EntityRepository, Repository} from "typeorm";
-import {User} from "../entities/User";
+import { EntityRepository, Repository } from "typeorm";
+import { User } from "../entities/User";
 
 @EntityRepository(User)
 class UserRepository extends Repository<User> {
-
   async getUserById(id: string) {
     let data: { user?: User } = {};
-    let error = '';
+    let error = "";
     let success = true;
     try {
       data.user = await this.findOne({ where: { id } });
-      if (!data.user)
-        throw new Error(`User with ${id} id is not found`);
-    } catch(err) {
+      if (!data.user) throw new Error(`User with ${id} id is not found`);
+    } catch (err) {
       error = err.message;
       success = false;
     }
@@ -21,11 +19,11 @@ class UserRepository extends Repository<User> {
 
   async getUsers() {
     let data: { users?: User[] } = {};
-    let error = '';
+    let error = "";
     let success = true;
     try {
       data.users = await this.find();
-    } catch(err) {
+    } catch (err) {
       error = err.message;
       success = false;
     }
@@ -34,14 +32,13 @@ class UserRepository extends Repository<User> {
 
   async updateById(id, newData) {
     let data: { user?: User } = {};
-    let error = '';
+    let error = "";
     let success = true;
-    try { 
-      await this.update({ id }, newData); 
+    try {
+      await this.update({ id }, newData);
       data.user = await this.findOne({ where: { id } });
-      if (!data.user)
-        throw new Error(`User with ${id} id is not found`);
-    } catch(err) {
+      if (!data.user) throw new Error(`User with ${id} id is not found`);
+    } catch (err) {
       error = err.message;
       success = false;
     }
@@ -50,14 +47,13 @@ class UserRepository extends Repository<User> {
 
   async deleteById(id) {
     let data = {};
-    let error = '';
+    let error = "";
     let success = true;
     try {
       const user = await this.findOne({ where: { id } });
-      if (!user)
-        throw new Error(`User with ${id} id is not found`);
+      if (!user) throw new Error(`User with ${id} id is not found`);
       await this.delete({ id });
-    } catch(err) {
+    } catch (err) {
       error = err.message;
       success = false;
     }
