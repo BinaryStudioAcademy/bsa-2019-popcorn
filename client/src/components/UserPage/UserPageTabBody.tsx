@@ -8,6 +8,8 @@ import UserTops from './UserTops/UserTops';
 import UserLists from './UserLists/UserLists';
 import UserWatched from './UserWatched/UserWatched';
 import ProfileComponent from './ProfileComponent/ProfileComponent';
+import UserSurveysNav from './UserSurveys/UserSurveysNav';
+import mock from './Survey/mock';
 import {
 	cancelAvatar,
 	getUsersPosts,
@@ -16,6 +18,8 @@ import {
 } from './actions';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+
+const surveys = mock;
 
 interface IProps {
 	mainPath: string;
@@ -73,7 +77,15 @@ const UserPageTabs: React.SFC<IProps> = ({
 				/>
 				<Route path={`${mainPath}/reviews`} component={UserReviews} />
 				<Route path={`${mainPath}/events`} component={UserEvents} />
-				<Route path={`${mainPath}/surveys`} component={UserSurveys} />
+				<Route
+					path={`${mainPath}/surveys`}
+					render={props => (
+						<UserSurveysNav
+							mainPath={`${mainPath}/surveys`}
+							surveys={surveys}
+						/>
+					)}
+				/>
 				<Route path={`${mainPath}/tops`} component={UserTops} />
 				<Route path={`${mainPath}/lists`} component={UserLists} />
 				<Route path={`${mainPath}/watched`} component={UserWatched} />
