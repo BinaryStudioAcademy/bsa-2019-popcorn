@@ -4,6 +4,7 @@ import { faChevronDown } from '@fortawesome/free-solid-svg-icons';
 import './Header.scss';
 import messageIcon from '../../../assets/icons/general/header/message-icon.svg';
 import notifyIcon from '../../../assets/icons/general/header/notify-icon.svg';
+import logo from '../../../assets/icons/general/popcorn-logo.svg';
 import MovieSearch from '../../MovieList/MovieSearch/index';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -54,7 +55,12 @@ const Header = ({
 }: IProps) => {
 	return (
 		<div className="header">
-			<div className="title">Pop Corn</div>
+			<NavLink to="/" className="header-logo-link">
+				<div className="logo-wrapper">
+					<img src={logo} className="logo" alt="logo" />
+				</div>
+				<div className="title">Pop Corn</div>
+			</NavLink>
 			<button className="header-buttons hover">
 				<NavLink
 					to={'/movie-list'}

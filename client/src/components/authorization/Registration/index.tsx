@@ -3,6 +3,7 @@ import { Form, Formik, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import './Registration.scss';
 import { NavLink, Redirect } from 'react-router-dom';
+import logo from '../../../assets/icons/general/popcorn-logo.svg';
 
 interface Values {
 	name: string;
@@ -41,6 +42,9 @@ class Registration extends React.Component<IProps, IState> {
 					<Redirect to="/" />
 				) : (
 					<div>
+						<div className="logo-wrapper">
+							<img src={logo} className="logo" alt="logo" />
+						</div>
 						<h1 className="form-heading">Join Pop Corn</h1>
 						<Formik
 							initialValues={{ ...initialFormikValues }}

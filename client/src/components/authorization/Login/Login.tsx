@@ -2,6 +2,7 @@ import * as React from 'react';
 import { ErrorMessage, Field, Form, Formik } from 'formik';
 import { NavLink, Redirect } from 'react-router-dom';
 import * as Yup from 'yup';
+import logo from '../../../assets/icons/general/popcorn-logo.svg';
 import './style.scss';
 
 interface IValues {
@@ -89,6 +90,9 @@ class Login extends React.Component<IProps, IState, IValues> {
 
 		return !isAuthorized ? (
 			<div className="form-wrapper">
+				<div className="logo-wrapper">
+					<img src={logo} className="logo" alt="logo" />
+				</div>
 				<h1 className="form-heading">Welcome back!</h1>
 				<Formik
 					initialValues={{ password: '', email: '' }}

@@ -9,10 +9,28 @@
 	border: 1px solid $border-color;
 	box-shadow: 0px 0px 10px $input-shadow-color;
 
-	.title {
-		font-weight: 900;
-		font-size: 24px;
-		letter-spacing: $header-letter-spacing;
+	.header-logo-link {
+		text-decoration: none;
+		color: inherit;
+		display: flex;
+		align-items: center;
+
+		&:active {
+			color: inherit;
+		}
+		.title {
+			font-weight: 900;
+			font-size: 24px;
+			letter-spacing: $header-letter-spacing;
+		}
+		.logo-wrapper {
+			font-size: 0;
+
+			img {
+				width: 50px;
+				height: 50px;
+			}
+		}
 	}
 
 	.header-buttons {
