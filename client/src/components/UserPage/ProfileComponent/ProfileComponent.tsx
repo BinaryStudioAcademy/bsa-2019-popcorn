@@ -145,18 +145,16 @@ class ProfileComponent extends Component<ProfileProps> {
                             <p className="field">Favorite movies: </p>
                             <div className="content">
                                 {favMovies.map(movie =>
-                                    <p key={movie.id}>{movie.movie} <span>&#10006;</span></p>
+                                    <p key={movie.id}>{movie.movie}</p>
                                 )}
-                                <p>&#x2795;</p>
                             </div>
                         </div>
                         <div className="profileRow">
                             <p className="field">Favorite TV-shows: </p>
                             <div className="content">
                                 {favShows.map(movie =>
-                                    <p key={movie.id}>{movie.movie} <span>&#10006;</span></p>
+                                    <p key={movie.id}>{movie.movie}</p>
                                 )}
-                                <p>&#x2795;</p>
                             </div>
                         </div>
                     </div>
