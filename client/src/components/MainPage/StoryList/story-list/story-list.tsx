@@ -1,9 +1,7 @@
 import React, {Component, ReactInstance} from 'react';
 import StoryListContent from '../story-list-content/story-list-content';
 import AddStoryItem from '../add-story-item/add-story-item';
-import StoryListSlider from "../story-list-slider/story-list-slider";
 import AddStoryPopup from "../add-story-popup/add-story-popup";
-
 import './story-list.scss';
 import Spinner from "../../../shared/Spinner";
 import config from "../../../../config";
@@ -26,26 +24,41 @@ interface IStoryListProps {
 }
 
 interface IState {
-    index: number,
     isPopupShown: boolean,
     scrollStep: number,
     isDown: boolean,
     startX: number,
-    scrollLeft: number
+    scrollLeft: number,
+}
+
+interface ILoad {
+    from: number,
+    count: number
 }
 
 class StoryList extends Component<IStoryListProps, IState> {
+
+    storiesFilter: ILoad;
+    
     constructor(props){
         super(props);
 
         this.state = {
-            index: 0,
             isPopupShown: false,
             scrollStep: props.scrollStep || 1,
             isDown: false,
             startX: 0,
-            scrollLeft: 0
+            scrollLeft: 0,
         }
+
+        this.storiesFilter = { 
+            from: 0,
+            count: 10,
+        };
+    }
+
+    componentDidMount() {
+        this.props.fetchStories();
     }
 
 
@@ -64,7 +77,7 @@ class StoryList extends Component<IStoryListProps, IState> {
         this.setState({ startX, scrollLeft, isDown: true });
     }
 
-    onMouseLeave = (event) => {
+    onMouseLeave = () => {
         this.setState({ isDown: false });
     }
 
@@ -78,58 +91,38 @@ class StoryList extends Component<IStoryListProps, IState> {
         scroll.scrollLeft = scrollLeft - walk;
     }
 
-    scrollLeft = () => {
+    loadFunction = () => {
         if(!this.props.stories || this.props.stories.length === 0)
             return;
-        const currentIndex = this.state.index;
-        if (currentIndex - this.state.scrollStep < 0) {
-            return;
-        }
+        const currentIndex = this.storiesFilter.from;
 
-        this.setState({
-            index: currentIndex - this.state.scrollStep
-        })
-    }
-
-    scrollRight = () => {
-        if(!this.props.stories || this.props.stories.length === 0)
-            return;
-        const currentIndex = this.state.index;
         if (currentIndex + this.state.scrollStep >= this.props.stories.length) {
             return;
         }
 
-        this.setState({
-            index: currentIndex + this.state.scrollStep
-        })
+
+        this.storiesFilter.from = currentIndex + this.state.scrollStep;
+
     }
 
     getStoryRange = (storyListItems: null | Array<IStoryListItem>, index: number) => {
-        return storyListItems ? storyListItems.slice(index, index + 9) : [];
+        return storyListItems ? storyListItems.slice(index, index + 90) : [];
     }
 
     render() {
-        const {stories, fetchStories} = this.props;
-        if(!stories){
-            fetchStories();
-            return <Spinner/>
-        }
-
-
         return (<div className="story-list-wrapper">
             <AddStoryPopup onClosePopupClick={this.onClosePopupClick} isShown={this.state.isPopupShown}/>
-            <StoryListSlider scrollLeft={this.scrollLeft} scrollRight={this.scrollRight}/>
             <div className="story-list">
                 <AddStoryItem onOpenPopupClick={this.onOpenPopupClick} avatar={this.props.avatar || config.DEFAULT_AVATAR}/>
                 <div 
                     ref="scroll"
-                    className="story-list-scroll"
+                    className={`story-list-scroll ${this.state.isDown && 'active'}`}
                     onMouseDown={this.onMouseDown}
                     onMouseLeave={this.onMouseLeave}
                     onMouseUp={this.onMouseLeave}
                     onMouseMove={this.onMouseMove}
-                >
-                    <StoryListContent storyListItems={this.getStoryRange(this.props.stories, this.state.index)}/>
+                >   
+                <StoryListContent storyListItems={this.getStoryRange(this.props.stories, 0)}/>
                 </div>
             </div>
         </div>);

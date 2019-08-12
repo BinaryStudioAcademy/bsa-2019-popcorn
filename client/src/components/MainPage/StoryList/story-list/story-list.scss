@@ -3,14 +3,19 @@
     margin: auto;
     display: grid;
     grid-template-rows: 27px 1fr;
+    grid-template-areas: 
+        "."
+        "stories";
     grid-gap: 14px;
     align-content: right;
     overflow: hidden;
+    padding: 0 20px;
 }
 
 .story-list {
     display: flex;
     overflow: hidden;
+    grid-area: stories;
 
     .story-list-scroll {
         display: flex;
@@ -25,8 +30,32 @@
         user-select: none;
         cursor: pointer;
 
+        &.active {
+            cursor: grabbing;
+            cursor: -webkit-grabbing;
+            transform: scale(1);
+        }
+
+/*         &::-webkit-scrollbar {
+            display: none;      
+        } */
+
         > * {
-            margin-left: 10px;
+            margin-left: 15px;
+            max-width: 118px;
+
+            img {
+                -webkit-user-drag: none;
+                -khtml-user-drag: none;
+                -moz-user-drag: none;
+                -o-user-drag: none;
+            }
+
+            .story-name {
+                max-width: 118px;
+                text-overflow: ellipsis;
+                overflow: hidden;
+            }
         }
     }
 }

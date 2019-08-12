@@ -22,8 +22,8 @@ class StoryListContent extends Component<IStoryListItemsProps> {
             key={i} 
             imageUrl={item.image_url} 
             name={item.caption}
-            avatar={item.user.avatar}/>
-        );
+            avatar={item.user.avatar}
+        />);
         return (storyList);
     }
 }
