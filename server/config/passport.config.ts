@@ -8,7 +8,6 @@ import * as userService from "../services/user.service";
 import * as googleConfig from "./google.config";
 import * as facebookConfig from "./facebook.config";
 
-
 const options = {
   jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
   secretOrKey: secret
@@ -63,9 +62,7 @@ passport.use(
   )
 );
 
-
 passport.use("restore", new JwtStrategy(options, async (body, done) => {}));
-
 
 passport.use(
   "jwt",
@@ -79,7 +76,6 @@ passport.use(
       return done(err);
     }
   })
-
 );
 
 passport.use(
@@ -96,7 +92,11 @@ passport.use(
         const { email, displayName: name } = data;
         const user = await userService.getByEmail(email);
         if (!user) {
-          const user = await userService.createUser({ name, email });
+          const user = await userService.createUser({
+            name,
+            email,
+            reset_token: ""
+          });
           return done(null, user);
         }
         return done(null, user);
@@ -123,7 +123,8 @@ passport.use(
         if (!user) {
           const user = await userService.createUser({
             name,
-            email: email || name
+            email: email || name,
+            reset_token: ""
           });
           return done(null, user);
         }
