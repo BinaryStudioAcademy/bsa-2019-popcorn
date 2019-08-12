@@ -1,19 +1,17 @@
-import {SET_STORIES} from "./actionTypes";
-
+import { SET_STORIES } from './actionTypes';
 
 const initialState = {
-    stories: null
+	stories: null
 };
 
-
-export default function (state = initialState, action) {
-    switch (action.type) {
-        case SET_STORIES:
-            return{
-                ...state,
-                stories: action.payload.stories
-            }
-        default:
-            return state;
-    }
+export default function(state = initialState, action) {
+	switch (action.type) {
+		case SET_STORIES:
+			return {
+				...state,
+				stories: action.payload.stories
+			};
+		default:
+			return state;
+	}
 }
