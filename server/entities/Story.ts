@@ -1,15 +1,24 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn } from "typeorm";
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  ManyToOne,
+  JoinColumn
+} from "typeorm";
 import { User } from "./User";
 
 @Entity()
 export class Story {
-    @PrimaryGeneratedColumn('uuid')
-    id: string;
+  @PrimaryGeneratedColumn("uuid")
+  id: string;
 
-    @Column()
-    image_url: string;
+  @Column()
+  image_url: string;
 
-    @ManyToOne(type => User)
-    @JoinColumn()
-    user: User;
+  @Column()
+  caption: string;
+
+  @ManyToOne(type => User)
+  @JoinColumn()
+  user: User;
 }

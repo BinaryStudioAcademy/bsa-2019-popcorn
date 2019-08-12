@@ -1,105 +1,118 @@
 import React, { Component } from 'react';
 import StoryListContent from '../story-list-content/story-list-content';
 import AddStoryItem from '../add-story-item/add-story-item';
-import StoryListSlider from "../story-list-slider/story-list-slider";
-import AddStoryPopup from "../add-story-popup/add-story-popup";
+import StoryListSlider from '../story-list-slider/story-list-slider';
+import AddStoryPopup from '../add-story-popup/add-story-popup';
 
 import './story-list.scss';
-
+import Spinner from '../../../shared/Spinner';
+import config from '../../../../config';
 
 interface IStoryListItem {
-    name: string,
-    imageUrl: string,
-    avatar: string,
-};
-interface IStoryListProps {
-    scrollStep: number,
+	caption: string;
+	image_url: string;
+	user: {
+		avatar: string;
+		any;
+	};
+	any;
 }
 
-class StoryList extends Component<IStoryListProps>{
-    mockedimageUrl = 'https://s3-alpha-sig.figma.com/img/e0c3/dd6e/d2d5bd4e0e1d9243f70ca5d2ba5f9130?Expires=1566172800&Signature=PZn4tI7Bfttzi9p9SM7hNsacTq8ul-9qr0c1X4n7MAFCDK8DIpdqN~YpdtLJO3ozvXCF1pWAxaOHdGkvIyuDdL5dYIVtgEOMf7S1oD5woUmPcF0C2PQ0p1mkMY5-QPEbrMy4e5~uuPvZo8XPaZaRypwBqNU7JPhZb8~6ZUt-xZJ8zum-lYmR4RWhPLfb02g3bPNCYRYw8c-Wuqr6WNfOQEeueUXyNl0HQCg9BK2hY3Lyz5s7FizfNzRVL9QZSsPdDbP-tbEZK~PUNlEPRn7Aw0JcEYMuJ1NuMoNOFHTYVvpFcKe0akNq9NDqDcWv2UaCB6NnsbxDIBejoN5EeuHozA__&Key-Pair-Id=APKAINTVSUGEWH5XD5UA';
-    mockedText = "example";
-    mockedAvatar = "https://pbs.twimg.com/profile_images/1148972773290762240/kmkJzp5I_400x400.png";
-    array = [
-        { imageUrl: this.mockedimageUrl, name: this.mockedText, avatar: this.mockedAvatar },
-        { imageUrl: this.mockedimageUrl, name: this.mockedText, avatar: this.mockedAvatar },
-        { imageUrl: this.mockedimageUrl, name: this.mockedText, avatar: this.mockedAvatar },
-        { imageUrl: this.mockedimageUrl, name: this.mockedText, avatar: this.mockedAvatar },
-        { imageUrl: this.mockedimageUrl, name: this.mockedText, avatar: this.mockedAvatar },
-        { imageUrl: this.mockedimageUrl, name: this.mockedText, avatar: this.mockedAvatar },
-        { imageUrl: this.mockedimageUrl, name: this.mockedText, avatar: this.mockedAvatar },
-        { imageUrl: this.mockedimageUrl, name: this.mockedText, avatar: this.mockedAvatar },
-        { imageUrl: this.mockedimageUrl, name: "1", avatar: this.mockedAvatar },
-        { imageUrl: this.mockedimageUrl, name: "2", avatar: this.mockedAvatar },
-        { imageUrl: this.mockedimageUrl, name: "3", avatar: this.mockedAvatar },
-        { imageUrl: this.mockedimageUrl, name: "4", avatar: this.mockedAvatar },
-        { imageUrl: this.mockedimageUrl, name: "5", avatar: this.mockedAvatar },
-        { imageUrl: this.mockedimageUrl, name: "6", avatar: this.mockedAvatar },
-        { imageUrl: this.mockedimageUrl, name: "7", avatar: this.mockedAvatar },
-        { imageUrl: this.mockedimageUrl, name: "8", avatar: this.mockedAvatar },
-        { imageUrl: this.mockedimageUrl, name: "9", avatar: this.mockedAvatar },
-        { imageUrl: this.mockedimageUrl, name: "123", avatar: this.mockedAvatar },
-        { imageUrl: this.mockedimageUrl, name: "5", avatar: this.mockedAvatar },
-        { imageUrl: this.mockedimageUrl, name: "6", avatar: this.mockedAvatar },
-        { imageUrl: this.mockedimageUrl, name: "7", avatar: this.mockedAvatar },
-        { imageUrl: this.mockedimageUrl, name: "8", avatar: this.mockedAvatar },
-        { imageUrl: this.mockedimageUrl, name: "9", avatar: this.mockedAvatar },
-        { imageUrl: this.mockedimageUrl, name: "123", avatar: this.mockedAvatar },
-    ];
+interface IStoryListProps {
+	scrollStep: number;
+	stories: null | Array<IStoryListItem>;
+	fetchStories: () => any;
+	avatar: null | string;
+}
 
-    state = {
-        index: 0,
-        scrollStep: 0,
-        isPopupShown: false,
-    }
-    componentDidMount() {
-        this.setState({ scrollStep: this.props.scrollStep });
-    };
+interface IState {
+	index: number;
+	isPopupShown: boolean;
+	scrollStep: number;
+}
 
-    onOpenPopupClick = () => {
-        this.setState({ isPopupShown: true });
-    }
+class StoryList extends Component<IStoryListProps, IState> {
+	constructor(props) {
+		super(props);
 
-    onClosePopupClick = () => {
-        this.setState({ isPopupShown: false });
-    }
+		this.state = {
+			index: 0,
+			isPopupShown: false,
+			scrollStep: props.scrollStep || 1
+		};
+	}
 
-    scrollLeft = () => {
-        const currentIndex = this.state.index;
-        if (currentIndex - this.state.scrollStep < 0) {
-            return;
-        }
+	onOpenPopupClick = () => {
+		this.setState({ isPopupShown: true });
+	};
 
-        this.setState({
-            index: currentIndex - this.state.scrollStep
-        })
-    }
+	onClosePopupClick = () => {
+		this.setState({ isPopupShown: false });
+	};
 
-    scrollRight = () => {
-        const currentIndex = this.state.index;
-        if (currentIndex + this.state.scrollStep >= this.array.length) {
-            return;
-        }
+	scrollLeft = () => {
+		if (!this.props.stories || this.props.stories.length === 0) return;
+		const currentIndex = this.state.index;
+		if (currentIndex - this.state.scrollStep < 0) {
+			return;
+		}
 
-        this.setState({
-            index: currentIndex + this.state.scrollStep
-        })
-    }
+		this.setState({
+			index: currentIndex - this.state.scrollStep
+		});
+	};
 
-    getStoryRange = (storyListItems: Array<IStoryListItem>, index: number) => {
-        return storyListItems.slice(index, index + 9);
-    }
+	scrollRight = () => {
+		if (!this.props.stories || this.props.stories.length === 0) return;
+		const currentIndex = this.state.index;
+		if (currentIndex + this.state.scrollStep >= this.props.stories.length) {
+			return;
+		}
 
-    render() {
-        return (<div className="story-list-wrapper">
-            <AddStoryPopup onClosePopupClick={this.onClosePopupClick} isShown={this.state.isPopupShown} />
-            <StoryListSlider scrollLeft={this.scrollLeft} scrollRight={this.scrollRight} />
-            <div className="story-list">
-                <AddStoryItem onOpenPopupClick={this.onOpenPopupClick} avatar={this.mockedAvatar} />
-                <StoryListContent storyListItems={this.getStoryRange(this.array, this.state.index)} />
-            </div>
-        </div>);
-    }
-};
+		this.setState({
+			index: currentIndex + this.state.scrollStep
+		});
+	};
+
+	getStoryRange = (
+		storyListItems: null | Array<IStoryListItem>,
+		index: number
+	) => {
+		return storyListItems ? storyListItems.slice(index, index + 9) : [];
+	};
+
+	render() {
+		const { stories, fetchStories } = this.props;
+		if (!stories) {
+			fetchStories();
+			return <Spinner />;
+		}
+
+		return (
+			<div className="story-list-wrapper">
+				<AddStoryPopup
+					onClosePopupClick={this.onClosePopupClick}
+					isShown={this.state.isPopupShown}
+				/>
+				<StoryListSlider
+					scrollLeft={this.scrollLeft}
+					scrollRight={this.scrollRight}
+				/>
+				<div className="story-list">
+					<AddStoryItem
+						onOpenPopupClick={this.onOpenPopupClick}
+						avatar={this.props.avatar || config.DEFAULT_AVATAR}
+					/>
+					<StoryListContent
+						storyListItems={this.getStoryRange(
+							this.props.stories,
+							this.state.index
+						)}
+					/>
+				</div>
+			</div>
+		);
+	}
+}
 
 export default StoryList;
