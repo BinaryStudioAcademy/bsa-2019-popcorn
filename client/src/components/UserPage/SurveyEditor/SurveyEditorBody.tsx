@@ -1,7 +1,7 @@
 import React from 'react';
 import SurveyEditor from './SurveyEditor';
 import { NavLink, Route, Switch } from 'react-router-dom';
-import  SurveyReplies from '../SurveyReplies/SurveyReplies';
+import SurveyReplies from '../SurveyReplies/SurveyReplies';
 
 interface ISurvey {
     id: string,
@@ -43,7 +43,7 @@ interface IProps {
     updateInfo: (ISurvey) => void,
     saveInfo?: (ISurvey) => void
     mainPath: string,
-    surveyInfo : ISurvey
+    surveyInfo: ISurvey
 }
 
 const SurveyEditorBody: React.FC<IProps> = (props: IProps) => {
@@ -52,9 +52,25 @@ const SurveyEditorBody: React.FC<IProps> = (props: IProps) => {
     return (
         <div>
             <header className="nav-header">
-                <NavLink to='/user-page/surveys'>Go back</NavLink>
-                <NavLink to={mainPath}>Questions</NavLink>
-                <NavLink to={`${mainPath}/responses`}>Responses</NavLink>
+                <NavLink
+                    to='/user-page/surveys'
+                    className="user-tab"
+                    activeClassName="user-tab-active"
+                >
+                    Go back
+                </NavLink>
+                <NavLink to={mainPath}
+                    className="user-tab"
+                    activeClassName="user-tab-active"
+                >
+                    Questions
+                </NavLink>
+                <NavLink to={`${mainPath}/responses/`}
+                    className="user-tab"
+                    activeClassName="user-tab-active"
+                >
+                    Responses
+                </NavLink>
             </header>
             <Switch>
                 <Route exact path={mainPath} render={() => {
@@ -62,18 +78,18 @@ const SurveyEditorBody: React.FC<IProps> = (props: IProps) => {
                         <div>
                             {
                                 props.saveInfo !== undefined &&
-                                <SurveyEditor 
-                                    updateInfo={updateInfo} 
-                                    mainPath={mainPath} 
-                                    surveyInfo={surveyInfo} 
+                                <SurveyEditor
+                                    updateInfo={updateInfo}
+                                    mainPath={mainPath}
+                                    surveyInfo={surveyInfo}
                                     saveInfo={props.saveInfo}
                                 />
                             }
                         </div>
                     );
                 }} />
-                <Route path={`${mainPath}/responses`} render={() => (
-                    <SurveyReplies mainPath={`${mainPath}/responses`} surveyInfo={surveyInfo}/>
+                <Route path={`${mainPath}/responses/`} render={() => (
+                    <SurveyReplies mainPath={`${mainPath}/responses`} surveyInfo={surveyInfo} />
                 )} />
             </Switch>
         </div>

@@ -1,6 +1,10 @@
 @import "../../../styles/variables.scss";
 @import url('https://rsms.me/inter/inter.css');
 
+$user-tab-active-line: 3px;
+$user-tab-space: 10px;
+$user-tab-list-space-top: $user-tab-space + $user-tab-active-line;
+
 .preview-container {
     position: relative;
 
@@ -33,6 +37,21 @@
         display: flex;
         justify-content: space-around;
         margin: 20px;
+    }
+
+    .user-tab {
+        padding: $user-tab-space;
+        text-decoration: none;
+        color: $text-secondary-color;
+        letter-spacing: $base-letter-spacing;
+        font-weight: 600;
+    }
+
+    .user-tab-active {
+        border-top: $user-tab-active-line solid $orange;
+        border-radius: 2px;
+        color: $text-base-color;
+        font-size: $header-medium;
     }
 
     a {

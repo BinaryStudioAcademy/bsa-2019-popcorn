@@ -70,7 +70,7 @@ const SurveyEditorNav: React.FC<IProps> = (props: IProps) => {
                         surveyInfo={survey} 
                     />
                 )} />
-                <Route exact path={`${mainPath}/responses`} render={() => (
+                <Route exact path={`${mainPath}/responses/statistics`} render={() => (
                     <SurveyEditorBody 
                         updateInfo={updateInfo} 
                         mainPath={mainPath} 

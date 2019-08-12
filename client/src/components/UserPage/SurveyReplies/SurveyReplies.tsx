@@ -1,7 +1,8 @@
 import React from 'react';
-import { Switch, Route, NavLink } from 'react-router-dom';
+import { Switch, Route, NavLink, Redirect } from 'react-router-dom';
 import SurveyStatistics from '../SurveyStatistics/SurveyStatistics';
 import SurveyIndividual from '../SurveyIndividual/SurveyIndividual';
+import "../SurveyEditor/SurveyEditor.scss";
 
 interface IProps {
     mainPath: string,
@@ -47,17 +48,28 @@ const SurveyReplies: React.FC<IProps> = (props: IProps) => {
 
     return (
         <div>
-            <header>
-                <NavLink to={mainPath}>Statistics</NavLink>
-                <NavLink to={`${mainPath}/individual`}>Individual</NavLink>
+            <header className="nav-header">
+                <NavLink to={`${mainPath}/statistics`}
+                    className="user-tab"
+                    activeClassName="user-tab-active"
+                >
+                    Statistics
+                </NavLink>
+                <NavLink to={`${mainPath}/individual`}
+                    className="user-tab"
+                    activeClassName="user-tab-active"
+                >
+                    Individual
+                </NavLink>
             </header>
             <Switch>
-                <Route exact path={mainPath} render={() => (
-                    <SurveyStatistics questions={surveyInfo.questions}/>
+                <Route exact path={`${mainPath}/statistics`} render={() => (
+                    <SurveyStatistics questions={surveyInfo.questions} />
                 )} />
                 <Route path={`${mainPath}/individual`} render={() => (
-                    <SurveyIndividual surveyInfo={surveyInfo}/>
+                    <SurveyIndividual surveyInfo={surveyInfo} />
                 )} />
+                <Redirect to={`${mainPath}/statistics`}/>
             </Switch>
         </div>
     )
