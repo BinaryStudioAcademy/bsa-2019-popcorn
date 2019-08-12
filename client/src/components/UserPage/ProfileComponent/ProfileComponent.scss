@@ -26,7 +26,7 @@ h2 {
 		.upload-wrp{
 			width: 100%;
 			text-align: center;
-			background-color: rgba($black, .1);
+			background-color: rgba($black, .4);
 			position: relative;
 			top: -44px;
 			height: 0;
@@ -41,7 +41,7 @@ h2 {
 		.fontAwesomeIcon{
 			margin-top: 5px;
 			font-size: 30px;
-			color: $text-secondary-color;
+			color: $text-base-color;
 			&:hover{
 				cursor: pointer;
 			}
