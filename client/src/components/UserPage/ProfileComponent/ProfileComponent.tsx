@@ -112,9 +112,12 @@ class ProfileComponent extends Component<ProfileProps> {
                                 disabled={!!uploadUrl}
                                 hidden
                             />
-                            <label htmlFor='image' className='upload-image-button'>
-                                <FontAwesomeIcon icon={faCamera} className="fontAwesomeIcon"/>
-                            </label>
+                            <div className='upload-wrp'>
+                                <label htmlFor='image' className='upload-image-button'>
+                                    <FontAwesomeIcon icon={faCamera} className="fontAwesomeIcon"/>
+                                </label>
+                            </div>
+                            
                         </div>}
 
                     <div className="ProfileInfo">

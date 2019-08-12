@@ -28,8 +28,26 @@ h2 {
 	align-items: flex-start;
 	
 	.profilePhotoWrap{
+		padding-top: 16px;
 		width: 35%;
+		.upload-wrp{
+			width: 100%;
+			text-align: center;
+			background-color: rgba($black, .1);
+			position: relative;
+			top: -44px;
+			height: 0;
+			transition: all .3s linear;
+			overflow: hidden;
+			margin-top: 40px;
+			// display: block;
+		}
+		&:hover .upload-wrp {
+			margin-top: 0;
+			height: 40px;
+		}
 		.fontAwesomeIcon{
+			margin-top: 5px;
 			font-size: 30px;
 			color: $titleColor;
 			&:hover{

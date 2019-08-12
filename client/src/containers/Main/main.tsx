@@ -60,7 +60,7 @@ const Main = ({isAuthorized, userInfo, movieList, fetchMovieList, setMovieSeries
     return (
         <div className="main-page">
             <MainPageSidebar userInfo={userInfo} notifications={notifications}/>
-            <div>
+            <div className='main-content'>
                 <Switch>
                     <Route exact path={`/`} component={MainPage}/>
                     <Route path={`/user-page`} component={UserPage}/>

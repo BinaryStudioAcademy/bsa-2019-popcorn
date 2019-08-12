@@ -39,7 +39,7 @@ const Routing = ({isAuthorized, authorize, fetchByToken, registration, loginErro
         return <Spinner/>
     }
     return (
-        <div>
+        <div className='main-content'>
             <Header/>
             <Switch>
                 <Route exact path="/login" component={() => <Login loginError={loginError} isAuthorized={isAuthorized} onSubmit={authorize}/>}/>
