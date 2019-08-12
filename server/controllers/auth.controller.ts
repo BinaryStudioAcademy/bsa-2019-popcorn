@@ -39,6 +39,7 @@ router
     authService
       .restore(req.body.password, req.body.token)
       .then(() => res.sendStatus(200))
+  )
   .get("/facebook", facebookMiddleware)
   .get("/facebook/redirect", facebookCallbackMiddleware, (req, res, next) =>
     authService

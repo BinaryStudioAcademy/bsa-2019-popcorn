@@ -1,6 +1,5 @@
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 
-
 import { Top } from "./Top";
 import { Story } from "./Story";
 import { Voting } from "../entities/Voting";
@@ -44,7 +43,6 @@ export class User {
   @OneToMany(type => Story, story => story.user)
   stories: Story[];
 
-  @Column({ default: "" })
+  @Column({ default: "", nullable: true })
   reset_token: string;
-
 }
