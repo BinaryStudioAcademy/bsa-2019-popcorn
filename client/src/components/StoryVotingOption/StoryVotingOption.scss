@@ -1,0 +1,30 @@
+@import '../../styles/variables.scss';
+
+.story-voting-option{
+    display: inline-block;
+    
+}
+.story-voting-option-button{
+    background-color: $button-background;
+    font-family: $base-font-family;
+    font-size: $form-font-size;
+    box-shadow: 0px 5px 12px rgba(255, 171, 7, 0.4);
+    border: 1px solid $border-color;
+    padding: 11px 27px 11px 27px;
+    color: $white;   
+    min-width: 4.5em;
+    outline: none;
+    text-transform: uppercase;
+}
+.story-voting-option-button:hover{
+    transform: scale(1.1);
+}
+.story-voting-option-percent{
+    margin-top: .5em;
+    padding: .5em;
+    font-family: $base-font-family;
+    font-size: $form-font-size;
+    color: $white;
+    letter-spacing: 0;
+}
+

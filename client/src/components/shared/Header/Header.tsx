@@ -9,6 +9,7 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import {fetchFilms} from '../Header/actions';
 import { NavLink } from 'react-router-dom';
+import {setMovieSeries} from "../../MovieSeriesPage/Movie.redux/actions";
 
 
 interface IProps {
@@ -29,7 +30,8 @@ interface IProps {
         cast: Array<string>
     }>
     fetchFilms:()=>void,
-    alreadySearch: boolean
+    alreadySearch: boolean,
+    setMovieSeries: (movie : any) => any
 };
 
 const user = {
@@ -40,7 +42,7 @@ const user = {
 const mock = ["Movies in cinema", "Top movies", "On DVD"];
 
 
-const Header = ({userInfo = user, movies = mock, tv = mock, ratings = mock, moviesSearch, fetchFilms, alreadySearch}: IProps) => {
+const Header = ({userInfo = user, movies = mock, tv = mock, ratings = mock, moviesSearch, fetchFilms, alreadySearch, setMovieSeries}: IProps) => {
 
 
     return (
@@ -69,10 +71,12 @@ const Header = ({userInfo = user, movies = mock, tv = mock, ratings = mock, movi
                 </div>
             </button>
 
-            <MovieSearch movies={moviesSearch} fetchFilms={fetchFilms} alreadySearch={alreadySearch}/>
+            <MovieSearch movies={moviesSearch} fetchFilms={fetchFilms} alreadySearch={alreadySearch} setMovieSeries={setMovieSeries}/>
             <div className="notifications">
                 <img className="message-icon hover" src={messageIcon} alt="message"/>
-                <img className="notify-icon hover" src={notifyIcon} alt="bell"/>
+                <NavLink to={"/user-activity"}>
+                    <img className="notify-icon hover" src={notifyIcon} alt="bell"/>
+                </NavLink>
             </div>
             <NavLink to={"/user-page"} className="user-info hover">
                 <img src={userInfo.image} alt="avatar"/>
@@ -84,13 +88,14 @@ const Header = ({userInfo = user, movies = mock, tv = mock, ratings = mock, movi
 
 
 const mapStateToProps = (rootState, props) => ({
-    moviesSearch: rootState.header.moviesSearch,
-    alreadySearch: rootState.header.alreadySearch,
+    moviesSearch: rootState.movie.moviesSearch,
+    alreadySearch: rootState.movie.alreadySearch,
     ...props
 });
 
 const actions = {
-    fetchFilms
+    fetchFilms,
+    setMovieSeries
 };
 
 const mapDispatchToProps = dispatch => bindActionCreators(actions, dispatch);

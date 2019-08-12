@@ -1,0 +1,16 @@
+@import '../../../../../../styles/variables.scss';
+.title-wrapper{
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    grid-gap: 10px;
+    align-items: center;
+    font-family: $base-font-family;
+    font-size:$header-medium;
+}
+.award-title{
+font-weight: bold;
+color: $text-base-color;
+}
+.year{
+    color: $text-secondary-color
+}

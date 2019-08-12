@@ -1,23 +1,23 @@
 // colors
 $black: #000;
-$white: #FFF;
-$orange: #FB8700;
-$orange-light: #FFAB07;
+$white: #fff;
+$orange: #fb8700;
+$orange-light: #ffab07;
 
-$background-gray: #F2F2F2;
-$button-background: #FF6501;
+$background-gray: #f2f2f2;
+$button-background: #ff6501;
 
 $button-publish-color: rgba(12, 81, 146, 0.5);
 $button-shadow-color: rgba($orange-light, 0.4);
 
 $text-base-color: #122737;
-$text-secondary-color: rgba($text-base-color, .5);
+$text-secondary-color: rgba($text-base-color, 0.5);
 
-$border-color: rgba($black, .11);
-$border-focus-color: rgba($black, .4);
+$border-color: rgba($black, 0.11);
+$border-focus-color: rgba($black, 0.4);
 
-$input-shadow-color: rgba($black, .04);
-$input-placeholder-color: rgba($black, .3);
+$input-shadow-color: rgba($black, 0.04);
+$input-placeholder-color: rgba($black, 0.3);
 
 // font
 $base-font-family: 'Inter', sans-serif;
@@ -32,6 +32,6 @@ $base-font-size: 12px;
 $message-font-size: 10px;
 $secondary-info-font-size: 9px;
 
-$header-letter-spacing: .9px;
-$input-letter-spacing: .5px;
-$base-letter-spacing: .4px;
+$header-letter-spacing: 0.9px;
+$input-letter-spacing: 0.5px;
+$base-letter-spacing: 0.4px;
