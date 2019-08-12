@@ -1,6 +1,7 @@
 import React from 'react';
 import './EventMapSearch.scss';
 /* eslint-disable no-undef */
+declare var google;
 
 const _ = require("lodash");
 
