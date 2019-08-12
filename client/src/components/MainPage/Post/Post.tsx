@@ -9,14 +9,18 @@ import Comment from "../Comment/Comment";
 import Tag from "../Tag/Tag";
 import PostEditModal from "../PostEditModal/PostEditModal";
 import PostContent from "../PostContent/PostContent";
+import config from "../../../config";
 
 type IPostProps = {
     post:{
-		author: string,
-		authorImage: string,
-		postDate: string,
-		postImage: string,
-		body?: string,
+		user:{
+			name: string,
+			avatar: string,
+			any
+		}
+		created_At?: string,
+		image_url: string,
+		description?: string,
 		content?: {
 			image: string,
 			link: string,
@@ -58,22 +62,22 @@ class Post extends PureComponent<IPostProps, IPostState> {
             null;
     }
 	render () {
-		const {post: {author, authorImage, postDate, postImage, body, content, comments, tags}} =  this.props;
+		const {post: {user, created_At, image_url, description, content, comments, tags}} =  this.props;
 		return (
 			<div className='post-item'>
 				<div className='post-item-header'>
-					<img className='post-item-avatar' src={authorImage} alt="author" />
+					<img className='post-item-avatar' src={user.avatar || config.DEFAULT_AVATAR} alt="author" />
 					<div className='post-item-info'>
-						<div className='post-item-author-name'>{author}</div>
-						<div className='post-item-post-time'>{postDate}</div>
+						<div className='post-item-author-name'>{user.name}</div>
+						{created_At && <div className='post-item-post-time'>{created_At}</div>}
 					</div>
 					<button className='post-item-settings' onClick={this.toggleModal}>
 						<SettingIcon />
 						{this.isModalShown()}
 					</button>
 				</div>
-				{postImage && <img className='post-item-image' src={postImage} alt="post" /> }
-				{body && <div className="post-body">{body}</div>}
+				{image_url && <img className='post-item-image' src={image_url} alt="post" /> }
+				{description && <div className="post-body">{description}</div>}
 				{content && 
 					<PostContent content={content}/>
 				}
@@ -86,7 +90,7 @@ class Post extends PureComponent<IPostProps, IPostState> {
 						<ShareIcon /></button>
 				</div>
 				<div className='post-item-last-reaction'> 
-					<img className='post-item-reaction-image' src={authorImage}
+					<img className='post-item-reaction-image' src={user.avatar || config.DEFAULT_AVATAR}
 						alt="author" />
 					<div className='post-item-reaction-text'>Appreciated by&nbsp;<strong>Doug Walker</strong></div>
 				</div>
@@ -96,7 +100,7 @@ class Post extends PureComponent<IPostProps, IPostState> {
 						<div className="horizontal-stroke"></div>
 						<div className="tag-items">
 							{ tags.map(item =>
-								<Tag tagItem={item} key={item.id} /> 
+								<Tag tagItem={item} key={item.id} />
 							)}
 						</div>
 					
