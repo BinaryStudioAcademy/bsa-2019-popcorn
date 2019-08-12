@@ -9,6 +9,7 @@ import "./MainContainer.scss";
 import MainPage from "../../components/MainPage/MainPage";
 import UserPage from "../../components/UserPage/UserPage";
 import MovieSeriesPage from "../../components/MovieSeriesPage/MovieSeriesPage";
+import EventPage from '../../components/EventPage/EventPage';
 
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
@@ -64,6 +65,7 @@ const Main = ({isAuthorized, userInfo, movieList, fetchMovieList, setMovieSeries
                 <Switch>
                     <Route exact path={`/`} component={MainPage}/>
                     <Route path={`/user-page`} component={UserPage}/>
+                    <Route path={`/event-page`} component={EventPage}/>
                     <Route path={`/movie-series`} render={() => <MovieSeriesPage movie={movieSeries}/>}/>
                     <Route path={`/movie-list`} render={() => MovieListRender(movieList, fetchMovieList, setMovieSeries)}/>
                     <Route path={`/*`} exact component={NotFound}/>
