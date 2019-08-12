@@ -101,9 +101,10 @@ passport.use(
         async (req, accessToken, refreshToken, data, done) => {
             try {
                 const { email, displayName: name } = data;
-                const user = await userService.getByEmail(email);
+                console.log(data);
+                const user = await userService.getByEmail(email || name);
                 if (!user) {
-                    const user = await userService.createUser({ name, email });
+                    const user = await userService.createUser({ name, email: email || name });
                     return done(null, user);
                 }
                 return done(null, user)
