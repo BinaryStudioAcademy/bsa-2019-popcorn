@@ -6,7 +6,7 @@ import eventRouter from './event.controller';
 import topRouter from './top.controller';
 import postRouter from './post.controller';
 import userRouter from './user.controller';
-
+import storyRouter from './story.controller';
 // register all routes
 export default (app) => {
     app.use('/api/auth', authRoutes);
@@ -17,4 +17,5 @@ export default (app) => {
     app.use('/api/event', eventRouter);
     app.use('/api/top', topRouter);
     app.use('/api/user', userRouter);
+    app.use('/api/story', storyRouter);
 };
