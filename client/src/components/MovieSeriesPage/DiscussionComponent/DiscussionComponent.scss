@@ -1,17 +1,16 @@
-@import "../../../styles/variables.scss";
+@import '../../../styles/variables.scss';
 
 p {
-  margin: 0;
-  padding: 0;
+	margin: 0;
+	padding: 0;
 }
 
 textarea:focus,
 textarea:active,
 a:active,
 a:focus {
-  outline: none;
+	outline: none;
 }
-
 
 #scroller * {
 	overflow-anchor: none;
@@ -21,17 +20,16 @@ a:focus {
 	overflow-anchor: auto;
 }
 .UserDiscussionComponent::-webkit-scrollbar {
-    -webkit-appearance: none;
+	-webkit-appearance: none;
 }
 
 .UserDiscussionComponent::-webkit-scrollbar:vertical {
-    width: 11px;
+	width: 11px;
 }
 
-
 .UserDiscussionComponent::-webkit-scrollbar-thumb {
-    border-radius: 8px;
-    background-color: rgba(0, 0, 0, .5);
+	border-radius: 8px;
+	background-color: rgba(0, 0, 0, 0.5);
 }
 
 .UserDiscussionComponent {
@@ -45,7 +43,7 @@ a:focus {
 	width: 300px;
 
 	.MessageContainer {
-			overflow-y: scroll;
+		overflow-y: scroll;
 	}
 
 	.messageItem {
@@ -74,47 +72,47 @@ a:focus {
 			width: 100%;
 			box-sizing: border-box;
 			font-size: $base-font-size;
-			
-		.body {
-			white-space: normal; 
-		}
 
-		.name {
-			font-weight: bold;
-			letter-spacing: $base-letter-spacing;
-		}
-
-		.newMessage {
-			display: flex;
-			align-items: center;
-			padding: 2% 2%;
-
-			textarea {
-				background-color: #fff;
-				resize: none;
-				margin-right: 10px;
-				border: none;
-				height: 20px;
-				overflow-y: scroll;
-				background-color: transparent;
+			.body {
+				white-space: normal;
 			}
 
-			button {
-				background-color: $button-background;
-				color: $white;
-				box-shadow: 0px 5px 12px $button-shadow-color;
-				border-radius: 15px;
-				width: 30px;
-				height: 30px;
-				border: none;
-				outline: none;
+			.name {
 				font-weight: bold;
-				&:hover {
-					background-color: rgb(216, 86, 0);
+				letter-spacing: $base-letter-spacing;
+			}
+
+			.newMessage {
+				display: flex;
+				align-items: center;
+				padding: 2% 2%;
+
+				textarea {
+					background-color: #fff;
+					resize: none;
+					margin-right: 10px;
+					border: none;
+					height: 20px;
+					overflow-y: scroll;
+					background-color: transparent;
+				}
+
+				button {
+					background-color: $button-background;
+					color: $white;
+					box-shadow: 0px 5px 12px $button-shadow-color;
+					border-radius: 15px;
+					width: 30px;
+					height: 30px;
+					border: none;
+					outline: none;
+					font-weight: bold;
+					&:hover {
+						background-color: rgb(216, 86, 0);
+					}
 				}
 			}
 		}
-	}
 
 		.messageInfo {
 			margin-bottom: 5px;
@@ -123,7 +121,7 @@ a:focus {
 
 			.date {
 				color: change-color($text-base-color, $lightness: 30%, $alpha: 0.5);
-				font-size: $message-font-size
+				font-size: $message-font-size;
 			}
 		}
 

@@ -1,9 +1,9 @@
 @import '../../styles/variables.scss';
 
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
 }
 
 $user-tab-active-line: 3px;
@@ -11,36 +11,36 @@ $user-tab-space: 10px;
 $user-tab-list-space-top: $user-tab-space + $user-tab-active-line;
 
 .user {
-    height: 100%;
-    width: 70%;
-    margin: 2% auto 0;
-    display: flex;
-    flex-direction: column;
-    color: $text-base-color;
+	height: 100%;
+	width: 70%;
+	margin: 2% auto 0;
+	display: flex;
+	flex-direction: column;
+	color: $text-base-color;
 }
 
 .user-tabs {
-    margin-bottom: $user-tab-space;
-    
-    .user-tab-list {
-        list-style-type: none;
-        display: flex;
-        justify-content: space-between;
-        margin-top: $user-tab-list-space-top;
-        
-        .user-tab {
-            padding: $user-tab-space;
-            text-decoration: none;
-            color: $text-secondary-color;
-            letter-spacing: $base-letter-spacing;
-            font-weight: 600;
-        }
+	margin-bottom: $user-tab-space;
 
-        .user-tab-active {
-            border-top: $user-tab-active-line solid $orange;
-            border-radius: 2px;
-            color: $text-base-color;
-            font-size: $header-medium;
-        }
-    }
+	.user-tab-list {
+		list-style-type: none;
+		display: flex;
+		justify-content: space-between;
+		margin-top: $user-tab-list-space-top;
+
+		.user-tab {
+			padding: $user-tab-space;
+			text-decoration: none;
+			color: $text-secondary-color;
+			letter-spacing: $base-letter-spacing;
+			font-weight: 600;
+		}
+
+		.user-tab-active {
+			border-top: $user-tab-active-line solid $orange;
+			border-radius: 2px;
+			color: $text-base-color;
+			font-size: $header-medium;
+		}
+	}
 }

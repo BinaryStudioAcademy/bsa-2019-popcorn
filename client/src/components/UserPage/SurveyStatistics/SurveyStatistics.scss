@@ -1,31 +1,30 @@
-@import "../../../styles/variables.scss";
+@import '../../../styles/variables.scss';
 
 .barChart {
-    margin: 0 auto;
-    width: 90%;
-    height: 300px;
+	margin: 0 auto;
+	width: 90%;
+	height: 300px;
 }
 
 .pieChart {
-    margin: 0 auto;
-    width: 90%;
-    height: 350px;
+	margin: 0 auto;
+	width: 90%;
+	height: 350px;
 }
 
 .responses-info {
-    color: $text-secondary-color;
-    margin-bottom: 10px;
+	color: $text-secondary-color;
+	margin-bottom: 10px;
 }
 
 .survey-statistics {
-    padding-top: 30px;
+	padding-top: 30px;
 }
 
-
 .question-title {
-    margin-bottom: 5px;
+	margin-bottom: 5px;
 }
 
 .errorResponses {
-    margin-bottom: 30px;
+	margin-bottom: 30px;
 }

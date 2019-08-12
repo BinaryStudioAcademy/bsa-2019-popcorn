@@ -1,26 +1,32 @@
-import {Entity, PrimaryGeneratedColumn, Column, OneToOne, JoinColumn} from "typeorm";
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  OneToOne,
+  JoinColumn
+} from "typeorm";
 
 @Entity()
 export class Movie {
-    @PrimaryGeneratedColumn('uuid')
-	id: string;
-	
-	@Column({
-        length: 255
-	})
-	title: string;
+  @PrimaryGeneratedColumn("uuid")
+  id: string;
 
-    @Column()
-    year: number;
+  @Column({
+    length: 255
+  })
+  title: string;
 
-    @Column()
-    description: string;
+  @Column()
+  year: number;
 
-    @Column()
-    duration: number;
+  @Column()
+  description: string;
 
-	@Column({
-        length: 255
-	})
-    preview: string;
+  @Column()
+  duration: number;
+
+  @Column({
+    length: 255
+  })
+  preview: string;
 }

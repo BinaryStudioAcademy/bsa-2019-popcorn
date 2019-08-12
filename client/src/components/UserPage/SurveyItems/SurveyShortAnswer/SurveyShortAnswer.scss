@@ -1,17 +1,17 @@
 @import '../../../../styles/variables.scss';
 
 .short-answer {
-    input {
-        font-size: $form-font-size;
-        margin: 20px;
-        padding-left: 35px;
-        border: none;
-        border-bottom: 1px solid $input-placeholder-color;
-        width: 60%;
-    }
+	input {
+		font-size: $form-font-size;
+		margin: 20px;
+		padding-left: 35px;
+		border: none;
+		border-bottom: 1px solid $input-placeholder-color;
+		width: 60%;
+	}
 
-    input:focus {
-        border-bottom: 2px solid $orange-light;
-        outline: none;
-    }
+	input:focus {
+		border-bottom: 2px solid $orange-light;
+		outline: none;
+	}
 }
