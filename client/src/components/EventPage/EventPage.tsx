@@ -1,6 +1,5 @@
 import React from 'react';
-// import EventPageHeader from './EventPageHeader';
-import EventPageHeader from './EventPageHeader2';
+import EventPageHeader from './EventPageHeader';
 import EventPageTabs from './EventPageTabs';
 import EventPageTabBody from './EventPageTabBody';
 import './EventPage.scss';
@@ -10,6 +9,7 @@ export interface IEvent {
     description: string,
     location: string,
     date: string,
+    photo: string,
     isPrivate: boolean
 }
 
@@ -24,6 +24,7 @@ const event: IEvent = {
     description: 'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Eos iste ipsa commodi nihil eveniet. Eos, rerum modi? Ratione non perspiciatis dicta vel, reprehenderit suscipit cum illo? Placeat unde sint deleniti!',
     location: 'location',
     date: 'Субота, 24 серпня 2019 р. з 13:00 по 19:00',
+    photo: 'https://99px.ru/sstorage/53/2017/05/tmb_200648_1245.jpg',
     isPrivate: false
 }
 

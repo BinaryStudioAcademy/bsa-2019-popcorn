@@ -12,7 +12,7 @@ const EventPageTabs: React.SFC<IProps> = ({ mainPath }) => {
             <ul className="event-page-tab-list">
                 {
                     eventTabsConfig.map((tab, index) =>
-                        <li className="event-page-item" key={index}>
+                        <li key={index}>
                             <NavLink
                                 exact={!index}
                                 to={mainPath + tab.link}
