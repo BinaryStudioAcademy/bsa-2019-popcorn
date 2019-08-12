@@ -20,46 +20,83 @@ const posts = [{
 		
 		comments: [
 			{
-				id: "12das",
+				id: "randID1",
+				author: "ameno_ameno",
+				commentDate: "20 hours ago",
+				commentBody: "I would disagree with you!",
+				parentId: "randID3"
+			},
+			{
+				id: "randID2",
 				author: "marie_marie",
 				commentDate: "18 hours ago",
 				commentBody: "She is my favourite actress!"
 			},
 			{
-				id: "13asdd2",
+				id: "randID3",
+				author: "benedictus",
+				commentDate: "19 hours ago",
+				commentBody: "Yes, she really looks amazing!",
+				parentId: "randID4"
+			},
+			{
+				id: "randID4",
 				author: "denny_de_vito",
 				commentDate: "19 hours ago",
 				commentBody: "She looks amazing!"
-			}
+			},
+			
 		],
-		tags: [	{	id: "9992fdas",
+		tags: [	{	id: "randID11",
 				tagName: "movie"
-			},	{	id: "143adsasdd2",
+			},	{	id: "randID22",
 				tagName: "beloved"
-			},	{	id: "143asdd32",
+			},	{	id: "randID33",
 				tagName: "happy"
-			},	{	id: "1243asdd2",
+			},	{	id: "randID44",
 				tagName: "new"
-			},	{	id: "143asdsfd2",
+			},	{	id: "randID55",
 				tagName: "best"
-			},	{	id: "1d3asdd2",
+			},	{	id: "randID66",
 				tagName: "keanu"
-			},	{	id: "143asd2",
+			},	{	id: "randID77",
 				tagName: "movies"
-			},	{	id: "3asdd2",
+			},	{	id: "randID88",
 				tagName: "2019"
-			},	{	id: "1243asdwwd2",
+			},	{	id: "randID99",
 				tagName: "cannes"
-			},	{	id: "143ahdd2",
+			},	{	id: "randID110",
 				tagName: "cinema"
 			},
 		]
 	},
 	{
-		author:"Doug Walker", 
+		author:"Mary Wilson", 
 		postDate:"3 hours ago", 
 		postImage:"https://ichef.bbci.co.uk/news/660/cpsprodpb/462C/production/_107846971_lion_king_disney.jpg", 
-		authorImage:"https://pbs.twimg.com/profile_images/1088129693390385152/oYJSGsdq_400x400.jpg"
+		authorImage:"https://pbs.twimg.com/profile_images/1088129693390385152/oYJSGsdq_400x400.jpg",
+		comments: [
+			{
+				id: "randID33",
+				author: "ameno_ameno",
+				commentDate: "2 hours ago",
+				commentBody: "Should I watch it?",
+				parentId: "randID22"
+			},
+			{
+				id: "randID22",
+				author: "marie_marie",
+				commentDate: "1 hour ago",
+				commentBody: "I love it!"
+			},
+			{
+				id: "randID32",
+				author: "benedictus",
+				commentDate: "1 hour ago",
+				commentBody: "I am glad you like it!",
+				parentId: "randID22"
+			}
+		]
 	},
 	{
 		author:"Doug Walker", 

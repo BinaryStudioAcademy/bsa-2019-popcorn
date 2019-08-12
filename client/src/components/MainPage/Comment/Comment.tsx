@@ -8,7 +8,8 @@ type ICommentProps = {
 		author: string,
 		commentDate: string,
 		commentBody: string,
-		parentId?: string
+		parentId?: string,
+		children: []
     }
 }
 
@@ -28,21 +29,29 @@ class Comment extends Component<ICommentProps, ICommentState>{
 	}
 	isCommentModalShown(id) {
         return this.state.isCommentModalShown ? 
-            <AddComment parentId={id}/> :
+            <AddComment replyId={id}/> :
             null;
-    }
+	}
 	render () {
-	const { id, author, commentDate, commentBody, parentId } = this.props.commentItem;
+	const comment = this.props.commentItem;
+	const nestedComments = (comment.children || []).map(comment => {
+		return <Comment commentItem={comment} />;
+	});
 	return (
-		<div className="comment-item">
-			<p><strong>{author}</strong> {commentBody}</p>
-			<p className="comment-date">{commentDate} 	
+		<div key={comment.id} >
+			<div className={comment.parentId ? "comment-item comment-item-reply" : "comment-item"}>
+				<p className="comment-text">
+					<strong>{comment.author}</strong>  
+					{comment.parentId && <i> {comment.parentId}, </i>} {comment.commentBody}
+				</p>
+				<p className="comment-date">{comment.commentDate} </p>
 				<button onClick={this.toggleCommentModal}>Reply</button>
-				
-			</p>
-		{this.isCommentModalShown(id)}
+				{this.isCommentModalShown(comment.id)}
+			</div>
+			{nestedComments}
 		</div>
-	);
+	  );
 	}
 }
+
 export default Comment;

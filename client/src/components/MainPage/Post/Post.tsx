@@ -1,6 +1,6 @@
 import React, { PureComponent } from "react";
-import AddComment from "../../shared/AddComment/AddComment"
-import "./Post.scss"
+import AddComment from "../../shared/AddComment/AddComment";
+import "./Post.scss";
 import { ReactComponent as SettingIcon } from '../../../assets/icons/general/settings.svg';
 import { ReactComponent as LikeIcon } from '../../../assets/icons/general/likeIcon.svg';
 import { ReactComponent as CommentIcon } from '../../../assets/icons/general/commentIcon.svg';
@@ -26,7 +26,8 @@ type IPostProps = {
 			id: string,
 			author: string,
 			commentDate: string,
-			commentBody: string
+			commentBody: string,
+			parentId?: string
 		}[],
 		tags?: {
 			id: string,
@@ -56,7 +57,24 @@ class Post extends PureComponent<IPostProps, IPostState> {
         return this.state.isModalShown ? 
             <PostEditModal isOwn={this.isOwnPost()} /> :
             null;
-    }
+	}
+	nestComments(commentList) {
+		const commentMap = {};
+		commentList.forEach(comment => commentMap[comment.id] = comment);
+		commentList.forEach(comment => {
+			if(comment.parentId != null) {
+				const parent = commentMap[comment.parentId];
+				if (! parent.children){
+					parent.children = [];
+				}
+				parent.children.push(comment);
+			}
+		});
+		return commentList.filter(comment => {
+			return comment.parentId == null;
+		});
+	}
+	nestedComments =  (this.props.post.comments) ? this.nestComments(this.props.post.comments) : this.props.post.comments;
 	render () {
 		const {post: {author, authorImage, postDate, postImage, body, content, comments, tags}} =  this.props;
 		return (
@@ -102,16 +120,17 @@ class Post extends PureComponent<IPostProps, IPostState> {
 					
 					</div>
 				}
-				{ comments && 
-				<div>
-					<div className="horizontal-stroke"></div>
-					{ comments.map(item =>
-					<Comment commentItem={item} key={item.id} /> 
-					)}
-					
-				</div>
+				{ this.nestedComments && 
+					<div>
+					{ this.nestedComments.map(item => 
+						<div style={{width: "100%"}}>
+							<div className="horizontal-stroke"></div>
+							<Comment commentItem={item} key={item.id} /> 
+						</div>
+						)
+					}
+					</div>
 				}
-				<div className="horizontal-stroke"></div>
 				<AddComment></AddComment>
 			</div>
 		);
