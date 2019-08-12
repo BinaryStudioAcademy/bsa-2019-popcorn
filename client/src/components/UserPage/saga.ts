@@ -11,9 +11,15 @@ import { uploadFile } from '../../services/file.service';
 import axios from 'axios';
 import {
 	FETCH_LOGIN,
+	FETCH_REGISTRATION,
+	FETCH_RESET_PASSWORD,
+	FETCH_RESTORE_PASSWORD,
 	FETCH_USER_BY_TOKEN,
 	LOGIN,
-	FETCH_REGISTRATION,
+	RESET_ERROR,
+	RESET_OK,
+	RESTORE_ERROR,
+	RESTORE_OK,
 	SET_LOGIN_ERROR,
 	SET_REGISTER_ERROR
 } from '../authorization/actionTypes';
@@ -146,6 +152,53 @@ export function* fetchPosts(action) {
 		console.log('profile saga fetch posts:', e.message);
 	}
 }
+
+export function* resetPassword(action) {
+	try {
+		const data = yield call(webApi, {
+			endpoint: config.API_URL + '/api/auth/reset',
+			method: 'POST',
+			parse: false,
+			body: {
+				email: action.payload.email
+			}
+		});
+		if (data.ok) yield put({ type: RESET_OK });
+		else
+			yield put({
+				type: RESET_ERROR,
+				payload: { message: data.statusMessage || 'Unknown error' }
+			});
+	} catch (e) {
+		console.log('profile saga reset password: ', e.message);
+		yield put({ type: RESET_ERROR, payload: { message: e.message } });
+	}
+}
+
+export function* fetchRestorePassword(action) {
+	try {
+		const data = yield call(webApi, {
+			endpoint: config.API_URL + '/api/auth/restore',
+			method: 'POST',
+			parse: false,
+			body: {
+				password: action.payload.password,
+				token: action.payload.token
+			}
+		});
+		if (data.ok) yield put({ type: RESTORE_OK });
+		else
+			yield put({
+				type: RESTORE_ERROR,
+				payload: { message: data.statusMessage || 'Unknown error' }
+			});
+	} catch (e) {
+		console.log('profile saga fetch restore password: ', e.message);
+		yield put({ type: RESTORE_ERROR, payload: { message: e.message } });
+	}
+
+}
+
 function* watchFetchFilms() {
 	yield takeEvery(START_UPLOAD_AVATAR, uploadAvatar);
 }
@@ -169,6 +222,15 @@ function* watchFetchPosts() {
 function* watchFetchRegistration() {
 	yield takeEvery(FETCH_REGISTRATION, fetchRegistration);
 }
+
+function* watchFetchResetPassword() {
+	yield takeEvery(FETCH_RESET_PASSWORD, resetPassword);
+}
+
+function* watchFetchRestorePassword() {
+	yield takeEvery(FETCH_RESTORE_PASSWORD, fetchRestorePassword);
+}
+
 export default function* profile() {
 	yield all([
 		watchFetchFilms(),
@@ -176,6 +238,8 @@ export default function* profile() {
 		watchFetchLogin(),
 		watchFetchUser(),
 		watchFetchRegistration(),
-		watchFetchPosts()
+		watchFetchPosts(),
+		watchFetchResetPassword(),
+		watchFetchRestorePassword()
 	]);
 }

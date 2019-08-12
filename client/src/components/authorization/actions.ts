@@ -1,7 +1,9 @@
 import {
 	FETCH_LOGIN,
 	FETCH_USER_BY_TOKEN,
-	FETCH_REGISTRATION
+	FETCH_REGISTRATION,
+	FETCH_RESET_PASSWORD,
+	FETCH_RESTORE_PASSWORD
 } from './actionTypes';
 import uuid from 'uuid/v4';
 
@@ -46,5 +48,24 @@ export const registration = (value: IValuesWithName): any => {
 	return {
 		type: FETCH_REGISTRATION,
 		payload: user
+	};
+};
+
+export const fetchResetPassword = (email: string): any => {
+	return {
+		type: FETCH_RESET_PASSWORD,
+		payload: {
+			email
+		}
+	};
+};
+
+export const fetchRestorePassword = (password: string, token: string): any => {
+	return {
+		type: FETCH_RESTORE_PASSWORD,
+		payload: {
+			password,
+			token
+		}
 	};
 };

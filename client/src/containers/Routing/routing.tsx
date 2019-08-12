@@ -10,11 +10,15 @@ import { bindActionCreators } from 'redux';
 import {
 	authorize,
 	fetchByToken,
+	fetchResetPassword,
+	fetchRestorePassword,
 	registration
 } from '../../components/authorization/actions';
 
 import Spinner from '../../components/shared/Spinner/index';
 import Header from '../../components/shared/Header/Header';
+import Reset from '../../components/authorization/Reset';
+import Restore from '../../components/authorization/Restore';
 
 interface IValues {
 	email: string;
@@ -34,6 +38,10 @@ interface IProps {
 	fetchByToken: (token: string) => any;
 	loginError: string | null;
 	registerError: string | null;
+	fetchResetPassword: (email: string) => any;
+	resetMessage: string;
+	restoreMessage: string;
+	fetchRestorePassword: (password: string, token: string) => any;
 }
 
 const Routing = ({
@@ -41,8 +49,12 @@ const Routing = ({
 	authorize,
 	fetchByToken,
 	registration,
+	resetMessage,
 	loginError,
-	registerError
+	registerError,
+	fetchResetPassword,
+	restoreMessage,
+	fetchRestorePassword
 }: IProps) => {
 	const token = localStorage.getItem('token');
 	if (token && !isAuthorized) {
@@ -75,6 +87,28 @@ const Routing = ({
 						/>
 					)}
 				/>
+				<Route
+					exact
+					path="/reset"
+					component={() => (
+						<Reset
+							isAuthorized={isAuthorized}
+							fetchResetPassword={fetchResetPassword}
+							resetMessage={resetMessage}
+						/>
+					)}
+				/>
+				<Route
+					path="/reset/:token"
+					component={props => (
+						<Restore
+							{...props}
+							isAuthorized={isAuthorized}
+							fetchRestorePassword={fetchRestorePassword}
+							restoreMessage={restoreMessage}
+						/>
+					)}
+				/>
 				<Route path="/" component={Main} />
 				{/* Not found route */}
 				<Route path="*" exact component={NotFound} />
@@ -87,13 +121,17 @@ const mapStateToProps = (rootState, props) => ({
 	...props,
 	isAuthorized: !!rootState.profile.profileInfo,
 	loginError: rootState.profile.loginError,
-	registerError: rootState.profile.registerError
+	registerError: rootState.profile.registerError,
+	resetMessage: rootState.profile.resetMessage,
+	restoreMessage: rootState.profile.restoreMessage
 });
 
 const actions = {
 	authorize,
 	fetchByToken,
-	registration
+	registration,
+	fetchResetPassword,
+	fetchRestorePassword
 };
 
 const mapDispatchToProps = dispatch => bindActionCreators(actions, dispatch);

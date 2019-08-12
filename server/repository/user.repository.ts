@@ -59,6 +59,14 @@ class UserRepository extends Repository<User> {
     }
     return { data, error, success };
   }
+
+  async getByEmail(email) {
+    return this.findOne({ email });
+  }
+
+  async getByToken(token) {
+    return this.findOne({ reset_token: token });
+  }
 }
 
 export default UserRepository;

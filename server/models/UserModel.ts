@@ -15,4 +15,5 @@ export class User {
   avatar?: string;
   tops?: Top[];
   stories?: Story[];
+  reset_token!: string;
 }

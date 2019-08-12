@@ -8,6 +8,7 @@ import * as userService from "../services/user.service";
 import * as googleConfig from "./google.config";
 import * as facebookConfig from "./facebook.config";
 
+
 const options = {
   jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
   secretOrKey: secret
@@ -62,6 +63,10 @@ passport.use(
   )
 );
 
+
+passport.use("restore", new JwtStrategy(options, async (body, done) => {}));
+
+
 passport.use(
   "jwt",
   new JwtStrategy(options, async ({ id }, done) => {
@@ -74,6 +79,7 @@ passport.use(
       return done(err);
     }
   })
+
 );
 
 passport.use(

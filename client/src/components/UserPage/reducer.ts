@@ -6,6 +6,10 @@ import {
 } from './actionTypes';
 import {
 	LOGIN,
+	RESET_ERROR,
+	RESET_OK,
+	RESTORE_ERROR,
+	RESTORE_OK,
 	SET_LOGIN_ERROR,
 	SET_REGISTER_ERROR
 } from '../authorization/actionTypes';
@@ -15,9 +19,17 @@ const initialState = {
 	uploadUrl: '',
 	userPosts: null,
 	loginError: null,
-	registerError: null
+	registerError: null,
+	resetMessage: '',
+	restoreMessage: '',
+  registerError: null
 };
 
+const ok_message = 'Check your email';
+const restore_ok_message = 'Your password has been changed';
+
+	
+};
 export default function(state = initialState, action) {
 	switch (action.type) {
 		case FINISH_UPLOAD_AVATAR:
@@ -57,6 +69,26 @@ export default function(state = initialState, action) {
 			return {
 				...state,
 				registerError: action.payload.registerError
+			};
+		case RESET_OK:
+			return {
+				...state,
+				resetMessage: ok_message
+			};
+		case RESET_ERROR:
+			return {
+				...state,
+				resetMessage: action.payload.message
+			};
+		case RESTORE_OK:
+			return {
+				...state,
+				restoreMessage: restore_ok_message
+			};
+		case RESTORE_ERROR:
+			return {
+				...state,
+				restoreMessage: action.payload.message
 			};
 		default:
 			return state;

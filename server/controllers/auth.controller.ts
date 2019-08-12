@@ -29,6 +29,16 @@ router
       .then(data => res.send(data))
       .catch(next)
   )
+  .post("/reset", (req, res, next) =>
+    authService
+      .reset(req.body.email)
+      .then(() => res.sendStatus(200))
+      .catch(next)
+  )
+  .post("/restore", (req, res, next) =>
+    authService
+      .restore(req.body.password, req.body.token)
+      .then(() => res.sendStatus(200))
   .get("/facebook", facebookMiddleware)
   .get("/facebook/redirect", facebookCallbackMiddleware, (req, res, next) =>
     authService

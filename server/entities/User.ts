@@ -1,4 +1,6 @@
-import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from "typeorm";
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+
+
 import { Top } from "./Top";
 import { Story } from "./Story";
 import { Voting } from "../entities/Voting";
@@ -41,4 +43,8 @@ export class User {
 
   @OneToMany(type => Story, story => story.user)
   stories: Story[];
+
+  @Column({ default: "" })
+  reset_token: string;
+
 }
