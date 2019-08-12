@@ -21,7 +21,7 @@ function* watchFetchStories() {
     yield takeEvery(FETCH_STORIES, fetchStories)
 }
 
-export default function* profile() {
+export default function* story() {
     yield all([
         watchFetchStories()
     ])
