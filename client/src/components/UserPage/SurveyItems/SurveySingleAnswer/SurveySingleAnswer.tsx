@@ -30,7 +30,7 @@ interface IProps {
                 value: string
             }>
     },
-    setAnswer: (data : IAnswer) => void,
+    setAnswer?: (data : IAnswer) => void,
     disable?: boolean,
     answer?: IReadyAnswer
 };
@@ -53,10 +53,7 @@ const SurveySingleAnswer = (props: IProps) => {
                                 value={option.value} 
                                 disabled={disable || false}
                                 checked={answer && (answer.option_id  === option.id)}
-                                onChange={() => {props.setAnswer({
-                                    questionId: id,
-                                    optionId: option.id
-                                })}}
+                                
                             /> 
                             <span className="checkmark"></span>
                             {option.value}

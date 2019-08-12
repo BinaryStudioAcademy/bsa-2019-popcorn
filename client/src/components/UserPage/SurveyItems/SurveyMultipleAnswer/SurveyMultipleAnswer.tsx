@@ -31,17 +31,13 @@ interface IProps {
                 value: string
             }>
     },
-<<<<<<< HEAD
     setAnswer?: (data: IAnswer) => void,
-=======
-    setAnswer: (data: IAnswer) => void,
->>>>>>> origin/feature/survey
     disable?: boolean,
     answers?: Array<IReadyAnswer>
 };
 
 const SurveyCheckboxes = (props: IProps) => {
-    const { questionInfo } = props;
+    const { questionInfo, disable, answers } = props;
     const { id, title, options, required, image_link } = questionInfo;
     
     return (
