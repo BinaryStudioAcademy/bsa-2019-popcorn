@@ -1,4 +1,6 @@
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+
+
 import { Top } from "./Top";
 import { Story } from "./Story";
 import { Voting } from "../entities/Voting";
@@ -15,13 +17,13 @@ export class User {
   @Column()
   email: string;
 
-  @Column()
+  @Column({ nullable: true })
   password: string;
 
-  @Column()
+  @Column({ nullable: true })
   location: string;
 
-  @Column()
+  @Column({ nullable: true })
   aboutMe: string;
 
   @OneToMany(type => Voting, voting => voting.user)
@@ -43,5 +45,6 @@ export class User {
   stories: Story[];
 
   @Column({ default: "" })
-  reset_token!: string;
+  reset_token: string;
+
 }

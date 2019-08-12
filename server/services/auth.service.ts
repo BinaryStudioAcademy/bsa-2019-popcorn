@@ -4,7 +4,6 @@ import { getCustomRepository } from "typeorm";
 import { User } from "../models/UserModel";
 import { sendToken } from "./email.service";
 
-const crypto = require("crypto");
 
 export const login = async ({ id }) => ({
   token: tokenHelper.createToken({ id }),
@@ -37,4 +36,5 @@ export const restore = async (password: string, token: string) => {
   if (!user) throw new Error("Invalid token");
 
   await repository.updateById(user.id, { password, reset_token: "" });
+
 };

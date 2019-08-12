@@ -21,12 +21,15 @@ const initialState = {
 	loginError: null,
 	registerError: null,
 	resetMessage: '',
-	restoreMessage: ''
+	restoreMessage: '',
+  registerError: null
 };
 
 const ok_message = 'Check your email';
 const restore_ok_message = 'Your password has been changed';
 
+	
+};
 export default function(state = initialState, action) {
 	switch (action.type) {
 		case FINISH_UPLOAD_AVATAR:

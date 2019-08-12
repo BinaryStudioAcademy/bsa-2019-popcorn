@@ -87,7 +87,6 @@ const Routing = ({
 						/>
 					)}
 				/>
-
 				<Route
 					exact
 					path="/reset"

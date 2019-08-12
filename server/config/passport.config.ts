@@ -1,8 +1,13 @@
 const passport = require("passport");
 import { Strategy as LocalStrategy } from "passport-local";
-import { ExtractJwt, Strategy as JwtStrategy } from "passport-jwt";
+import { Strategy as JwtStrategy, ExtractJwt } from "passport-jwt";
+import { Strategy as GoogleStrategy } from "passport-google-oauth2";
+import { Strategy as FacebookStrategy } from "passport-facebook";
 import { secret } from "./jwt.config";
 import * as userService from "../services/user.service";
+import * as googleConfig from "./google.config";
+import * as facebookConfig from "./facebook.config";
+
 
 const options = {
   jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
@@ -58,7 +63,9 @@ passport.use(
   )
 );
 
+
 passport.use("restore", new JwtStrategy(options, async (body, done) => {}));
+
 
 passport.use(
   "jwt",
@@ -72,4 +79,58 @@ passport.use(
       return done(err);
     }
   })
+
+);
+
+passport.use(
+  "google",
+  new GoogleStrategy(
+    {
+      clientID: googleConfig.clientID,
+      clientSecret: googleConfig.clientSecret,
+      callbackURL: googleConfig.callbackURL,
+      passReqToCallback: true
+    },
+    async (req, accessToken, refreshToken, data, done) => {
+      try {
+        const { email, displayName: name } = data;
+        const user = await userService.getByEmail(email);
+        if (!user) {
+          const user = await userService.createUser({ name, email });
+          return done(null, user);
+        }
+        return done(null, user);
+      } catch (err) {
+        return done(err);
+      }
+    }
+  )
+);
+
+passport.use(
+  "facebook",
+  new FacebookStrategy(
+    {
+      clientID: facebookConfig.clientID,
+      clientSecret: facebookConfig.clientSecret,
+      callbackURL: facebookConfig.callbackURL,
+      passReqToCallback: true
+    },
+    async (req, accessToken, refreshToken, data, done) => {
+      try {
+        const { email, displayName: name } = data;
+        const user = await userService.getByEmail(email || name);
+        if (!user) {
+          const user = await userService.createUser({
+            name,
+            email: email || name
+          });
+          return done(null, user);
+        }
+        return done(null, user);
+      } catch (err) {
+        return done(err);
+      }
+    }
+  )
 );
