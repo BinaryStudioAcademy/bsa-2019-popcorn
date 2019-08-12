@@ -29,16 +29,16 @@
         will-change: transform;
         user-select: none;
         cursor: pointer;
-
+        
         &.active {
             cursor: grabbing;
             cursor: -webkit-grabbing;
             transform: scale(1);
         }
 
-/*         &::-webkit-scrollbar {
+        &::-webkit-scrollbar {
             display: none;      
-        } */
+        }
 
         > * {
             margin-left: 15px;

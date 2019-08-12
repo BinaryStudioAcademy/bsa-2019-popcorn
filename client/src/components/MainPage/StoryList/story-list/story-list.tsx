@@ -31,15 +31,7 @@ interface IState {
     scrollLeft: number,
 }
 
-interface ILoad {
-    from: number,
-    count: number
-}
-
 class StoryList extends Component<IStoryListProps, IState> {
-
-    storiesFilter: ILoad;
-    
     constructor(props){
         super(props);
 
@@ -50,17 +42,7 @@ class StoryList extends Component<IStoryListProps, IState> {
             startX: 0,
             scrollLeft: 0,
         }
-
-        this.storiesFilter = { 
-            from: 0,
-            count: 10,
-        };
     }
-
-    componentDidMount() {
-        this.props.fetchStories();
-    }
-
 
     onOpenPopupClick = () => {
         this.setState({isPopupShown: true});
@@ -91,25 +73,13 @@ class StoryList extends Component<IStoryListProps, IState> {
         scroll.scrollLeft = scrollLeft - walk;
     }
 
-    loadFunction = () => {
-        if(!this.props.stories || this.props.stories.length === 0)
-            return;
-        const currentIndex = this.storiesFilter.from;
-
-        if (currentIndex + this.state.scrollStep >= this.props.stories.length) {
-            return;
-        }
-
-
-        this.storiesFilter.from = currentIndex + this.state.scrollStep;
-
-    }
-
-    getStoryRange = (storyListItems: null | Array<IStoryListItem>, index: number) => {
-        return storyListItems ? storyListItems.slice(index, index + 90) : [];
-    }
-
     render() {
+        const { stories, fetchStories } = this.props;
+		if (!stories) {
+			fetchStories();
+			return <Spinner />;
+		}
+
         return (<div className="story-list-wrapper">
             <AddStoryPopup onClosePopupClick={this.onClosePopupClick} isShown={this.state.isPopupShown}/>
             <div className="story-list">
@@ -122,7 +92,7 @@ class StoryList extends Component<IStoryListProps, IState> {
                     onMouseUp={this.onMouseLeave}
                     onMouseMove={this.onMouseMove}
                 >   
-                <StoryListContent storyListItems={this.getStoryRange(this.props.stories, 0)}/>
+                <StoryListContent storyListItems={stories}/>
                 </div>
             </div>
         </div>);
