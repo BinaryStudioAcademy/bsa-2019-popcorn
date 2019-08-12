@@ -21,8 +21,7 @@ const initialState = {
 	loginError: null,
 	registerError: null,
 	resetMessage: '',
-	restoreMessage: '',
-	registerError: null
+	restoreMessage: ''
 };
 
 const ok_message = 'Check your email';
