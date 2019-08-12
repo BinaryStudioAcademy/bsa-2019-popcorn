@@ -1,221 +1,220 @@
 @import '../../../styles/variables.scss';
 
 .type-title {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-end;
-    margin-bottom: 20px;
+	display: flex;
+	justify-content: space-between;
+	align-items: flex-end;
+	margin-bottom: 20px;
 
-    .question-title {
-        width: 60%;
-        margin-right: 5px;
-        font-size: 20px;
-        font-weight: 500;
-    }
-    
-    .question-type {
-        width: 30%;
-        background: $background-gray;
-        height: 30px;
-        font-family: $base-font-family;
-        font-weight: 500;
-        font-size: $menu-font-size;
-        border: none;
-        box-shadow: 0 1px 4px 0 rgba(0,0,0,0.37);
-        cursor: pointer;
+	.question-title {
+		width: 60%;
+		margin-right: 5px;
+		font-size: 20px;
+		font-weight: 500;
+	}
 
-        &:focus {
-            outline: none;
-        }
-    }
+	.question-type {
+		width: 30%;
+		background: $background-gray;
+		height: 30px;
+		font-family: $base-font-family;
+		font-weight: 500;
+		font-size: $menu-font-size;
+		border: none;
+		box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.37);
+		cursor: pointer;
+
+		&:focus {
+			outline: none;
+		}
+	}
 }
 
 .question-required {
-    float: right;
-    font-size: $menu-font-size;
-    display: flex;
-    position: relative;
-    align-items: center;
-    width: 90px;
-    height: 20px;
-    justify-content: space-between;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-    cursor: pointer;
+	float: right;
+	font-size: $menu-font-size;
+	display: flex;
+	position: relative;
+	align-items: center;
+	width: 90px;
+	height: 20px;
+	justify-content: space-between;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+	cursor: pointer;
 
-    input {
-        position: absolute;
-        opacity: 0;
-        cursor: pointer;
-        height: 0;
-        width: 0;
-    }
+	input {
+		position: absolute;
+		opacity: 0;
+		cursor: pointer;
+		height: 0;
+		width: 0;
+	}
 
-    input:checked ~ .checkmark {
-        background-color: #2196F3;
-    }
+	input:checked ~ .checkmark {
+		background-color: #2196f3;
+	}
 
-    input:checked ~ .checkmark:after {
-        display: block;
-    }
+	input:checked ~ .checkmark:after {
+		display: block;
+	}
 
-    .checkmark {
-        position: absolute;
-        top: 0;
-        right: 0;
-        height: 20px;
-        width: 20px;
-        background-color: #eee;
-    }
+	.checkmark {
+		position: absolute;
+		top: 0;
+		right: 0;
+		height: 20px;
+		width: 20px;
+		background-color: #eee;
+	}
 
-    .checkmark:after {
-        content: "";
-        position: absolute;
-        display: none;
-        left: 6px;
-        top: 2px;
-        width: 5px;
-        height: 10px;
-        border: solid white;
-        border-width: 0 3px 3px 0;
-        -webkit-transform: rotate(45deg);
-        -ms-transform: rotate(45deg);
-        transform: rotate(45deg);
-    }
+	.checkmark:after {
+		content: '';
+		position: absolute;
+		display: none;
+		left: 6px;
+		top: 2px;
+		width: 5px;
+		height: 10px;
+		border: solid white;
+		border-width: 0 3px 3px 0;
+		-webkit-transform: rotate(45deg);
+		-ms-transform: rotate(45deg);
+		transform: rotate(45deg);
+	}
 }
 
 .question-image {
-    display: flex;
-    flex-direction: column;
+	display: flex;
+	flex-direction: column;
 
-    img {
-        margin-left: 20px;
-        max-width: 90%;
-    }
+	img {
+		margin-left: 20px;
+		max-width: 90%;
+	}
 
-    svg {
-        color: $text-secondary-color;
-        font-size: 20px;
-        cursor: pointer;
+	svg {
+		color: $text-secondary-color;
+		font-size: 20px;
+		cursor: pointer;
 
-        &:hover {
-            color: $text-base-color;
-        }
-    }
+		&:hover {
+			color: $text-base-color;
+		}
+	}
 }
 
 .question-body {
-    display: flex;
-    flex-direction: column;
+	display: flex;
+	flex-direction: column;
 
-    .short-answer {
-        width: 60%;
-        
-        &:disabled {
-            background-color: $white;
-        }
+	.short-answer {
+		width: 60%;
 
-        &::placeholder {
-            font-size: $form-font-size;
-        }
-    }
+		&:disabled {
+			background-color: $white;
+		}
 
-    .option-container {
-        display: grid;
-        grid-template-columns: max-content auto max-content;
-        align-items: center;
-        margin-bottom: 20px;
+		&::placeholder {
+			font-size: $form-font-size;
+		}
+	}
 
-        input {
-            font-size: $form-font-size;
+	.option-container {
+		display: grid;
+		grid-template-columns: max-content auto max-content;
+		align-items: center;
+		margin-bottom: 20px;
 
-            &:disabled {
-                background-color: $white;
-                color: $text-base-color;
-                text-align: left;
-                margin-right: 32px;
-            }
-        }
+		input {
+			font-size: $form-font-size;
 
-        .option-icon {
-            width: 25px;
-            height: 25px;
-            background-color: $background-gray;
-            margin-right: 35px;
-        }
+			&:disabled {
+				background-color: $white;
+				color: $text-base-color;
+				text-align: left;
+				margin-right: 32px;
+			}
+		}
 
-        svg {
-            margin-left: 20px;
-            font-size: $header-medium;
-            color: $text-secondary-color;
-            &:hover {
-                cursor: pointer;
-                color: $text-base-color;
-            }
-        }
+		.option-icon {
+			width: 25px;
+			height: 25px;
+			background-color: $background-gray;
+			margin-right: 35px;
+		}
 
-        .add-bttn {
-            cursor: pointer;
-            color: $text-secondary-color;
-            border-bottom: 1px solid rgba(0, 0, 0, .12);
-            padding-bottom: 2px;
-            margin-right: 32px;
-        }
-    }
+		svg {
+			margin-left: 20px;
+			font-size: $header-medium;
+			color: $text-secondary-color;
+			&:hover {
+				cursor: pointer;
+				color: $text-base-color;
+			}
+		}
+
+		.add-bttn {
+			cursor: pointer;
+			color: $text-secondary-color;
+			border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+			padding-bottom: 2px;
+			margin-right: 32px;
+		}
+	}
 }
 
 .Multi {
-    .option-icon {
-        border-radius: 50%;
-    }
+	.option-icon {
+		border-radius: 50%;
+	}
 }
 
 .linear-scale {
+	.scale-labels {
+		margin-top: 20px;
+		font-size: $form-font-size;
+		display: flex;
+		flex-direction: column;
+		width: 100%;
 
-    .scale-labels {
-        margin-top: 20px;
-        font-size: $form-font-size;
-        display: flex;
-        flex-direction: column;
-        width: 100%;
+		label {
+			margin-bottom: 20px;
+			font-weight: 600;
 
-        label {
-            margin-bottom: 20px;
-            font-weight: 600;
+			input {
+				font-size: $form-font-size;
+				margin-left: 20px;
+				color: $text-base-color;
+			}
+		}
+	}
 
-            input {
-                font-size: $form-font-size;
-                margin-left: 20px;
-                color: $text-base-color;
-            }
-        }
-    }
+	.scale-value {
+		display: flex;
+		justify-content: left;
+		align-items: center;
+		width: 100%;
+		font-weight: 500;
+		font-size: $header-medium;
 
-    .scale-value {
-        display: flex;
-        justify-content: left;
-        align-items: center;
-        width: 100%;
-        font-weight: 500;
-        font-size: $header-medium;
-        
-        select {
-            background: $background-gray;
-            height: 30px;
-            font-family: $base-font-family;
-            font-weight: 500;
-            font-size: $header-medium;
-            border: none;
-            box-shadow: 0 1px 4px 0 rgba(0,0,0,0.37);
-            cursor: pointer;
-            margin-left: 10px;
-            color: $text-base-color;
+		select {
+			background: $background-gray;
+			height: 30px;
+			font-family: $base-font-family;
+			font-weight: 500;
+			font-size: $header-medium;
+			border: none;
+			box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.37);
+			cursor: pointer;
+			margin-left: 10px;
+			color: $text-base-color;
 
-            &:focus {
-                outline: none;
-            }
-        }
-    }
+			&:focus {
+				outline: none;
+			}
+		}
+	}
 }
