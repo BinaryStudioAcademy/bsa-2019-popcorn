@@ -88,13 +88,13 @@
 		.fa-chevron-down,
 		.fa-chevron-up {
 			margin-left: 4px;
-			width: 10px !important;
+			width: 12px;
 		}
 	}
 
-	.yellowStar,
-	.greyStar {
-		height: auto !important;
-		width: 20px !important;
+	.yellowStar.svg-inline--fa.fa-w-18,
+	.greyStar.svg-inline--fa.fa-w-18 {
+		height: auto;
+		width: 20px;
 	}
 }
