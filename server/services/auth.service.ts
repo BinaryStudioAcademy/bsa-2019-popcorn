@@ -2,6 +2,7 @@ import tokenHelper from "./../helpers/token.helper";
 import userRepository from "./../repository/user.repository";
 import { getCustomRepository } from "typeorm";
 import { User } from "../models/UserModel";
+
 const crypto = require("crypto");
 
 export const login = async ({ id }) => ({
@@ -25,4 +26,14 @@ export const reset = async (email: string) => {
   });
 
   //send to email
+};
+
+export const restore = async (password: string, token: string) => {
+  console.log(password, token);
+  const repository = await getCustomRepository(userRepository);
+  const user = await repository.getByToken(token);
+
+  if (!user) throw new Error("Invalid token");
+
+  await repository.updateById(user.id, { password });
 };

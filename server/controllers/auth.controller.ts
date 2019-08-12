@@ -26,6 +26,12 @@ router
       .then(() => res.sendStatus(200))
       .catch(next)
   )
+  .post("/restore", (req, res, next) =>
+    authService
+      .restore(req.body.password, req.body.token)
+      .then(() => res.sendStatus(200))
+      .catch(next)
+  )
   .get("/user", jwtMiddleware, (req, res, next) => {
     userService
       .getUserById(req.user.data.user.id)

@@ -1,1 +1,6 @@
-export default ["/auth/login", "/auth/register", "/auth/reset"];
+export default [
+  "/auth/login",
+  "/auth/register",
+  "/auth/reset",
+  "/auth/restore"
+];
