@@ -3,51 +3,64 @@ import './SurveyMultipleAnswer.scss';
 
 interface IAnswer {
     questionId: string,
-    optionId: string
+    optionId: string,
+    value: boolean
+};
+
+interface IReadyAnswer {
+    id: string,
+    question_id: string,
+    option_id?: string,
+    user_id: string,
+    value: string
 };
 
 interface IProps {
     questionInfo: {
         id: string,
-        survey_id: string,
-        title: string,
-        firstLabel?: string,
-        lastLabel?: string,
-        type: string,
-        image_link?: string,
-        required: boolean,
-        options?: Array<{
-               id: string,
+            survey_id: string,
+            title: string,
+            firstLabel?: string,
+            lastLabel?: string,
+            type: string,
+            image_link?: string,
+            required: boolean,
+            options?: Array<{
+                id: string,
                 question_id: string,
                 value: string
             }>
     },
-    setAnswer?: (data : IAnswer) => void
+    setAnswer?: (data: IAnswer) => void,
+    disable?: boolean,
+    answers?: Array<IReadyAnswer>
 };
 
-const SurveySingleAnswer = (props: IProps) => {
+const SurveyCheckboxes = (props: IProps) => {
     const { questionInfo } = props;
     const { id, title, options, required, image_link } = questionInfo;
 
     return (
-        <div className="question-container single">
+        <div className="multiple question-container">
             <p className={`survey-question required-${required}`}>{title}</p>
-            {   options!==undefined &&
+            {   
+                options !== undefined &&
                 options.map((option, i) => (
                     <p key={i}>
                         <label>
                             <input 
-                                type="radio" 
-                                name={id} 
+                                type="checkbox" 
+                                name={id}
                                 key={i} 
                                 value={option.value} 
-                                onChange={() => {
+                                onChange={(event) => {
                                     if (!props.setAnswer) return;
                                     props.setAnswer({
                                         questionId: id,
-                                        optionId: option.id
-                                })}
-                                }
+                                        optionId: option.id,
+                                        value: event.target.checked
+                                    });
+                                }}
                             /> 
                             <span className="checkmark"></span>
                             {option.value}
@@ -63,4 +76,4 @@ const SurveySingleAnswer = (props: IProps) => {
     )
 };
 
-export default SurveySingleAnswer;
+export default SurveyCheckboxes;

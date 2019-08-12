@@ -1,0 +1,26 @@
+@import "../../../styles/variables.scss";
+
+.barChart {
+    margin: 0 auto;
+    width: 90%;
+    height: 300px;
+}
+
+.pieChart {
+    margin: 0 auto;
+    width: 90%;
+    height: 350px;
+}
+
+.responses-info {
+    color: $text-secondary-color;
+    margin-bottom: 10px;
+}
+
+.survey-statistics {
+    padding-top: 40px;
+}
+
+.question-title {
+    margin-bottom: 5px;
+}

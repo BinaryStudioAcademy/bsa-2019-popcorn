@@ -1,56 +1,63 @@
 import React from 'react';
-import './SurveyCheckboxes.scss';
+import './SurveySingleAnswer.scss';
 
 interface IAnswer {
     questionId: string,
-    optionId: string,
-    value: boolean
+    optionId: string
+};
+
+interface IReadyAnswer {
+    id: string,
+    question_id: string,
+    option_id?: string,
+    user_id: string,
+    value: string
 };
 
 interface IProps {
     questionInfo: {
         id: string,
-            survey_id: string,
-            title: string,
-            firstLabel?: string,
-            lastLabel?: string,
-            type: string,
-            image_link?: string,
-            required: boolean,
-            options?: Array<{
-                id: string,
+        survey_id: string,
+        title: string,
+        firstLabel?: string,
+        lastLabel?: string,
+        type: string,
+        image_link?: string,
+        required: boolean,
+        options?: Array<{
+               id: string,
                 question_id: string,
                 value: string
             }>
     },
-    setAnswer?: (data: IAnswer) => void
+    setAnswer?: (data : IAnswer) => void,
+    disable?: boolean,
+    answer?: IReadyAnswer
 };
 
-const SurveyCheckboxes = (props: IProps) => {
+const SurveySingleAnswer = (props: IProps) => {
     const { questionInfo } = props;
     const { id, title, options, required, image_link } = questionInfo;
 
     return (
-        <div className="multiple question-container">
+        <div className="question-container single">
             <p className={`survey-question required-${required}`}>{title}</p>
-            {   
-                options !== undefined &&
+            {   options!==undefined &&
                 options.map((option, i) => (
                     <p key={i}>
                         <label>
                             <input 
-                                type="checkbox" 
-                                name={id}
+                                type="radio" 
+                                name={id} 
                                 key={i} 
                                 value={option.value} 
-                                onChange={(event) => {
+                                onChange={() => {
                                     if (!props.setAnswer) return;
                                     props.setAnswer({
                                         questionId: id,
-                                        optionId: option.id,
-                                        value: event.target.checked
-                                    });
-                                }}
+                                        optionId: option.id
+                                })}
+                                }
                             /> 
                             <span className="checkmark"></span>
                             {option.value}
@@ -66,4 +73,4 @@ const SurveyCheckboxes = (props: IProps) => {
     )
 };
 
-export default SurveyCheckboxes;
+export default SurveySingleAnswer;

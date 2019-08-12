@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react';
 import './Survey.scss';
-import SurveyMultipleAnswers from '../SurveyItems/SurveyMultipleAnswer/SurveyMultipleAnswer';
-import Checkboxes from '../SurveyItems/SurveyCheckboxes/SurveyCheckboxes';
+import SurveyMultipleAnswers from '../SurveyItems/SurveySingleAnswer/SurveySingleAnswer';
+import Checkboxes from '../SurveyItems/SurveyMultipleAnswer/SurveyMultipleAnswer';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import SurveyShortAnswer from '../SurveyItems/SurveyShortAnswer/SurveyShortAnswer';
 import SurveyLinearScale from '../SurveyItems/SurveyLinearScale/SurveyLinearScale';

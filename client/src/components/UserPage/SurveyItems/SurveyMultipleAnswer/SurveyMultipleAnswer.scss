@@ -1,13 +1,12 @@
 @import '../../../../styles/variables.scss';
 
-.single {
+.multiple {
 
     label {
         padding-top: 3px;
         display: flex;
-        width: fit-content;
-        margin: 20px;
         position: relative;
+        margin: 20px;
         padding-left: 35px;
         cursor: pointer;
         font-size: $form-font-size;
@@ -39,7 +38,6 @@
             height: 25px;
             width: 25px;
             background-color: #eee;
-            border-radius: 50%;
         }
 
         .checkmark:after {
@@ -50,14 +48,15 @@
     }
 
     label .checkmark:after {
-        top: 9px;
         left: 9px;
-        width: 8px;
-        height: 8px;
-        border-radius: 50%;
-        background: white;
+        top: 5px;
+        width: 5px;
+        height: 10px;
+        border: solid white;
+        border-width: 0 3px 3px 0;
+        -webkit-transform: rotate(45deg);
+        -ms-transform: rotate(45deg);
+        transform: rotate(45deg);
     }
 }
  
-   
-  
