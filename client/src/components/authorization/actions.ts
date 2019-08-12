@@ -1,47 +1,60 @@
-import {FETCH_LOGIN, FETCH_USER_BY_TOKEN, FETCH_REGISTRATION} from "./actionTypes";
+import {
+	FETCH_LOGIN,
+	FETCH_USER_BY_TOKEN,
+	FETCH_REGISTRATION,
+	FETCH_RESET_PASSWORD
+} from './actionTypes';
 import uuid from 'uuid/v4';
 
 interface IValues {
-    email: string;
-    password: string;
+	email: string;
+	password: string;
 }
 
 interface IValuesWithName {
-    email: string;
-    password: string;
-    name: string
+	email: string;
+	password: string;
+	name: string;
 }
 
 export const authorize = (values: IValues): any => {
-    return {
-        type: FETCH_LOGIN,
-        payload: {
-            ...values
-        }
-    }
+	return {
+		type: FETCH_LOGIN,
+		payload: {
+			...values
+		}
+	};
 };
 
-
 export const fetchByToken = (token: string): any => {
-    return {
-        type: FETCH_USER_BY_TOKEN,
-        payload: {
-            token
-        }
-    }
+	return {
+		type: FETCH_USER_BY_TOKEN,
+		payload: {
+			token
+		}
+	};
 };
 
 export const registration = (value: IValuesWithName): any => {
-    const user = {
-        id:uuid(),
-        ...value,
-        location: "",
-        aboutMe: "",
-        tops: []
-    };
+	const user = {
+		id: uuid(),
+		...value,
+		location: '',
+		aboutMe: '',
+		tops: []
+	};
 
-    return {
-        type: FETCH_REGISTRATION,
-        payload: user
-    }
+	return {
+		type: FETCH_REGISTRATION,
+		payload: user
+	};
+};
+
+export const fetchResetPassword = (email: string): any => {
+	return {
+		type: FETCH_RESET_PASSWORD,
+		payload: {
+			email
+		}
+	};
 };
