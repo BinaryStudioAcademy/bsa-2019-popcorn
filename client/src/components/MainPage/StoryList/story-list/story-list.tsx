@@ -114,7 +114,8 @@ class StoryList extends Component<IStoryListProps, IState> {
             <StoryListSlider scrollLeft={this.scrollLeft} scrollRight={this.scrollRight}/>
             <div className="story-list">
                 <AddStoryItem onOpenPopupClick={this.onOpenPopupClick} avatar={this.mockedAvatar}/>
-                <StoryListContent storyListItems={this.getStoryRange(this.props.stories, this.state.index)}/>
+                {/*this.array change to this.props.stories to use stories from db*/}
+                <StoryListContent storyListItems={this.getStoryRange(this.array, this.state.index)}/>
             </div>
         </div>);
     }
