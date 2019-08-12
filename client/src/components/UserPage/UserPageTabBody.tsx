@@ -45,7 +45,7 @@ const UserPageTabs: React.SFC<IProps> = ({mainPath, uploadAvatar, profileInfo, u
                        render={() => <ProfileComponent uploadAvatar={uploadAvatar} profileInfo={profileInfo}
                                                        uploadUrl={uploadUrl}
                                                        cancelAvatar={cancelAvatar} setAvatar={setAvatar}/>}/>
-                <Route path={`${mainPath}/posts`} component={() => <UserPosts userPosts={userPosts}
+                <Route path={`${mainPath}/posts`} component={() => <UserPosts posts={userPosts}
                                                                               getUsersPosts={() => getUsersPosts(profileInfo.id)}/>} />
                 <Route path={`${mainPath}/reviews`} component={UserReviews}/>
                 <Route path={`${mainPath}/events`} component={UserEvents}/>
