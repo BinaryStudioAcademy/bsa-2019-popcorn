@@ -137,12 +137,13 @@ class SurveyEditor extends Component<IProps, IState> {
         const questions = this.state.surveyInfo.questions;
         questions.push(newQuestion);
         this.setState({ 
-            currentElement: questions.length - 1, 
             surveyInfo: { 
                 ...this.state.surveyInfo, 
                 questions 
             }
         });
+
+        this.changeCurrentElement(questions.length - 1);
     }
 
     duplicateQuestion = (question) => {
