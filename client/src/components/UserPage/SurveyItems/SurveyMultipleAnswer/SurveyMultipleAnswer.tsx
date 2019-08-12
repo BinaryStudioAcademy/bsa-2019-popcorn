@@ -31,7 +31,11 @@ interface IProps {
                 value: string
             }>
     },
+<<<<<<< HEAD
     setAnswer?: (data: IAnswer) => void,
+=======
+    setAnswer: (data: IAnswer) => void,
+>>>>>>> origin/feature/survey
     disable?: boolean,
     answers?: Array<IReadyAnswer>
 };
@@ -39,7 +43,7 @@ interface IProps {
 const SurveyCheckboxes = (props: IProps) => {
     const { questionInfo } = props;
     const { id, title, options, required, image_link } = questionInfo;
-
+    
     return (
         <div className="multiple question-container">
             <p className={`survey-question required-${required}`}>{title}</p>
@@ -52,7 +56,11 @@ const SurveyCheckboxes = (props: IProps) => {
                                 type="checkbox" 
                                 name={id}
                                 key={i} 
-                                value={option.value} 
+                                value={option.value}
+                                disabled={disable || false}
+                                checked={
+                                    answers && answers.some(answer => (answer.option_id === option.id))
+                                }
                                 onChange={(event) => {
                                     if (!props.setAnswer) return;
                                     props.setAnswer({

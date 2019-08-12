@@ -30,13 +30,13 @@ interface IProps {
                 value: string
             }>
     },
-    setAnswer?: (data : IAnswer) => void,
+    setAnswer: (data : IAnswer) => void,
     disable?: boolean,
     answer?: IReadyAnswer
 };
 
 const SurveySingleAnswer = (props: IProps) => {
-    const { questionInfo } = props;
+    const { questionInfo, disable, answer } = props;
     const { id, title, options, required, image_link } = questionInfo;
 
     return (
@@ -46,18 +46,17 @@ const SurveySingleAnswer = (props: IProps) => {
                 options.map((option, i) => (
                     <p key={i}>
                         <label>
-                            <input 
+                            <input
                                 type="radio" 
                                 name={id} 
                                 key={i} 
                                 value={option.value} 
-                                onChange={() => {
-                                    if (!props.setAnswer) return;
-                                    props.setAnswer({
-                                        questionId: id,
-                                        optionId: option.id
-                                })}
-                                }
+                                disabled={disable || false}
+                                checked={answer && (answer.option_id  === option.id)}
+                                onChange={() => {props.setAnswer({
+                                    questionId: id,
+                                    optionId: option.id
+                                })}}
                             /> 
                             <span className="checkmark"></span>
                             {option.value}

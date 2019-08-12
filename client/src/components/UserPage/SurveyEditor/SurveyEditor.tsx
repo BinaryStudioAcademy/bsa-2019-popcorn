@@ -5,7 +5,7 @@ import { Snackbar } from '@material-ui/core';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye } from '@fortawesome/free-solid-svg-icons';
 import SurveyQuestion from '../SurveyEditorItems/SurveyQuestion';
-import SurveyMultipleAnswers from '../SurveyItems/SurveySingleAnswer/SurveySingleAnswer';
+import SurveyMultipleAnswer from '../SurveyItems/SurveySingleAnswer/SurveySingleAnswer';
 import SurveyCheckboxes from '../SurveyItems/SurveyMultipleAnswer/SurveyMultipleAnswer';
 import SurveyShortAnswer from '../SurveyItems/SurveyShortAnswer/SurveyShortAnswer';
 import SurveyLinearScale from '../SurveyItems/SurveyLinearScale/SurveyLinearScale';
