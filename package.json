@@ -11,12 +11,10 @@
     "rimraf": "^2.6.3"
   },
   "scripts": {
-    "install-client": "cd client && yarn",
-    "install-server": "cd server && yarn",
-    "install-packages": "yarn && concurrently \"yarn install-client\" \"yarn install-server\"",
-    "client": "cd client && yarn start",
-    "server": "cd server && yarn start",
-    "start": "concurrently --kill-others \"yarn server\" \"yarn client\""
+    "build": "concurrently \"cd client && npm run build\"",
+    "heroku-postbuild": "npm run build",
+    "install": "(cd client && npm i) && (cd server && npm i)",
+    "start": "cd server && npm run start-server"
   },
   "repository": {
     "type": "git",
