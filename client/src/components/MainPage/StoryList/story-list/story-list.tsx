@@ -8,6 +8,7 @@ import './story-list.scss';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import {fetchStories} from "../story.redux/actions";
+import Spinner from "../../../shared/Spinner";
 
 interface IStoryListItem {
     name: string,
@@ -97,6 +98,13 @@ class StoryList extends Component<IStoryListProps> {
     }
 
     render() {
+        const {stories, fetchStories} = this.props;
+        if(!stories){
+            fetchStories();
+            return <Spinner/>
+        }
+
+
         return (<div className="story-list-wrapper">
             <AddStoryPopup onClosePopupClick={this.onClosePopupClick} isShown={this.state.isPopupShown}/>
             <StoryListSlider scrollLeft={this.scrollLeft} scrollRight={this.scrollRight}/>
