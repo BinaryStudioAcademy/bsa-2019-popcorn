@@ -1,0 +1,78 @@
+$black: #000;
+$text-base-color: #122737;
+$input-shadow-color: rgba($black, .04);
+$input-letter-spacing: .5px;
+
+.about-event {
+    margin: 0 10px;
+
+    .date {
+        display: flex;
+        align-items: center;
+        margin-bottom: 15px;
+    }
+
+    .location {
+        margin-bottom: 15px;
+
+        .location-info {
+            display: flex;
+            justify-content: space-between;
+            line-height: 22px;
+        }
+
+        .location-btn {
+            display: block;
+            width: 100px;
+            cursor: pointer;
+            font-size: 14px;
+            color: blue;
+        }
+    }
+
+    .icon {
+        width: 30px;
+    }
+
+    .details {
+        max-height: 100px;
+        line-height: 22px;
+    }    
+}
+
+.map-loading-elem {
+    height: 100%;
+}
+.map-container {
+    width: 100%;
+    height: 300px;
+}
+.map-elem {
+    height: 100%;
+}
+
+.modal-window {
+    width: 50%;
+    transform: translateY(-25%);
+}
+.modal-btn-close {
+    width: 78px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 5px 0 0 auto;
+    padding: 6px;    
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    border-radius: 2px;
+    box-shadow: 0px 0px 11px $input-shadow-color;
+    background: #fff;
+    font-size: 12px;
+    line-height: 15px;
+    letter-spacing: $input-letter-spacing;
+    color: $text-base-color;
+    cursor: pointer;
+
+    &:hover {
+        background-color: #f9f9f9;
+    }
+}
