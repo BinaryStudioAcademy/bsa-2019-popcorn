@@ -25,6 +25,7 @@ const initialState = {
 };
 
 const ok_message = 'Check your email';
+const restore_ok_message = 'Your password has been changed';
 
 export default function(state = initialState, action) {
 	switch (action.type) {
@@ -79,7 +80,7 @@ export default function(state = initialState, action) {
 		case RESTORE_OK:
 			return {
 				...state,
-				restoreMessage: ok_message
+				restoreMessage: restore_ok_message
 			};
 		case RESTORE_ERROR:
 			return {

@@ -36,5 +36,5 @@ export const restore = async (password: string, token: string) => {
 
   if (!user) throw new Error("Invalid token");
 
-  await repository.updateById(user.id, { password });
+  await repository.updateById(user.id, { password, reset_token: "" });
 };
