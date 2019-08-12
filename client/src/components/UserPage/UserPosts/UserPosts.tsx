@@ -2,19 +2,19 @@ import React from 'react';
 import PostList from '../../MainPage/PostList/PostList';
 import Spinner from "../../shared/Spinner";
 interface IProps {
-    userPosts?:any,// todo
+    posts?:any,// todo
     getUsersPosts: () => any
 }
 
 
-const UserPosts: React.FC<IProps> = ({userPosts, getUsersPosts}) => {
-    if(!userPosts) {
+const UserPosts: React.FC<IProps> = ({posts, getUsersPosts}) => {
+    if(!posts) {
         getUsersPosts();
         return <Spinner/>
     }
     return (
         <div className="UserPosts">
-            <PostList/>
+            <PostList posts={posts}/>
         </div>
     );
 };
