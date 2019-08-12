@@ -6,7 +6,8 @@ import {connect} from 'react-redux';
 
 const mapStateToProps = (rootState, props) => ({
     ...props,
-    stories: rootState.story.stories
+    stories: rootState.story.stories,
+    avatar: rootState.profile.profileInfo && rootState.profile.profileInfo.avatar
 });
 
 const actions = {
