@@ -1,7 +1,8 @@
 
+import config from './../config';
 
 export const uploadFile = async (file: FormData) => {
-    let response = await fetch('http://localhost:5000/api/image/upload',{
+    let response = await fetch(`${config.API_URL}/api/image/upload`,{
         headers:{
             "Authorization":`Bearer ${localStorage.getItem('token')}`
         },
