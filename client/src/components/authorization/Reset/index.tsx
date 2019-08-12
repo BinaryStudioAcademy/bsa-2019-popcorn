@@ -2,6 +2,7 @@ import React from 'react';
 import { ErrorMessage, Field, Form, Formik } from 'formik';
 import * as Yup from 'yup';
 import { NavLink, Redirect } from 'react-router-dom';
+import { fetchResetPassword } from '../actions';
 
 interface Values {
 	name: string;
@@ -10,9 +11,9 @@ interface Values {
 }
 
 interface IProps {
-	registration: (values: Values) => any;
+	fetchResetPassword: (email: string) => any;
 	isAuthorized: boolean;
-	registerError: string | null;
+	resetMessage: string;
 }
 
 interface IState {
@@ -29,8 +30,11 @@ class Reset extends React.Component<IProps, IState> {
 	};
 
 	public render() {
-		const { registration, isAuthorized } = this.props;
+		const { fetchResetPassword, isAuthorized, resetMessage } = this.props;
 		const { isLoading } = this.state;
+
+		if (resetMessage)
+			return <div className={'form-wrapper'}>{resetMessage}</div>;
 
 		return (
 			<div className={'form-wrapper'}>
@@ -47,6 +51,8 @@ class Reset extends React.Component<IProps, IState> {
 									return;
 								}
 								this.setState({ ...this.state, isLoading: true });
+
+								fetchResetPassword(values.email);
 							}}
 							validationSchema={Yup.object().shape({
 								email: Yup.string()

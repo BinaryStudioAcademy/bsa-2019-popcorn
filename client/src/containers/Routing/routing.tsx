@@ -10,8 +10,8 @@ import { bindActionCreators } from 'redux';
 import {
 	authorize,
 	fetchByToken,
-	registration,
-	fetchResetPassword
+	fetchResetPassword,
+	registration
 } from '../../components/authorization/actions';
 
 import Spinner from '../../components/shared/Spinner/index';
@@ -36,6 +36,8 @@ interface IProps {
 	fetchByToken: (token: string) => any;
 	loginError: string | null;
 	registerError: string | null;
+	fetchResetPassword: (email: string) => any;
+	resetMessage: string;
 }
 
 const Routing = ({
@@ -43,8 +45,10 @@ const Routing = ({
 	authorize,
 	fetchByToken,
 	registration,
+	resetMessage,
 	loginError,
-	registerError
+	registerError,
+	fetchResetPassword
 }: IProps) => {
 	const token = localStorage.getItem('token');
 	if (token && !isAuthorized) {
@@ -83,9 +87,9 @@ const Routing = ({
 					path="/reset"
 					component={() => (
 						<Reset
-							registerError={registerError}
 							isAuthorized={isAuthorized}
-							registration={registration}
+							fetchResetPassword={fetchResetPassword}
+							resetMessage={resetMessage}
 						/>
 					)}
 				/>
