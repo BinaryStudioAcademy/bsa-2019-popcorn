@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import "./story-list-slider.scss"
-import { ReactComponent as SliderLeftIcon } from '../../../assets/icons/storyList/sliderLeft-icon.svg'
-import { ReactComponent as SliderRightIcon } from '../../../assets/icons/storyList/sliderRight-icon.svg'
+import { ReactComponent as SliderLeftIcon } from '../../../../assets/icons/storyList/sliderLeft-icon.svg'
+import { ReactComponent as SliderRightIcon } from '../../../../assets/icons/storyList/sliderRight-icon.svg'
 
 interface IStoryListSlider {
     scrollRight: () => void,

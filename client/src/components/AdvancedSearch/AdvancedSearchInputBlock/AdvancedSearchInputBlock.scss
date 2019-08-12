@@ -1,0 +1,20 @@
+@import '../../../styles/variables.scss';
+
+.search-input{
+    font-family: $base-font-family;
+    font-size: 16px;
+    line-height: 19px;
+    box-shadow: rgba($black, .04);
+    border-radius: 3px;
+    background: $white;
+    padding:.5em;
+    margin-bottom: .5em;
+    outline:none;
+    border: 1px solid rgba(0, 0, 0, 0.11);
+    
+}
+
+.input-header{
+    font-size: $header-large;
+    align-self: center;
+}
