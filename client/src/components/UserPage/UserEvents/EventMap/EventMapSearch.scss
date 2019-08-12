@@ -1,35 +1,34 @@
-@import '../../../../styles/variables.scss'; 
+@import '../../../../styles/variables.scss';
 
 .map-container {
-  height: 300px;
-  width: 80%;
-  float: right;
+	height: 300px;
+	width: 80%;
+	float: right;
 }
 
 .map-loading {
-  height: 300px;
-  width: 500px;
+	height: 300px;
+	width: 500px;
 }
 
 .map {
-  height: 300px;
+	height: 300px;
 }
 
 .search-box {
-  box-sizing: border-box;
-  width: 48% !important;
-  height: 40px;
-  margin-top: 10px;
-  padding: 0 12px;
-  outline: none;
-  text-overflow: ellipses;
+	box-sizing: border-box;
+	width: 48% !important;
+	height: 40px;
+	margin-top: 10px;
+	padding: 0 12px;
+	outline: none;
+	text-overflow: ellipses;
 
-
-  color: $text-base-color;
-  font-size: $form-font-size;
-  letter-spacing: $input-letter-spacing;
-  box-shadow: 0px 0px 10px $input-shadow-color;
-  border: 1px solid $border-color;
-  border-radius: 3px;
-  padding: 12px 15px;
+	color: $text-base-color;
+	font-size: $form-font-size;
+	letter-spacing: $input-letter-spacing;
+	box-shadow: 0px 0px 10px $input-shadow-color;
+	border: 1px solid $border-color;
+	border-radius: 3px;
+	padding: 12px 15px;
 }

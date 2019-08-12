@@ -98,7 +98,7 @@ class Post extends PureComponent<IPostProps, IPostState> {
 				<div className="post-item-header">
 					<img
 						className="post-item-avatar"
-						src={user.avatar || config.DEFAULT_AVATAR}
+						src={(user && user.avatar) || config.DEFAULT_AVATAR}
 						alt="author"
 					/>
 					<div className="post-item-info">
