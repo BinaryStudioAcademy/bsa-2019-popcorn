@@ -99,7 +99,7 @@ const SurveyStatistics: React.FC<IProps> = (props: IProps) => {
                             )
                         ))
                     ) : (
-                            <h3>This survey doesnt have any responses</h3>
+                            <h3 className="errorResponses">This survey doesnt have any responses</h3>
                         )
                 }
             </div>

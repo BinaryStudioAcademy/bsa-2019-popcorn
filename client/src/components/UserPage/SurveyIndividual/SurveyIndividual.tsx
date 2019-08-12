@@ -89,6 +89,14 @@ class SurveyIndividual extends PureComponent<IProps, IState> {
         return res;
     }
 
+    checkForAnswers(questions: IQuesstion[]) {
+        let haveAnswers = true;
+        questions.forEach(({ answers }) => {
+            if (!answers.length) haveAnswers = false
+        })
+        return haveAnswers;
+    }
+
     render() {
         const { surveyInfo: { questions } } = this.props;
         const { currUserIndex, usersIdList } = this.state;
@@ -96,74 +104,84 @@ class SurveyIndividual extends PureComponent<IProps, IState> {
         return (
             <div className="survey">
                 <div className="survey-background" />
-                <form>
-                    <div className="form-header" />
-                    <p className="page-control-wrapper">
-                        <span onClick={() => this.moveToPrevUser()} className="page-control page-control--left">
-                            <FontAwesomeIcon icon={faArrowCircleLeft} />
-                        </span>
-                        {currUserIndex + 1} of {usersIdList.length}
-                        <span onClick={() => this.moveToNextUser()} className="page-control page-control--right">
-                            <FontAwesomeIcon icon={faArrowCircleRight}/>
-                        </span>
-                    </p>
-                    {
-                        questions.map((question, i) => {
-                            if (question.type === 'Multiple choice') {
-                                return (
-                                    <SurveyMultipleAnswer
-                                        key={i}
-                                        questionInfo={question}
-                                        setAnswer={() => { }}
-                                        disable={true}
-                                        answers={
-                                            this.getCurrUserAnswer(question.id, usersIdList[currUserIndex], question.answers)
-                                        }
-                                    />
-                                )
-                            }
-                            else if (question.type === 'Checkboxes') {
-                                return (
-                                    <SurveySingleAnswer
-                                        key={i}
-                                        questionInfo={question}
-                                        setAnswer={() => { }}
-                                        disable={true}
-                                        answer={
-                                            this.getCurrUserAnswer(question.id, usersIdList[currUserIndex], question.answers)[0]
-                                        }
-                                    />
-                                );
-
-                            }
-
-                            else if (question.type === 'Short Answer') {
-                                return (
-                                    <SurveyShortAnswer
-                                        key={i}
-                                        questionInfo={question}
-                                        disable={true}
-                                        answer={
-                                            this.getCurrUserAnswer(question.id, usersIdList[currUserIndex], question.answers)[0]
-                                        }
-                                    />
-                                )
-                            }
-
-                            else return (
-                                <SurveyLinearScale
-                                    key={i}
-                                    questionInfo={question}
-                                    disable={true}
-                                    answer={
-                                        this.getCurrUserAnswer(question.id, usersIdList[currUserIndex], question.answers)[0]
+                {
+                    this.checkForAnswers(questions) ? (
+                        <form>
+                            <div className="form-header" />
+                            <p className="page-control-wrapper">
+                                <span onClick={() => this.moveToPrevUser()} className="page-control page-control--left">
+                                    <FontAwesomeIcon icon={faArrowCircleLeft} />
+                                </span>
+                                {currUserIndex + 1} of {usersIdList.length}
+                                <span onClick={() => this.moveToNextUser()} className="page-control page-control--right">
+                                    <FontAwesomeIcon icon={faArrowCircleRight} />
+                                </span>
+                            </p>
+                            {
+                                questions.map((question, i) => {
+                                    if (question.type === 'Multiple choice') {
+                                        return (
+                                            <SurveyMultipleAnswer
+                                                key={i}
+                                                questionInfo={question}
+                                                setAnswer={() => { }}
+                                                disable={true}
+                                                answers={
+                                                    this.getCurrUserAnswer(question.id, usersIdList[currUserIndex], question.answers)
+                                                }
+                                            />
+                                        )
                                     }
-                                />
-                            )
+                                    else if (question.type === 'Checkboxes') {
+                                        return (
+                                            <SurveySingleAnswer
+                                                key={i}
+                                                questionInfo={question}
+                                                setAnswer={() => { }}
+                                                disable={true}
+                                                answer={
+                                                    this.getCurrUserAnswer(question.id, usersIdList[currUserIndex], question.answers)[0]
+                                                }
+                                            />
+                                        );
 
-                        })
-                    }
-                </form>
+                                    }
+
+                                    else if (question.type === 'Short Answer') {
+                                        return (
+                                            <SurveyShortAnswer
+                                                key={i}
+                                                questionInfo={question}
+                                                disable={true}
+                                                answer={
+                                                    this.getCurrUserAnswer(question.id, usersIdList[currUserIndex], question.answers)[0]
+                                                }
+                                            />
+                                        )
+                                    }
+
+                                    else return (
+                                        <SurveyLinearScale
+                                            key={i}
+                                            questionInfo={question}
+                                            disable={true}
+                                            answer={
+                                                this.getCurrUserAnswer(question.id, usersIdList[currUserIndex], question.answers)[0]
+                                            }
+                                        />
+                                    )
+
+                                })
+                            }
+                        </form>
+                    ) : (
+                            <form>
+                                <div className="form-header" />
+                                <h3 className="errorResponses-individual">This survey doesnt have any responses</h3>
+                            </form>
+                        )
+                }
+
             </div>
         )
     }

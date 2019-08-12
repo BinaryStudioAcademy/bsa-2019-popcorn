@@ -55,7 +55,6 @@ const SurveyEditorBody: React.FC<IProps> = (props: IProps) => {
                 <NavLink
                     to='/user-page/surveys'
                     className="user-tab"
-                    activeClassName="user-tab-active"
                 >
                     Go back
                 </NavLink>
