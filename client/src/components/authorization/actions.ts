@@ -2,7 +2,8 @@ import {
 	FETCH_LOGIN,
 	FETCH_USER_BY_TOKEN,
 	FETCH_REGISTRATION,
-	FETCH_RESET_PASSWORD
+	FETCH_RESET_PASSWORD,
+	FETCH_RESTORE_PASSWORD
 } from './actionTypes';
 import uuid from 'uuid/v4';
 
@@ -55,6 +56,16 @@ export const fetchResetPassword = (email: string): any => {
 		type: FETCH_RESET_PASSWORD,
 		payload: {
 			email
+		}
+	};
+};
+
+export const fetchRestorePassword = (password: string, token: string): any => {
+	return {
+		type: FETCH_RESTORE_PASSWORD,
+		payload: {
+			password,
+			token
 		}
 	};
 };

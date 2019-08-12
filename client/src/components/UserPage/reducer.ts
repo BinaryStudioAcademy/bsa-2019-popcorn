@@ -8,6 +8,8 @@ import {
 	LOGIN,
 	RESET_ERROR,
 	RESET_OK,
+	RESTORE_ERROR,
+	RESTORE_OK,
 	SET_LOGIN_ERROR,
 	SET_REGISTER_ERROR
 } from '../authorization/actionTypes';
@@ -18,7 +20,8 @@ const initialState = {
 	userPosts: null,
 	loginError: null,
 	registerError: null,
-	resetMessage: ''
+	resetMessage: '',
+	restoreMessage: ''
 };
 
 const ok_message = 'Check your email';
@@ -72,6 +75,16 @@ export default function(state = initialState, action) {
 			return {
 				...state,
 				resetMessage: action.payload.message
+			};
+		case RESTORE_OK:
+			return {
+				...state,
+				restoreMessage: ok_message
+			};
+		case RESTORE_ERROR:
+			return {
+				...state,
+				restoreMessage: action.payload.message
 			};
 		default:
 			return state;

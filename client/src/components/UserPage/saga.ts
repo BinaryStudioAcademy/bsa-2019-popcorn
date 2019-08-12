@@ -13,10 +13,13 @@ import {
 	FETCH_LOGIN,
 	FETCH_REGISTRATION,
 	FETCH_RESET_PASSWORD,
+	FETCH_RESTORE_PASSWORD,
 	FETCH_USER_BY_TOKEN,
 	LOGIN,
 	RESET_ERROR,
 	RESET_OK,
+	RESTORE_ERROR,
+	RESTORE_OK,
 	SET_LOGIN_ERROR,
 	SET_REGISTER_ERROR
 } from '../authorization/actionTypes';
@@ -172,6 +175,29 @@ export function* resetPassword(action) {
 	}
 }
 
+export function* fetchRestorePassword(action) {
+	try {
+		const data = yield call(webApi, {
+			endpoint: config.API_URL + '/api/auth/restore',
+			method: 'POST',
+			parse: false,
+			body: {
+				password: action.payload.password,
+				token: action.payload.token
+			}
+		});
+		if (data.ok) yield put({ type: RESTORE_OK });
+		else
+			yield put({
+				type: RESTORE_ERROR,
+				payload: { message: data.statusMessage || 'Unknown error' }
+			});
+	} catch (e) {
+		console.log('profile saga fetch restore password: ', e.message);
+		yield put({ type: RESTORE_ERROR, payload: { message: e.message } });
+	}
+}
+
 function* watchFetchFilms() {
 	yield takeEvery(START_UPLOAD_AVATAR, uploadAvatar);
 }
@@ -200,6 +226,10 @@ function* watchFetchResetPassword() {
 	yield takeEvery(FETCH_RESET_PASSWORD, resetPassword);
 }
 
+function* watchFetchRestorePassword() {
+	yield takeEvery(FETCH_RESTORE_PASSWORD, fetchRestorePassword);
+}
+
 export default function* profile() {
 	yield all([
 		watchFetchFilms(),
@@ -208,6 +238,7 @@ export default function* profile() {
 		watchFetchUser(),
 		watchFetchRegistration(),
 		watchFetchPosts(),
-		watchFetchResetPassword()
+		watchFetchResetPassword(),
+		watchFetchRestorePassword()
 	]);
 }
