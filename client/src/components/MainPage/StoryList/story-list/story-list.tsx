@@ -8,9 +8,13 @@ import './story-list.scss';
 import Spinner from "../../../shared/Spinner";
 
 interface IStoryListItem {
-    name: string,
-    imageUrl: string,
-    avatar: string,
+    caption: string,
+    image_url: string,
+    user: {
+        avatar: string,
+        any
+    },
+    any
 };
 
 interface IStoryListProps {
@@ -114,8 +118,7 @@ class StoryList extends Component<IStoryListProps, IState> {
             <StoryListSlider scrollLeft={this.scrollLeft} scrollRight={this.scrollRight}/>
             <div className="story-list">
                 <AddStoryItem onOpenPopupClick={this.onOpenPopupClick} avatar={this.mockedAvatar}/>
-                {/*this.array change to this.props.stories to use stories from db*/}
-                <StoryListContent storyListItems={this.getStoryRange(this.array, this.state.index)}/>
+                <StoryListContent storyListItems={this.getStoryRange(this.props.stories, this.state.index)}/>
             </div>
         </div>);
     }
