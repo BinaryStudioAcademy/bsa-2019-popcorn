@@ -1,0 +1,243 @@
+@import "../../../styles/variables.scss";
+@import url('https://rsms.me/inter/inter.css');
+
+$user-tab-active-line: 3px;
+$user-tab-space: 10px;
+$user-tab-list-space-top: $user-tab-space + $user-tab-active-line;
+
+.preview-container {
+    position: relative;
+
+    .preview-back {
+        position: absolute;
+        top: 10px;
+        left: 10px;
+        z-index: 2;
+        font-size: 30px;
+    }
+}
+
+.required-label {
+    margin: 10px;
+    color: #D93025;
+} 
+
+.required-true:after {
+    content: '*';
+    color: #D93025;
+}
+
+.survey-editor {
+
+    .question-container {
+        pointer-events: none;
+    }
+
+    .nav-header {
+        display: flex;
+        justify-content: space-around;
+        margin: 20px;
+    }
+
+    .user-tab {
+        padding: $user-tab-space;
+        text-decoration: none;
+        color: $text-secondary-color;
+        letter-spacing: $base-letter-spacing;
+        font-weight: 600;
+    }
+
+    .user-tab-active {
+        border-top: $user-tab-active-line solid $orange;
+        border-radius: 2px;
+        color: $text-base-color;
+        font-size: $header-medium;
+    }
+
+    a {
+        text-decoration: none;
+        color: $text-base-color;
+        font-weight: 600;
+        font-size: $header-medium;
+    }
+
+    .preview {
+        margin-top: 100px;
+        font-size: $form-font-size;
+        display: flex;
+        justify-content: center;
+        background-color: $white;
+        box-shadow: 0 1px 4px 0 rgba(0,0,0,0.37);
+        padding: 10px;
+        z-index: 1;
+        width: 80%;
+        max-width: 650px;
+        margin-left: auto;
+        margin-right: auto;
+
+        div {
+            width: fit-content;
+            display: flex;
+            align-items: center;
+            svg {
+                margin-right: 10px;
+                font-size: 20px;
+            }
+        }
+    }
+
+    .link:hover {
+        box-shadow: 0 2px 4px 0 rgba(0,0,0,0.37);
+    }
+
+    .survey-editor-container {
+        flex-direction: column;
+        position: relative;
+        justify-items: center;
+
+        .survey-background {
+            top:0;
+        }
+
+        form {
+            margin-right: auto;
+            margin-left: auto;
+            margin-top: 0;
+            padding-bottom: 70px;
+
+            input, textarea {
+                border: none;
+                border-bottom: 1px solid rgba(0, 0, 0, .12);
+                padding-bottom: 2px;
+                font-family: $base-font-family;
+
+                &:focus {
+                    outline: none;
+                    border-bottom: 2px solid $orange;
+                }
+
+                &::placeholder{
+                    color: $text-secondary-color;
+                }
+            }
+
+            .buttons {
+                margin-top: 40px;
+                display: flex;
+                justify-content: space-around;
+
+                button {
+                    width: 45%;
+                }
+
+                .add-question-bttn {
+                    background-color: $background-gray;
+                    color: $text-base-color;
+                    box-shadow: 0 1px 4px 0 rgba(0,0,0,0.37);
+
+                    &:hover {
+                        box-shadow: 0 1px 5px 0 rgba(0, 0, 0, 0.5);
+                    }
+                }
+            }
+
+            header {
+                margin-top: 40px;
+                word-wrap: break-word;
+            }
+
+            button {
+                position: static;
+            }
+
+            .editor-header {
+                margin-bottom: 0;
+                margin-top: 0;
+                padding-top: 40px;
+                padding-bottom: 40px;
+                padding-right: 20px;
+
+                .survey-title {
+                    font-size: 20px;
+                    margin-bottom: 15px;
+                    padding-bottom: 10px;
+                    width: 100%;
+                    letter-spacing: .2px;
+                    font-weight: 500;
+                    columns: 1;
+                    box-sizing: initial;
+                    height: 43px;
+                }
+
+                textarea {
+                    width:100%;
+                    resize: none;
+                    -ms-overflow-style: none;  
+                    scrollbar-width: none;  
+        
+                    &::-webkit-scrollbar { 
+                        display: none;  
+                    }
+                }
+
+                .survey-description {
+                    width: 100%;
+                    padding-bottom: 5px;
+                    height: 34px;
+                    box-sizing: initial;
+                }
+            }
+
+            .question-view {
+                padding-top: 20px;
+                padding-bottom: 20px;
+            }
+    
+            .editor-question {
+                position: relative;
+                border-left: 3px solid $orange;
+                padding-top: 40px;
+                padding-bottom: 40px;
+                width: 100%;
+                margin-left: 0;
+                padding-left: 5%;
+                padding-right: 5%;
+                box-shadow: 0 1px 4px 0 rgba(0,0,0,0.37);
+
+                .sidebar-icons {
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: space-around;
+                    align-items: center;
+                    position: absolute;
+                    top: 0;
+                    right: -50px;
+                    height: 100%;
+                    width: 40px;
+                    background-color: white;
+                    box-shadow: 0 1px 4px 0 rgba(0,0,0,0.37);
+                    padding-bottom: 10px;
+                    padding-top: 10px;
+                    font-size: 30px;
+                    color: $text-secondary-color;
+
+                    p {
+                        width: fit-content;
+                        margin-left: auto;
+                        margin-right: auto;
+                        cursor: pointer;
+
+                        &:hover {
+                            color: #2196f3;
+                        }
+                    }
+
+                    input {
+                        display: none;
+                    }
+                }
+            }
+        }  
+    }
+}
+
