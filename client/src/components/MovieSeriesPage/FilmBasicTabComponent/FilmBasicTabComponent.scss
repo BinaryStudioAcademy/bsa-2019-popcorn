@@ -1,0 +1,81 @@
+@import '../../../styles/variables.scss';
+
+.film-basic-wrp {
+	height: 500px;
+	overflow-y: scroll;
+}
+
+.filmSection {
+	width: 100%;
+	display: grid;
+	grid-template-rows: auto;
+	grid-template-columns: 0.3fr 0.7fr;
+	background-color: $background-gray;
+	border-radius: 3px;
+	padding: 20px 30px;
+	min-height: 500px;
+	grid-gap: 10px;
+}
+
+.poster {
+	width: 100%;
+}
+
+.posterWrapper {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+}
+
+.descriptionList {
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+}
+
+.descriptionItem {
+	display: grid;
+	grid-template-columns: 0.4fr 0.6fr;
+}
+
+.descriptionTitle {
+	font-family: $base-font-family;
+	font-size: $header-medium;
+	color: $text-base-color;
+	letter-spacing: $base-letter-spacing;
+}
+
+.descriptionBody {
+	text-align: left;
+	font-family: $base-font-family;
+	font-size: $header-medium;
+	color: $text-base-color;
+	letter-spacing: $base-letter-spacing;
+}
+
+.yellowStar {
+	color: #ffcd1e;
+}
+
+.greyStar {
+	color: rgba(0, 0, 0, 0.5);
+}
+
+.videoWrapper {
+	grid-column: span 2;
+	background-color: $background-gray;
+	border: 1px solid $border-color;
+	border-radius: 3px;
+	padding: 20px 30px;
+}
+
+.video {
+	width: 100%;
+	height: 30vw;
+}
+
+.descriptionWrapper {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-around;
+}

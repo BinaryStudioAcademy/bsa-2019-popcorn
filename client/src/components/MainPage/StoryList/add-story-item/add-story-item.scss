@@ -1,0 +1,51 @@
+.add-story-wrapper {
+	height: 190px;
+	width: 120px;
+	background-color: #f7f8f9;
+}
+
+.card-wrapper {
+	display: grid;
+	grid-template-columns: 30px 30px 30px 30px;
+	grid-template-rows: 30px 65px 65px 30px;
+	align-items: center;
+	justify-items: center;
+}
+
+.avatar-story {
+	width: 20px;
+	height: 20px;
+	border-radius: 50%;
+}
+
+.add-story-text {
+	font-family: Inter;
+	font-weight: 500;
+	font-size: 12px;
+	line-height: 15px;
+	letter-spacing: 0.4px;
+}
+
+.button-story {
+	width: 34px;
+	height: 34px;
+	border: solid 1px rgba(0, 0, 0, 0.4);
+	border-radius: 50%;
+	grid-column: 2/4;
+	grid-row: 2/4;
+	display: grid;
+	grid-template-columns: 10px 10px;
+	grid-template-rows: 10px 10px;
+	align-items: center;
+	justify-items: center;
+	background-color: #fff;
+	cursor: pointer;
+	svg {
+		margin: 0 auto;
+	}
+}
+
+.plus {
+	grid-column: 1/-1;
+	grid-row: 1/-1;
+}

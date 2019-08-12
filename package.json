@@ -1,0 +1,29 @@
+{
+  "name": "bsa-2019-popcorn",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "engines": {
+    "node": "10.x"
+  },
+  "dependencies": {
+    "concurrently": "^4.1.1",
+    "rimraf": "^2.6.3"
+  },
+  "scripts": {
+    "build": "concurrently \"cd client && npm run build\"",
+    "heroku-postbuild": "npm run build",
+    "install": "(cd client && npm i) && (cd server && npm i)",
+    "start": "cd server && npm run start-server"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/BinaryStudioAcademy/bsa-2019-popcorn.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/BinaryStudioAcademy/bsa-2019-popcorn/issues"
+  },
+  "homepage": "https://github.com/BinaryStudioAcademy/bsa-2019-popcorn#readme"
+}

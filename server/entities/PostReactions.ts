@@ -1,20 +1,18 @@
-import {Entity, PrimaryGeneratedColumn, Column, OneToOne, JoinColumn} from "typeorm";
-import {User} from "./User";
-import {Post} from "./Post";
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from "typeorm";
+import { User } from "./User";
+import { Post } from "./Post";
 
 @Entity()
 export class PostReactions {
-    @PrimaryGeneratedColumn('uuid')
-    id: string;
+  @PrimaryGeneratedColumn("uuid")
+  id: string;
 
-    @Column()
-    smile:boolean;
+  @Column()
+  smile: boolean;
 
-    @OneToOne(type => Post, post => post.id)
-    @JoinColumn()
-    post: Post;
+  @ManyToOne(type => Post, post => post.id)
+  post: Post;
 
-    @OneToOne(type => User, user => user.id)
-    @JoinColumn()
-    user: User;
+  @ManyToOne(type => User, user => user.id)
+  user: User;
 }

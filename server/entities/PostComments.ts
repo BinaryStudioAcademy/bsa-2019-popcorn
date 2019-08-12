@@ -1,20 +1,18 @@
-import {Entity, PrimaryGeneratedColumn, Column, OneToOne, JoinColumn} from "typeorm";
-import {User} from "./User";
-import {Post} from "./Post";
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from "typeorm";
+import { User } from "./User";
+import { Post } from "./Post";
 
 @Entity()
 export class PostComments {
-    @PrimaryGeneratedColumn('uuid')
-    id: string;
+  @PrimaryGeneratedColumn("uuid")
+  id: string;
 
-    @Column()
-    text: string;
+  @Column()
+  text: string;
 
-    @OneToOne(type => User, user => user.id)
-    @JoinColumn()
-    user: User;
+  @ManyToOne(type => User, user => user.id)
+  user: User;
 
-    @OneToOne(type => Post, post => post.id)
-    @JoinColumn()
-    post: Post;
+  @ManyToOne(type => Post, post => post.id)
+  post: Post;
 }

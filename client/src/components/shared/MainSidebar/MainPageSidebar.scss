@@ -1,0 +1,79 @@
+@import '../../../styles/variables.scss';
+@import url('https://rsms.me/inter/inter.css');
+
+.left-sidebar {
+	padding-top: 88px;
+	display: flex;
+	flex-direction: column;
+	background-color: $background-gray;
+	color: $text-base-color;
+	font-weight: 600;
+	font-size: $menu-font-size;
+	font-family: $base-font-family;
+	line-height: 17px;
+	letter-spacing: $base-letter-spacing;
+	font-style: normal;
+
+	.avatar {
+		margin-left: 69px;
+		position: relative;
+
+		img {
+			width: 55px;
+		}
+
+		.fa-chevron-down {
+			margin-left: 10px;
+			position: absolute;
+			top: 50%;
+		}
+
+		.fa-chevron-down:hover {
+			cursor: pointer;
+		}
+	}
+
+	.user-name {
+		margin-left: 72px;
+		margin-bottom: 89px;
+	}
+
+	.menu {
+		div {
+			display: flex;
+			align-items: center;
+			margin-bottom: 19px;
+			height: 23px;
+			margin-left: 72px;
+
+			p:hover {
+				cursor: pointer;
+			}
+
+			p {
+				margin: 0;
+			}
+
+			svg {
+				position: absolute;
+				left: 43px;
+			}
+
+			.notifications {
+				width: 20px;
+				height: 20px;
+				background: #fb8700;
+				border-radius: 11px;
+				font-weight: bold;
+				font-size: 12px;
+				line-height: 20px;
+				text-align: center;
+				color: #fff;
+				margin: 0 0 0 22px;
+				span {
+					margin: 0 auto;
+				}
+			}
+		}
+	}
+}

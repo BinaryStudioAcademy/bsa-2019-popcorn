@@ -1,0 +1,41 @@
+@import '../../styles/variables.scss';
+
+.story-voting {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	background-color: black;
+	position: relative;
+	width: 350px;
+	height: 500px;
+
+	button:hover {
+		cursor: pointer;
+	}
+}
+
+.story-voting-header {
+	position: absolute;
+	top: 0;
+	left: 0;
+	font-family: $base-font-family;
+	font-size: 48px;
+	line-height: 58px;
+	color: $white;
+}
+
+.story-voting-options-list {
+	max-width: 330px;
+	text-align: center;
+}
+
+.back-to-editor-button {
+	border: none;
+	outline: none;
+	background: none;
+	color: white;
+	position: absolute;
+	top: 0px;
+	left: 0px;
+}

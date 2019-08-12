@@ -1,0 +1,30 @@
+@import '../../../../../../styles/variables.scss';
+.description-wrapper {
+	display: grid;
+	grid-template-columns: 80px 1fr 14px 50px;
+	grid-template-rows: 1fr 1fr;
+	grid-gap: 5px;
+	font-family: $base-font-family;
+	font-size: $base-font-size;
+	letter-spacing: $base-letter-spacing;
+}
+.achievement {
+	font-weight: bold;
+	color: $text-base-color;
+}
+.nominationName {
+	color: $text-secondary-color;
+}
+.hyphen {
+	color: $text-secondary-color;
+}
+.gender {
+	color: $text-secondary-color;
+}
+.winnerName {
+	color: $text-secondary-color;
+}
+.winnerName {
+	grid-column: 2/3;
+	grid-row: 2/3;
+}

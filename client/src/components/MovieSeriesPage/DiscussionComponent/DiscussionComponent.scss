@@ -1,0 +1,156 @@
+@import '../../../styles/variables.scss';
+
+p {
+	margin: 0;
+	padding: 0;
+}
+
+textarea:focus,
+textarea:active,
+a:active,
+a:focus {
+	outline: none;
+}
+
+#scroller * {
+	overflow-anchor: none;
+}
+
+#anchor {
+	overflow-anchor: auto;
+}
+.UserDiscussionComponent::-webkit-scrollbar {
+	-webkit-appearance: none;
+}
+
+.UserDiscussionComponent::-webkit-scrollbar:vertical {
+	width: 11px;
+}
+
+.UserDiscussionComponent::-webkit-scrollbar-thumb {
+	border-radius: 8px;
+	background-color: rgba(0, 0, 0, 0.5);
+}
+
+.UserDiscussionComponent {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	border: 1px solid $border-color;
+	color: $text-base-color;
+	font-family: $base-font-family;
+	padding: 10px;
+	width: 300px;
+
+	.MessageContainer {
+		overflow-y: scroll;
+	}
+
+	.messageItem {
+		border: 1px solid $border-color;
+		border-left: 3px solid rgba($button-background, 0.4);
+		padding: 10px;
+		display: flex;
+		align-items: center;
+		text-align: left;
+		margin-bottom: 20px;
+		width: 100%;
+
+		&:hover {
+			border-left: 3px solid rgba($button-background, 0.6);
+		}
+
+		img {
+			align-self: flex-start;
+			width: 15%;
+			height: auto;
+			margin-right: 10px;
+			border-radius: 5px;
+		}
+
+		.messageBody {
+			width: 100%;
+			box-sizing: border-box;
+			font-size: $base-font-size;
+
+			.body {
+				white-space: normal;
+			}
+
+			.name {
+				font-weight: bold;
+				letter-spacing: $base-letter-spacing;
+			}
+
+			.newMessage {
+				display: flex;
+				align-items: center;
+				padding: 2% 2%;
+
+				textarea {
+					background-color: #fff;
+					resize: none;
+					margin-right: 10px;
+					border: none;
+					height: 20px;
+					overflow-y: scroll;
+					background-color: transparent;
+				}
+
+				button {
+					background-color: $button-background;
+					color: $white;
+					box-shadow: 0px 5px 12px $button-shadow-color;
+					border-radius: 15px;
+					width: 30px;
+					height: 30px;
+					border: none;
+					outline: none;
+					font-weight: bold;
+					&:hover {
+						background-color: rgb(216, 86, 0);
+					}
+				}
+			}
+		}
+
+		.messageInfo {
+			margin-bottom: 5px;
+			display: flex;
+			justify-content: space-between;
+
+			.date {
+				color: change-color($text-base-color, $lightness: 30%, $alpha: 0.5);
+				font-size: $message-font-size;
+			}
+		}
+
+		.newMessageInput {
+			&::placeholder {
+				color: $input-placeholder-color;
+			}
+			box-sizing: border-box;
+			width: 80%;
+			height: 100%;
+			margin-top: 5px;
+		}
+	}
+
+	.newMessageItem {
+		box-shadow: 2px 2px 2px $input-shadow-color;
+		box-sizing: border-box;
+		border: 1px solid $border-color;
+		&:hover {
+			border: 1px solid $border-focus-color;
+		}
+		outline: none;
+		margin-bottom: 0;
+	}
+
+	svg {
+		width: 15px;
+		height: 15px;
+		fill: white;
+		margin-right: 3px;
+	}
+}

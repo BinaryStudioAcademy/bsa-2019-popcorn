@@ -1,0 +1,52 @@
+@import '../../../styles/variables.scss';
+
+.user-tops {
+	font-family: $base-font-family;
+	font-size: 16px;
+	line-height: 19px;
+	color: rgba(0, 0, 0, 0.4);
+	letter-spacing: 0.533333px;
+}
+
+.film-input {
+	width: 100%;
+	padding: 12px 15px 15px 12px;
+	margin-top: 18px;
+	letter-spacing: 0.533333px;
+	color: rgba(0, 0, 0, 0.4);
+	border: 1px solid rgba(0, 0, 0, 0.11);
+	box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.04);
+	border-radius: 3px;
+}
+.film-input-item {
+	width: 400px;
+	margin: auto;
+}
+.film-input-item {
+	img {
+		vertical-align: middle;
+		cursor: pointer !important;
+		margin-top: 18px;
+	}
+}
+
+.add-film {
+	color: rgba(0, 0, 0, 0.4);
+	cursor: pointer;
+	margin-top: 26px;
+	font-weight: bold;
+}
+
+// .film-input-item:hover {
+// 	.modal {
+// 		transform: scaleY(0);
+// 	}
+// }
+
+.film-input-item:hover {
+	.modal {
+		transform: scaleY(1) !important;
+		padding-top: 10px;
+		width: 94%;
+	}
+}

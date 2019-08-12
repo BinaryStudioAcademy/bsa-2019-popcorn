@@ -1,0 +1,40 @@
+@import '../../../styles/variables.scss';
+
+.cast-list {
+	font-family: $base-font-family;
+	font-style: normal;
+	font-weight: normal;
+	font-size: $base-font-size;
+	line-height: 14px;
+	letter-spacing: $base-letter-spacing;
+}
+
+.cast-list-header {
+	margin-top: 1em;
+	font-size: $header-medium;
+	margin-bottom: 1em;
+	font-weight: 600;
+	text-transform: uppercase;
+}
+
+.cast-items-container {
+	padding: 1em;
+	display: flex;
+	flex-direction: row;
+	overflow-x: scroll;
+}
+.cast-items-container::before,
+.cast-items-container::after {
+	content: '';
+	margin: auto;
+}
+
+.cast-items-container::-webkit-scrollbar {
+	height: 4px;
+}
+
+/* Handle */
+.cast-items-container::-webkit-scrollbar-thumb {
+	background: $border-color;
+	border-radius: 10px;
+}

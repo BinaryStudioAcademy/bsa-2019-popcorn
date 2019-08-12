@@ -1,0 +1,45 @@
+@import '../../styles/variables.scss';
+
+.story-modal-container {
+	height: 100%;
+	width: 100%;
+	background-color: rgba($color: $black, $alpha: 0.5);
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	position: absolute;
+	left: 0;
+	top: 0;
+
+	.story-modal {
+		width: 400px;
+		background-color: $white;
+		color: $text-base-color;
+		-webkit-border-radius: 15px;
+		-moz-border-radius: 15px;
+		border-radius: 15px;
+
+		button {
+			display: block;
+			border: none;
+			height: 50px;
+			width: 100%;
+			background-color: transparent;
+			border-bottom: 0.5px solid rgba($color: $black, $alpha: 0.3);
+			font-size: $menu-font-size;
+			font-family: $base-font-family;
+			font-weight: 600;
+			color: $text-base-color;
+			cursor: pointer;
+		}
+
+		button:active,
+		button:focus {
+			outline: none;
+		}
+
+		.delete {
+			color: #ed4956;
+		}
+	}
+}
