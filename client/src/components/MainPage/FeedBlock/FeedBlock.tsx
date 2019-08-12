@@ -6,14 +6,16 @@ import TopList from "../TopList/TopList";
 import {bindActionCreators} from "redux";
 import {connect} from 'react-redux';
 import Spinner from "../../shared/Spinner";
+import {fetchPosts} from "./FeedBlock.redux/actions";
 
 interface IProps {
-    posts: any
+    posts: any,
+    fetchPosts: () => any
 }
 
 const FeedBlock =(props: IProps)=>{
         if(!props.posts){
-
+            props.fetchPosts()
         }
 
         return <div className={"feed-block"}>
@@ -32,7 +34,7 @@ const mapStateToProps = (rootState, props) => ({
 });
 
 const actions = {
-
+    fetchPosts
 };
 const mapDispatchToProps = dispatch => bindActionCreators(actions, dispatch);
 

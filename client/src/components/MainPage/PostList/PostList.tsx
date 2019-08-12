@@ -105,7 +105,7 @@ const posts = [{
 ];
 
 interface IProps {
-    posts: any
+    posts: any,
 }
 
 const PostList = (props: IProps) => {
