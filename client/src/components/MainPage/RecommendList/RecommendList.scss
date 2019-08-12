@@ -1,17 +1,15 @@
-@import "../../../styles/variables.scss";
+@import '../../../styles/variables.scss';
 
-.recommend-list{
-    grid-area: recommend-list;
-    padding:15px;
-    min-width: 277px;
-    
+.recommend-list {
+	grid-area: recommend-list;
+	padding: 15px;
+	min-width: 277px;
 }
-.recommend-heading{
-    font-family: $base-font-family;
-    font-style: normal;
-    font-weight: bold;
-    font-size: $header-medium;
-    line-height: 22px;
-    text-align: left;
-    }
-    
+.recommend-heading {
+	font-family: $base-font-family;
+	font-style: normal;
+	font-weight: bold;
+	font-size: $header-medium;
+	line-height: 22px;
+	text-align: left;
+}

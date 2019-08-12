@@ -1,20 +1,20 @@
 @import '../../../styles/variables.scss';
 
-.staff-item{
-    display: flex;
-    flex-direction: row;
-    font-family: $base-font-family;
-    font-style: normal;
-    font-weight: normal;
-    font-size: $post-font-size;
-    line-height: 14px;
-    letter-spacing: $base-letter-spacing;
-    margin-top: 1em;
+.staff-item {
+	display: flex;
+	flex-direction: row;
+	font-family: $base-font-family;
+	font-style: normal;
+	font-weight: normal;
+	font-size: $post-font-size;
+	line-height: 14px;
+	letter-spacing: $base-letter-spacing;
+	margin-top: 1em;
 }
-.staff-item-name{
-    margin-left: .5em;
-    color: $text-base-color;
+.staff-item-name {
+	margin-left: 0.5em;
+	color: $text-base-color;
 }
-.staff-item-role{
-    color: $text-secondary-color;
+.staff-item-role {
+	color: $text-secondary-color;
 }

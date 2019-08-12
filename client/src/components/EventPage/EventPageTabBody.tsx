@@ -7,21 +7,25 @@ import ParticipantList from './ParticipantList/ParticipantList';
 import InterestedList from './InterestedList/InterestedList';
 
 interface IProps {
-    mainPath: string,
-    event: IEvent
+	mainPath: string;
+	event: IEvent;
 }
 
 const EventPageTabBody: React.SFC<IProps> = ({ mainPath, event }) => {
-    return (
-        <div className={"event-page-tab-body"}>
-            <Switch>
-                <Route exact path={`${mainPath}`} component={() => <About event={event} />} />
-                <Route path={`${mainPath}/discussion`} component={Discussion} />
-                <Route path={`${mainPath}/participants`} component={ParticipantList} />
-                <Route path={`${mainPath}/interested`} component={InterestedList} />
-            </Switch>
-        </div>
-    );
+	return (
+		<div className={'event-page-tab-body'}>
+			<Switch>
+				<Route
+					exact
+					path={`${mainPath}`}
+					component={() => <About event={event} />}
+				/>
+				<Route path={`${mainPath}/discussion`} component={Discussion} />
+				<Route path={`${mainPath}/participants`} component={ParticipantList} />
+				<Route path={`${mainPath}/interested`} component={InterestedList} />
+			</Switch>
+		</div>
+	);
 };
 
 export default EventPageTabBody;

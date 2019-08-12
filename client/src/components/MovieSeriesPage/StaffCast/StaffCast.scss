@@ -1,11 +1,10 @@
 @import '../../../styles/variables.scss';
 
-
 .staff-cast {
-  background-color: $background-gray;
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
-  min-height: 500px;
+	background-color: $background-gray;
+	width: 100%;
+	display: flex;
+	justify-content: center;
+	flex-direction: column;
+	min-height: 500px;
 }

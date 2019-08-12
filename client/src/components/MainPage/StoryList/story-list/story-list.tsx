@@ -32,6 +32,7 @@ interface IState {
 }
 
 class StoryList extends Component<IStoryListProps, IState> {
+
     constructor(props){
         super(props);
 

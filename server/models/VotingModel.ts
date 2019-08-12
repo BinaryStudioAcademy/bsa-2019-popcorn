@@ -5,5 +5,5 @@ export class Voting {
   id: string;
   body: string;
   user: User;
-  votingOptions: VotingOption[]
+  votingOptions: VotingOption[];
 }
