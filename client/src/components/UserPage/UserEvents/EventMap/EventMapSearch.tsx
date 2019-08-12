@@ -40,6 +40,17 @@ const MapWithASearchBox = compose(
           const position = refs.marker.getPosition();
           this.props.onLocationChanged({lat: position.lat(), lng: position.lng()});
         },
+        onMapClick: (e) => {
+          refs.marker.position = e.latLng;
+          refs.marker.position = e.latLng;
+          this.setState({
+            center: {
+              lat: e.latLng.lat(), lng: e.latLng.lng()
+            },
+            marker: refs.marker
+          });
+          this.state.onPositionChanged();
+        },
         onBoundsChanged: () => {
           this.setState({
             bounds: refs.map.getBounds(),
@@ -71,7 +82,7 @@ const MapWithASearchBox = compose(
           const position = refs.marker.getPosition();
           this.props.onLocationChanged({lat: position.lat(), lng: position.lng()});
           refs.map.fitBounds(bounds);
-        },  
+        },
       })
     },
     componentWillReceiveProps(nextProps) {
@@ -93,6 +104,7 @@ const MapWithASearchBox = compose(
     defaultZoom={15}
     center={props.center}
     onChanged={props.onBoundsChanged}
+    onClick={props.onMapClick}
   >
     <SearchBox
       ref={props.onSearchBoxMounted}
