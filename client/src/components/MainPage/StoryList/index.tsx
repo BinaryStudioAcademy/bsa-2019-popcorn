@@ -4,6 +4,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
+import GetAddStoryPopupContent from './story-modal/create-story';
 
 interface IStoryListItem {
 	caption: string;
@@ -22,24 +23,12 @@ interface IProps {
 	avatar: null | string;
 }
 
-const getAddStoryPopupContent = () => {
-	return (
-		<div className={'modal modal-story'}>
-			<div className={'content-wrp'}></div>
-
-			<div className={'btn-wrp'}>
-				<button className={'btn'}>Cancel</button>
-				<button className={'btn'}>Save</button>
-			</div>
-		</div>
-	);
-};
 const ListBlock = ({ ...props }: IProps) => {
 	return (
 		<div>
 			<StoryList {...props} />
 			<Switch>
-				<Route path={`/create`} component={() => getAddStoryPopupContent()} />
+				<Route path={`/create`} component={GetAddStoryPopupContent} />
 			</Switch>
 		</div>
 	);

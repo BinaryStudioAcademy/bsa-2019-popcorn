@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import './add-story-popup.scss';
+import React from 'react';
+import '../story-modal/add-story-popup.scss';
 import { Redirect } from 'react-router';
 interface IAddStoryPopupProps {
 	isShown: Boolean;
