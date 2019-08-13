@@ -255,7 +255,7 @@ class SurveyEditor extends Component<IProps, IState> {
 				>
 					<div>
 						<FontAwesomeIcon icon={faEye} />
-						<span>Preview?</span>
+						<span>Preview</span>
 					</div>
 				</NavLink>
 				<div className="survey-background" />
