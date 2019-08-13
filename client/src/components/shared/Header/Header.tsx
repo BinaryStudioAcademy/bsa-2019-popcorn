@@ -45,7 +45,7 @@ const user = {
 const mock = ['Movies in cinema', 'Top movies', 'On DVD'];
 
 const Header = ({
-	userInfo,
+	userInfo = user,
 	movies = mock,
 	tv = mock,
 	ratings = mock,
@@ -55,7 +55,7 @@ const Header = ({
 	setMovieSeries,
 	isAuthorized
 }: IProps) => {
-	console.log(isAuthorized);
+	console.log(userInfo);
 	return (
 		<div className="header">
 			<NavLink to="/" className="header-logo-link">
