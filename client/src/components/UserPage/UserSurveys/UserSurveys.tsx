@@ -164,38 +164,40 @@ class UserSurveys extends React.Component<IProps, IState> {
 				: null;
 
 		return (
-			<div className="userSurveys">
+			<div>
 				{url_callback && (
 					<button onClick={redirect} className={'btn'}>
 						Back to story
 					</button>
 				)}
-				<NavLink to={`${mainPath}/create`} className="create-button">
-					<button>Create survey</button>
-				</NavLink>
-				<div className="survey-list">
-					{surveys.map((survey, i) => {
-						return (
-							<NavLink key={i} exact={!i} to={`${mainPath}/${survey.id}`}>
-								<div className="survey-list-item">
-									<span>{survey.title}</span>
-									<p className="buttons">
-										{this.typeSurveyBttn(survey)}
-										<button
-											className="delete-bttn"
-											onClick={event => {
-												this.showModal(event, i);
-											}}
-										>
-											<FontAwesomeIcon icon={faTrashAlt} />
-										</button>
-									</p>
-								</div>
-							</NavLink>
-						);
-					})}
+				<div className="userSurveys">
+					<NavLink to={`${mainPath}/create`} className="create-button">
+						<button>Create survey</button>
+					</NavLink>
+					<div className="survey-list">
+						{surveys.map((survey, i) => {
+							return (
+								<NavLink key={i} exact={!i} to={`${mainPath}/${survey.id}`}>
+									<div className="survey-list-item">
+										<span>{survey.title}</span>
+										<p className="buttons">
+											{this.typeSurveyBttn(survey)}
+											<button
+												className="delete-bttn"
+												onClick={event => {
+													this.showModal(event, i);
+												}}
+											>
+												<FontAwesomeIcon icon={faTrashAlt} />
+											</button>
+										</p>
+									</div>
+								</NavLink>
+							);
+						})}
+					</div>
+					{this.modalIsShown()}
 				</div>
-				{this.modalIsShown()}
 			</div>
 		);
 	}
