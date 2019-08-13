@@ -2,9 +2,9 @@ import React, { PureComponent } from 'react';
 import AddComment from '../../shared/AddComment/AddComment';
 import './Post.scss';
 import { ReactComponent as SettingIcon } from '../../../assets/icons/general/settings.svg';
-import { ReactComponent as LikeIcon } from '../../../assets/icons/general/likeIcon.svg';
-import { ReactComponent as CommentIcon } from '../../../assets/icons/general/commentIcon.svg';
-import { ReactComponent as ShareIcon } from '../../../assets/icons/general/shareIcon.svg';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faHeart } from '@fortawesome/free-regular-svg-icons';
+import { faShare } from '@fortawesome/free-solid-svg-icons';
 import Comment from '../Comment/Comment';
 import Tag from '../Tag/Tag';
 import PostEditModal from '../PostEditModal/PostEditModal';
@@ -109,8 +109,8 @@ class Post extends PureComponent<IPostProps, IPostState> {
 					</div>
 					<button className="post-item-settings" onClick={this.toggleModal}>
 						<SettingIcon />
-						{this.isModalShown()}
 					</button>
+					{this.isModalShown()}
 				</div>
 				{image_url && (
 					<img className="post-item-image" src={image_url} alt="post" />
@@ -118,25 +118,18 @@ class Post extends PureComponent<IPostProps, IPostState> {
 				{description && <div className="post-body">{description}</div>}
 				{content && <PostContent content={content} />}
 				<div className="post-item-action-buttons">
-					<button>
-						<LikeIcon />
-					</button>
-					<button>
-						<CommentIcon />
-					</button>
-					<button className="">
-						<ShareIcon />
-					</button>
-				</div>
-				<div className="post-item-last-reaction">
-					<img
-						className="post-item-reaction-image"
-						src={user.avatar || config.DEFAULT_AVATAR}
-						alt="author"
-					/>
-					<div className="post-item-reaction-text">
-						Appreciated by&nbsp;<strong>Doug Walker</strong>
+					<div className="post-item-last-reaction">
+						<button className="like-icon">
+							<FontAwesomeIcon icon={faHeart} />
+						</button>
+						<div className="post-item-reaction-text">
+							Appreciated by&nbsp;<strong>Doug Walker </strong>
+							and <strong>13 others</strong>
+						</div>
 					</div>
+					<button className="">
+						<FontAwesomeIcon icon={faShare} />
+					</button>
 				</div>
 
 				{tags && (

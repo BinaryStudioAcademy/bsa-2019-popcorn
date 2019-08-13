@@ -1,5 +1,7 @@
 import React from 'react';
 import './AddComment.scss';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCommentAlt } from '@fortawesome/free-regular-svg-icons';
 
 interface IAddCommentProps {
 	replyId?: string;
@@ -31,7 +33,9 @@ class AddComment extends React.Component<IAddCommentProps> {
 							: 'Write something...'
 					}
 				/>
-				<button className="publish-button">Publish</button>
+				<button className="publish-button">
+					<FontAwesomeIcon icon={faCommentAlt} />
+				</button>
 			</form>
 		);
 	}

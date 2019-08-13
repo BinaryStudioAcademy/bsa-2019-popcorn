@@ -17,6 +17,7 @@ import {
 	fetchMovieList,
 	setMovieSeries
 } from '../../components/MovieSeriesPage/Movie.redux/actions';
+import Header from '../../components/shared/Header/Header';
 
 const { notifications } = {
 	notifications: {

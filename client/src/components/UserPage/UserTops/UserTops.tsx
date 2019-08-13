@@ -2,22 +2,19 @@ import React from 'react';
 import './UserTops.scss';
 import DragDrop from './DragDrop';
 
-let moviess = [
-	{ title: 'Big Beauty reunion', id: 123 },
-	{ title: 'THE BIG LEBOWSKI', id: 456 }
-];
-
-// a little function to help us with reordering the result
-const reorder = (list, startIndex, endIndex): any => {
-	const result = Array.from(list);
-	const [removed] = result.splice(startIndex, 1);
-	result.splice(endIndex, 0, removed);
-
-	return result;
-};
-
-interface IUserTopsProps {
-	location?: {
+import TopItem from './TopItem/TopItem';
+import { ITopItem } from './TopItem/TopItem';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { uploadImage } from './actions';
+export interface IUserTopsState {
+	topList: ITopItem[];
+}
+interface IUserTopProps {
+	uploadImage: (data: FormData, titleId: string) => void;
+	uploadUrl: string;
+	urlForTop: string;
+  location?: {
 		state?: {
 			url_callback?: string;
 		};
@@ -27,43 +24,96 @@ interface IUserTopsProps {
 	};
 }
 
-interface IMovie {
-	inputMovies: Array<any>;
-}
 
-class UserTops extends React.Component<IUserTopsProps, IMovie> {
+const topItemsMock: ITopItem[] = [
+	{
+		id: '1',
+		title: 'My Top 1',
+		titleImageUrl: '',
+		moviesList: [
+			{ title: 'The Avengers', id: '1', comment: 'Nice' },
+			{ title: 'Spider-Man', id: '2', comment: 'Nice' },
+			{ title: 'Batman', id: '3', comment: 'Nice' }
+		]
+	},
+	{
+		id: '2',
+		title: 'My Top 2',
+		titleImageUrl: '',
+		moviesList: [
+			{ title: 'The Avengers', id: '1', comment: 'Nice' },
+			{ title: 'Spider-Man', id: '2', comment: 'Nice' },
+			{ title: 'Batman', id: '3', comment: 'Nice' }
+		]
+	},
+	{
+		id: '3',
+		title: 'My Top 3',
+		titleImageUrl: '',
+		moviesList: [
+			{ title: 'The Avengers', id: '1', comment: 'Nice' },
+			{ title: 'Spider-Man', id: '2', comment: 'Nice' },
+			{ title: 'Batman', id: '3', comment: 'Nice' }
+		]
+	}
+];
+
+const newTop = (): ITopItem => {
+	return {
+		id: Date.now().toString(),
+		title: '',
+		moviesList: [],
+		titleImageUrl: ''
+	};
+};
+
+
+class UserTops extends React.Component<IUserTopProps, IUserTopsState> {
+
 	constructor(props) {
 		super(props);
 		this.state = {
-			inputMovies: moviess
+			topList: topItemsMock
 		};
-		this.onDragEnd = this.onDragEnd.bind(this);
 	}
 
-	onDragEnd(result) {
-		if (!result.destination) {
-			return;
-		}
-		const updatedItems = reorder(
-			this.state.inputMovies,
-			result.source.index,
-			result.destination.index
+	deleteTop = (topId: string) => {
+		const topList = this.state.topList.filter(
+			(topItem: ITopItem) => topItem.id !== topId
 		);
-		this.setState({ inputMovies: updatedItems });
-	}
-
-	deleteFilmInput = (movieId: number) => {
-		const inputMovies = this.state.inputMovies.filter(
-			movie => movie.id !== movieId
-		);
-
-		this.setState({ inputMovies });
+		this.setState({ topList });
 	};
 
-	render() {
-		const { inputMovies } = this.state;
+	createTop = () => {
+		const { topList } = this.state;
+		this.setState({ topList: [...topList, newTop()] });
+	};
 
-		const url_callback =
+	saveUserTop = (updatedTopItem: ITopItem) => {
+		const topList = this.state.topList.map(topItem =>
+			topItem.id === updatedTopItem.id ? updatedTopItem : topItem
+		);
+		this.setState({ topList });
+	};
+
+	// componentDidUpdate(prevProps) {
+
+	// 	// 	let topList = this.state.topList.map((topItem) =>
+	// 	// 		topItem.titleImageUrl = this.props.uploadUrls[topItem.id])
+	// 	// 	this.setState({ topList });
+	// 	// console.log(topList)
+
+	// }
+	// componentDidUpdate(prevProps) {
+	// 	if (prevProps.uploadUrls !== this.props.uploadUrls) {
+	// 		let topList = this.state.topList.map((topItem) =>
+	// 			topItem.titleImageUrl = this.props.uploadUrls[topItem.id])
+	// 		this.setState({ topList });
+	// 	}
+	// }
+
+	render() {
+    const url_callback =
 			this.props.location &&
 			this.props.location.state &&
 			this.props.location.state.url_callback;
@@ -71,35 +121,51 @@ class UserTops extends React.Component<IUserTopsProps, IMovie> {
 			url_callback
 				? this.props.history && this.props.history.push(url_callback)
 				: null;
-
+    
+		const topList = this.state.topList;
+		// const topList = this.state.topList.map((topItem) => {
+		// 	return { ...topItem, titleImageUrl: this.props.uploadUrls[topItem.id] }
+		// })
+		// console.log(topList)
 		return (
-			<div className="user-tops">
-				{url_callback && (
+			<div>
+        {url_callback && (
 					<button onClick={redirect} className={'btn'}>
 						Back to story
 					</button>
 				)}
-				<DragDrop
-					deleteFilmInput={this.deleteFilmInput}
-					inputMovies={inputMovies}
-					onDragEnd={this.onDragEnd}
-				/>
-				<div
-					className="add-film"
-					onClick={() =>
-						this.setState({
-							inputMovies: [
-								...this.state.inputMovies,
-								{ title: '', id: Date.now() }
-							]
-						})
-					}
-				>
-					Add film
+				<div className="create-top-button hover" onClick={this.createTop}>
+					Create Top
 				</div>
+				{topList.map((topItem: ITopItem) => (
+					<TopItem
+						key={topItem.id}
+						saveUserTop={this.saveUserTop}
+						topItem={topItem}
+						deleteTop={this.deleteTop}
+						uploadUrl={this.props.uploadUrl}
+						urlForTop={this.props.urlForTop}
+						uploadImage={this.props.uploadImage}
+					/>
+				))}
 			</div>
 		);
 	}
 }
 
-export default UserTops;
+const mapStateToProps = (rootState, props) => ({
+	...props,
+	uploadUrl: rootState.userTops.uploadUrl,
+	urlForTop: rootState.userTops.urlForTop
+});
+
+const actions = {
+	uploadImage
+};
+
+const mapDispatchToProps = dispatch => bindActionCreators(actions, dispatch);
+
+export default connect(
+	mapStateToProps,
+	mapDispatchToProps
+)(UserTops);

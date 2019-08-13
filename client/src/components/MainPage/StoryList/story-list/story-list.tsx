@@ -31,7 +31,8 @@ interface IState {
 	scrollLeft: number;
 }
 
-class StoryList extends React.Component<IStoryListProps, IState> {
+class StoryList extends Component<IStoryListProps, IState> {
+
 	constructor(props) {
 		super(props);
 

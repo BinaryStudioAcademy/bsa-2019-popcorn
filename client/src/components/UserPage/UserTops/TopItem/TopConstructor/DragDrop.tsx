@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import FilmInput from './FilmInput';
+import { IMovie } from '../TopItem';
 
 const grid = 8;
 
@@ -12,18 +13,19 @@ const getItemStyle = (isDragging, draggableStyle) => ({
 });
 
 const getListStyle = isDraggingOver => ({
-	padding: grid,
-	width: 250
+	padding: grid
 });
 
-interface IDragDropProps {
-	inputMovies: Array<{ id: number; title: string }>;
+export interface IDragDropProps {
+	moviesList: IMovie[];
 	onDragEnd: (result: any) => void;
-	deleteFilmInput: (movieId: number) => void;
+	deleteFilmInput: (movieId: string) => void;
+	saveMovie: (movie: IMovie) => void;
 }
 
 const DragDrop: React.FC<IDragDropProps> = ({
-	inputMovies,
+	saveMovie,
+	moviesList,
 	onDragEnd,
 	deleteFilmInput
 }) => {
@@ -36,7 +38,7 @@ const DragDrop: React.FC<IDragDropProps> = ({
 						ref={provided.innerRef}
 						style={getListStyle(snapshot.isDraggingOver)}
 					>
-						{inputMovies.map((movie, index) => (
+						{moviesList.map((movie, index) => (
 							<Draggable
 								className="film-input-item"
 								key={movie.id}
@@ -53,12 +55,14 @@ const DragDrop: React.FC<IDragDropProps> = ({
 											provided.draggableProps.style
 										)}
 									>
-										<span>
+										<div className="film-input-wrap">
+											<div className="numeration">{index + 1}</div>
 											<FilmInput
 												movie={movie}
+												saveMovie={saveMovie}
 												deleteFilmInput={deleteFilmInput}
 											/>
-										</span>
+										</div>
 									</div>
 								)}
 							</Draggable>

@@ -2,13 +2,23 @@
 
 .feed-list {
 	grid-area: feed-list;
-	padding: 15px;
+	padding-right: 30px;
+	margin-right: 30px;
 }
 .feed-heading {
 	font-family: $base-font-family;
 	font-style: normal;
-	font-weight: bold;
+	font-weight: 600;
 	font-size: $header-medium;
 	line-height: 22px;
 	text-align: left;
+	margin-bottom: 30px;
+	display: flex;
+	align-items: center;
+
+	svg {
+		fill: $button-background;
+		margin-right: 10px;
+		height: 25px;
+	}
 }

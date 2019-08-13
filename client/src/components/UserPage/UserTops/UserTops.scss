@@ -75,4 +75,20 @@ $btn-height: 36px;
 		padding-top: 10px;
 		width: 94%;
 	}
+
+.create-top-button {
+	border: 1px solid $border-color;
+	box-shadow: 0px 0px 11px $input-shadow-color;
+	color: $text-secondary-color;
+	border-radius: 2px;
+	padding: 6px;
+	font-size: 24px;
+	line-height: 15px;
+	align-items: center;
+	letter-spacing: $header-letter-spacing;
+	display: flex;
+    justify-content: center;
+	height: 45px;
+	margin-top: 20px;
+}
 }

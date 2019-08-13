@@ -6,6 +6,7 @@ import {
 	faTimesCircle
 } from '@fortawesome/free-solid-svg-icons';
 import { faCamera } from '@fortawesome/free-solid-svg-icons/faCamera';
+import ImageUploader from '../ImageUploader/ImageUploader';
 
 // example:
 {
@@ -20,11 +21,9 @@ interface IPostStoryEditorProps {
 }
 
 interface IPostStoryEditorState {
-	imageUrl?: string;
-	errorMsg?: string;
-	isUploading: boolean;
 	body: string;
 	checkboxValue: boolean;
+	imageUrl: string;
 }
 
 class PostStoryEditor extends React.Component<
@@ -34,18 +33,16 @@ class PostStoryEditor extends React.Component<
 	constructor(props: IPostStoryEditorProps) {
 		super(props);
 		this.state = {
-			imageUrl: undefined,
-			errorMsg: '',
-			isUploading: false,
 			body: '',
-			checkboxValue: false
+			checkboxValue: false,
+			imageUrl: ''
 		};
 
 		this.onCancel = this.onCancel.bind(this);
 		this.onSave = this.onSave.bind(this);
 		this.onChangeData = this.onChangeData.bind(this);
 		this.onToggleCheckbox = this.onToggleCheckbox.bind(this);
-		this.handleUploadFile = this.handleUploadFile.bind(this);
+		this.imageStateHandler = this.imageStateHandler.bind(this);
 	}
 
 	componentDidMount() {
@@ -90,7 +87,7 @@ class PostStoryEditor extends React.Component<
 	onCancel() {
 		this.setState({
 			...this.state,
-			imageUrl: undefined,
+			imageUrl: '',
 			body: '',
 			checkboxValue: false
 		});
@@ -146,7 +143,13 @@ class PostStoryEditor extends React.Component<
 				});
 
 		target.value = '';
-	}
+}
+        
+	imageStateHandler(data) {
+		this.setState({
+			imageUrl: data
+		});
+	
 
 	render() {
 		return (
@@ -215,6 +218,7 @@ class PostStoryEditor extends React.Component<
 							/>
 						</p>
 					)}
+
 					{/*<div>*/}
 					{/*    <input*/}
 					{/*        name="image"*/}
@@ -235,7 +239,19 @@ class PostStoryEditor extends React.Component<
 					{/*        Save*/}
 					{/*    </button>*/}
 					{/*</div>*/}
-				</div>
+          {/* <div>
+						<ImageUploader
+							imageHandler={this.props.uploadImage}
+							imageStateHandler={this.imageStateHandler}
+						/>
+						<button className="cancel-btn" onClick={this.onCancel}>
+							Cancel
+						</button>
+						<button className="save-btn" onClick={this.onSave}>
+							Save
+						</button>
+					</div>*/}
+				</div> 
 			</div>
 		);
 	}

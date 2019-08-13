@@ -16,7 +16,10 @@ body {
 	margin: 0 auto;
 	padding: 0 15px;
 
-	transform: translateY(50%);
+	height: 100vh;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
 
 	.logo-wrapper {
 		font-size: 0;
