@@ -12,11 +12,11 @@ class EventRepository extends Repository<Event> {
       .where("event.id = :id", { id: eventId })
       .getOne();
   }
-  async getEventsByVisitorId(userId: string): Promise<EventVisitor[]> {
-    return await getRepository(EventVisitor)
-      .createQueryBuilder("event_visitor")
-      .leftJoinAndSelect("event_visitor.event", "event")
-      .where("event_visitor.userId = :id", { id: userId })
+  async getEventsByVisitorId(userId: string): Promise<Event[]> {
+    return await getRepository(Event)
+      .createQueryBuilder("event")
+      .innerJoinAndSelect("event.eventVisitors", "visitors")
+      .where("visitors.userId = :id", { id: userId })
       .getMany();
   }
   async getEvents(userId: string): Promise<Event[]> {

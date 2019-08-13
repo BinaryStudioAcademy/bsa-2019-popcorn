@@ -78,7 +78,7 @@ router
   .get("/visitor/:id", (req: Request, res: Response, next: NextFunction) =>
     eventService
       .getEventsByVisitorId(req.params.id)
-      .then((response: EventVisitor[]) => res.send(response))
+      .then((response: Event[]) => res.send(response))
       .catch(next)
   )
   .delete("/visitor/:id", (req: Request, res: Response, next: NextFunction) =>

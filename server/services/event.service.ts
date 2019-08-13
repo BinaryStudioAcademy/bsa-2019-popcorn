@@ -76,10 +76,9 @@ export const getVisitorsByEventId = async (
 ): Promise<EventVisitor[]> =>
   await getRepository(VisitorEntity).find({ eventId });
 
-export const getEventsByVisitorId = async (
-  userId: string
-): Promise<EventVisitor[]> =>
+export const getEventsByVisitorId = async (userId: string): Promise<Event[]> =>
   await getCustomRepository(EventRepository).getEventsByVisitorId(userId);
+
 export const createVisitor = async (
   visitor: EventVisitor
 ): Promise<EventVisitor[]> =>
@@ -141,7 +140,7 @@ const formatForClient = (event: any) => {
     eventVisitors
   } = event;
   const result = {
-    id,
+    id: id,
     title,
     description,
     location: {

@@ -5,13 +5,37 @@ import Spinner from '../../shared/Spinner/index';
 import { getUserEvents } from './actions';
 
 interface IProps {
-	userEvents: any;
+	userEvents: IEvent[];
 	getUserEvents: (id: string) => any;
 	currentUserId: string;
 }
 
-class UserEvents extends React.PureComponent<IProps> {
-	constructor(props) {
+interface IEvent {
+	id: string;
+	title: string;
+	description: string;
+	location: {
+		lat: number;
+		lng: number;
+	};
+	dateRange: {
+		start: Date;
+		end: Date;
+	};
+	userId: string;
+	movieId: string | undefined;
+	eventVisitors: IVisitor[];
+}
+
+interface IVisitor {
+	id: string;
+	status: string;
+	userId: string;
+	eventId: string;
+}
+
+class UserEvents extends React.Component<IProps> {
+	constructor(props: IProps) {
 		super(props);
 	}
 
@@ -25,7 +49,11 @@ class UserEvents extends React.PureComponent<IProps> {
 
 		return (
 			<div className="UserEvents">
-				{userEvents ? <div>USEREVENTS</div> : <Spinner />}
+				{userEvents ? (
+					<div className="event-list-container"></div>
+				) : (
+					<Spinner />
+				)}
 			</div>
 		);
 	}

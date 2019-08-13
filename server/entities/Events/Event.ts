@@ -23,10 +23,10 @@ export class Event {
   @Column()
   description: string;
 
-  @Column()
+  @Column({ type: "float" })
   location_lat: number;
 
-  @Column()
+  @Column({ type: "float" })
   location_lng: number;
 
   @Column()

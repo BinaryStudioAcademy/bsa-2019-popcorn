@@ -6,7 +6,6 @@ import webApi from '../../../services/webApi.service';
 
 export function* fetchEvents(action) {
 	try {
-		console.log(action);
 		const data = yield call(webApi, {
 			endpoint: config.API_URL + '/api/event/user/' + action.payload,
 			method: 'GET'
