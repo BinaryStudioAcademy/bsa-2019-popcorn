@@ -108,7 +108,7 @@ class Login extends React.Component<IProps, IState, IValues> {
 							.email('Email is invalid')
 							.required('Email is required'),
 						password: Yup.string()
-							.min(5, 'Password must be at least 6 characters')
+							.min(6, 'Password must be at least 6 characters')
 							.required('Password is required')
 					})}
 					render={({ errors, status, touched }) => {
