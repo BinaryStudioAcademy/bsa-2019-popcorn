@@ -1,0 +1,13 @@
+.post-reaction-wrapper {
+	display: grid;
+	grid-template-columns: 31px 1fr;
+	grid-gap: 2px;
+	align-items: center;
+}
+
+.post-reaction-wrapper > svg {
+	cursor: pointer;
+	border-radius: 50%;
+	width: 31px;
+	height: 31px;
+}

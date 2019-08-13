@@ -21,7 +21,7 @@ app.use(bodyParser.json());
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(passport.initialize());
-app.use("/api/", authorizationMiddleware(routesWhiteList));
+// app.use("/api/", authorizationMiddleware(routesWhiteList));
 
 routes(app);
 
