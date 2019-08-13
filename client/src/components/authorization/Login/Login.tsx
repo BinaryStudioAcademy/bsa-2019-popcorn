@@ -105,9 +105,11 @@ class Login extends React.Component<IProps, IState, IValues> {
 					}}
 					validationSchema={Yup.object().shape({
 						email: Yup.string()
+							.max(320, 'Email must be no more than 320 characters')
 							.email('Email is invalid')
 							.required('Email is required'),
 						password: Yup.string()
+							.max(64, 'Password must be no more than 64 characters')
 							.min(6, 'Password must be at least 6 characters')
 							.required('Password is required')
 					})}
