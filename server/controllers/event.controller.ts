@@ -7,9 +7,9 @@ import { Event as EventEntity } from "../entities/Events";
 const router = Router();
 
 router
-  .get("/", (req: Request, res: Response, next: NextFunction) =>
+  .get("/user/:id", (req: Request, res: Response, next: NextFunction) =>
     eventService
-      .getEvents(req.query.id)
+      .getEventsByUserId(req.params.id)
       .then((events: Event[]) => res.send(events))
       .catch(next)
   )
@@ -22,7 +22,7 @@ router
   .post("/", (req: Request, res: Response, next: NextFunction) =>
     eventService
       .createEvent(req.body)
-      .then((response: Event[]) => res.send(response))
+      .then((response: Event) => res.send(response))
       .catch(next)
   )
   .delete("/:id", (req: Request, res: Response, next: NextFunction) =>

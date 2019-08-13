@@ -8,14 +8,26 @@ import {
 import EventRepository from "../repository/event.repository";
 import { getRepository, getCustomRepository } from "typeorm";
 
-export const getEvents = async (userId: string): Promise<Event[]> =>
-  await getCustomRepository(EventRepository).find({ userId });
+export const getEventsByUserId = async (userId: string): Promise<any[]> => {
+  const events = await getCustomRepository(EventRepository).getEvents(userId);
+  const response = events.map(event => formatForClient(event));
+  return response;
+};
 
 export const getEventById = async (eventId: number): Promise<Event> =>
   await getCustomRepository(EventRepository).getEvent(eventId);
 
-export const createEvent = async (event: Event): Promise<Event[]> =>
-  await getCustomRepository(EventRepository).save([event]);
+export const createEvent = async (event: any): Promise<Event> => {
+  const result = formatForDB(event);
+  const responseEvent = await getCustomRepository(EventRepository).save(result);
+  const newVisitor = {
+    status: "going",
+    userId: responseEvent.userId,
+    eventId: responseEvent.id
+  };
+  createVisitor(newVisitor as any);
+  return responseEvent;
+};
 
 export const updateEvent = async (updatedEvent: Event): Promise<Event[]> => {
   let event = await getCustomRepository(EventRepository).findOne(
@@ -85,4 +97,65 @@ export const deleteVisitorById = async (
 ): Promise<EventVisitor> => {
   const visitor = await getRepository(VisitorEntity).findOne(visitorId);
   return await getRepository(VisitorEntity).remove(visitor);
+};
+
+// other
+const formatForDB = (event: any) => {
+  const {
+    title,
+    description,
+    location,
+    dateRange,
+    image,
+    isPrivate,
+    userId,
+    movieId
+  } = event;
+  const result = {
+    title,
+    description,
+    location_lat: location.lat,
+    location_lng: location.lng,
+    start_date: dateRange.startDate,
+    end_date: dateRange.endDate,
+    image,
+    isPrivate,
+    userId,
+    movieId
+  };
+  return result;
+};
+
+const formatForClient = (event: any) => {
+  const {
+    id,
+    title,
+    description,
+    location_lat,
+    location_lng,
+    start_date,
+    end_date,
+    isPrivate,
+    userId,
+    movieId,
+    eventVisitors
+  } = event;
+  const result = {
+    id,
+    title,
+    description,
+    location: {
+      lat: location_lat,
+      lng: location_lng
+    },
+    dateRange: {
+      start: start_date,
+      end: end_date
+    },
+    isPrivate,
+    userId,
+    movieId,
+    eventVisitors
+  };
+  return result;
 };

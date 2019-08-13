@@ -24,10 +24,19 @@ export class Event {
   description: string;
 
   @Column()
-  time: Date;
+  location_lat: number;
 
   @Column()
-  location: string;
+  location_lng: number;
+
+  @Column()
+  start_date: Date;
+
+  @Column()
+  end_date: Date;
+
+  @Column()
+  isPrivate: boolean;
 
   @ManyToOne(type => User, user => user.id)
   @JoinColumn()
