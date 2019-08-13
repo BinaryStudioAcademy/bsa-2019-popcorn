@@ -16,7 +16,7 @@ export const getAll = async () => {
   return response.json();
 };
 
-export const getByTitle = async () => {
+export const getByTitle = async (title: string) => {
   const response = await fetch(
     process.env.ELASTIC_API_URL + "/popcorn/_search",
     {
@@ -24,7 +24,7 @@ export const getByTitle = async () => {
       body: JSON.stringify({
         query: {
           match: {
-            original_title: "Big"
+            original_title: `"${title}"`
           }
         }
       })

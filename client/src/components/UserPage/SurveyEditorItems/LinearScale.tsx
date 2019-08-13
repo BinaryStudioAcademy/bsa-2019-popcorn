@@ -33,7 +33,6 @@ class LinearScale extends Component<IProps, IQuestion> {
 	componentWillReceiveProps(nextProps) {
 		if (!isEqual(nextProps.questionInfo, this.state)) {
 			this.setState({ ...nextProps.questionInfo });
-			console.log('received');
 		}
 	}
 

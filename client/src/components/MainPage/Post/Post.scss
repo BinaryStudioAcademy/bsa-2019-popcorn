@@ -4,15 +4,31 @@
 	background: $white;
 	border: 1px solid $border-color;
 	box-sizing: border-box;
-	box-shadow: 2px 1px 8px $border-focus-color;
+	box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.37);
 	border-radius: 2px;
-	margin-top: 1em;
+	margin-bottom: 40px;
 	font-family: $base-font-family;
 	font-style: normal;
 	font-weight: normal;
 	font-size: $post-font-size;
 	line-height: 19px;
 	letter-spacing: $base-letter-spacing;
+	position: relative;
+
+	> * {
+		margin: 0 25px;
+	}
+
+	.comment-form {
+		margin: 0;
+		margin-top: 10px;
+		padding-left: 0;
+
+		input {
+			color: $text-base-color;
+			padding: 0 25px;
+		}
+	}
 
 	button {
 		background-color: $white;
@@ -22,10 +38,13 @@
 
 	button:hover {
 		cursor: pointer;
+		color: $button-background;
 	}
+
 	.post-body {
-		padding: 0.5em 1em;
+		margin-top: 20px;
 	}
+
 	.tag-items {
 		padding: 0.5em 1em;
 		display: flex;
@@ -35,14 +54,17 @@
 
 .post-item-header {
 	display: flex;
-	flex-direction: row;
 	align-items: center;
-	padding: 1em;
 	position: relative;
+	border-bottom: 1px solid $border-color;
+	height: 70px;
+	padding: 25px;
+	margin: 0;
 }
 
 .post-item-image {
 	width: 100%;
+	margin: 0;
 }
 
 .post-item-avatar {
@@ -76,15 +98,19 @@
 	display: flex;
 	text-align: left;
 	position: relative;
-	padding: 0.5em 1em;
+	margin-top: 20px;
 
 	button {
 		margin-right: 10px;
+		&:hover svg {
+			color: $button-background;
+		}
+		z-index: 1;
 	}
 
 	button svg {
-		width: 31px;
-		height: 31px;
+		font-size: 25px;
+		color: $text-base-color;
 	}
 
 	button:last-child {
@@ -102,22 +128,21 @@
 	display: flex;
 	align-items: center;
 	text-align: left;
-	padding: 0.5em 1em;
 	flex-direction: row;
 }
 
 .post-item-reaction-image {
-	width: 2em;
-	height: 2em;
+	width: 30px;
 	border-radius: 50%;
 	margin-right: 1em;
 }
 .horizontal-stroke {
-	height: 2px;
+	height: 7px;
 	margin: 0.5em 0;
 	width: 100%;
 	background-color: #e5e5e5;
 }
 .post-item-reaction-text {
 	color: $text-base-color;
+	font-size: $menu-font-size;
 }

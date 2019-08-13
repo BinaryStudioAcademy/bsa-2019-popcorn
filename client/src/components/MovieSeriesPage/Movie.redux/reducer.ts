@@ -1,5 +1,10 @@
 import { FINISH_FETCH_SEARCH_FILMS } from '../../shared/Header/actionTypes';
-import { SET_MOVIE_LIST, SET_MOVIE_SERIES } from './actionTypes';
+import {
+	SET_MOVIE_LIST,
+	SET_MOVIE_SERIES,
+	CLEAR_ElASTIC_MOVIE_LIST,
+	SET_ElASTIC_MOVIE_LIST
+} from './actionTypes';
 
 type Movie = {
 	id: string;
@@ -13,14 +18,18 @@ type Movie = {
 
 const initialState: {
 	moviesSearch: Array<Movie>;
+	elasticSearchMovies: Array<any>;
 	alreadySearch: boolean;
+	alreadyElasticSearch: boolean;
 	movieList: null | Array<Movie>;
 	movieSeries: null | Movie;
 } = {
 	moviesSearch: [],
+	elasticSearchMovies: [],
 	alreadySearch: false,
 	movieList: null,
-	movieSeries: null
+	movieSeries: null,
+	alreadyElasticSearch: false
 };
 
 export default function(state = initialState, action) {
@@ -34,12 +43,26 @@ export default function(state = initialState, action) {
 		case SET_MOVIE_LIST:
 			return {
 				...state,
-				movieList: action.payload.movies
+				movieList: action.payload.movies,
+				alreadySearch: true
 			};
 		case SET_MOVIE_SERIES:
 			return {
 				...state,
-				movieSeries: action.payload.movie
+				movieSeries: action.payload.movie,
+				alreadySearch: true
+			};
+		case SET_ElASTIC_MOVIE_LIST:
+			return {
+				...state,
+				elasticSearchMovies: action.payload.elasticSearchMovies,
+				alreadyElasticSearch: true
+			};
+		case CLEAR_ElASTIC_MOVIE_LIST:
+			return {
+				...state,
+				elasticSearchMovies: [],
+				alreadyElasticSearch: false
 			};
 		default:
 			return state;
