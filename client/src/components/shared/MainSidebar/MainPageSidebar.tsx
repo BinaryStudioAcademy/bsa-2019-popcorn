@@ -19,13 +19,15 @@ interface IProps {
 const MainPageSidebar = ({ userInfo, notifications }: IProps) => {
 	return (
 		<div className="left-sidebar">
-			<div className="avatar">
-				<img src={userInfo.image || config.DEFAULT_AVATAR} alt="avatar" />
-				<FontAwesomeIcon icon={faChevronDown} />
-			</div>
-			<p className="user-name">
-				<span>{userInfo.name}</span>
-			</p>
+			<NavLink to={'/user-page'} className={'hover'}>
+				<div className="avatar">
+					<img src={userInfo.image || config.DEFAULT_AVATAR} alt="avatar" />
+					<FontAwesomeIcon icon={faChevronDown} />
+				</div>
+				<p className="user-name">
+					<span>{userInfo.name}</span>
+				</p>
+			</NavLink>
 			<div className="menu">
 				<div>
 					<NavLink to={'/'}>Home</NavLink>

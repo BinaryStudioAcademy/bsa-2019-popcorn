@@ -79,6 +79,7 @@ const Routing = ({
 					userInfo={{ name: profileInfo.name, image: profileInfo.avatar }}
 				/>
 			) : null}
+
 			<Switch>
 				<Route
 					exact
