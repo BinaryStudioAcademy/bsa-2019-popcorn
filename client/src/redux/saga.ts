@@ -13,6 +13,6 @@ export default function* rootSaga() {
 		storySaga(),
 		feedSaga(),
 		userTopsSaga(),
-    adminPanelSaga()
+		adminPanelSaga()
 	]);
 }

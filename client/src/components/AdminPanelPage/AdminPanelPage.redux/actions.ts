@@ -5,7 +5,7 @@ export const fetchUsers = () => {
 		type: ActionType.FETCH_USERS
 	};
 };
-export const deleteUsers = (userId) => {
+export const deleteUsers = userId => {
 	return {
 		type: ActionType.DELETE_USERS,
 		payload: {
@@ -19,7 +19,7 @@ export const fetchMovies = () => {
 		type: ActionType.FETCH_MOVIES
 	};
 };
-export const deleteMovies = (movieId) => {
+export const deleteMovies = movieId => {
 	return {
 		type: ActionType.DELETE_MOVIES,
 		payload: {
@@ -33,7 +33,7 @@ export const fetchPosts = () => {
 		type: ActionType.FETCH_POSTS
 	};
 };
-export const deletePosts = (postId) => {
+export const deletePosts = postId => {
 	return {
 		type: ActionType.DELETE_POSTS,
 		payload: {
@@ -47,7 +47,7 @@ export const fetchTops = () => {
 		type: ActionType.FETCH_TOPS
 	};
 };
-export const deleteTops = (topId) => {
+export const deleteTops = topId => {
 	return {
 		type: ActionType.DELETE_TOPS,
 		payload: {
@@ -61,7 +61,7 @@ export const fetchStories = () => {
 		type: ActionType.FETCH_STORIES
 	};
 };
-export const deleteStories = (storyId) => {
+export const deleteStories = storyId => {
 	return {
 		type: ActionType.DELETE_STORIES,
 		payload: {
@@ -75,7 +75,7 @@ export const fetchEvents = () => {
 		type: ActionType.FETCH_EVENTS
 	};
 };
-export const deleteEvents = (eventId) => {
+export const deleteEvents = eventId => {
 	return {
 		type: ActionType.DELETE_EVENTS,
 		payload: {
@@ -89,7 +89,7 @@ export const fetchVoting = () => {
 		type: ActionType.FETCH_VOTING
 	};
 };
-export const deleteVoting = (votingId) => {
+export const deleteVoting = votingId => {
 	return {
 		type: ActionType.DELETE_VOTING,
 		payload: {

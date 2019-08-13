@@ -51,7 +51,6 @@ function* watchDeleteUser() {
 	yield takeEvery(ActionType.DELETE_USERS, deleteUser);
 }
 
-
 export function* fetchMovies(action) {
 	try {
 		const data = yield call(webApi, {
@@ -97,7 +96,6 @@ export function* deleteMovie(action) {
 function* watchDeleteMovie() {
 	yield takeEvery(ActionType.DELETE_MOVIES, deleteMovie);
 }
-
 
 export function* fetchPosts(action) {
 	try {
@@ -145,7 +143,6 @@ function* watchDeletePost() {
 	yield takeEvery(ActionType.DELETE_POSTS, deletePost);
 }
 
-
 export function* fetchTops(action) {
 	try {
 		const data = yield call(webApi, {
@@ -191,7 +188,6 @@ export function* deleteTop(action) {
 function* watchDeleteTop() {
 	yield takeEvery(ActionType.DELETE_TOPS, deleteTop);
 }
-
 
 export function* fetchStories(action) {
 	try {
@@ -239,7 +235,6 @@ function* watchDeleteStory() {
 	yield takeEvery(ActionType.DELETE_STORIES, deleteStory);
 }
 
-
 export function* fetchEvents(action) {
 	try {
 		const data = yield call(webApi, {
@@ -286,7 +281,6 @@ function* watchDeleteEvent() {
 	yield takeEvery(ActionType.DELETE_EVENTS, deleteEvent);
 }
 
-
 export function* fetchVoting(action) {
 	try {
 		const data = yield call(webApi, {
@@ -332,7 +326,6 @@ export function* deleteVoting(action) {
 function* watchDeleteVoting() {
 	yield takeEvery(ActionType.DELETE_VOTING, deleteVoting);
 }
-
 
 export default function* adminPanel() {
 	yield all([

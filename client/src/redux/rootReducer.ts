@@ -15,5 +15,5 @@ export default combineReducers({
 	story: storyReducer,
 	feed: feedReducer,
 	userTops: userTopsReducer,
-  adminPanel: adminPanelReducer
+	adminPanel: adminPanelReducer
 });
