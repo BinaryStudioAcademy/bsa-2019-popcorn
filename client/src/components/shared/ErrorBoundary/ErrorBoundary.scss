@@ -1,0 +1,50 @@
+@import '../../../styles/variables';
+
+.error-container {
+	width: 100vw;
+	height: 100vh;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.error-main {
+	width: 60vw;
+	height: 45vh;
+	display: flex;
+	align-items: center;
+	flex-direction: column;
+	background-color: $background-gray;
+	padding: 35px 40px;
+	border-radius: 3px;
+	border: 1px solid $border-color;
+	box-shadow: 2px 1px 8px $border-focus-color;
+}
+
+.error-title {
+	font-family: $base-font-family;
+	font-size: 40px;
+	line-height: 1.4;
+	letter-spacing: $header-letter-spacing;
+	color: $text-base-color;
+	margin-bottom: 20px;
+	text-align: center;
+}
+
+.error-description {
+	font-family: $base-font-family;
+	font-size: $header-medium;
+	letter-spacing: $header-letter-spacing;
+	color: $text-base-color;
+	margin-bottom: 20px;
+	text-align: center;
+}
+
+.error-details {
+	margin-right: auto;
+	font-family: $base-font-family;
+	font-size: $header-medium;
+	letter-spacing: $header-letter-spacing;
+	color: $text-base-color;
+	white-space: pre-wrap;
+}
