@@ -1,0 +1,156 @@
+@import '../../../../styles/variables';
+
+$height: 75vh;
+$width: 50vw;
+$btn-height: 36px;
+$border: 1px solid $orange-light;
+$border-radius: 5px;
+
+.modal-story {
+	display: block;
+	position: fixed;
+	top: 50%;
+	left: 50%;
+	width: $width;
+	height: $height;
+	transform: translate(-50%, -50%);
+	background-color: $background-gray;
+	z-index: 9;
+
+	.content-wrp,
+	.content-wrp .edit-form {
+		height: calc(75vh - 36px);
+	}
+
+	.btn-wrp {
+		position: absolute;
+		bottom: 0;
+		left: 0;
+		display: flex;
+		justify-content: space-around;
+		flex-direction: row;
+		width: 100%;
+	}
+
+	.btn {
+		font-size: 18px;
+		font-weight: 600;
+		line-height: 22px;
+
+		display: inline-flex;
+
+		min-width: 174px;
+		height: $btn-height;
+		margin: 0;
+		padding: 0;
+
+		cursor: pointer;
+		transition: all 0.4s;
+		text-align: center;
+		text-decoration: none;
+		letter-spacing: 0.4px;
+
+		color: #fff;
+		border: none;
+		border-radius: 55px;
+		background-color: #ff6501;
+
+		justify-content: center;
+	}
+
+	.upload-image-wrp {
+		width: 100%;
+		display: flex;
+		justify-content: center;
+		height: 200px;
+		flex-direction: column;
+		align-items: center;
+	}
+
+	.nav-block-wrp {
+		display: flex;
+		justify-content: space-between;
+		flex-direction: row;
+		height: 50px;
+		padding: 10px;
+		box-sizing: border-box;
+		font-size: larger;
+
+		.fontAwesomeIcon {
+			cursor: pointer;
+		}
+
+		.fontAwesomeIcon:hover {
+			color: $orange-light;
+		}
+	}
+
+	.content-extra {
+		padding: 25px;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+
+		.extra-item {
+			width: 200px;
+			border: $border;
+			padding: 5px;
+			border-radius: $border-radius;
+			margin-bottom: 10px;
+			cursor: pointer;
+			position: relative;
+			left: 0;
+			transition: all 0.5s ease;
+			display: flex;
+			justify-content: space-between;
+		}
+
+		.extra-item:hover {
+			left: 20px;
+		}
+	}
+
+	.choose-extra-option-wrp {
+		.create {
+			display: flex;
+			justify-content: center;
+
+			span {
+				border: $border;
+				border-radius: $border-radius;
+				padding: 5px;
+				cursor: pointer;
+				position: relative;
+				left: 0;
+				transition: all 0.5s ease;
+			}
+
+			span:hover {
+				left: 20px;
+			}
+		}
+
+		.recent-created {
+			display: flex;
+			justify-content: center;
+			flex-direction: column;
+			align-items: center;
+			margin-top: 40px;
+
+			span {
+				border: $border;
+				border-radius: $border-radius;
+				padding: 5px;
+				margin-bottom: 10px;
+				cursor: pointer;
+				position: relative;
+				left: 0;
+				transition: all 0.5s ease;
+			}
+
+			span:hover {
+				left: 20px;
+			}
+		}
+	}
+}
