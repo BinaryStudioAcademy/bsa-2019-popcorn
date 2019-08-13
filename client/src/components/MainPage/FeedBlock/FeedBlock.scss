@@ -1,6 +1,7 @@
 .feed-block {
 	margin: 50px 5%;
 	display: grid;
+
 	grid:
 		'freeSpaceLeft feed-list recommend-list freeSpaceRight'
 		/ 0 60% auto 0;
