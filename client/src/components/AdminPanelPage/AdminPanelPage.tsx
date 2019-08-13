@@ -6,11 +6,17 @@ import './AdminPanelPage.scss';
 
 import {
     fetchUsers,
+    deleteUsers,
     fetchMovies,
+    deleteMovies,
     fetchPosts,
+    deletePosts,
     fetchTops,
+    deleteTops,
     fetchStories,
+    deleteStories,
     fetchEvents,
+    deleteEvents,
     fetchVoting
 } from './AdminPanelPage.redux/actions';
 
@@ -19,6 +25,7 @@ interface IProps {
     fetchUsers: () => any;
     movies: any;
     fetchMovies: () => any;
+    deleteMovies: () => any;
     posts: any;
     fetchPosts: () => any;
     tops: any;
@@ -34,15 +41,24 @@ interface IProps {
 const AdminPanelPage: React.FC<IProps> = (props) => {
     const [activeEntity, setActiveEntity] = useState();
 
+    const deleteEntityItem = (e) => {
+        if (e.target.classList.contains('entity-data-btn')) {
+            const id = e.currentTarget.dataset.itemId;
+            const deleteEntity = `delete${activeEntity[0].toUpperCase() + activeEntity.slice(1)}`;
+
+            props[deleteEntity](id);
+        }
+    }
+
     if (activeEntity && !props[activeEntity]) {
         const fetchEntity = `fetch${activeEntity[0].toUpperCase() + activeEntity.slice(1)}`;
-        console.log(fetchEntity);
-        
         props[fetchEntity]();
     }
 
+    console.group();
     console.log(activeEntity);
     console.log(props[activeEntity]);
+    console.groupEnd();
 
     return (
         <div className="admin-panel-page">
@@ -62,40 +78,45 @@ const AdminPanelPage: React.FC<IProps> = (props) => {
                 }
             </div>
             {
-                activeEntity && props[activeEntity] ? (
-                    <table className="entity-data">
-                        <thead>
-                            {
-                                Object.keys(props[activeEntity][0])
-                                    .map(key => <th>{key}</th>)
-                            }
-                        </thead>
-                        <tbody>
-                            {
-                                props[activeEntity].map(item => <tr>
+                activeEntity &&
+                    props[activeEntity] &&
+                    props[activeEntity].length ? (
+                        <table className="entity-data">
+                            <thead>
+                                <tr>
                                     {
-                                        Object.keys(item).map(key =>
-                                            <td className="entity-data-value">
-                                                {
-                                                    typeof item[key] === 'object' ?
-                                                        'ref' :
-                                                        item[key]
-                                                }
-                                            </td>
-                                        )
+                                        Object.keys(props[activeEntity][0])
+                                            .map((key, index) => <th key={index}>{key}</th>)
                                     }
-                                    <td>
-                                        <button
-                                            className="entity-data-btn"
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {
+                                    props[activeEntity].map((item, index) =>
+                                        <tr
+                                            key={index}
+                                            data-item-id={item.id}
+                                            onClick={deleteEntityItem}
                                         >
-                                            delete
-                                        </button>
-                                    </td>
-                                </tr>)
-                            }
-                        </tbody>
-                    </table>
-                ) : null
+                                            {
+                                                Object.keys(item).map((key, index) =>
+                                                    <td className="entity-data-value" key={index}>
+                                                        {
+                                                            typeof item[key] === 'object' ?
+                                                                'ref' :
+                                                                item[key]
+                                                        }
+                                                    </td>
+                                                )
+                                            }
+                                            <td>
+                                                <button className="entity-data-btn">delete</button>
+                                            </td>
+                                        </tr>)
+                                }
+                            </tbody>
+                        </table>
+                    ) : null
             }
 
         </div>
@@ -115,11 +136,17 @@ const mapStateToProps = (rootState, props) => ({
 
 const actions = {
     fetchUsers,
+    deleteUsers,
     fetchMovies,
+    deleteMovies,
     fetchPosts,
+    deletePosts,
     fetchTops,
+    deleteTops,
     fetchStories,
+    deleteStories,
     fetchEvents,
+    deleteEvents,
     fetchVoting
 };
 const mapDispatchToProps = dispatch => bindActionCreators(actions, dispatch);

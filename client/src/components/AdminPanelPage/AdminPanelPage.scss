@@ -19,29 +19,30 @@
 }
 
 .entity-data {
+    display: block;
     width: 100%;
     margin-top: 20px;
-    height: 400px;
+    max-height: 400px;
     padding: 10px;
     border: 1px solid silver;
     overflow-y: scroll;
     text-align: center;
     border-collapse: collapse;
-
+    
     th {
-        padding: 10px 0;
+        padding: 10px 5px;
     }
 
-    tr:nth-child(odd) {
+    tr:nth-child(even) {
         background-color: #f9f9f9;
     }
 
     td {
-        max-width: 200px;
+        max-width: 300px;
+        padding: 5px;
         border: 1px solid silver;
-        overflow: hidden;
         text-overflow: ellipsis;
-        clip: auto;
+        overflow: hidden;
     }
 
     .entity-data-btn {
