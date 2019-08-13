@@ -13,16 +13,19 @@ class EventRepository extends Repository<Event> {
       .where("event.id = :id", { id: eventId })
       .getOne();
   }
+
   async getEventsByVisitorId(userId: string): Promise<Event[]> {
-    const interestedEventIds = await getCustomRepository(EventVisitorRepository).getEventIdsByVisitorId(userId);
+    const interestedEventIds = await getCustomRepository(
+      EventVisitorRepository
+    ).getEventIdsByVisitorId(userId);
 
     const interestedEvents = await Promise.all(
-      interestedEventIds.map(interestedEventId => this.getEvent(interestedEventId))
+      interestedEventIds.map(interestedEventId =>
+        this.getEvent(interestedEventId)
+      )
     );
 
-    const ownEvents = await this.getEvents(userId);
-
-    return [ ...interestedEvents, ...ownEvents];
+    return [...interestedEvents];
   }
   // async getEventsByVisitorId(userId: string): Promise<Event[]> {
   //   return await getRepository(Event)
