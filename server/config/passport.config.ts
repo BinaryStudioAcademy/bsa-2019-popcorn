@@ -78,60 +78,60 @@ passport.use(
   })
 );
 
-passport.use(
-  "google",
-  new GoogleStrategy(
-    {
-      clientID: googleConfig.clientID,
-      clientSecret: googleConfig.clientSecret,
-      callbackURL: googleConfig.callbackURL,
-      passReqToCallback: true
-    },
-    async (req, accessToken, refreshToken, data, done) => {
-      try {
-        const { email, displayName: name } = data;
-        const user = await userService.getByEmail(email);
-        if (!user) {
-          const user = await userService.createUser({
-            name,
-            email,
-            reset_token: ""
-          });
-          return done(null, user);
-        }
-        return done(null, user);
-      } catch (err) {
-        return done(err);
-      }
-    }
-  )
-);
+// passport.use(
+//   "google",
+//   new GoogleStrategy(
+//     {
+//       clientID: googleConfig.clientID,
+//       clientSecret: googleConfig.clientSecret,
+//       callbackURL: googleConfig.callbackURL,
+//       passReqToCallback: true
+//     },
+//     async (req, accessToken, refreshToken, data, done) => {
+//       try {
+//         const { email, displayName: name } = data;
+//         const user = await userService.getByEmail(email);
+//         if (!user) {
+//           const user = await userService.createUser({
+//             name,
+//             email,
+//             reset_token: ""
+//           });
+//           return done(null, user);
+//         }
+//         return done(null, user);
+//       } catch (err) {
+//         return done(err);
+//       }
+//     }
+//   )
+// );
 
-passport.use(
-  "facebook",
-  new FacebookStrategy(
-    {
-      clientID: facebookConfig.clientID,
-      clientSecret: facebookConfig.clientSecret,
-      callbackURL: facebookConfig.callbackURL,
-      passReqToCallback: true
-    },
-    async (req, accessToken, refreshToken, data, done) => {
-      try {
-        const { email, displayName: name } = data;
-        const user = await userService.getByEmail(email || name);
-        if (!user) {
-          const user = await userService.createUser({
-            name,
-            email: email || name,
-            reset_token: ""
-          });
-          return done(null, user);
-        }
-        return done(null, user);
-      } catch (err) {
-        return done(err);
-      }
-    }
-  )
-);
+// passport.use(
+//   "facebook",
+//   new FacebookStrategy(
+//     {
+//       clientID: facebookConfig.clientID,
+//       clientSecret: facebookConfig.clientSecret,
+//       callbackURL: facebookConfig.callbackURL,
+//       passReqToCallback: true
+//     },
+//     async (req, accessToken, refreshToken, data, done) => {
+//       try {
+//         const { email, displayName: name } = data;
+//         const user = await userService.getByEmail(email || name);
+//         if (!user) {
+//           const user = await userService.createUser({
+//             name,
+//             email: email || name,
+//             reset_token: ""
+//           });
+//           return done(null, user);
+//         }
+//         return done(null, user);
+//       } catch (err) {
+//         return done(err);
+//       }
+//     }
+//   )
+// );
