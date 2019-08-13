@@ -9,7 +9,7 @@ const router = Router();
 router
   .get("/", (req: Request, res: Response, next: NextFunction) =>
     eventService
-      .getEvents(req.query.id)
+      .getEvents(req.query.userId)
       .then((events: Event[]) => res.send(events))
       .catch(next)
   )
