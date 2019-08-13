@@ -3,18 +3,11 @@ version: 0.0
 os: linux
 
 files:
-  - source: /
+  - source: ./
     destination: /home/ubuntu/bsa-2019-popcorn
 
-permissions:
-  - object: /
-    pattern: "**"
-    owner: ubuntu
-    group: ubuntu
-
 hooks:
-  BeforeInstall:
-    - location: scripts/before-install.sh
+  AfterInstall:
+    - location: scripts/after-install.sh
   ApplicationStart:
     - location: scripts/app-start.sh
-      runas: ubuntu
