@@ -20,7 +20,6 @@ import {
 
 const { notifications } = {
 	notifications: {
-		newFriends: 12,
 		newMessages: 0,
 		newEvents: 2
 	}
