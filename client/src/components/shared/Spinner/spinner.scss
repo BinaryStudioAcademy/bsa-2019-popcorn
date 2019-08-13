@@ -1,3 +1,18 @@
+.spinner-wrp {
+	width: 100%;
+}
+.lds-css {
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
+
 @keyframes lds-double-ring {
 	0% {
 		-webkit-transform: rotate(0);

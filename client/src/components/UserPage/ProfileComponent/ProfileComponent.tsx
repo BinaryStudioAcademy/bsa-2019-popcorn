@@ -3,7 +3,10 @@ import './ProfileComponent.scss';
 import {
 	faCamera,
 	faCheckCircle,
-	faTimesCircle
+	faTimesCircle,
+	faVenus,
+	faMars,
+	faMapMarkerAlt
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import config from '../../../config';
@@ -23,35 +26,35 @@ type ProfileProps = {
 	cancelAvatar?: () => any;
 	setAvatar?: (url: string, id: string) => any;
 };
-const favMovies = [
+const favMovies: Array<{ id: string; movie: string }> = [
 	{
-		id: Math.random() * (9000 - 1) + 1,
+		id: Math.random() * (9000 - 1) + 1 + '',
 		movie: 'Cloud Atlas'
 	},
 	{
-		id: Math.random() * (9000 - 1) + 1,
+		id: Math.random() * (9000 - 1) + 1 + '',
 		movie: 'V for Vendetta '
 	},
 	{
-		id: Math.random() * (9000 - 1) + 1,
+		id: Math.random() * (9000 - 1) + 1 + '',
 		movie: 'Donnie Darko '
 	},
 	{
-		id: Math.random() * (9000 - 1) + 1,
+		id: Math.random() * (9000 - 1) + 1 + '',
 		movie: 'The Talented Mr. Ripley '
 	}
 ];
-const favShows = [
+const favShows: Array<{ id: string; movie: string }> = [
 	{
-		id: Math.random() * (9000 - 1) + 1,
+		id: Math.random() * (9000 - 1) + 1 + '',
 		movie: 'Stranger Things '
 	},
 	{
-		id: Math.random() * (9000 - 1) + 1,
+		id: Math.random() * (9000 - 1) + 1 + '',
 		movie: 'Breaking Bad'
 	},
 	{
-		id: Math.random() * (9000 - 1) + 1,
+		id: Math.random() * (9000 - 1) + 1 + '',
 		movie: 'Black Mirror'
 	}
 ];
@@ -91,7 +94,6 @@ class ProfileComponent extends Component<ProfileProps> {
 			id
 		} = this.props.profileInfo;
 		const { uploadUrl, cancelAvatar, setAvatar } = this.props;
-
 		return (
 			<div className={'UserProfileComponent'}>
 				<div className={'ProfileWrap'}>
@@ -140,50 +142,61 @@ class ProfileComponent extends Component<ProfileProps> {
 								disabled={!!uploadUrl}
 								hidden
 							/>
-							<label htmlFor="image" className="upload-image-button">
-								<FontAwesomeIcon icon={faCamera} className="fontAwesomeIcon" />
-							</label>
+							<div className="upload-wrp">
+								<label htmlFor="image" className="upload-image-button">
+									<FontAwesomeIcon
+										icon={faCamera}
+										className="fontAwesomeIcon"
+									/>
+								</label>
+							</div>
 						</div>
 					)}
 
 					<div className="ProfileInfo">
-						<div className="profileRow">
-							<p className="field"> Name: </p>
-							<div className="content">{name}</div>
-						</div>
-						<div className="profileRow">
-							<p className="field"> Gender : </p>
-							{male && <div className="content">Male</div>}
-							{female && <div className="content">Female</div>}
-						</div>
-						<div className="profileRow">
-							<p className="field">Location: </p>
-							<div className="content">{location}</div>
+						<div className="profileRow-username">{name}</div>
+						<div className="profileRow-info">
+							{male && (
+								<div className="user-gender">
+									<FontAwesomeIcon icon={faMars} className="fontAwesomeIcon" />
+									Male
+								</div>
+							)}
+							{female && (
+								<div className="user-gender">
+									<FontAwesomeIcon icon={faVenus} className="fontAwesomeIcon" />
+									Female
+								</div>
+							)}
+
+							{location && (
+								<div className="user-location">
+									<FontAwesomeIcon
+										icon={faMapMarkerAlt}
+										className="fontAwesomeIcon"
+									/>
+									{location}
+								</div>
+							)}
 						</div>
 						<div className="profileRow">
 							<p className="field">About: </p>
-							<div className="content">{about}</div>
+							<div className="content">{about || '-'}</div>
 						</div>
 						<div className="profileRow">
 							<p className="field">Favorite movies: </p>
 							<div className="content">
-								{favMovies.map(movie => (
-									<p key={movie.id}>
-										{movie.movie} <span>&#10006;</span>
-									</p>
-								))}
-								<p>&#x2795;</p>
+								{favMovies.length > 0
+									? favMovies.map(movie => <p key={movie.id}>{movie.movie}</p>)
+									: '-'}
 							</div>
 						</div>
 						<div className="profileRow">
 							<p className="field">Favorite TV-shows: </p>
 							<div className="content">
-								{favShows.map(movie => (
-									<p key={movie.id}>
-										{movie.movie} <span>&#10006;</span>
-									</p>
-								))}
-								<p>&#x2795;</p>
+								{favShows.length > 0
+									? favShows.map(movie => <p key={movie.id}>{movie.movie}</p>)
+									: '-'}
 							</div>
 						</div>
 					</div>
