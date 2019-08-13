@@ -5,7 +5,6 @@
 .film-input {
 	border: 1px solid $border-color;
 	box-shadow: 0px 0px 11px $input-shadow-color;
-	padding: 10px 15px;
 }
 .top-constructor {
 	font-family: $base-font-family;
@@ -23,7 +22,7 @@
 	padding: 12px 15px 15px 12px;
 	margin-top: 18px;
 	letter-spacing: $input-letter-spacing;
-	color: $text-secondary-color;
+	color: $text-base-color;
 	border-radius: 3px;
 }
 
@@ -121,6 +120,7 @@
 	font-family: $base-font-family;
 	margin: 20px 0px;
 	height: 50px;
+	color: $text-secondary-color;
 }
 
 .modal-top {
