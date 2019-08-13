@@ -22,6 +22,10 @@
 		font-size: 24px;
 	}
 
+	.hover {
+		cursor: pointer;
+	}
+
 	.edit-top {
 		padding: 10px;
 	}
@@ -37,7 +41,7 @@
 		justify-self: end;
 		border-radius: 3px;
 	}
-	
+
 	.top-title-input {
 		margin: 5px;
 		font-size: $form-font-size;

@@ -1,22 +1,21 @@
 import React from 'react';
-import FeedList from '../../MainPage/FeedList/FeedList';
-import Spinner from "../../shared/Spinner";
+import PostList from '../../MainPage/PostList/PostList';
+import Spinner from '../../shared/Spinner';
 interface IProps {
-    userPosts?:any,// todo
-    getUsersPosts: () => any
+	posts?: any; // todo
+	getUsersPosts: () => any;
 }
 
-
-const UserPosts: React.FC<IProps> = ({userPosts, getUsersPosts}) => {
-    if(!userPosts) {
-        getUsersPosts();
-        return <Spinner/>
-    }
-    return (
-        <div className={"UserPosts"}>
-            <FeedList posts={userPosts}/>
-        </div>
-    );
+const UserPosts: React.FC<IProps> = ({ posts, getUsersPosts }) => {
+	if (!posts) {
+		getUsersPosts();
+		return <Spinner />;
+	}
+	return (
+		<div className="UserPosts">
+			<PostList posts={posts} />
+		</div>
+	);
 };
 
 export default UserPosts;

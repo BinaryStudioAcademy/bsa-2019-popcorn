@@ -1,30 +1,34 @@
-import fetch from 'node-fetch';
-
+import fetch from "node-fetch";
 
 export const getAll = async () => {
-    const response = await fetch(process.env.ELASTIC_API_URL + "/popcorn/_search", {
-        method: "POST",
-        body: JSON.stringify({
-            query: {
-                match_all: {}
-            }
-        })
-    });
+  const response = await fetch(
+    process.env.ELASTIC_API_URL + "/popcorn/_search",
+    {
+      method: "POST",
+      body: JSON.stringify({
+        query: {
+          match_all: {}
+        }
+      })
+    }
+  );
 
-    return response.json();
+  return response.json();
 };
 
-
 export const getByTitle = async (title: string) => {
-    const response = await fetch(process.env.ELASTIC_API_URL + "/popcorn/_search", {
-        method: "POST",
-        body: JSON.stringify({
-            "query": {
-                "match": {
-                    "original_title": `"${title}"`
-                }
-            }
-        })
-    });
-    return response.json();
+  const response = await fetch(
+    process.env.ELASTIC_API_URL + "/popcorn/_search",
+    {
+      method: "POST",
+      body: JSON.stringify({
+        query: {
+          match: {
+            original_title: `"${title}"`
+          }
+        }
+      })
+    }
+  );
+  return response.json();
 };
