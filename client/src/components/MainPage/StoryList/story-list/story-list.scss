@@ -1,63 +1,75 @@
 .story-list-wrapper {
-
-    width: 100%;
-    margin: auto;
-    display: grid;
-    grid-template-rows: 27px 1fr;
-    grid-template-areas: 
-        "."
-        "stories";
-    grid-gap: 14px;
-    align-content: right;
-    overflow: hidden;
-    padding: 0 20px;
+	width: 90%;
+	box-sizing: content-box;
+	margin: 0 5%;
+	display: grid;
+	grid-template-rows: 27px 1fr;
+	grid-template-areas:
+		'.'
+		'stories';
+	grid-gap: 14px;
+	align-content: right;
+	overflow: hidden;
 }
 
 .story-list {
-    display: flex;
-    overflow: hidden;
-    grid-area: stories;
+	display: flex;
+	overflow: hidden;
+	grid-area: stories;
+	justify-content: space-between;
 
-    .story-list-scroll {
-        display: flex;
-        width: 100%;
-        position: relative;
-        overflow-x: scroll;
-        overflow-y: hidden;
-        white-space: nowrap;
-        transition: all 0.2s;
-        transform: scale(0.98);
-        will-change: transform;
-        user-select: none;
-        cursor: pointer;
-        
-        &.active {
-            cursor: grabbing;
-            cursor: -webkit-grabbing;
-            transform: scale(1);
-        }
+	.story-list-scroll {
+		display: flex;
+		width: 100%;
+		margin-left: auto;
+		position: relative;
+		left: 15px;
+		overflow-x: scroll;
+		white-space: nowrap;
+		transition: all 0.2s;
+		transform: scale(0.98);
+		will-change: transform;
+		user-select: none;
+		margin-left: 20px;
 
-        &::-webkit-scrollbar {
-            display: none;      
-        }
+		&:first-child {
+			margin-left: 0 !important;
+		}
 
-        > * {
-            margin-left: 15px;
-            max-width: 118px;
+		&.active {
+			cursor: grabbing;
+			cursor: -webkit-grabbing;
+			transform: scale(1);
+		}
 
-            img {
-                -webkit-user-drag: none;
-                -khtml-user-drag: none;
-                -moz-user-drag: none;
-                -o-user-drag: none;
-            }
+		&::-webkit-scrollbar {
+			display: none;
+		}
 
-            .story-name {
-                max-width: 118px;
-                text-overflow: ellipsis;
-                overflow: hidden;
-            }
-        }
-    }
+		> * {
+			margin-left: 15px;
+			max-width: 118px;
+			margin-top: 4px;
+			margin-bottom: 4px;
+			cursor: pointer;
+
+			&:hover {
+				transform: scale(1.02);
+				transition: all 0.3s;
+			}
+
+			img {
+				-webkit-user-drag: none;
+				-khtml-user-drag: none;
+				-moz-user-drag: none;
+				-o-user-drag: none;
+			}
+
+			.story-name {
+				max-width: 118px;
+				text-overflow: ellipsis;
+				overflow: hidden;
+			}
+		}
+	}
 }
-

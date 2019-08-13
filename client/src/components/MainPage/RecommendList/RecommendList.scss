@@ -2,14 +2,22 @@
 
 .recommend-list {
 	grid-area: recommend-list;
-	padding: 15px;
-	min-width: 277px;
+	margin-left: 20px;
 }
 .recommend-heading {
 	font-family: $base-font-family;
 	font-style: normal;
-	font-weight: bold;
+	font-weight: 600;
 	font-size: $header-medium;
 	line-height: 22px;
 	text-align: left;
+	margin-bottom: 30px;
+	display: flex;
+	align-items: center;
+
+	svg {
+		color: $button-background;
+		margin-right: 10px;
+		font-size: 22.5px;
+	}
 }
