@@ -1,6 +1,6 @@
 @import '../../../styles/variables';
 
-.UserProfileComponent{
+.UserProfileComponent {
 	padding: 2% 2%;
 }
 h2 {
@@ -17,19 +17,19 @@ h2 {
 }
 .ProfileWrap {
 	display: flex;
-	align-items: flex-start;	
-	.profilePhotoWrap{
+	align-items: flex-start;
+	.profilePhotoWrap {
 		padding-top: 16px;
 		margin-right: 2%;
 		width: 35%;
-		.upload-wrp{
+		.upload-wrp {
 			width: 100%;
 			text-align: center;
-			background-color: rgba($black, .4);
+			background-color: rgba($black, 0.4);
 			position: relative;
 			top: -44px;
 			height: 0;
-			transition: all .3s linear;
+			transition: all 0.3s linear;
 			overflow: hidden;
 			margin-top: 40px;
 		}
@@ -37,11 +37,11 @@ h2 {
 			margin-top: 0;
 			height: 40px;
 		}
-		.fontAwesomeIcon{
+		.fontAwesomeIcon {
 			margin-top: 5px;
 			font-size: 30px;
 			color: $text-base-color;
-			&:hover{
+			&:hover {
 				cursor: pointer;
 			}
 		}
@@ -69,7 +69,7 @@ h2 {
 			padding-left: 20px;
 			width: 70%;
 			p {
-				background-color: rgba($orange, .7);
+				background-color: rgba($orange, 0.7);
 				padding: 5px;
 				border-radius: 10px;
 				color: white;
@@ -77,10 +77,10 @@ h2 {
 				line-height: 1.3em;
 				margin-bottom: 5px;
 				margin-right: 5px;
-				transition: all .1s linear;
+				transition: all 0.1s linear;
 				&:hover {
 					background-color: $orange;
-					text-shadow: 0 0 .65px white, 0 0 .65px white;
+					text-shadow: 0 0 0.65px white, 0 0 0.65px white;
 					text-decoration: underline;
 				}
 			}
@@ -101,7 +101,7 @@ h2 {
 		letter-spacing: $base-letter-spacing;
 		padding: 1rem;
 		display: flex;
-		color: rgba($text-base-color, .9);
+		color: rgba($text-base-color, 0.9);
 
 		.user-gender {
 			max-width: 20%;
