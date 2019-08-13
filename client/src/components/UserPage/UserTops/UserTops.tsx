@@ -18,7 +18,7 @@ const topItemsMock: ITopItem[] = [
 	{
 		id: '1',
 		title: 'My Top 1',
-		titleImageUrl: '',
+		topImageUrl: '',
 		moviesList: [
 			{ title: 'The Avengers', id: '1', comment: 'Nice' },
 			{ title: 'Spider-Man', id: '2', comment: 'Nice' },
@@ -28,7 +28,7 @@ const topItemsMock: ITopItem[] = [
 	{
 		id: '2',
 		title: 'My Top 2',
-		titleImageUrl: '',
+		topImageUrl: '',
 		moviesList: [
 			{ title: 'The Avengers', id: '1', comment: 'Nice' },
 			{ title: 'Spider-Man', id: '2', comment: 'Nice' },
@@ -38,7 +38,7 @@ const topItemsMock: ITopItem[] = [
 	{
 		id: '3',
 		title: 'My Top 3',
-		titleImageUrl: '',
+		topImageUrl: '',
 		moviesList: [
 			{ title: 'The Avengers', id: '1', comment: 'Nice' },
 			{ title: 'Spider-Man', id: '2', comment: 'Nice' },
@@ -52,7 +52,7 @@ const newTop = (): ITopItem => {
 		id: Date.now().toString(),
 		title: '',
 		moviesList: [],
-		titleImageUrl: ''
+		topImageUrl: ''
 	};
 };
 
@@ -83,28 +83,8 @@ class UserTops extends React.Component<IUserTopProps, IUserTopsState> {
 		this.setState({ topList });
 	};
 
-	// componentDidUpdate(prevProps) {
-
-	// 	// 	let topList = this.state.topList.map((topItem) =>
-	// 	// 		topItem.titleImageUrl = this.props.uploadUrls[topItem.id])
-	// 	// 	this.setState({ topList });
-	// 	// console.log(topList)
-
-	// }
-	// componentDidUpdate(prevProps) {
-	// 	if (prevProps.uploadUrls !== this.props.uploadUrls) {
-	// 		let topList = this.state.topList.map((topItem) =>
-	// 			topItem.titleImageUrl = this.props.uploadUrls[topItem.id])
-	// 		this.setState({ topList });
-	// 	}
-	// }
-
 	render() {
 		const topList = this.state.topList;
-		// const topList = this.state.topList.map((topItem) => {
-		// 	return { ...topItem, titleImageUrl: this.props.uploadUrls[topItem.id] }
-		// })
-		// console.log(topList)
 		return (
 			<div>
 				<div className="create-top-button hover" onClick={this.createTop}>

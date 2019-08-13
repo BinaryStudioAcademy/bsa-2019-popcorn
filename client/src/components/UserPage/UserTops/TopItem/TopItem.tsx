@@ -8,7 +8,7 @@ export interface ITopItem {
 	title: string;
 	id: string;
 	moviesList: IMovie[];
-	titleImageUrl: string;
+	topImageUrl: string;
 }
 
 export interface IMovie {
@@ -37,6 +37,13 @@ const TopItem: React.FC<ITopItemProps> = ({
 }) => {
 	const [editTop, canEditTop] = useState(false);
 	const [title, setTitle] = useState(topItem.title);
+	const [topImageUrl, setTopImageUrl] = useState('');
+	useEffect(() => {
+		if (urlForTop == topItem.id) {
+			setTopImageUrl(uploadUrl);
+			saveUserTop({ ...topItem, title, topImageUrl });
+		}
+	}, [uploadUrl]);
 
 	function toogleEdit() {
 		canEditTop(!editTop);
@@ -44,20 +51,16 @@ const TopItem: React.FC<ITopItemProps> = ({
 
 	function saveTop(movies: Array<any>) {
 		const moviesList = movies.filter(movie => movie.title.trim() !== '');
-		saveUserTop({ ...topItem, moviesList, title });
+		saveUserTop({ ...topItem, moviesList, title, topImageUrl });
 		canEditTop(false);
 	}
-	function handleUploadFile(e, id) {
+
+	function handleUploadFile(e, topId: string) {
 		const data = new FormData();
 		data.append('file', e.target.files[0]);
-		if (uploadImage) uploadImage(data, id);
-		else console.log('no uploadAvatar method');
+		if (uploadImage) uploadImage(data, topId);
+		else console.log('no uploadImage method');
 	}
-
-	const [topImgUrl, setTopImgUrl] = useState(uploadUrl);
-	useEffect(() => {
-		if (urlForTop == topItem.id) setTopImgUrl(uploadUrl);
-	}, [uploadUrl]);
 
 	return (
 		<div>
@@ -95,7 +98,7 @@ const TopItem: React.FC<ITopItemProps> = ({
 					<CloseIcon />
 				</div>
 
-				<img className="image-top" src={topImgUrl} alt="" />
+				<img className="image-top" src={topImageUrl} alt="" />
 			</div>
 			{(editTop || topItem.moviesList.length === 0) && (
 				<TopConstructor moviesList={topItem.moviesList} saveTop={saveTop} />
