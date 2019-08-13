@@ -1,6 +1,5 @@
 import React from 'react';
 import './UserTops.scss';
-import DragDrop from './DragDrop';
 
 import TopItem from './TopItem/TopItem';
 import { ITopItem } from './TopItem/TopItem';
@@ -14,7 +13,7 @@ interface IUserTopProps {
 	uploadImage: (data: FormData, titleId: string) => void;
 	uploadUrl: string;
 	urlForTop: string;
-  location?: {
+	location?: {
 		state?: {
 			url_callback?: string;
 		};
@@ -23,7 +22,6 @@ interface IUserTopProps {
 		push: (path: string) => any;
 	};
 }
-
 
 const topItemsMock: ITopItem[] = [
 	{
@@ -67,9 +65,7 @@ const newTop = (): ITopItem => {
 	};
 };
 
-
 class UserTops extends React.Component<IUserTopProps, IUserTopsState> {
-
 	constructor(props) {
 		super(props);
 		this.state = {
@@ -113,7 +109,7 @@ class UserTops extends React.Component<IUserTopProps, IUserTopsState> {
 	// }
 
 	render() {
-    const url_callback =
+		const url_callback =
 			this.props.location &&
 			this.props.location.state &&
 			this.props.location.state.url_callback;
@@ -121,7 +117,7 @@ class UserTops extends React.Component<IUserTopProps, IUserTopsState> {
 			url_callback
 				? this.props.history && this.props.history.push(url_callback)
 				: null;
-    
+
 		const topList = this.state.topList;
 		// const topList = this.state.topList.map((topItem) => {
 		// 	return { ...topItem, titleImageUrl: this.props.uploadUrls[topItem.id] }
@@ -129,7 +125,7 @@ class UserTops extends React.Component<IUserTopProps, IUserTopsState> {
 		// console.log(topList)
 		return (
 			<div>
-        {url_callback && (
+				{url_callback && (
 					<button onClick={redirect} className={'btn'}>
 						Back to story
 					</button>

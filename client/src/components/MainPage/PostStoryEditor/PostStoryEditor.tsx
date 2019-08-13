@@ -6,7 +6,6 @@ import {
 	faTimesCircle
 } from '@fortawesome/free-solid-svg-icons';
 import { faCamera } from '@fortawesome/free-solid-svg-icons/faCamera';
-import ImageUploader from '../ImageUploader/ImageUploader';
 
 // example:
 {
@@ -24,6 +23,8 @@ interface IPostStoryEditorState {
 	body: string;
 	checkboxValue: boolean;
 	imageUrl: string;
+	errorMsg: string;
+	isUploading: boolean;
 }
 
 class PostStoryEditor extends React.Component<
@@ -35,7 +36,9 @@ class PostStoryEditor extends React.Component<
 		this.state = {
 			body: '',
 			checkboxValue: false,
-			imageUrl: ''
+			imageUrl: '',
+			errorMsg: '',
+			isUploading: false
 		};
 
 		this.onCancel = this.onCancel.bind(this);
@@ -143,13 +146,13 @@ class PostStoryEditor extends React.Component<
 				});
 
 		target.value = '';
-}
-        
+	}
+
 	imageStateHandler(data) {
 		this.setState({
 			imageUrl: data
 		});
-	
+	}
 
 	render() {
 		return (
@@ -218,28 +221,28 @@ class PostStoryEditor extends React.Component<
 							/>
 						</p>
 					)}
-
-					{/*<div>*/}
-					{/*    <input*/}
-					{/*        name="image"*/}
-					{/*        type="file"*/}
-					{/*        onChange={this.handleUploadFile}*/}
-					{/*        className="upload-image"*/}
-					{/*        id="image"*/}
-					{/*        accept=".jpg, .jpeg, .png"*/}
-					{/*        disabled={this.state.isUploading}*/}
-					{/*    />*/}
-					{/*    <label htmlFor="image" className="upload-image-button">*/}
-					{/*        Upload image*/}
-					{/*    </label>*/}
-					{/*    <button className="cancel-btn" onClick={this.onCancel}>*/}
-					{/*        Cancel*/}
-					{/*    </button>*/}
-					{/*    <button className="save-btn" onClick={this.onSave}>*/}
-					{/*        Save*/}
-					{/*    </button>*/}
-					{/*</div>*/}
-          {/* <div>
+				</div>
+				{/*<div>*/}
+				{/*    <input*/}
+				{/*        name="image"*/}
+				{/*        type="file"*/}
+				{/*        onChange={this.handleUploadFile}*/}
+				{/*        className="upload-image"*/}
+				{/*        id="image"*/}
+				{/*        accept=".jpg, .jpeg, .png"*/}
+				{/*        disabled={this.state.isUploading}*/}
+				{/*    />*/}
+				{/*    <label htmlFor="image" className="upload-image-button">*/}
+				{/*        Upload image*/}
+				{/*    </label>*/}
+				{/*    <button className="cancel-btn" onClick={this.onCancel}>*/}
+				{/*        Cancel*/}
+				{/*    </button>*/}
+				{/*    <button className="save-btn" onClick={this.onSave}>*/}
+				{/*        Save*/}
+				{/*    </button>*/}
+				{/*</div>*/}
+				{/* <div>
 						<ImageUploader
 							imageHandler={this.props.uploadImage}
 							imageStateHandler={this.imageStateHandler}
@@ -251,7 +254,6 @@ class PostStoryEditor extends React.Component<
 							Save
 						</button>
 					</div>*/}
-				</div> 
 			</div>
 		);
 	}

@@ -68,7 +68,7 @@ const Main = ({
 		return <Redirect to="/login" />;
 	return (
 		<div className="main-page">
-			<MainPageSidebar userInfo={userInfo} notifications={notifications} />
+			<MainPageSidebar notifications={notifications} />
 			<div>
 				<Switch>
 					<Route exact path={[`/`, '/create*']} component={MainPage} />
