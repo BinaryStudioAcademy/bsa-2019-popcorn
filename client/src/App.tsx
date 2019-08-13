@@ -4,14 +4,17 @@ import Routing from './containers/Routing/routing';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import store from './redux/store';
+import ErrorBoundary from './components/shared/ErrorBoundary/ErrorBoundary';
 
 const App: React.FC = () => {
 	return (
-		<Provider store={store}>
-			<Router>
-				<Routing />
-			</Router>
-		</Provider>
+		<ErrorBoundary>
+			<Provider store={store}>
+				<Router>
+					<Routing />
+				</Router>
+			</Provider>
+		</ErrorBoundary>
 	);
 };
 

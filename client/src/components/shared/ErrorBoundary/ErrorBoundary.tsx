@@ -1,53 +1,49 @@
-import React, { PureComponent } from 'react';
+import React, { PureComponent, ErrorInfo } from 'react';
 import { NavLink } from 'react-router-dom';
 import Modal from '@material-ui/core/Modal';
-import './ErrorModal.scss';
+import './ErrorBoundary.scss';
 
 interface IProps {
-	erorrBody: string;
+	// erorrBody: string;
 }
 
 interface IState {
+	error: Error | null;
+	errorInfo: ErrorInfo | null;
 	hasError: boolean;
 }
 
 class ErrorBoundary extends PureComponent<IProps, IState> {
 	constructor(props) {
 		super(props);
-		this.state = { hasError: false };
-	}
-
-	static getDerivedStateFromError(error) {
-		// Update state so the next render will show the fallback UI.
-		return { hasError: true };
+		this.state = { error: null, errorInfo: null, hasError: false };
 	}
 
 	componentDidCatch(error, errorInfo) {
-		// You can also log the error to an error reporting service
+		this.setState({
+			hasError: true,
+			error: error,
+			errorInfo: errorInfo
+		});
 	}
 
 	render() {
-		const { hasError } = this.state;
-		if (hasError) {
+		if (this.state.hasError) {
 			return (
-				<Modal open={true}>
-					<section className="modal">
-						<div className="modal-main">
-							<h2 className="modal-title">Error</h2>
-							<p className="modal-error-description">{this.props.erorrBody}</p>
-							<p className="modal-body">
-								{'Go to '}
-								<NavLink to="/" className="notFound-link">
-									Home
-								</NavLink>
-								{' page'}
-							</p>
-							<a href="#" className="btn">
-								Close
-							</a>
-						</div>
-					</section>
-				</Modal>
+				<section className="error-container">
+					<div className="error-main">
+						<h2 className="error-title">Aaaah! Something went wrong !</h2>
+						<p className="error-description">
+							Brace Your self till we get the error fixed. You may also refresh
+							the page or try again later
+						</p>
+						<details className="error-details">
+							{this.state.error && this.state.error.toString()}
+							<br />
+							{this.state.errorInfo && this.state.errorInfo.componentStack}
+						</details>
+					</div>
+				</section>
 			);
 		}
 
