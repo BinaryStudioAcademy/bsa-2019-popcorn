@@ -1,5 +1,12 @@
 @import '../../../styles/variables.scss';
 
+.reaction-list {
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+	align-items: center;
+	padding-left: 16px;
+}
+
 .post-item {
 	background: $white;
 	border: 1px solid $border-color;
