@@ -70,7 +70,7 @@ const Main = ({
 		<div>
 			<Header />
 			<div className="main-page">
-				<MainPageSidebar userInfo={userInfo} notifications={notifications} />
+				<MainPageSidebar notifications={notifications} />
 				<div>
 					<Switch>
 						<Route exact path={`/`} component={MainPage} />
