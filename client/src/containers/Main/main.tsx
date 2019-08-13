@@ -1,96 +1,112 @@
 import React from 'react';
-import { Route, Switch } from 'react-router-dom';
-import MainPageSidebar from "../../components/shared/MainSidebar/MainPageSidebar";
+import { Redirect, Route, Switch } from 'react-router-dom';
+import MainPageSidebar from '../../components/shared/MainSidebar/MainPageSidebar';
 import MovieList from '../../components/MovieList/MovieList';
 
-import "./MainContainer.scss";
-import MainPage from "../../components/MainPage/MainPage";
-import UserPage from "../../components/UserPage/UserPage";
-import MovieSeriesPage from "../../components/MovieSeriesPage/MovieSeriesPage";
+import NotFound from './../../components/NotFound/NotFound';
+import './MainContainer.scss';
+import MainPage from '../../components/MainPage/MainPage';
+import UserPage from '../../components/UserPage/UserPage';
+import MovieSeriesPage from '../../components/MovieSeriesPage/MovieSeriesPage';
+import EventPage from '../../components/EventPage/EventPage';
 
-const {userInfo, notifications} = {
-    userInfo: {
-        name: "Sofi Dub",
-        image: "https://s3-alpha-sig.figma.com/img/919e/1a5a/da4f250d469108191ad9d4af68b2a639?Expires=1566172800&Signature=Kou41Z8bd8ig~9nLibgCH5gfaOc0K~9Io82-umabjJnomveXbPcqMWfD911bHy6h77reHT6ecNYFHCzmXkQNy3vEF-OzgJYgV875TI2rX~cPt1FaSJC5wCeybEfTrlBlCcdzSFn8iVcP~C8GTx-l6CIjyugGAhvr7xJ-hfAdlf~5Mll0Sy92dSKn8q7OkJdfsMvEEFVQ3rGHn8GGQZg1a60gif0VaQhuVX1gcRgwrsak~cerS1bnDvo93B1lFOIk85wlhY2hPwQrmCtI9A-qaAtbIxmzmxkRpuVUpDrX6Jd4hXpksbd7urSJ91Dg7tv9WzRZvIkLnPXflCfmPw~slw__&Key-Pair-Id=APKAINTVSUGEWH5XD5UA"
-    },
-    notifications: {
-        newFriends: 12,
-        newMessages: 0,
-        newEvents: 2
-    }
-}
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import Spinner from '../../components/shared/Spinner';
+import {
+	fetchMovieList,
+	setMovieSeries
+} from '../../components/MovieSeriesPage/Movie.redux/actions';
+import Header from '../../components/shared/Header/Header';
 
-const movies = [
-    {
-        id: '8c0bb20f-fc81-473b-8a73-5ae2125fe603',
-        title: 'Titanic',
-        year: 1975,
-        image: 'https://images-na.ssl-images-amazon.com/images/I/51gEpO63aRL.jpg',
-        duration: '3h 21min',
-        genres: ['Drama', 'Action', 'Family'],
-        cast: ['leonardo dicaprio', 'leonardo dicaprio', 'leonardo dicaprio', 'leonardo dicaprio', 'leonardo dicaprio']
-    },
-    {
-        id: '8c0bb1ef-fc81-473b-8a73-5ae2125fe603',
-        title: 'Forrest Gump',
-        year: 1975,
-        image: 'https://posteritati.com/posters/000/000/053/106/forrest-gump-md-web.jpg',
-        duration: '1h 33min',
-        genres: ['Drama'],
-        cast: ['leonardo dicaprio', 'leonardo dicaprio', 'leonardo dicaprio', 'leonardo dicaprio', 'leonardo dicaprio']
-    },
-    {
-        id: '8c0bb20f-fc81-423b-8a73-5ae2125fe603',
-        title: 'Titanic1',
-        year: 1975,
-        image: 'https://images-na.ssl-images-amazon.com/images/I/51gEpO63aRL.jpg',
-        duration: '3h 21min',
-        genres: ['Drama', 'Action', 'Family'],
-        cast: ['leonardo dicaprio', 'leonardo dicaprio', 'leonardo dicaprio', 'leonardo dicaprio', 'leonardo dicaprio']
-    },
-    {
-        id: '8c0bb1ef-fc11-473b-8a73-5ae2125fe603',
-        title: 'Forrest Gump12',
-        year: 1975,
-        image: 'https://posteritati.com/posters/000/000/053/106/forrest-gump-md-web.jpg',
-        duration: '1h 13min',
-        genres: ['Drama'],
-        cast: ['leonardo dicaprio', 'leonardo dicaprio', 'leonardo dicaprio', 'leonardo dicaprio', 'leonardo dicaprio']
-    },
-    {
-        id: '8c0bb20f-fc81-473b-8a73-5ae2121fe603',
-        title: 'Titanic',
-        year: 1975,
-        image: 'https://images-na.ssl-images-amazon.com/images/I/51gEpO63aRL.jpg',
-        duration: '3h 21min',
-        genres: ['Drama', 'Action', 'Family'],
-        cast: ['leonardo dicaprio', 'leonardo dicaprio', 'leonardo dicaprio', 'leonardo dicaprio', 'leonardo dicaprio']
-    },
-    {
-        id: '8c0bb1ef-fc81-473b-8a73-5ae2125fe60a',
-        title: 'Forrest Gump',
-        year: 1975,
-        image: 'https://posteritati.com/posters/000/000/053/106/forrest-gump-md-web.jpg',
-        duration: '1h 33min',
-        genres: ['Drama'],
-        cast: ['leonardo dicaprio', 'leonardo dicaprio', 'leonardo dicaprio', 'leonardo dicaprio', 'leonardo dicaprio']
-    }
-];
-
-const Main = () => {
-    return (
-        <div className="main-page">
-            <MainPageSidebar userInfo={userInfo} notifications={notifications}/>
-            <div>
-                <Switch>
-                    <Route exact path={`/`} component={MainPage}/>
-                    <Route path={`/user-page`} component={UserPage}/>
-                    <Route path={`/movie-series`} component={MovieSeriesPage}/>
-                    <Route path={`/movie-list`} render={() => <MovieList movies={movies}/>}/>
-                </Switch>
-            </div>
-        </div>
-    );
+const { notifications } = {
+	notifications: {
+		newMessages: 0,
+		newEvents: 2
+	}
+};
+type Movie = {
+	id: string;
+	title: string;
+	year?: number;
+	image: string;
+	duration: string;
+	genres: Array<string>;
+	cast: Array<string>;
+};
+type userInfo = {
+	name: string;
+	image: string;
+	any;
 };
 
-export default Main;
+interface IProps {
+	isAuthorized: boolean;
+	userInfo: userInfo;
+	movieList: null | Array<Movie>;
+	fetchMovieList: () => any;
+	setMovieSeries: (movie: any) => any;
+	movieSeries: null | Movie;
+}
+
+const MovieListRender = (movieList, fetchMovieList, setMovieSeries) => {
+	if (!movieList) {
+		fetchMovieList();
+		return <Spinner />;
+	}
+	return <MovieList movies={movieList} setMovieSeries={setMovieSeries} />;
+};
+const Main = ({
+	isAuthorized,
+	userInfo,
+	movieList,
+	fetchMovieList,
+	setMovieSeries,
+	movieSeries
+}: IProps) => {
+	if (!isAuthorized || !localStorage.getItem('token'))
+		return <Redirect to="/login" />;
+	return (
+		<div className="main-page">
+			<MainPageSidebar userInfo={userInfo} notifications={notifications} />
+			<div className="main-content">
+				<Switch>
+					<Route exact path={`/`} component={MainPage} />
+					<Route path={`/user-page`} component={UserPage} />
+					<Route path={`/event-page`} component={EventPage} />
+					<Route
+						path={`/movie-series`}
+						render={() => <MovieSeriesPage movie={movieSeries} />}
+					/>
+					<Route
+						path={`/movie-list`}
+						render={() =>
+							MovieListRender(movieList, fetchMovieList, setMovieSeries)
+						}
+					/>
+					<Route path={`/*`} exact component={NotFound} />
+				</Switch>
+			</div>
+		</div>
+	);
+};
+
+const mapStateToProps = (rootState, props) => ({
+	...props,
+	isAuthorized: !!rootState.profile.profileInfo,
+	userInfo: rootState.profile.profileInfo,
+	movieList: rootState.movie.movieList,
+	movieSeries: rootState.movie.movieSeries
+});
+
+const actions = {
+	fetchMovieList,
+	setMovieSeries
+};
+
+const mapDispatchToProps = dispatch => bindActionCreators(actions, dispatch);
+
+export default connect(
+	mapStateToProps,
+	mapDispatchToProps
+)(Main);

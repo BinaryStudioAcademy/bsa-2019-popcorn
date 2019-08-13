@@ -1,81 +1,88 @@
-@import "../../../styles/variables.scss";
+@import '../../../styles/variables.scss';
 @import url('https://rsms.me/inter/inter.css');
 
-
 .left-sidebar {
-    padding-top: 88px;
-    display: flex;
-    flex-direction: column;
-    background-color: $background-gray;
-    color: $text-base-color;
-    font-weight: 600;
-    font-size: $menu-font-size;
-    font-family: $base-font-family;
-    line-height: 17px;
-    letter-spacing: $base-letter-spacing;
-    font-style: normal;
+	padding-top: 88px;
+	display: flex;
+	flex-direction: column;
+	background-color: $background-gray;
+	color: $text-base-color;
+	font-weight: 600;
+	font-size: $menu-font-size;
+	font-family: $base-font-family;
+	line-height: 17px;
+	letter-spacing: $base-letter-spacing;
+	font-style: normal;
 
-    .avatar {
-        margin-left: 69px;
-        position: relative;
+	.avatar {
+		margin-left: 69px;
+		position: relative;
 
-        img {
-            width: 55px;
-        }
+		img {
+			width: 55px;
+			border-radius: 50%;
+		}
 
-        .fa-chevron-down {
-            margin-left: 10px;
-            position: absolute;
-            top: 50%;
-        }
+		.fa-chevron-down {
+			margin-left: 10px;
+			position: absolute;
+			top: 50%;
+		}
 
-        .fa-chevron-down:hover {
-            cursor: pointer;
-        }
-    }
+		.fa-chevron-down:hover {
+			cursor: pointer;
+		}
+	}
 
-    .user-name {
-        margin-left: 72px;
-        margin-bottom: 89px;
-    }
+	.user-name {
+		margin-left: 72px;
+		margin-bottom: 89px;
+	}
 
-    .menu {
-        div {
-            display: flex;
-            align-items: center;
-            margin-bottom: 19px;
-            height: 23px;
-            margin-left: 72px;
+	.menu {
+		div {
+			display: flex;
+			align-items: center;
+			margin-bottom: 19px;
+			height: 23px;
+			margin-left: 72px;
 
-            p:hover {
-                cursor: pointer;
-            }
+			a {
+				text-decoration: none;
+				color: $text-base-color;
+			}
 
-            p {
-                margin: 0;
-            }
+			p:hover {
+				cursor: pointer;
+			}
 
-            svg {
-                position: absolute;
-                left: 43px;
-            }
+			p {
+				margin: 0;
+			}
 
-            .notifications {
-                width: 20px;
-                height: 20px;
-                background: #FB8700;
-                border-radius: 11px;
-                font-weight: bold;
-                font-size: 12px;
-                line-height: 20px;
-                text-align: center;
-                color: #FFF;
-                margin: 0 0 0 22px;
-                span{
-                    margin: 0 auto;
-                }
-            }
-        }
-    }
+			svg {
+				position: absolute;
+				left: 43px;
+			}
+
+			.notifications {
+				padding: 2px;
+				width: 31px;
+				height: 14px;
+				background: #fb8700;
+				border-radius: 5px;
+				font-weight: bold;
+				font-size: 12px;
+				line-height: 20px;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				color: #fff;
+				margin: 0 0 0 22px;
+				span {
+					margin: 0 auto;
+				}
+			}
+		}
+	}
 }
-

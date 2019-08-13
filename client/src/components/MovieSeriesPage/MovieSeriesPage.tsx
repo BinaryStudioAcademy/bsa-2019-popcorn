@@ -3,30 +3,34 @@ import MovieSeriesPageHeader from './MovieSeriesPageHeader';
 import MovieSeriesPageTabs from './MovieSeriesPageTabs';
 import MovieSeriesPageTabBody from './MovieSeriesPageTabBody';
 import './MovieSeriesPage.scss';
+import { Redirect } from 'react-router';
 
 interface IProps {
-    match: {
-        path: string
-    }
+	movie?: null | Movie;
 }
-
-const movieSeriesData = {
-    title: 'Confessions of a Teenage Drama Queen',
-    releaseYear: 2004,
-    genre: ['Comedy', 'Family', 'Music'],
-    rating: 3.5
+type Movie = {
+	id: string;
+	title: string;
+	year?: number;
+	image: string;
+	duration: string;
+	genres: Array<string>;
+	cast: Array<string>;
+	any?;
 };
 
-const MovieSeriesPage: React.SFC<IProps> = ({ match }) => {
-    const { path: mainPath } = match;
+const MovieSeriesPage: React.SFC<IProps> = ({ movie }) => {
+	const mainPath = '/movie-series';
 
-    return (
-        <div className="movie-series-page">
-            <MovieSeriesPageHeader movieSeriesData={movieSeriesData} />       
-            <MovieSeriesPageTabs mainPath={mainPath} />
-            <MovieSeriesPageTabBody mainPath={mainPath} />
-        </div>
-    );
-}
+	return movie ? (
+		<div className="movie-series-page">
+			<MovieSeriesPageHeader movieSeriesData={movie} />
+			<MovieSeriesPageTabs mainPath={mainPath} />
+			<MovieSeriesPageTabBody mainPath={mainPath} movie={movie} />
+		</div>
+	) : (
+		<Redirect to={'/movie-list'} />
+	);
+};
 
 export default MovieSeriesPage;
