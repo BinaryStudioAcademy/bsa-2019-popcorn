@@ -26,13 +26,11 @@
         position: relative;
         left: 15px;
         overflow-x: scroll;
-        overflow-y: hidden;
         white-space: nowrap;
         transition: all 0.2s;
         transform: scale(0.98);
         will-change: transform;
         user-select: none;
-        cursor: pointer;
         margin-left: 20px;  
 
         &:first-child {
@@ -52,6 +50,14 @@
         > * {
             margin-left: 15px;
             max-width: 118px;
+            margin-top: 4px;
+            margin-bottom: 4px;
+            cursor: pointer;
+
+            &:hover {
+                transform: scale(1.02);
+                transition: all 0.3s;
+            }
 
             img {
                 -webkit-user-drag: none;
