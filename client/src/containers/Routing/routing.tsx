@@ -63,7 +63,6 @@ const Routing = ({
 	}
 	return (
 		<div>
-			<Header />
 			<Switch>
 				<Route
 					exact
