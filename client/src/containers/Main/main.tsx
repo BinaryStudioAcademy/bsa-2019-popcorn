@@ -17,6 +17,7 @@ import {
 	fetchMovieList,
 	setMovieSeries
 } from '../../components/MovieSeriesPage/Movie.redux/actions';
+import Header from '../../components/shared/Header/Header';
 
 const { notifications } = {
 	notifications: {
@@ -66,25 +67,28 @@ const Main = ({
 	if (!isAuthorized || !localStorage.getItem('token'))
 		return <Redirect to="/login" />;
 	return (
-		<div className="main-page">
-			<MainPageSidebar userInfo={userInfo} notifications={notifications} />
-			<div>
-				<Switch>
-					<Route exact path={`/`} component={MainPage} />
-					<Route path={`/user-page`} component={UserPage} />
-					<Route path={`/event-page`} component={EventPage} />
-					<Route
-						path={`/movie-series`}
-						render={() => <MovieSeriesPage movie={movieSeries} />}
-					/>
-					<Route
-						path={`/movie-list`}
-						render={() =>
-							MovieListRender(movieList, fetchMovieList, setMovieSeries)
-						}
-					/>
-					<Route path={`/*`} exact component={NotFound} />
-				</Switch>
+		<div>
+			<Header />
+			<div className="main-page">
+				<MainPageSidebar userInfo={userInfo} notifications={notifications} />
+				<div>
+					<Switch>
+						<Route exact path={`/`} component={MainPage} />
+						<Route path={`/user-page`} component={UserPage} />
+						<Route path={`/event-page`} component={EventPage} />
+						<Route
+							path={`/movie-series`}
+							render={() => <MovieSeriesPage movie={movieSeries} />}
+						/>
+						<Route
+							path={`/movie-list`}
+							render={() =>
+								MovieListRender(movieList, fetchMovieList, setMovieSeries)
+							}
+						/>
+						<Route path={`/*`} exact component={NotFound} />
+					</Switch>
+				</div>
 			</div>
 		</div>
 	);
