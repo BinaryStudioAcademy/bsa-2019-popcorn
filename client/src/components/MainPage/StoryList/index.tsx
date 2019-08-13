@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 import GetAddStoryPopupContent from './story-modal/create-story';
+import ChooseExtra from './story-modal/choose-extra';
 
 interface IStoryListItem {
 	caption: string;
@@ -28,7 +29,8 @@ const ListBlock = ({ ...props }: IProps) => {
 		<div>
 			<StoryList {...props} />
 			<Switch>
-				<Route path={`/create`} component={GetAddStoryPopupContent} />
+				<Route exact path={`/create`} component={GetAddStoryPopupContent} />
+				<Route exact path={`/create/extra`} component={ChooseExtra} />
 			</Switch>
 		</div>
 	);

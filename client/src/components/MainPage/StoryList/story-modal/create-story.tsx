@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Redirect } from 'react-router';
+import PostStoryEditor from '../../PostStoryEditor/PostStoryEditor';
 
 class getAddStoryPopupContent extends React.Component {
 	state = {
@@ -13,7 +14,9 @@ class getAddStoryPopupContent extends React.Component {
 
 		return (
 			<div className={'modal modal-story'}>
-				<div className={'content-wrp'} />
+				<div className={'content-wrp'}>
+					<PostStoryEditor type={'story'} />
+				</div>
 
 				<div className={'btn-wrp'}>
 					<button onClick={close} className={'btn'}>

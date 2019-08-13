@@ -14,7 +14,6 @@ class AddComment extends React.Component<IAddCommentProps> {
 	}
 
 	render() {
-		console.log('this.props.replyId', this.props.replyId);
 		/*  UI: Change this.props.replyId to userName */
 		return (
 			<form

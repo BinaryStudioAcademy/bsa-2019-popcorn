@@ -1,5 +1,11 @@
 import React from 'react';
 import './PostStoryEditor.scss';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import {
+	faCheckCircle,
+	faTimesCircle
+} from '@fortawesome/free-solid-svg-icons';
+import { faCamera } from '@fortawesome/free-solid-svg-icons/faCamera';
 
 // example:
 {
@@ -9,7 +15,7 @@ import './PostStoryEditor.scss';
 interface IPostStoryEditorProps {
 	id?: string;
 	type: 'story' | 'post';
-	uploadImage: (s: any) => any;
+	uploadImage?: (s: any) => any;
 }
 
 interface IPostStoryEditorState {
@@ -66,9 +72,7 @@ class PostStoryEditor extends React.Component<
 		}
 	}
 
-	onChangeData(e: React.FormEvent<HTMLInputElement>, keyword: string) {
-		const target = e.target as HTMLTextAreaElement;
-		const value = target.value;
+	onChangeData(value: string, keyword: string) {
 		this.setState({
 			...this.state,
 			[keyword]: value
@@ -130,29 +134,70 @@ class PostStoryEditor extends React.Component<
 		const data = new FormData();
 		data.append('file', target.files[0]);
 
-		this.props
-			.uploadImage(data)
-			.then(({ imageUrl }) => {
-				this.setState({ imageUrl, isUploading: false, errorMsg: '' });
-			})
-			.catch(error => {
-				this.setState({ isUploading: false, errorMsg: error.message });
-			});
+		if (this.props.uploadImage)
+			this.props
+				.uploadImage(data)
+				.then(({ imageUrl }) => {
+					this.setState({ imageUrl, isUploading: false, errorMsg: '' });
+				})
+				.catch(error => {
+					this.setState({ isUploading: false, errorMsg: error.message });
+				});
+
 		target.value = '';
 	}
 
 	render() {
 		return (
-			<div className="edit-form">
-				{this.state.imageUrl && <img alt="poster" src={this.state.imageUrl} />}
-
-				<input
+			<div className={'edit-form'}>
+				{this.state.errorMsg && (
+					<span className="upload-error">{this.state.errorMsg}</span>
+				)}
+				{this.state.imageUrl ? (
+					<div className={'profilePhotoWrap'}>
+						<img
+							src={this.state.imageUrl}
+							style={{ width: '100%', height: '100%' }}
+							alt=""
+						/>
+						<span>
+							<FontAwesomeIcon
+								icon={faCheckCircle}
+								className="fontAwesomeIcon"
+							/>
+						</span>
+						<span>
+							<FontAwesomeIcon
+								icon={faTimesCircle}
+								className={'fontAwesomeIcon'}
+							/>
+						</span>
+					</div>
+				) : (
+					<div className={'upload-image-wrp'}>
+						<input
+							name="image"
+							type="file"
+							onChange={e => this.handleUploadFile(e)}
+							className="upload-image"
+							id="image"
+							accept=".jpg, .jpeg, .png"
+							disabled={!!this.state.imageUrl}
+							hidden
+						/>
+						<label htmlFor="image" className="upload-image-button">
+							<FontAwesomeIcon icon={faCamera} className="fontAwesomeIcon" />
+						</label>
+					</div>
+				)}
+				<textarea
 					placeholder="Type a text here..."
-					type="text"
 					value={this.state.body}
-					onChange={e => this.onChangeData(e, 'body')}
+					onChange={e => this.onChangeData(e.target.value, 'body')}
 				/>
-
+				<div>
+					<button className={'btn'}>Add extra</button>
+				</div>
 				<div className="footer">
 					{this.props.type === 'story' && (
 						<p className="checker">
@@ -164,29 +209,26 @@ class PostStoryEditor extends React.Component<
 							/>
 						</p>
 					)}
-					<div>
-						{this.state.errorMsg && (
-							<span className="upload-error">{this.state.errorMsg}</span>
-						)}
-						<input
-							name="image"
-							type="file"
-							onChange={this.handleUploadFile}
-							className="upload-image"
-							id="image"
-							accept=".jpg, .jpeg, .png"
-							disabled={this.state.isUploading}
-						/>
-						<label htmlFor="image" className="upload-image-button">
-							Upload image
-						</label>
-						<button className="cancel-btn" onClick={this.onCancel}>
-							Cancel
-						</button>
-						<button className="save-btn" onClick={this.onSave}>
-							Save
-						</button>
-					</div>
+					{/*<div>*/}
+					{/*    <input*/}
+					{/*        name="image"*/}
+					{/*        type="file"*/}
+					{/*        onChange={this.handleUploadFile}*/}
+					{/*        className="upload-image"*/}
+					{/*        id="image"*/}
+					{/*        accept=".jpg, .jpeg, .png"*/}
+					{/*        disabled={this.state.isUploading}*/}
+					{/*    />*/}
+					{/*    <label htmlFor="image" className="upload-image-button">*/}
+					{/*        Upload image*/}
+					{/*    </label>*/}
+					{/*    <button className="cancel-btn" onClick={this.onCancel}>*/}
+					{/*        Cancel*/}
+					{/*    </button>*/}
+					{/*    <button className="save-btn" onClick={this.onSave}>*/}
+					{/*        Save*/}
+					{/*    </button>*/}
+					{/*</div>*/}
 				</div>
 			</div>
 		);

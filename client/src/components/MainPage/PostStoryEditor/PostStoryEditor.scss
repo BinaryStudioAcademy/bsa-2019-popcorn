@@ -1,4 +1,4 @@
-@import '~../../styles/variables';
+@import '../../../styles/variables';
 
 .edit-form {
 	font-family: $base-font-family;
@@ -9,13 +9,14 @@
 	margin: 0 auto;
 	padding: 50px;
 	box-sizing: border-box;
+	flex: 1;
 
 	img {
 		max-width: 100%;
 	}
 
-	input[type='text'] {
-		height: 43px;
+	textarea {
+		height: 130px;
 		margin-bottom: 50px;
 		outline: none;
 		width: 100%;
@@ -51,6 +52,8 @@
 		align-self: stretch;
 		height: 43px;
 
+		position: absolute;
+		bottom: 36px;
 		.checker {
 			float: left;
 			color: $text-secondary-color;
