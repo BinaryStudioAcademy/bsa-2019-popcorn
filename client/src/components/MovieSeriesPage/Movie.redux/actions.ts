@@ -1,4 +1,8 @@
-import { FETCH_MOVIE_LIST, SET_MOVIE_SERIES } from './actionTypes';
+import {
+	FETCH_MOVIE_LIST,
+	SET_MOVIE_SERIES,
+	CLEAR_ElASTIC_MOVIE_LIST
+} from './actionTypes';
 
 export const fetchMovieList = (): any => {
 	return {
@@ -12,5 +16,11 @@ export const setMovieSeries = (movie): any => {
 		payload: {
 			movie
 		}
+	};
+};
+
+export const clearSearch = (): object => {
+	return {
+		type: CLEAR_ElASTIC_MOVIE_LIST
 	};
 };

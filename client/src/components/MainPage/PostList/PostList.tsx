@@ -1,6 +1,6 @@
 import React from 'react';
 import Post from '../Post/Post';
-import { ReactComponent as FeedIcon } from '../../../assets/icons/general/newsFeed.svg'
+import { ReactComponent as FeedIcon } from '../../../assets/icons/general/newsFeed.svg';
 import './PostList.scss';
 
 type post = {

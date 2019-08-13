@@ -1,0 +1,63 @@
+@import '../../../../styles/variables.scss';
+
+.top-item,
+.edit-top,
+.delete-top,
+.top-upload-image {
+	border: 1px solid $border-color;
+	box-shadow: 0px 0px 11px $border-color;
+}
+
+.top-item {
+	color: $text-secondary-color;
+
+	border-radius: 3px;
+	display: grid;
+	grid-template-columns: 1fr 60px 60px 60px;
+	grid-template-rows: 60px 1fr;
+	align-items: center;
+	min-height: 60px;
+	margin-top: 20px;
+
+	.top-item-title {
+		padding-left: 30px;
+		font-size: 24px;
+	}
+
+	.top-upload-image {
+		padding: 10px 20px;
+		margin: auto;
+	}
+
+	.hover {
+		cursor: pointer;
+	}
+
+	.edit-top {
+		padding: 10px;
+	}
+
+	.delete-top {
+		margin: 10px;
+		padding: 4px;
+	}
+
+	.edit-top,
+	.delete-top {
+		color: $text-secondary-color;
+		justify-self: end;
+		border-radius: 3px;
+	}
+
+	.top-title-input {
+		margin: 5px;
+		font-size: $form-font-size;
+		width: 95%;
+	}
+
+	.image-top {
+		width: 300px;
+		grid-area: 2/1/3/5;
+		margin: 10px auto;
+	}
+}

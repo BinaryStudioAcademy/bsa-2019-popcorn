@@ -131,7 +131,6 @@ class Post extends PureComponent<IPostProps, IPostState> {
 						<FontAwesomeIcon icon={faShare} />
 					</button>
 				</div>
-				
 
 				{tags && (
 					<div>

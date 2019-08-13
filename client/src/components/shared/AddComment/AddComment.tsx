@@ -35,7 +35,7 @@ class AddComment extends React.Component<IAddCommentProps> {
 					}
 				/>
 				<button className="publish-button">
-						<FontAwesomeIcon icon={faCommentAlt} />
+					<FontAwesomeIcon icon={faCommentAlt} />
 				</button>
 			</form>
 		);

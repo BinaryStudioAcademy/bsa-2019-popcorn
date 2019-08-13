@@ -56,6 +56,7 @@ const MovieListRender = (movieList, fetchMovieList, setMovieSeries) => {
 	}
 	return <MovieList movies={movieList} setMovieSeries={setMovieSeries} />;
 };
+
 const Main = ({isAuthorized, userInfo, movieList, fetchMovieList, setMovieSeries, movieSeries}: IProps) => {
 
     if (!isAuthorized || !localStorage.getItem('token'))
