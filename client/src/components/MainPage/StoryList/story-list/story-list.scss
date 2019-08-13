@@ -1,7 +1,8 @@
 .story-list-wrapper {
 
-    width: 100%;
-    margin: auto;
+    width: 90%;
+    box-sizing: content-box;
+    margin: 0 5%; 
     display: grid;
     grid-template-rows: 27px 1fr;
     grid-template-areas: 
@@ -10,18 +11,20 @@
     grid-gap: 14px;
     align-content: right;
     overflow: hidden;
-    padding: 0 20px;
 }
 
 .story-list {
     display: flex;
     overflow: hidden;
     grid-area: stories;
+    justify-content: space-between;
 
     .story-list-scroll {
         display: flex;
         width: 100%;
+        margin-left: auto;
         position: relative;
+        left: 15px;
         overflow-x: scroll;
         overflow-y: hidden;
         white-space: nowrap;
@@ -30,6 +33,11 @@
         will-change: transform;
         user-select: none;
         cursor: pointer;
+        margin-left: 20px;  
+
+        &:first-child {
+            margin-left: 0 !important;
+        }
         
         &.active {
             cursor: grabbing;

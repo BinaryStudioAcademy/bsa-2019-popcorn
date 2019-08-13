@@ -96,7 +96,7 @@ class ProfileComponent extends Component<ProfileProps> {
                             }}>
                                 <FontAwesomeIcon icon={faTimesCircle} className={"fontAwesomeIcon"}/>
                             </span>
-					</div>) :
+					</div> :
                         <div className={"profilePhotoWrap"}>
                             <img src={avatar || config.DEFAULT_AVATAR} style={{width: "100%", height: "100%"}} alt=""/>
                             < input
