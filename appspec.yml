@@ -6,8 +6,15 @@ files:
   - source: ./
     destination: /home/ubuntu/bsa-2019-popcorn
 
+permissions:
+  - object: /
+    pattern: "**"
+    owner: ubuntu
+    group: ubuntu
+
 hooks:
   AfterInstall:
     - location: scripts/after-install.sh
   ApplicationStart:
     - location: scripts/app-start.sh
+      runas: ubuntu
