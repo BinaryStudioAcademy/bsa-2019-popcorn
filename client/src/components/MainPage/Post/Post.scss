@@ -1,4 +1,11 @@
-@import "../../../styles/variables.scss";
+@import '../../../styles/variables.scss';
+
+.reaction-list {
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+	align-items: center;
+	padding-left: 16px;
+}
 
 .post-item {
 	background: $white;
@@ -23,7 +30,7 @@
 	button:hover {
 		cursor: pointer;
 	}
-	.post-body{
+	.post-body {
 		padding: 0.5em 1em;
 	}
 	.tag-items {
@@ -31,7 +38,6 @@
 		display: flex;
 		flex-wrap: wrap;
 	}
-
 }
 
 .post-item-header {
@@ -43,7 +49,7 @@
 }
 
 .post-item-image {
-	width: 100%
+	width: 100%;
 }
 
 .post-item-avatar {
@@ -113,11 +119,11 @@
 	border-radius: 50%;
 	margin-right: 1em;
 }
-.horizontal-stroke{
+.horizontal-stroke {
 	height: 2px;
 	margin: 0.5em 0;
 	width: 100%;
-	background-color:  #e5e5e5;
+	background-color: #e5e5e5;
 }
 .post-item-reaction-text {
 	color: $text-base-color;
