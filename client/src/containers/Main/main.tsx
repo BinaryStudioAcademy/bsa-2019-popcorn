@@ -9,6 +9,7 @@ import MainPage from '../../components/MainPage/MainPage';
 import UserPage from '../../components/UserPage/UserPage';
 import MovieSeriesPage from '../../components/MovieSeriesPage/MovieSeriesPage';
 import EventPage from '../../components/EventPage/EventPage';
+import AdminPanelPage from '../../components/AdminPanelPage/AdminPanelPage';
 
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
@@ -56,6 +57,7 @@ const MovieListRender = (movieList, fetchMovieList, setMovieSeries) => {
 	}
 	return <MovieList movies={movieList} setMovieSeries={setMovieSeries} />;
 };
+
 const Main = ({
 	isAuthorized,
 	userInfo,
@@ -71,7 +73,7 @@ const Main = ({
 			<Header />
 			<div className="main-page">
 				<MainPageSidebar notifications={notifications} />
-				<div>
+				<div className="main-content">
 					<Switch>
 						<Route exact path={`/`} component={MainPage} />
 						<Route path={`/user-page`} component={UserPage} />

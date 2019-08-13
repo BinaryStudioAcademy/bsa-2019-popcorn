@@ -1,5 +1,6 @@
 import React from 'react';
 import Post from '../Post/Post';
+import { ReactComponent as FeedIcon } from '../../../assets/icons/general/newsFeed.svg';
 import './PostList.scss';
 
 type post = {
@@ -34,7 +35,10 @@ interface IProps {
 const PostList = (props: IProps) => {
 	return (
 		<div className="feed-list">
-			<div className="feed-heading">News feed</div>
+			<div className="feed-heading">
+				<FeedIcon />
+				<span>News feed</span>
+			</div>
 			{props.posts.map(post => (
 				<Post post={post} />
 			))}

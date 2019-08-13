@@ -36,7 +36,7 @@ const RecommendItem = ({
 					<div className="recommend-item-name">{name}</div>
 					<div className="recommend-item-percent">85%</div>
 				</div>
-				<div className="recommend-item-row">
+				<div className="recommend-item-row rating">
 					<div>
 						<span className="recommend-item-date">
 							{date}{' '}
@@ -60,7 +60,7 @@ const RecommendItem = ({
 						<NotStaredIcon />
 					</div>
 				</div>
-				<div className="recommend-item-row">
+				<div className="recommend-item-row action">
 					<div className="recommend-item-action-buttons">
 						<button>
 							<LikeIcon width="1.5em" height="1.5em" />

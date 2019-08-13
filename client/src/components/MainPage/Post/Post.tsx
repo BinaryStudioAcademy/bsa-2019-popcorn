@@ -2,14 +2,16 @@ import React, { PureComponent } from 'react';
 import AddComment from '../../shared/AddComment/AddComment';
 import './Post.scss';
 import { ReactComponent as SettingIcon } from '../../../assets/icons/general/settings.svg';
-import { ReactComponent as LikeIcon } from '../../../assets/icons/general/likeIcon.svg';
-import { ReactComponent as CommentIcon } from '../../../assets/icons/general/commentIcon.svg';
-import { ReactComponent as ShareIcon } from '../../../assets/icons/general/shareIcon.svg';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faHeart } from '@fortawesome/free-regular-svg-icons';
+import { faShare } from '@fortawesome/free-solid-svg-icons';
 import Comment from '../Comment/Comment';
 import Tag from '../Tag/Tag';
 import PostEditModal from '../PostEditModal/PostEditModal';
 import PostContent from '../PostContent/PostContent';
 import config from '../../../config';
+import Reactions from '../Reactions/Reactions';
+import PostReaction from './PostReaction/PostReaction';
 
 type IPostProps = {
 	post: {
@@ -39,18 +41,44 @@ type IPostProps = {
 		}[];
 	};
 };
-
+interface IReactItem {
+	id: number;
+	name: string;
+}
 interface IPostState {
 	isModalShown: boolean;
+	hover: boolean;
+	reactionList: Array<IReactItem>;
 }
 
 class Post extends PureComponent<IPostProps, IPostState> {
 	constructor(props: IPostProps) {
 		super(props);
 		this.state = {
-			isModalShown: false
+			isModalShown: false,
+			hover: false,
+			reactionList: []
 		};
 	}
+	MouseEnterLikeButton = () => {
+		this.setState({ hover: true });
+	};
+
+	MouseLeaveLikeButton = () => {
+		this.setState({ hover: false });
+	};
+
+	onReactionClick = (reaction: IReactItem) => {
+		const reactionList = this.state.reactionList;
+
+		if (reactionList.findIndex(item => item.id === reaction.id) != -1) {
+			return;
+		}
+
+		reactionList.push(reaction);
+		this.setState({ reactionList });
+	};
+
 	isOwnPost() {
 		return true;
 	}
@@ -93,6 +121,13 @@ class Post extends PureComponent<IPostProps, IPostState> {
 				tags
 			}
 		} = this.props;
+		const reactionsShow = this.state.hover ? (
+			<Reactions
+				onReactionClick={this.onReactionClick}
+				MouseLeaveLikeButton={this.MouseLeaveLikeButton}
+				MouseEnterLikeButton={this.MouseEnterLikeButton}
+			/>
+		) : null;
 		return (
 			<div className="post-item">
 				<div className="post-item-header">
@@ -109,36 +144,38 @@ class Post extends PureComponent<IPostProps, IPostState> {
 					</div>
 					<button className="post-item-settings" onClick={this.toggleModal}>
 						<SettingIcon />
-						{this.isModalShown()}
 					</button>
+					{this.isModalShown()}
 				</div>
 				{image_url && (
 					<img className="post-item-image" src={image_url} alt="post" />
 				)}
 				{description && <div className="post-body">{description}</div>}
 				{content && <PostContent content={content} />}
+				{reactionsShow}
 				<div className="post-item-action-buttons">
-					<button>
-						<LikeIcon />
-					</button>
-					<button>
-						<CommentIcon />
-					</button>
-					<button className="">
-						<ShareIcon />
-					</button>
-				</div>
-				<div className="post-item-last-reaction">
-					<img
-						className="post-item-reaction-image"
-						src={user.avatar || config.DEFAULT_AVATAR}
-						alt="author"
-					/>
-					<div className="post-item-reaction-text">
-						Appreciated by&nbsp;<strong>Doug Walker</strong>
+					<div className="post-item-last-reaction">
+						<button
+							className="like-icon"
+							onMouseEnter={this.MouseEnterLikeButton}
+							onMouseLeave={this.MouseLeaveLikeButton}
+						>
+							<FontAwesomeIcon icon={faHeart} />
+						</button>
+						<div className="post-item-reaction-text">
+							Appreciated by&nbsp;<strong>Doug Walker </strong>
+							and <strong>13 others</strong>
+						</div>
 					</div>
+					<button className="">
+						<FontAwesomeIcon icon={faShare} />
+					</button>
 				</div>
-
+				<div className="reaction-list">
+					{this.state.reactionList.map((item, index) => (
+						<PostReaction key={index} quantity={355} name={item.name} />
+					))}
+				</div>
 				{tags && (
 					<div>
 						<div className="horizontal-stroke"></div>
