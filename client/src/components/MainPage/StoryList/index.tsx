@@ -23,7 +23,6 @@ interface IProps {
 }
 
 const getAddStoryPopupContent = () => {
-	console.log('hear');
 	return (
 		<div className={'modal modal-story'}>
 			<div className={'content-wrp'}></div>
