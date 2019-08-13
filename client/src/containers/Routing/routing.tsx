@@ -16,7 +16,6 @@ import {
 } from '../../components/authorization/actions';
 
 import Spinner from '../../components/shared/Spinner/index';
-import Header from '../../components/shared/Header/Header';
 import Reset from '../../components/authorization/Reset';
 import Restore from '../../components/authorization/Restore';
 
@@ -42,15 +41,6 @@ interface IProps {
 	resetMessage: string;
 	restoreMessage: string;
 	fetchRestorePassword: (password: string, token: string) => any;
-	profileInfo: {
-		id: string;
-		name: string;
-		male: boolean;
-		female: boolean;
-		location: string;
-		about: string;
-		avatar: string;
-	};
 }
 
 const Routing = ({
@@ -63,23 +53,15 @@ const Routing = ({
 	registerError,
 	fetchResetPassword,
 	restoreMessage,
-	fetchRestorePassword,
-	profileInfo
+	fetchRestorePassword
 }: IProps) => {
 	const token = localStorage.getItem('token');
 	if (token && !isAuthorized) {
 		fetchByToken(token);
 		return <Spinner />;
 	}
-
 	return (
-		<div>
-			{isAuthorized ? (
-				<Header
-					userInfo={{ name: profileInfo.name, image: profileInfo.avatar }}
-				/>
-			) : null}
-
+		<div className="main-content">
 			<Switch>
 				<Route
 					exact
@@ -139,8 +121,7 @@ const mapStateToProps = (rootState, props) => ({
 	loginError: rootState.profile.loginError,
 	registerError: rootState.profile.registerError,
 	resetMessage: rootState.profile.resetMessage,
-	restoreMessage: rootState.profile.restoreMessage,
-	profileInfo: rootState.profile.profileInfo
+	restoreMessage: rootState.profile.restoreMessage
 });
 
 const actions = {

@@ -9,7 +9,7 @@ import EventRepository from "../repository/event.repository";
 import { getRepository, getCustomRepository } from "typeorm";
 
 export const getEvents = async (userId: string): Promise<Event[]> =>
-  await getCustomRepository(EventRepository).find({ userId });
+  await getCustomRepository(EventRepository).getEvents(userId);
 
 export const getEventById = async (eventId: number): Promise<Event> =>
   await getCustomRepository(EventRepository).getEvent(eventId);

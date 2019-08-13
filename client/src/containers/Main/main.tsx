@@ -71,12 +71,11 @@ const Main = ({
 	return (
 		<div className="main-page">
 			<MainPageSidebar notifications={notifications} />
-			<div className="main-content">
+			<div>
 				<Switch>
-					<Route exact path={`/`} component={MainPage} />
+					<Route exact path={[`/`, '/create*']} component={MainPage} />
 					<Route path={`/user-page`} component={UserPage} />
 					<Route path={`/event-page`} component={EventPage} />
-					<Route path={`/admin-panel-page`} component={AdminPanelPage} />
 					<Route
 						path={`/movie-series`}
 						render={() => <MovieSeriesPage movie={movieSeries} />}

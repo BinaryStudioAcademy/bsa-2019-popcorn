@@ -10,7 +10,7 @@
 
 .top-item {
 	color: $text-secondary-color;
-
+	padding: 5px;
 	border-radius: 3px;
 	display: grid;
 	grid-template-columns: 1fr 60px 60px 60px;
@@ -27,6 +27,7 @@
 	.top-upload-image {
 		padding: 10px 20px;
 		margin: auto;
+		border-radius: 3px;
 	}
 
 	.hover {
@@ -50,14 +51,15 @@
 	}
 
 	.top-title-input {
-		margin: 5px;
+		margin: 10px;
 		font-size: $form-font-size;
 		width: 95%;
+		padding: 10px 15px;
 	}
 
 	.image-top {
 		width: 300px;
 		grid-area: 2/1/3/5;
-		margin: 10px auto;
+		margin: auto;
 	}
 }
