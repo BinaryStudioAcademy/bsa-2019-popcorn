@@ -15,7 +15,7 @@ export class Story {
   @Column()
   image_url: string;
 
-  @Column()
+  @Column({ default: "" })
   caption: string;
 
   @ManyToOne(type => User)

@@ -1,14 +1,61 @@
 .story-list-wrapper {
-    width: 1300px;
-    margin: auto;
-    display: grid;
-    grid-template-rows: 27px 1fr;
-    grid-gap: 14px;
-    align-content: right;
+	width: 100%;
+	margin: auto;
+	display: grid;
+	grid-template-rows: 27px 1fr;
+	grid-template-areas:
+		'.'
+		'stories';
+	grid-gap: 14px;
+	align-content: right;
+	overflow: hidden;
+	padding: 0 20px;
 }
 
 .story-list {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
-    grid-gap: 10px;
+	display: flex;
+	overflow: hidden;
+	grid-area: stories;
+
+	.story-list-scroll {
+		display: flex;
+		width: 100%;
+		position: relative;
+		overflow-x: scroll;
+		overflow-y: hidden;
+		white-space: nowrap;
+		transition: all 0.2s;
+		transform: scale(0.98);
+		will-change: transform;
+		user-select: none;
+		cursor: pointer;
+
+		&.active {
+			cursor: grabbing;
+			cursor: -webkit-grabbing;
+			transform: scale(1);
+		}
+
+		&::-webkit-scrollbar {
+			display: none;
+		}
+
+		> * {
+			margin-left: 15px;
+			max-width: 118px;
+
+			img {
+				-webkit-user-drag: none;
+				-khtml-user-drag: none;
+				-moz-user-drag: none;
+				-o-user-drag: none;
+			}
+
+			.story-name {
+				max-width: 118px;
+				text-overflow: ellipsis;
+				overflow: hidden;
+			}
+		}
+	}
 }

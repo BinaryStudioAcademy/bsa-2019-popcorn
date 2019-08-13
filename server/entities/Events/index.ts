@@ -1,5 +1,5 @@
-import {Event} from "./Event";
-import {EventComment} from "./EventComment";
-import {EventVisitor} from "./EventVisitor";
+import { Event } from "./Event";
+import { EventComment } from "./EventComment";
+import { EventVisitor } from "./EventVisitor";
 
-export {Event,EventComment,EventVisitor};
+export { Event, EventComment, EventVisitor };

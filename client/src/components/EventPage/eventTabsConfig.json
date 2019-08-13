@@ -1,0 +1,18 @@
+[
+	{
+		"link": "",
+		"label": "About"
+	},
+	{
+		"link": "/discussion",
+		"label": "Discussion"
+	},
+	{
+		"link": "/participants",
+		"label": "Participants"
+	},
+	{
+		"link": "/interested",
+		"label": "Interested"
+	}
+]

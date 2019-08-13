@@ -6,31 +6,31 @@ import './MovieSeriesPage.scss';
 import { Redirect } from 'react-router';
 
 interface IProps {
-    movie?: null | Movie
+	movie?: null | Movie;
 }
 type Movie = {
-    id: string,
-    title: string,
-    year?: number,
-    image: string,
-    duration: string,
-    genres: Array<string>,
-    cast: Array<string>,
-    any?
-}
+	id: string;
+	title: string;
+	year?: number;
+	image: string;
+	duration: string;
+	genres: Array<string>;
+	cast: Array<string>;
+	any?;
+};
 
 const MovieSeriesPage: React.SFC<IProps> = ({ movie }) => {
-    const mainPath = "/movie-series";
+	const mainPath = '/movie-series';
 
-    return (
-        movie ?
-        <div className="movie-series-page">
-            <MovieSeriesPageHeader movieSeriesData={movie} />
-            <MovieSeriesPageTabs mainPath={mainPath}/>
-            <MovieSeriesPageTabBody mainPath={mainPath} movie={movie}/>
-        </div>
-            : <Redirect to={'/movie-list'}/>
-    );
-}
+	return movie ? (
+		<div className="movie-series-page">
+			<MovieSeriesPageHeader movieSeriesData={movie} />
+			<MovieSeriesPageTabs mainPath={mainPath} />
+			<MovieSeriesPageTabBody mainPath={mainPath} movie={movie} />
+		</div>
+	) : (
+		<Redirect to={'/movie-list'} />
+	);
+};
 
 export default MovieSeriesPage;
