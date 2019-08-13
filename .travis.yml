@@ -40,6 +40,6 @@ script:
   - cd client/
   - npm run build
   - cd ..
-  - zip -r latest * -x *.git* node_modules/\*
+  - zip -r latest * -x node_modules/\*
   - mkdir -p dpl_cd_upload
   - mv latest.zip dpl_cd_upload/latest.zip
