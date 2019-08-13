@@ -77,4 +77,27 @@ $btn-height: 36px;
 			cursor: pointer;
 		}
 	}
+
+	.content-extra {
+		padding: 25px;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		.extra-item {
+			width: 200px;
+			border: 1px solid $orange-light;
+			padding: 5px;
+			border-radius: 5px;
+			margin-bottom: 10px;
+			cursor: pointer;
+			position: relative;
+			left: 0;
+			transition: all 0.5s ease;
+			display: flex;
+			justify-content: space-between;
+		}
+		.extra-item:hover {
+			left: 20px;
+		}
+	}
 }

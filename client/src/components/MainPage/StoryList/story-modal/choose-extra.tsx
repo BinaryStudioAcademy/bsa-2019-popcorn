@@ -1,12 +1,13 @@
 import React from 'react';
 import { Redirect } from 'react-router';
-import PostStoryEditor from '../../PostStoryEditor/PostStoryEditor';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
 	faArrowCircleLeft,
 	faTimesCircle
 } from '@fortawesome/free-solid-svg-icons';
+import { faChevronRight } from '@fortawesome/free-solid-svg-icons';
 
+const options = ['survey', 'top', 'vote', 'event'];
 class ChooseExtra extends React.Component {
 	state = {
 		open: true,
@@ -35,6 +36,20 @@ class ChooseExtra extends React.Component {
 							className={'fontAwesomeIcon'}
 						/>
 					</span>
+				</div>
+				<div className={'content-extra'}>
+					{options &&
+						options.map(option => {
+							return (
+								<div className={'extra-item'}>
+									<span>Add {option}</span>
+									<FontAwesomeIcon
+										icon={faChevronRight}
+										style={{ color: '#ffab07' }}
+									/>
+								</div>
+							);
+						})}
 				</div>
 			</div>
 		);
