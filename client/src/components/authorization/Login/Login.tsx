@@ -83,7 +83,10 @@ class Login extends React.Component<IProps, IState, IValues> {
 			</Form>
 		);
 	}
-
+	trimObjectValues(obj) {
+		Object.keys(obj).forEach(field => (obj[field] = obj[field].trim()));
+		return obj;
+	}
 	render() {
 		const { onSubmit, isAuthorized, loginError } = this.props;
 		const { isLoading } = this.state;
@@ -97,14 +100,17 @@ class Login extends React.Component<IProps, IState, IValues> {
 				<Formik
 					initialValues={{ password: '', email: '' }}
 					onSubmit={(values, actions) => {
-						onSubmit(values);
+						const trimedValues = this.trimObjectValues(values);
+						onSubmit(trimedValues);
 					}}
 					validationSchema={Yup.object().shape({
 						email: Yup.string()
+							.max(320, 'Email must be no more than 320 characters')
 							.email('Email is invalid')
 							.required('Email is required'),
 						password: Yup.string()
-							.min(5, 'Password must be at least 6 characters')
+							.max(64, 'Password must be no more than 64 characters')
+							.min(6, 'Password must be at least 6 characters')
 							.required('Password is required')
 					})}
 					render={({ errors, status, touched }) => {
