@@ -62,7 +62,8 @@ const Routing = ({
 		return <Spinner />;
 	}
 	return (
-		<div>
+		<div className='main-content'>
+			<Header />
 			<Switch>
 				<Route
 					exact

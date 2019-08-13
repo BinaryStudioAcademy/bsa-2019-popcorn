@@ -1,5 +1,9 @@
 .feed-block {
-	padding: 20px;
+	margin: 50px 5%;
 	display: grid;
-	grid-template-columns: 7fr 3fr;
+
+	grid:
+		'freeSpaceLeft feed-list recommend-list freeSpaceRight'
+		/ 0 60% auto 0;
+	grid-template-rows: 1fr 0.2fr;
 }

@@ -1,5 +1,7 @@
+@import '../../styles/variables.scss';
 .main-page {
     display: grid;
     grid-template-columns: 205px auto;
     height: 100%;
+    color: $text-base-color;
 }

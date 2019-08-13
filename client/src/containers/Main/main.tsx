@@ -56,42 +56,33 @@ const MovieListRender = (movieList, fetchMovieList, setMovieSeries) => {
 	}
 	return <MovieList movies={movieList} setMovieSeries={setMovieSeries} />;
 };
-const Main = ({
-	isAuthorized,
-	userInfo,
-	movieList,
-	fetchMovieList,
-	setMovieSeries,
-	movieSeries
-}: IProps) => {
-	if (!isAuthorized || !localStorage.getItem('token'))
-		return <Redirect to="/login" />;
-	return (
-		<div>
-			<Header />
-			<div className="main-page">
-				<MainPageSidebar userInfo={userInfo} notifications={notifications} />
-				<div>
-					<Switch>
-						<Route exact path={`/`} component={MainPage} />
-						<Route path={`/user-page`} component={UserPage} />
-						<Route path={`/event-page`} component={EventPage} />
-						<Route
-							path={`/movie-series`}
-							render={() => <MovieSeriesPage movie={movieSeries} />}
-						/>
-						<Route
-							path={`/movie-list`}
-							render={() =>
-								MovieListRender(movieList, fetchMovieList, setMovieSeries)
-							}
-						/>
-						<Route path={`/*`} exact component={NotFound} />
-					</Switch>
-				</div>
-			</div>
-		</div>
-	);
+const Main = ({isAuthorized, userInfo, movieList, fetchMovieList, setMovieSeries, movieSeries}: IProps) => {
+
+    if (!isAuthorized || !localStorage.getItem('token'))
+        return <Redirect to="/login"/>;
+    return (
+        <div className="main-page">
+            <MainPageSidebar userInfo={userInfo} notifications={notifications}/>
+            <div className='main-content'>
+                <Switch>
+                    <Route exact path={`/`} component={MainPage}/>
+                    <Route path={`/user-page`} component={UserPage}/>
+										<Route path={`/event-page`} component={EventPage} />
+                    <Route
+											path={`/movie-series`}
+											render={() => <MovieSeriesPage movie={movieSeries} />}
+										/>
+										<Route
+											path={`/movie-list`}
+											render={() =>
+												MovieListRender(movieList, fetchMovieList, setMovieSeries)
+											}
+										/>
+                    <Route path={`/*`} exact component={NotFound}/>
+                </Switch>
+            </div>
+        </div>
+    );
 };
 
 const mapStateToProps = (rootState, props) => ({
