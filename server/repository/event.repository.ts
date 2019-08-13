@@ -1,10 +1,11 @@
-import { EntityRepository, Repository } from "typeorm";
+import { EntityRepository, Repository, getCustomRepository } from "typeorm";
 import { Event, EventComment, EventVisitor } from "../entities/Events";
 import { getRepository, createQueryBuilder } from "typeorm";
+import EventVisitorRepository from "./eventVisitor.repository";
 
 @EntityRepository(Event)
 class EventRepository extends Repository<Event> {
-  async getEvent(eventId: number): Promise<Event> {
+  async getEvent(eventId: string): Promise<Event> {
     return await getRepository(Event)
       .createQueryBuilder("event")
       .leftJoinAndSelect("event.eventComments", "comments")
@@ -13,12 +14,23 @@ class EventRepository extends Repository<Event> {
       .getOne();
   }
   async getEventsByVisitorId(userId: string): Promise<Event[]> {
-    return await getRepository(Event)
-      .createQueryBuilder("event")
-      .innerJoinAndSelect("event.eventVisitors", "visitors")
-      .where("visitors.userId = :id", { id: userId })
-      .getMany();
+    const interestedEventIds = await getCustomRepository(EventVisitorRepository).getEventIdsByVisitorId(userId);
+
+    const interestedEvents = await Promise.all(
+      interestedEventIds.map(interestedEventId => this.getEvent(interestedEventId))
+    );
+
+    const ownEvents = await this.getEvents(userId);
+
+    return [ ...interestedEvents, ...ownEvents];
   }
+  // async getEventsByVisitorId(userId: string): Promise<Event[]> {
+  //   return await getRepository(Event)
+  //     .createQueryBuilder("event")
+  //     .innerJoinAndSelect("event.eventVisitors", "visitors")
+  //     .where("visitors.userId = :id", { id: userId })
+  //     .getMany();
+  // }
   async getEvents(userId: string): Promise<Event[]> {
     return await getRepository(Event)
       .createQueryBuilder("event")

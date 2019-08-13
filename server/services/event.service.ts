@@ -14,7 +14,7 @@ export const getEventsByUserId = async (userId: string): Promise<any[]> => {
   return response;
 };
 
-export const getEventById = async (eventId: number): Promise<Event> =>
+export const getEventById = async (eventId: string): Promise<Event> =>
   await getCustomRepository(EventRepository).getEvent(eventId);
 
 export const createEvent = async (event: any): Promise<Event> => {
