@@ -1,27 +1,20 @@
 @import '../../../styles/variables';
 
-$titleColor: #545454;
-$contentColor: #545454;
-$svgColor: #000;
-$bcgColor: $background-gray;
-
-.UserProfileComponent {
+.UserProfileComponent{
 	padding: 2% 2%;
 }
 h2 {
 	width: 100%;
-	color: $titleColor;
 	text-align: center;
 	line-height: 0.1em;
 	margin: 10px 0 20px;
 	text-transform: uppercase;
 	font-weight: lighter;
 	span {
-		background: $bcgColor;
+		background: $background-gray;
 		padding: 0 10px;
 	}
 }
-
 .ProfileWrap {
 	display: flex;
 	align-items: flex-start;
@@ -32,14 +25,13 @@ h2 {
 		.upload-wrp{
 			width: 100%;
 			text-align: center;
-			background-color: rgba($black, .1);
+			background-color: rgba($black, .4);
 			position: relative;
 			top: -44px;
 			height: 0;
 			transition: all .3s linear;
 			overflow: hidden;
 			margin-top: 40px;
-			// display: block;
 		}
 		&:hover .upload-wrp {
 			margin-top: 0;
@@ -48,9 +40,8 @@ h2 {
 		.fontAwesomeIcon{
 			margin-top: 5px;
 			font-size: 30px;
-			color: $titleColor;
-			&:hover {
-				transform: scale(1.1, 1);
+			color: $text-base-color;
+			&:hover{
 				cursor: pointer;
 			}
 		}
@@ -63,44 +54,69 @@ h2 {
 		width: 100%;
 		height: auto;
 	}
-	.profileRow:first-child {
-		border: none;
-	}
 	.profileRow {
-		font-size: 18px;
+		letter-spacing: $base-letter-spacing;
 		display: flex;
 		justify-content: space-between;
 		padding: 1rem;
-		color: white;
-		border-width: 3px;
-		border-style: solid;
-		border-image: linear-gradient(
-				to left,
-				darken($bcgColor, 10%),
-				rgba(0, 0, 0, 0)
-			)
-			100% 1;
 		.field {
-			color: $titleColor;
+			font-weight: 600;
 			width: 30%;
 			text-align: left;
 			position: relative;
 		}
 		.content {
-			color: $contentColor;
-			text-align: right;
+			padding-left: 20px;
 			width: 70%;
 			p {
-				background-color: #00000030;
-				padding: 1% 1%;
-				margin: 1% 1%;
+				background-color: rgba($orange, .7);
+				padding: 5px;
+				border-radius: 10px;
+				color: white;
 				display: inline-block;
 				line-height: 1.3em;
+				margin-bottom: 5px;
+				margin-right: 5px;
+				transition: all .1s linear;
+				&:hover {
+					background-color: $orange;
+					text-shadow: 0 0 .65px white, 0 0 .65px white;
+					text-decoration: underline;
+				}
 			}
 			p:hover {
-				background-color: #fff;
 				cursor: pointer;
 			}
+		}
+	}
+	.profileRow-username {
+		letter-spacing: $base-letter-spacing;
+		padding: 1rem;
+		padding-bottom: 0;
+		font-size: $header-large;
+		font-weight: 600;
+	}
+
+	.profileRow-info {
+		letter-spacing: $base-letter-spacing;
+		padding: 1rem;
+		display: flex;
+		color: rgba($text-base-color, .9);
+
+		.user-gender {
+			max-width: 20%;
+			min-width: 90px;
+		}
+		.user-location {
+			text-overflow: ellipsis;
+			white-space: nowrap;
+			overflow: hidden;
+			width: 80%;
+		}
+
+		svg {
+			margin-right: 5px;
+			color: $text-base-color;
 		}
 	}
 }
