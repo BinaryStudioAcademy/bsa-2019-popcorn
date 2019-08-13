@@ -36,9 +36,9 @@ deploy:
   on: *2
 
 script:
-  - export SKIP_PREFLIGHT_CHECK=tru
+  - export SKIP_PREFLIGHT_CHECK=true
   - cd client/
-  - npm run build
+  - CI=false npm run build
   - cd ..
   - zip -r latest * >/dev/null
   - mkdir -p dpl_cd_upload
