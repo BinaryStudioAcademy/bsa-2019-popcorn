@@ -13,6 +13,8 @@ interface IStoryListItem {
 	image_url: string;
 	user: {
 		avatar: string;
+		id: string;
+		name: string;
 		any;
 	};
 	any;

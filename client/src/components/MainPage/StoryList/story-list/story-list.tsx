@@ -33,7 +33,8 @@ interface IState {
 	startX: number;
 	scrollLeft: number;
 	isShownViewer: boolean;
-	currentStory: number
+	currentStory: number;
+	class: string;
 }
 
 class StoryList extends Component<IStoryListProps, IState> {
@@ -48,7 +49,8 @@ class StoryList extends Component<IStoryListProps, IState> {
 			startX: 0,
 			scrollLeft: 0,
 			isShownViewer: false,
-			currentStory: -1
+			currentStory: -1,
+			class: ''
 		};
 	}
 
@@ -68,7 +70,7 @@ class StoryList extends Component<IStoryListProps, IState> {
 	};
 
 	onMouseLeave = () => {
-		this.setState({ isDown: false });
+		this.setState({ isDown: false, class: '' });
 	};
 
 	onMouseMove = event => {
@@ -79,6 +81,7 @@ class StoryList extends Component<IStoryListProps, IState> {
 		const x = event.pageX - scroll.offsetLeft;
 		const walk = x - startX;
 		scroll.scrollLeft = scrollLeft - walk;
+		this.setState({ class: 'active' })
 	};
 
 	viewerIsShown = () => {
@@ -142,7 +145,7 @@ class StoryList extends Component<IStoryListProps, IState> {
 					/>
 					<div
 						ref="scroll"
-						className={`story-list-scroll ${this.state.isDown && 'active'}`}
+						className={`story-list-scroll ${this.state.class}`}
 						onMouseDown={this.onMouseDown}
 						onMouseLeave={this.onMouseLeave}
 						onMouseUp={this.onMouseLeave}
