@@ -64,4 +64,17 @@ $btn-height: 36px;
 		flex-direction: column;
 		align-items: center;
 	}
+
+	.nav-block-wrp {
+		display: flex;
+		justify-content: space-between;
+		flex-direction: row;
+		height: 50px;
+		padding: 10px;
+		box-sizing: border-box;
+		font-size: larger;
+		.fontAwesomeIcon {
+			cursor: pointer;
+		}
+	}
 }

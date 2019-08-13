@@ -16,6 +16,7 @@ interface IPostStoryEditorProps {
 	id?: string;
 	type: 'story' | 'post';
 	uploadImage?: (s: any) => any;
+	addExtra?: () => any;
 }
 
 interface IPostStoryEditorState {
@@ -196,7 +197,12 @@ class PostStoryEditor extends React.Component<
 					onChange={e => this.onChangeData(e.target.value, 'body')}
 				/>
 				<div>
-					<button className={'btn'}>Add extra</button>
+					<button
+						className={'btn'}
+						onClick={() => (this.props.addExtra ? this.props.addExtra() : null)}
+					>
+						Add extra
+					</button>
 				</div>
 				<div className="footer">
 					{this.props.type === 'story' && (
