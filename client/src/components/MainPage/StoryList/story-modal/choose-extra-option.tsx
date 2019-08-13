@@ -39,7 +39,15 @@ class ChooseExtraOption extends React.Component<IProps> {
 
 		if (!this.state.open) return <Redirect to={'/'} />;
 		if (!this.state.back || !option) return <Redirect to={'/create/extra'} />;
-		if (!this.state.create) return <Redirect to={`/user-page/${option}s`} />;
+		if (!this.state.create)
+			return (
+				<Redirect
+					to={{
+						pathname: `/user-page/${option}s`,
+						state: { url_callback: `/create/extra/${option}` }
+					}}
+				/>
+			);
 
 		const close = () => this.setState({ open: false });
 		const back = () => this.setState({ back: false });

@@ -1,6 +1,7 @@
 import React from 'react';
 import './UserTops.scss';
 import DragDrop from './DragDrop';
+
 let moviess = [
 	{ title: 'Big Beauty reunion', id: 123 },
 	{ title: 'THE BIG LEBOWSKI', id: 456 }
@@ -15,11 +16,21 @@ const reorder = (list, startIndex, endIndex): any => {
 	return result;
 };
 
-interface IUserTopsProps {}
+interface IUserTopsProps {
+	location?: {
+		state?: {
+			url_callback?: string;
+		};
+	};
+	history?: {
+		push: (path: string) => any;
+	};
+}
 
 interface IMovie {
 	inputMovies: Array<any>;
 }
+
 class UserTops extends React.Component<IUserTopsProps, IMovie> {
 	constructor(props) {
 		super(props);
@@ -48,10 +59,26 @@ class UserTops extends React.Component<IUserTopsProps, IMovie> {
 
 		this.setState({ inputMovies });
 	};
+
 	render() {
 		const { inputMovies } = this.state;
+
+		const url_callback =
+			this.props.location &&
+			this.props.location.state &&
+			this.props.location.state.url_callback;
+		const redirect = () =>
+			url_callback
+				? this.props.history && this.props.history.push(url_callback)
+				: null;
+
 		return (
 			<div className="user-tops">
+				{url_callback && (
+					<button onClick={redirect} className={'btn'}>
+						Back to story
+					</button>
+				)}
 				<DragDrop
 					deleteFilmInput={this.deleteFilmInput}
 					inputMovies={inputMovies}

@@ -1,5 +1,7 @@
 @import '../../../styles/variables.scss';
 
+$btn-height: 36px;
+
 .user-tops {
 	font-family: $base-font-family;
 	font-size: 16px;
@@ -8,6 +10,30 @@
 	letter-spacing: 0.533333px;
 }
 
+.btn {
+	font-size: 18px;
+	font-weight: 600;
+	line-height: 22px;
+
+	display: inline-flex;
+
+	height: $btn-height;
+	margin: 0;
+	padding: 5px;
+
+	cursor: pointer;
+	transition: all 0.4s;
+	text-align: center;
+	text-decoration: none;
+	letter-spacing: 0.4px;
+
+	color: #fff;
+	border: none;
+	border-radius: 55px;
+	background-color: #ff6501;
+
+	justify-content: center;
+}
 .film-input {
 	width: 100%;
 	padding: 12px 15px 15px 12px;

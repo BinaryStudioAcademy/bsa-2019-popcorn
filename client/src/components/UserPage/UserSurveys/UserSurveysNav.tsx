@@ -83,6 +83,7 @@ const UserSurveysNav: React.FC<IProps> = (props: IProps) => {
 				path={mainPath}
 				render={props => (
 					<UserSurveys
+						{...props}
 						updateInfo={updateInfo}
 						surveys={state}
 						mainPath={mainPath}
