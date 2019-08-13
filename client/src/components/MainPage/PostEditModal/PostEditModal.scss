@@ -1,0 +1,40 @@
+@import 'src/styles/variables.scss';
+
+.post-modal-container {
+	position: absolute;
+	right: 0;
+	top: 100%;
+	z-index: 100;
+
+	.post-modal {
+		z-index: 100;
+		width: 200px;
+		background-color: $background-gray;
+		margin-left: auto;
+		color: $text-base-color;
+
+		button {
+			display: block;
+			border: none;
+			height: 35px;
+			padding: 1% 28%;
+			width: 100%;
+			background-color: transparent;
+			border-bottom: 0.5px solid rgba($color: $black, $alpha: 0.3);
+			font-size: $menu-font-size;
+			font-family: $base-font-family;
+			font-weight: 600;
+			color: $text-base-color;
+			cursor: pointer;
+		}
+
+		button:active,
+		button:focus {
+			outline: none;
+		}
+
+		.delete {
+			color: #ed4956;
+		}
+	}
+}

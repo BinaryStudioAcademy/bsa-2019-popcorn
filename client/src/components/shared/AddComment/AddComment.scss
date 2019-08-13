@@ -1,30 +1,43 @@
-@import "../../../styles/variables.scss";
+@import '../../../styles/variables.scss';
 
-.comment-form{
-    padding: 1em;
-    text-align: left;
-    position: relative;
+.comment-form {
+	display: flex;
+	align-items: center;
+	padding: 1em;
+	margin-top: 0.5em;
+	text-align: left;
+	position: relative;
+	border-top: 2px solid #e5e5e5;
+	.comment-input {
+		border: none;
+		height: 100%;
+		width: 80%;
+		font-family: $base-font-family;
+		font-style: normal;
+		font-weight: 600;
+		font-size: 16px;
+		line-height: 19px;
+		letter-spacing: 0.4px;
+		color: $text-secondary-color;
+		outline: none;
+	}
+	.publish-button {
+		display: flex;
+		margin-left: auto;
+		align-items: flex-end;
+		font-family: $base-font-family;
+		font-style: normal;
+		font-weight: 600;
+		line-height: 19px;
+		letter-spacing: 0.4px;
+
+		svg {
+			width: 20px;
+			height: 20px;
+		}
+	}
 }
-.comment-input{
-    border: none;    
-    height: 100%;
-    font-family: $base-font-family;
-    font-style: normal;
-    font-weight: 600;
-    font-size: 16px;
-    line-height: 19px;
-    letter-spacing: 0.4px;
-    color: $text-secondary-color;
-    outline: none;
-}
-.publish-button{
-    position: absolute;
-    right: 1em;
-    font-family: $base-font-family;
-    font-style: normal;
-    font-weight: 600;
-    font-size: 16px;
-    line-height: 19px;
-    letter-spacing: 0.4px;
-    color: $button-publish-color;
+.comment-form-reply {
+	margin-top: 5px;
+	border: 2px solid #e5e5e5;
 }

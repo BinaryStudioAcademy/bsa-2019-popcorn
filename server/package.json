@@ -3,13 +3,38 @@
   "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",
+  "scripts": {
+    "start": "nodemon",
+    "start-server": "ts-node ./",
+    "lint": "tslint -c tslint.json -p tsconfig.json --exclude **/*.d.ts"
+  },
+  "nodemonConfig": {
+    "ignore": [
+      "**/*.test.ts",
+      "**/*.spec.ts",
+      "./git",
+      "node_modules"
+    ],
+    "watch": [
+      "./"
+    ],
+    "exec": "./node_modules/.bin/ts-node ./index.ts",
+    "ext": "ts"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "pretty-quick --staged"
+    }
+  },
   "dependencies": {
+    "@sendgrid/mail": "^6.4.0",
     "@types/dotenv": "^6.1.1",
     "@types/express": "^4.17.0",
     "@types/node": "^12.6.9",
     "@types/passport-jwt": "^3.0.1",
     "body-parser": "^1.19.0",
     "cors": "^2.8.5",
+    "crypto": "^1.0.1",
     "dotenv": "^8.0.0",
     "express": "^4.17.1",
     "fs": "^0.0.1-security",
@@ -17,6 +42,8 @@
     "multiparty": "^4.2.1",
     "node-fetch": "^2.6.0",
     "passport": "^0.4.0",
+    "passport-facebook": "^3.0.0",
+    "passport-google-oauth2": "^0.2.0",
     "passport-jwt": "^4.0.0",
     "passport-local": "^1.0.0",
     "pg": "^7.12.0",
@@ -26,12 +53,13 @@
     "typescript": "^3.5.3",
     "uuid": "^3.3.2"
   },
-  "scripts": {
-    "start-server": "ts-node ./"
-  },
   "devDependencies": {
-    "@types/passport-local": "^1.0.33",
     "@types/multiparty": "^0.0.32",
-    "prettier": "1.18.2"
+    "@types/passport-local": "^1.0.33",
+    "prettier": "1.18.2",
+    "husky": "^3.0.3",
+    "pretty-quick": "^1.11.1",
+    "tslint": "^5.18.0",
+    "tslint-config-prettier": "^1.18.0"
   }
 }
