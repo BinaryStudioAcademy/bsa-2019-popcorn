@@ -13,11 +13,12 @@ import { NavLink } from 'react-router-dom';
 import { setMovieSeries } from '../../MovieSeriesPage/Movie.redux/actions';
 
 interface IProps {
-	userInfo?: {
+	userInfo: {
 		//temporary put ? to use mocks inside component
 		name: string;
 		image: string;
 	};
+	isAuthorized: boolean;
 	movies?: Array<string>;
 	tv?: Array<string>;
 	ratings?: Array<string>;
@@ -44,15 +45,17 @@ const user = {
 const mock = ['Movies in cinema', 'Top movies', 'On DVD'];
 
 const Header = ({
-	userInfo = user,
+	userInfo,
 	movies = mock,
 	tv = mock,
 	ratings = mock,
 	moviesSearch,
 	fetchFilms,
 	alreadySearch,
-	setMovieSeries
+	setMovieSeries,
+	isAuthorized
 }: IProps) => {
+	console.log(isAuthorized);
 	return (
 		<div className="header">
 			<NavLink to="/" className="header-logo-link">
