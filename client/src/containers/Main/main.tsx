@@ -62,7 +62,7 @@ const Main = ({isAuthorized, userInfo, movieList, fetchMovieList, setMovieSeries
         return <Redirect to="/login"/>;
     return (
         <div className="main-page">
-            <MainPageSidebar userInfo={userInfo} notifications={notifications}/>
+            <MainPageSidebar notifications={notifications}/>
             <div className='main-content'>
                 <Switch>
                     <Route exact path={`/`} component={MainPage}/>
