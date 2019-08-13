@@ -11,7 +11,6 @@ interface IProps {
 		image: string;
 	};
 	notifications: {
-		newFriends: number;
 		newMessages: number;
 		newEvents: number;
 	};
@@ -30,14 +29,6 @@ const MainPageSidebar = ({ userInfo, notifications }: IProps) => {
 			<div className="menu">
 				<div>
 					<NavLink to={'/'}>Home</NavLink>
-				</div>
-				<div>
-					<p>Friends</p>
-					{notifications.newFriends !== 0 && (
-						<p className="notifications">
-							<span>{notifications.newFriends}</span>
-						</p>
-					)}
 				</div>
 				<div>
 					<p>Messages</p>
