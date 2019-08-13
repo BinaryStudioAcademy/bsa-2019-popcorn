@@ -1,9 +1,7 @@
-import {EntityRepository, Repository} from "typeorm";
-import {Story} from "../entities/Story";
+import { EntityRepository, Repository } from "typeorm";
+import { Story } from "../entities/Story";
 
 @EntityRepository(Story)
-class StoryRepository extends Repository<Story>{
-    
-}
+class StoryRepository extends Repository<Story> {}
 
 export default StoryRepository;

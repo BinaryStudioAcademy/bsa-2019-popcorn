@@ -1,7 +1,7 @@
-import {FETCH_STORIES} from "./actionTypes";
+import { FETCH_STORIES } from './actionTypes';
 
 export const fetchStories = () => {
-    return{
-        type: FETCH_STORIES
-    }
+	return {
+		type: FETCH_STORIES
+	};
 };

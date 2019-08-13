@@ -63,20 +63,18 @@ const favShows: Array<{ id: string, movie: string }> = [
 //     </svg>
 // );
 
-
 class ProfileComponent extends Component<ProfileProps> {
-    constructor(props: ProfileProps) {
-        super(props);
-    }
+	constructor(props: ProfileProps) {
+		super(props);
+	}
 
-    handleUploadFile(e) {
-        const data = new FormData();
-        data.append('file', e.target.files[0]);
-        if (this.props.uploadAvatar)
-            this.props.uploadAvatar(data, this.props.profileInfo.id);
-        else
-            console.log('no uploadAvatar method')
-    }
+	handleUploadFile(e) {
+		const data = new FormData();
+		data.append('file', e.target.files[0]);
+		if (this.props.uploadAvatar)
+			this.props.uploadAvatar(data, this.props.profileInfo.id);
+		else console.log('no uploadAvatar method');
+	}
 
     render() {
         const {name, location, about, male, female, avatar, id} = this.props.profileInfo;
