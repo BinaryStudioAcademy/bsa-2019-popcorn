@@ -1,7 +1,8 @@
 import React from 'react';
 import RecommendItem from '../RecommendItem/RecommendItem';
 import './RecommendList.scss';
-import { ReactComponent as StaredIcon } from '../../../assets/icons/general/movie/staredIcon.svg';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faStar } from '@fortawesome/free-solid-svg-icons';
 
 type RecommendList = {};
 
@@ -9,8 +10,8 @@ const RecommendList: React.FC = ({  }: RecommendList) => {
 	return (
 		<div className="recommend-list">
 			<div className="recommend-heading">
+				<FontAwesomeIcon icon={faStar} />
 				<span>Recommended </span>
-				<StaredIcon width="16" height="14" />
 			</div>
 			<RecommendItem
 				recommendItem={{

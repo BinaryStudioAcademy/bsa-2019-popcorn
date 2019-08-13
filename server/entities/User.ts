@@ -1,7 +1,8 @@
-import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
-
+import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from "typeorm";
 import { Top } from "./Top";
 import { Story } from "./Story";
+import { Surveys } from "./Surveys";
+import { SurveysQuestionAnswer } from "./SurveysQuestionAnswer";
 import { Voting } from "../entities/Voting";
 import { VotingOptionReaction } from "../entities/VotingOptionReaction";
 
@@ -42,6 +43,15 @@ export class User {
 
   @OneToMany(type => Story, story => story.user)
   stories: Story[];
+
+  @OneToMany(type => Surveys, surveys => surveys.user)
+  surveys: Surveys[];
+
+  @OneToMany(
+    type => SurveysQuestionAnswer,
+    surveysQuestionAnswer => surveysQuestionAnswer.user
+  )
+  surveysQuestionAnswer: SurveysQuestionAnswer[];
 
   @Column({ default: "", nullable: true })
   reset_token: string;
