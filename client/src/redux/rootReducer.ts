@@ -4,6 +4,7 @@ import profileHeader from '../components/UserPage/reducer';
 import storyReducer from '../components/MainPage/StoryList/story.redux/reducer';
 import feedReducer from '../components/MainPage/FeedBlock/FeedBlock.redux/reducer';
 import eventsReducer from '../components/UserPage/UserEvents/reduser';
+import userTopsReducer from '../components/UserPage/UserTops/reducer';
 
 const reducers = {};
 
@@ -13,5 +14,6 @@ export default combineReducers({
 	profile: profileHeader,
 	story: storyReducer,
 	feed: feedReducer,
-	events: eventsReducer
+	events: eventsReducer,
+	userTops: userTopsReducer
 });
