@@ -1,5 +1,6 @@
 import React from 'react';
 import './PostStoryEditor.scss';
+import ImageUploader from '../ImageUploader/ImageUploader';
 
 // example:
 {
@@ -13,11 +14,9 @@ interface IPostStoryEditorProps {
 }
 
 interface IPostStoryEditorState {
-	imageUrl?: string;
-	errorMsg?: string;
-	isUploading: boolean;
 	body: string;
 	checkboxValue: boolean;
+	imageUrl: string;
 }
 
 class PostStoryEditor extends React.Component<
@@ -27,18 +26,16 @@ class PostStoryEditor extends React.Component<
 	constructor(props: IPostStoryEditorProps) {
 		super(props);
 		this.state = {
-			imageUrl: undefined,
-			errorMsg: '',
-			isUploading: false,
 			body: '',
-			checkboxValue: false
+			checkboxValue: false,
+			imageUrl: ''
 		};
 
 		this.onCancel = this.onCancel.bind(this);
 		this.onSave = this.onSave.bind(this);
 		this.onChangeData = this.onChangeData.bind(this);
 		this.onToggleCheckbox = this.onToggleCheckbox.bind(this);
-		this.handleUploadFile = this.handleUploadFile.bind(this);
+		this.imageStateHandler = this.imageStateHandler.bind(this);
 	}
 
 	componentDidMount() {
@@ -85,7 +82,7 @@ class PostStoryEditor extends React.Component<
 	onCancel() {
 		this.setState({
 			...this.state,
-			imageUrl: undefined,
+			imageUrl: '',
 			body: '',
 			checkboxValue: false
 		});
@@ -115,30 +112,10 @@ class PostStoryEditor extends React.Component<
 		this.onCancel();
 	}
 
-	handleUploadFile({ target }) {
-		this.setState({ isUploading: true, errorMsg: '' });
-
-		if (target.files[0] && target.files[0].size > 1048576 * 3) {
-			target.value = '';
-			this.setState({
-				isUploading: false,
-				errorMsg: 'File is too big! (max 3MB)'
-			});
-			return;
-		}
-
-		const data = new FormData();
-		data.append('file', target.files[0]);
-
-		this.props
-			.uploadImage(data)
-			.then(({ imageUrl }) => {
-				this.setState({ imageUrl, isUploading: false, errorMsg: '' });
-			})
-			.catch(error => {
-				this.setState({ isUploading: false, errorMsg: error.message });
-			});
-		target.value = '';
+	imageStateHandler(data) {
+		this.setState({
+			imageUrl: data
+		});
 	}
 
 	render() {
@@ -165,21 +142,10 @@ class PostStoryEditor extends React.Component<
 						</p>
 					)}
 					<div>
-						{this.state.errorMsg && (
-							<span className="upload-error">{this.state.errorMsg}</span>
-						)}
-						<input
-							name="image"
-							type="file"
-							onChange={this.handleUploadFile}
-							className="upload-image"
-							id="image"
-							accept=".jpg, .jpeg, .png"
-							disabled={this.state.isUploading}
+						<ImageUploader
+							imageHandler={this.props.uploadImage}
+							imageStateHandler={this.imageStateHandler}
 						/>
-						<label htmlFor="image" className="upload-image-button">
-							Upload image
-						</label>
 						<button className="cancel-btn" onClick={this.onCancel}>
 							Cancel
 						</button>
