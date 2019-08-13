@@ -42,6 +42,15 @@ interface IProps {
 	resetMessage: string;
 	restoreMessage: string;
 	fetchRestorePassword: (password: string, token: string) => any;
+	profileInfo: {
+		id: string;
+		name: string;
+		male: boolean;
+		female: boolean;
+		location: string;
+		about: string;
+		avatar: string;
+	};
 }
 
 const Routing = ({
@@ -54,16 +63,22 @@ const Routing = ({
 	registerError,
 	fetchResetPassword,
 	restoreMessage,
-	fetchRestorePassword
+	fetchRestorePassword,
+	profileInfo
 }: IProps) => {
 	const token = localStorage.getItem('token');
 	if (token && !isAuthorized) {
 		fetchByToken(token);
 		return <Spinner />;
 	}
+
 	return (
 		<div>
-			<Header />
+			{isAuthorized ? (
+				<Header
+					userInfo={{ name: profileInfo.name, image: profileInfo.avatar }}
+				/>
+			) : null}
 			<Switch>
 				<Route
 					exact
@@ -123,7 +138,8 @@ const mapStateToProps = (rootState, props) => ({
 	loginError: rootState.profile.loginError,
 	registerError: rootState.profile.registerError,
 	resetMessage: rootState.profile.resetMessage,
-	restoreMessage: rootState.profile.restoreMessage
+	restoreMessage: rootState.profile.restoreMessage,
+	profileInfo: rootState.profile.profileInfo
 });
 
 const actions = {
