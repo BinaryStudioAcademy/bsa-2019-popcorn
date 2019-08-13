@@ -1,72 +1,55 @@
 import React from 'react';
 import './UserTops.scss';
-import DragDrop from './DragDrop';
-let moviess = [
-    { title: "Big Beauty reunion", id: 123 },
-    { title: "THE BIG LEBOWSKI", id: 456 }
+import TopItem from './TopItem/TopItem';
+import { ITopItem } from './TopItem/TopItem'
+
+export interface IUserTopsState {
+    topList: ITopItem[];
+}
+
+const topItemsMock: ITopItem[] = [
+    { id: "1", title: "My Top 1", moviesList: [{ title: "The Avengers", id: "1",comment:"Nice" }, { title: "Spider-Man", id: "2",comment:"Nice" }, { title: "Batman", id: "3",comment:"Nice" }] },
+    { id: "2", title: "My Top 2", moviesList: [{ title: "The Avengers", id: "1",comment:"Nice" }, { title: "Spider-Man", id: "2",comment:"Nice" }, { title: "Batman", id: "3",comment:"Nice" }] },
+    { id: "3", title: "My Top 3", moviesList: [{ title: "The Avengers", id: "1",comment:"Nice" }, { title: "Spider-Man", id: "2",comment:"Nice" }, { title: "Batman", id: "3",comment:"Nice" }] },
 ]
 
-
-// a little function to help us with reordering the result
-const reorder = (list, startIndex, endIndex): any => {
-    const result = Array.from(list);
-    const [removed] = result.splice(startIndex, 1);
-    result.splice(endIndex, 0, removed);
-
-    return result;
-};
-
-interface IUserTopsProps {
-  
+const newTop = (): ITopItem => {
+    return { id: Date.now().toString(), title: "", moviesList: [] }
 }
 
-interface IMovie {
-    inputMovies: Array<any>
-}
-class UserTops extends React.Component<IUserTopsProps, IMovie> {
-
+class UserTops extends React.Component<{}, IUserTopsState> {
     constructor(props) {
         super(props);
         this.state = {
-            inputMovies: moviess
-        };
-        this.onDragEnd = this.onDragEnd.bind(this);
-    }
-
-    onDragEnd(result) {
-        if (!result.destination) {
-            return;
+            topList: topItemsMock
         }
-        const updatedItems = reorder(
-            this.state.inputMovies,
-            result.source.index,
-            result.destination.index
-        );
-        this.setState({ inputMovies: updatedItems });
     }
 
-    deleteFilmInput = (movieId: number) => {
-        const inputMovies = this.state.inputMovies.filter(movie => movie.id !== movieId);
-
-        this.setState({ inputMovies })
+    deleteTop = (topId: string) => {
+        const topList = this.state.topList.filter((topItem: ITopItem) => topItem.id !== topId);
+        this.setState({ topList });
     }
+
+    createTop = () => {
+        const { topList } = this.state;
+        this.setState({ topList: [...topList, newTop()] })
+    }
+
+    saveUserTop = (updatedTopItem: ITopItem) => {
+        const topList = this.state.topList.map(topItem => topItem.id === updatedTopItem.id ? updatedTopItem : topItem);
+        console.log('updated topitem',updatedTopItem)
+        this.setState({ topList });
+    }
+
     render() {
-        const { inputMovies } = this.state;
+        const topList = this.state.topList;
         return (
-            <div className="user-tops">
-                <DragDrop
-                    deleteFilmInput={this.deleteFilmInput}
-                    inputMovies={inputMovies}
-                    onDragEnd={this.onDragEnd}
-                />
-                <div className='add-film'
-                    onClick={() => this.setState({ inputMovies: [...this.state.inputMovies, { title: "", id: Date.now() }] })}>Add film</div>
-            </div >
+            <div>
+                <div className="create-top-button hover" onClick={this.createTop}> Create Top </div>
+                {topList.map((topItem: ITopItem) => <TopItem key={topItem.id} saveUserTop={this.saveUserTop} topItem={topItem} deleteTop={this.deleteTop} />)}
+            </div>
         )
     }
 }
-
-
-
 
 export default UserTops;

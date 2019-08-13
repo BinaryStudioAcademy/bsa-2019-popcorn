@@ -1,0 +1,98 @@
+@import '../../../../../styles/variables.scss';
+
+.top-constructor,
+.top-title-input,
+.film-input {
+	border: 1px solid $border-color;
+	box-shadow: 0px 0px 11px $input-shadow-color;
+}
+.top-constructor {
+	font-family: $base-font-family;
+	font-size: $form-font-size;
+	line-height: 19px;
+	color: $text-secondary-color;
+	letter-spacing: $input-letter-spacing;
+	border-top: none;
+}
+
+.top-title-input,
+.film-input {
+	font-family: $base-font-family;
+	width: 100%;
+	padding: 12px 15px 15px 12px;
+	margin-top: 18px;
+	letter-spacing: $input-letter-spacing;
+	color: $text-secondary-color;
+	border-radius: 3px;
+}
+
+.film-input-wrap {
+	display: grid;
+	grid-template-columns: 40px 1fr;
+	margin-left: 20px;
+}
+
+.film-input-item {
+	font-family: $base-font-family;
+	width: 400px;
+	margin: auto;
+	width: 100%;
+	position: relative;
+	display: grid;
+	align-items: center;
+	grid-template-columns: 1fr 30px;
+}
+.film-input-item {
+	img {
+		vertical-align: middle;
+		cursor: pointer;
+		margin-top: 18px;
+	}
+}
+.top-buttons-container {
+	display: flex;
+	justify-content: space-evenly;
+
+	.save-top-button {
+		color: $black;
+	}
+
+	.top-buttons {
+		color: $text-secondary-color;
+		margin: 20px;
+		font-weight: bold;
+		border: 1px solid $border-color;
+		box-shadow: 0px 0px 10px $input-shadow-color;
+		margin: 20px;
+		padding: 10px;
+		font-weight: bold;
+		border-radius: 3px;
+	}
+}
+
+.film-input-item:hover {
+	.modal {
+		transform: scaleY(1);
+		padding-top: 10px;
+		width: 400px;
+	}
+}
+
+.numeration {
+	margin-top: 18px;
+	font-size: $form-font-size;
+	line-height: 19px;
+	color: $black;
+	letter-spacing: $input-letter-spacing;
+	padding-top: 11px;
+}
+
+.comment-film-input {
+	font-family: $base-font-family;
+	margin: 20px 0px;
+	height: 50px;
+}
+
+.modal-top {
+	margin-top: -90px;
+}

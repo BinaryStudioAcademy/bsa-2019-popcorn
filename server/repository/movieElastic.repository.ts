@@ -15,13 +15,13 @@ export const getAll = async () => {
 };
 
 
-export const getByTitle = async () => {
+export const getByTitle = async (title: string) => {
     const response = await fetch(process.env.ELASTIC_API_URL + "/popcorn/_search", {
         method: "POST",
         body: JSON.stringify({
             "query": {
                 "match": {
-                    "original_title": "Big"
+                    "original_title": `"${title}"`
                 }
             }
         })

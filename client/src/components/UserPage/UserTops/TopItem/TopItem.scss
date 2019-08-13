@@ -1,0 +1,45 @@
+@import '../../../../styles/variables.scss';
+
+.top-item,
+.edit-top,
+.delete-top {
+	border: 1px solid $border-color;
+	box-shadow: 0px 0px 11px $border-color;
+}
+
+.top-item {
+	color: $text-secondary-color;
+
+	border-radius: 3px;
+	display: grid;
+	grid-template-columns: 1fr 60px 60px;
+	align-items: center;
+	min-height: 60px;
+	margin-top: 20px;
+
+	.top-item-title {
+		padding-left: 30px;
+		font-size: 24px;
+	}
+
+	.edit-top {
+		padding: 10px;
+	}
+
+	.delete-top {
+		margin: 10px;
+		padding: 4px;
+	}
+
+	.edit-top,
+	.delete-top {
+		color: $text-secondary-color;
+		justify-self: end;
+		border-radius: 3px;
+	}
+	
+	.top-title-input {
+		margin: 5px;
+		font-size: $form-font-size;
+	}
+}

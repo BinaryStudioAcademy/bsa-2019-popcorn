@@ -1,6 +1,7 @@
-import React from 'react';
+import React,{useState} from 'react';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import FilmInput from './FilmInput';
+import { IMovie } from '../TopItem';
 
 const grid = 8;
 
@@ -13,16 +14,16 @@ const getItemStyle = (isDragging, draggableStyle) => ({
 
 const getListStyle = isDraggingOver => ({
     padding: grid,
-    width: 250
 });
 
-interface IDragDropProps {
-    inputMovies: Array<{ id: number, title: string }>;
-    onDragEnd: (result:any) => void;
-    deleteFilmInput: (movieId: number) => void;
+export interface IDragDropProps {
+    moviesList: IMovie[];
+    onDragEnd: (result: any) => void;
+    deleteFilmInput: (movieId: string) => void;
+    saveMovie: (movie: IMovie) => void;
 }
 
-const DragDrop: React.FC<IDragDropProps> = ({ inputMovies, onDragEnd, deleteFilmInput }) => {
+const DragDrop: React.FC<IDragDropProps> = ({ saveMovie, moviesList, onDragEnd, deleteFilmInput }) => {
     return (<DragDropContext onDragEnd={onDragEnd}>
         <Droppable className="user-tops" droppableId="droppable">
             {(provided, snapshot) => (
@@ -31,7 +32,7 @@ const DragDrop: React.FC<IDragDropProps> = ({ inputMovies, onDragEnd, deleteFilm
                     ref={provided.innerRef}
                     style={getListStyle(snapshot.isDraggingOver)}
                 >
-                    {inputMovies.map((movie, index) => (
+                    {moviesList.map((movie, index) => (
                         <Draggable className="film-input-item" key={movie.id} draggableId={movie.id} index={index}>
                             {(provided, snapshot) => (
                                 <div ref={provided.innerRef}
@@ -42,11 +43,15 @@ const DragDrop: React.FC<IDragDropProps> = ({ inputMovies, onDragEnd, deleteFilm
                                         snapshot.isDragging,
                                         provided.draggableProps.style
                                     )}>
-                                    <span>
+                                    <div className="film-input-wrap">
+                                        <div className="numeration">{index + 1}</div>
                                         <FilmInput
                                             movie={movie}
-                                            deleteFilmInput={deleteFilmInput} />
-                                    </span>
+                                            saveMovie={saveMovie}
+                                            deleteFilmInput={deleteFilmInput}
+                                        />
+                                       
+                                    </div>
                                 </div>
                             )}
                         </Draggable>
