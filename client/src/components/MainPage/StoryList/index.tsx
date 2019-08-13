@@ -1,0 +1,63 @@
+import StoryList from './story-list/story-list';
+import { fetchStories } from './story.redux/actions';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import React from 'react';
+import { Route, Switch } from 'react-router-dom';
+
+interface IStoryListItem {
+	caption: string;
+	image_url: string;
+	user: {
+		avatar: string;
+		any;
+	};
+	any;
+}
+
+interface IProps {
+	scrollStep: number;
+	stories: null | Array<IStoryListItem>;
+	fetchStories: () => any;
+	avatar: null | string;
+}
+
+const getAddStoryPopupContent = () => {
+	console.log('hear');
+	return (
+		<div className={'modal modal-story'}>
+			<div className={'content-wrp'}></div>
+
+			<div className={'btn-wrp'}>
+				<button className={'btn'}>Cancel</button>
+				<button className={'btn'}>Save</button>
+			</div>
+		</div>
+	);
+};
+const ListBlock = ({ ...props }: IProps) => {
+	return (
+		<div>
+			<StoryList {...props} />
+			<Switch>
+				<Route path={`/create`} component={() => getAddStoryPopupContent()} />
+			</Switch>
+		</div>
+	);
+};
+
+const mapStateToProps = (rootState, props) => ({
+	...props,
+	stories: rootState.story.stories,
+	avatar: rootState.profile.profileInfo && rootState.profile.profileInfo.avatar
+});
+
+const actions = {
+	fetchStories
+};
+const mapDispatchToProps = dispatch => bindActionCreators(actions, dispatch);
+
+export default connect(
+	mapStateToProps,
+	mapDispatchToProps
+)(ListBlock);

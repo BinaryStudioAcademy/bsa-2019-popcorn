@@ -1,11 +1,56 @@
+@import '../../../../styles/variables';
+
+$height: 75vh;
+$width: 50vw;
+$btn-height: 36px;
+
 .modal-story {
 	display: block;
 	position: fixed;
 	top: 50%;
 	left: 50%;
-	width: 50%;
-	height: 200px;
+	width: $width;
+	height: $height;
 	transform: translate(-50%, -50%);
-	background-color: #fff;
+	background-color: $background-gray;
 	z-index: 9;
+
+	.content-wrp {
+	}
+
+	.btn-wrp {
+		position: absolute;
+		bottom: 0;
+		left: 0;
+		display: flex;
+		justify-content: space-around;
+		flex-direction: row;
+		width: 100%;
+	}
+
+	.btn {
+		font-size: 18px;
+		font-weight: 600;
+		line-height: 22px;
+
+		display: inline-flex;
+
+		min-width: 174px;
+		height: $btn-height;
+		margin: 0;
+		padding: 0;
+
+		cursor: pointer;
+		transition: all 0.4s;
+		text-align: center;
+		text-decoration: none;
+		letter-spacing: 0.4px;
+
+		color: #fff;
+		border: none;
+		border-radius: 55px;
+		background-color: #ff6501;
+
+		justify-content: center;
+	}
 }

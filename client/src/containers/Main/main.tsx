@@ -70,7 +70,7 @@ const Main = ({
 			<MainPageSidebar userInfo={userInfo} notifications={notifications} />
 			<div>
 				<Switch>
-					<Route exact path={`/`} component={MainPage} />
+					<Route exact path={[`/`, '/create*']} component={MainPage} />
 					<Route path={`/user-page`} component={UserPage} />
 					<Route path={`/event-page`} component={EventPage} />
 					<Route
