@@ -19,7 +19,6 @@ interface IProps {
 		name: string;
 		image: string;
 	};
-	isAuthorized: boolean;
 	movies?: Array<string>;
 	tv?: Array<string>;
 	ratings?: Array<string>;
@@ -53,10 +52,8 @@ const Header = ({
 	moviesSearch,
 	fetchFilms,
 	alreadySearch,
-	setMovieSeries,
-	isAuthorized
+	setMovieSeries
 }: IProps) => {
-	console.log(userInfo);
 	return (
 		<div className="header">
 			<NavLink to="/" className="header-logo-link">
