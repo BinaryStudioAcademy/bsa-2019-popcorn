@@ -9,7 +9,7 @@
 }
 
 .film-input {
-	width: 100%;
+	width: 400px;
 	padding: 12px 15px 15px 12px;
 	margin-top: 18px;
 	letter-spacing: 0.533333px;
@@ -17,10 +17,12 @@
 	border: 1px solid rgba(0, 0, 0, 0.11);
 	box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.04);
 	border-radius: 3px;
+	margin-right: 5px;
 }
 .film-input-item {
-	width: 400px;
-	margin: auto;
+	margin: 0 auto;
+	display: flex;
+	justify-content: flex-start;
 }
 .film-input-item {
 	img {

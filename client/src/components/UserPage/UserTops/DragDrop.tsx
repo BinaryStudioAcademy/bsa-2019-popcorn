@@ -12,8 +12,7 @@ const getItemStyle = (isDragging, draggableStyle) => ({
 });
 
 const getListStyle = isDraggingOver => ({
-	padding: grid,
-	width: 250
+	padding: grid
 });
 
 interface IDragDropProps {
@@ -53,12 +52,12 @@ const DragDrop: React.FC<IDragDropProps> = ({
 											provided.draggableProps.style
 										)}
 									>
-										<span>
+										<div>
 											<FilmInput
 												movie={movie}
 												deleteFilmInput={deleteFilmInput}
 											/>
-										</span>
+										</div>
 									</div>
 								)}
 							</Draggable>
