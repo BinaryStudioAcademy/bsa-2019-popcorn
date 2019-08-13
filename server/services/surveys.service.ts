@@ -33,9 +33,14 @@ export const deleteSurveysById = async (id: string, next): Promise<{}> => {
   );
 };
 
-export const updateSurveysById = async (id: string, next): Promise<Surveys> => {
+export const updateSurveysById = async (
+  id: string,
+  body,
+  next
+): Promise<Surveys> => {
   return await getCustomRepository(SurveysRepository).updateSurveysById(
     id,
+    body,
     next
   );
 };
