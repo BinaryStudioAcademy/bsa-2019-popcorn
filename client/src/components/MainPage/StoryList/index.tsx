@@ -6,6 +6,7 @@ import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 import GetAddStoryPopupContent from './story-modal/create-story';
 import ChooseExtra from './story-modal/choose-extra';
+import ChooseExtraOption from './story-modal/choose-extra-option';
 
 interface IStoryListItem {
 	caption: string;
@@ -31,6 +32,7 @@ const ListBlock = ({ ...props }: IProps) => {
 			<Switch>
 				<Route exact path={`/create`} component={GetAddStoryPopupContent} />
 				<Route exact path={`/create/extra`} component={ChooseExtra} />
+				<Route path={`/create/extra/:option`} component={ChooseExtraOption} />
 			</Switch>
 		</div>
 	);
