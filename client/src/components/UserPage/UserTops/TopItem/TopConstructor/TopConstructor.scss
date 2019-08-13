@@ -95,6 +95,10 @@
 	}
 }
 
+.hover {
+	cursor: pointer;
+}
+
 .film-input-item:hover {
 	.modal {
 		transform: scaleY(1);

@@ -2,15 +2,23 @@ import React from 'react';
 import './UserTops.scss';
 import TopItem from './TopItem/TopItem';
 import { ITopItem } from './TopItem/TopItem';
-
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { uploadImage } from './actions';
 export interface IUserTopsState {
 	topList: ITopItem[];
+}
+interface IUserTopProps {
+	uploadImage: (data: FormData, titleId: string) => void;
+	uploadUrl: string;
+	urlForTop: string;
 }
 
 const topItemsMock: ITopItem[] = [
 	{
 		id: '1',
 		title: 'My Top 1',
+		titleImageUrl: '',
 		moviesList: [
 			{ title: 'The Avengers', id: '1', comment: 'Nice' },
 			{ title: 'Spider-Man', id: '2', comment: 'Nice' },
@@ -20,6 +28,7 @@ const topItemsMock: ITopItem[] = [
 	{
 		id: '2',
 		title: 'My Top 2',
+		titleImageUrl: '',
 		moviesList: [
 			{ title: 'The Avengers', id: '1', comment: 'Nice' },
 			{ title: 'Spider-Man', id: '2', comment: 'Nice' },
@@ -29,6 +38,7 @@ const topItemsMock: ITopItem[] = [
 	{
 		id: '3',
 		title: 'My Top 3',
+		titleImageUrl: '',
 		moviesList: [
 			{ title: 'The Avengers', id: '1', comment: 'Nice' },
 			{ title: 'Spider-Man', id: '2', comment: 'Nice' },
@@ -38,10 +48,15 @@ const topItemsMock: ITopItem[] = [
 ];
 
 const newTop = (): ITopItem => {
-	return { id: Date.now().toString(), title: '', moviesList: [] };
+	return {
+		id: Date.now().toString(),
+		title: '',
+		moviesList: [],
+		titleImageUrl: ''
+	};
 };
 
-class UserTops extends React.Component<{}, IUserTopsState> {
+class UserTops extends React.Component<IUserTopProps, IUserTopsState> {
 	constructor(props) {
 		super(props);
 		this.state = {
@@ -65,17 +80,35 @@ class UserTops extends React.Component<{}, IUserTopsState> {
 		const topList = this.state.topList.map(topItem =>
 			topItem.id === updatedTopItem.id ? updatedTopItem : topItem
 		);
-		console.log('updated topitem', updatedTopItem);
 		this.setState({ topList });
 	};
 
+	// componentDidUpdate(prevProps) {
+
+	// 	// 	let topList = this.state.topList.map((topItem) =>
+	// 	// 		topItem.titleImageUrl = this.props.uploadUrls[topItem.id])
+	// 	// 	this.setState({ topList });
+	// 	// console.log(topList)
+
+	// }
+	// componentDidUpdate(prevProps) {
+	// 	if (prevProps.uploadUrls !== this.props.uploadUrls) {
+	// 		let topList = this.state.topList.map((topItem) =>
+	// 			topItem.titleImageUrl = this.props.uploadUrls[topItem.id])
+	// 		this.setState({ topList });
+	// 	}
+	// }
+
 	render() {
 		const topList = this.state.topList;
+		// const topList = this.state.topList.map((topItem) => {
+		// 	return { ...topItem, titleImageUrl: this.props.uploadUrls[topItem.id] }
+		// })
+		// console.log(topList)
 		return (
 			<div>
 				<div className="create-top-button hover" onClick={this.createTop}>
-					{' '}
-					Create Top{' '}
+					Create Top
 				</div>
 				{topList.map((topItem: ITopItem) => (
 					<TopItem
@@ -83,6 +116,9 @@ class UserTops extends React.Component<{}, IUserTopsState> {
 						saveUserTop={this.saveUserTop}
 						topItem={topItem}
 						deleteTop={this.deleteTop}
+						uploadUrl={this.props.uploadUrl}
+						urlForTop={this.props.urlForTop}
+						uploadImage={this.props.uploadImage}
 					/>
 				))}
 			</div>
@@ -90,4 +126,19 @@ class UserTops extends React.Component<{}, IUserTopsState> {
 	}
 }
 
-export default UserTops;
+const mapStateToProps = (rootState, props) => ({
+	...props,
+	uploadUrl: rootState.userTops.uploadUrl,
+	urlForTop: rootState.userTops.urlForTop
+});
+
+const actions = {
+	uploadImage
+};
+
+const mapDispatchToProps = dispatch => bindActionCreators(actions, dispatch);
+
+export default connect(
+	mapStateToProps,
+	mapDispatchToProps
+)(UserTops);
