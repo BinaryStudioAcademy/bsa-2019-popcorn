@@ -1,0 +1,30 @@
+[
+	{
+		"name": "users",
+		"label": "Users"
+	},
+	{
+		"name": "movies",
+		"label": "Movies"
+	},
+	{
+		"name": "posts",
+		"label": "Posts"
+	},
+	{
+		"name": "tops",
+		"label": "Tops"
+	},
+	{
+		"name": "stories",
+		"label": "Stories"
+	},
+	{
+		"name": "events",
+		"label": "Events"
+	},
+	{
+		"name": "voting",
+		"label": "Voting"
+	}
+]

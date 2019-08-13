@@ -9,6 +9,7 @@ import MainPage from '../../components/MainPage/MainPage';
 import UserPage from '../../components/UserPage/UserPage';
 import MovieSeriesPage from '../../components/MovieSeriesPage/MovieSeriesPage';
 import EventPage from '../../components/EventPage/EventPage';
+import AdminPanelPage from '../../components/AdminPanelPage/AdminPanelPage';
 
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
@@ -74,6 +75,7 @@ const Main = ({
 					<Route exact path={`/`} component={MainPage} />
 					<Route path={`/user-page`} component={UserPage} />
 					<Route path={`/event-page`} component={EventPage} />
+					<Route path={`/admin-panel-page`} component={AdminPanelPage} />
 					<Route
 						path={`/movie-series`}
 						render={() => <MovieSeriesPage movie={movieSeries} />}
