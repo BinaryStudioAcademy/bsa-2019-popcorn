@@ -21,7 +21,7 @@ deploy:
   local_dir: dpl_cd_upload
   skip_cleanup: true
   on: &2
-    repo: organization/bsa-2019-popcorn
+    repo: BinaryStudioAcademy/bsa-2019-popcorn
   bucket: popcorn-bucket
   region: popcorn
 - provider: codedeploy
