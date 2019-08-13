@@ -6,26 +6,15 @@ import { NavLink } from 'react-router-dom';
 import config from '../../../config';
 
 interface IProps {
-	userInfo: {
-		name: string;
-		image: string;
-	};
 	notifications: {
 		newMessages: number;
 		newEvents: number;
 	};
 }
 
-const MainPageSidebar = ({ userInfo, notifications }: IProps) => {
+const MainPageSidebar = ({ notifications }: IProps) => {
 	return (
 		<div className="left-sidebar">
-			<div className="avatar">
-				<img src={userInfo.image || config.DEFAULT_AVATAR} alt="avatar" />
-				<FontAwesomeIcon icon={faChevronDown} />
-			</div>
-			<p className="user-name">
-				<span>{userInfo.name}</span>
-			</p>
 			<div className="menu">
 				<div>
 					<NavLink to={'/'}>Home</NavLink>

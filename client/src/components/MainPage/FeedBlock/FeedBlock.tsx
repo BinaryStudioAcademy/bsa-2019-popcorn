@@ -20,9 +20,11 @@ const FeedBlock = (props: IProps) => {
 
 	return (
 		<div className={'feed-block'}>
-			{props.posts ? <PostList posts={props.posts} /> : <Spinner />}
-			<RecommendList />
-			<TopList />
+			<div>{props.posts ? <PostList posts={props.posts} /> : <Spinner />}</div>
+			<div>
+				<RecommendList />
+				<TopList />
+			</div>
 		</div>
 	);
 };

@@ -196,7 +196,6 @@ export function* fetchRestorePassword(action) {
 		console.log('profile saga fetch restore password: ', e.message);
 		yield put({ type: RESTORE_ERROR, payload: { message: e.message } });
 	}
-
 }
 
 function* watchFetchFilms() {
