@@ -81,20 +81,18 @@ class StoryViewer extends PureComponent<IProps, IState> {
 	}
 
 	goToPrevStory = () => {
-		const story: any = this.refs.story;
 		if (this.state.currentStory === 0) return;
 		this.setState(prevState => ({
 			currentStory: prevState.currentStory - 1,
-			translateValue: prevState.translateValue + story.clientWidth
+			translateValue: prevState.translateValue + 350
 		}));
 	};
 
 	goToNextStory = () => {
-		const story: any = this.refs.story;
 		if (this.state.currentStory === this.props.stories.length - 1) return;
 		this.setState(prevState => ({
 			currentStory: prevState.currentStory + 1,
-			translateValue: prevState.translateValue - story.clientWidth
+			translateValue: prevState.translateValue - 350
 		}));
 	};
 
@@ -115,7 +113,7 @@ class StoryViewer extends PureComponent<IProps, IState> {
 						}}
 					>
 						{stories.map((story, i) => (
-							<div ref="story" className="story" key={i}>
+							<div className="story" key={i}>
 								<header>
 									<img 
 										src={story.userInfo.image_url || config.DEFAULT_AVATAR} 
