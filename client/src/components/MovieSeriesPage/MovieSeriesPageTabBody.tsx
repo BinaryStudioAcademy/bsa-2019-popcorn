@@ -32,6 +32,27 @@ const messages = [
 		body: 'I am going to watch it',
 		photo: 'https://i.pravatar.cc/300?img=10',
 		date: '2 hours ago'
+	},
+	{
+		id: '4',
+		name: 'Forrest Meadows',
+		body: 'I am going to watch it',
+		photo: 'https://i.pravatar.cc/300?img=10',
+		date: '2 hours ago'
+	},
+	{
+		id: '5',
+		name: 'Forrest Meadows',
+		body: 'I am going to watch it',
+		photo: 'https://i.pravatar.cc/300?img=10',
+		date: '2 hours ago'
+	},
+	{
+		id: '6',
+		name: 'Forrest Meadows',
+		body: 'I am going to watch it',
+		photo: 'https://i.pravatar.cc/300?img=10',
+		date: '2 hours ago'
 	}
 ];
 

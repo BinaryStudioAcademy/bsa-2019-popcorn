@@ -1,10 +1,5 @@
 @import '../../../styles/variables.scss';
 
-.film-basic-wrp {
-	height: 500px;
-	overflow-y: scroll;
-}
-
 .filmSection {
 	width: 100%;
 	display: grid;
@@ -13,7 +8,6 @@
 	background-color: $background-gray;
 	border-radius: 3px;
 	padding: 20px 30px;
-	min-height: 500px;
 	grid-gap: 10px;
 }
 
@@ -25,6 +19,7 @@
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
+	margin-right: 20px;
 }
 
 .descriptionList {
@@ -35,20 +30,20 @@
 
 .descriptionItem {
 	display: grid;
-	grid-template-columns: 0.4fr 0.6fr;
+	grid-template-columns: 0.3fr 0.7fr;
 }
 
 .descriptionTitle {
 	font-family: $base-font-family;
-	font-size: $header-medium;
-	color: $text-base-color;
+	font-size: $form-font-size;
+	color: $text-secondary-color;
 	letter-spacing: $base-letter-spacing;
 }
 
 .descriptionBody {
 	text-align: left;
 	font-family: $base-font-family;
-	font-size: $header-medium;
+	font-size: $form-font-size;
 	color: $text-base-color;
 	letter-spacing: $base-letter-spacing;
 }
@@ -64,7 +59,7 @@
 .videoWrapper {
 	grid-column: span 2;
 	background-color: $background-gray;
-	border: 1px solid $border-color;
+
 	border-radius: 3px;
 	padding: 20px 30px;
 }

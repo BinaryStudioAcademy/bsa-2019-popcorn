@@ -69,7 +69,7 @@ const Main = ({
 	if (!isAuthorized || !localStorage.getItem('token'))
 		return <Redirect to="/login" />;
 	return (
-		<div>
+		<div className={'main-wrap'}>
 			{isAuthorized ? (
 				<Header
 				// userInfo={userInfo}
