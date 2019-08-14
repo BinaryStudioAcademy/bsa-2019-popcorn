@@ -183,7 +183,8 @@ $user-tab-list-space-top: $user-tab-space + $user-tab-active-line;
 				.survey-description {
 					width: 100%;
 					padding-bottom: 5px;
-					height: 34px;
+					min-height: 34px;
+					height: fit-content;
 					box-sizing: initial;
 				}
 			}
@@ -205,6 +206,7 @@ $user-tab-list-space-top: $user-tab-space + $user-tab-active-line;
 				box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.37);
 
 				.sidebar-icons {
+					height: 220px;
 					display: flex;
 					flex-direction: column;
 					justify-content: space-around;
@@ -212,7 +214,6 @@ $user-tab-list-space-top: $user-tab-space + $user-tab-active-line;
 					position: absolute;
 					top: 0;
 					right: -50px;
-					height: 100%;
 					width: 40px;
 					background-color: white;
 					box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.37);
