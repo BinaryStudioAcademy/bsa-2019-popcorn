@@ -2,6 +2,7 @@ import React from 'react';
 import { IEventFormatClient } from '../UserEvents.service';
 import './EventItem.scss';
 import Moment from 'react-moment';
+import { ReactComponent as CloseIcon } from '../../../../assets/icons/general/closeIcon.svg';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
 	faMapMarkerAlt,
@@ -54,7 +55,7 @@ const EventItem: React.FC<IProps> = ({ event }) => {
 							{eventVisitors.length} users subscribe
 						</div>
 					</div>
-					<div className="event-date">
+					<div className="event-date-buttons">
 						<div className="event-date-range">
 							<Moment format=" D MMM HH:mm " local>
 								{String(dateRange.startDate)}
@@ -63,6 +64,12 @@ const EventItem: React.FC<IProps> = ({ event }) => {
 							<Moment format=" D MMM HH:mm " local>
 								{String(dateRange.endDate)}
 							</Moment>
+						</div>
+						<div className="event-buttons">
+							<button className="edit-button">Edit</button>
+							<button className="delete-button">
+								<CloseIcon className="delete-button-svg" />
+							</button>
 						</div>
 					</div>
 				</div>
