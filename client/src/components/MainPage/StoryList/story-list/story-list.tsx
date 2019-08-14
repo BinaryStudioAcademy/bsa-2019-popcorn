@@ -151,6 +151,9 @@ class StoryList extends Component<IStoryListProps, IState> {
 						onMouseLeave={this.onMouseLeave}
 						onMouseUp={this.onMouseLeave}
 						onMouseMove={this.onMouseMove}
+						onClickCapture={event => {
+							event.stopPropagation();
+						}}
 					>
 						<StoryListContent
 							storyListItems={stories}
