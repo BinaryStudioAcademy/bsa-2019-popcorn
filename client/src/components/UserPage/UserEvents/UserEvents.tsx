@@ -2,14 +2,16 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import Spinner from '../../shared/Spinner/index';
-import { getUserEvents } from './actions';
+import { getUserEvents, saveEvent } from './actions';
 import EventItem from './EventItem/EventItem';
 import './UserEvents.scss';
+import UserEventsEditor from './UserEventsEditor/UserEventsEditor';
 
 interface IProps {
 	userEvents: IEvent[];
 	getUserEvents: (id: string) => any;
 	currentUserId: string;
+	saveEvent: (event: any) => void;
 }
 
 export interface IEvent {
@@ -25,9 +27,9 @@ export interface IEvent {
 		endDate: string;
 	};
 	userId: string;
-	image: string;
+	image?: string;
 	isPrivate: boolean;
-	movieId: string | undefined;
+	movieId?: string | undefined;
 	eventVisitors: IVisitor[];
 }
 
@@ -69,6 +71,7 @@ class UserEvents extends React.Component<IProps> {
 
 		return (
 			<div className="UserEvents">
+				<UserEventsEditor saveEvent={this.props.saveEvent} id={currentUserId} />
 				<div className="events-title">
 					<span>Your Events</span>
 				</div>
@@ -106,7 +109,8 @@ const mapStateToProps = (state, props) => {
 
 const mapDispatchToProps = dispatch => {
 	const actions = {
-		getUserEvents
+		getUserEvents,
+		saveEvent
 	};
 
 	return bindActionCreators(actions, dispatch);

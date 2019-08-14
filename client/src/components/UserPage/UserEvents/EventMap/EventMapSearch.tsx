@@ -19,7 +19,7 @@ const {
 const MapWithASearchBox = compose(
 	withProps({
 		googleMapURL:
-			'https://maps.googleapis.com/maps/api/js?key=&v=3.exp&libraries=geometry,drawing,places',
+			'https://maps.googleapis.com/maps/api/js?key=AIzaSyB8B04MTIk7abJDVESr6SUF6f3Hgt1DPAY&v=3.exp&libraries=geometry,drawing,places',
 		loadingElement: <div className="map-loading" />,
 		containerElement: <div className="map-container" />,
 		mapElement: <div className="map" />

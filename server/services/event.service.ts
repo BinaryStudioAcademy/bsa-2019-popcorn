@@ -19,6 +19,7 @@ export const getEventById = async (eventId: string): Promise<Event> =>
 
 export const createEvent = async (event: any): Promise<Event> => {
   const result = formatForDB(event);
+  console.log("event", event);
   const responseEvent = await getCustomRepository(EventRepository).save(result);
   const newVisitor = {
     status: "going",
@@ -26,6 +27,7 @@ export const createEvent = async (event: any): Promise<Event> => {
     eventId: responseEvent.id
   };
   createVisitor(newVisitor as any);
+  console.log(responseEvent);
   return responseEvent;
 };
 
@@ -96,6 +98,7 @@ export const updateVisitor = async (
   visitor = { ...visitor, status: updatedVisitor.status };
   return await getRepository(VisitorEntity).save([visitor]);
 };
+
 export const deleteVisitorById = async (
   visitorId: number
 ): Promise<EventVisitor> => {

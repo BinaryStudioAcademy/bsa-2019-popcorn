@@ -4,9 +4,11 @@ import 'react-datepicker/dist/react-datepicker.css';
 import './UserEventsEditor.scss';
 import MapWithASearchBox from '../EventMap/EventMapSearch';
 import { ReactComponent as PhotoIcon } from '../../../../assets/icons/general/photoIcon.svg';
+import { IEvent } from '../UserEvents';
 
 interface IUserEventsEditorProps {
 	id?: string;
+	saveEvent: (event: any) => void;
 }
 
 interface IUserEventsEditorState {
@@ -133,9 +135,20 @@ class UserEventsEditor extends React.Component<
 		)
 			return;
 
-		this.props.id
-			? console.log(this.state, 'event updated') //this.props.updateEvent(this.props.id, this.state);
-			: console.log(this.state, 'event created'); //this.props.addEvent(this.state);
+		if (this.props.id) {
+			console.log(this.state, 'event updated'); //this.props.updateEvent(this.props.id, this.state);
+		} else {
+			console.log('iki');
+			const {
+				title,
+				description,
+				location,
+				dateRange,
+				image,
+				isPrivate
+			} = this.state;
+			this.props.saveEvent({ ...this.state, userId: this.props.id }); //this.props.addEvent(this.state);
+		}
 		this.onCancel();
 	}
 
