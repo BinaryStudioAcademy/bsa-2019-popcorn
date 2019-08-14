@@ -35,15 +35,26 @@ a:focus {
 .UserDiscussionComponent {
 	display: flex;
 	flex-direction: column;
-	justify-content: space-between;
-	border: 1px solid $border-color;
+	justify-content: flex-start;
 	color: $text-base-color;
 	font-family: $base-font-family;
 	padding: 10px;
-	width: 300px;
+	justify-self: end;
+	max-height: 500px;
 
 	.MessageContainer {
+		padding-right: 5px;
 		overflow-y: scroll;
+		padding-bottom: -20px;
+	}
+
+	.MessageContainer::-webkit-scrollbar {
+		width: 4px;
+	}
+
+	.MessageContainer::-webkit-scrollbar-thumb {
+		background: $border-color;
+		border-radius: 10px;
 	}
 
 	.messageItem {
@@ -144,7 +155,6 @@ a:focus {
 			border: 1px solid $border-focus-color;
 		}
 		outline: none;
-		margin-bottom: 0;
 	}
 
 	svg {

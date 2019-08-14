@@ -22,10 +22,15 @@ interface IProps {
 	};
 }
 
+const starStyle = {
+	width: '1em',
+	height: '1em'
+};
 const solidStar = (key: number, type: boolean): any => (
 	<FontAwesomeIcon
 		icon={faStar}
 		className={type ? 'yellowStar' : 'greyStar'}
+		style={starStyle}
 		key={key}
 	/>
 );
@@ -43,10 +48,10 @@ const descriptionItem = (
 	title: string,
 	body: string | ReactElement[] | number
 ) => (
-	<p className="descriptionItem">
+	<div className="descriptionItem">
 		<span className="descriptionTitle">{title}:</span>
 		<span className="descriptionBody">{body}</span>
-	</p>
+	</div>
 );
 
 const FilmBasicTab = (props: IProps) => {
