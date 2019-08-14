@@ -6,6 +6,8 @@ interface IStoryListItem {
 	image_url: string;
 	user: {
 		avatar: string;
+		id: string;
+		name: string;
 		any;
 	};
 	any;
@@ -13,9 +15,14 @@ interface IStoryListItem {
 
 interface IStoryListItemsProps {
 	storyListItems: Array<IStoryListItem>;
+	openViewer: (number) => void
 }
 
 class StoryListContent extends Component<IStoryListItemsProps> {
+	constructor(props) {
+		super(props);
+	}
+
 	render() {
 		const { storyListItems } = this.props;
 		const storyList = storyListItems.map((item, i) => (
@@ -24,6 +31,8 @@ class StoryListContent extends Component<IStoryListItemsProps> {
 				imageUrl={item.image_url}
 				name={item.caption}
 				avatar={item.user.avatar}
+				openViewer={this.props.openViewer}
+				index={i}
 			/>
 		));
 		return storyList;

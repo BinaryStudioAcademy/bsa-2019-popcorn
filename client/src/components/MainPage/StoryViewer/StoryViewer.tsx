@@ -11,6 +11,7 @@ import {
 	faChevronRight,
 	faChevronLeft
 } from '@fortawesome/free-solid-svg-icons';
+import config from '../../../config';
 
 interface IProps {
 	stories: Array<{
@@ -27,6 +28,8 @@ interface IProps {
 	currentUser: {
 		userId: string;
 	};
+	currentStory: number;
+	closeViewer: () => void
 }
 
 interface IState {
@@ -42,8 +45,8 @@ class StoryViewer extends PureComponent<IProps, IState> {
 		this.state = {
 			isModalShown: false,
 			isSeenByModalShown: false,
-			currentStory: 0,
-			translateValue: 0
+			currentStory: props.currentStory,
+			translateValue: -props.currentStory * 350
 		};
 	}
 
@@ -105,13 +108,17 @@ class StoryViewer extends PureComponent<IProps, IState> {
 					<div
 						className="slider-wrapper"
 						style={{
-							transform: `translateX(${this.state.translateValue}px)`
+							transform: `translateX(${this.state.translateValue}px)`,
+							transition: 'transform ease-out 0.45s'
 						}}
 					>
 						{stories.map((story, i) => (
 							<div className="story" key={i}>
 								<header>
-									<img src={story.userInfo.image_url} alt=""></img>
+									<img 
+										src={story.userInfo.image_url || config.DEFAULT_AVATAR} 
+										alt=""
+									/>
 									<span className="username">{story.userInfo.name}</span>
 									<TimeAgo date={story.created_at} timeStyle="twitter" />
 									<p className="ellipsis" onClick={this.toogleModal}>
@@ -143,7 +150,7 @@ class StoryViewer extends PureComponent<IProps, IState> {
 					</div>
 				</div>
 				<div className="stories-right-icons">
-					<p className="close-stories">
+					<p className="close-stories" onClick={this.props.closeViewer}>
 						<FontAwesomeIcon icon={faTimes} />
 					</p>
 					<p className="right-arrow" onClick={this.goToNextStory}>

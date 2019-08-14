@@ -5,13 +5,18 @@ interface IStoryListItemProps {
 	name: string;
 	imageUrl: string;
 	avatar: string;
+	index: number;
+	openViewer: (number) => void
 }
 
 class StoryListItem extends Component<IStoryListItemProps> {
 	render() {
 		const { imageUrl, name, avatar } = this.props;
 		return (
-			<div className="story-list-item-wrapper">
+			<div 
+				className="story-list-item-wrapper" 
+				onClick={() => { this.props.openViewer(this.props.index) }}
+			>
 				<div className="card">
 					<img
 						alt="avatar"

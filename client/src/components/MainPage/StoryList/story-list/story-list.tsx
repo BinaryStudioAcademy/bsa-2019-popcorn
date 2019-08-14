@@ -5,12 +5,15 @@ import AddStoryPopup from '../add-story-popup/add-story-popup';
 import './story-list.scss';
 import Spinner from '../../../shared/Spinner';
 import config from '../../../../config';
+import StoryViewer from '../../StoryViewer/StoryViewer';
 
 interface IStoryListItem {
 	caption: string;
 	image_url: string;
 	user: {
 		avatar: string;
+		name: string;
+		id: string;
 		any;
 	};
 	any;
@@ -29,6 +32,9 @@ interface IState {
 	isDown: boolean;
 	startX: number;
 	scrollLeft: number;
+	isShownViewer: boolean;
+	currentStory: number;
+	class: string;
 }
 
 class StoryList extends Component<IStoryListProps, IState> {
@@ -41,7 +47,10 @@ class StoryList extends Component<IStoryListProps, IState> {
 			scrollStep: props.scrollStep || 1,
 			isDown: false,
 			startX: 0,
-			scrollLeft: 0
+			scrollLeft: 0,
+			isShownViewer: false,
+			currentStory: -1,
+			class: ''
 		};
 	}
 
@@ -61,7 +70,7 @@ class StoryList extends Component<IStoryListProps, IState> {
 	};
 
 	onMouseLeave = () => {
-		this.setState({ isDown: false });
+		this.setState({ isDown: false, class: '' });
 	};
 
 	onMouseMove = event => {
@@ -72,7 +81,48 @@ class StoryList extends Component<IStoryListProps, IState> {
 		const x = event.pageX - scroll.offsetLeft;
 		const walk = x - startX;
 		scroll.scrollLeft = scrollLeft - walk;
+		this.setState({ class: 'active' })
 	};
+
+	viewerIsShown = () => {
+		const { stories } = this.props;
+		if (!stories) return;
+		if (!this.state.isShownViewer) return null;
+
+		const { currentStory } = this.state;
+		const mockStories = stories.map(story => ({
+			image_url: story.image_url,
+			bckg_color: '#eedcff',
+			users: [],
+			userInfo: {
+				userId: story.user.id,
+				name: story.user.name,
+				image_url: story.user.avatar
+			},
+			created_at: new Date(2019, 7, 13, 22)
+		}));
+
+		return <StoryViewer 
+			stories={mockStories}  
+			currentUser={{ userId: "7f13634d-c353-433c-98fe-ead99e1252c7" }}
+			currentStory={currentStory}
+			closeViewer={this.closeViewer}
+		/>
+	} 
+
+	closeViewer = () => {
+		this.setState({
+			currentStory: -1,
+			isShownViewer: false
+		});
+	}
+
+	openViewer = (id: number) => {
+		this.setState({
+			currentStory: id,
+			isShownViewer: true
+		});
+	} 
 
 	render() {
 		const { stories, fetchStories } = this.props;
@@ -83,6 +133,7 @@ class StoryList extends Component<IStoryListProps, IState> {
 
 		return (
 			<div className="story-list-wrapper">
+				{this.viewerIsShown()}
 				<AddStoryPopup
 					onClosePopupClick={this.onClosePopupClick}
 					isShown={this.state.isPopupShown}
@@ -94,13 +145,13 @@ class StoryList extends Component<IStoryListProps, IState> {
 					/>
 					<div
 						ref="scroll"
-						className={`story-list-scroll ${this.state.isDown && 'active'}`}
+						className={`story-list-scroll ${this.state.class}`}
 						onMouseDown={this.onMouseDown}
 						onMouseLeave={this.onMouseLeave}
 						onMouseUp={this.onMouseLeave}
 						onMouseMove={this.onMouseMove}
 					>
-						<StoryListContent storyListItems={stories} />
+						<StoryListContent storyListItems={stories} openViewer={this.openViewer}/>
 					</div>
 				</div>
 			</div>
