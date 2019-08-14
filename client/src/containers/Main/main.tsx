@@ -70,7 +70,11 @@ const Main = ({
 		return <Redirect to="/login" />;
 	return (
 		<div>
-			{isAuthorized ? <Header userInfo={userInfo} /> : null}
+			{isAuthorized ? (
+				<Header
+				// userInfo={userInfo}
+				/>
+			) : null}
 
 			<div className="main-page">
 				<MainPageSidebar notifications={notifications} />
