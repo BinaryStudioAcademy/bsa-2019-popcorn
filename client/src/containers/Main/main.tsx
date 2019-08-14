@@ -19,6 +19,7 @@ import {
 	setMovieSeries
 } from '../../components/MovieSeriesPage/Movie.redux/actions';
 import Header from '../../components/shared/Header/Header';
+import UserTops from '../../components/UserPage/UserTops/UserTops';
 
 const { notifications } = {
 	notifications: {
@@ -70,7 +71,11 @@ const Main = ({
 		return <Redirect to="/login" />;
 	return (
 		<div>
-			{isAuthorized ? <Header userInfo={userInfo} /> : null}
+			{isAuthorized ? (
+				<Header
+				// userInfo={userInfo}
+				/>
+			) : null}
 
 			<div className="main-page">
 				<MainPageSidebar notifications={notifications} />
@@ -79,6 +84,7 @@ const Main = ({
 						<Route exact path={[`/`, '/create*']} component={MainPage} />
 						<Route path={`/user-page`} component={UserPage} />
 						<Route path={`/event-page`} component={EventPage} />
+						<Route path={`/admin-panel-page`} component={AdminPanelPage} />
 						<Route
 							path={`/movie-series`}
 							render={() => <MovieSeriesPage movie={movieSeries} />}
@@ -89,6 +95,7 @@ const Main = ({
 								MovieListRender(movieList, fetchMovieList, setMovieSeries)
 							}
 						/>
+						<Route path={`/movie-tops`} render={() => <UserTops />} />
 						<Route path={`/*`} exact component={NotFound} />
 					</Switch>
 				</div>

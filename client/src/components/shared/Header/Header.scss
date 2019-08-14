@@ -119,7 +119,6 @@
 			}
 		}
 	}
-
 	.hover:hover {
 		cursor: pointer;
 	}
@@ -167,10 +166,18 @@
 		line-height: 15px;
 		width: 150px;
 		padding: 0 10px 10px 10px;
+		.hover {
+			color: inherit;
+		}
+		a {
+			text-decoration: none;
 
-		div {
+			display: block;
 			padding-top: 15px;
 			line-height: 20px;
+			&:hover {
+				cursor: pointer;
+			}
 		}
 	}
 
