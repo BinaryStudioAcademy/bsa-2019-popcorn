@@ -39,15 +39,9 @@ interface IProps {
 				question_id: string;
 				value: string;
 			}>;
-			answers: Array<{
-				id: string;
-				question_id: string;
-				option_id?: string;
-				user_id: string;
-				value: string;
-			}>;
 		}>;
 	};
+	isPreview?: boolean;
 }
 
 interface IState {
@@ -56,8 +50,9 @@ interface IState {
 		options: Array<{
 			id: string;
 		}>;
+		value?: string;
 	}>;
-	isShown: boolean;
+	isDisabled: boolean;
 }
 
 class Survey extends PureComponent<IProps, IState> {
@@ -66,10 +61,27 @@ class Survey extends PureComponent<IProps, IState> {
 		this.state = {
 			answers: props.surveyInfo.questions.map(question => ({
 				questionId: question.id,
-				options: []
+				options: [],
+				value: ''
 			})),
-			isShown: false
+			isDisabled: false
 		};
+	}
+
+	validate = () => {
+		const { questions } = this.props.surveyInfo;
+		const { answers } = this.state;
+		const requiredQuestions = questions.filter(question => question.required === true);
+		const validate = !requiredQuestions.some(question => {
+			const answer: any = answers.find(answer => answer.questionId === question.id);
+			if (question.type !== 'Short Answer') {
+				if (answer.options.length === 0) return true;
+			} else {
+				if (answer.value.trim() === '') return true; 
+			}
+			return false;
+		}); 
+		return validate;
 	}
 
 	setSingleAnswer = answerInfo => {
@@ -85,6 +97,19 @@ class Survey extends PureComponent<IProps, IState> {
 			answers: newAnswers
 		});
 	};
+
+	setShortAnswer = answerInfo => {
+		const { questionId, value } = answerInfo;
+		const newAnswers = this.state.answers.map(answer => {
+			if (answer.questionId === questionId) {
+				return { questionId, value, options: [] };
+			}
+			return answer;
+		});
+		this.setState({
+			answers: newAnswers
+		});
+	}
 
 	setMultipleAnswer = answerInfo => {
 		const { questionId, optionId, value } = answerInfo;
@@ -115,9 +140,11 @@ class Survey extends PureComponent<IProps, IState> {
 	};
 
 	sendAnswer = () => {
-		this.setState({ isShown: false });
-		if (this.state.answers.some(answer => answer.options.length === 0)) {
-			this.setState({ isShown: true });
+		this.setState({ isDisabled: false });
+		const validate = this.validate()
+
+		if (!validate) {
+			this.setState({ isDisabled: true });
 			return;
 		}
 		console.log(this.state.answers);
@@ -169,13 +196,29 @@ class Survey extends PureComponent<IProps, IState> {
 								/>
 							);
 						} else if (question.type === 'Short Answer') {
-							return <SurveyShortAnswer key={i} questionInfo={question} />;
-						} else return <SurveyLinearScale key={i} questionInfo={question} />;
+							return <SurveyShortAnswer 
+								key={i} 
+								questionInfo={question} 
+								setAnswer={this.setShortAnswer}
+							/>;
+						} else return <SurveyLinearScale 
+							key={i} 
+							questionInfo={question} 
+							setAnswer={this.setSingleAnswer}
+						/>;
 					})}
-					{/* <div className="button" >
-                        {this.state.isShown && (<p>Oops, seems like you didn't answer some questions. Fix it!</p>)}
-                        <button disabled type="button" onClick={this.sendAnswer}>Send</button>
-                    </div> */}
+				 	<div className="button">
+					 	{
+							this.state.isDisabled && 
+							<div className="error-message">Please, answer all required questions.</div>
+						}
+						{ 
+							!this.props.isPreview && 
+							<button type="button" onClick={this.sendAnswer}>
+								Send
+							</button>
+						}
+                    </div> 
 				</form>
 			</div>
 		);
