@@ -3,6 +3,7 @@ import { VotingOption } from "../models/VotingOptionModel";
 import VotingRepository from "../repository/voting.repository";
 import { getCustomRepository } from "typeorm";
 import UserRepository from "../repository/user.repository";
+import VotingOptionRepository from "../repository/votingOption.repository";
 
 const uuid = require("uuid/v4");
 
@@ -43,8 +44,8 @@ export const createVoting = async ({
   }
 };
 
-export const getVotingById = async (id: string, next): Promise<Voting> => {
-  return await getCustomRepository(VotingRepository).getVotingById(id, next);
+export const getVotingById = async (id: string): Promise<Voting> => {
+  return await getCustomRepository(VotingRepository).getVotingById(id);
 };
 
 export const getVotingByUserId = async (
@@ -75,12 +76,21 @@ export const updateVotingById = async (
 
 export const createVotingOptionByVotingId = async (
   id: string,
-  votingOption: VotingOption,
+  { text },
   next
 ): Promise<VotingOption> => {
-  return await getCustomRepository(
-    VotingRepository
-  ).createVotingOptionByVotingId(id, votingOption, next);
+  const votingOption = new VotingOption();
+  votingOption.id = uuid();
+  votingOption.body = text;
+  votingOption.voting = await getCustomRepository(VotingRepository).findOne({
+    id
+  });
+  votingOption.votingOptionReactions = [];
+
+  return await getCustomRepository(VotingOptionRepository).save(
+    votingOption,
+    next
+  );
 };
 
 export const deleteVotingById = async (id: string, next): Promise<{}> => {

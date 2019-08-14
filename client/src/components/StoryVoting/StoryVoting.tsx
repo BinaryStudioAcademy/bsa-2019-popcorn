@@ -146,7 +146,7 @@ class StoryVoting extends React.Component<StoryVotingProps, StoryVotingState> {
 	}
 
 	onSave = () => {
-		const { header, userId, backColor, backImage } = this.props;
+		const { header, userId, backColor, backImage, options } = this.props;
 		const { deltaPositionHead, deltaPositionOptionBlock } = this.state;
 		this.props.createVoting &&
 			this.props.createVoting({
@@ -157,7 +157,8 @@ class StoryVoting extends React.Component<StoryVotingProps, StoryVotingState> {
 				deltaPositionOptionBlockX: deltaPositionOptionBlock.x,
 				deltaPositionOptionBlockY: deltaPositionOptionBlock.y,
 				backColor: `rgba(${backColor.r},${backColor.g},${backColor.b},${backColor.a})`,
-				backImage: backImage
+				backImage,
+				options
 			});
 	};
 

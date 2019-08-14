@@ -67,6 +67,14 @@ export function* createVoting(action) {
 			}
 		});
 
+		yield call(webApi, {
+			method: 'POST',
+			endpoint: config.API_URL + `/api/voting/${data.id}/options`,
+			body: {
+				options: action.payload.voting.options
+			}
+		});
+
 		yield put({
 			type: CHANGE_ACTIVITY,
 			payload: {

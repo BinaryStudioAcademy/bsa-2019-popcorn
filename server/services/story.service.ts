@@ -2,11 +2,25 @@ import { Story } from "../models/StoryModel";
 import { getCustomRepository } from "typeorm";
 import StoryRepository from "../repository/story.repository";
 import UserRepository from "../repository/user.repository";
+import { getVotingById } from "./voting.service";
 
 const uuid = require("uuid/v4");
 
-export const getStories = async (): Promise<Array<Story>> =>
-  await getCustomRepository(StoryRepository).find({ relations: ["user"] });
+export const getStories = async (): Promise<Array<Story>> => {
+  const stories = await getCustomRepository(StoryRepository).find({
+    relations: ["user"]
+  });
+  return Promise.all(
+    stories.map(async item => {
+      let story: any = { ...item };
+      switch (story.type) {
+        case "voting":
+          story.voting = await getVotingById(story.activityId);
+      }
+      return story;
+    })
+  );
+};
 
 export const getStorybyId = async (storyId: string): Promise<Story> =>
   await getCustomRepository(StoryRepository).findOne(storyId);
