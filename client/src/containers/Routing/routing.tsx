@@ -16,7 +16,6 @@ import {
 } from '../../components/authorization/actions';
 
 import Spinner from '../../components/shared/Spinner/index';
-import Header from '../../components/shared/Header/Header';
 import Reset from '../../components/authorization/Reset';
 import Restore from '../../components/authorization/Restore';
 
@@ -63,7 +62,6 @@ const Routing = ({
 	}
 	return (
 		<div className="main-content">
-			<Header />
 			<Switch>
 				<Route
 					exact

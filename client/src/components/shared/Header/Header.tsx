@@ -11,9 +11,10 @@ import { bindActionCreators } from 'redux';
 import { fetchFilms } from '../Header/actions';
 import { NavLink } from 'react-router-dom';
 import { setMovieSeries } from '../../MovieSeriesPage/Movie.redux/actions';
+import config from '../../../config';
 
 interface IProps {
-	userInfo?: {
+	userInfo: {
 		//temporary put ? to use mocks inside component
 		name: string;
 		image: string;
@@ -115,7 +116,7 @@ const Header = ({
 				</NavLink>
 			</div>
 			<NavLink to={'/user-page'} className="user-info hover">
-				<img src={userInfo.image} alt="avatar" />
+				<img src={userInfo.image || config.DEFAULT_AVATAR} alt="avatar" />
 				<span className="user-name">{userInfo.name}</span>
 			</NavLink>
 		</div>

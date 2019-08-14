@@ -9,6 +9,7 @@ import MainPage from '../../components/MainPage/MainPage';
 import UserPage from '../../components/UserPage/UserPage';
 import MovieSeriesPage from '../../components/MovieSeriesPage/MovieSeriesPage';
 import EventPage from '../../components/EventPage/EventPage';
+import AdminPanelPage from '../../components/AdminPanelPage/AdminPanelPage';
 
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
@@ -68,25 +69,29 @@ const Main = ({
 	if (!isAuthorized || !localStorage.getItem('token'))
 		return <Redirect to="/login" />;
 	return (
-		<div className="main-page">
-			<MainPageSidebar notifications={notifications} />
-			<div className="main-content">
-				<Switch>
-					<Route exact path={`/`} component={MainPage} />
-					<Route path={`/user-page`} component={UserPage} />
-					<Route path={`/event-page`} component={EventPage} />
-					<Route
-						path={`/movie-series`}
-						render={() => <MovieSeriesPage movie={movieSeries} />}
-					/>
-					<Route
-						path={`/movie-list`}
-						render={() =>
-							MovieListRender(movieList, fetchMovieList, setMovieSeries)
-						}
-					/>
-					<Route path={`/*`} exact component={NotFound} />
-				</Switch>
+		<div>
+			{isAuthorized ? <Header userInfo={userInfo} /> : null}
+
+			<div className="main-page">
+				<MainPageSidebar notifications={notifications} />
+				<div>
+					<Switch>
+						<Route exact path={[`/`, '/create*']} component={MainPage} />
+						<Route path={`/user-page`} component={UserPage} />
+						<Route path={`/event-page`} component={EventPage} />
+						<Route
+							path={`/movie-series`}
+							render={() => <MovieSeriesPage movie={movieSeries} />}
+						/>
+						<Route
+							path={`/movie-list`}
+							render={() =>
+								MovieListRender(movieList, fetchMovieList, setMovieSeries)
+							}
+						/>
+						<Route path={`/*`} exact component={NotFound} />
+					</Switch>
+				</div>
 			</div>
 		</div>
 	);
