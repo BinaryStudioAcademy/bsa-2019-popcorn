@@ -53,6 +53,7 @@ const TopItem: React.FC<ITopItemProps> = ({
 
 	function saveTop(movies: Array<any>) {
 		const moviesList = movies.filter(movie => movie.title.trim() !== '');
+		if (title.trim() === '') setTitle('New top');
 		saveUserTop({ ...topItem, moviesList, title, topImageUrl });
 		canEditTop(false);
 	}
