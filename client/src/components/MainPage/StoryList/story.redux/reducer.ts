@@ -10,7 +10,7 @@ const initialState: { stories: any; newStory: INewStory } = {
 	stories: null,
 	newStory: {
 		image_url: null,
-		caption: '123',
+		caption: '',
 		activity: null,
 		type: ''
 	}

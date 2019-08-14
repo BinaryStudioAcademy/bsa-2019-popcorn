@@ -19,8 +19,13 @@ class getAddStoryPopupContent extends React.Component<IProps> {
 		extra: true
 	};
 
+	valid({ image_url, caption }: INewStory) {
+		return !(image_url && caption);
+	}
 	render() {
 		const newStory = this.props.newStory;
+
+		const disabled = this.valid(newStory);
 
 		if (!this.state.open) return <Redirect to={'/'} />;
 		if (!this.state.extra) return <Redirect to={'/create/extra'} />;
@@ -49,7 +54,9 @@ class getAddStoryPopupContent extends React.Component<IProps> {
 					<button onClick={close} className={'btn'}>
 						Cancel
 					</button>
-					<button className={'btn'}>Save</button>
+					<button className={'btn'} disabled={disabled}>
+						Save
+					</button>
 				</div>
 			</div>
 		);

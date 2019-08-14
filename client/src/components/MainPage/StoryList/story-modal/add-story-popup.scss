@@ -57,6 +57,9 @@ $border-radius: 5px;
 
 		justify-content: center;
 	}
+	.btn:disabled {
+		background-color: #efd69a;
+	}
 
 	.upload-image-wrp {
 		width: 100%;

@@ -15,21 +15,29 @@ interface IProps {
 	};
 	top: [{ id: string; name: string; any }];
 	survey: [{ id: string; name: string; any }];
-	changeActivity: (type: string, activity: { id: string; name: string }) => any;
+	changeActivity: (
+		type: string,
+		activity: null | { id: string; name: string }
+	) => any;
 	option: null | { id: string; name: string; any };
+	history: {
+		push: (path: string) => void;
+	};
 }
 
 interface IState {
 	open: boolean;
 	back: boolean;
 	create: boolean;
+	option: boolean;
 }
 
 class ChooseExtraOption extends React.Component<IProps, IState> {
 	state = {
 		open: true,
 		back: true,
-		create: true
+		create: true,
+		option: true
 	};
 
 	render() {
@@ -50,14 +58,12 @@ class ChooseExtraOption extends React.Component<IProps, IState> {
 					}}
 				/>
 			);
-		if (this.props.option) {
-			return <Redirect to={'/create'} />;
-		}
 
 		const close = () => this.setState({ open: false });
 		const back = () => this.setState({ back: false });
 		const create = () => this.setState({ create: false });
 		const choose = (activity: { id: string; name: string; any }) => {
+			this.props.history.push('/create');
 			this.props.changeActivity(option, activity);
 		};
 
