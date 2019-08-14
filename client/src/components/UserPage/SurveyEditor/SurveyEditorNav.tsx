@@ -114,7 +114,7 @@ const SurveyEditorNav: React.FC<IProps> = (props: IProps) => {
 							<NavLink to={mainPath} className="preview-back">
 								<FontAwesomeIcon icon={faArrowLeft} />
 							</NavLink>
-							<Survey surveyInfo={survey} />
+							<Survey surveyInfo={survey} isPreview={true}/>
 						</div>
 					)}
 				/>

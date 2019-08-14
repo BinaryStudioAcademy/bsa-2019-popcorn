@@ -9,6 +9,11 @@ interface IReadyAnswer {
 	value: string;
 }
 
+interface IAnswer {
+	questionId: string;
+	optionId: string;
+}
+
 interface IProps {
 	questionInfo: {
 		id: string;
@@ -25,6 +30,7 @@ interface IProps {
 			value: string;
 		}>;
 	};
+	setAnswer?: (data: IAnswer) => void;
 	disable?: boolean;
 	answer?: IReadyAnswer;
 }
@@ -59,6 +65,13 @@ const SurveyLinearScale = (props: IProps) => {
 									value={option.value}
 									disabled={disable || false}
 									checked={answer && answer.option_id === option.id}
+									onChange={() => {
+										if (!props.setAnswer) return;
+										props.setAnswer({
+											questionId: id,
+											optionId: option.id
+										});
+									}}
 								/>
 								<span className="checkmark"></span>
 							</label>
