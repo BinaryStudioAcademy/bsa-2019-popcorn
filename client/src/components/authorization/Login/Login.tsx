@@ -38,11 +38,13 @@ class Login extends React.Component<IProps, IState, IValues> {
 		return (
 			<Form>
 				<div className="form-group">
+					<p className="error-message">{loginError}</p>
 					<label className="form-label">
 						<Field
 							name="email"
 							type="text"
 							placeholder="Email address"
+							maxLength={320}
 							className={
 								'form-input' +
 								(errors.email && touched.email ? ' is-invalid' : '')
@@ -59,6 +61,7 @@ class Login extends React.Component<IProps, IState, IValues> {
 							name="password"
 							type="password"
 							placeholder="Password"
+							maxLength={64}
 							className={
 								'form-input' +
 								(errors.password && touched.password ? ' is-invalid' : '')
@@ -70,7 +73,6 @@ class Login extends React.Component<IProps, IState, IValues> {
 							className="form-input-error"
 						/>
 					</label>
-					{loginError}
 					<div className="form-btn-wrapper">
 						<button
 							type="submit"
@@ -110,7 +112,7 @@ class Login extends React.Component<IProps, IState, IValues> {
 							.required('Email is required'),
 						password: Yup.string()
 							.max(64, 'Password must be no more than 64 characters')
-							.min(6, 'Password must be at least 6 characters')
+							.min(5, 'Password must be at least 5 characters')
 							.required('Password is required')
 					})}
 					render={({ errors, status, touched }) => {
