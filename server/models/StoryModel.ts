@@ -5,4 +5,6 @@ export class Story {
   image_url: string;
   caption: string;
   user: User;
+  type: string;
+  activityId: string;
 }

@@ -18,6 +18,12 @@ export class Story {
   @Column({ default: "" })
   caption: string;
 
+  @Column({ nullable: true })
+  type: string;
+
+  @Column({ nullable: true })
+  activityId: string;
+
   @ManyToOne(type => User)
   @JoinColumn()
   user: User;
