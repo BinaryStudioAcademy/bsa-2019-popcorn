@@ -30,7 +30,6 @@ const UserSurveysNav: React.FC<IProps> = (props: IProps) => {
 	}, []);
 	
 	const surveys = transformDataToProps(props.surveys);
-	console.log(surveys);
 
 	const updateInfo = newSurvey => {
 		const survey = surveys.some(survey => survey.id === newSurvey.id);
