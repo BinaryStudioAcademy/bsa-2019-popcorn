@@ -2,7 +2,7 @@ import React from 'react';
 import './ImageUploader.scss';
 
 interface IPostImageUploaderProps {
-	imageHandler: (s: any) => any;
+	imageHandler?: (s: any) => any;
 	imageStateHandler: (s: any) => any;
 }
 
@@ -42,19 +42,21 @@ class ImageUploader extends React.Component<
 		const data = new FormData();
 		data.append('file', target.files[0]);
 
-		this.props
-			.imageHandler(data)
-			.then(({ imageUrl }) => {
-				this.setState({ imageUrl, isUploading: false, errorMsg: '' });
-				this.props.imageStateHandler(imageUrl);
-			})
-			.catch(error => {
-				this.setState({ isUploading: false, errorMsg: error.message });
-			});
+		if (this.props.imageHandler)
+			this.props
+				.imageHandler(data)
+				.then(({ imageUrl }) => {
+					this.setState({ imageUrl, isUploading: false, errorMsg: '' });
+					this.props.imageStateHandler(imageUrl);
+				})
+				.catch(error => {
+					this.setState({ isUploading: false, errorMsg: error.message });
+				});
 		target.value = '';
 	}
 
 	render() {
+		console.log(this.props);
 		return (
 			<div className="edit-form">
 				{this.state.errorMsg && (
@@ -69,9 +71,13 @@ class ImageUploader extends React.Component<
 					accept=".jpg, .jpeg, .png"
 					disabled={this.state.isUploading}
 				/>
-				<label htmlFor="image" className="upload-image-button">
-					Upload image
-				</label>
+				{this.props.children ? (
+					this.props.children
+				) : (
+					<label htmlFor="image" className="upload-image-button">
+						Upload image
+					</label>
+				)}
 			</div>
 		);
 	}

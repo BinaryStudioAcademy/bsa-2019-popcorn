@@ -6,11 +6,7 @@ import {
 	faTimesCircle
 } from '@fortawesome/free-solid-svg-icons';
 import { faCamera } from '@fortawesome/free-solid-svg-icons/faCamera';
-
-// example:
-{
-	/* <PostStoryEditor id={'1'} type={'story'} uploadImage={event}/> */
-}
+import ImageUploader from '../ImageUploader/ImageUploader';
 
 interface IPostStoryEditorProps {
 	id?: string;
@@ -118,34 +114,6 @@ class PostStoryEditor extends React.Component<
 		this.onCancel();
 	}
 
-	handleUploadFile({ target }) {
-		this.setState({ isUploading: true, errorMsg: '' });
-
-		if (target.files[0] && target.files[0].size > 1048576 * 3) {
-			target.value = '';
-			this.setState({
-				isUploading: false,
-				errorMsg: 'File is too big! (max 3MB)'
-			});
-			return;
-		}
-
-		const data = new FormData();
-		data.append('file', target.files[0]);
-
-		if (this.props.uploadImage)
-			this.props
-				.uploadImage(data)
-				.then(({ imageUrl }) => {
-					this.setState({ imageUrl, isUploading: false, errorMsg: '' });
-				})
-				.catch(error => {
-					this.setState({ isUploading: false, errorMsg: error.message });
-				});
-
-		target.value = '';
-	}
-
 	imageStateHandler(data) {
 		this.setState({
 			imageUrl: data
@@ -180,25 +148,19 @@ class PostStoryEditor extends React.Component<
 					</div>
 				) : (
 					<div className={'upload-image-wrp'}>
-						<input
-							name="image"
-							type="file"
-							onChange={e => this.handleUploadFile(e)}
-							className="upload-image"
-							id="image"
-							accept=".jpg, .jpeg, .png"
-							disabled={!!this.state.imageUrl}
-							hidden
-						/>
-						<label htmlFor="image" className="upload-image-button">
-							<FontAwesomeIcon icon={faCamera} className="fontAwesomeIcon" />
-						</label>
+						<ImageUploader
+							imageHandler={this.props.uploadImage}
+							imageStateHandler={this.imageStateHandler}
+						>
+							<label htmlFor="image" className="upload-image-button">
+								<FontAwesomeIcon icon={faCamera} className="fontAwesomeIcon" />
+							</label>
+						</ImageUploader>
 					</div>
 				)}
 				<textarea
 					placeholder="Type a text here..."
 					value={this.props.body}
-					// onChange={e => this.onChangeData(e.target.value, 'body')}
 					onChange={e => this.props.changeBody(e.target.value)}
 				/>
 				<div>
@@ -221,38 +183,6 @@ class PostStoryEditor extends React.Component<
 						</p>
 					)}
 				</div>
-				{/*<div>*/}
-				{/*    <input*/}
-				{/*        name="image"*/}
-				{/*        type="file"*/}
-				{/*        onChange={this.handleUploadFile}*/}
-				{/*        className="upload-image"*/}
-				{/*        id="image"*/}
-				{/*        accept=".jpg, .jpeg, .png"*/}
-				{/*        disabled={this.state.isUploading}*/}
-				{/*    />*/}
-				{/*    <label htmlFor="image" className="upload-image-button">*/}
-				{/*        Upload image*/}
-				{/*    </label>*/}
-				{/*    <button className="cancel-btn" onClick={this.onCancel}>*/}
-				{/*        Cancel*/}
-				{/*    </button>*/}
-				{/*    <button className="save-btn" onClick={this.onSave}>*/}
-				{/*        Save*/}
-				{/*    </button>*/}
-				{/*</div>*/}
-				{/* <div>
-						<ImageUploader
-							imageHandler={this.props.uploadImage}
-							imageStateHandler={this.imageStateHandler}
-						/>
-						<button className="cancel-btn" onClick={this.onCancel}>
-							Cancel
-						</button>
-						<button className="save-btn" onClick={this.onSave}>
-							Save
-						</button>
-					</div>*/}
 			</div>
 		);
 	}
