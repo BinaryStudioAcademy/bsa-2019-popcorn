@@ -1,14 +1,15 @@
 import {EntityRepository, Repository} from "typeorm";
 import {Surveys} from "../entities/Surveys";
+import {Surveys as SurveysModel} from "../models/SurveysModel";
 import UserRepository from "./user.repository";
 import {getCustomRepository} from "typeorm";
 import { SurveysQuestion } from "../models/SurveysQuestionModel";
 import SurveysQuestionRepository from "./surveysQuestion.repository";
 
 @EntityRepository(Surveys)
-class SurveysRepository extends Repository<Surveys> {
+class SurveysRepository extends Repository<SurveysModel> {
 
-  async createSurveys(id: string, surveys: Surveys, surveysQuestion: Array<SurveysQuestion>, next?) {
+  async createSurveys(id: string, surveys: SurveysModel, surveysQuestion: Array<SurveysQuestion>, next?) {
     try {
       const user = await getCustomRepository(UserRepository).findOne(id); 
 
@@ -29,7 +30,11 @@ class SurveysRepository extends Repository<Surveys> {
 
   async getSurveys(next?) {
     try {
-      return await this.find();
+      const a = await this.find({
+        relations: ["surveysQuestion", "surveysQuestion.surveysQuestionOption", "surveysQuestion.surveysQuestionAnswer"]
+    });
+      console.log(a)
+      return a;
     } catch(err) {
       return next({status: err.status, message: err.message}, null);
     }
@@ -57,7 +62,7 @@ class SurveysRepository extends Repository<Surveys> {
     }
   }
 
-  async updateSurveysById(id: string, surveys: Surveys, next?) {
+  async updateSurveysById(id: string, surveys: SurveysModel, next?) {
     try {
       await this.update({ id }, surveys);
       const updatedSurveys = await this.getSurveysById(id, next);

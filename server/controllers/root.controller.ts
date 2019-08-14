@@ -20,5 +20,5 @@ export default app => {
   app.use("/api/top", topRouter);
   app.use("/api/user", userRouter);
   app.use("/api/story", storyRouter);
-  // app.use("/api/surveys", surveysRoutes);
+  app.use("/api/surveys", surveysRoutes);
 };
