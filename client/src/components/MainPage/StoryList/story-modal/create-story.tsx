@@ -11,6 +11,8 @@ interface IProps {
 		type: string,
 		activity: { id: string; name: string } | null
 	) => any;
+	createStory: (newStory: INewStory, userId: string) => any;
+	userId: string;
 }
 
 class getAddStoryPopupContent extends React.Component<IProps> {
@@ -22,6 +24,7 @@ class getAddStoryPopupContent extends React.Component<IProps> {
 	valid({ image_url, caption }: INewStory) {
 		return !(image_url && caption);
 	}
+
 	render() {
 		const newStory = this.props.newStory;
 
@@ -54,7 +57,11 @@ class getAddStoryPopupContent extends React.Component<IProps> {
 					<button onClick={close} className={'btn'}>
 						Cancel
 					</button>
-					<button className={'btn'} disabled={disabled}>
+					<button
+						className={'btn'}
+						disabled={disabled}
+						onClick={() => this.props.createStory(newStory, this.props.userId)}
+					>
 						Save
 					</button>
 				</div>

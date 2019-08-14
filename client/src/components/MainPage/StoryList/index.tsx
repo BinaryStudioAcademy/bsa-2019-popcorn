@@ -1,6 +1,7 @@
 import StoryList from './story-list/story-list';
 import {
 	changeActivity,
+	createStory,
 	fetchStories,
 	saveImage,
 	setCaption
@@ -40,6 +41,8 @@ interface IProps {
 		type: string,
 		activity: { id: string; name: string } | null
 	) => any;
+	createStory: (newStory: INewStory, userId: string) => any;
+	userId: string;
 }
 
 const mock = {
@@ -69,6 +72,8 @@ const ListBlock = ({ ...props }: IProps) => {
 							setCaption={props.setCaption}
 							saveImage={props.saveImage}
 							changeActivity={props.changeActivity}
+							createStory={props.createStory}
+							userId={props.userId}
 						/>
 					)}
 				/>
@@ -94,6 +99,7 @@ const mapStateToProps = (rootState, props) => ({
 	...props,
 	stories: rootState.story.stories,
 	avatar: rootState.profile.profileInfo && rootState.profile.profileInfo.avatar,
+	userId: rootState.profile.profileInfo && rootState.profile.profileInfo.id,
 	newStory: rootState.story.newStory,
 	top: mock.tops,
 	survey: mock.surveys
@@ -103,7 +109,8 @@ const actions = {
 	fetchStories,
 	setCaption,
 	saveImage,
-	changeActivity
+	changeActivity,
+	createStory
 };
 const mapDispatchToProps = dispatch => bindActionCreators(actions, dispatch);
 

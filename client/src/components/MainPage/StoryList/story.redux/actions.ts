@@ -1,9 +1,11 @@
 import {
 	CHANGE_ACTIVITY,
 	CHANGE_IMAGE,
+	CREATE_STORY,
 	FETCH_STORIES,
 	SET_CAPTION_NEWSTORY
 } from './actionTypes';
+import INewStory from '../INewStory';
 
 export const fetchStories = () => {
 	return {
@@ -36,6 +38,16 @@ export const changeActivity = (
 		payload: {
 			type,
 			activity
+		}
+	};
+};
+
+export const createStory = (newStory: INewStory, userId: string) => {
+	return {
+		type: CREATE_STORY,
+		payload: {
+			newStory,
+			userId
 		}
 	};
 };

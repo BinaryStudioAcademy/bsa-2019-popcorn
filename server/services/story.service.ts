@@ -1,7 +1,8 @@
 import { Story } from "../models/StoryModel";
-import { getRepository, getCustomRepository } from "typeorm";
+import { getCustomRepository } from "typeorm";
 import StoryRepository from "../repository/story.repository";
 import UserRepository from "../repository/user.repository";
+
 const uuid = require("uuid/v4");
 
 export const getStories = async (): Promise<Array<Story>> =>
