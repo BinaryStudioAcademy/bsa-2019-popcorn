@@ -1,5 +1,5 @@
 import StoryList from './story-list/story-list';
-import { fetchStories, setCaption } from './story.redux/actions';
+import { fetchStories, setCaption, saveImage } from './story.redux/actions';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import React from 'react';
@@ -28,7 +28,23 @@ interface IProps {
 	avatar: null | string;
 	newStory: INewStory;
 	setCaption: (caption: string) => any;
+	top: { id: string; name: string; any };
+	survey: { id: string; name: string; any };
+	saveImage: (url: string) => any;
 }
+
+const mock = {
+	tops: [
+		{ id: '1', name: 'Top 1' },
+		{ id: '2', name: 'Top 2' },
+		{ id: '3', name: 'Top 3' }
+	],
+	surveys: [
+		{ id: '1', name: 'Surveys 1' },
+		{ id: '2', name: 'Surveys 2' },
+		{ id: '3', name: 'Surveys 3' }
+	]
+};
 
 const ListBlock = ({ ...props }: IProps) => {
 	return (
@@ -42,11 +58,21 @@ const ListBlock = ({ ...props }: IProps) => {
 						<GetAddStoryPopupContent
 							newStory={props.newStory}
 							setCaption={props.setCaption}
+							saveImage={props.saveImage}
 						/>
 					)}
 				/>
 				<Route exact path={`/create/extra`} component={ChooseExtra} />
-				<Route path={`/create/extra/:option`} component={ChooseExtraOption} />
+				<Route
+					path={`/create/extra/:option`}
+					component={anotherProps => (
+						<ChooseExtraOption
+							{...anotherProps}
+							top={props.top}
+							survey={props.survey}
+						/>
+					)}
+				/>
 			</Switch>
 		</div>
 	);
@@ -56,12 +82,15 @@ const mapStateToProps = (rootState, props) => ({
 	...props,
 	stories: rootState.story.stories,
 	avatar: rootState.profile.profileInfo && rootState.profile.profileInfo.avatar,
-	newStory: rootState.story.newStory
+	newStory: rootState.story.newStory,
+	top: mock.tops,
+	survey: mock.surveys
 });
 
 const actions = {
 	fetchStories,
-	setCaption
+	setCaption,
+	saveImage
 };
 const mapDispatchToProps = dispatch => bindActionCreators(actions, dispatch);
 

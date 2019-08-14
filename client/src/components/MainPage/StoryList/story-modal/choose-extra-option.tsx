@@ -13,6 +13,8 @@ interface IProps {
 			option: string;
 		};
 	};
+	top: { id: string; name: string; any };
+	survey: { id: string; name: string; any };
 }
 
 const mock = [
@@ -36,6 +38,8 @@ class ChooseExtraOption extends React.Component<IProps> {
 
 	render() {
 		const option = this.props.match && this.props.match.params.option;
+
+		console.log(this.props[option]);
 
 		if (!this.state.open) return <Redirect to={'/'} />;
 		if (!this.state.back || !option) return <Redirect to={'/create/extra'} />;
