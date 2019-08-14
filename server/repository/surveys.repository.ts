@@ -31,7 +31,14 @@ class SurveysRepository extends Repository<SurveysModel> {
   async getSurveys(next?) {
     try {
       const a = await this.find({
-        relations: ["surveysQuestion", "surveysQuestion.surveysQuestionOption", "surveysQuestion.surveysQuestionAnswer", "surveysQuestion.surveysQuestionAnswer.user"]
+        relations: [
+          "surveysQuestion",
+          "surveysQuestion.surveysQuestionOption",
+          "surveysQuestion.surveysQuestionAnswer",
+          "surveysQuestion.surveysQuestionAnswer.user",
+          "surveysQuestion.surveysQuestionAnswer.surveysQuestionOption",
+          "user"
+        ]
     });
       console.log(a)
       return a;

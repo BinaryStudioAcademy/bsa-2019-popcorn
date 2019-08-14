@@ -1,46 +1,17 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Switch, Route } from 'react-router-dom';
 import SurveyEditorNav from '../SurveyEditor/SurveyEditorNav';
 import UserSurveys from './UserSurveys';
 import newSurvey from './newSurveyConfig';
+import { connect } from 'react-redux';
+import { fetchSurveys } from './UserSurveys.redux/actions';
+import { bindActionCreators } from 'redux';
+import { transformDataToProps } from './UserSurveys.service';
 
 interface IProps {
 	mainPath: string;
-	surveys: Array<{
-		id: string;
-		created_at: Date;
-		title: string;
-		type: string;
-		description: string;
-		user_id: string;
-		user: {
-			name: string;
-			image_link: string;
-		};
-		participants: number;
-		questions: Array<{
-			id: string;
-			survey_id: string;
-			title: string;
-			firstLabel?: string;
-			lastLabel?: string;
-			type: string;
-			image_link?: string;
-			required: boolean;
-			options?: Array<{
-				id: string;
-				question_id: string;
-				value: string;
-			}>;
-			answers: Array<{
-				id: string;
-				question_id: string;
-				option_id?: string;
-				user_id: string;
-				value: string;
-			}>;
-		}>;
-	}>;
+	surveys: any;
+	fetchSurveys: () => any;
 }
 
 const { id, userInfo } = {
@@ -52,28 +23,36 @@ const { id, userInfo } = {
 };
 
 const UserSurveysNav: React.FC<IProps> = (props: IProps) => {
-	const { surveys, mainPath } = props;
+	const { mainPath } = props;
 
-	const [state, setState] = useState([...surveys]);
+	useEffect(() => {
+		props.fetchSurveys();
+	}, []);
+	
+	const surveys = transformDataToProps(props.surveys);
+	console.log(surveys);
 
 	const updateInfo = newSurvey => {
-		const survey = state.some(survey => survey.id === newSurvey.id);
+		const survey = surveys.some(survey => survey.id === newSurvey.id);
 
-		if (!survey) setState([newSurvey, ...state]);
+		if (!survey) console.log('need to be created');
+		// if (!survey) setState([newSurvey, ...state]);
 		else {
-			const newState = state.map(survey => {
+			const newState = surveys.map(survey => {
 				if (survey.id === newSurvey.id) return newSurvey;
 				return survey;
 			});
-			setState([...newState]);
+			// setState([...newState]);
+			console.log('need to be update');
 		}
 	};
 
 	const deleteSurvey = deletedSurvey => {
-		const index = state.indexOf(deletedSurvey);
-		const newState = [...state];
+		const index = surveys.indexOf(deletedSurvey);
+		const newState = [...surveys];
 		newState.splice(index, 1);
-		setState(newState);
+		// setState(newState);
+		console.log('need to be deleted')
 	};
 
 	return (
@@ -81,11 +60,11 @@ const UserSurveysNav: React.FC<IProps> = (props: IProps) => {
 			<Route
 				exact
 				path={mainPath}
-				render={props => (
+				render={routeProps => (
 					<UserSurveys
-						{...props}
+						{...routeProps}
 						updateInfo={updateInfo}
-						surveys={state}
+						surveys={props.surveys}
 						mainPath={mainPath}
 						deleteSurvey={deleteSurvey}
 					/>
@@ -105,7 +84,7 @@ const UserSurveysNav: React.FC<IProps> = (props: IProps) => {
 					/>
 				)}
 			/>
-			{state.map((survey, i) => (
+			{surveys.map((survey, i) => (
 				<Route
 					key={i}
 					path={`${mainPath}/${survey.id}`}
@@ -122,4 +101,18 @@ const UserSurveysNav: React.FC<IProps> = (props: IProps) => {
 	);
 };
 
-export default UserSurveysNav;
+const mapStateToProps = (rootState, props) => ({
+	...props,
+	surveys: rootState.survey.surveys
+});
+
+const actions = {
+	fetchSurveys
+};
+
+const mapDispatchToProps = dispatch => bindActionCreators(actions, dispatch);
+
+export default connect(
+	mapStateToProps,
+	mapDispatchToProps
+)(UserSurveysNav);

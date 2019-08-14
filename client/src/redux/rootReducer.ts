@@ -5,6 +5,7 @@ import storyReducer from '../components/MainPage/StoryList/story.redux/reducer';
 import feedReducer from '../components/MainPage/FeedBlock/FeedBlock.redux/reducer';
 import userTopsReducer from '../components/UserPage/UserTops/reducer';
 import adminPanelReducer from '../components/AdminPanelPage/AdminPanelPage.redux/reducer';
+import surveyReducer from '../components/UserPage/UserSurveys/UserSurveys.redux/reducer'
 
 const reducers = {};
 
@@ -15,5 +16,6 @@ export default combineReducers({
 	story: storyReducer,
 	feed: feedReducer,
 	userTops: userTopsReducer,
-	adminPanel: adminPanelReducer
+	adminPanel: adminPanelReducer,
+	survey: surveyReducer
 });
