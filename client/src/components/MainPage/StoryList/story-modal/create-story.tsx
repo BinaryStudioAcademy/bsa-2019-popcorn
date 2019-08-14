@@ -7,6 +7,10 @@ interface IProps {
 	newStory: INewStory;
 	setCaption: (caption: string) => any;
 	saveImage: (url: string) => any;
+	changeActivity: (
+		type: string,
+		activity: { id: string; name: string } | null
+	) => any;
 }
 
 class getAddStoryPopupContent extends React.Component<IProps> {
@@ -35,7 +39,10 @@ class getAddStoryPopupContent extends React.Component<IProps> {
 						imageUrl={newStory.image_url || ''}
 						changeBody={this.props.setCaption}
 						saveImage={this.props.saveImage}
-					/>
+						changeActivity={this.props.changeActivity}
+					>
+						{newStory.activity && newStory.activity.name}
+					</PostStoryEditor>
 				</div>
 
 				<div className={'btn-wrp'}>

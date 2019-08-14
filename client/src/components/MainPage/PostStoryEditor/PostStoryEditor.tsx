@@ -17,6 +17,10 @@ interface IPostStoryEditorProps {
 	body: string;
 	imageUrl: string;
 	changeBody: (text: string) => any;
+	changeActivity?: (
+		type: string,
+		activity: null | { id: string; name: string }
+	) => any;
 }
 
 interface IPostStoryEditorState {
@@ -120,6 +124,22 @@ class PostStoryEditor extends React.Component<
 						Add extra
 					</button>
 				</div>
+				{this.props.children && (
+					<div className={'activity'}>
+						{this.props.children}
+
+						<span
+							onClick={() =>
+								this.props.changeActivity && this.props.changeActivity('', null)
+							}
+						>
+							<FontAwesomeIcon
+								icon={faTimesCircle}
+								className={'fontAwesomeIcon'}
+							/>
+						</span>
+					</div>
+				)}
 				<div className="footer">
 					{this.props.type === 'story' && (
 						<p className="checker">

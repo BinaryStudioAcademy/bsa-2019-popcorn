@@ -36,7 +36,10 @@ interface IProps {
 	top: { id: string; name: string; any };
 	survey: { id: string; name: string; any };
 	saveImage: (url: string) => any;
-	changeActivity: (type: string, activity: { id: string; name: string }) => any;
+	changeActivity: (
+		type: string,
+		activity: { id: string; name: string } | null
+	) => any;
 }
 
 const mock = {
@@ -65,6 +68,7 @@ const ListBlock = ({ ...props }: IProps) => {
 							newStory={props.newStory}
 							setCaption={props.setCaption}
 							saveImage={props.saveImage}
+							changeActivity={props.changeActivity}
 						/>
 					)}
 				/>
