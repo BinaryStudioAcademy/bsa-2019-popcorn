@@ -1,5 +1,6 @@
 import { EntityRepository, Repository } from "typeorm";
 import { Surveys } from "../entities/Surveys";
+import { Surveys as SurveysModel } from "../models/SurveysModel";
 import UserRepository from "./user.repository";
 import { getCustomRepository } from "typeorm";
 import { SurveysQuestion } from "../models/SurveysQuestionModel";
@@ -9,7 +10,7 @@ import SurveysQuestionRepository from "./surveysQuestion.repository";
 class SurveysRepository extends Repository<Surveys> {
   async createSurveys(
     id: string,
-    surveys: Surveys,
+    surveys: SurveysModel,
     surveysQuestion: Array<SurveysQuestion>,
     next?
   ) {

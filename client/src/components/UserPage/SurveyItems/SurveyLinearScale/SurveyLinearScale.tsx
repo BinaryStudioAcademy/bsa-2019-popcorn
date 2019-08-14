@@ -44,8 +44,9 @@ const SurveyLinearScale = (props: IProps) => {
 	return (
 		<div className="question-container">
 			<p className={`survey-question required-${required}`}>{title}</p>
+			{image_link && <img className="question-image" alt="" src={image_link} />}
 			<div className="linear-scale">
-				<span>{firstLabel}</span>
+				<span className="label">{firstLabel}</span>
 				{options !== undefined &&
 					options.map((option, i) => (
 						<p key={i} className="linear-scale-item">
@@ -63,9 +64,8 @@ const SurveyLinearScale = (props: IProps) => {
 							</label>
 						</p>
 					))}
-				<span>{lastLabel}</span>
+				<span className="label">{lastLabel}</span>
 			</div>
-			{image_link && <img className="question-image" alt="" src={image_link} />}
 		</div>
 	);
 };

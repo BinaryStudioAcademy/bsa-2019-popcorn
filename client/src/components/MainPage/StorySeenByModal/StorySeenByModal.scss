@@ -1,4 +1,4 @@
-@import '../../styles/variables.scss';
+@import '../../../styles/variables.scss';
 
 .seen-by-modal-container {
 	height: 100%;
@@ -58,6 +58,13 @@
 			overflow: auto;
 			height: 330px;
 			margin-bottom: 20px;
+
+			.view-message {
+				font-size: $menu-font-size;
+				font-weight: 500;
+				text-align: center;
+				margin-top: 10px;
+			}
 
 			.seen-by-item {
 				display: flex;

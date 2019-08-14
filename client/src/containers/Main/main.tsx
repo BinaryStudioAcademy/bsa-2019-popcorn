@@ -71,6 +71,7 @@ const Main = ({
 	return (
 		<div>
 			{isAuthorized ? <Header userInfo={userInfo} /> : null}
+
 			<div className="main-page">
 				<MainPageSidebar notifications={notifications} />
 				<div>

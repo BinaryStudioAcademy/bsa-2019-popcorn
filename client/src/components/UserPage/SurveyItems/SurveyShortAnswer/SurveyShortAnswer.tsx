@@ -36,13 +36,13 @@ const SurveyShortAnswer = (props: IProps) => {
 	return (
 		<div className="question-container short-answer">
 			<p className={`survey-question required-${required}`}>{title}</p>
+			{image_link && <img className="question-image" alt="" src={image_link} />}
 			<input
 				type="text"
 				placeholder="My answer"
 				disabled={disable || false}
 				value={answer && answer.value}
 			/>
-			{image_link && <img className="question-image" alt="" src={image_link} />}
 		</div>
 	);
 };

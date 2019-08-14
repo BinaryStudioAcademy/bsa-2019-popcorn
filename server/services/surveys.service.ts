@@ -35,12 +35,12 @@ export const deleteSurveysById = async (id: string, next): Promise<{}> => {
 
 export const updateSurveysById = async (
   id: string,
-  surveys: Surveys,
+  body,
   next
 ): Promise<Surveys> => {
   return await getCustomRepository(SurveysRepository).updateSurveysById(
     id,
-    surveys,
+    body,
     next
   );
 };
