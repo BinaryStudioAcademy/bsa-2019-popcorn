@@ -1,4 +1,5 @@
 import {
+	CHANGE_ACTIVITY,
 	CHANGE_IMAGE,
 	FETCH_STORIES,
 	SET_CAPTION_NEWSTORY
@@ -23,5 +24,18 @@ export const saveImage = url => {
 	return {
 		type: CHANGE_IMAGE,
 		payload: url
+	};
+};
+
+export const changeActivity = (
+	type: string,
+	activity: { id: string; name: string }
+) => {
+	return {
+		type: CHANGE_ACTIVITY,
+		payload: {
+			type,
+			activity
+		}
 	};
 };

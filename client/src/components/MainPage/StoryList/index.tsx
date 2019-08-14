@@ -1,5 +1,10 @@
 import StoryList from './story-list/story-list';
-import { fetchStories, setCaption, saveImage } from './story.redux/actions';
+import {
+	changeActivity,
+	fetchStories,
+	saveImage,
+	setCaption
+} from './story.redux/actions';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import React from 'react';
@@ -31,6 +36,7 @@ interface IProps {
 	top: { id: string; name: string; any };
 	survey: { id: string; name: string; any };
 	saveImage: (url: string) => any;
+	changeActivity: (type: string, activity: { id: string; name: string }) => any;
 }
 
 const mock = {
@@ -70,6 +76,8 @@ const ListBlock = ({ ...props }: IProps) => {
 							{...anotherProps}
 							top={props.top}
 							survey={props.survey}
+							changeActivity={props.changeActivity}
+							option={props.newStory.activity}
 						/>
 					)}
 				/>
@@ -90,7 +98,8 @@ const mapStateToProps = (rootState, props) => ({
 const actions = {
 	fetchStories,
 	setCaption,
-	saveImage
+	saveImage,
+	changeActivity
 };
 const mapDispatchToProps = dispatch => bindActionCreators(actions, dispatch);
 
