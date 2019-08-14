@@ -104,7 +104,7 @@ class UserTops extends React.Component<IUserTopProps, IUserTopsState> {
 
 		const topList = this.state.topList;
 		return (
-			<div>
+			<div className="user-tops">
 				{url_callback && (
 					<button onClick={redirect} className={'btn'}>
 						Back to story
