@@ -1,6 +1,7 @@
 import StoryVotingCreation from '../../../StoryVotingCreation/StoryVotingCreation';
 import * as React from 'react';
 import IVoting from '../IVoting';
+import INewStory from '../INewStory';
 
 interface IProps {
 	userId: string;

@@ -1,6 +1,7 @@
 import { all, call, put, takeEvery } from 'redux-saga/effects';
 import {
 	ADD_STORY,
+	CHANGE_ACTIVITY,
 	CREATE_STORY,
 	CREATE_VOTING,
 	DELETE_NEW_STORY,
@@ -66,7 +67,13 @@ export function* createVoting(action) {
 			}
 		});
 
-		console.log(data);
+		yield put({
+			type: CHANGE_ACTIVITY,
+			payload: {
+				type: 'voting',
+				activity: { id: data.id, name: data.header }
+			}
+		});
 	} catch (e) {
 		console.log('story modal creating vote: ', e.message);
 	}

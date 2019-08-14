@@ -3,6 +3,7 @@ import StoryVotingOption from '../StoryVotingOption/StoryVotingOption';
 import './StoryVoting.scss';
 import Draggable from 'react-draggable';
 import IVoting from '../MainPage/StoryList/IVoting';
+import { Redirect } from 'react-router';
 
 type StoryVotingProps = {
 	header: string;
@@ -18,14 +19,14 @@ type StoryVotingProps = {
 		x: number;
 		y: number;
 	};
-	backToEditor: (
+	backToEditor?: (
 		deltaHead: { x: number; y: number },
 		deltaOptions: { x: number; y: number }
 	) => void;
 	backColor: { r: string; g: string; b: string; a: string };
 	backImage?: string;
 	userId: string;
-	createVoting: (voting: IVoting) => any;
+	createVoting?: (voting: IVoting) => any;
 };
 
 type StoryVotingState = {
@@ -33,6 +34,7 @@ type StoryVotingState = {
 	inEditor: boolean;
 	deltaPositionHead: { x: number; y: number };
 	deltaPositionOptionBlock: { x: number; y: number };
+	redirect: boolean;
 };
 
 const firstRadius = '28px 0 0 28px';
@@ -50,7 +52,7 @@ class StoryVoting extends React.Component<StoryVotingProps, StoryVotingState> {
 		super(props);
 		this.state = {
 			answerSelected: false,
-			inEditor: true,
+			inEditor: props.inEditor || true,
 			deltaPositionHead: {
 				x: this.props.deltaPositionForHeader.x,
 				y: this.props.deltaPositionForHeader.y
@@ -58,7 +60,8 @@ class StoryVoting extends React.Component<StoryVotingProps, StoryVotingState> {
 			deltaPositionOptionBlock: {
 				x: this.props.deltaPositionForOptionBlock.x,
 				y: this.props.deltaPositionForOptionBlock.y
-			}
+			},
+			redirect: false
 		};
 		this.onAnswerSelect = this.onAnswerSelect.bind(this);
 		this.handleDragHead = this.handleDragHead.bind(this);
@@ -145,16 +148,17 @@ class StoryVoting extends React.Component<StoryVotingProps, StoryVotingState> {
 	onSave = () => {
 		const { header, userId, backColor, backImage } = this.props;
 		const { deltaPositionHead, deltaPositionOptionBlock } = this.state;
-		this.props.createVoting({
-			userId,
-			header,
-			deltaPositionHeadX: deltaPositionHead.x,
-			deltaPositionHeadY: deltaPositionHead.y,
-			deltaPositionOptionBlockX: deltaPositionOptionBlock.x,
-			deltaPositionOptionBlockY: deltaPositionOptionBlock.y,
-			backColor: `rgba(${backColor.r},${backColor.g},${backColor.b},${backColor.a})`,
-			backImage: backImage
-		});
+		this.props.createVoting &&
+			this.props.createVoting({
+				userId,
+				header,
+				deltaPositionHeadX: deltaPositionHead.x,
+				deltaPositionHeadY: deltaPositionHead.y,
+				deltaPositionOptionBlockX: deltaPositionOptionBlock.x,
+				deltaPositionOptionBlockY: deltaPositionOptionBlock.y,
+				backColor: `rgba(${backColor.r},${backColor.g},${backColor.b},${backColor.a})`,
+				backImage: backImage
+			});
 	};
 
 	render() {
@@ -165,11 +169,16 @@ class StoryVoting extends React.Component<StoryVotingProps, StoryVotingState> {
 				: `rgba(${this.props.backColor.r},${this.props.backColor.b},${this.props.backColor.g},${this.props.backColor.a})`
 		};
 
+		if (this.state.redirect) return <Redirect to={'/create'} />;
+
+		const setRedirect = () => this.setState({ redirect: true });
+
 		return (
 			<div>
 				<div className="story-voting" style={backgroundStyle}>
 					<button
 						onClick={() =>
+							this.props.backToEditor &&
 							this.props.backToEditor(
 								this.state.deltaPositionHead,
 								this.state.deltaPositionOptionBlock
@@ -202,11 +211,19 @@ class StoryVoting extends React.Component<StoryVotingProps, StoryVotingState> {
 						</div>
 					</Draggable>
 				</div>
-				<div className={'btn-wrp'}>
-					<button className={'btn'} onClick={this.onSave}>
-						Save
-					</button>
-				</div>
+				{this.state.inEditor && (
+					<div className={'btn-wrp'}>
+						<button
+							className={'btn'}
+							onClick={() => {
+								this.onSave();
+								setRedirect();
+							}}
+						>
+							Save
+						</button>
+					</div>
+				)}
 			</div>
 		);
 	}
