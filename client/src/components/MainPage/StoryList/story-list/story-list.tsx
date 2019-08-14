@@ -149,8 +149,11 @@ class StoryList extends Component<IStoryListProps, IState> {
 						className={`story-list-scroll ${this.state.class}`}
 						onMouseDown={this.onMouseDown}
 						onMouseLeave={this.onMouseLeave}
-						onMouseUp={this.onMouseLeave}
 						onMouseMove={this.onMouseMove}
+						onClickCapture={event => {
+							if (this.state.class === 'active') event.stopPropagation();
+							this.setState({ isDown: false, class: '', isPopupShown: false });
+						}}
 					>
 						<StoryListContent
 							storyListItems={stories}
