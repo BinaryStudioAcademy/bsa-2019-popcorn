@@ -9,7 +9,7 @@ import MovieSearch from '../../MovieList/MovieSearch/index';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { fetchFilms } from '../Header/actions';
-import { NavLink } from 'react-router-dom';
+import { NavLink, Link } from 'react-router-dom';
 import { setMovieSeries } from '../../MovieSeriesPage/Movie.redux/actions';
 import config from '../../../config';
 
@@ -46,9 +46,13 @@ const mock = ['Movies in cinema', 'Top movies', 'On DVD'];
 
 const Header = ({
 	userInfo = user,
-	movies = mock,
-	tv = mock,
-	ratings = mock,
+	movies = ['Movies in cinema', 'Movie tops', `${userInfo.name}'s Movie Lists`],
+	tv = [
+		'New TV Series',
+		'TV Series tops',
+		`${userInfo.name}'s TV Series Lists`
+	],
+	ratings = ['Popular Movies', 'Popular TV Series', 'Popular Users'],
 	moviesSearch,
 	fetchFilms,
 	alreadySearch,
@@ -72,11 +76,15 @@ const Header = ({
 				</NavLink>
 				<FontAwesomeIcon icon={faChevronDown} />
 				<div className="modal">
-					{movies.map(movie => (
-						<div key={movie} className="hover">
-							{movie}
-						</div>
-					))}
+					<Link aria-current="page" className="hover" to="#">
+						{movies[0]}
+					</Link>
+					<Link aria-current="page" className="hover" to="/movie-tops">
+						{movies[1]}
+					</Link>
+					<Link aria-current="page" className="hover" to="/user-page/lists">
+						{movies[2]}
+					</Link>
 				</div>
 			</button>
 
@@ -84,25 +92,32 @@ const Header = ({
 				TV
 				<FontAwesomeIcon icon={faChevronDown} />
 				<div className="modal">
-					{tv.map(tvElemenet => (
-						<div key={tvElemenet} className="inactive">
-							{tvElemenet}
-						</div>
-					))}
+					<Link aria-current="page" className="hover" to="#">
+						{tv[0]}
+					</Link>
+					<Link aria-current="page" className="hover" to="#">
+						{tv[1]}
+					</Link>
+					<Link aria-current="page" className="hover" to="/user-page/lists">
+						{tv[2]}
+					</Link>
 				</div>
 			</button>
 			<button className="header-buttons hover">
 				Ratings
 				<FontAwesomeIcon icon={faChevronDown} />
 				<div className="modal">
-					{ratings.map(rating => (
-						<div key={rating} className="inactive">
-							{rating}
-						</div>
-					))}
+					<Link aria-current="page" className="hover" to="#">
+						{ratings[0]}
+					</Link>
+					<Link aria-current="page" className="hover" to="#">
+						{ratings[1]}
+					</Link>
+					<Link aria-current="page" className="hover" to="#">
+						{ratings[2]}
+					</Link>
 				</div>
 			</button>
-
 			<MovieSearch
 				movies={moviesSearch}
 				fetchFilms={fetchFilms}

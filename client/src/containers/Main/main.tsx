@@ -19,6 +19,7 @@ import {
 	setMovieSeries
 } from '../../components/MovieSeriesPage/Movie.redux/actions';
 import Header from '../../components/shared/Header/Header';
+import UserTops from '../../components/UserPage/UserTops/UserTops';
 
 const { notifications } = {
 	notifications: {
@@ -90,6 +91,7 @@ const Main = ({
 								MovieListRender(movieList, fetchMovieList, setMovieSeries)
 							}
 						/>
+						<Route path={`/movie-tops`} render={() => <UserTops />} />
 						<Route path={`/*`} exact component={NotFound} />
 					</Switch>
 				</div>

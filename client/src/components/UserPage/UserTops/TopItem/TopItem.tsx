@@ -9,6 +9,7 @@ export interface ITopItem {
 	id: string;
 	moviesList: IMovie[];
 	topImageUrl: string;
+	isOwnTop: boolean;
 }
 
 export interface IMovie {
@@ -37,6 +38,7 @@ const TopItem: React.FC<ITopItemProps> = ({
 }) => {
 	const [editTop, canEditTop] = useState(false);
 	const [title, setTitle] = useState(topItem.title);
+	const [isOwnTop] = useState(topItem.isOwnTop);
 	const [topImageUrl, setTopImageUrl] = useState('');
 	useEffect(() => {
 		if (urlForTop == topItem.id) {
@@ -92,14 +94,19 @@ const TopItem: React.FC<ITopItemProps> = ({
 						<FontAwesomeIcon icon={faImage} className="fontAwesomeIcon" />
 					</label>
 				)}
-
-				<div className="edit-top hover" onClick={toogleEdit}>
-					Edit
-				</div>
-				<div className="delete-top hover" onClick={() => deleteTop(topItem.id)}>
-					<CloseIcon />
-				</div>
-
+				{isOwnTop && (
+					<div className="edit-top hover" onClick={toogleEdit}>
+						Edit
+					</div>
+				)}
+				{isOwnTop && (
+					<div
+						className="delete-top hover"
+						onClick={() => deleteTop(topItem.id)}
+					>
+						<CloseIcon />
+					</div>
+				)}
 				<img className="image-top" src={topImageUrl} alt="" />
 			</div>
 			{(editTop || topItem.moviesList.length === 0) && (
