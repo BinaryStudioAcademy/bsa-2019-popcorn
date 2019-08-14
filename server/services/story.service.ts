@@ -31,8 +31,8 @@ export const createStory = async ({
   image_url,
   type,
   activityId
-}): Promise<Story> => {
-  let story = new Story();
+}): Promise<any> => {
+  let story: any = new Story();
   story.id = uuid();
   story.user = await getCustomRepository(UserRepository).findOne({
     id: userId
@@ -42,7 +42,13 @@ export const createStory = async ({
   story.type = type;
   story.activityId = activityId;
 
-  return getCustomRepository(StoryRepository).save(story);
+  await getCustomRepository(StoryRepository).save(story);
+
+  if (type === "voting") {
+    story.voting = await getVotingById(activityId);
+  }
+
+  return story;
 };
 
 export const updateStory = async (story: Story): Promise<Story> =>
