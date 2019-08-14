@@ -129,7 +129,7 @@ export function* fetchRegistration(action) {
 		yield put({
 			type: SET_REGISTER_ERROR,
 			payload: {
-				registerError: e.message
+				registerError: e.response.data.message
 			}
 		});
 	}

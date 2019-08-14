@@ -36,7 +36,7 @@ function validateEmail(value) {
 			value
 		)
 	) {
-		error = 'Invalid email address';
+		error = 'Email is invalid';
 	}
 	return error;
 }
@@ -46,7 +46,7 @@ function validatePassword(value) {
 	if (!value) {
 		error = 'Required';
 	} else if (!/^[0-9a-zA-Z`!@#$%^&*()+=_-{}[\]|:;<>”’?]+$/im.test(value)) {
-		error = 'Invalid password';
+		error = 'Password is invalid';
 	}
 	return error;
 }
@@ -157,7 +157,7 @@ class Registration extends React.Component<IProps, IState> {
 												className="form-input-error"
 											/>
 										</label>
-										{registerError}
+										<div className="register-error">{registerError}</div>
 										<div className="form-btn-wrapper">
 											<button
 												type="submit"
