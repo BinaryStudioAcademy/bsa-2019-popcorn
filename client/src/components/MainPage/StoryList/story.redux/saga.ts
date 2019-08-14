@@ -1,5 +1,11 @@
 import { all, call, put, takeEvery } from 'redux-saga/effects';
-import { CREATE_STORY, FETCH_STORIES, SET_STORIES } from './actionTypes';
+import {
+	ADD_STORY,
+	CREATE_STORY,
+	DELETE_NEW_STORY,
+	FETCH_STORIES,
+	SET_STORIES
+} from './actionTypes';
 import webApi from '../../../../services/webApi.service';
 import config from '../../../../config';
 
@@ -34,8 +40,16 @@ export function* createStory(action) {
 			}
 		});
 
-		// add story
-		// close modal together with delete data from store
+		yield put({
+			type: ADD_STORY,
+			payload: {
+				story
+			}
+		});
+
+		yield put({
+			type: DELETE_NEW_STORY
+		});
 	} catch (e) {
 		console.log('story saga create story: ', e.message);
 	}

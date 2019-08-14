@@ -13,6 +13,9 @@ interface IProps {
 	) => any;
 	createStory: (newStory: INewStory, userId: string) => any;
 	userId: string;
+	history: {
+		push: (path: string) => void;
+	};
 }
 
 class getAddStoryPopupContent extends React.Component<IProps> {
@@ -60,7 +63,10 @@ class getAddStoryPopupContent extends React.Component<IProps> {
 					<button
 						className={'btn'}
 						disabled={disabled}
-						onClick={() => this.props.createStory(newStory, this.props.userId)}
+						onClick={() => {
+							this.props.createStory(newStory, this.props.userId);
+							this.props.history.push('/');
+						}}
 					>
 						Save
 					</button>

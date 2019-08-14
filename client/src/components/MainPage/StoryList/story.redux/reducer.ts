@@ -1,6 +1,8 @@
 import {
+	ADD_STORY,
 	CHANGE_ACTIVITY,
 	CHANGE_IMAGE,
+	DELETE_NEW_STORY,
 	SET_CAPTION_NEWSTORY,
 	SET_STORIES
 } from './actionTypes';
@@ -46,6 +48,24 @@ export default function(state = initialState, action) {
 					...state.newStory,
 					type: action.payload.type,
 					activity: action.payload.activity
+				}
+			};
+		case ADD_STORY:
+			const stories = state.stories
+				? [action.payload.story, ...state.stories]
+				: [action.payload.story];
+			return {
+				...state,
+				stories
+			};
+		case DELETE_NEW_STORY:
+			return {
+				...state,
+				newStory: {
+					image_url: null,
+					caption: '',
+					activity: null,
+					type: ''
 				}
 			};
 		default:

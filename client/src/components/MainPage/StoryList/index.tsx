@@ -66,8 +66,9 @@ const ListBlock = ({ ...props }: IProps) => {
 				<Route
 					exact
 					path={`/create`}
-					component={() => (
+					component={({ history }) => (
 						<GetAddStoryPopupContent
+							history={history}
 							newStory={props.newStory}
 							setCaption={props.setCaption}
 							saveImage={props.saveImage}

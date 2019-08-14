@@ -115,6 +115,7 @@ class PostStoryEditor extends React.Component<
 					placeholder="Type a text here..."
 					value={this.props.body}
 					onChange={e => this.props.changeBody(e.target.value)}
+					ref={input => input && input.focus()}
 				/>
 				<div>
 					<button
