@@ -1,5 +1,6 @@
 import React from 'react';
 import './UserTops.scss';
+
 import TopItem from './TopItem/TopItem';
 import { ITopItem } from './TopItem/TopItem';
 import { connect } from 'react-redux';
@@ -12,6 +13,14 @@ interface IUserTopProps {
 	uploadImage: (data: FormData, titleId: string) => void;
 	uploadUrl: string;
 	urlForTop: string;
+	location?: {
+		state?: {
+			url_callback?: string;
+		};
+	};
+	history?: {
+		push: (path: string) => any;
+	};
 }
 
 const topItemsMock: ITopItem[] = [
@@ -84,9 +93,23 @@ class UserTops extends React.Component<IUserTopProps, IUserTopsState> {
 	};
 
 	render() {
+		const url_callback =
+			this.props.location &&
+			this.props.location.state &&
+			this.props.location.state.url_callback;
+		const redirect = () =>
+			url_callback
+				? this.props.history && this.props.history.push(url_callback)
+				: null;
+
 		const topList = this.state.topList;
 		return (
 			<div>
+				{url_callback && (
+					<button onClick={redirect} className={'btn'}>
+						Back to story
+					</button>
+				)}
 				<div className="create-top-button hover" onClick={this.createTop}>
 					Create Top
 				</div>

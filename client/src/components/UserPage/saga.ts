@@ -73,11 +73,11 @@ export function* fetchLogin(action) {
 			payload: { user: data.user[0] }
 		});
 	} catch (e) {
-		console.log('user saga login', e.message);
+		console.log('user saga login', e);
 		yield put({
 			type: SET_LOGIN_ERROR,
 			payload: {
-				loginError: e.message
+				loginError: e.response.data.message
 			}
 		});
 	}

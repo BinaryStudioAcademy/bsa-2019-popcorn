@@ -1,4 +1,4 @@
-@import '../../styles/variables.scss';
+@import '../../../styles/variables.scss';
 @import url('https://rsms.me/inter/inter.css');
 
 .story-viewer {
@@ -8,11 +8,12 @@
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	position: absolute;
+	position: fixed;
 	left: 0;
 	top: 0;
 	color: $white;
 	font-family: $base-font-family;
+	z-index: 20;
 
 	.svg-inline--fa {
 		font-size: 24px;
@@ -60,6 +61,7 @@
 
 		.slider-wrapper {
 			display: flex;
+			width: 100%;
 		}
 	}
 
@@ -68,6 +70,7 @@
 		grid-template-areas:
 			'header'
 			'story';
+		width: 100%;
 
 		header {
 			grid-area: header;
@@ -80,6 +83,9 @@
 			img {
 				width: 45px;
 				margin-right: 5px;
+				display: flex;
+				overflow: hidden;
+				border-radius: 50%;
 			}
 
 			time {

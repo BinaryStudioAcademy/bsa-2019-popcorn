@@ -46,6 +46,14 @@ interface IProps {
 	updateInfo: (ISurvey) => void;
 	deleteSurvey: (ISurvey) => void;
 	surveys: Array<ISurvey>;
+	location?: {
+		state?: {
+			url_callback?: string;
+		};
+	};
+	history?: {
+		push: (path: string) => any;
+	};
 }
 
 interface IState {
@@ -122,11 +130,13 @@ class UserSurveys extends React.Component<IProps, IState> {
 	};
 
 	modalIsShown = () => {
-		if (this.state.deletedSurvey === -1) return null;
+		const { deletedSurvey, surveys } = this.state;
+		if (deletedSurvey === -1) return null;
 		return (
 			<div className="modal-delete-container">
 				<div className="modal-delete">
 					<p>Are you sure you want to delete this survey?</p>
+					<p className="delete-title">{surveys[deletedSurvey].title}</p>
 					<button className="delete" onClick={this.deleteSurvey}>
 						Delete
 					</button>
@@ -146,34 +156,50 @@ class UserSurveys extends React.Component<IProps, IState> {
 		const { surveys } = this.state;
 		const { mainPath } = this.props;
 
+		const url_callback =
+			this.props.location &&
+			this.props.location.state &&
+			this.props.location.state.url_callback;
+		const redirect = () =>
+			url_callback
+				? this.props.history && this.props.history.push(url_callback)
+				: null;
+
 		return (
-			<div className="userSurveys">
-				<NavLink to={`${mainPath}/create`} className="create-button">
-					<button>Create survey</button>
-				</NavLink>
-				<div className="survey-list">
-					{surveys.map((survey, i) => {
-						return (
-							<NavLink key={i} exact={!i} to={`${mainPath}/${survey.id}`}>
-								<div className="survey-list-item">
-									<span>{survey.title}</span>
-									<p className="buttons">
-										{this.typeSurveyBttn(survey)}
-										<button
-											className="delete-bttn"
-											onClick={event => {
-												this.showModal(event, i);
-											}}
-										>
-											<FontAwesomeIcon icon={faTrashAlt} />
-										</button>
-									</p>
-								</div>
-							</NavLink>
-						);
-					})}
+			<div>
+				{url_callback && (
+					<button onClick={redirect} className={'btn'}>
+						Back to story
+					</button>
+				)}
+				<div className="userSurveys">
+					<NavLink to={`${mainPath}/create`} className="create-button">
+						<button>Create survey</button>
+					</NavLink>
+					<div className="survey-list">
+						{surveys.map((survey, i) => {
+							return (
+								<NavLink key={i} exact={!i} to={`${mainPath}/${survey.id}`}>
+									<div className="survey-list-item">
+										<span>{survey.title}</span>
+										<p className="buttons">
+											{this.typeSurveyBttn(survey)}
+											<button
+												className="delete-bttn"
+												onClick={event => {
+													this.showModal(event, i);
+												}}
+											>
+												<FontAwesomeIcon icon={faTrashAlt} />
+											</button>
+										</p>
+									</div>
+								</NavLink>
+							);
+						})}
+					</div>
+					{this.modalIsShown()}
 				</div>
-				{this.modalIsShown()}
 			</div>
 		);
 	}
