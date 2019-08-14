@@ -35,7 +35,7 @@ class UserEvents extends React.Component<IProps> {
 	}
 
 	renderEventList = (eventList: IEventFormatClient[]) =>
-		eventList.map(event => <EventItem event={event} />);
+		eventList.map(event => <EventItem event={event} key={event.id} />);
 
 	render() {
 		const { userEvents, currentUserId } = this.props;
@@ -48,7 +48,7 @@ class UserEvents extends React.Component<IProps> {
 		const subscribeEvents: IEventFormatClient[] = [];
 
 		for (const eventVisitor of userEvents) {
-			eventVisitor.eventId === currentUserId
+			eventVisitor.event.userId === currentUserId
 				? ownEvents.push(formatToClient(eventVisitor.event))
 				: subscribeEvents.push(formatToClient(eventVisitor.event));
 		}
