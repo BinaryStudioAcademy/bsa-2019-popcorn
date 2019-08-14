@@ -6,6 +6,10 @@
 	box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.37);
 	margin-top: 10px;
 
+	&:last-child {
+		margin-bottom: 30px;
+	}
+
 	.event-wrapper {
 		display: flex;
 		justify-content: flex-start;
@@ -78,10 +82,7 @@
 			}
 			.event-date {
 				font-size: 16px;
-			}
-
-			.event-date-status {
-				margin-top: 5px;
+				width: 400px;
 				text-align: right;
 			}
 		}

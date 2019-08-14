@@ -73,13 +73,23 @@ class UserEvents extends React.Component<IProps> {
 					<span>Your Events</span>
 				</div>
 				<div className="event-list-container">
-					{this.renderEventList(ownEvents)}
+					{ownEvents.length === 0 ? (
+						<div className="event-show-warning">
+							No one event. You can craete
+						</div>
+					) : (
+						this.renderEventList(ownEvents)
+					)}
 				</div>
 				<div className="events-title">
 					<span>Events interested you</span>
 				</div>
 				<div className="event-list-container">
-					{this.renderEventList(subscribeEvents)}
+					{subscribeEvents.length === 0 ? (
+						<div className="event-show-warning">No one event</div>
+					) : (
+						this.renderEventList(subscribeEvents)
+					)}
 				</div>
 			</div>
 		);

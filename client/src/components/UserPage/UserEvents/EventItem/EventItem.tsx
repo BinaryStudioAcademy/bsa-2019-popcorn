@@ -8,7 +8,6 @@ import {
 	faVideo,
 	faUsers
 } from '@fortawesome/free-solid-svg-icons';
-import { date } from 'yup';
 
 interface IProps {
 	event: IEvent;
@@ -24,15 +23,6 @@ const EventItem: React.FC<IProps> = ({ event }) => {
 		movieId,
 		eventVisitors
 	} = event;
-
-	const calendarStrings = {
-		lastDay: '[Yesterday at] LT',
-		sameDay: '[Today at] LT',
-		nextDay: '[Tomorrow at] LT',
-		lastWeek: '[last] dddd [at] LT',
-		nextWeek: 'dddd [at] LT',
-		sameElse: '[]'
-	};
 
 	return (
 		<div className="event-item">
@@ -73,9 +63,6 @@ const EventItem: React.FC<IProps> = ({ event }) => {
 							<Moment format=" D MMM HH:mm " local>
 								{dateRange.endDate}
 							</Moment>
-						</div>
-						<div className="event-date-status">
-							<Moment calendar={calendarStrings}>{dateRange.startDate}</Moment>
 						</div>
 					</div>
 				</div>

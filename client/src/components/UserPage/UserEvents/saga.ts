@@ -1,6 +1,5 @@
 import { all, call, put, takeEvery } from 'redux-saga/effects';
 import { GET_USER_EVENTS, GET_USER_EVENTS_SUCCESS } from './actionsTypes';
-import axios from 'axios';
 import config from '../../../config';
 import webApi from '../../../services/webApi.service';
 
