@@ -6,7 +6,7 @@ import { getUserEvents } from './actions';
 import {
 	IEventFormatDataBase,
 	IEventFormatClient,
-	formatToClient1
+	formatToClient
 } from './UserEvents.service';
 import EventItem from './EventItem/EventItem';
 import './UserEvents.scss';
@@ -49,8 +49,8 @@ class UserEvents extends React.Component<IProps> {
 
 		for (const eventVisitor of userEvents) {
 			eventVisitor.eventId === currentUserId
-				? ownEvents.push(formatToClient1(eventVisitor.event))
-				: subscribeEvents.push(formatToClient1(eventVisitor.event));
+				? ownEvents.push(formatToClient(eventVisitor.event))
+				: subscribeEvents.push(formatToClient(eventVisitor.event));
 		}
 		return (
 			<div className="UserEvents">

@@ -41,7 +41,7 @@ interface IVisitor {
 	eventId: string;
 }
 
-export const formatToClient1 = (
+export const formatToClient = (
 	event: IEventFormatDataBase
 ): IEventFormatClient => {
 	const {
@@ -75,6 +75,32 @@ export const formatToClient1 = (
 		isPrivate,
 		movieId,
 		eventVisitors
+	};
+	return formatEvent;
+};
+
+export const formatToDataBase = (event: IEventFormatClient): any => {
+	const {
+		title,
+		description,
+		location,
+		dateRange,
+		userId,
+		image,
+		isPrivate,
+		movieId
+	} = event;
+	const formatEvent = {
+		title,
+		description,
+		image,
+		location_lat: location.lat,
+		location_lng: location.lng,
+		start_date: dateRange.startDate,
+		end_date: dateRange.endDate,
+		isPrivate,
+		userId,
+		movieId
 	};
 	return formatEvent;
 };
