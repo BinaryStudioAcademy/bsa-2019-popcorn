@@ -14,7 +14,7 @@ import './UserEvents.scss';
 interface IProps {
 	userEvents: IEventVisitor[];
 	getUserEvents: (id: string) => any;
-	deleteEvent: (id: string) => any;
+	deleteEvent: (id: string, currentUserId: string) => any;
 	currentUserId: string;
 }
 

@@ -7,10 +7,13 @@ export const getUserEvents = (id: string) => {
 	};
 };
 
-export const deleteEvent = (id: string) => {
+export const deleteEvent = (id: string, currentUserId: string) => {
 	console.log('Удаляем шляпу');
 	return {
 		type: DELETE_OWN_USER_EVENT,
-		payload: id
+		payload: {
+			id,
+			currentUserId
+		}
 	};
 };
