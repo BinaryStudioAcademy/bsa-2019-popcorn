@@ -18,6 +18,7 @@ interface IProps {
 		//temporary put ? to use mocks inside component
 		name: string;
 		image: string;
+		avatar?: string;
 	};
 	moviesSearch?: Array<{
 		id: string;
@@ -40,7 +41,7 @@ const user = {
 };
 
 const Header = ({
-	userInfo = user,
+	userInfo,
 	moviesSearch,
 	fetchFilms,
 	alreadySearch,
@@ -128,7 +129,7 @@ const Header = ({
 				</NavLink>
 			</div>
 			<NavLink to={'/user-page'} className="user-info hover">
-				<img src={userInfo.image || config.DEFAULT_AVATAR} alt="avatar" />
+				<img src={userInfo.avatar || config.DEFAULT_AVATAR} alt="avatar" />
 				<span className="user-name">{userInfo.name}</span>
 			</NavLink>
 		</div>
