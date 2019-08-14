@@ -1,14 +1,21 @@
 import React from 'react';
 import { Redirect } from 'react-router';
 import PostStoryEditor from '../../PostStoryEditor/PostStoryEditor';
+import INewStory from '../INewStory';
 
-class getAddStoryPopupContent extends React.Component {
+interface IProps {
+	newStory: INewStory;
+}
+
+class getAddStoryPopupContent extends React.Component<IProps> {
 	state = {
 		open: true,
 		extra: true
 	};
 
 	render() {
+		const newStory = this.props.newStory;
+
 		if (!this.state.open) return <Redirect to={'/'} />;
 		if (!this.state.extra) return <Redirect to={'/create/extra'} />;
 

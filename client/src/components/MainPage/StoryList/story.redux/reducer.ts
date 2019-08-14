@@ -1,7 +1,13 @@
 import { SET_STORIES } from './actionTypes';
+import INewStory from '../INewStory';
 
-const initialState = {
-	stories: null
+const initialState: { stories: any; newStory: INewStory } = {
+	stories: null,
+	newStory: {
+		image_url: null,
+		userId: null,
+		caption: '123'
+	}
 };
 
 export default function(state = initialState, action) {

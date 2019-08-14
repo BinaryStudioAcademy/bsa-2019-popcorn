@@ -7,6 +7,7 @@ import { Route, Switch } from 'react-router-dom';
 import GetAddStoryPopupContent from './story-modal/create-story';
 import ChooseExtra from './story-modal/choose-extra';
 import ChooseExtraOption from './story-modal/choose-extra-option';
+import INewStory from './INewStory';
 
 interface IStoryListItem {
 	caption: string;
@@ -25,6 +26,7 @@ interface IProps {
 	stories: null | Array<IStoryListItem>;
 	fetchStories: () => any;
 	avatar: null | string;
+	newStory: INewStory;
 }
 
 const ListBlock = ({ ...props }: IProps) => {
@@ -32,7 +34,13 @@ const ListBlock = ({ ...props }: IProps) => {
 		<div>
 			<StoryList {...props} />
 			<Switch>
-				<Route exact path={`/create`} component={GetAddStoryPopupContent} />
+				<Route
+					exact
+					path={`/create`}
+					component={() => (
+						<GetAddStoryPopupContent newStory={props.newStory} />
+					)}
+				/>
 				<Route exact path={`/create/extra`} component={ChooseExtra} />
 				<Route path={`/create/extra/:option`} component={ChooseExtraOption} />
 			</Switch>
@@ -43,7 +51,8 @@ const ListBlock = ({ ...props }: IProps) => {
 const mapStateToProps = (rootState, props) => ({
 	...props,
 	stories: rootState.story.stories,
-	avatar: rootState.profile.profileInfo && rootState.profile.profileInfo.avatar
+	avatar: rootState.profile.profileInfo && rootState.profile.profileInfo.avatar,
+	newStory: rootState.story.newStory
 });
 
 const actions = {
