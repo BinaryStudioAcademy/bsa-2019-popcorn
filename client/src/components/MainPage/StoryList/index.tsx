@@ -1,5 +1,5 @@
 import StoryList from './story-list/story-list';
-import { fetchStories } from './story.redux/actions';
+import { fetchStories, setCaption } from './story.redux/actions';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import React from 'react';
@@ -27,6 +27,7 @@ interface IProps {
 	fetchStories: () => any;
 	avatar: null | string;
 	newStory: INewStory;
+	setCaption: (caption: string) => any;
 }
 
 const ListBlock = ({ ...props }: IProps) => {
@@ -38,7 +39,10 @@ const ListBlock = ({ ...props }: IProps) => {
 					exact
 					path={`/create`}
 					component={() => (
-						<GetAddStoryPopupContent newStory={props.newStory} />
+						<GetAddStoryPopupContent
+							newStory={props.newStory}
+							setCaption={props.setCaption}
+						/>
 					)}
 				/>
 				<Route exact path={`/create/extra`} component={ChooseExtra} />
@@ -56,7 +60,8 @@ const mapStateToProps = (rootState, props) => ({
 });
 
 const actions = {
-	fetchStories
+	fetchStories,
+	setCaption
 };
 const mapDispatchToProps = dispatch => bindActionCreators(actions, dispatch);
 

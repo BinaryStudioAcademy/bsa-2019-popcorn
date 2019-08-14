@@ -5,6 +5,7 @@ import INewStory from '../INewStory';
 
 interface IProps {
 	newStory: INewStory;
+	setCaption: (caption: string) => any;
 }
 
 class getAddStoryPopupContent extends React.Component<IProps> {
@@ -26,7 +27,13 @@ class getAddStoryPopupContent extends React.Component<IProps> {
 		return (
 			<div className={'modal modal-story'}>
 				<div className={'content-wrp'}>
-					<PostStoryEditor type={'story'} addExtra={addExtra} />
+					<PostStoryEditor
+						type={'story'}
+						addExtra={addExtra}
+						body={newStory.caption || ''}
+						imageUrl={newStory.image_url}
+						changeBody={this.props.setCaption}
+					/>
 				</div>
 
 				<div className={'btn-wrp'}>
@@ -39,4 +46,5 @@ class getAddStoryPopupContent extends React.Component<IProps> {
 		);
 	}
 }
+
 export default getAddStoryPopupContent;

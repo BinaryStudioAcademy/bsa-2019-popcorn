@@ -17,10 +17,12 @@ interface IPostStoryEditorProps {
 	type: 'story' | 'post';
 	uploadImage?: (s: any) => any;
 	addExtra?: () => any;
+	body: string;
+	imageUrl?: string | null;
+	changeBody: (text: string) => any;
 }
 
 interface IPostStoryEditorState {
-	body: string;
 	checkboxValue: boolean;
 	imageUrl: string;
 	errorMsg: string;
@@ -34,7 +36,6 @@ class PostStoryEditor extends React.Component<
 	constructor(props: IPostStoryEditorProps) {
 		super(props);
 		this.state = {
-			body: '',
 			checkboxValue: false,
 			imageUrl: '',
 			errorMsg: '',
@@ -54,16 +55,14 @@ class PostStoryEditor extends React.Component<
 				case 'post':
 					// fetch post by id
 					this.setState({
-						...this.state,
-						body: 'test post'
+						...this.state
 					});
 					break;
 
 				case 'story':
 					// fetch story by id
 					this.setState({
-						...this.state,
-						body: 'test story'
+						...this.state
 					});
 					break;
 
@@ -91,7 +90,6 @@ class PostStoryEditor extends React.Component<
 		this.setState({
 			...this.state,
 			imageUrl: '',
-			body: '',
 			checkboxValue: false
 		});
 		console.log('redirected');
@@ -99,7 +97,7 @@ class PostStoryEditor extends React.Component<
 	}
 
 	onSave() {
-		if (this.state.body.trim() === '') return;
+		if (this.props.body.trim() === '') return;
 		switch (this.props.type) {
 			case 'post':
 				this.props.id
@@ -199,8 +197,9 @@ class PostStoryEditor extends React.Component<
 				)}
 				<textarea
 					placeholder="Type a text here..."
-					value={this.state.body}
-					onChange={e => this.onChangeData(e.target.value, 'body')}
+					value={this.props.body}
+					// onChange={e => this.onChangeData(e.target.value, 'body')}
+					onChange={e => this.props.changeBody(e.target.value)}
 				/>
 				<div>
 					<button
