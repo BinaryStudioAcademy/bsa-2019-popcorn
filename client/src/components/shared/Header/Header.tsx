@@ -9,7 +9,7 @@ import MovieSearch from '../../MovieList/MovieSearch/index';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { fetchFilms } from '../Header/actions';
-import { NavLink } from 'react-router-dom';
+import { NavLink, Link } from 'react-router-dom';
 import { setMovieSeries } from '../../MovieSeriesPage/Movie.redux/actions';
 import config from '../../../config';
 
@@ -19,9 +19,6 @@ interface IProps {
 		name: string;
 		image: string;
 	};
-	movies?: Array<string>;
-	tv?: Array<string>;
-	ratings?: Array<string>;
 	moviesSearch?: Array<{
 		id: string;
 		title: string;
@@ -42,18 +39,22 @@ const user = {
 		'https://s3-alpha-sig.figma.com/img/919e/1a5a/da4f250d469108191ad9d4af68b2a639?Expires=1566172800&Signature=Kou41Z8bd8ig~9nLibgCH5gfaOc0K~9Io82-umabjJnomveXbPcqMWfD911bHy6h77reHT6ecNYFHCzmXkQNy3vEF-OzgJYgV875TI2rX~cPt1FaSJC5wCeybEfTrlBlCcdzSFn8iVcP~C8GTx-l6CIjyugGAhvr7xJ-hfAdlf~5Mll0Sy92dSKn8q7OkJdfsMvEEFVQ3rGHn8GGQZg1a60gif0VaQhuVX1gcRgwrsak~cerS1bnDvo93B1lFOIk85wlhY2hPwQrmCtI9A-qaAtbIxmzmxkRpuVUpDrX6Jd4hXpksbd7urSJ91Dg7tv9WzRZvIkLnPXflCfmPw~slw__&Key-Pair-Id=APKAINTVSUGEWH5XD5UA'
 };
 
-const mock = ['Movies in cinema', 'Top movies', 'On DVD'];
-
 const Header = ({
 	userInfo = user,
-	movies = mock,
-	tv = mock,
-	ratings = mock,
 	moviesSearch,
 	fetchFilms,
 	alreadySearch,
 	setMovieSeries
 }: IProps) => {
+	const MOVIES_IN_CINEMA = 'Movies in cinema';
+	const MOVIE_TOPS = 'Movie tops';
+	const USER_MOVIE_TOPS = `${userInfo.name}'s Movie Lists`;
+	const NEW_TV_SERIES = 'New TV Series';
+	const TV_SERIES_TOPS = 'TV Series tops';
+	const USER_TV_SERIES_TOPS = `${userInfo.name}'s TV Series Lists`;
+	const POPULAR_MOVIES = 'Popular Movies';
+	const POPULAR_TV_SERIES = 'Popular TV Series';
+	const POPULAR_USERS = 'Popular Users';
 	return (
 		<div className="header">
 			<NavLink to="/" className="header-logo-link">
@@ -72,11 +73,15 @@ const Header = ({
 				</NavLink>
 				<FontAwesomeIcon icon={faChevronDown} />
 				<div className="modal">
-					{movies.map(movie => (
-						<div key={movie} className="hover">
-							{movie}
-						</div>
-					))}
+					<Link aria-current="page" className="hover" to="#">
+						{MOVIES_IN_CINEMA}
+					</Link>
+					<Link aria-current="page" className="hover" to="/movie-tops">
+						{MOVIE_TOPS}
+					</Link>
+					<Link aria-current="page" className="hover" to="/user-page/lists">
+						{USER_MOVIE_TOPS}
+					</Link>
 				</div>
 			</button>
 
@@ -84,25 +89,32 @@ const Header = ({
 				TV
 				<FontAwesomeIcon icon={faChevronDown} />
 				<div className="modal">
-					{tv.map(tvElemenet => (
-						<div key={tvElemenet} className="inactive">
-							{tvElemenet}
-						</div>
-					))}
+					<Link aria-current="page" className="hover" to="#">
+						{NEW_TV_SERIES}
+					</Link>
+					<Link aria-current="page" className="hover" to="#">
+						{TV_SERIES_TOPS}
+					</Link>
+					<Link aria-current="page" className="hover" to="/user-page/lists">
+						{USER_TV_SERIES_TOPS}
+					</Link>
 				</div>
 			</button>
 			<button className="header-buttons hover">
 				Ratings
 				<FontAwesomeIcon icon={faChevronDown} />
 				<div className="modal">
-					{ratings.map(rating => (
-						<div key={rating} className="inactive">
-							{rating}
-						</div>
-					))}
+					<Link aria-current="page" className="hover" to="#">
+						{POPULAR_MOVIES}
+					</Link>
+					<Link aria-current="page" className="hover" to="#">
+						{POPULAR_TV_SERIES}
+					</Link>
+					<Link aria-current="page" className="hover" to="#">
+						{POPULAR_USERS}
+					</Link>
 				</div>
 			</button>
-
 			<MovieSearch
 				movies={moviesSearch}
 				fetchFilms={fetchFilms}
