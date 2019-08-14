@@ -6,6 +6,7 @@ import INewStory from '../INewStory';
 interface IProps {
 	newStory: INewStory;
 	setCaption: (caption: string) => any;
+	saveImage: (url: string) => any;
 }
 
 class getAddStoryPopupContent extends React.Component<IProps> {
@@ -31,8 +32,9 @@ class getAddStoryPopupContent extends React.Component<IProps> {
 						type={'story'}
 						addExtra={addExtra}
 						body={newStory.caption || ''}
-						imageUrl={newStory.image_url}
+						imageUrl={newStory.image_url || ''}
 						changeBody={this.props.setCaption}
+						saveImage={this.props.saveImage}
 					/>
 				</div>
 

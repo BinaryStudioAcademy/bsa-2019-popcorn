@@ -7,22 +7,23 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { faCamera } from '@fortawesome/free-solid-svg-icons/faCamera';
 import ImageUploader from '../ImageUploader/ImageUploader';
+import { uploadFile } from '../../../services/file.service';
 
 interface IPostStoryEditorProps {
 	id?: string;
 	type: 'story' | 'post';
-	uploadImage?: (s: any) => any;
+	saveImage: (url: string) => void;
 	addExtra?: () => any;
 	body: string;
-	imageUrl?: string | null;
+	imageUrl: string;
 	changeBody: (text: string) => any;
 }
 
 interface IPostStoryEditorState {
 	checkboxValue: boolean;
-	imageUrl: string;
 	errorMsg: string;
 	isUploading: boolean;
+	savePhoto: boolean;
 }
 
 class PostStoryEditor extends React.Component<
@@ -33,46 +34,15 @@ class PostStoryEditor extends React.Component<
 		super(props);
 		this.state = {
 			checkboxValue: false,
-			imageUrl: '',
 			errorMsg: '',
-			isUploading: false
+			isUploading: false,
+			savePhoto: false
 		};
 
 		this.onCancel = this.onCancel.bind(this);
 		this.onSave = this.onSave.bind(this);
-		this.onChangeData = this.onChangeData.bind(this);
 		this.onToggleCheckbox = this.onToggleCheckbox.bind(this);
 		this.imageStateHandler = this.imageStateHandler.bind(this);
-	}
-
-	componentDidMount() {
-		if (this.props.id) {
-			switch (this.props.type) {
-				case 'post':
-					// fetch post by id
-					this.setState({
-						...this.state
-					});
-					break;
-
-				case 'story':
-					// fetch story by id
-					this.setState({
-						...this.state
-					});
-					break;
-
-				default:
-					break;
-			}
-		}
-	}
-
-	onChangeData(value: string, keyword: string) {
-		this.setState({
-			...this.state,
-			[keyword]: value
-		});
 	}
 
 	onToggleCheckbox() {
@@ -85,39 +55,18 @@ class PostStoryEditor extends React.Component<
 	onCancel() {
 		this.setState({
 			...this.state,
-			imageUrl: '',
 			checkboxValue: false
 		});
-		console.log('redirected');
-		//redirect to main page
+
+		this.props.saveImage('');
 	}
 
 	onSave() {
-		if (this.props.body.trim() === '') return;
-		switch (this.props.type) {
-			case 'post':
-				this.props.id
-					? console.log(this.state, 'post updated') //this.props.updatePost(this.props.id, this.state);
-					: console.log(this.state, 'post created'); //this.props.addPost(this.state);
-				break;
-
-			case 'story':
-				if (this.state.checkboxValue) console.log(this.state, 'post created'); //this.props.addPost(this.state);
-				this.props.id
-					? console.log(this.state, 'story updated') //this.props.updateStory(this.props.id, this.state);
-					: console.log(this.state, 'story created'); //this.props.addStory(this.state);
-				break;
-
-			default:
-				break;
-		}
-		this.onCancel();
+		this.setState({ savePhoto: true });
 	}
 
 	imageStateHandler(data) {
-		this.setState({
-			imageUrl: data
-		});
+		this.props.saveImage(data);
 	}
 
 	render() {
@@ -126,30 +75,34 @@ class PostStoryEditor extends React.Component<
 				{this.state.errorMsg && (
 					<span className="upload-error">{this.state.errorMsg}</span>
 				)}
-				{this.state.imageUrl ? (
+				{this.props.imageUrl ? (
 					<div className={'profilePhotoWrap'}>
 						<img
-							src={this.state.imageUrl}
+							src={this.props.imageUrl}
 							style={{ width: '100%', height: '100%' }}
 							alt=""
 						/>
-						<span>
-							<FontAwesomeIcon
-								icon={faCheckCircle}
-								className="fontAwesomeIcon"
-							/>
-						</span>
-						<span>
-							<FontAwesomeIcon
-								icon={faTimesCircle}
-								className={'fontAwesomeIcon'}
-							/>
-						</span>
+						{this.state.savePhoto && (
+							<span onClick={this.onSave}>
+								<FontAwesomeIcon
+									icon={faCheckCircle}
+									className="fontAwesomeIcon"
+								/>
+							</span>
+						)}
+						{this.state.savePhoto && (
+							<span onClick={this.onCancel}>
+								<FontAwesomeIcon
+									icon={faTimesCircle}
+									className={'fontAwesomeIcon'}
+								/>
+							</span>
+						)}
 					</div>
 				) : (
 					<div className={'upload-image-wrp'}>
 						<ImageUploader
-							imageHandler={this.props.uploadImage}
+							imageHandler={uploadFile}
 							imageStateHandler={this.imageStateHandler}
 						>
 							<label htmlFor="image" className="upload-image-button">

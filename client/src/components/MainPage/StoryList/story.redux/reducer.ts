@@ -1,4 +1,4 @@
-import { SET_CAPTION_NEWSTORY, SET_STORIES } from './actionTypes';
+import { CHANGE_IMAGE, SET_CAPTION_NEWSTORY, SET_STORIES } from './actionTypes';
 import INewStory from '../INewStory';
 
 const initialState: { stories: any; newStory: INewStory } = {
@@ -22,6 +22,15 @@ export default function(state = initialState, action) {
 				newStory: {
 					...state.newStory,
 					caption: action.payload.caption
+				}
+			};
+		case CHANGE_IMAGE:
+			console.log();
+			return {
+				...state,
+				newStory: {
+					...state.newStory,
+					image_url: action.payload.url
 				}
 			};
 		default:

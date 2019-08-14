@@ -1,8 +1,9 @@
 import React from 'react';
 import './ImageUploader.scss';
+import config from '../../../config';
 
 interface IPostImageUploaderProps {
-	imageHandler?: (s: any) => any;
+	imageHandler: (s: any) => any;
 	imageStateHandler: (s: any) => any;
 }
 
@@ -46,8 +47,14 @@ class ImageUploader extends React.Component<
 			this.props
 				.imageHandler(data)
 				.then(({ imageUrl }) => {
-					this.setState({ imageUrl, isUploading: false, errorMsg: '' });
-					this.props.imageStateHandler(imageUrl);
+					let url = imageUrl.split(`\\`);
+					url.shift();
+					url = url.join('/');
+
+					url = config.API_URL + '/' + url;
+
+					this.setState({ imageUrl: url, isUploading: false, errorMsg: '' });
+					this.props.imageStateHandler(url);
 				})
 				.catch(error => {
 					this.setState({ isUploading: false, errorMsg: error.message });
@@ -56,7 +63,6 @@ class ImageUploader extends React.Component<
 	}
 
 	render() {
-		console.log(this.props);
 		return (
 			<div className="edit-form">
 				{this.state.errorMsg && (

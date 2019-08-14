@@ -1,4 +1,8 @@
-import { FETCH_STORIES, SET_CAPTION_NEWSTORY } from './actionTypes';
+import {
+	CHANGE_IMAGE,
+	FETCH_STORIES,
+	SET_CAPTION_NEWSTORY
+} from './actionTypes';
 
 export const fetchStories = () => {
 	return {
@@ -12,5 +16,12 @@ export const setCaption = caption => {
 		payload: {
 			caption
 		}
+	};
+};
+
+export const saveImage = url => {
+	return {
+		type: CHANGE_IMAGE,
+		payload: url
 	};
 };
