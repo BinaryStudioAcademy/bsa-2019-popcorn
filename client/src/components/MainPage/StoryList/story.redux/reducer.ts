@@ -25,12 +25,11 @@ export default function(state = initialState, action) {
 				}
 			};
 		case CHANGE_IMAGE:
-			console.log();
 			return {
 				...state,
 				newStory: {
 					...state.newStory,
-					image_url: action.payload.url
+					image_url: action.payload
 				}
 			};
 		default:

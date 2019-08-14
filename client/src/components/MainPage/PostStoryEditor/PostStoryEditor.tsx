@@ -76,13 +76,9 @@ class PostStoryEditor extends React.Component<
 					<span className="upload-error">{this.state.errorMsg}</span>
 				)}
 				{this.props.imageUrl ? (
-					<div className={'profilePhotoWrap'}>
-						<img
-							src={this.props.imageUrl}
-							style={{ width: '100%', height: '100%' }}
-							alt=""
-						/>
-						{this.state.savePhoto && (
+					<div className={'photo-wrp'}>
+						<img src={this.props.imageUrl} alt="" />
+						{!this.state.savePhoto && (
 							<span onClick={this.onSave}>
 								<FontAwesomeIcon
 									icon={faCheckCircle}
@@ -90,7 +86,7 @@ class PostStoryEditor extends React.Component<
 								/>
 							</span>
 						)}
-						{this.state.savePhoto && (
+						{!this.state.savePhoto && (
 							<span onClick={this.onCancel}>
 								<FontAwesomeIcon
 									icon={faTimesCircle}
