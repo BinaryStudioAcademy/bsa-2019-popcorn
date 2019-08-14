@@ -2,42 +2,30 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import Spinner from '../../shared/Spinner/index';
-import { getUserEvents, saveEvent } from './actions';
+import { getUserEvents, saveEvent, deleteEvent } from './actions';
+
+import {
+	IEventFormatDataBase,
+	IEventFormatClient,
+	formatToClient
+} from './UserEvents.service';
 import EventItem from './EventItem/EventItem';
 import './UserEvents.scss';
 import UserEventsEditor from './UserEventsEditor/UserEventsEditor';
 
 interface IProps {
-	userEvents: IEvent[];
+	userEvents: IEventVisitor[];
 	getUserEvents: (id: string) => any;
+	deleteEvent: (id: string, currentUserId: string) => any;
 	currentUserId: string;
 	saveEvent: (event: any) => void;
 }
 
-export interface IEvent {
-	id: string;
-	title: string;
-	description: string;
-	location: {
-		lat: number;
-		lng: number;
-	};
-	dateRange: {
-		startDate: string;
-		endDate: string;
-	};
-	userId: string;
-	image?: string;
-	isPrivate: boolean;
-	movieId?: string | undefined;
-	eventVisitors: IVisitor[];
-}
-
-interface IVisitor {
+interface IEventVisitor {
+	eventId: string;
 	id: string;
 	status: string;
-	userId: string;
-	eventId: string;
+	event: IEventFormatDataBase;
 }
 
 class UserEvents extends React.Component<IProps> {
@@ -50,25 +38,26 @@ class UserEvents extends React.Component<IProps> {
 		this.props.getUserEvents(currentUserId);
 	}
 
-	renderEventList = (eventList: IEvent[]) =>
-		eventList.map(event => <EventItem event={event} />);
+	renderEventList = (eventList: IEventFormatClient[], deleteEventAction: any) =>
+		eventList.map(event => (
+			<EventItem event={event} key={event.id} deleteEvent={deleteEventAction} />
+		));
 
 	render() {
-		const { userEvents, currentUserId } = this.props;
+		const { userEvents, currentUserId, deleteEvent } = this.props;
 
 		if (!userEvents) {
 			return <Spinner />;
 		}
 
-		const ownEvents: IEvent[] = [];
-		const subscribeEvents: IEvent[] = [];
+		const ownEvents: IEventFormatClient[] = [];
+		const subscribeEvents: IEventFormatClient[] = [];
 
-		for (const event of userEvents) {
-			event.userId === currentUserId
-				? ownEvents.push(event)
-				: subscribeEvents.push(event);
+		for (const eventVisitor of userEvents) {
+			eventVisitor.event.userId === currentUserId
+				? ownEvents.push(formatToClient(eventVisitor.event))
+				: subscribeEvents.push(formatToClient(eventVisitor.event));
 		}
-
 		return (
 			<div className="UserEvents">
 				<UserEventsEditor saveEvent={this.props.saveEvent} id={currentUserId} />
@@ -81,7 +70,7 @@ class UserEvents extends React.Component<IProps> {
 							No one event. You can craete
 						</div>
 					) : (
-						this.renderEventList(ownEvents)
+						this.renderEventList(ownEvents, deleteEvent)
 					)}
 				</div>
 				<div className="events-title">
@@ -91,7 +80,7 @@ class UserEvents extends React.Component<IProps> {
 					{subscribeEvents.length === 0 ? (
 						<div className="event-show-warning">No one event</div>
 					) : (
-						this.renderEventList(subscribeEvents)
+						this.renderEventList(subscribeEvents, null)
 					)}
 				</div>
 			</div>
@@ -110,7 +99,8 @@ const mapStateToProps = (state, props) => {
 const mapDispatchToProps = dispatch => {
 	const actions = {
 		getUserEvents,
-		saveEvent
+		saveEvent,
+		deleteEvent
 	};
 
 	return bindActionCreators(actions, dispatch);

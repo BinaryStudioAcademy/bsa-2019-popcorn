@@ -4,7 +4,6 @@ import 'react-datepicker/dist/react-datepicker.css';
 import './UserEventsEditor.scss';
 import MapWithASearchBox from '../EventMap/EventMapSearch';
 import { ReactComponent as PhotoIcon } from '../../../../assets/icons/general/photoIcon.svg';
-import { IEvent } from '../UserEvents';
 
 interface IUserEventsEditorProps {
 	id?: string;

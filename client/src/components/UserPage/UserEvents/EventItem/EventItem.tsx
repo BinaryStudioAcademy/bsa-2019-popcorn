@@ -1,7 +1,8 @@
 import React from 'react';
-import { IEvent } from '../UserEvents';
+import { IEventFormatClient } from '../UserEvents.service';
 import './EventItem.scss';
 import Moment from 'react-moment';
+import { ReactComponent as CloseIcon } from '../../../../assets/icons/general/closeIcon.svg';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
 	faMapMarkerAlt,
@@ -10,11 +11,14 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 
 interface IProps {
-	event: IEvent;
+	event: IEventFormatClient;
+	deleteEvent: null | ((id: string, currentUserId: string) => any);
 }
 
-const EventItem: React.FC<IProps> = ({ event }) => {
+const EventItem: React.FC<IProps> = ({ event, deleteEvent }) => {
 	const {
+		id,
+		userId: currentUserId,
 		title,
 		description,
 		location,
@@ -54,16 +58,27 @@ const EventItem: React.FC<IProps> = ({ event }) => {
 							{eventVisitors.length} users subscribe
 						</div>
 					</div>
-					<div className="event-date">
+					<div className="event-date-buttons">
 						<div className="event-date-range">
 							<Moment format=" D MMM HH:mm " local>
-								{dateRange.startDate}
+								{String(dateRange.startDate)}
 							</Moment>
 							-
 							<Moment format=" D MMM HH:mm " local>
-								{dateRange.endDate}
+								{String(dateRange.endDate)}
 							</Moment>
 						</div>
+						{deleteEvent !== null ? (
+							<div className="event-buttons">
+								<button className="edit-button">Edit</button>
+								<button
+									className="delete-button"
+									onClick={() => deleteEvent(id, currentUserId)}
+								>
+									<CloseIcon className="delete-button-svg" />
+								</button>
+							</div>
+						) : null}
 					</div>
 				</div>
 			</div>

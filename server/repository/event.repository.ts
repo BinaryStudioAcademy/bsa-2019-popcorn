@@ -14,30 +14,19 @@ class EventRepository extends Repository<Event> {
       .getOne();
   }
 
-  async getEventsByVisitorId(userId: string): Promise<Event[]> {
-    const interestedEventIds = await getCustomRepository(
-      EventVisitorRepository
-    ).getEventIdsByVisitorId(userId);
-
-    const interestedEvents = await Promise.all(
-      interestedEventIds.map(interestedEventId =>
-        this.getEvent(interestedEventId)
-      )
-    );
-
-    return [...interestedEvents];
+  async getEventsByVisitorId(userId: string): Promise<EventVisitor[]> {
+    return await getRepository(EventVisitor)
+      .createQueryBuilder("event_visitor")
+      .leftJoinAndSelect("event_visitor.event", "event")
+      .leftJoinAndSelect("event.eventVisitors", "eventVisitors")
+      .where("event_visitor.userId = :id", { id: userId })
+      .getMany();
   }
-  // async getEventsByVisitorId(userId: string): Promise<Event[]> {
-  //   return await getRepository(Event)
-  //     .createQueryBuilder("event")
-  //     .innerJoinAndSelect("event.eventVisitors", "visitors")
-  //     .where("visitors.userId = :id", { id: userId })
-  //     .getMany();
-  // }
 
   async getEvents(userId: string): Promise<Event[]> {
     return await getRepository(Event)
       .createQueryBuilder("event")
+
       .leftJoinAndSelect("event.eventVisitors", "visitors")
       .where("event.userId = :id", { id: userId })
       .getMany();

@@ -30,5 +30,10 @@ export const deleteMovieById = async (movieId: number): Promise<Movie> => {
   return await getCustomRepository(MovieRepository).remove(movie);
 };
 
-export const getByTitle = async (title: string): Promise<Movie[]> =>
-  await elasticRepository.getByTitle(title);
+export const getByTitle = async (title: string): Promise<Movie[]> => {
+  let data = await elasticRepository.getByTitle(title);
+
+  data = data.hits.hits;
+
+  return data.map(movie => movie._source);
+};

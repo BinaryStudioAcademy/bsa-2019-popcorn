@@ -55,11 +55,15 @@ export class Event {
   @Column({ nullable: true })
   movieId: string;
 
-  @OneToMany(type => EventComment, event_comment => event_comment.event)
+  @OneToMany(type => EventComment, event_comment => event_comment.event, {
+    onDelete: "CASCADE"
+  })
   @JoinColumn()
   eventComments: EventVisitor[];
 
-  @OneToMany(type => EventVisitor, event_visitor => event_visitor.event)
+  @OneToMany(type => EventVisitor, event_visitor => event_visitor.event, {
+    onDelete: "CASCADE"
+  })
   @JoinColumn()
   eventVisitors: EventVisitor[];
 }

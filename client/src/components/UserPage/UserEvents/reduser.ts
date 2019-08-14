@@ -2,7 +2,6 @@ import {
 	GET_USER_EVENTS_SUCCESS,
 	FINISH_UPLOAD_USER_EVENTS
 } from './actionsTypes';
-import { IEvent } from './UserEvents';
 
 const initialState = {
 	userEvents: []
@@ -16,7 +15,7 @@ export default (state = initialState, action) => {
 				userEvents: action.payload.userEvents
 			};
 		case FINISH_UPLOAD_USER_EVENTS:
-			const newEvent: IEvent = action.payload.newEvent;
+			const newEvent = action.payload.newEvent;
 			return {
 				...state,
 				userEvents: [...state.userEvents, newEvent]

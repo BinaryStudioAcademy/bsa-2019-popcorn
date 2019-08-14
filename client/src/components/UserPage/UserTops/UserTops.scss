@@ -18,35 +18,35 @@ $btn-height: 36px;
 	margin-top: 20px;
 }
 .user-tops {
+	padding: 1% 1%;
 	font-family: $base-font-family;
 	font-size: 16px;
 	line-height: 19px;
 	color: rgba(0, 0, 0, 0.4);
 	letter-spacing: 0.533333px;
 	margin-bottom: 20px;
-}
+	.btn {
+		font-size: 18px;
+		font-weight: 600;
+		line-height: 22px;
 
-.btn {
-	font-size: 18px;
-	font-weight: 600;
-	line-height: 22px;
+		display: inline-flex;
 
-	display: inline-flex;
+		height: $btn-height;
+		margin: 0;
+		padding: 5px;
 
-	height: $btn-height;
-	margin: 0;
-	padding: 5px;
+		cursor: pointer;
+		transition: all 0.4s;
+		text-align: center;
+		text-decoration: none;
+		letter-spacing: 0.4px;
 
-	cursor: pointer;
-	transition: all 0.4s;
-	text-align: center;
-	text-decoration: none;
-	letter-spacing: 0.4px;
+		color: #fff;
+		border: none;
+		border-radius: 55px;
+		background-color: #ff6501;
 
-	color: #fff;
-	border: none;
-	border-radius: 55px;
-	background-color: #ff6501;
-
-	justify-content: center;
+		justify-content: center;
+	}
 }
