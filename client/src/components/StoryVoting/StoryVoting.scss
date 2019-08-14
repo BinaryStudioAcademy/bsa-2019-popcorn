@@ -1,5 +1,10 @@
 @import '../../styles/variables.scss';
 
+.prev-wrp {
+	width: 100%;
+	display: flex;
+	justify-content: center;
+}
 .story-voting {
 	display: flex;
 	flex-direction: column;
@@ -8,7 +13,7 @@
 	background-color: black;
 	position: relative;
 	width: 350px;
-	height: 500px;
+	height: 475px;
 
 	button:hover {
 		cursor: pointer;

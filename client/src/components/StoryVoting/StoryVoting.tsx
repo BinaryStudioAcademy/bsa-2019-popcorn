@@ -91,23 +91,22 @@ class StoryVoting extends React.Component<StoryVotingProps, StoryVotingState> {
 
 	calculatePositions() {
 		const headerPosition = {
-			top: 0 + this.state.deltaPositionHead.y,
-			left: 0 + this.state.deltaPositionHead.x
+			top: this.state.deltaPositionHead.y,
+			left: this.state.deltaPositionHead.x
 		};
 		const buttonsPosition = {
-			top: 0 + this.state.deltaPositionOptionBlock.y,
-			left: 0 + this.state.deltaPositionOptionBlock.x
+			top: this.state.deltaPositionOptionBlock.y,
+			left: this.state.deltaPositionOptionBlock.x
 		};
-		const positions = {
+		return {
 			headerPosition,
 			buttonsPosition
 		};
-		return positions;
 	}
 
 	createStoryVotingOptions() {
-		const allVotes = this.calculateAllVotes();
-		const votingOptions = this.props.options.map((el, index) => {
+		const allVotes = StoryVoting.calculateAllVotes();
+		return this.props.options.map((el, index) => {
 			if (index === 0)
 				return (
 					<StoryVotingOption
@@ -135,15 +134,10 @@ class StoryVoting extends React.Component<StoryVotingProps, StoryVotingState> {
 					/>
 				);
 		});
-		return votingOptions;
 	}
 
-	calculateAllVotes() {
-		const allVotes = storyVotingOptionsMock.reduce(
-			(a, b) => a + (b['voted'] || 0),
-			0
-		);
-		return allVotes;
+	static calculateAllVotes() {
+		return storyVotingOptionsMock.reduce((a, b) => a + (b['voted'] || 0), 0);
 	}
 
 	render() {
@@ -164,9 +158,7 @@ class StoryVoting extends React.Component<StoryVotingProps, StoryVotingState> {
 						)
 					}
 					className="back-to-editor-button"
-				>
-					<CrossIcon width="3em" height="3em" />
-				</button>
+				></button>
 				<Draggable
 					bounds=".story-voting"
 					defaultPosition={{
