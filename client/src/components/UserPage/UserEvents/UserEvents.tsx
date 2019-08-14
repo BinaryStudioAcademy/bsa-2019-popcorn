@@ -3,6 +3,8 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import Spinner from '../../shared/Spinner/index';
 import { getUserEvents } from './actions';
+import EventItem from './EventItem/EventItem';
+import './UserEvents.scss';
 
 interface IProps {
 	userEvents: IEvent[];
@@ -10,7 +12,7 @@ interface IProps {
 	currentUserId: string;
 }
 
-interface IEvent {
+export interface IEvent {
 	id: string;
 	title: string;
 	description: string;
@@ -23,6 +25,8 @@ interface IEvent {
 		end: Date;
 	};
 	userId: string;
+	image: string;
+	isPrivate: boolean;
 	movieId: string | undefined;
 	eventVisitors: IVisitor[];
 }
@@ -44,16 +48,38 @@ class UserEvents extends React.Component<IProps> {
 		this.props.getUserEvents(currentUserId);
 	}
 
+	renderEventList = (eventList: IEvent[]) =>
+		eventList.map(event => <EventItem event={event} />);
+
 	render() {
-		const { userEvents } = this.props;
+		const { userEvents, currentUserId } = this.props;
+
+		if (!userEvents) {
+			return <Spinner />;
+		}
+
+		const ownEvents: IEvent[] = [];
+		const subscribeEvents: IEvent[] = [];
+
+		for (const event of userEvents) {
+			event.userId === currentUserId
+				? ownEvents.push(event)
+				: subscribeEvents.push(event);
+		}
 
 		return (
 			<div className="UserEvents">
-				{userEvents ? (
-					<div className="event-list-container"></div>
-				) : (
-					<Spinner />
-				)}
+				<div className="event-list-container">
+					<div className="events-title">
+						<span>Your Events</span>
+					</div>
+					{this.renderEventList(ownEvents)}
+
+					<div className="events-title">
+						<span>Events interested you</span>
+					</div>
+					{this.renderEventList(subscribeEvents)}
+				</div>
 			</div>
 		);
 	}
