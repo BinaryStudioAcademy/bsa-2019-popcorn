@@ -3,6 +3,7 @@ import { ReactComponent as CrossIcon } from '../../assets/icons/storyVote/crossI
 import { SketchPicker } from 'react-color';
 import StoryVoting from '../StoryVoting/StoryVoting';
 import './StoryVotingCreation.scss';
+import { uploadFile } from '../../services/file.service';
 
 type StoryVotingCreationState = {
 	header: string;
@@ -23,7 +24,7 @@ type StoryVotingCreationState = {
 };
 
 class StoryVotingCreation extends React.Component<
-	{ uploadImage: (data: any) => any },
+	{},
 	StoryVotingCreationState
 > {
 	constructor(props) {
@@ -158,8 +159,7 @@ class StoryVotingCreation extends React.Component<
 
 		const data = new FormData();
 		data.append('file', target.files[0]);
-		this.props
-			.uploadImage(data)
+		uploadFile(data)
 			.then(({ imageUrl }) => {
 				this.setState({ imageUrl, isUploading: false, errorMsg: '' });
 			})
@@ -291,9 +291,9 @@ class StoryVotingCreation extends React.Component<
 				>
 					Show Preview
 				</button>
-				<div className="form-action-buttons">
-					<button className="cancel-btn-vote-creation">Cancel</button>
-					<button className="save-btn-vote-creation">Save</button>
+				<div className={'btn-wrp'}>
+					<button className={'btn'}>Cancel</button>
+					<button className={'btn'}> Save</button>
 				</div>
 			</div>
 		);

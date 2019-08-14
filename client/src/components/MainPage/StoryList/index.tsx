@@ -14,6 +14,7 @@ import GetAddStoryPopupContent from './story-modal/create-story';
 import ChooseExtra from './story-modal/choose-extra';
 import ChooseExtraOption from './story-modal/choose-extra-option';
 import INewStory from './INewStory';
+import CreateVote from './story-modal/create-vote';
 
 interface IStoryListItem {
 	caption: string;
@@ -79,6 +80,7 @@ const ListBlock = ({ ...props }: IProps) => {
 					)}
 				/>
 				<Route exact path={`/create/extra`} component={ChooseExtra} />
+				<Route path={`/create/extra/vote`} component={CreateVote} />
 				<Route
 					path={`/create/extra/:option`}
 					component={anotherProps => (
