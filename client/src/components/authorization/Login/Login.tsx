@@ -38,11 +38,13 @@ class Login extends React.Component<IProps, IState, IValues> {
 		return (
 			<Form>
 				<div className="form-group">
+					<p className="error-message">{loginError}</p>
 					<label className="form-label">
 						<Field
 							name="email"
 							type="text"
 							placeholder="Email address"
+							maxLength={320}
 							className={
 								'form-input' +
 								(errors.email && touched.email ? ' is-invalid' : '')
@@ -59,6 +61,7 @@ class Login extends React.Component<IProps, IState, IValues> {
 							name="password"
 							type="password"
 							placeholder="Password"
+							maxLength={64}
 							className={
 								'form-input' +
 								(errors.password && touched.password ? ' is-invalid' : '')
@@ -70,7 +73,6 @@ class Login extends React.Component<IProps, IState, IValues> {
 							className="form-input-error"
 						/>
 					</label>
-					{loginError}
 					<div className="form-btn-wrapper">
 						<button
 							type="submit"
@@ -83,7 +85,10 @@ class Login extends React.Component<IProps, IState, IValues> {
 			</Form>
 		);
 	}
-
+	trimObjectValues(obj) {
+		Object.keys(obj).forEach(field => (obj[field] = obj[field].trim()));
+		return obj;
+	}
 	render() {
 		const { onSubmit, isAuthorized, loginError } = this.props;
 		const { isLoading } = this.state;
@@ -97,14 +102,17 @@ class Login extends React.Component<IProps, IState, IValues> {
 				<Formik
 					initialValues={{ password: '', email: '' }}
 					onSubmit={(values, actions) => {
-						onSubmit(values);
+						const trimedValues = this.trimObjectValues(values);
+						onSubmit(trimedValues);
 					}}
 					validationSchema={Yup.object().shape({
 						email: Yup.string()
+							.max(320, 'Email must be no more than 320 characters')
 							.email('Email is invalid')
 							.required('Email is required'),
 						password: Yup.string()
-							.min(5, 'Password must be at least 6 characters')
+							.max(64, 'Password must be no more than 64 characters')
+							.min(5, 'Password must be at least 5 characters')
 							.required('Password is required')
 					})}
 					render={({ errors, status, touched }) => {

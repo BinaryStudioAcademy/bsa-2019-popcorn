@@ -43,6 +43,7 @@ const SurveyCheckboxes = (props: IProps) => {
 	return (
 		<div className="multiple question-container">
 			<p className={`survey-question required-${required}`}>{title}</p>
+			{image_link && <img className="question-image" alt="" src={image_link} />}
 			{options !== undefined &&
 				options.map((option, i) => (
 					<p key={i}>
@@ -71,7 +72,6 @@ const SurveyCheckboxes = (props: IProps) => {
 						</label>
 					</p>
 				))}
-			{image_link && <img className="question-image" alt="" src={image_link} />}
 		</div>
 	);
 };

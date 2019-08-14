@@ -18,6 +18,6 @@ export class User {
   tops?: Top[];
   stories?: Story[];
   reset_token: string;
-  surveys: Surveys[];
-  surveysQuestionAnswer: SurveysQuestionAnswer[];
+  surveys?: Surveys[];
+  surveysQuestionAnswer?: SurveysQuestionAnswer[];
 }

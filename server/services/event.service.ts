@@ -8,14 +8,24 @@ import {
 import EventRepository from "../repository/event.repository";
 import { getRepository, getCustomRepository } from "typeorm";
 
-export const getEvents = async (userId: string): Promise<Event[]> =>
-  await getCustomRepository(EventRepository).find({ userId });
+export const getEventsByUserId = async (userId: string): Promise<any[]> => {
+  const events = await getCustomRepository(EventRepository).getEvents(userId);
+  return events;
+};
 
-export const getEventById = async (eventId: number): Promise<Event> =>
+export const getEventById = async (eventId: string): Promise<Event> =>
   await getCustomRepository(EventRepository).getEvent(eventId);
 
-export const createEvent = async (event: Event): Promise<Event[]> =>
-  await getCustomRepository(EventRepository).save([event]);
+export const createEvent = async (event: any): Promise<Event> => {
+  const responseEvent = await getCustomRepository(EventRepository).save(event);
+  const newVisitor = {
+    status: "going",
+    userId: responseEvent.userId,
+    eventId: responseEvent.id
+  };
+  createVisitor(newVisitor as any);
+  return responseEvent;
+};
 
 export const updateEvent = async (updatedEvent: Event): Promise<Event[]> => {
   let event = await getCustomRepository(EventRepository).findOne(
@@ -64,10 +74,13 @@ export const getVisitorsByEventId = async (
 ): Promise<EventVisitor[]> =>
   await getRepository(VisitorEntity).find({ eventId });
 
-export const getEventsByVisitorId = async (
-  userId: string
-): Promise<EventVisitor[]> =>
-  await getCustomRepository(EventRepository).getEventsByVisitorId(userId);
+export const getEventsByVisitorId = async (userId: string): Promise<any[]> => {
+  const events = await getCustomRepository(
+    EventRepository
+  ).getEventsByVisitorId(userId);
+  return events;
+};
+
 export const createVisitor = async (
   visitor: EventVisitor
 ): Promise<EventVisitor[]> =>

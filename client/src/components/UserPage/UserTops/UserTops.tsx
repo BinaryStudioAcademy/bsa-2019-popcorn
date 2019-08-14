@@ -1,5 +1,6 @@
 import React from 'react';
 import './UserTops.scss';
+
 import TopItem from './TopItem/TopItem';
 import { ITopItem } from './TopItem/TopItem';
 import { connect } from 'react-redux';
@@ -12,38 +13,60 @@ interface IUserTopProps {
 	uploadImage: (data: FormData, titleId: string) => void;
 	uploadUrl: string;
 	urlForTop: string;
+	location?: {
+		state?: {
+			url_callback?: string;
+		};
+	};
+	history?: {
+		push: (path: string) => any;
+	};
 }
 
 const topItemsMock: ITopItem[] = [
 	{
 		id: '1',
 		title: 'My Top 1',
-		titleImageUrl: '',
+		topImageUrl: '',
 		moviesList: [
 			{ title: 'The Avengers', id: '1', comment: 'Nice' },
 			{ title: 'Spider-Man', id: '2', comment: 'Nice' },
 			{ title: 'Batman', id: '3', comment: 'Nice' }
-		]
+		],
+		isOwnTop: true
 	},
 	{
 		id: '2',
 		title: 'My Top 2',
-		titleImageUrl: '',
+		topImageUrl: '',
 		moviesList: [
 			{ title: 'The Avengers', id: '1', comment: 'Nice' },
 			{ title: 'Spider-Man', id: '2', comment: 'Nice' },
 			{ title: 'Batman', id: '3', comment: 'Nice' }
-		]
+		],
+		isOwnTop: true
 	},
 	{
 		id: '3',
 		title: 'My Top 3',
-		titleImageUrl: '',
+		topImageUrl: '',
 		moviesList: [
 			{ title: 'The Avengers', id: '1', comment: 'Nice' },
 			{ title: 'Spider-Man', id: '2', comment: 'Nice' },
 			{ title: 'Batman', id: '3', comment: 'Nice' }
-		]
+		],
+		isOwnTop: true
+	},
+	{
+		id: '4',
+		title: "Somebody's Top",
+		topImageUrl: 'https://www.w3schools.com/images/colorpicker.gif',
+		moviesList: [
+			{ title: 'The Avengers', id: '1', comment: 'Nice' },
+			{ title: 'Spider-Man', id: '2', comment: 'Nice' },
+			{ title: 'Batman', id: '3', comment: 'Nice' }
+		],
+		isOwnTop: false
 	}
 ];
 
@@ -52,7 +75,8 @@ const newTop = (): ITopItem => {
 		id: Date.now().toString(),
 		title: '',
 		moviesList: [],
-		titleImageUrl: ''
+		topImageUrl: '',
+		isOwnTop: true
 	};
 };
 
@@ -63,7 +87,6 @@ class UserTops extends React.Component<IUserTopProps, IUserTopsState> {
 			topList: topItemsMock
 		};
 	}
-
 	deleteTop = (topId: string) => {
 		const topList = this.state.topList.filter(
 			(topItem: ITopItem) => topItem.id !== topId
@@ -83,44 +106,43 @@ class UserTops extends React.Component<IUserTopProps, IUserTopsState> {
 		this.setState({ topList });
 	};
 
-	// componentDidUpdate(prevProps) {
-
-	// 	// 	let topList = this.state.topList.map((topItem) =>
-	// 	// 		topItem.titleImageUrl = this.props.uploadUrls[topItem.id])
-	// 	// 	this.setState({ topList });
-	// 	// console.log(topList)
-
-	// }
-	// componentDidUpdate(prevProps) {
-	// 	if (prevProps.uploadUrls !== this.props.uploadUrls) {
-	// 		let topList = this.state.topList.map((topItem) =>
-	// 			topItem.titleImageUrl = this.props.uploadUrls[topItem.id])
-	// 		this.setState({ topList });
-	// 	}
-	// }
-
 	render() {
+		const url_callback =
+			this.props.location &&
+			this.props.location.state &&
+			this.props.location.state.url_callback;
+		const redirect = () =>
+			url_callback
+				? this.props.history && this.props.history.push(url_callback)
+				: null;
+
 		const topList = this.state.topList;
-		// const topList = this.state.topList.map((topItem) => {
-		// 	return { ...topItem, titleImageUrl: this.props.uploadUrls[topItem.id] }
-		// })
-		// console.log(topList)
 		return (
-			<div>
+			<div className="user-tops">
+				{url_callback && (
+					<button onClick={redirect} className={'btn'}>
+						Back to story
+					</button>
+				)}
 				<div className="create-top-button hover" onClick={this.createTop}>
 					Create Top
 				</div>
-				{topList.map((topItem: ITopItem) => (
-					<TopItem
-						key={topItem.id}
-						saveUserTop={this.saveUserTop}
-						topItem={topItem}
-						deleteTop={this.deleteTop}
-						uploadUrl={this.props.uploadUrl}
-						urlForTop={this.props.urlForTop}
-						uploadImage={this.props.uploadImage}
-					/>
-				))}
+				{topList.map(
+					(topItem: ITopItem) =>
+						((topItem.isOwnTop &&
+							window.location.pathname == '/user-page/tops') ||
+							window.location.pathname == '/movie-tops') && (
+							<TopItem
+								key={topItem.id}
+								saveUserTop={this.saveUserTop}
+								topItem={topItem}
+								deleteTop={this.deleteTop}
+								uploadUrl={this.props.uploadUrl}
+								urlForTop={this.props.urlForTop}
+								uploadImage={this.props.uploadImage}
+							/>
+						)
+				)}
 			</div>
 		);
 	}

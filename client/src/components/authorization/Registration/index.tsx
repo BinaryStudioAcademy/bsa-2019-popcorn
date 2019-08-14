@@ -27,6 +27,30 @@ const initialFormikValues = {
 	password: ''
 };
 
+function validateEmail(value) {
+	let error;
+	if (!value) {
+		error = 'Required';
+	} else if (
+		!/[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/i.test(
+			value
+		)
+	) {
+		error = 'Email is invalid';
+	}
+	return error;
+}
+
+function validatePassword(value) {
+	let error;
+	if (!value) {
+		error = 'Required';
+	} else if (!/^[0-9a-zA-Z`!@#$%^&*()+=_-{}[\]|:;<>”’?]+$/im.test(value)) {
+		error = 'Password is invalid';
+	}
+	return error;
+}
+
 class Registration extends React.Component<IProps, IState> {
 	state: IState = {
 		isLoading: false
@@ -64,14 +88,18 @@ class Registration extends React.Component<IProps, IState> {
 							}}
 							validationSchema={Yup.object().shape({
 								name: Yup.string()
+									.strict(false)
+									.trim()
+									.min(3, 'Its too short Name')
 									.max(20, 'Its too long Name')
 									.required('Name is required'),
 								email: Yup.string()
-									.max(254, 'Its too long email')
+									.max(320, 'Its too long email')
 									.email('Email is invalid')
 									.required('Email is required'),
 								password: Yup.string()
 									.min(6, 'Password must be at least 6 characters')
+									.max(64, 'Password is too long')
 									.required('Password is required')
 							})}
 							render={({ errors, status, touched }) => (
@@ -102,6 +130,7 @@ class Registration extends React.Component<IProps, IState> {
 													'form-input' +
 													(errors.email && touched.email ? ' is-invalid' : '')
 												}
+												validate={validateEmail}
 											/>
 											<ErrorMessage
 												name="email"
@@ -120,6 +149,7 @@ class Registration extends React.Component<IProps, IState> {
 														? ' is-invalid'
 														: '')
 												}
+												validate={validatePassword}
 											/>
 											<ErrorMessage
 												name="password"
@@ -127,7 +157,7 @@ class Registration extends React.Component<IProps, IState> {
 												className="form-input-error"
 											/>
 										</label>
-										{registerError}
+										<div className="register-error">{registerError}</div>
 										<div className="form-btn-wrapper">
 											<button
 												type="submit"

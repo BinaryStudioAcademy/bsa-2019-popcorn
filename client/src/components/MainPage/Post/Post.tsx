@@ -10,6 +10,8 @@ import Tag from '../Tag/Tag';
 import PostEditModal from '../PostEditModal/PostEditModal';
 import PostContent from '../PostContent/PostContent';
 import config from '../../../config';
+import Reactions from '../Reactions/Reactions';
+import PostReaction from './PostReaction/PostReaction';
 
 type IPostProps = {
 	post: {
@@ -39,18 +41,44 @@ type IPostProps = {
 		}[];
 	};
 };
-
+interface IReactItem {
+	id: number;
+	name: string;
+}
 interface IPostState {
 	isModalShown: boolean;
+	hover: boolean;
+	reactionList: Array<IReactItem>;
 }
 
 class Post extends PureComponent<IPostProps, IPostState> {
 	constructor(props: IPostProps) {
 		super(props);
 		this.state = {
-			isModalShown: false
+			isModalShown: false,
+			hover: false,
+			reactionList: []
 		};
 	}
+	MouseEnterLikeButton = () => {
+		this.setState({ hover: true });
+	};
+
+	MouseLeaveLikeButton = () => {
+		this.setState({ hover: false });
+	};
+
+	onReactionClick = (reaction: IReactItem) => {
+		const reactionList = this.state.reactionList;
+
+		if (reactionList.findIndex(item => item.id === reaction.id) != -1) {
+			return;
+		}
+
+		reactionList.push(reaction);
+		this.setState({ reactionList });
+	};
+
 	isOwnPost() {
 		return true;
 	}
@@ -93,6 +121,13 @@ class Post extends PureComponent<IPostProps, IPostState> {
 				tags
 			}
 		} = this.props;
+		const reactionsShow = this.state.hover ? (
+			<Reactions
+				onReactionClick={this.onReactionClick}
+				MouseLeaveLikeButton={this.MouseLeaveLikeButton}
+				MouseEnterLikeButton={this.MouseEnterLikeButton}
+			/>
+		) : null;
 		return (
 			<div className="post-item">
 				<div className="post-item-header">
@@ -117,9 +152,14 @@ class Post extends PureComponent<IPostProps, IPostState> {
 				)}
 				{description && <div className="post-body">{description}</div>}
 				{content && <PostContent content={content} />}
+				{reactionsShow}
 				<div className="post-item-action-buttons">
 					<div className="post-item-last-reaction">
-						<button className="like-icon">
+						<button
+							className="like-icon"
+							onMouseEnter={this.MouseEnterLikeButton}
+							onMouseLeave={this.MouseLeaveLikeButton}
+						>
 							<FontAwesomeIcon icon={faHeart} />
 						</button>
 						<div className="post-item-reaction-text">
@@ -131,7 +171,11 @@ class Post extends PureComponent<IPostProps, IPostState> {
 						<FontAwesomeIcon icon={faShare} />
 					</button>
 				</div>
-
+				<div className="reaction-list">
+					{this.state.reactionList.map((item, index) => (
+						<PostReaction key={index} quantity={355} name={item.name} />
+					))}
+				</div>
 				{tags && (
 					<div>
 						<div className="horizontal-stroke"></div>

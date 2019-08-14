@@ -8,7 +8,8 @@ export interface ITopItem {
 	title: string;
 	id: string;
 	moviesList: IMovie[];
-	titleImageUrl: string;
+	topImageUrl: string;
+	isOwnTop: boolean;
 }
 
 export interface IMovie {
@@ -37,6 +38,14 @@ const TopItem: React.FC<ITopItemProps> = ({
 }) => {
 	const [editTop, canEditTop] = useState(false);
 	const [title, setTitle] = useState(topItem.title);
+	const [isOwnTop] = useState(topItem.isOwnTop);
+	const [topImageUrl, setTopImageUrl] = useState('');
+	useEffect(() => {
+		if (urlForTop == topItem.id) {
+			setTopImageUrl(uploadUrl);
+			saveUserTop({ ...topItem, title, topImageUrl });
+		}
+	}, [uploadUrl]);
 
 	function toogleEdit() {
 		canEditTop(!editTop);
@@ -44,20 +53,16 @@ const TopItem: React.FC<ITopItemProps> = ({
 
 	function saveTop(movies: Array<any>) {
 		const moviesList = movies.filter(movie => movie.title.trim() !== '');
-		saveUserTop({ ...topItem, moviesList, title });
+		saveUserTop({ ...topItem, moviesList, title, topImageUrl });
 		canEditTop(false);
 	}
-	function handleUploadFile(e, id) {
+
+	function handleUploadFile(e, topId: string) {
 		const data = new FormData();
 		data.append('file', e.target.files[0]);
-		if (uploadImage) uploadImage(data, id);
-		else console.log('no uploadAvatar method');
+		if (uploadImage) uploadImage(data, topId);
+		else console.log('no uploadImage method');
 	}
-
-	const [topImgUrl, setTopImgUrl] = useState(uploadUrl);
-	useEffect(() => {
-		if (urlForTop == topItem.id) setTopImgUrl(uploadUrl);
-	}, [uploadUrl]);
 
 	return (
 		<div>
@@ -81,21 +86,28 @@ const TopItem: React.FC<ITopItemProps> = ({
 					accept=".jpg, .jpeg, .png"
 					hidden
 				/>
-				<label
-					htmlFor={`${topItem.id}image`}
-					className="top-upload-image hover"
-				>
-					<FontAwesomeIcon icon={faImage} className="fontAwesomeIcon" />
-				</label>
-
-				<div className="edit-top hover" onClick={toogleEdit}>
-					Edit
-				</div>
-				<div className="delete-top hover" onClick={() => deleteTop(topItem.id)}>
-					<CloseIcon />
-				</div>
-
-				<img className="image-top" src={topImgUrl} alt="" />
+				{editTop && (
+					<label
+						htmlFor={`${topItem.id}image`}
+						className="top-upload-image hover"
+					>
+						<FontAwesomeIcon icon={faImage} className="fontAwesomeIcon" />
+					</label>
+				)}
+				{isOwnTop && (
+					<div className="edit-top hover" onClick={toogleEdit}>
+						Edit
+					</div>
+				)}
+				{isOwnTop && (
+					<div
+						className="delete-top hover"
+						onClick={() => deleteTop(topItem.id)}
+					>
+						<CloseIcon />
+					</div>
+				)}
+				<img className="image-top" src={topImageUrl} alt="" />
 			</div>
 			{(editTop || topItem.moviesList.length === 0) && (
 				<TopConstructor moviesList={topItem.moviesList} saveTop={saveTop} />

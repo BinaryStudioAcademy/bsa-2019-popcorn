@@ -42,6 +42,7 @@ const SurveySingleAnswer = (props: IProps) => {
 	return (
 		<div className="question-container single">
 			<p className={`survey-question required-${required}`}>{title}</p>
+			{image_link && <img className="question-image" alt="" src={image_link} />}
 			{options !== undefined &&
 				options.map((option, i) => (
 					<p key={i}>
@@ -53,13 +54,19 @@ const SurveySingleAnswer = (props: IProps) => {
 								value={option.value}
 								disabled={disable || false}
 								checked={answer && answer.option_id === option.id}
+								onChange={() => {
+									if (!props.setAnswer) return;
+									props.setAnswer({
+                                    	questionId: id,
+                                    	optionId: option.id
+									});
+								}}
 							/>
 							<span className="checkmark"></span>
 							{option.value}
 						</label>
 					</p>
 				))}
-			{image_link && <img className="question-image" alt="" src={image_link} />}
 		</div>
 	);
 };

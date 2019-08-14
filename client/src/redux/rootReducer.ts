@@ -3,7 +3,10 @@ import movieReducer from '../components/MovieSeriesPage/Movie.redux/reducer';
 import profileHeader from '../components/UserPage/reducer';
 import storyReducer from '../components/MainPage/StoryList/story.redux/reducer';
 import feedReducer from '../components/MainPage/FeedBlock/FeedBlock.redux/reducer';
+import eventsReducer from '../components/UserPage/UserEvents/reduser';
 import userTopsReducer from '../components/UserPage/UserTops/reducer';
+import adminPanelReducer from '../components/AdminPanelPage/AdminPanelPage.redux/reducer';
+
 const reducers = {};
 
 export default combineReducers({
@@ -12,5 +15,7 @@ export default combineReducers({
 	profile: profileHeader,
 	story: storyReducer,
 	feed: feedReducer,
-	userTops: userTopsReducer
+	events: eventsReducer,
+	userTops: userTopsReducer,
+	adminPanel: adminPanelReducer
 });
