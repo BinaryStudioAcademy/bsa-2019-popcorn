@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { v4 as uuid } from 'uuid';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import TextareaAutosize from '@material-ui/core/TextareaAutosize';
 import {
 	faTimes,
 	faTrashAlt,
@@ -188,8 +189,7 @@ class SurveyQuestion extends Component<IProps, IState> {
 			<div>
 				<div>
 					<div className="type-title">
-						<input
-							type="text"
+						<TextareaAutosize
 							className="question-title"
 							onChange={event => {
 								this.changeQuestionTitle(event);

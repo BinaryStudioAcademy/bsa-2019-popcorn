@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import TextareaAutosize from '@material-ui/core/TextareaAutosize';
 import { NavLink } from 'react-router-dom';
 import { v4 as uuid } from 'uuid';
 import { Snackbar } from '@material-ui/core';
@@ -262,14 +263,14 @@ class SurveyEditor extends Component<IProps, IState> {
 				<form className="survey-editor-form">
 					{this.state.currentElement === -1 && (
 						<header className="editor-question editor-header">
-							<textarea
+							<TextareaAutosize
 								value={title}
 								placeholder="Title*"
 								className="survey-title"
 								onChange={this.onChangeTitle}
 								autoFocus
 							/>
-							<textarea
+							<TextareaAutosize
 								onChange={this.onChangeDescription}
 								className="survey-description"
 								placeholder="Description"

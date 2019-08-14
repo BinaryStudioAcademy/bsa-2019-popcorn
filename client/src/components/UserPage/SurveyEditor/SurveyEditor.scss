@@ -183,7 +183,8 @@ $user-tab-list-space-top: $user-tab-space + $user-tab-active-line;
 				.survey-description {
 					width: 100%;
 					padding-bottom: 5px;
-					height: 34px;
+					min-height: 34px;
+					height: fit-content;
 					box-sizing: initial;
 				}
 			}
