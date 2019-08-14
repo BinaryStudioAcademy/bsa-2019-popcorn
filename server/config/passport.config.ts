@@ -21,14 +21,21 @@ passport.use(
       try {
         const user = await userService.getByEmail(email);
         if (!user) {
-          return done({ status: 401, message: "Incorrect email." }, false);
+          return done(
+            { status: 401, message: "Incorrect email or password." },
+            false
+          );
         }
 
         return password === user.password
           ? done(null, user)
-          : done({ status: 401, message: "Passwords do not match." }, null, {
-              message: "false"
-            });
+          : done(
+              { status: 401, message: "Incorrect email or password." },
+              null,
+              {
+                message: "false"
+              }
+            );
       } catch (err) {
         return done(err);
       }

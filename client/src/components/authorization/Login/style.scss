@@ -43,6 +43,12 @@ body {
 
 .form-group {
 	margin-bottom: 23px;
+	.error-message {
+		margin-bottom: 13px;
+		text-align: center;
+		color: rgba(255, 0, 0, 0.6);
+		font-size: 14px;
+	}
 }
 
 .form-label {
