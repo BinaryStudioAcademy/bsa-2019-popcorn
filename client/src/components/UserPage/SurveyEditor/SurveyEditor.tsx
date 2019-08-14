@@ -269,12 +269,14 @@ class SurveyEditor extends Component<IProps, IState> {
 								className="survey-title"
 								onChange={this.onChangeTitle}
 								autoFocus
+								maxLength={255}
 							/>
 							<TextareaAutosize
 								onChange={this.onChangeDescription}
 								className="survey-description"
 								placeholder="Description"
 								value={description}
+								maxLength={255}
 							/>
 						</header>
 					)}

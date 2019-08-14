@@ -9,6 +9,7 @@ const ShortAnswer: React.FC = () => {
 				disabled
 				placeholder="Short answer"
 				type="text"
+				maxLength={255}
 			/>
 		</div>
 	);

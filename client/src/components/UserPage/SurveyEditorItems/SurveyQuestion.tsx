@@ -196,6 +196,7 @@ class SurveyQuestion extends Component<IProps, IState> {
 							}}
 							value={question.title}
 							placeholder="Question*"
+							maxLength={255}
 							autoFocus
 						/>
 						{

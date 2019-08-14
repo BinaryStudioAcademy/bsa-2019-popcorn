@@ -93,6 +93,7 @@ class MultipleChoice extends Component<IProps, IQuestion> {
 								value={option.value}
 								className="option"
 								placeholder="Option*"
+								maxLength={255}
 							/>
 							{options.length !== 1 && (
 								<span

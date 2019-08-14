@@ -91,6 +91,7 @@ class LinearScale extends Component<IProps, IQuestion> {
 							}}
 							value={firstLabel ? firstLabel : ''}
 							placeholder="Label"
+							maxLength={255}
 						/>
 					</label>
 					<label>
@@ -102,6 +103,7 @@ class LinearScale extends Component<IProps, IQuestion> {
 								this.changeLabel(event, 'last');
 							}}
 							placeholder="Label"
+							maxLength={255}
 						/>
 					</label>
 				</div>
