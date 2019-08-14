@@ -46,7 +46,7 @@ export const transformDataToProps = (data):Array<ISurvey> => {
       name: survey.user.name,
       image_link: survey.user.avatar
     },
-    participants: 123,//to do
+    participants: countParticipants(survey.surveysQuestion),
     questions: survey.surveysQuestion.map(question => ({
       id: question.id,
       survey_id: survey.id,
@@ -71,4 +71,10 @@ export const transformDataToProps = (data):Array<ISurvey> => {
     })),
   }));
   return transformData;
+}
+
+const countParticipants = (questions) => {
+  const answererIds = questions.flatMap(question => question.surveysQuestionAnswer).map(answer => answer.user.id);
+  const uniqueUserIds = new Set(answererIds);
+  return uniqueUserIds.size;
 }
