@@ -4,6 +4,7 @@ import VotingRepository from "../repository/voting.repository";
 import { getCustomRepository } from "typeorm";
 import UserRepository from "../repository/user.repository";
 import VotingOptionRepository from "../repository/votingOption.repository";
+import { getVotingOptionByVotingId } from "./votingOption.service";
 
 const uuid = require("uuid/v4");
 
@@ -44,8 +45,10 @@ export const createVoting = async ({
   }
 };
 
-export const getVotingById = async (id: string): Promise<Voting> => {
-  return await getCustomRepository(VotingRepository).getVotingById(id);
+export const getVotingById = async (id: string): Promise<any> => {
+  const voting = await getCustomRepository(VotingRepository).getVotingById(id);
+  voting.options = await getVotingOptionByVotingId(voting.id);
+  return voting;
 };
 
 export const getVotingByUserId = async (

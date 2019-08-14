@@ -20,7 +20,7 @@ router
   )
   .get("/:id/options", errorHandlerMiddleware, (req, res, next) =>
     votingOptionService
-      .getVotingOptionByVotingId(req.params.id, next)
+      .getVotingOptionByVotingId(req.params.id)
       .then(result => res.send(result))
       .catch(next)
   )
