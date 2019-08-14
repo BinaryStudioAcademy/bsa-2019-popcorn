@@ -35,7 +35,7 @@ class UserEvents extends React.Component<IProps> {
 	}
 
 	renderEventList = (eventList: IEventFormatClient[]) =>
-		eventList.map(event => <EventItem event={event} />);
+		eventList.map(event => <EventItem event={event} key={event.id} />);
 
 	render() {
 		const { userEvents, currentUserId } = this.props;
