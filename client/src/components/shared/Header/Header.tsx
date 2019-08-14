@@ -19,9 +19,6 @@ interface IProps {
 		name: string;
 		image: string;
 	};
-	movies?: Array<string>;
-	tv?: Array<string>;
-	ratings?: Array<string>;
 	moviesSearch?: Array<{
 		id: string;
 		title: string;
@@ -42,22 +39,22 @@ const user = {
 		'https://s3-alpha-sig.figma.com/img/919e/1a5a/da4f250d469108191ad9d4af68b2a639?Expires=1566172800&Signature=Kou41Z8bd8ig~9nLibgCH5gfaOc0K~9Io82-umabjJnomveXbPcqMWfD911bHy6h77reHT6ecNYFHCzmXkQNy3vEF-OzgJYgV875TI2rX~cPt1FaSJC5wCeybEfTrlBlCcdzSFn8iVcP~C8GTx-l6CIjyugGAhvr7xJ-hfAdlf~5Mll0Sy92dSKn8q7OkJdfsMvEEFVQ3rGHn8GGQZg1a60gif0VaQhuVX1gcRgwrsak~cerS1bnDvo93B1lFOIk85wlhY2hPwQrmCtI9A-qaAtbIxmzmxkRpuVUpDrX6Jd4hXpksbd7urSJ91Dg7tv9WzRZvIkLnPXflCfmPw~slw__&Key-Pair-Id=APKAINTVSUGEWH5XD5UA'
 };
 
-const mock = ['Movies in cinema', 'Top movies', 'On DVD'];
-
 const Header = ({
 	userInfo = user,
-	movies = ['Movies in cinema', 'Movie tops', `${userInfo.name}'s Movie Lists`],
-	tv = [
-		'New TV Series',
-		'TV Series tops',
-		`${userInfo.name}'s TV Series Lists`
-	],
-	ratings = ['Popular Movies', 'Popular TV Series', 'Popular Users'],
 	moviesSearch,
 	fetchFilms,
 	alreadySearch,
 	setMovieSeries
 }: IProps) => {
+	const MOVIES_IN_CINEMA = 'Movies in cinema';
+	const MOVIE_TOPS = 'Movie tops';
+	const USER_MOVIE_TOPS = `${userInfo.name}'s Movie Lists`;
+	const NEW_TV_SERIES = 'New TV Series';
+	const TV_SERIES_TOPS = 'TV Series tops';
+	const USER_TV_SERIES_TOPS = `${userInfo.name}'s TV Series Lists`;
+	const POPULAR_MOVIES = 'Popular Movies';
+	const POPULAR_TV_SERIES = 'Popular TV Series';
+	const POPULAR_USERS = 'Popular Users';
 	return (
 		<div className="header">
 			<NavLink to="/" className="header-logo-link">
@@ -77,13 +74,13 @@ const Header = ({
 				<FontAwesomeIcon icon={faChevronDown} />
 				<div className="modal">
 					<Link aria-current="page" className="hover" to="#">
-						{movies[0]}
+						{MOVIES_IN_CINEMA}
 					</Link>
 					<Link aria-current="page" className="hover" to="/movie-tops">
-						{movies[1]}
+						{MOVIE_TOPS}
 					</Link>
 					<Link aria-current="page" className="hover" to="/user-page/lists">
-						{movies[2]}
+						{USER_MOVIE_TOPS}
 					</Link>
 				</div>
 			</button>
@@ -93,13 +90,13 @@ const Header = ({
 				<FontAwesomeIcon icon={faChevronDown} />
 				<div className="modal">
 					<Link aria-current="page" className="hover" to="#">
-						{tv[0]}
+						{NEW_TV_SERIES}
 					</Link>
 					<Link aria-current="page" className="hover" to="#">
-						{tv[1]}
+						{TV_SERIES_TOPS}
 					</Link>
 					<Link aria-current="page" className="hover" to="/user-page/lists">
-						{tv[2]}
+						{USER_TV_SERIES_TOPS}
 					</Link>
 				</div>
 			</button>
@@ -108,13 +105,13 @@ const Header = ({
 				<FontAwesomeIcon icon={faChevronDown} />
 				<div className="modal">
 					<Link aria-current="page" className="hover" to="#">
-						{ratings[0]}
+						{POPULAR_MOVIES}
 					</Link>
 					<Link aria-current="page" className="hover" to="#">
-						{ratings[1]}
+						{POPULAR_TV_SERIES}
 					</Link>
 					<Link aria-current="page" className="hover" to="#">
-						{ratings[2]}
+						{POPULAR_USERS}
 					</Link>
 				</div>
 			</button>
