@@ -11,6 +11,7 @@ import {
 	faTimesCircle
 } from '@fortawesome/free-solid-svg-icons';
 import { Redirect } from 'react-router';
+import IVoting from '../MainPage/StoryList/IVoting';
 
 type StoryVotingCreationState = {
 	header: string;
@@ -33,7 +34,10 @@ type StoryVotingCreationState = {
 };
 
 class StoryVotingCreation extends React.Component<
-	{},
+	{
+		userId: string;
+		createVoting: (voting: IVoting) => any;
+	},
 	StoryVotingCreationState
 > {
 	constructor(props) {
@@ -258,10 +262,9 @@ class StoryVotingCreation extends React.Component<
 							backToEditor={this.handleShowEditor}
 							header={this.state.header}
 							options={this.state.inputs}
+							userId={this.props.userId}
+							createVoting={this.props.createVoting}
 						/>
-						<div className={'btn-wrp'}>
-							<button className={'btn'}> Save</button>
-						</div>
 					</div>
 				) : (
 					<div className="story-voting-creation-form">

@@ -2,6 +2,7 @@ import React from 'react';
 import StoryVotingOption from '../StoryVotingOption/StoryVotingOption';
 import './StoryVoting.scss';
 import Draggable from 'react-draggable';
+import IVoting from '../MainPage/StoryList/IVoting';
 
 type StoryVotingProps = {
 	header: string;
@@ -23,6 +24,8 @@ type StoryVotingProps = {
 	) => void;
 	backColor: { r: string; g: string; b: string; a: string };
 	backImage?: string;
+	userId: string;
+	createVoting: (voting: IVoting) => any;
 };
 
 type StoryVotingState = {
@@ -139,6 +142,21 @@ class StoryVoting extends React.Component<StoryVotingProps, StoryVotingState> {
 		return storyVotingOptionsMock.reduce((a, b) => a + (b['voted'] || 0), 0);
 	}
 
+	onSave = () => {
+		const { header, userId, backColor, backImage } = this.props;
+		const { deltaPositionHead, deltaPositionOptionBlock } = this.state;
+		this.props.createVoting({
+			userId,
+			header,
+			deltaPositionHeadX: deltaPositionHead.x,
+			deltaPositionHeadY: deltaPositionHead.y,
+			deltaPositionOptionBlockX: deltaPositionOptionBlock.x,
+			deltaPositionOptionBlockY: deltaPositionOptionBlock.y,
+			backColor: `rgba(${backColor.r},${backColor.g},${backColor.b},${backColor.a})`,
+			backImage: backImage
+		});
+	};
+
 	render() {
 		const positions = this.calculatePositions();
 		const backgroundStyle = {
@@ -148,43 +166,50 @@ class StoryVoting extends React.Component<StoryVotingProps, StoryVotingState> {
 		};
 
 		return (
-			<div className="story-voting" style={backgroundStyle}>
-				<button
-					onClick={() =>
-						this.props.backToEditor(
-							this.state.deltaPositionHead,
-							this.state.deltaPositionOptionBlock
-						)
-					}
-					className="back-to-editor-button"
-				></button>
-				<Draggable
-					bounds=".story-voting"
-					defaultPosition={{
-						x: positions.headerPosition.left,
-						y: positions.headerPosition.top
-					}}
-					onDrag={this.handleDragHead}
-					disabled={this.state.inEditor ? false : true}
-				>
-					<div className="story-voting-header">{this.props.header}</div>
-				</Draggable>
-				<Draggable
-					bounds=".story-voting"
-					defaultPosition={{
-						x: positions.buttonsPosition.left,
-						y: positions.buttonsPosition.top
-					}}
-					onDrag={this.handleDragOptionBlock}
-					disabled={this.state.inEditor ? false : true}
-				>
-					<div className="story-voting-options-list">
-						{this.createStoryVotingOptions()}
-					</div>
-				</Draggable>
+			<div>
+				<div className="story-voting" style={backgroundStyle}>
+					<button
+						onClick={() =>
+							this.props.backToEditor(
+								this.state.deltaPositionHead,
+								this.state.deltaPositionOptionBlock
+							)
+						}
+						className="back-to-editor-button"
+					/>
+					<Draggable
+						bounds=".story-voting"
+						defaultPosition={{
+							x: positions.headerPosition.left,
+							y: positions.headerPosition.top
+						}}
+						onDrag={this.handleDragHead}
+						disabled={this.state.inEditor ? false : true}
+					>
+						<div className="story-voting-header">{this.props.header}</div>
+					</Draggable>
+					<Draggable
+						bounds=".story-voting"
+						defaultPosition={{
+							x: positions.buttonsPosition.left,
+							y: positions.buttonsPosition.top
+						}}
+						onDrag={this.handleDragOptionBlock}
+						disabled={this.state.inEditor ? false : true}
+					>
+						<div className="story-voting-options-list">
+							{this.createStoryVotingOptions()}
+						</div>
+					</Draggable>
+				</div>
+				<div className={'btn-wrp'}>
+					<button className={'btn'} onClick={onSave}>
+						{' '}
+						Save
+					</button>
+				</div>
 			</div>
 		);
 	}
 }
-
 export default StoryVoting;

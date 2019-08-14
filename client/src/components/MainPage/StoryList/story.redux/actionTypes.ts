@@ -6,3 +6,5 @@ export const CHANGE_ACTIVITY = 'CHANGE_ACTIVITY';
 export const CREATE_STORY = 'CREATE_STORY';
 export const ADD_STORY = 'ADD_STORY';
 export const DELETE_NEW_STORY = 'DELETE_NEW_STORY';
+
+export const CREATE_VOTING = 'CREATE_VOTING';

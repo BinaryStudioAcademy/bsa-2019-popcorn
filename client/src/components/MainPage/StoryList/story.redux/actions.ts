@@ -6,6 +6,7 @@ import {
 	SET_CAPTION_NEWSTORY
 } from './actionTypes';
 import INewStory from '../INewStory';
+import IVoting from '../IVoting';
 
 export const fetchStories = () => {
 	return {
@@ -48,6 +49,15 @@ export const createStory = (newStory: INewStory, userId: string) => {
 		payload: {
 			newStory,
 			userId
+		}
+	};
+};
+
+export const createVoting = (voting: IVoting) => {
+	return {
+		type: CREATE_STORY,
+		payload: {
+			voting
 		}
 	};
 };

@@ -37,6 +37,6 @@ export class Voting {
   @Column()
   backColor: string;
 
-  @Column()
+  @Column({ nullable: true })
   backImage: string;
 }

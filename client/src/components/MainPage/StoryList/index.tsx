@@ -2,6 +2,7 @@ import StoryList from './story-list/story-list';
 import {
 	changeActivity,
 	createStory,
+	createVoting,
 	fetchStories,
 	saveImage,
 	setCaption
@@ -15,6 +16,7 @@ import ChooseExtra from './story-modal/choose-extra';
 import ChooseExtraOption from './story-modal/choose-extra-option';
 import INewStory from './INewStory';
 import CreateVote from './story-modal/create-vote';
+import IVoting from './IVoting';
 
 interface IStoryListItem {
 	caption: string;
@@ -44,6 +46,7 @@ interface IProps {
 	) => any;
 	createStory: (newStory: INewStory, userId: string) => any;
 	userId: string;
+	createVoting: (voting: IVoting) => any;
 }
 
 const mock = {
@@ -80,7 +83,15 @@ const ListBlock = ({ ...props }: IProps) => {
 					)}
 				/>
 				<Route exact path={`/create/extra`} component={ChooseExtra} />
-				<Route path={`/create/extra/vote`} component={CreateVote} />
+				<Route
+					path={`/create/extra/vote`}
+					component={() => (
+						<CreateVote
+							createVoting={props.createVoting}
+							userId={props.userId}
+						/>
+					)}
+				/>
 				<Route
 					path={`/create/extra/:option`}
 					component={anotherProps => (
@@ -113,7 +124,8 @@ const actions = {
 	setCaption,
 	saveImage,
 	changeActivity,
-	createStory
+	createStory,
+	createVoting
 };
 const mapDispatchToProps = dispatch => bindActionCreators(actions, dispatch);
 
