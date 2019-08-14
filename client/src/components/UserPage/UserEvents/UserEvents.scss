@@ -1,7 +1,10 @@
 .UserEvents {
-	border: 1px solid black;
+	.event-list-container {
+		padding: 3px;
+	}
 
 	.events-title {
+		margin-top: 20px;
 		width: 100%;
 		text-align: center;
 		position: relative;
@@ -18,18 +21,19 @@
 			background: linear-gradient(
 				90deg,
 				rgba(0, 0, 0, 0.1) 0%,
-				rgba(0, 0, 0, 0.8) 50%,
+				rgba(0, 0, 0, 0.6) 50%,
 				rgba(0, 0, 0, 0.1) 100%
 			);
 		}
 
 		span {
 			position: relative;
-			padding: 0 10px;
+			padding: 0 5px;
 			background-color: white;
 			border-radius: 100%;
 			font-size: 20px;
-			color: black;
+			color: rgba(18, 39, 55, 0.5);
+			font-style: italic;
 			z-index: 2;
 		}
 	}

@@ -21,8 +21,8 @@ export interface IEvent {
 		lng: number;
 	};
 	dateRange: {
-		start: Date;
-		end: Date;
+		startDate: string;
+		endDate: string;
 	};
 	userId: string;
 	image: string;
@@ -69,15 +69,16 @@ class UserEvents extends React.Component<IProps> {
 
 		return (
 			<div className="UserEvents">
+				<div className="events-title">
+					<span>Your Events</span>
+				</div>
 				<div className="event-list-container">
-					<div className="events-title">
-						<span>Your Events</span>
-					</div>
 					{this.renderEventList(ownEvents)}
-
-					<div className="events-title">
-						<span>Events interested you</span>
-					</div>
+				</div>
+				<div className="events-title">
+					<span>Events interested you</span>
+				</div>
+				<div className="event-list-container">
 					{this.renderEventList(subscribeEvents)}
 				</div>
 			</div>
