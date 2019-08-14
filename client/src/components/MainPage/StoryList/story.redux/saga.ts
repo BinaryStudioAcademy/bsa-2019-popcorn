@@ -2,6 +2,7 @@ import { all, call, put, takeEvery } from 'redux-saga/effects';
 import {
 	ADD_STORY,
 	CREATE_STORY,
+	CREATE_VOTING,
 	DELETE_NEW_STORY,
 	FETCH_STORIES,
 	SET_STORIES
@@ -55,6 +56,22 @@ export function* createStory(action) {
 	}
 }
 
+export function* createVoting(action) {
+	try {
+		const data = yield call(webApi, {
+			method: 'POST',
+			endpoint: config.API_URL + '/api/voting',
+			body: {
+				...action.payload.voting
+			}
+		});
+
+		console.log(data);
+	} catch (e) {
+		console.log('story modal creating vote: ', e.message);
+	}
+}
+
 function* watchFetchStories() {
 	yield takeEvery(FETCH_STORIES, fetchStories);
 }
@@ -63,6 +80,10 @@ function* watchCreateStory() {
 	yield takeEvery(CREATE_STORY, createStory);
 }
 
+function* watchCreateVoting() {
+	yield takeEvery(CREATE_VOTING, createVoting);
+}
+
 export default function* story() {
-	yield all([watchFetchStories(), watchCreateStory()]);
+	yield all([watchFetchStories(), watchCreateStory(), watchCreateVoting()]);
 }

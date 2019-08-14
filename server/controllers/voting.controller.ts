@@ -66,9 +66,9 @@ router
       .then(result => res.send(result))
       .catch(next)
   )
-  .post("/", errorHandlerMiddleware, (req, res, next) =>
+  .post("/", (req, res, next) =>
     votingService
-      .createVoting(req.body, next)
+      .createVoting(req.body)
       .then(result => res.send(result))
       .catch(next)
   )

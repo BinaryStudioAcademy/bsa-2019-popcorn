@@ -203,8 +203,7 @@ class StoryVoting extends React.Component<StoryVotingProps, StoryVotingState> {
 					</Draggable>
 				</div>
 				<div className={'btn-wrp'}>
-					<button className={'btn'} onClick={onSave}>
-						{' '}
+					<button className={'btn'} onClick={this.onSave}>
 						Save
 					</button>
 				</div>

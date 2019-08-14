@@ -2,6 +2,7 @@ import {
 	CHANGE_ACTIVITY,
 	CHANGE_IMAGE,
 	CREATE_STORY,
+	CREATE_VOTING,
 	FETCH_STORIES,
 	SET_CAPTION_NEWSTORY
 } from './actionTypes';
@@ -55,7 +56,7 @@ export const createStory = (newStory: INewStory, userId: string) => {
 
 export const createVoting = (voting: IVoting) => {
 	return {
-		type: CREATE_STORY,
+		type: CREATE_VOTING,
 		payload: {
 			voting
 		}

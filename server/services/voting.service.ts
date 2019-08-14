@@ -20,7 +20,7 @@ export const createVoting = async ({
   deltaPositionOptionBlockX,
   deltaPositionOptionBlockY,
   backColor,
-  backImage
+  backImage = ""
 }): Promise<Voting> => {
   const voting = new Voting();
   voting.id = uuid();
@@ -36,7 +36,11 @@ export const createVoting = async ({
   voting.backImage = backImage;
   voting.votingOptions = [];
 
-  return await getCustomRepository(VotingRepository).save(voting);
+  try {
+    return await getCustomRepository(VotingRepository).save(voting);
+  } catch (e) {
+    console.log(e);
+  }
 };
 
 export const getVotingById = async (id: string, next): Promise<Voting> => {
