@@ -10,13 +10,13 @@ class AddStoryItem extends Component<AddStoryItemProps> {
 		const { avatar, onOpenPopupClick } = this.props;
 		return (
 			<div className="add-story-wrapper">
-				<div className="card-wrapper">
+				<div className="card-wrapper" onClick={onOpenPopupClick}>
 					<img
 						alt="user-avatar"
 						src={avatar}
 						className="avatar avatar-story"
 					></img>
-					<button onClick={onOpenPopupClick} className="button-story">
+					<button className="button-story">
 						<PlusIcon className="plus" />
 					</button>
 				</div>
