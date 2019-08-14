@@ -10,16 +10,14 @@ import { getRepository, getCustomRepository } from "typeorm";
 
 export const getEventsByUserId = async (userId: string): Promise<any[]> => {
   const events = await getCustomRepository(EventRepository).getEvents(userId);
-  const response = events.map(event => formatForClient(event));
-  return response;
+  return events;
 };
 
 export const getEventById = async (eventId: string): Promise<Event> =>
   await getCustomRepository(EventRepository).getEvent(eventId);
 
 export const createEvent = async (event: any): Promise<Event> => {
-  const result = formatForDB(event);
-  const responseEvent = await getCustomRepository(EventRepository).save(result);
+  const responseEvent = await getCustomRepository(EventRepository).save(event);
   const newVisitor = {
     status: "going",
     userId: responseEvent.userId,
@@ -80,8 +78,7 @@ export const getEventsByVisitorId = async (userId: string): Promise<any[]> => {
   const events = await getCustomRepository(
     EventRepository
   ).getEventsByVisitorId(userId);
-  const response = events.map(event => formatForClient(event));
-  return response;
+  return events;
 };
 
 export const createVisitor = async (

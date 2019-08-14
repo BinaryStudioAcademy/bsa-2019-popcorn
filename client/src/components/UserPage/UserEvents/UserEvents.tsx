@@ -3,39 +3,25 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import Spinner from '../../shared/Spinner/index';
 import { getUserEvents } from './actions';
+import {
+	IEventFormatDataBase,
+	IEventFormatClient,
+	formatToClient1
+} from './UserEvents.service';
 import EventItem from './EventItem/EventItem';
 import './UserEvents.scss';
 
 interface IProps {
-	userEvents: IEvent[];
+	userEvents: IEventVisitor[];
 	getUserEvents: (id: string) => any;
 	currentUserId: string;
 }
 
-export interface IEvent {
-	id: string;
-	title: string;
-	description: string;
-	location: {
-		lat: number;
-		lng: number;
-	};
-	dateRange: {
-		startDate: string;
-		endDate: string;
-	};
-	userId: string;
-	image: string;
-	isPrivate: boolean;
-	movieId: string | undefined;
-	eventVisitors: IVisitor[];
-}
-
-interface IVisitor {
+interface IEventVisitor {
+	eventId: string;
 	id: string;
 	status: string;
-	userId: string;
-	eventId: string;
+	event: IEventFormatDataBase;
 }
 
 class UserEvents extends React.Component<IProps> {
@@ -48,7 +34,7 @@ class UserEvents extends React.Component<IProps> {
 		this.props.getUserEvents(currentUserId);
 	}
 
-	renderEventList = (eventList: IEvent[]) =>
+	renderEventList = (eventList: IEventFormatClient[]) =>
 		eventList.map(event => <EventItem event={event} />);
 
 	render() {
@@ -58,15 +44,14 @@ class UserEvents extends React.Component<IProps> {
 			return <Spinner />;
 		}
 
-		const ownEvents: IEvent[] = [];
-		const subscribeEvents: IEvent[] = [];
+		const ownEvents: IEventFormatClient[] = [];
+		const subscribeEvents: IEventFormatClient[] = [];
 
-		for (const event of userEvents) {
-			event.userId === currentUserId
-				? ownEvents.push(event)
-				: subscribeEvents.push(event);
+		for (const eventVisitor of userEvents) {
+			eventVisitor.eventId === currentUserId
+				? ownEvents.push(formatToClient1(eventVisitor.event))
+				: subscribeEvents.push(formatToClient1(eventVisitor.event));
 		}
-
 		return (
 			<div className="UserEvents">
 				<div className="events-title">

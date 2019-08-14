@@ -1,5 +1,5 @@
 import React from 'react';
-import { IEvent } from '../UserEvents';
+import { IEventFormatClient } from '../UserEvents.service';
 import './EventItem.scss';
 import Moment from 'react-moment';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -10,7 +10,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 
 interface IProps {
-	event: IEvent;
+	event: IEventFormatClient;
 }
 
 const EventItem: React.FC<IProps> = ({ event }) => {
@@ -57,11 +57,11 @@ const EventItem: React.FC<IProps> = ({ event }) => {
 					<div className="event-date">
 						<div className="event-date-range">
 							<Moment format=" D MMM HH:mm " local>
-								{dateRange.startDate}
+								{String(dateRange.startDate)}
 							</Moment>
 							-
 							<Moment format=" D MMM HH:mm " local>
-								{dateRange.endDate}
+								{String(dateRange.endDate)}
 							</Moment>
 						</div>
 					</div>
