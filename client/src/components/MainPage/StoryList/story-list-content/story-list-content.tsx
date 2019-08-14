@@ -15,7 +15,7 @@ interface IStoryListItem {
 
 interface IStoryListItemsProps {
 	storyListItems: Array<IStoryListItem>;
-	openViewer: (number) => void
+	openViewer: (number) => void;
 }
 
 class StoryListContent extends Component<IStoryListItemsProps> {

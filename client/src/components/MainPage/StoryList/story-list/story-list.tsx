@@ -38,7 +38,6 @@ interface IState {
 }
 
 class StoryList extends Component<IStoryListProps, IState> {
-
 	constructor(props) {
 		super(props);
 
@@ -81,7 +80,7 @@ class StoryList extends Component<IStoryListProps, IState> {
 		const x = event.pageX - scroll.offsetLeft;
 		const walk = x - startX;
 		scroll.scrollLeft = scrollLeft - walk;
-		this.setState({ class: 'active' })
+		this.setState({ class: 'active' });
 	};
 
 	viewerIsShown = () => {
@@ -102,27 +101,29 @@ class StoryList extends Component<IStoryListProps, IState> {
 			created_at: new Date(2019, 7, 13, 22)
 		}));
 
-		return <StoryViewer 
-			stories={mockStories}  
-			currentUser={{ userId: "7f13634d-c353-433c-98fe-ead99e1252c7" }}
-			currentStory={currentStory}
-			closeViewer={this.closeViewer}
-		/>
-	} 
+		return (
+			<StoryViewer
+				stories={mockStories}
+				currentUser={{ userId: '7f13634d-c353-433c-98fe-ead99e1252c7' }}
+				currentStory={currentStory}
+				closeViewer={this.closeViewer}
+			/>
+		);
+	};
 
 	closeViewer = () => {
 		this.setState({
 			currentStory: -1,
 			isShownViewer: false
 		});
-	}
+	};
 
 	openViewer = (id: number) => {
 		this.setState({
 			currentStory: id,
 			isShownViewer: true
 		});
-	} 
+	};
 
 	render() {
 		const { stories, fetchStories } = this.props;
@@ -151,7 +152,10 @@ class StoryList extends Component<IStoryListProps, IState> {
 						onMouseUp={this.onMouseLeave}
 						onMouseMove={this.onMouseMove}
 					>
-						<StoryListContent storyListItems={stories} openViewer={this.openViewer}/>
+						<StoryListContent
+							storyListItems={stories}
+							openViewer={this.openViewer}
+						/>
 					</div>
 				</div>
 			</div>

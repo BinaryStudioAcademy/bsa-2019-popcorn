@@ -29,7 +29,7 @@ interface IProps {
 		userId: string;
 	};
 	currentStory: number;
-	closeViewer: () => void
+	closeViewer: () => void;
 }
 
 interface IState {
@@ -115,8 +115,8 @@ class StoryViewer extends PureComponent<IProps, IState> {
 						{stories.map((story, i) => (
 							<div className="story" key={i}>
 								<header>
-									<img 
-										src={story.userInfo.image_url || config.DEFAULT_AVATAR} 
+									<img
+										src={story.userInfo.image_url || config.DEFAULT_AVATAR}
 										alt=""
 									/>
 									<span className="username">{story.userInfo.name}</span>

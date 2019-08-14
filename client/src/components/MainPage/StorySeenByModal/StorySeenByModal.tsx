@@ -22,10 +22,9 @@ const StorySeenByModal = (props: IProps) => {
 						</p>
 					</header>
 					<main>
-						{
-							users.length === 0 &&
+						{users.length === 0 && (
 							<div className="view-message">No views yet.</div>
-						}
+						)}
 						{users.map((user, i) => (
 							<div className="seen-by-item" key={i}>
 								<img src={user.image_url} alt="" />
