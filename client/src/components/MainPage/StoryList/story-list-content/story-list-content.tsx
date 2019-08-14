@@ -11,7 +11,21 @@ interface IStoryListItem {
 		name: string;
 		any;
 	};
-	any;
+	type: string;
+	voting?: {
+		backColor: string;
+		backImage: string;
+		deltaPositionHeadX: number;
+		deltaPositionHeadY: number;
+		deltaPositionOptionBlockX: number;
+		deltaPositionOptionBlockY: number;
+		header: string;
+		id: string;
+		options: Array<{
+			text: string;
+			voted: number;
+		}>;
+	};
 }
 
 interface IStoryListItemsProps {
@@ -27,9 +41,25 @@ class StoryListContent extends Component<IStoryListItemsProps> {
 	render() {
 		const { storyListItems } = this.props;
 		const storyList = storyListItems.map((item, i) => {
-			// if (item.type === 'event') {
-			// 	return <StoryVoting header={} options={} deltaPositionForHeader={} deltaPositionForOptionBlock={} backColor={} userId={}
-			// }
+			if (item.type === 'voting' && item.voting) {
+				const voting = item.voting;
+				return (
+					<StoryVoting
+						header={voting.header}
+						options={voting.options}
+						deltaPositionForHeader={{
+							x: voting.deltaPositionHeadX,
+							y: voting.deltaPositionHeadY
+						}}
+						deltaPositionForOptionBlock={{
+							x: voting.deltaPositionOptionBlockX,
+							y: voting.deltaPositionOptionBlockY
+						}}
+						backColor={voting.backColor}
+						userId={item.user.id}
+					/>
+				);
+			}
 
 			return (
 				<StoryListItem

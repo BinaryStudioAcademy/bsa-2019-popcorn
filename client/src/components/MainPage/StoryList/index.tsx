@@ -27,7 +27,21 @@ interface IStoryListItem {
 		name: string;
 		any;
 	};
-	any;
+	type: string;
+	voting?: {
+		backColor: string;
+		backImage: string;
+		deltaPositionHeadX: number;
+		deltaPositionHeadY: number;
+		deltaPositionOptionBlockX: number;
+		deltaPositionOptionBlockY: number;
+		header: string;
+		id: string;
+		options: Array<{
+			text: string;
+			voted: number;
+		}>;
+	};
 }
 
 interface IProps {

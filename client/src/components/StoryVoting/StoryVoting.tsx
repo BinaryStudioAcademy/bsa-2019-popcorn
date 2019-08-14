@@ -23,7 +23,7 @@ type StoryVotingProps = {
 		deltaHead: { x: number; y: number },
 		deltaOptions: { x: number; y: number }
 	) => void;
-	backColor: { r: string; g: string; b: string; a: string };
+	backColor: { r: string; g: string; b: string; a: string } | string;
 	backImage?: string;
 	userId: string;
 	createVoting?: (voting: IVoting) => any;
@@ -148,6 +148,10 @@ class StoryVoting extends React.Component<StoryVotingProps, StoryVotingState> {
 	onSave = () => {
 		const { header, userId, backColor, backImage, options } = this.props;
 		const { deltaPositionHead, deltaPositionOptionBlock } = this.state;
+		const rgba =
+			typeof this.props.backColor === 'string'
+				? this.props.backColor
+				: `rgba(${this.props.backColor.r},${this.props.backColor.b},${this.props.backColor.g},${this.props.backColor.a})`;
 		this.props.createVoting &&
 			this.props.createVoting({
 				userId,
@@ -156,7 +160,7 @@ class StoryVoting extends React.Component<StoryVotingProps, StoryVotingState> {
 				deltaPositionHeadY: deltaPositionHead.y,
 				deltaPositionOptionBlockX: deltaPositionOptionBlock.x,
 				deltaPositionOptionBlockY: deltaPositionOptionBlock.y,
-				backColor: `rgba(${backColor.r},${backColor.g},${backColor.b},${backColor.a})`,
+				backColor: rgba,
 				backImage,
 				options
 			});
@@ -164,10 +168,13 @@ class StoryVoting extends React.Component<StoryVotingProps, StoryVotingState> {
 
 	render() {
 		const positions = this.calculatePositions();
+		const rgba =
+			typeof this.props.backColor === 'string'
+				? this.props.backColor
+				: `rgba(${this.props.backColor.r},${this.props.backColor.b},${this.props.backColor.g},${this.props.backColor.a})`;
+
 		const backgroundStyle = {
-			background: this.props.backImage
-				? `url(${this.props.backImage})`
-				: `rgba(${this.props.backColor.r},${this.props.backColor.b},${this.props.backColor.g},${this.props.backColor.a})`
+			background: this.props.backImage ? `url(${this.props.backImage})` : rgba
 		};
 
 		if (this.state.redirect) return <Redirect to={'/create'} />;
@@ -229,4 +236,5 @@ class StoryVoting extends React.Component<StoryVotingProps, StoryVotingState> {
 		);
 	}
 }
+
 export default StoryVoting;
