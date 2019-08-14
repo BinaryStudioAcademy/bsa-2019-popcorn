@@ -6,6 +6,7 @@ export class Event {
   location_lng: number;
   start_date: Date;
   end_date: Date;
+  image: string;
   isPrivate: boolean;
   userId: string;
   movieId?: string;

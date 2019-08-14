@@ -23,6 +23,9 @@ export class Event {
   @Column()
   description: string;
 
+  @Column()
+  image: string;
+
   @Column({ type: "float" })
   location_lat: number;
 

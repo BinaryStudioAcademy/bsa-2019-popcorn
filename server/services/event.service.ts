@@ -142,7 +142,8 @@ const formatForClient = (event: any) => {
     isPrivate,
     userId,
     movieId,
-    eventVisitors
+    eventVisitors,
+    image
   } = event;
   const result = {
     id: id,
@@ -153,9 +154,10 @@ const formatForClient = (event: any) => {
       lng: location_lng
     },
     dateRange: {
-      start: start_date,
-      end: end_date
+      startDate: start_date,
+      endDate: end_date
     },
+    image,
     isPrivate,
     userId,
     movieId,
