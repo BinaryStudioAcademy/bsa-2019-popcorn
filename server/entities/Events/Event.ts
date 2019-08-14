@@ -24,10 +24,22 @@ export class Event {
   description: string;
 
   @Column()
-  time: Date;
+  image: string;
+
+  @Column({ type: "float" })
+  location_lat: number;
+
+  @Column({ type: "float" })
+  location_lng: number;
 
   @Column()
-  location: string;
+  start_date: Date;
+
+  @Column()
+  end_date: Date;
+
+  @Column()
+  isPrivate: boolean;
 
   @ManyToOne(type => User, user => user.id)
   @JoinColumn()

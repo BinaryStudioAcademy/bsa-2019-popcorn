@@ -19,7 +19,7 @@ export class EventVisitor {
 
   @ManyToOne(type => Event, event => event.eventVisitors)
   @JoinColumn()
-  event: string;
+  event: Event;
 
   @Column()
   status: string;
