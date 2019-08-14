@@ -84,12 +84,14 @@ const TopItem: React.FC<ITopItemProps> = ({
 					accept=".jpg, .jpeg, .png"
 					hidden
 				/>
-				<label
-					htmlFor={`${topItem.id}image`}
-					className="top-upload-image hover"
-				>
-					<FontAwesomeIcon icon={faImage} className="fontAwesomeIcon" />
-				</label>
+				{editTop && (
+					<label
+						htmlFor={`${topItem.id}image`}
+						className="top-upload-image hover"
+					>
+						<FontAwesomeIcon icon={faImage} className="fontAwesomeIcon" />
+					</label>
+				)}
 
 				<div className="edit-top hover" onClick={toogleEdit}>
 					Edit

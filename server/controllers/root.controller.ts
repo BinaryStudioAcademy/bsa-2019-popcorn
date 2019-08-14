@@ -7,7 +7,7 @@ import topRouter from "./top.controller";
 import postRouter from "./post.controller";
 import userRouter from "./user.controller";
 import storyRouter from "./story.controller";
-// import surveysRoutes from "./surveys.controller";
+import surveysRoutes from "./surveys.controller";
 
 // register all routes
 export default app => {
@@ -20,5 +20,5 @@ export default app => {
   app.use("/api/top", topRouter);
   app.use("/api/user", userRouter);
   app.use("/api/story", storyRouter);
-  // app.use("/api/surveys", surveysRoutes);
+  app.use("/api/surveys", surveysRoutes);
 };

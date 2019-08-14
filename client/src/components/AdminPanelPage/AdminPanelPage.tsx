@@ -77,6 +77,9 @@ const AdminPanelPage: React.FC<IProps> = props => {
 					</label>
 				))}
 			</div>
+			{activeEntity && !props[activeEntity] ? (
+				<span className="entity-data-warning">Loading...</span>
+			) : null}
 			{activeEntity && props[activeEntity] && props[activeEntity].length ? (
 				<table className="entity-data">
 					<thead>
@@ -101,6 +104,8 @@ const AdminPanelPage: React.FC<IProps> = props => {
 						))}
 					</tbody>
 				</table>
+			) : activeEntity && props[activeEntity] && !props[activeEntity].length ? (
+				<span className="entity-data-warning">Empty data</span>
 			) : null}
 		</div>
 	);

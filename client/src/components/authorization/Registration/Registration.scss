@@ -3,7 +3,7 @@
 }
 
 body {
-	font-family: 'Arial', sans-sans-serif;
+	font-family: 'Inter', sans-sans-serif;
 	font-size: 16px;
 
 	margin: 0;
@@ -169,4 +169,8 @@ body {
 
 .form-hint-link:hover {
 	text-decoration: underline;
+}
+
+.register-error {
+	text-align: center;
 }
