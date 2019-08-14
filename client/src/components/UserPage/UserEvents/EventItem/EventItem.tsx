@@ -12,10 +12,12 @@ import {
 
 interface IProps {
 	event: IEventFormatClient;
+	deleteEvent: null | ((id: string) => any);
 }
 
-const EventItem: React.FC<IProps> = ({ event }) => {
+const EventItem: React.FC<IProps> = ({ event, deleteEvent }) => {
 	const {
+		userId,
 		title,
 		description,
 		location,
@@ -65,12 +67,17 @@ const EventItem: React.FC<IProps> = ({ event }) => {
 								{String(dateRange.endDate)}
 							</Moment>
 						</div>
-						<div className="event-buttons">
-							<button className="edit-button">Edit</button>
-							<button className="delete-button">
-								<CloseIcon className="delete-button-svg" />
-							</button>
-						</div>
+						{deleteEvent !== null ? (
+							<div className="event-buttons">
+								<button className="edit-button">Edit</button>
+								<button
+									className="delete-button"
+									onClick={() => deleteEvent(userId)}
+								>
+									<CloseIcon className="delete-button-svg" />
+								</button>
+							</div>
+						) : null}
 					</div>
 				</div>
 			</div>

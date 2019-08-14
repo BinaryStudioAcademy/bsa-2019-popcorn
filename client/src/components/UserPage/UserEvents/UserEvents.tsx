@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import Spinner from '../../shared/Spinner/index';
-import { getUserEvents } from './actions';
+import { getUserEvents, deleteEvent } from './actions';
 import {
 	IEventFormatDataBase,
 	IEventFormatClient,
@@ -14,6 +14,7 @@ import './UserEvents.scss';
 interface IProps {
 	userEvents: IEventVisitor[];
 	getUserEvents: (id: string) => any;
+	deleteEvent: (id: string) => any;
 	currentUserId: string;
 }
 
@@ -34,11 +35,13 @@ class UserEvents extends React.Component<IProps> {
 		this.props.getUserEvents(currentUserId);
 	}
 
-	renderEventList = (eventList: IEventFormatClient[]) =>
-		eventList.map(event => <EventItem event={event} key={event.id} />);
+	renderEventList = (eventList: IEventFormatClient[], deleteEventAction: any) =>
+		eventList.map(event => (
+			<EventItem event={event} key={event.id} deleteEvent={deleteEventAction} />
+		));
 
 	render() {
-		const { userEvents, currentUserId } = this.props;
+		const { userEvents, currentUserId, deleteEvent } = this.props;
 
 		if (!userEvents) {
 			return <Spinner />;
@@ -63,7 +66,7 @@ class UserEvents extends React.Component<IProps> {
 							No one event. You can craete
 						</div>
 					) : (
-						this.renderEventList(ownEvents)
+						this.renderEventList(ownEvents, deleteEvent)
 					)}
 				</div>
 				<div className="events-title">
@@ -73,7 +76,7 @@ class UserEvents extends React.Component<IProps> {
 					{subscribeEvents.length === 0 ? (
 						<div className="event-show-warning">No one event</div>
 					) : (
-						this.renderEventList(subscribeEvents)
+						this.renderEventList(subscribeEvents, null)
 					)}
 				</div>
 			</div>
@@ -91,7 +94,8 @@ const mapStateToProps = (state, props) => {
 
 const mapDispatchToProps = dispatch => {
 	const actions = {
-		getUserEvents
+		getUserEvents,
+		deleteEvent
 	};
 
 	return bindActionCreators(actions, dispatch);
