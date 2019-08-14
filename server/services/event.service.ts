@@ -17,18 +17,18 @@ export const getEventsByUserId = async (userId: string): Promise<any[]> => {
 export const getEventById = async (eventId: string): Promise<Event> =>
   await getCustomRepository(EventRepository).getEvent(eventId);
 
-export const createEvent = async (event: any): Promise<Event> => {
+export const createEvent = async (event: any): Promise<any> => {
   const result = formatForDB(event);
   console.log("event", event);
-  const responseEvent = await getCustomRepository(EventRepository).save(result);
+  let responseEvent = await getCustomRepository(EventRepository).save(result);
   const newVisitor = {
     status: "going",
     userId: responseEvent.userId,
     eventId: responseEvent.id
   };
-  createVisitor(newVisitor as any);
+  const visitor = await createVisitor(newVisitor as any);
   console.log(responseEvent);
-  return responseEvent;
+  return { ...responseEvent, eventVisitors: visitor };
 };
 
 export const updateEvent = async (updatedEvent: Event): Promise<Event[]> => {

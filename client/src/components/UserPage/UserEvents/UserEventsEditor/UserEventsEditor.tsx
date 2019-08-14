@@ -135,7 +135,7 @@ class UserEventsEditor extends React.Component<
 		)
 			return;
 
-		if (this.props.id) {
+		if (!this.props.id) {
 			console.log(this.state, 'event updated'); //this.props.updateEvent(this.props.id, this.state);
 		} else {
 			console.log('iki');
