@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { v4 as uuid } from 'uuid';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import TextareaAutosize from '@material-ui/core/TextareaAutosize';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import { isEqual } from 'lodash';
 import './SurveyItem.scss';
@@ -85,11 +86,10 @@ class MultipleChoice extends Component<IProps, IQuestion> {
 					options.map((option, i) => (
 						<div key={i} className="option-container">
 							<p className="option-icon"></p>
-							<input
+							<TextareaAutosize
 								onChange={event => {
 									this.changeInput(event, option.id);
 								}}
-								type="text"
 								value={option.value}
 								className="option"
 								placeholder="Option*"
