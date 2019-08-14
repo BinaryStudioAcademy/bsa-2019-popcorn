@@ -38,8 +38,12 @@
 
 		&.active {
 			cursor: grabbing;
-			cursor: -webkit-grabbing;
 			transform: scale(1);
+
+			>*:hover {
+				cursor: grabbing;
+				transform: none;
+			}
 		}
 
 		&::-webkit-scrollbar {
