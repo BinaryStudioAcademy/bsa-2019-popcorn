@@ -1,6 +1,5 @@
 import React from 'react';
 import StoryVotingOption from '../StoryVotingOption/StoryVotingOption';
-import { ReactComponent as CrossIcon } from '../../assets/icons/storyVote/crossIcon.svg';
 import './StoryVoting.scss';
 import Draggable from 'react-draggable';
 
