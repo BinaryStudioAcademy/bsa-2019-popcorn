@@ -7,12 +7,12 @@ branches:
   only:
   - deploy-aws
 
-# install:
-#   - cd client/
-#   - npm install
-#   - cd ../server/
-#   - npm install
-#   - cd ..
+install:
+  - cd client/
+  - npm install
+  - cd ../server/
+  - npm install
+  - cd ..
 
 deploy:
 - provider: s3
