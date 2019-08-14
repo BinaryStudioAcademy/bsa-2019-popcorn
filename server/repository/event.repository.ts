@@ -17,7 +17,7 @@ class EventRepository extends Repository<Event> {
     return await getRepository(EventVisitor)
       .createQueryBuilder("event_visitor")
       .leftJoinAndSelect("event_visitor.event", "event")
-      .leftJoinAndSelect("event.eventVisitors", "event2")
+      .leftJoinAndSelect("event.eventVisitors", "eventVisitors")
       .where("event_visitor.userId = :id", { id: userId })
       .getMany();
   }
