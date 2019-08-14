@@ -27,6 +27,7 @@ type StoryVotingProps = {
 	backImage?: string;
 	userId: string;
 	createVoting?: (voting: IVoting) => any;
+	inEditor?: boolean;
 };
 
 type StoryVotingState = {

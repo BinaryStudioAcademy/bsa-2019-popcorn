@@ -44,20 +44,23 @@ class StoryListContent extends Component<IStoryListItemsProps> {
 			if (item.type === 'voting' && item.voting) {
 				const voting = item.voting;
 				return (
-					<StoryVoting
-						header={voting.header}
-						options={voting.options}
-						deltaPositionForHeader={{
-							x: voting.deltaPositionHeadX,
-							y: voting.deltaPositionHeadY
-						}}
-						deltaPositionForOptionBlock={{
-							x: voting.deltaPositionOptionBlockX,
-							y: voting.deltaPositionOptionBlockY
-						}}
-						backColor={voting.backColor}
-						userId={item.user.id}
-					/>
+					<div className={'story-list-item-wrapper voting-wrp'}>
+						<StoryVoting
+							header={voting.header}
+							options={voting.options}
+							deltaPositionForHeader={{
+								x: voting.deltaPositionHeadX,
+								y: voting.deltaPositionHeadY
+							}}
+							deltaPositionForOptionBlock={{
+								x: voting.deltaPositionOptionBlockX,
+								y: voting.deltaPositionOptionBlockY
+							}}
+							backColor={voting.backColor}
+							userId={item.user.id}
+							inEditor={false}
+						/>
+					</div>
 				);
 			}
 
