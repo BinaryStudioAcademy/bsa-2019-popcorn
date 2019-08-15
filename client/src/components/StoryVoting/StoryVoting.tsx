@@ -186,9 +186,13 @@ class StoryVoting extends React.Component<StoryVotingProps, StoryVotingState> {
 
 		return (
 			<div className="story-voting-wrp">
-				<div className="story-voting" style={backgroundStyle}>
+				<div
+					className="story-voting"
+					id="voting-preview"
+					style={backgroundStyle}
+				>
 					<Draggable
-						bounds=".story-voting"
+						bounds="parent"
 						defaultPosition={{
 							x: positions.headerPosition.left,
 							y: positions.headerPosition.top
@@ -199,7 +203,7 @@ class StoryVoting extends React.Component<StoryVotingProps, StoryVotingState> {
 						<div className="story-voting-header">{this.props.header}</div>
 					</Draggable>
 					<Draggable
-						bounds=".story-voting"
+						bounds="parent"
 						defaultPosition={{
 							x: positions.buttonsPosition.left,
 							y: positions.buttonsPosition.top

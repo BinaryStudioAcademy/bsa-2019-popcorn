@@ -2,10 +2,20 @@
 @import '../../../AdvancedSearch//AdvancedMovieSearch/CustomCheckbox.scss';
 
 $height: 75vh;
-$width: 50vw;
+$width: 30vw;
 $btn-height: 36px;
 $border: 1px solid $orange-light;
 $border-radius: 5px;
+
+.modal-wrp {
+	position: fixed;
+	top: 0;
+	left: 0;
+	background-color: rgba(128, 128, 128, 0.507);
+	z-index: 8;
+	width: 100vw;
+	height: 100vh;
+}
 
 .modal-story {
 	display: block;

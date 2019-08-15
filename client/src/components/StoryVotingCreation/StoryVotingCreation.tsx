@@ -10,6 +10,7 @@ import {
 	faArrowCircleLeft,
 	faTimesCircle
 } from '@fortawesome/free-solid-svg-icons';
+import { faCamera } from '@fortawesome/free-solid-svg-icons/faCamera';
 import { Redirect } from 'react-router';
 import IVoting from '../MainPage/StoryList/IVoting';
 
@@ -318,7 +319,7 @@ class StoryVotingCreation extends React.Component<
 						</div>
 						<div className="image-uploading">
 							<label htmlFor="image" className="upload-image-button">
-								Upload image? :
+								<FontAwesomeIcon icon={faCamera} className="fontAwesomeIcon" />
 							</label>
 							<input
 								name="image"
