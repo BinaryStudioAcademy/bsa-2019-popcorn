@@ -7,7 +7,8 @@ import {
 	faTimesCircle
 } from '@fortawesome/free-solid-svg-icons';
 
-const options = ['survey', 'top', 'vote', 'event'];
+const options = ['survey', 'top', 'vote'];
+// 'vote', 'event'
 
 class ChooseExtra extends React.Component {
 	state = {

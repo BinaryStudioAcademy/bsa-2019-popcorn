@@ -9,6 +9,8 @@ interface IProps {
 }
 
 const StorySeenByModal = (props: IProps) => {
+	const { users } = props;
+
 	return (
 		<div className="seen-by-modal-container">
 			<div>
@@ -20,7 +22,10 @@ const StorySeenByModal = (props: IProps) => {
 						</p>
 					</header>
 					<main>
-						{props.users.map((user, i) => (
+						{users.length === 0 && (
+							<div className="view-message">No views yet.</div>
+						)}
+						{users.map((user, i) => (
 							<div className="seen-by-item" key={i}>
 								<img src={user.image_url} alt="" />
 								<span>{user.name}</span>

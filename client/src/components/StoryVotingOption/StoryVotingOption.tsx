@@ -5,7 +5,7 @@ type StoryVotingOptionProps = {
 	radius?: string;
 	allVotesCount: number;
 	storyVotingOptionInfo: {
-		text: string;
+		body: string;
 		voted: number;
 	};
 };
@@ -14,7 +14,7 @@ const calculatePercentage = (voted, allVotesCount) => {
 };
 
 const StoryVotingOption = ({
-	storyVotingOptionInfo: { text, voted },
+	storyVotingOptionInfo: { body, voted },
 	radius,
 	allVotesCount
 }: StoryVotingOptionProps) => {
@@ -23,10 +23,10 @@ const StoryVotingOption = ({
 	return (
 		<div className="story-voting-option">
 			<button style={borderStyle} className="story-voting-option-button">
-				{text}
+				{body}
 			</button>
 			<div className="story-voting-option-percent">
-				{calculatePercentage(voted, allVotesCount)}%
+				{calculatePercentage(voted, allVotesCount) || 0}%
 			</div>
 		</div>
 	);

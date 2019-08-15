@@ -1,19 +1,37 @@
-import React, { Component, ReactInstance } from 'react';
+import React, { Component } from 'react';
 import StoryListContent from '../story-list-content/story-list-content';
 import AddStoryItem from '../add-story-item/add-story-item';
-import AddStoryPopup from '../add-story-popup/add-story-popup';
 import './story-list.scss';
+import './add-story-popup.scss';
 import Spinner from '../../../shared/Spinner';
 import config from '../../../../config';
+import StoryViewer from '../../StoryViewer/StoryViewer';
+import { Redirect } from 'react-router';
 
 interface IStoryListItem {
 	caption: string;
 	image_url: string;
 	user: {
 		avatar: string;
+		name: string;
+		id: string;
 		any;
 	};
-	any;
+	type: string;
+	voting?: {
+		backColor: string;
+		backImage: string;
+		deltaPositionHeadX: number;
+		deltaPositionHeadY: number;
+		deltaPositionOptionBlockX: number;
+		deltaPositionOptionBlockY: number;
+		header: string;
+		id: string;
+		options: Array<{
+			body: string;
+			voted: number;
+		}>;
+	};
 }
 
 interface IStoryListProps {
@@ -29,10 +47,14 @@ interface IState {
 	isDown: boolean;
 	startX: number;
 	scrollLeft: number;
+	isShownViewer: boolean;
+	currentStory: number;
+	class: string;
+	modal: boolean;
 }
 
 class StoryList extends Component<IStoryListProps, IState> {
-
+	updateModal: (value: boolean) => void;
 	constructor(props) {
 		super(props);
 
@@ -41,12 +63,21 @@ class StoryList extends Component<IStoryListProps, IState> {
 			scrollStep: props.scrollStep || 1,
 			isDown: false,
 			startX: 0,
-			scrollLeft: 0
+			scrollLeft: 0,
+			isShownViewer: false,
+			currentStory: -1,
+			class: '',
+			modal: false
 		};
+		this.updateModal = this.handleUpdateModal.bind(this);
 	}
+	handleUpdateModal = (value: boolean) => {
+		this.setState({ isPopupShown: value });
+	};
 
 	onOpenPopupClick = () => {
-		this.setState({ isPopupShown: true });
+		this.setState({ modal: true });
+		// this.setState({ isPopupShown: true });
 	};
 
 	onClosePopupClick = () => {
@@ -61,7 +92,7 @@ class StoryList extends Component<IStoryListProps, IState> {
 	};
 
 	onMouseLeave = () => {
-		this.setState({ isDown: false });
+		this.setState({ isDown: false, class: '' });
 	};
 
 	onMouseMove = event => {
@@ -72,6 +103,50 @@ class StoryList extends Component<IStoryListProps, IState> {
 		const x = event.pageX - scroll.offsetLeft;
 		const walk = x - startX;
 		scroll.scrollLeft = scrollLeft - walk;
+		this.setState({ class: 'active' });
+	};
+
+	viewerIsShown = () => {
+		const { stories } = this.props;
+		if (!stories) return;
+		if (!this.state.isShownViewer) return null;
+
+		const { currentStory } = this.state;
+		const mockStories = stories.map(story => ({
+			...story,
+			image_url: story.image_url,
+			bckg_color: '#eedcff',
+			users: [],
+			userInfo: {
+				userId: story.user.id,
+				name: story.user.name,
+				image_url: story.user.avatar
+			},
+			created_at: new Date(2019, 7, 13, 22)
+		}));
+
+		return (
+			<StoryViewer
+				stories={mockStories}
+				currentUser={{ userId: '7f13634d-c353-433c-98fe-ead99e1252c7' }}
+				currentStory={currentStory}
+				closeViewer={this.closeViewer}
+			/>
+		);
+	};
+
+	closeViewer = () => {
+		this.setState({
+			currentStory: -1,
+			isShownViewer: false
+		});
+	};
+
+	openViewer = (id: number) => {
+		this.setState({
+			currentStory: id,
+			isShownViewer: true
+		});
 	};
 
 	render() {
@@ -81,12 +156,14 @@ class StoryList extends Component<IStoryListProps, IState> {
 			return <Spinner />;
 		}
 
+		if (this.state.modal) {
+			this.setState({ modal: false });
+			return <Redirect to={'/create'} />;
+		}
+
 		return (
 			<div className="story-list-wrapper">
-				<AddStoryPopup
-					onClosePopupClick={this.onClosePopupClick}
-					isShown={this.state.isPopupShown}
-				/>
+				{this.viewerIsShown()}
 				<div className="story-list">
 					<AddStoryItem
 						onOpenPopupClick={this.onOpenPopupClick}
@@ -94,13 +171,19 @@ class StoryList extends Component<IStoryListProps, IState> {
 					/>
 					<div
 						ref="scroll"
-						className={`story-list-scroll ${this.state.isDown && 'active'}`}
+						className={`story-list-scroll ${this.state.class}`}
 						onMouseDown={this.onMouseDown}
 						onMouseLeave={this.onMouseLeave}
-						onMouseUp={this.onMouseLeave}
 						onMouseMove={this.onMouseMove}
+						onClickCapture={event => {
+							if (this.state.class === 'active') event.stopPropagation();
+							this.setState({ isDown: false, class: '', isPopupShown: false });
+						}}
 					>
-						<StoryListContent storyListItems={stories} />
+						<StoryListContent
+							storyListItems={stories}
+							openViewer={this.openViewer}
+						/>
 					</div>
 				</div>
 			</div>

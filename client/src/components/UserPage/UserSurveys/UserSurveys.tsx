@@ -139,11 +139,13 @@ class UserSurveys extends React.Component<IProps, IState> {
 	};
 
 	modalIsShown = () => {
-		if (this.state.deletedSurvey === -1) return null;
+		const { deletedSurvey, surveys } = this.state;
+		if (deletedSurvey === -1) return null;
 		return (
 			<div className="modal-delete-container">
 				<div className="modal-delete">
 					<p>Are you sure you want to delete this survey?</p>
+					<p className="delete-title">{surveys[deletedSurvey].title}</p>
 					<button className="delete" onClick={this.deleteSurvey}>
 						Delete
 					</button>

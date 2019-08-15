@@ -38,6 +38,11 @@
 			margin: 0;
 		}
 
+		.error-message {
+			color: #d93025;
+			font-size: $menu-font-size;
+		}
+
 		header {
 			margin-bottom: 40px;
 
@@ -48,11 +53,13 @@
 				margin-bottom: 20px;
 				padding-bottom: 10px;
 				font-family: $base-font-family;
+				word-break: break-word;
 			}
 
 			p {
 				font-size: $menu-font-size;
 				padding-bottom: 2px;
+				word-break: break-word;
 			}
 		}
 
@@ -130,9 +137,11 @@
 			.question-image {
 				max-width: 80%;
 				margin-top: 20px;
+				margin-bottom: 20px;
 			}
 
 			.survey-question {
+				word-break: break-word;
 				font-size: 20px;
 				font-weight: 500;
 			}

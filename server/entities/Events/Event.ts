@@ -23,11 +23,23 @@ export class Event {
   @Column()
   description: string;
 
-  @Column()
-  time: Date;
+  @Column({ nullable: true })
+  image: string;
+
+  @Column({ type: "float" })
+  location_lat: number;
+
+  @Column({ type: "float" })
+  location_lng: number;
 
   @Column()
-  location: string;
+  start_date: Date;
+
+  @Column()
+  end_date: Date;
+
+  @Column()
+  isPrivate: boolean;
 
   @ManyToOne(type => User, user => user.id)
   @JoinColumn()
@@ -37,10 +49,10 @@ export class Event {
   @JoinColumn()
   movie: Movie;
 
-  @Column()
+  @Column({ nullable: true })
   userId: string;
 
-  @Column()
+  @Column({ nullable: true })
   movieId: string;
 
   @OneToMany(type => EventComment, event_comment => event_comment.event)

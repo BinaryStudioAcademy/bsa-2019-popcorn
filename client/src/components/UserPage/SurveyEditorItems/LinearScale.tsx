@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import TextareaAutosize from '@material-ui/core/TextareaAutosize';
 import { v4 as uuid } from 'uuid';
 import './SurveyItem.scss';
 import { isEqual } from 'lodash';
@@ -84,24 +85,24 @@ class LinearScale extends Component<IProps, IQuestion> {
 				<div className="scale-labels">
 					<label>
 						1
-						<input
-							type="text"
+						<TextareaAutosize
 							onChange={event => {
 								this.changeLabel(event, 'first');
 							}}
 							value={firstLabel ? firstLabel : ''}
 							placeholder="Label"
+							maxLength={255}
 						/>
 					</label>
 					<label>
 						{options.length}
-						<input
-							type="text"
+						<TextareaAutosize
 							value={lastLabel ? lastLabel : ''}
 							onChange={event => {
 								this.changeLabel(event, 'last');
 							}}
 							placeholder="Label"
+							maxLength={255}
 						/>
 					</label>
 				</div>

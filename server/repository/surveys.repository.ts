@@ -2,29 +2,39 @@ import {EntityRepository, Repository} from "typeorm";
 import {Surveys} from "../entities/Surveys";
 import {Surveys as SurveysModel} from "../models/SurveysModel";
 import UserRepository from "./user.repository";
-import {getCustomRepository} from "typeorm";
+import { getCustomRepository } from "typeorm";
 import { SurveysQuestion } from "../models/SurveysQuestionModel";
 import SurveysQuestionRepository from "./surveysQuestion.repository";
 
 @EntityRepository(Surveys)
-class SurveysRepository extends Repository<SurveysModel> {
-
-  async createSurveys(id: string, surveys: SurveysModel, surveysQuestion: Array<SurveysQuestion>, next?) {
-    console.log('create', id, surveys,surveysQuestion)
+class SurveysRepository extends Repository<Surveys> {
+  async createSurveys(
+    id: string,
+    surveys: SurveysModel,
+    surveysQuestion: Array<SurveysQuestion>,
+    next?
+  ) {
     try {
-      const user = await getCustomRepository(UserRepository).findOne(id); 
+      const user = await getCustomRepository(UserRepository).findOne(id);
+
       if (!user) {
-        return next({status: 404, message: 'User is not found'}, null);
+        return next({ status: 404, message: "User is not found" }, null);
       }
       surveys.user = user;
 
-      await Promise.all(surveysQuestion.map(so => getCustomRepository(SurveysQuestionRepository).createSurveysQuestion(so, next)));
+      await Promise.all(
+        surveysQuestion.map(so =>
+          getCustomRepository(SurveysQuestionRepository).createSurveysQuestion(
+            so,
+            next
+          )
+        )
+      );
 
       surveys.surveysQuestion = surveysQuestion;
       return await this.save(surveys);
-    } catch(err) {
-      
-      return next({status: err.status, message: err.message}, null);
+    } catch (err) {
+      return next({ status: err.status, message: err.message }, null);
     }
   }
 
@@ -49,22 +59,22 @@ class SurveysRepository extends Repository<SurveysModel> {
   async getSurveysById(id: string, next?) {
     try {
       const surveys = await this.findOne(id);
-      if (!surveys) 
-        return next({status: 404, message: 'Surveys is not found'}, null);
+      if (!surveys)
+        return next({ status: 404, message: "Surveys is not found" }, null);
       return await this.findOne(id);
-    } catch(err) {
-      return next({status: err.status, message: err.message}, null);
-    } 
+    } catch (err) {
+      return next({ status: err.status, message: err.message }, null);
+    }
   }
 
   async getSurveysByUserId(id: string, next?) {
     try {
       const user = await getCustomRepository(UserRepository).findOne(id);
       if (!user)
-        return next({status: 404, message: 'User is not found'}, null);
-      return await this.find({user});
-    } catch(err) {
-      return next({status: err.status, message: err.message}, null);
+        return next({ status: 404, message: "User is not found" }, null);
+      return await this.find({ user });
+    } catch (err) {
+      return next({ status: err.status, message: err.message }, null);
     }
   }
 
@@ -88,11 +98,11 @@ class SurveysRepository extends Repository<SurveysModel> {
     try {
       const surveys = await this.getSurveysById(id, next);
       if (!surveys)
-        return next({status: 404, message: 'Voiting is not found'}, null);
+        return next({ status: 404, message: "Voiting is not found" }, null);
       await this.delete({ id });
       return {};
-    } catch(err) {
-      return next({status: err.status, message: err.message}, null);
+    } catch (err) {
+      return next({ status: err.status, message: err.message }, null);
     }
   }
 }

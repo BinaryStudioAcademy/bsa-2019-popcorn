@@ -7,6 +7,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import Spinner from '../../shared/Spinner';
 import { fetchPosts } from './FeedBlock.redux/actions';
+import StoryList from '../StoryList';
 
 interface IProps {
 	posts: any;
@@ -18,14 +19,21 @@ const FeedBlock = (props: IProps) => {
 		props.fetchPosts();
 	}
 
-	return (
-		<div className={'feed-block'}>
-			<div>{props.posts ? <PostList posts={props.posts} /> : <Spinner />}</div>
-			<div>
-				<RecommendList />
-				<TopList />
+	return props.posts ? (
+		<div>
+			<StoryList scrollStep={1} />
+			<div className={'feed-block'}>
+				<div>
+					<PostList posts={props.posts} />
+				</div>
+				<div>
+					<RecommendList />
+					<TopList />
+				</div>
 			</div>
 		</div>
+	) : (
+		<Spinner />
 	);
 };
 

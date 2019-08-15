@@ -9,6 +9,11 @@ interface IReadyAnswer {
 	value: string;
 }
 
+interface IAnswer {
+	questionId: string;
+	value: string;
+}
+
 interface IProps {
 	questionInfo: {
 		id: string;
@@ -27,22 +32,30 @@ interface IProps {
 	};
 	disable?: boolean;
 	answer?: IReadyAnswer;
+	setAnswer?: (data: IAnswer) => void;
 }
 
 const SurveyShortAnswer = (props: IProps) => {
 	const { questionInfo, disable, answer } = props;
-	const { title, required, image_link } = questionInfo;
+	const { id, title, required, image_link } = questionInfo;
 
 	return (
 		<div className="question-container short-answer">
 			<p className={`survey-question required-${required}`}>{title}</p>
+			{image_link && <img className="question-image" alt="" src={image_link} />}
 			<input
 				type="text"
 				placeholder="My answer"
 				disabled={disable || false}
 				value={answer && answer.value}
+				onChange={event => {
+					if (!props.setAnswer) return;
+					props.setAnswer({
+						questionId: id,
+						value: event.target.value
+					});
+				}}
 			/>
-			{image_link && <img className="question-image" alt="" src={image_link} />}
 		</div>
 	);
 };

@@ -17,7 +17,6 @@
 
 	textarea {
 		height: 130px;
-		margin-bottom: 50px;
 		outline: none;
 		width: 100%;
 		color: $text-base-color;
@@ -55,8 +54,12 @@
 		position: absolute;
 		bottom: 36px;
 		.checker {
+			cursor: pointer;
 			float: left;
 			color: $text-secondary-color;
+			input {
+				cursor: pointer;
+			}
 		}
 
 		div {
@@ -77,6 +80,21 @@
 			&:hover {
 				background-color: $background-gray;
 			}
+		}
+	}
+	.activity {
+		border: 2px solid $orange-light;
+		padding: 5px;
+		margin-top: 15px;
+		span {
+			margin-left: 10px;
+		}
+		.fontAwesomeIcon {
+			cursor: pointer;
+		}
+
+		.fontAwesomeIcon:hover {
+			color: $orange-light;
 		}
 	}
 }

@@ -128,7 +128,8 @@
 		align-items: center;
 		margin-bottom: 20px;
 
-		input {
+		input,
+		textarea {
 			font-size: $form-font-size;
 
 			&:disabled {
@@ -184,7 +185,8 @@
 			margin-bottom: 20px;
 			font-weight: 600;
 
-			input {
+			input,
+			textarea {
 				font-size: $form-font-size;
 				margin-left: 20px;
 				color: $text-base-color;
