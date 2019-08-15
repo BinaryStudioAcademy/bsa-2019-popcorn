@@ -1,4 +1,4 @@
-import React, { Component, ReactInstance } from 'react';
+import React, { Component } from 'react';
 import StoryListContent from '../story-list-content/story-list-content';
 import AddStoryItem from '../add-story-item/add-story-item';
 import AddStoryPopup from '../add-story-popup/add-story-popup';
@@ -38,6 +38,7 @@ interface IState {
 }
 
 class StoryList extends Component<IStoryListProps, IState> {
+	updateModal: (value: boolean) => void;
 	constructor(props) {
 		super(props);
 
@@ -51,7 +52,11 @@ class StoryList extends Component<IStoryListProps, IState> {
 			currentStory: -1,
 			class: ''
 		};
+		this.updateModal = this.handleUpdateModal.bind(this);
 	}
+	handleUpdateModal = (value: boolean) => {
+		this.setState({ isPopupShown: value });
+	};
 
 	onOpenPopupClick = () => {
 		this.setState({ isPopupShown: true });
@@ -138,6 +143,7 @@ class StoryList extends Component<IStoryListProps, IState> {
 				<AddStoryPopup
 					onClosePopupClick={this.onClosePopupClick}
 					isShown={this.state.isPopupShown}
+					handleUpdateModal={this.handleUpdateModal}
 				/>
 				<div className="story-list">
 					<AddStoryItem
