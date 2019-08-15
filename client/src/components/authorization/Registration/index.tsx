@@ -19,6 +19,8 @@ interface IProps {
 
 interface IState {
 	isLoading: boolean;
+	emailIsTaken: boolean;
+	userNameIsTaken: boolean;
 }
 
 const initialFormikValues = {
@@ -52,13 +54,30 @@ function validatePassword(value) {
 }
 
 class Registration extends React.Component<IProps, IState> {
-	state: IState = {
-		isLoading: false
-	};
+	constructor(props) {
+		super(props);
+		this.state = {
+			isLoading: false,
+			emailIsTaken: false,
+			userNameIsTaken: false
+		};
+	}
+
+	componentDidUpdate(prevProps) {
+		const registerError = this.props.registerError;
+		if (prevProps.registerError !== registerError) {
+			if (registerError === 'Email is already taken.') {
+				this.setState({ emailIsTaken: true });
+			}
+			if (registerError === 'Username is already taken.') {
+				this.setState({ userNameIsTaken: true });
+			}
+		}
+	}
 
 	public render() {
 		const { registration, isAuthorized, registerError } = this.props;
-		const { isLoading } = this.state;
+		const { isLoading, userNameIsTaken, emailIsTaken } = this.state;
 
 		return (
 			<div className={'form-wrapper'}>
@@ -105,7 +124,10 @@ class Registration extends React.Component<IProps, IState> {
 							render={({ errors, status, touched }) => (
 								<Form>
 									<div className="form-group">
-										<label className="form-label">
+										<label
+											className="form-label"
+											onChange={() => this.setState({ userNameIsTaken: false })}
+										>
 											<Field
 												name="name"
 												type="text"
@@ -120,8 +142,14 @@ class Registration extends React.Component<IProps, IState> {
 												component="span"
 												className="form-input-error"
 											/>
+											{userNameIsTaken && (
+												<p className="error-message">{registerError}</p>
+											)}
 										</label>
-										<label className="form-label">
+										<label
+											className="form-label"
+											onChange={() => this.setState({ emailIsTaken: false })}
+										>
 											<Field
 												name="email"
 												type="text"
@@ -137,6 +165,9 @@ class Registration extends React.Component<IProps, IState> {
 												component="span"
 												className="form-input-error"
 											/>
+											{emailIsTaken && (
+												<p className="error-message">{registerError}</p>
+											)}
 										</label>
 										<label className="form-label">
 											<Field
