@@ -1,6 +1,5 @@
 import React from 'react';
 import './MovieListItem.scss';
-import { ReactComponent as GenreIcon } from '../../../assets/icons/general/movie/genre-icon.svg';
 import { ReactComponent as DurationIcon } from '../../../assets/icons/general/movie/duration-icon.svg';
 import { NavLink } from 'react-router-dom';
 
@@ -55,10 +54,7 @@ const MovieListItem: React.FC<IMovieListItemProps> = ({
 				</NavLink>
 				<div>
 					{/*movie.genres.slice(0,3).join(', ')*/}
-					<span className="movie-genre">
-						<GenreIcon />
-						{'Action, Drama, Horror'}
-					</span>
+					<span className="movie-genre">{'Action, Drama, Horror'}</span>
 					{duration && (
 						<span className="movie-duration">
 							<DurationIcon />
