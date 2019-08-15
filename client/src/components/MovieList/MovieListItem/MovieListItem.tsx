@@ -2,12 +2,13 @@ import React from 'react';
 import './MovieListItem.scss';
 import { ReactComponent as DurationIcon } from '../../../assets/icons/general/movie/duration-icon.svg';
 import { NavLink } from 'react-router-dom';
+import { release } from 'os';
 
 interface IMovieListItemProps {
 	movie: {
 		id: string;
 		title: string;
-		year?: number;
+		release_date?: string;
 		poster_path: string;
 		runtime: number;
 		genres: Array<string>;
@@ -49,7 +50,10 @@ const MovieListItem: React.FC<IMovieListItemProps> = ({
 					onClick={() => setMovieSeries(movie)}
 				>
 					<div className="movie-title">
-						{movie.title} {movie.year}
+						{movie.title}{' '}
+						{movie.release_date
+							? '(' + movie.release_date.slice(0, 4) + ')'
+							: null}
 					</div>
 				</NavLink>
 				<div>
