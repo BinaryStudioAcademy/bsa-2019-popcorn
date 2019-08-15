@@ -10,6 +10,25 @@
 	grid-gap: 14px;
 	align-content: right;
 	overflow: hidden;
+
+	.voting-wrp {
+		div {
+			width: 120px;
+			height: 100%;
+			transform: none !important;
+		}
+		.story-voting-option {
+			display: none;
+		}
+		.story-voting {
+			width: 100%;
+			height: 94%;
+		}
+		.story-voting-header {
+			font-size: 15px;
+			transform: none !important;
+		}
+	}
 }
 
 .story-list {

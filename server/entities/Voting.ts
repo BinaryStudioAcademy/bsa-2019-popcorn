@@ -14,11 +14,29 @@ export class Voting {
   id: string;
 
   @Column()
-  body: string;
+  header: string;
 
-  @ManyToOne(type => User, { onDelete: "CASCADE" })
+  @ManyToOne(type => User, user => user.id)
   user: User;
 
   @OneToMany(type => VotingOption, votingOption => votingOption.voting)
   votingOptions: VotingOption[];
+
+  @Column()
+  deltaPositionHeadX: number;
+
+  @Column()
+  deltaPositionHeadY: number;
+
+  @Column()
+  deltaPositionOptionBlockX: number;
+
+  @Column()
+  deltaPositionOptionBlockY: number;
+
+  @Column()
+  backColor: string;
+
+  @Column({ nullable: true })
+  backImage: string;
 }
