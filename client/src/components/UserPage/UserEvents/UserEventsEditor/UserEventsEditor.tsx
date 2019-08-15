@@ -2,7 +2,7 @@ import React from 'react';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import './UserEventsEditor.scss';
-import MapWithASearchBox from '../EventMap/EventMapSearch';
+// import MapWithASearchBox from '../EventMap/EventMapSearch';
 import { ReactComponent as PhotoIcon } from '../../../../assets/icons/general/photoIcon.svg';
 import {
 	formatToDataBase,
@@ -273,10 +273,10 @@ class UserEventsEditor extends React.Component<
 
 					<div className="input-wrp">
 						<span className="label">Location: </span>
-						<MapWithASearchBox
+						{/* <MapWithASearchBox
 							onLocationChanged={this.onLocationChanged}
 							defaultMarkerPosition={this.state.location}
-						/>
+						/> */}
 					</div>
 
 					<div className="input-wrp">
