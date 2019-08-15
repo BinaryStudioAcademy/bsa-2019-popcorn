@@ -3,9 +3,7 @@ import { EntityRepository, Repository } from "typeorm";
 import { SurveysQuestionOption as SurveysQuestionOptionEntity } from "../entities/SurveysQuestionOption";
 
 import { SurveysQuestionOption } from "../models/SurveysQuestionOption";
-import { SurveysQuestion } from "../models/SurveysQuestionModel";
 
-import SurveysRepository from "./surveys.repository";
 import SurveysQuestionRepository from "./surveysQuestion.repository";
 
 @EntityRepository(SurveysQuestionOptionEntity)
@@ -37,7 +35,6 @@ class SurveysQuestionOptionRepository extends Repository<
 
   async updateQuestionOptionById(id: string, surveysQuestionOption: SurveysQuestionOption, surveysQuestionId: string, next?) {
     try {
-      // await this.update({id}, { title: surveysQuestionOption.title });
       const question = await getCustomRepository(SurveysQuestionRepository).findOne({ id: surveysQuestionId });
       surveysQuestionOption.surveysQuestion = question;
       await this.save(surveysQuestionOption);

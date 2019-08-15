@@ -59,14 +59,6 @@ class SurveysQuestionRepository extends Repository<SurveysQuestion> {
 
   async updateSurveysQuestionById(id: string, surveysQuestion: SurveysQuestion, surveyId: string, next?) {
     try {
-      // await this.update({id}, { 
-      //   type: surveysQuestion.type,
-      //   title: surveysQuestion.title,
-      //   firstLabel: surveysQuestion.firstLabel,
-      //   lastLabel: surveysQuestion.lastLabel,
-      //   image: surveysQuestion.image,
-      //   required: surveysQuestion.required
-      // });
       const survey = await getCustomRepository(SurveysRepository).findOne({ id: surveyId });
       surveysQuestion.surveys = survey;
       await this.save(surveysQuestion);

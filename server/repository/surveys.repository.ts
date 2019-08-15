@@ -86,10 +86,6 @@ class SurveysRepository extends Repository<Surveys> {
       return await this.update({ id }, {title: surveys.title, 
         description: surveys.description, 
         type: surveys.type});
-/*       Promise.all(surveys.surveysQuestion.map(question => {
-        console.log(question)
-        getCustomRepository(SurveysQuestionRepository).updateSurveysQuestionById(question.id, question, id, next)
-      })); */
      
     } catch(err) {
       return next({status: err.status, message: err.message}, null);
