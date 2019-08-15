@@ -24,18 +24,20 @@ class Reactions extends Component<IReactionsProps> {
 			onReactionClick
 		} = this.props;
 		return (
-			<div
-				onMouseEnter={MouseEnterLikeButton}
-				onMouseLeave={MouseLeaveLikeButton}
-				className="reaction-box"
-			>
-				{this.reactions.map((item, index) => (
-					<ReactionItem
-						key={index}
-						onClick={() => onReactionClick(item)}
-						name={item.name}
-					/>
-				))}
+			<div className="reaction-box-wrapper">
+				<div
+					onMouseEnter={MouseEnterLikeButton}
+					onMouseLeave={MouseLeaveLikeButton}
+					className="reaction-box"
+				>
+					{this.reactions.map((item, index) => (
+						<ReactionItem
+							key={index}
+							onClick={() => onReactionClick(item)}
+							name={item.name}
+						/>
+					))}
+				</div>
 			</div>
 		);
 	}
