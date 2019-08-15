@@ -15,7 +15,7 @@ import IVoting from '../MainPage/StoryList/IVoting';
 
 type StoryVotingCreationState = {
 	header: string;
-	inputs: Array<{ text: string; voted: 0 }>;
+	inputs: Array<{ body: string; voted: 0 }>;
 	previewIsShown: boolean;
 	deltaPositionHeader: { x: number; y: number };
 	deltaPositionOptionBlock: { x: number; y: number };
@@ -44,7 +44,7 @@ class StoryVotingCreation extends React.Component<
 		super(props);
 		this.state = {
 			header: '',
-			inputs: [{ text: '', voted: 0 }, { text: '', voted: 0 }],
+			inputs: [{ body: '', voted: 0 }, { body: '', voted: 0 }],
 			previewIsShown: false,
 			deltaPositionHeader: {
 				x: 0,
@@ -82,7 +82,7 @@ class StoryVotingCreation extends React.Component<
 
 	handleShowPreview = () => {
 		if (
-			this.state.inputs.filter(el => el.text == '').length === 0 &&
+			this.state.inputs.filter(el => el.body == '').length === 0 &&
 			this.state.header !== ''
 		)
 			this.setState({
@@ -135,7 +135,7 @@ class StoryVotingCreation extends React.Component<
 	handleInputTextChange = idx => evt => {
 		const newInputs = this.state.inputs.map((el, sidx) => {
 			if (idx !== sidx) return el;
-			return { ...el, text: evt.target.value };
+			return { ...el, body: evt.target.value };
 		});
 		this.setState({ inputs: newInputs });
 	};
@@ -149,7 +149,7 @@ class StoryVotingCreation extends React.Component<
 	handleAddOption = () => {
 		if (this.state.inputs.length < 5)
 			this.setState({
-				inputs: this.state.inputs.concat([{ text: '', voted: 0 }])
+				inputs: this.state.inputs.concat([{ body: '', voted: 0 }])
 			});
 	};
 
@@ -200,7 +200,7 @@ class StoryVotingCreation extends React.Component<
 						outline: this.state.errorMsg === '' ? 'none' : '1px solid red'
 					}}
 					placeholder={`Option ${idx + 1} `}
-					value={el.text}
+					value={el.body}
 					onChange={this.handleInputTextChange(idx)}
 				/>
 				{idx > 1 ? (
@@ -264,6 +264,7 @@ class StoryVotingCreation extends React.Component<
 							options={this.state.inputs}
 							userId={this.props.userId}
 							createVoting={this.props.createVoting}
+							inEditor={true}
 						/>
 					</div>
 				) : (

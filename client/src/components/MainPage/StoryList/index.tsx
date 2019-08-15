@@ -38,7 +38,7 @@ interface IStoryListItem {
 		header: string;
 		id: string;
 		options: Array<{
-			text: string;
+			body: string;
 			voted: number;
 		}>;
 	};

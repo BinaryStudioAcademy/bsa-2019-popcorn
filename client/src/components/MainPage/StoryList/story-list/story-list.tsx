@@ -27,7 +27,7 @@ interface IStoryListItem {
 		header: string;
 		id: string;
 		options: Array<{
-			text: string;
+			body: string;
 			voted: number;
 		}>;
 	};
@@ -104,6 +104,7 @@ class StoryList extends Component<IStoryListProps, IState> {
 
 		const { currentStory } = this.state;
 		const mockStories = stories.map(story => ({
+			...story,
 			image_url: story.image_url,
 			bckg_color: '#eedcff',
 			users: [],

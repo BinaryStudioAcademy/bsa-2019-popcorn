@@ -58,12 +58,19 @@ export function* createStory(action) {
 }
 
 export function* createVoting(action) {
+	const options = action.payload.voting.options.map(option => {
+		return {
+			text: option.body,
+			voted: option.voted
+		};
+	});
 	try {
 		const data = yield call(webApi, {
 			method: 'POST',
 			endpoint: config.API_URL + '/api/voting',
 			body: {
-				...action.payload.voting
+				...action.payload.voting,
+				options
 			}
 		});
 

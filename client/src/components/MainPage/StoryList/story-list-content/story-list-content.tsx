@@ -22,7 +22,7 @@ interface IStoryListItem {
 		header: string;
 		id: string;
 		options: Array<{
-			text: string;
+			body: string;
 			voted: number;
 		}>;
 	};
@@ -44,7 +44,12 @@ class StoryListContent extends Component<IStoryListItemsProps> {
 			if (item.type === 'voting' && item.voting) {
 				const voting = item.voting;
 				return (
-					<div className={'story-list-item-wrapper voting-wrp'}>
+					<div
+						className={'story-list-item-wrapper voting-wrp'}
+						onClick={() => {
+							this.props.openViewer(i);
+						}}
+					>
 						<StoryVoting
 							header={voting.header}
 							options={voting.options}

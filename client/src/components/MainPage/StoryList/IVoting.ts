@@ -8,7 +8,7 @@ export default interface IVoting {
 	deltaPositionOptionBlockX: number;
 	deltaPositionOptionBlockY: number;
 	options: Array<{
-		text: string;
+		body: string;
 		voted: number;
 	}>;
 }

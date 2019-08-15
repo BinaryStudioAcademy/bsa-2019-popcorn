@@ -8,7 +8,7 @@ import { Redirect } from 'react-router';
 type StoryVotingProps = {
 	header: string;
 	options: Array<{
-		text: string;
+		body: string;
 		voted: number;
 	}>;
 	deltaPositionForHeader: {
@@ -27,7 +27,7 @@ type StoryVotingProps = {
 	backImage?: string;
 	userId: string;
 	createVoting?: (voting: IVoting) => any;
-	inEditor?: boolean;
+	inEditor: boolean;
 };
 
 type StoryVotingState = {
@@ -53,7 +53,7 @@ class StoryVoting extends React.Component<StoryVotingProps, StoryVotingState> {
 		super(props);
 		this.state = {
 			answerSelected: false,
-			inEditor: props.inEditor || true,
+			inEditor: props.inEditor,
 			deltaPositionHead: {
 				x: this.props.deltaPositionForHeader.x,
 				y: this.props.deltaPositionForHeader.y
@@ -185,16 +185,6 @@ class StoryVoting extends React.Component<StoryVotingProps, StoryVotingState> {
 		return (
 			<div>
 				<div className="story-voting" style={backgroundStyle}>
-					<button
-						onClick={() =>
-							this.props.backToEditor &&
-							this.props.backToEditor(
-								this.state.deltaPositionHead,
-								this.state.deltaPositionOptionBlock
-							)
-						}
-						className="back-to-editor-button"
-					/>
 					<Draggable
 						bounds=".story-voting"
 						defaultPosition={{
@@ -202,7 +192,7 @@ class StoryVoting extends React.Component<StoryVotingProps, StoryVotingState> {
 							y: positions.headerPosition.top
 						}}
 						onDrag={this.handleDragHead}
-						disabled={this.state.inEditor ? false : true}
+						disabled={!this.state.inEditor}
 					>
 						<div className="story-voting-header">{this.props.header}</div>
 					</Draggable>
@@ -213,7 +203,7 @@ class StoryVoting extends React.Component<StoryVotingProps, StoryVotingState> {
 							y: positions.buttonsPosition.top
 						}}
 						onDrag={this.handleDragOptionBlock}
-						disabled={this.state.inEditor ? false : true}
+						disabled={!this.state.inEditor}
 					>
 						<div className="story-voting-options-list">
 							{this.createStoryVotingOptions()}
