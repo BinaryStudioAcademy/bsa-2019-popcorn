@@ -53,7 +53,11 @@ const FilmInput: React.FC<IInputProps> = ({
 				placeholder="Type film here"
 				value={title}
 				onFocus={() => setFocused(true)}
-				onBlur={() => clearSearch()}
+				onBlur={() => { 
+					clearSearch(); 
+					if (title.trim() === '' && comment.trim() === '')
+					deleteFilmInput(movie.id);
+				}}
 			/>
 			{!isChosenTitle && alreadySearch && isFocused ? (
 				<div className="modal modal-top">

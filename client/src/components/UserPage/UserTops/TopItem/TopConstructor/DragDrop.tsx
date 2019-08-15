@@ -38,35 +38,47 @@ const DragDrop: React.FC<IDragDropProps> = ({
 						ref={provided.innerRef}
 						style={getListStyle(snapshot.isDraggingOver)}
 					>
-						{moviesList.map((movie, index) => (
-							<Draggable
-								className="film-input-item"
-								key={movie.id}
-								draggableId={movie.id}
-								index={index}
-							>
-								{(provided, snapshot) => (
-									<div
-										ref={provided.innerRef}
-										{...provided.draggableProps}
-										{...provided.dragHandleProps}
-										style={getItemStyle(
-											snapshot.isDragging,
-											provided.draggableProps.style
-										)}
-									>
-										<div className="film-input-wrap">
-											<div className="numeration">{index + 1}</div>
-											<FilmInput
-												movie={movie}
-												saveMovie={saveMovie}
-												deleteFilmInput={deleteFilmInput}
-											/>
+						{moviesList.map((movie, index) => {
+							if (index === moviesList.length - 1) return (
+								<div className="film-input-wrap">
+									<div className="numeration">{index + 1}</div>
+									<FilmInput
+										movie={movie}
+										saveMovie={saveMovie}
+										deleteFilmInput={deleteFilmInput}
+									/>
+								</div>
+							);
+							return (
+								<Draggable
+									className="film-input-item"
+									key={movie.id}
+									draggableId={movie.id}
+									index={index}
+								>
+									{(provided, snapshot) => (
+										<div
+											ref={provided.innerRef}
+											{...provided.draggableProps}
+											{...provided.dragHandleProps}
+											style={getItemStyle(
+												snapshot.isDragging,
+												provided.draggableProps.style
+											)}
+										>
+											<div className="film-input-wrap">
+												<div className="numeration">{index + 1}</div>
+												<FilmInput
+													movie={movie}
+													saveMovie={saveMovie}
+													deleteFilmInput={deleteFilmInput}
+												/>
+											</div>
 										</div>
-									</div>
-								)}
-							</Draggable>
-						))}
+									)}
+								</Draggable>
+							);
+						})}
 						{provided.placeholder}
 					</div>
 				)}
