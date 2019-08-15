@@ -30,7 +30,7 @@ interface IProps {
 		male: boolean;
 		female: boolean;
 		location: string;
-		about: string;
+		aboutMe: string;
 		avatar: string;
 	};
 	uploadUrl?: string;
