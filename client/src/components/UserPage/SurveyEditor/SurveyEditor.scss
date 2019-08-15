@@ -58,6 +58,7 @@ $user-tab-list-space-top: $user-tab-space + $user-tab-active-line;
 		color: $text-base-color;
 		font-weight: 600;
 		font-size: $header-medium;
+		width: fit-content;
 	}
 
 	.preview {
