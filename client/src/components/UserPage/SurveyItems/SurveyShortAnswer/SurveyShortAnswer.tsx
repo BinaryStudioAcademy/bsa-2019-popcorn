@@ -48,7 +48,7 @@ const SurveyShortAnswer = (props: IProps) => {
 				placeholder="My answer"
 				disabled={disable || false}
 				value={answer && answer.value}
-				onChange={(event) => {
+				onChange={event => {
 					if (!props.setAnswer) return;
 					props.setAnswer({
 						questionId: id,

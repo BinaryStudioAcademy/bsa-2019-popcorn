@@ -121,7 +121,7 @@ export function* fetchUser(action) {
 export function* unathorizeUser(action) {
 	try {
 		localStorage.removeItem('token');
-	} catch(e) {
+	} catch (e) {
 		console.log('Something went wrong with logout');
 	}
 }

@@ -31,8 +31,8 @@ export const authorize = (values: IValues): any => {
 export const unauthorize = (): any => {
 	return {
 		type: LOGOUT
-	}
-}
+	};
+};
 
 export const fetchByToken = (token: string): any => {
 	return {

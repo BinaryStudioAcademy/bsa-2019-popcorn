@@ -144,9 +144,7 @@ const Header = ({
 					<Link aria-current="page" className="hover" to="/settings">
 						{SETTINGS}
 					</Link>
-					<a onClick={() => unauthorize()}>
-						{LOGOUT}
-					</a>
+					<a onClick={() => unauthorize()}>{LOGOUT}</a>
 				</div>
 			</div>
 		</div>

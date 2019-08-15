@@ -53,11 +53,11 @@ export default function(state = initialState, action) {
 				...state,
 				profileInfo: action.payload.user
 			};
-		case LOGOUT: 
+		case LOGOUT:
 			return {
 				...state,
 				profileInfo: null
-			}
+			};
 		case SET_USER_POSTS:
 			return {
 				...state,

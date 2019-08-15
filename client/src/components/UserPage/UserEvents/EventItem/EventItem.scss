@@ -80,10 +80,51 @@
 					}
 				}
 			}
-			.event-date {
-				font-size: 16px;
-				width: 400px;
-				text-align: right;
+			.event-date-buttons {
+				display: flex;
+				flex-direction: column;
+				justify-content: space-between;
+
+				.event-date-range {
+					font-size: 16px;
+					min-width: 200px;
+					text-align: right;
+				}
+
+				.event-buttons {
+					display: flex;
+					justify-content: flex-end;
+
+					button {
+						display: block;
+						outline: none;
+						border: 1px solid rgba(0, 0, 0, 0.11);
+						background-color: white;
+						cursor: pointer;
+						border-radius: 3px;
+						box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.2);
+						transition: box-shadow 0.3s ease, border-color 0.4s ease;
+
+						&:hover {
+							box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.12);
+							border-color: rgba(0, 0, 0, 0.05);
+						}
+					}
+
+					.edit-button {
+						padding: 0 10px;
+						margin-right: 10px;
+						color: #00000099;
+						font-size: 15px;
+					}
+
+					.delete-button {
+						font-size: 0;
+						.delete-button-svg {
+							opacity: 0.6;
+						}
+					}
+				}
 			}
 		}
 	}

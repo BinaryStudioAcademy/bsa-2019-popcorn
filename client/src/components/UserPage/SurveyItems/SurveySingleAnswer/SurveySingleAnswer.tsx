@@ -57,8 +57,8 @@ const SurveySingleAnswer = (props: IProps) => {
 								onChange={() => {
 									if (!props.setAnswer) return;
 									props.setAnswer({
-                                    	questionId: id,
-                                    	optionId: option.id
+										questionId: id,
+										optionId: option.id
 									});
 								}}
 							/>

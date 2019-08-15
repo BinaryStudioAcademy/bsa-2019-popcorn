@@ -45,7 +45,7 @@ const FilmInput: React.FC<IInputProps> = ({
 			<input
 				onChange={e => {
 					saveMovie({ ...movie, title, comment: e.target.value });
-					searchFilms(e.target.value)
+					searchFilms(e.target.value);
 				}}
 				maxLength={140}
 				type="text"
@@ -62,7 +62,7 @@ const FilmInput: React.FC<IInputProps> = ({
 							<div
 								className="hover"
 								key={index}
-								onClick={() => 
+								onClick={() =>
 									changeTitle({
 										movieId: movie.id,
 										title: searchedMovie._source.title

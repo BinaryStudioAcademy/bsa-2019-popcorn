@@ -1,7 +1,6 @@
 // formater for event data
-
-export interface IEventFormatClient {
-	id: string;
+export interface IEventFormatFromEditor {
+	id?: string;
 	title: string;
 	description: string;
 	location: {
@@ -9,28 +8,39 @@ export interface IEventFormatClient {
 		lng: number;
 	};
 	dateRange: {
-		startDate: Date;
-		endDate: Date;
+		startDate: undefined | Date;
+		endDate: undefined | Date;
 	};
+	movieId: null | string;
 	userId: string;
 	image: string;
 	isPrivate: boolean;
-	movieId: string;
-	eventVisitors: IVisitor[];
 }
 
-export interface IEventFormatDataBase {
+export interface IEventFormatClient extends IEventFormatFromEditor {
 	id: string;
+	eventVisitors: IVisitor[];
+	location: {
+		lat: number;
+		lng: number;
+	};
+}
+
+export interface IventFormatToSave {
+	id?: string;
 	title: string;
 	description: string;
 	image: string;
 	location_lat: number;
 	location_lng: number;
-	start_date: Date;
-	end_date: Date;
+	start_date: undefined | Date;
+	end_date: undefined | Date;
 	isPrivate: boolean;
 	userId: string;
-	movieId: string;
+	movieId: null | string;
+}
+export interface IEventFormatDataBase extends IventFormatToSave {
+	id: string;
 	eventVisitors: IVisitor[];
 }
 
@@ -79,7 +89,9 @@ export const formatToClient = (
 	return formatEvent;
 };
 
-export const formatToDataBase = (event: IEventFormatClient): any => {
+export const formatToDataBase = (
+	event: IEventFormatFromEditor
+): IventFormatToSave => {
 	const {
 		title,
 		description,
@@ -90,7 +102,7 @@ export const formatToDataBase = (event: IEventFormatClient): any => {
 		isPrivate,
 		movieId
 	} = event;
-	const formatEvent = {
+	let formatEvent = {
 		title,
 		description,
 		image,
@@ -102,5 +114,10 @@ export const formatToDataBase = (event: IEventFormatClient): any => {
 		userId,
 		movieId
 	};
+
+	if (event.id) {
+		formatEvent['id'] = event.id;
+	}
+
 	return formatEvent;
 };
