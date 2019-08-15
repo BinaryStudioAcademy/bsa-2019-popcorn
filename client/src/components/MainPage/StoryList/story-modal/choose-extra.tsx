@@ -44,18 +44,24 @@ class ChooseExtra extends React.Component {
 					</span>
 				</div>
 				<div className={'content-extra'}>
-					{options &&
-						options.map(option => {
-							return (
-								<div className={'extra-item'} onClick={() => setOption(option)}>
-									<span>Add {option}</span>
-									<FontAwesomeIcon
-										icon={faChevronRight}
-										style={{ color: '#ffab07' }}
-									/>
-								</div>
-							);
-						})}
+					<div className="extra-header">Choose Extra</div>
+					<div>
+						{options &&
+							options.map(option => {
+								return (
+									<div
+										className={'extra-item'}
+										onClick={() => setOption(option)}
+									>
+										<span>Add {option}</span>
+										<FontAwesomeIcon
+											icon={faChevronRight}
+											style={{ color: '#ffab07' }}
+										/>
+									</div>
+								);
+							})}
+					</div>
 				</div>
 			</div>
 		);

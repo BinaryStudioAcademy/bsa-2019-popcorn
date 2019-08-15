@@ -237,7 +237,7 @@ class StoryVotingCreation extends React.Component<
 		};
 
 		return (
-			<div>
+			<div style={{ height: '100%' }}>
 				<div className={'nav-block-wrp'}>
 					<span onClick={back}>
 						<FontAwesomeIcon
@@ -330,7 +330,7 @@ class StoryVotingCreation extends React.Component<
 						</div>
 						<div className="errors-field">{this.state.errorMsg}</div>
 
-						<div className={'btn-wrp'}>
+						<div>
 							<button
 								type="button"
 								className={'btn'}

@@ -183,7 +183,7 @@ class StoryVoting extends React.Component<StoryVotingProps, StoryVotingState> {
 		const setRedirect = () => this.setState({ redirect: true });
 
 		return (
-			<div>
+			<div className="story-voting-wrp">
 				<div className="story-voting" style={backgroundStyle}>
 					<Draggable
 						bounds=".story-voting"
@@ -211,7 +211,7 @@ class StoryVoting extends React.Component<StoryVotingProps, StoryVotingState> {
 					</Draggable>
 				</div>
 				{this.state.inEditor && (
-					<div className={'btn-wrp'}>
+					<div>
 						<button
 							className={'btn'}
 							onClick={() => {

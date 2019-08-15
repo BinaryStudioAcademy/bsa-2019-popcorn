@@ -7,6 +7,8 @@ body {
 	display: flex;
 	flex-direction: column;
 	align-items: center;
+	justify-content: space-around;
+	height: calc(100% - 50px);
 	button {
 		margin: 5px;
 		background-color: $button-background;
@@ -34,7 +36,6 @@ body {
 	}
 
 	.add-option-button {
-		margin-top: 1em;
 		border: none;
 		background: none;
 		outline: none;
