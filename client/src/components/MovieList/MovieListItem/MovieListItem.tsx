@@ -10,7 +10,7 @@ interface IMovieListItemProps {
 		title: string;
 		year?: number;
 		image: string;
-		duration: string;
+		runtime: number;
 		genres: Array<string>;
 		cast: Array<string>;
 	};
@@ -18,10 +18,22 @@ interface IMovieListItemProps {
 	setMovieSeries: (movie: any) => any;
 }
 
+const getFilmDuration = (runtime: number) => {
+	if (!runtime || runtime <= 0) {
+		return null;
+	}
+	const minutes = runtime % 60;
+	const hours = Math.floor(runtime / 60);
+	const mm = minutes < 10 ? `0${minutes}` : minutes;
+	const hh = hours < 10 ? `0${hours}` : hours;
+	return `${hh}:${mm}`;
+};
+
 const MovieListItem: React.FC<IMovieListItemProps> = ({
 	movie,
 	setMovieSeries
 }) => {
+	const duration = getFilmDuration(movie.runtime);
 	return (
 		<div className="movie-item">
 			<div className="movie-poster-wrp">
@@ -43,10 +55,12 @@ const MovieListItem: React.FC<IMovieListItemProps> = ({
 						<GenreIcon />
 						{'Action, Drama, Horror'}
 					</span>
-					<span className="movie-duration">
-						<DurationIcon />
-						{movie.duration}
-					</span>
+					{duration && (
+						<span className="movie-duration">
+							<DurationIcon />
+							{duration}
+						</span>
+					)}
 				</div>
 				{/*movie.cast.join(', ')*/}
 				<div className="movie-cast">
