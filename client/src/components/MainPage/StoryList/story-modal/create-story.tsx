@@ -24,14 +24,14 @@ class getAddStoryPopupContent extends React.Component<IProps> {
 		extra: true
 	};
 
-	valid({ image_url, caption }: INewStory) {
-		return !(image_url && caption);
+	valid({ image_url, caption, type }: INewStory) {
+		return (image_url && caption) || type === 'voting';
 	}
 
 	render() {
 		const newStory = this.props.newStory;
 
-		const disabled = this.valid(newStory);
+		const disabled = !this.valid(newStory);
 
 		if (!this.state.open) return <Redirect to={'/'} />;
 		if (!this.state.extra) return <Redirect to={'/create/extra'} />;

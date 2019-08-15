@@ -1,4 +1,4 @@
-import React, { Component, ReactInstance } from 'react';
+import React, { Component } from 'react';
 import StoryListContent from '../story-list-content/story-list-content';
 import AddStoryItem from '../add-story-item/add-story-item';
 import './story-list.scss';
@@ -54,6 +54,7 @@ interface IState {
 }
 
 class StoryList extends Component<IStoryListProps, IState> {
+	updateModal: (value: boolean) => void;
 	constructor(props) {
 		super(props);
 
@@ -68,7 +69,11 @@ class StoryList extends Component<IStoryListProps, IState> {
 			class: '',
 			modal: false
 		};
+		this.updateModal = this.handleUpdateModal.bind(this);
 	}
+	handleUpdateModal = (value: boolean) => {
+		this.setState({ isPopupShown: value });
+	};
 
 	onOpenPopupClick = () => {
 		this.setState({ modal: true });
@@ -169,8 +174,11 @@ class StoryList extends Component<IStoryListProps, IState> {
 						className={`story-list-scroll ${this.state.class}`}
 						onMouseDown={this.onMouseDown}
 						onMouseLeave={this.onMouseLeave}
-						onMouseUp={this.onMouseLeave}
 						onMouseMove={this.onMouseMove}
+						onClickCapture={event => {
+							if (this.state.class === 'active') event.stopPropagation();
+							this.setState({ isDown: false, class: '', isPopupShown: false });
+						}}
 					>
 						<StoryListContent
 							storyListItems={stories}

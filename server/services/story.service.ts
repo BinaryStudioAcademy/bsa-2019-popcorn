@@ -30,7 +30,8 @@ export const createStory = async ({
   caption,
   image_url,
   type,
-  activityId
+  activityId,
+  activity
 }): Promise<any> => {
   let story: any = new Story();
   story.id = uuid();
@@ -46,6 +47,8 @@ export const createStory = async ({
 
   if (type === "voting") {
     story.voting = await getVotingById(activityId);
+  } else if (type) {
+    story.activity = activity.name;
   }
 
   return story;

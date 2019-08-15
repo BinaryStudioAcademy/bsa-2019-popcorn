@@ -150,7 +150,11 @@ class PostStoryEditor extends React.Component<
 					{this.props.type === 'story' && (
 						<label className="container-checkbox">
 							Create post also
-							<input type="checkbox" />
+							<input
+								type="checkbox"
+								onClick={this.onToggleCheckbox}
+								checked={this.state.checkboxValue}
+							/>
 							<span className="checkmark-checkbox"></span>
 						</label>
 					)}

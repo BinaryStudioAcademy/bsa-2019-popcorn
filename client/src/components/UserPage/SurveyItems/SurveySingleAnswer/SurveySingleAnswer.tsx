@@ -54,6 +54,13 @@ const SurveySingleAnswer = (props: IProps) => {
 								value={option.value}
 								disabled={disable || false}
 								checked={answer && answer.option_id === option.id}
+								onChange={() => {
+									if (!props.setAnswer) return;
+									props.setAnswer({
+										questionId: id,
+										optionId: option.id
+									});
+								}}
 							/>
 							<span className="checkmark"></span>
 							{option.value}
