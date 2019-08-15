@@ -4,6 +4,7 @@ import * as Yup from 'yup';
 import './Registration.scss';
 import { NavLink, Redirect } from 'react-router-dom';
 import logo from '../../../assets/icons/general/popcorn-logo.svg';
+import { tsConstructSignatureDeclaration } from '@babel/types';
 
 interface Values {
 	name: string;
@@ -68,7 +69,6 @@ class Registration extends React.Component<IProps, IState> {
 		const { registration, isAuthorized, registerError } = this.props;
 		const { isLoading } = this.state;
 		const takenError = this.state.takenError || registerError;
-		console.log(takenError);
 		return (
 			<div className={'form-wrapper'}>
 				{isAuthorized ? (
@@ -84,16 +84,16 @@ class Registration extends React.Component<IProps, IState> {
 							onSubmit={async (values, actions) => {
 								const { isLoading } = this.state;
 								if (isLoading) {
-									// block button
 									return;
 								}
+								Object.keys(values).forEach(key => {
+									initialFormikValues[key] = values[key];
+								});
+								initialFormikValues.name = values.name;
+								initialFormikValues.email = values.email;
+								initialFormikValues.password = values.password;
+								registration({ ...values });
 								this.setState({ ...this.state, isLoading: true });
-								registration({ ...values }); // { name, email, password } --- will update props isAuthorized
-								// .then((s: any) => { return 0 })
-								// .catch((error: any) => {
-								//   actions.setFieldError('email', error.message);
-								//   this.setState({ isLoading: false });
-								// });
 							}}
 							validationSchema={Yup.object().shape({
 								name: Yup.string()
@@ -111,20 +111,25 @@ class Registration extends React.Component<IProps, IState> {
 									.max(64, 'Password must be no more than 64 characters')
 									.required('Password is required')
 							})}
-							render={({ errors, status, touched }) => (
+							render={props => (
 								<Form>
 									<div className="form-group">
 										<label
 											className="form-label"
-											onChange={() => this.setState({ takenError: ' ' })}
+											onChange={() =>
+												this.setState({ ...this.state, takenError: '' })
+											}
 										>
 											<Field
 												name="name"
 												type="text"
+												value={props.values.name}
 												placeholder="First and Last name"
 												className={
 													'form-input' +
-													(errors.name && touched.name ? ' is-invalid' : '')
+													(props.errors.name && props.touched.name
+														? ' is-invalid'
+														: '')
 												}
 											/>
 											<ErrorMessage
@@ -138,7 +143,9 @@ class Registration extends React.Component<IProps, IState> {
 										</label>
 										<label
 											className="form-label"
-											onChange={() => this.setState({ takenError: ' ' })}
+											onChange={() =>
+												this.setState({ ...this.state, takenError: '' })
+											}
 										>
 											<Field
 												name="email"
@@ -146,7 +153,9 @@ class Registration extends React.Component<IProps, IState> {
 												placeholder="Email address"
 												className={
 													'form-input' +
-													(errors.email && touched.email ? ' is-invalid' : '')
+													(props.errors.email && props.touched.email
+														? ' is-invalid'
+														: '')
 												}
 												validate={validateEmail}
 											/>
@@ -166,7 +175,7 @@ class Registration extends React.Component<IProps, IState> {
 												placeholder="Password"
 												className={
 													'form-input' +
-													(errors.password && touched.password
+													(props.errors.password && props.touched.password
 														? ' is-invalid'
 														: '')
 												}
