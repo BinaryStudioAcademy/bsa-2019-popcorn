@@ -79,12 +79,12 @@ export const updateVotingById = async (
 
 export const createVotingOptionByVotingId = async (
   id: string,
-  { text },
+  { body },
   next
 ): Promise<VotingOption> => {
   const votingOption = new VotingOption();
   votingOption.id = uuid();
-  votingOption.body = text;
+  votingOption.body = body;
   votingOption.voting = await getCustomRepository(VotingRepository).findOne({
     id
   });
