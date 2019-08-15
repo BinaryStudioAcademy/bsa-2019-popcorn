@@ -25,6 +25,7 @@ type StoryVotingProps = {
 	) => void;
 	backColor: { r: string; g: string; b: string; a: string } | string;
 	backImage?: string;
+	image_url?: string;
 	userId: string;
 	createVoting?: (voting: IVoting) => any;
 	inEditor: boolean;
@@ -177,6 +178,8 @@ class StoryVoting extends React.Component<StoryVotingProps, StoryVotingState> {
 		const backgroundStyle = {
 			background: this.props.backImage
 				? `url(${this.props.backImage}) no-repeat`
+				: this.props.image_url
+				? this.props.image_url
 				: rgba
 		};
 
