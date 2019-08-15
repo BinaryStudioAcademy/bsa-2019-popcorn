@@ -10,11 +10,13 @@ interface IProps {
 export default class CreateVoting extends React.Component<IProps> {
 	render() {
 		return (
-			<div className={'modal modal-story'}>
-				<StoryVotingCreation
-					createVoting={this.props.createVoting}
-					userId={this.props.userId}
-				/>
+			<div className={'modal-wrp'}>
+				<div className={'modal modal-story'}>
+					<StoryVotingCreation
+						createVoting={this.props.createVoting}
+						userId={this.props.userId}
+					/>
+				</div>
 			</div>
 		);
 	}

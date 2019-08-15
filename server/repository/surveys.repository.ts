@@ -1,6 +1,6 @@
-import { EntityRepository, Repository } from "typeorm";
-import { Surveys } from "../entities/Surveys";
-import { Surveys as SurveysModel } from "../models/SurveysModel";
+import {EntityRepository, Repository} from "typeorm";
+import {Surveys} from "../entities/Surveys";
+import {Surveys as SurveysModel} from "../models/SurveysModel";
 import UserRepository from "./user.repository";
 import { getCustomRepository } from "typeorm";
 import { SurveysQuestion } from "../models/SurveysQuestionModel";
@@ -40,9 +40,19 @@ class SurveysRepository extends Repository<Surveys> {
 
   async getSurveys(next?) {
     try {
-      return await this.find();
-    } catch (err) {
-      return next({ status: err.status, message: err.message }, null);
+      const a = await this.find({
+        relations: [
+          "surveysQuestion",
+          "surveysQuestion.surveysQuestionOption",
+          "surveysQuestion.surveysQuestionAnswer",
+          "surveysQuestion.surveysQuestionAnswer.user",
+          "surveysQuestion.surveysQuestionAnswer.surveysQuestionOption",
+          "user"
+        ]
+    });
+      return a;
+    } catch(err) {
+      return next({status: err.status, message: err.message}, null);
     }
   }
 
@@ -68,15 +78,17 @@ class SurveysRepository extends Repository<Surveys> {
     }
   }
 
-  async updateSurveysById(id: string, surveys: Surveys, next?) {
+  async updateSurveysById(id: string, surveys: SurveysModel, next?) {
     try {
-      await this.update({ id }, surveys);
       const updatedSurveys = await this.getSurveysById(id, next);
-      return updatedSurveys
-        ? updatedSurveys
-        : next({ status: 404, message: "Voiting is not found" }, null);
-    } catch (err) {
-      return next({ status: err.status, message: err.message }, null);
+      if (!updatedSurveys) next({status: 404, message: 'Voiting is not found'}, null);
+
+      return await this.update({ id }, {title: surveys.title, 
+        description: surveys.description, 
+        type: surveys.type});
+     
+    } catch(err) {
+      return next({status: err.status, message: err.message}, null);
     }
   }
 

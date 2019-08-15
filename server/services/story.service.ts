@@ -7,9 +7,9 @@ import { getVotingById } from "./voting.service";
 const uuid = require("uuid/v4");
 
 export const getStories = async (): Promise<Array<Story>> => {
-  const stories = await getCustomRepository(StoryRepository).find({
+  const stories = (await getCustomRepository(StoryRepository).find({
     relations: ["user"]
-  });
+  })).reverse();
   return Promise.all(
     stories.map(async item => {
       let story: any = { ...item };

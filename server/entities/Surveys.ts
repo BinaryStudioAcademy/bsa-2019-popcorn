@@ -21,8 +21,11 @@ export class Surveys {
   @Column()
   description: string;
 
-  @ManyToOne(type => User, { onDelete: "CASCADE" })
-  user: User;
+    @Column({ default: 'Open' })
+    type: string;
+
+    @ManyToOne(type => User, { onDelete: 'CASCADE' })
+    user: User;
 
   @OneToMany(
     type => SurveysQuestion,

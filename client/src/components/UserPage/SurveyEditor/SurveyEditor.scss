@@ -58,6 +58,7 @@ $user-tab-list-space-top: $user-tab-space + $user-tab-active-line;
 		color: $text-base-color;
 		font-weight: 600;
 		font-size: $header-medium;
+		width: fit-content;
 	}
 
 	.preview {
@@ -128,6 +129,13 @@ $user-tab-list-space-top: $user-tab-space + $user-tab-active-line;
 
 				button {
 					width: 45%;
+				}
+
+				a {
+					width: 45%;
+					button {
+						width: 100%;
+					}
 				}
 
 				.add-question-bttn {
@@ -221,6 +229,10 @@ $user-tab-list-space-top: $user-tab-space + $user-tab-active-line;
 					padding-top: 10px;
 					font-size: 30px;
 					color: $text-secondary-color;
+
+					.edit-form {
+						display: none;
+					}
 
 					p {
 						width: fit-content;

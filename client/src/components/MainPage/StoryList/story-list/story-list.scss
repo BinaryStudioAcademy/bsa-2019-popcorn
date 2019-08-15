@@ -14,19 +14,28 @@
 	.voting-wrp {
 		div {
 			width: 120px;
-			height: 100%;
+			height: 86%;
 			transform: none !important;
 		}
 		.story-voting-option {
 			display: none;
 		}
 		.story-voting {
+			position: absolute;
+			top: 0;
 			width: 100%;
-			height: 94%;
 		}
 		.story-voting-header {
 			font-size: 15px;
 			transform: none !important;
+		}
+		.story-name {
+			font-family: Inter;
+			font-weight: 500;
+			font-size: 12px;
+			line-height: 15px;
+			letter-spacing: 0.4px;
+			min-height: 30px;
 		}
 	}
 }

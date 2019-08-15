@@ -13,7 +13,6 @@ interface IPostStoryEditorProps {
 	id?: string;
 	type: 'story' | 'post';
 	saveImage: (url: string) => void;
-	addExtra?: () => any;
 	body: string;
 	imageUrl: string;
 	changeBody: (text: string) => any;
@@ -122,14 +121,6 @@ class PostStoryEditor extends React.Component<
 						e.target.value = val;
 					}}
 				/>
-				<div>
-					<button
-						className={'btn'}
-						onClick={() => (this.props.addExtra ? this.props.addExtra() : null)}
-					>
-						Add extra
-					</button>
-				</div>
 				{this.props.children && (
 					<div className={'activity'}>
 						{this.props.children}
@@ -146,14 +137,19 @@ class PostStoryEditor extends React.Component<
 						</span>
 					</div>
 				)}
-				<div className="footer">
-					{this.props.type === 'story' && (
-						<p className="checker" onClick={this.onToggleCheckbox}>
-							Create post also{' '}
-							<input type="checkbox" checked={this.state.checkboxValue} />
-						</p>
-					)}
-				</div>
+				{/*<div className="footer">*/}
+				{/*	{this.props.type === 'story' && (*/}
+				{/*		<label className="container-checkbox">*/}
+				{/*			Create post also*/}
+				{/*			<input*/}
+				{/*				type="checkbox"*/}
+				{/*				onClick={this.onToggleCheckbox}*/}
+				{/*				checked={this.state.checkboxValue}*/}
+				{/*			/>*/}
+				{/*			<span className="checkmark-checkbox"/>*/}
+				{/*		</label>*/}
+				{/*	)}*/}
+				{/*</div>*/}
 			</div>
 		);
 	}

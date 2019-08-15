@@ -26,6 +26,12 @@ export class User {
   @Column({ nullable: true })
   aboutMe: string;
 
+  @Column({ nullable: true })
+  male: boolean;
+
+  @Column({ nullable: true })
+  female: boolean;
+
   @OneToMany(type => Voting, voting => voting.user)
   votings: Voting[];
 

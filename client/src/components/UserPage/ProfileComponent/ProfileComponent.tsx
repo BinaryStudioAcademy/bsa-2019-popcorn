@@ -18,7 +18,7 @@ type ProfileProps = {
 		male: boolean;
 		female: boolean;
 		location: string;
-		about: string;
+		aboutMe: string;
 		avatar: string;
 	};
 	uploadAvatar?: (FormData, string) => any;
@@ -87,7 +87,7 @@ class ProfileComponent extends Component<ProfileProps> {
 		const {
 			name,
 			location,
-			about,
+			aboutMe,
 			male,
 			female,
 			avatar,
@@ -181,7 +181,7 @@ class ProfileComponent extends Component<ProfileProps> {
 						</div>
 						<div className="profileRow">
 							<p className="field">About: </p>
-							<div className="content">{about || '-'}</div>
+							<div className="content">{aboutMe || '-'}</div>
 						</div>
 						<div className="profileRow">
 							<p className="field">Favorite movies: </p>

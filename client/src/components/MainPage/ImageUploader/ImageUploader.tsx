@@ -47,14 +47,25 @@ class ImageUploader extends React.Component<
 			this.props
 				.imageHandler(data)
 				.then(({ imageUrl }) => {
-					let url = imageUrl.split(`\\`);
-					url.shift();
-					url = url.join('/');
+					if (imageUrl.indexOf('\\') !== -1) {
+						let url = imageUrl.split(`\\`);
+						url.shift();
+						url = url.join('/');
 
-					url = config.API_URL + '/' + url;
+						url = config.API_URL + '/' + url;
 
-					this.setState({ imageUrl: url, isUploading: false, errorMsg: '' });
-					this.props.imageStateHandler(url);
+						this.setState({ imageUrl: url, isUploading: false, errorMsg: '' });
+						this.props.imageStateHandler(url);
+					} else {
+						let url = imageUrl.split(`/`);
+						url.shift();
+						url = url.join('/');
+
+						url = config.API_URL + '/' + url;
+
+						this.setState({ imageUrl: url, isUploading: false, errorMsg: '' });
+						this.props.imageStateHandler(url);
+					}
 				})
 				.catch(error => {
 					this.setState({ isUploading: false, errorMsg: error.message });

@@ -41,35 +41,43 @@ class getAddStoryPopupContent extends React.Component<IProps> {
 		const addExtra = () => this.setState({ extra: false });
 
 		return (
-			<div className={'modal modal-story'}>
-				<div className={'content-wrp'}>
-					<PostStoryEditor
-						type={'story'}
-						addExtra={addExtra}
-						body={newStory.caption || ''}
-						imageUrl={newStory.image_url || ''}
-						changeBody={this.props.setCaption}
-						saveImage={this.props.saveImage}
-						changeActivity={this.props.changeActivity}
-					>
-						{newStory.activity && newStory.activity.name}
-					</PostStoryEditor>
-				</div>
+			<div className={'modal-wrp'}>
+				<div className={'modal modal-story'}>
+					<div className={'content-wrp'}>
+						<PostStoryEditor
+							type={'story'}
+							body={newStory.caption || ''}
+							imageUrl={newStory.image_url || ''}
+							changeBody={this.props.setCaption}
+							saveImage={this.props.saveImage}
+							changeActivity={this.props.changeActivity}
+						>
+							{newStory.activity && newStory.activity.name}
+						</PostStoryEditor>
+					</div>
 
-				<div className={'btn-wrp'}>
-					<button onClick={close} className={'btn'}>
-						Cancel
-					</button>
-					<button
-						className={'btn'}
-						disabled={disabled}
-						onClick={() => {
-							this.props.createStory(newStory, this.props.userId);
-							this.props.history.push('/');
-						}}
-					>
-						Save
-					</button>
+					<div className={'btn-wrp'}>
+						<div className={'extra'}>
+							<button className={'btn'} onClick={addExtra}>
+								Add extra
+							</button>
+						</div>
+						<div className={'cancel-save'}>
+							<button onClick={close} className={'btn'}>
+								Cancel
+							</button>
+							<button
+								className={'btn'}
+								disabled={disabled}
+								onClick={() => {
+									this.props.createStory(newStory, this.props.userId);
+									this.props.history.push('/');
+								}}
+							>
+								Save
+							</button>
+						</div>
+					</div>
 				</div>
 			</div>
 		);

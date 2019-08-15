@@ -30,7 +30,7 @@ interface IProps {
 		male: boolean;
 		female: boolean;
 		location: string;
-		about: string;
+		aboutMe: string;
 		avatar: string;
 	};
 	uploadUrl?: string;
@@ -81,8 +81,13 @@ const UserPageTabs: React.SFC<IProps> = ({
 					path={`${mainPath}/surveys`}
 					render={props => (
 						<UserSurveysNav
+							id={profileInfo.id}
+							userInfo={{
+								id: profileInfo.id,
+								name: profileInfo.name,
+								image_link: profileInfo.avatar
+					 		}}
 							mainPath={`${mainPath}/surveys`}
-							surveys={surveys}
 						/>
 					)}
 				/>
