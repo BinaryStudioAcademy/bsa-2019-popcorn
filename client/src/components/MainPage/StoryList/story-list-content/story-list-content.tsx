@@ -25,6 +25,7 @@ interface IStoryListItem {
 			body: string;
 			voted: number;
 		}>;
+		image_url?: string;
 	};
 }
 
@@ -43,6 +44,7 @@ class StoryListContent extends Component<IStoryListItemsProps> {
 		const storyList = storyListItems.map((item, i) => {
 			if (item.type === 'voting' && item.voting) {
 				const voting = item.voting;
+				console.log(voting);
 				return (
 					<div
 						className={'story-list-item-wrapper voting-wrp'}
@@ -64,6 +66,7 @@ class StoryListContent extends Component<IStoryListItemsProps> {
 							backColor={voting.backColor}
 							userId={item.user.id}
 							inEditor={false}
+							backImage={voting.backImage || ''}
 						/>
 					</div>
 				);
