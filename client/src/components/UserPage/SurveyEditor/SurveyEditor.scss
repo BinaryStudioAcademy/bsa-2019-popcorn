@@ -131,6 +131,13 @@ $user-tab-list-space-top: $user-tab-space + $user-tab-active-line;
 					width: 45%;
 				}
 
+				a {
+					width: 45%;
+					button {
+						width: 100%;
+					}
+				}
+
 				.add-question-bttn {
 					background-color: $background-gray;
 					color: $text-base-color;
