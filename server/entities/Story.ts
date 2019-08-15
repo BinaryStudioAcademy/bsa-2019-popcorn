@@ -12,7 +12,7 @@ export class Story {
   @PrimaryGeneratedColumn("uuid")
   id: string;
 
-  @Column()
+  @Column({ nullable: true })
   image_url: string;
 
   @Column({ default: "" })
