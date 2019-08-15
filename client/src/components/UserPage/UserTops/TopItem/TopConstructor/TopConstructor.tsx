@@ -60,12 +60,6 @@ const TopConstructor: React.FC<ITopConstructorProps> = ({
 				saveMovie={saveMovie}
 			/>
 			<div className="top-buttons-container">
-				<div
-					className="top-buttons hover"
-					onClick={() => setMovies([...movies, emptyInput])}
-				>
-					Add film
-				</div>
 				<div className="top-buttons save-top-button hover" onClick={save}>
 					Save
 				</div>
