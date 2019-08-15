@@ -9,6 +9,8 @@ import {
 	IEventFormatClient,
 	IEventFormatFromEditor
 } from '../UserEvents.service';
+import ImageUploader from '../../../MainPage/ImageUploader/ImageUploader';
+import { uploadFile } from '../../../../services/file.service';
 
 interface IUserEventsEditorProps {
 	id?: string;
@@ -227,6 +229,10 @@ class UserEventsEditor extends React.Component<
 									className="event-image"
 								/>
 							)}
+							<ImageUploader
+								imageHandler={uploadFile}
+								imageStateHandler={image => this.setState({ image })}
+							/>
 							<PhotoIcon />
 						</div>
 					</label>

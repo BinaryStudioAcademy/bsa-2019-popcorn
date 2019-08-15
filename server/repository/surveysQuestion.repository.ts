@@ -5,6 +5,7 @@ import { SurveysQuestion } from "../models/SurveysQuestionModel";
 import SurveysRepository from "./surveys.repository";
 import SurveysQuestionOptionRepository from "./surveysQuestionOption.repository";
 import { Surveys } from "../models/SurveysModel";
+import SurveysQuestionAnswerRepository from "./surveysQuestionAnswer.repository";
 
 @EntityRepository(SurveysQuestionEntity)
 class SurveysQuestionRepository extends Repository<SurveysQuestion> {
@@ -56,14 +57,16 @@ class SurveysQuestionRepository extends Repository<SurveysQuestion> {
     }
   }
 
-  async updateSurveysQuestionById(
-    id: string,
-    surveysQuestion: SurveysQuestion,
-    next?
-  ) {
+  async updateSurveysQuestionById(id: string, surveysQuestion: SurveysQuestion, surveyId: string, next?) {
     try {
-      await this.update({ id }, surveysQuestion);
+      const survey = await getCustomRepository(SurveysRepository).findOne({ id: surveyId });
+      surveysQuestion.surveys = survey;
+      await this.save(surveysQuestion);
       const updatedSurveysQuestion = await this.findOne(id);
+      Promise.all(surveysQuestion.surveysQuestionOption.map(option => 
+        getCustomRepository(SurveysQuestionOptionRepository).updateQuestionOptionById(option.id, option, id, next)
+      ));
+
       return updatedSurveysQuestion
         ? updatedSurveysQuestion
         : next({ status: 404, message: "Surveys Option is not found" }, null);
