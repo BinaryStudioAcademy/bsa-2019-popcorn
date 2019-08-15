@@ -155,7 +155,6 @@ class StoryList extends Component<IStoryListProps, IState> {
 			fetchStories();
 			return <Spinner />;
 		}
-
 		if (this.state.modal) {
 			this.setState({ modal: false });
 			return <Redirect to={'/create'} />;
