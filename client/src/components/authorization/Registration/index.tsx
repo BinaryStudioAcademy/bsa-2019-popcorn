@@ -4,7 +4,6 @@ import * as Yup from 'yup';
 import './Registration.scss';
 import { NavLink, Redirect } from 'react-router-dom';
 import logo from '../../../assets/icons/general/popcorn-logo.svg';
-import { tsConstructSignatureDeclaration } from '@babel/types';
 import Spinner from '../../shared/Spinner';
 
 interface Values {
