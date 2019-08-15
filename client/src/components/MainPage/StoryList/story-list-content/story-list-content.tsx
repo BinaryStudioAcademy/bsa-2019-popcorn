@@ -66,8 +66,9 @@ class StoryListContent extends Component<IStoryListItemsProps> {
 							backColor={voting.backColor}
 							userId={item.user.id}
 							inEditor={false}
-							backImage={voting.backImage || ''}
+							image_url={voting.backImage || ''}
 						/>
+						<div className="story-name">{item.caption}</div>
 					</div>
 				);
 			}

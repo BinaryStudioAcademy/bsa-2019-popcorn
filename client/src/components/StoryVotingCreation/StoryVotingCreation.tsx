@@ -188,6 +188,7 @@ class StoryVotingCreation extends React.Component<
 			.catch(error => {
 				this.setState({ isUploading: false, errorMsg: error.message });
 			});
+		console.log(this.state.imageUrl);
 		target.value = '';
 	}
 
@@ -258,7 +259,7 @@ class StoryVotingCreation extends React.Component<
 					<div className={'prev-wrp'}>
 						<StoryVoting
 							backColor={this.state.backgroundColor}
-							backImage={this.state.imageUrl}
+							image_url={this.state.imageUrl}
 							deltaPositionForOptionBlock={this.state.deltaPositionOptionBlock}
 							deltaPositionForHeader={this.state.deltaPositionHeader}
 							backToEditor={this.handleShowEditor}
