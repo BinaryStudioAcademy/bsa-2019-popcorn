@@ -184,6 +184,14 @@
 		}
 	}
 
+	.user-info {
+		position: static;
+		.modal {
+			left: calc(100% - 150px);		
+			top: 72px;
+		}
+	}
+
 	.inactive {
 		color: $text-secondary-color;
 	}
