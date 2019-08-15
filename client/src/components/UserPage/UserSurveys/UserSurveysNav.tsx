@@ -24,19 +24,16 @@ interface IProps {
 	updateSurvey: (string, any) => any;
 	deleteSurvey: (string) => any;
 	recreateSurvey: (string, any) => any;
+	userInfo: {
+		id: string,
+		name: string,
+		image_link: string
+	}
 }
 
 interface IState {
 	surveys: any
 }
-
-const { id, userInfo } = {
-	id: '7f13634d-c353-433c-98fe-ead99e1252c7',
-	userInfo: {
-		name: 'admin',
-		image_link: ''
-	}
-};
 
 class UserSurveysNav extends React.Component<IProps, IState> {
 	constructor(props: IProps) {
@@ -82,7 +79,7 @@ class UserSurveysNav extends React.Component<IProps, IState> {
 	};
 
 	render() {
-		const { mainPath } = this.props;
+		const { mainPath, userInfo } = this.props;
 		if (!this.state.surveys) return <Spinner />
 		return (
 		<Switch>
@@ -106,7 +103,7 @@ class UserSurveysNav extends React.Component<IProps, IState> {
 						mainPath={`${mainPath}/create`}
 						surveyInfo={{
 							...newSurvey(),
-							user_id: id,
+							user_id: userInfo.id,
 							user: { ...userInfo }
 						}}
 						updateInfo={this.updateInfo}
