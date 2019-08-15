@@ -4,7 +4,7 @@ import SurveyEditorNav from '../SurveyEditor/SurveyEditorNav';
 import UserSurveys from './UserSurveys';
 import newSurvey from './newSurveyConfig';
 import { connect } from 'react-redux';
-import { fetchSurveys, addSurvey, updateSurvey } from './UserSurveys.redux/actions';
+import { fetchSurveys, addSurvey, updateSurvey, deleteSurvey } from './UserSurveys.redux/actions';
 import { bindActionCreators } from 'redux';
 import { transformDataToProps, transformDataToServerFormatCreate, transformDataToServerFormatUpdate } from './UserSurveys.service';
 import { isEqual } from 'lodash';
@@ -15,6 +15,7 @@ interface IProps {
 	fetchSurveys: () => any;
 	addSurvey: (any) => any;
 	updateSurvey: (string, any) => any;
+	deleteSurvey: (string) => any;
 }
 
 interface IState {
@@ -64,9 +65,10 @@ class UserSurveysNav extends React.Component<IProps, IState> {
 	};
 
 	deleteSurvey = deletedSurvey => {
-		const index = this.state.surveys.indexOf(deletedSurvey);
+		/* const index = this.state.surveys.indexOf(deletedSurvey);
 		const newState = [...this.state.surveys];
-		newState.splice(index, 1);
+		newState.splice(index, 1); */
+		this.props.deleteSurvey(deletedSurvey.id);
 	};
 
 	render() {
@@ -127,7 +129,8 @@ const mapStateToProps = (rootState, props) => ({
 const actions = {
 	fetchSurveys,
 	addSurvey,
-	updateSurvey
+	updateSurvey,
+	deleteSurvey
 };
 
 const mapDispatchToProps = dispatch => bindActionCreators(actions, dispatch);

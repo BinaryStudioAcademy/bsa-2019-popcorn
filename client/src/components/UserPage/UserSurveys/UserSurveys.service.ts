@@ -104,6 +104,7 @@ export const transformDataToServerFormatUpdate = data => {
   return {
     title: data.title,
     description: data.description,
+    type: data.type,
     surveysQuestion: data.questions.map(question => ({
       id: question.id,
       type: question.type,
@@ -116,6 +117,7 @@ export const transformDataToServerFormatUpdate = data => {
         id: option.id,
         title: option.value
       }))
-    }))
+    })),
+    user: data.user
   }
 }

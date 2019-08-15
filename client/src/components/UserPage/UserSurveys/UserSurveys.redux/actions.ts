@@ -1,4 +1,4 @@
-import { FETCH_SURVEYS, ADD_SURVEY, UPDATE_SURVEY } from './actionTypes';
+import { FETCH_SURVEYS, ADD_SURVEY, UPDATE_SURVEY, DELETE_SURVEY } from './actionTypes';
 
 export const fetchSurveys = () => {
 	return {
@@ -18,5 +18,12 @@ export const updateSurvey = (id, data) => ({
   payload: {
       data,
       id
+  }
+});
+
+export const deleteSurvey = (id) => ({
+  type: DELETE_SURVEY,
+  payload: {
+    id
   }
 });

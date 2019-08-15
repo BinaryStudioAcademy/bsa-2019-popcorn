@@ -360,13 +360,15 @@ class SurveyEditor extends Component<IProps, IState> {
 						>
 							Add question
 						</button>
-						<button
-							type="button"
-							onClick={this.onSave}
-							className="save-question-bttn"
-						>
-							Save
-						</button>
+						<NavLink to='/user-page/surveys'>
+							<button
+								type="button"
+								onClick={this.onSave}
+								className="save-question-bttn"
+							>
+								Save
+							</button>
+						</NavLink>
 					</div>
 					<Snackbar
 						anchorOrigin={{ horizontal: 'right', vertical: 'top' }}

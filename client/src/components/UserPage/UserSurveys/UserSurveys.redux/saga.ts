@@ -1,5 +1,5 @@
 import { all, takeEvery, call, put } from '@redux-saga/core/effects';
-import { FETCH_SURVEYS, SET_SURVEYS, ADD_SURVEY, UPDATE_SURVEY } from './actionTypes';
+import { FETCH_SURVEYS, SET_SURVEYS, ADD_SURVEY, UPDATE_SURVEY, DELETE_SURVEY } from './actionTypes';
 import webApi from '../../../../services/webApi.service';
 import config from '../../../../config';
 
@@ -44,7 +44,6 @@ function* watchAdd() {
 }
 
 export function* updateSurvey(action) {
-  console.log(action.payload);
   try {
 		const data = yield call(webApi, {
 			method: 'PUT',
@@ -53,7 +52,7 @@ export function* updateSurvey(action) {
 				...action.payload.data
 			}
 		});
-    if (data.ok) yield put({ type: FETCH_SURVEYS });
+    if (data) yield put({ type: FETCH_SURVEYS });
 	} catch (e) {
 		console.log('survey saga update survey: ', e.message);
 	}
@@ -63,6 +62,22 @@ function* watchUpdate() {
 	yield takeEvery(UPDATE_SURVEY, updateSurvey);
 }
 
+function* deleteSurvey(action) {
+	try {
+		const data = yield call(webApi, {
+			method: 'DELETE',
+			endpoint: config.API_URL + '/api/surveys/' + action.payload.id
+		});
+		if (data) yield put({ type: FETCH_SURVEYS });
+	} catch(e) {
+		console.log('survey saga delete survey: ', e.message);
+	}
+}
+
+function* watchDelete() {
+	yield takeEvery(DELETE_SURVEY, deleteSurvey);
+}
+
 export default function* survey() {
-	yield all([watchFetch(), watchAdd(), watchUpdate()]);
+	yield all([watchFetch(), watchAdd(), watchUpdate(), watchDelete()]);
 }
