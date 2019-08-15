@@ -78,3 +78,24 @@ const countParticipants = (questions) => {
   const uniqueUserIds = new Set(answererIds);
   return uniqueUserIds.size;
 }
+
+export const transformDataToServerFormat = data => {
+  return {
+    user_id: data.user_id,
+    surveys: {
+      title: data.title,
+      description: data.description
+    },
+    surveysQuestion: data.questions.map(question => ({
+      type: question.type,
+      title: question.title,
+      firstLabel: question.firstLabel,
+      lastLabel: question.lastLabel,
+      image: question.image_link,
+      required: question.required,
+      surveysQuestionOption: question.options.map(option => ({
+        title: option.value
+      }))
+    }))
+  }
+}

@@ -27,17 +27,14 @@ function* watchFetch() {
 
 export function* createSurvey(action) {
   try {
-		yield call(webApi, {
+		const data = yield call(webApi, {
 			method: 'POST',
       endpoint: config.API_URL + '/api/surveys',
       body: {
-				// id: action.payload.password,
-        // surveys: action.payload.token,
-        // surveysQuestion: action.payload
+				...action.payload.body
 			}
 		});
-
-		// yield put({ type: FETCH_SURVEYS });
+    if (data.ok) yield put({ type: FETCH_SURVEYS });
 	} catch (e) {
 		console.log('survey saga create survey: ', e.message);
 	}

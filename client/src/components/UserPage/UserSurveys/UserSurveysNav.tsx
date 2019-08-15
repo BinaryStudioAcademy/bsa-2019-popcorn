@@ -6,7 +6,7 @@ import newSurvey from './newSurveyConfig';
 import { connect } from 'react-redux';
 import { fetchSurveys, addSurvey } from './UserSurveys.redux/actions';
 import { bindActionCreators } from 'redux';
-import { transformDataToProps } from './UserSurveys.service';
+import { transformDataToProps, transformDataToServerFormat } from './UserSurveys.service';
 import { isEqual } from 'lodash';
 
 interface IProps {
@@ -21,10 +21,10 @@ interface IState {
 }
 
 const { id, userInfo } = {
-	id: '1',
+	id: '7f13634d-c353-433c-98fe-ead99e1252c7',
 	userInfo: {
-		name: 'Parsons',
-		image_link: 'https://i.pravatar.cc/300?img=5'
+		name: 'admin',
+		image_link: ''
 	}
 };
 
@@ -51,7 +51,8 @@ class UserSurveysNav extends React.Component<IProps, IState> {
 		const survey = this.state.surveys.some(survey => survey.id === newSurvey.id);
 
 		if (!survey) {
-			this.props.addSurvey({})
+			const body = transformDataToServerFormat(newSurvey);
+			this.props.addSurvey(body)
 		}
 		// if (!survey) setState([newSurvey, ...state]);
 		else {
