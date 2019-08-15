@@ -9,7 +9,7 @@ interface IMovieListItemProps {
 		id: string;
 		title: string;
 		year?: number;
-		image: string;
+		poster_path: string;
 		runtime: number;
 		genres: Array<string>;
 		cast: Array<string>;
@@ -37,7 +37,11 @@ const MovieListItem: React.FC<IMovieListItemProps> = ({
 	return (
 		<div className="movie-item">
 			<div className="movie-poster-wrp">
-				<img className="movie-poster" alt="movie-poster" src={movie.image} />
+				<img
+					className="movie-poster"
+					alt="movie-poster"
+					src={`https://image.tmdb.org/t/p/w500/${movie.poster_path}`}
+				/>
 			</div>
 			<div className="movie-info">
 				<NavLink
