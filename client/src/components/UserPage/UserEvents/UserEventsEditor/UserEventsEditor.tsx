@@ -2,7 +2,7 @@ import React from 'react';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import './UserEventsEditor.scss';
-import MapWithASearchBox from '../EventMap/EventMapSearch';
+// import MapWithASearchBox from '../EventMap/EventMapSearch';
 import { ReactComponent as PhotoIcon } from '../../../../assets/icons/general/photoIcon.svg';
 import {
 	formatToDataBase,
@@ -203,7 +203,7 @@ class UserEventsEditor extends React.Component<
 
 		return (
 			<div className="event-editor">
-				<button className="back-btn" onClick={this.onCancel}>
+				<button className="back-btn hover" onClick={this.onCancel}>
 					Back
 				</button>
 
@@ -221,7 +221,7 @@ class UserEventsEditor extends React.Component<
 
 					<label className="input-wrp">
 						<span className="label">Image: </span>
-						<div className="img-uploader">
+						<div className="img-uploader hover">
 							{this.state.image && (
 								<img
 									alt="event image"
@@ -279,10 +279,10 @@ class UserEventsEditor extends React.Component<
 
 					<div className="input-wrp">
 						<span className="label">Location: </span>
-						<MapWithASearchBox
+						{/* <MapWithASearchBox
 							onLocationChanged={this.onLocationChanged}
 							defaultMarkerPosition={this.state.location}
-						/>
+						/> */}
 					</div>
 
 					<div className="input-wrp">
@@ -314,10 +314,18 @@ class UserEventsEditor extends React.Component<
 					</div>
 				</div>
 				<div className="footer">
-					<button className="cancel-btn" onClick={this.onCancel} type="button">
+					<button
+						className="cancel-btn hover"
+						onClick={this.onCancel}
+						type="button"
+					>
 						Cancel
 					</button>
-					<button className="save-btn" onClick={this.onSave} type="button">
+					<button
+						className="save-btn hover"
+						onClick={this.onSave}
+						type="button"
+					>
 						Save
 					</button>
 				</div>

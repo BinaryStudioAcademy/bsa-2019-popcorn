@@ -1,6 +1,12 @@
+.reaction-box-wrapper {
+	position: relative;
+}
 .reaction-box {
+	position: absolute;
 	width: 364px;
 	height: 55px;
+	top: -40px;
+	left: -40px;
 	padding-left: 5px;
 	background: #e9e7e4;
 	border-radius: 28px;

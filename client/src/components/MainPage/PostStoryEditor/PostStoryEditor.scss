@@ -5,14 +5,15 @@
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-	border: 1px solid $border-color;
+	justify-content: space-around;
 	margin: 0 auto;
 	padding: 50px;
 	box-sizing: border-box;
 	flex: 1;
 
 	img {
-		max-width: 100%;
+		width: 270px;
+		height: 270px;
 	}
 
 	textarea {
@@ -22,6 +23,7 @@
 		color: $text-base-color;
 		box-sizing: border-box;
 		font-size: $form-font-size;
+		font-family: $base-font-family;
 		letter-spacing: $input-letter-spacing;
 		box-shadow: 0px 0px 10px $input-shadow-color;
 		border: 1px solid $border-color;
@@ -51,8 +53,6 @@
 		align-self: stretch;
 		height: 43px;
 
-		position: absolute;
-		bottom: 36px;
 		.checker {
 			cursor: pointer;
 			float: left;

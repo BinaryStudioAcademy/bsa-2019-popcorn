@@ -10,6 +10,7 @@ import {
 	faArrowCircleLeft,
 	faTimesCircle
 } from '@fortawesome/free-solid-svg-icons';
+import { faCamera } from '@fortawesome/free-solid-svg-icons/faCamera';
 import { Redirect } from 'react-router';
 import IVoting from '../MainPage/StoryList/IVoting';
 
@@ -203,15 +204,16 @@ class StoryVotingCreation extends React.Component<
 					value={el.body}
 					onChange={this.handleInputTextChange(idx)}
 				/>
-				{idx > 1 ? (
+				{
 					<button
 						type="button"
 						onClick={this.handleRemoveInput(idx)}
+						style={idx > 1 ? { opacity: 1 } : { opacity: 0 }}
 						className="delete-input-button"
 					>
 						<CrossIcon />
 					</button>
-				) : null}
+				}
 			</div>
 		));
 	};
@@ -237,7 +239,7 @@ class StoryVotingCreation extends React.Component<
 		};
 
 		return (
-			<div>
+			<div style={{ height: '100%' }}>
 				<div className={'nav-block-wrp'}>
 					<span onClick={back}>
 						<FontAwesomeIcon
@@ -256,7 +258,7 @@ class StoryVotingCreation extends React.Component<
 					<div className={'prev-wrp'}>
 						<StoryVoting
 							backColor={this.state.backgroundColor}
-							backImage={this.state.imageUrl}
+							image_url={this.state.imageUrl}
 							deltaPositionForOptionBlock={this.state.deltaPositionOptionBlock}
 							deltaPositionForHeader={this.state.deltaPositionHeader}
 							backToEditor={this.handleShowEditor}
@@ -282,14 +284,15 @@ class StoryVotingCreation extends React.Component<
 						</div>
 						<div className="story-voting-option-input-container">
 							{this.createInputs()}
+							<button
+								className="add-option-button"
+								type="button"
+								onClick={this.handleAddOption}
+							>
+								Add Option
+							</button>
 						</div>
-						<button
-							className="add-option-button"
-							type="button"
-							onClick={this.handleAddOption}
-						>
-							Add Option
-						</button>
+
 						<div className="color-picker">
 							<label className="color-picker-label">Select back color:</label>
 							<div
@@ -316,7 +319,7 @@ class StoryVotingCreation extends React.Component<
 						</div>
 						<div className="image-uploading">
 							<label htmlFor="image" className="upload-image-button">
-								Upload image? :
+								<FontAwesomeIcon icon={faCamera} className="fontAwesomeIcon" />
 							</label>
 							<input
 								name="image"
@@ -330,7 +333,7 @@ class StoryVotingCreation extends React.Component<
 						</div>
 						<div className="errors-field">{this.state.errorMsg}</div>
 
-						<div className={'btn-wrp'}>
+						<div>
 							<button
 								type="button"
 								className={'btn'}

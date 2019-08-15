@@ -25,9 +25,10 @@
 	position: absolute;
 	top: 0;
 	left: 0;
-	height: 16px;
-	width: 16px;
-	background-color: #eee;
+	height: 20px;
+	width: 20px;
+	background-color: white;
+	border: 1px solid #eee;
 }
 
 /* On mouse-over, add a grey background color */
@@ -54,7 +55,7 @@
 
 /* Style the checkmark-checkbox/indicator */
 .container-checkbox .checkmark-checkbox:after {
-	left: 5px;
+	left: 6px;
 	top: 1px;
 	width: 3px;
 	height: 10px;

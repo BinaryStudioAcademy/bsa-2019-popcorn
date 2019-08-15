@@ -258,7 +258,8 @@ class SurveyQuestion extends Component<IProps, IState> {
 								this.props.changeQuestion(newQuestion);
 							}}
 						/>
-						 <label htmlFor="image">
+
+						<label htmlFor="image">
 							<p>
 								<FontAwesomeIcon icon={faImage} title="Add image" />
 							</p>

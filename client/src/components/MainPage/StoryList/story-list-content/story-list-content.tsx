@@ -1,6 +1,7 @@
 import StoryListItem from '../story-list-item/story-list-item';
 import React, { Component } from 'react';
 import StoryVoting from '../../../StoryVoting/StoryVoting';
+import config from '../../../../config';
 
 interface IStoryListItem {
 	caption: string;
@@ -25,6 +26,7 @@ interface IStoryListItem {
 			body: string;
 			voted: number;
 		}>;
+		image_url?: string;
 	};
 }
 
@@ -50,6 +52,11 @@ class StoryListContent extends Component<IStoryListItemsProps> {
 							this.props.openViewer(i);
 						}}
 					>
+						<img
+							alt="avatar"
+							className="avatar avatar-story avatar-voting"
+							src={config.DEFAULT_AVATAR}
+						/>
 						<StoryVoting
 							header={voting.header}
 							options={voting.options}
@@ -64,7 +71,9 @@ class StoryListContent extends Component<IStoryListItemsProps> {
 							backColor={voting.backColor}
 							userId={item.user.id}
 							inEditor={false}
+							image_url={voting.backImage || ''}
 						/>
+						<div className="story-name">{item.caption}</div>
 					</div>
 				);
 			}

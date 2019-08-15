@@ -173,7 +173,7 @@ class Post extends PureComponent<IPostProps, IPostState> {
 				</div>
 				<div className="reaction-list">
 					{this.state.reactionList.map((item, index) => (
-						<PostReaction key={index} quantity={355} name={item.name} />
+						<PostReaction key={index} quantity={1} name={item.name} />
 					))}
 				</div>
 				{tags && (

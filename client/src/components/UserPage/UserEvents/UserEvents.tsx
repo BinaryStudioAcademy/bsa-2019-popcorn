@@ -86,8 +86,11 @@ class UserEvents extends React.Component<IProps, IState> {
 				: subscribeEvents.push(formatToClient(event));
 		});
 		return (
-			<div className="user-events hover">
-				<div className="create-event-button" onClick={() => this.editEvent()}>
+			<div className="user-events">
+				<div
+					className="create-event-button hover"
+					onClick={() => this.editEvent()}
+				>
 					{openEventEditor ? BACK_TO_EVENTS_TEXT : CREATE_EVENT_TEXT}{' '}
 				</div>
 				{openEventEditor ? (
