@@ -107,7 +107,6 @@ class SurveyIndividual extends PureComponent<IProps, IState> {
 			surveyInfo: { questions }
 		} = this.props;
 		const { currUserIndex, usersIdList } = this.state;
-		console.log(this.state.usersIdList);
 		return (
 			<div className="survey">
 				<div className="survey-background" />
