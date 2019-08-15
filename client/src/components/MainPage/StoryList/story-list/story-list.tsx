@@ -1,7 +1,6 @@
 import React, { Component, ReactInstance } from 'react';
 import StoryListContent from '../story-list-content/story-list-content';
 import AddStoryItem from '../add-story-item/add-story-item';
-import AddStoryPopup from '../add-story-popup/add-story-popup';
 import './story-list.scss';
 import './add-story-popup.scss';
 import Spinner from '../../../shared/Spinner';
