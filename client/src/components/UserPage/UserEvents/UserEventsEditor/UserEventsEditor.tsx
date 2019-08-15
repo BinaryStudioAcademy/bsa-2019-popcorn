@@ -201,7 +201,7 @@ class UserEventsEditor extends React.Component<
 
 		return (
 			<div className="event-editor">
-				<button className="back-btn" onClick={this.onCancel}>
+				<button className="back-btn hover" onClick={this.onCancel}>
 					Back
 				</button>
 
@@ -219,7 +219,7 @@ class UserEventsEditor extends React.Component<
 
 					<label className="input-wrp">
 						<span className="label">Image: </span>
-						<div className="img-uploader">
+						<div className="img-uploader hover">
 							{this.state.image && (
 								<img
 									alt="event image"
@@ -308,10 +308,18 @@ class UserEventsEditor extends React.Component<
 					</div>
 				</div>
 				<div className="footer">
-					<button className="cancel-btn" onClick={this.onCancel} type="button">
+					<button
+						className="cancel-btn hover"
+						onClick={this.onCancel}
+						type="button"
+					>
 						Cancel
 					</button>
-					<button className="save-btn" onClick={this.onSave} type="button">
+					<button
+						className="save-btn hover"
+						onClick={this.onSave}
+						type="button"
+					>
 						Save
 					</button>
 				</div>
