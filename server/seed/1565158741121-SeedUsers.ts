@@ -1,7 +1,6 @@
 import { getCustomRepository, MigrationInterface, QueryRunner } from "typeorm";
 import UserRepository from "../repository/user.repository";
 import { User } from "../models/UserModel";
-const uuid = require("uuid/v4");
 
 export class SeedUsers1565158741121 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
@@ -12,7 +11,7 @@ export class SeedUsers1565158741121 implements MigrationInterface {
         password: "admin1",
         location: "Lebanon",
         aboutMe: "Work in Canopoly",
-        avatar: ""
+        avatar: "https://imgur.com/fvLQf0V.png"
       },
       {
         name: "Shawn Leonard",
@@ -20,7 +19,7 @@ export class SeedUsers1565158741121 implements MigrationInterface {
         password: "5d5440e1271362283b0bae72",
         location: "Spain",
         aboutMe: "Work in Phormula",
-        avatar: ""
+        avatar: "https://imgur.com/G1km9tV.png"
       },
       {
         name: "Peterson Hull",
@@ -28,7 +27,7 @@ export class SeedUsers1565158741121 implements MigrationInterface {
         password: "5d5440e187d0336c0de0c33b",
         location: "Guyana",
         aboutMe: "Work in Zosis",
-        avatar: ""
+        avatar: "https://imgur.com/MViYeqK.png"
       },
       {
         name: "Brittany Herring",
@@ -36,7 +35,7 @@ export class SeedUsers1565158741121 implements MigrationInterface {
         password: "5d5440e1f5a75940f1a4a804",
         location: "Qatar",
         aboutMe: "Work in Comtract",
-        avatar: ""
+        avatar: "https://imgur.com/JfqF1lO.png"
       },
       {
         name: "Ramos Fernandez",
@@ -44,7 +43,7 @@ export class SeedUsers1565158741121 implements MigrationInterface {
         password: "5d5440e13d63211446c43b29",
         location: "Israel",
         aboutMe: "Work in Remotion",
-        avatar: ""
+        avatar: "https://imgur.com/un80lX2.png"
       },
       {
         name: "Marshall Solis",
@@ -52,7 +51,7 @@ export class SeedUsers1565158741121 implements MigrationInterface {
         password: "5d5440e181a79e6ca28ca608",
         location: "Solomon Islands",
         aboutMe: "Work in Ecratic",
-        avatar: ""
+        avatar: "https://imgur.com/eTPLhuF.png"
       },
       {
         name: "Christi Scott",
@@ -60,7 +59,7 @@ export class SeedUsers1565158741121 implements MigrationInterface {
         password: "5d5440e1fed85750693e7404",
         location: "Jordan",
         aboutMe: "Work in Rodeology",
-        avatar: ""
+        avatar: "https://imgur.com/FzZAFGj.png"
       },
       {
         name: "Hubbard Sykes",
@@ -68,7 +67,7 @@ export class SeedUsers1565158741121 implements MigrationInterface {
         password: "5d5440e1e48fee3713eb74ea",
         location: "Western Sahara",
         aboutMe: "Work in Acrodance",
-        avatar: ""
+        avatar: "https://imgur.com/vuUqpeH.png"
       },
       {
         name: "Ola Hogan",
@@ -76,23 +75,7 @@ export class SeedUsers1565158741121 implements MigrationInterface {
         password: "5d5440e1e5e832aa4ec157d1",
         location: "Oman",
         aboutMe: "Work in Filodyne",
-        avatar: ""
-      },
-      {
-        name: "Scott Spence",
-        email: "scottspence@filodyne.com",
-        password: "5d5440e1f92bb734a62220aa",
-        location: "Honduras",
-        aboutMe: "Work in Zaj",
-        avatar: ""
-      },
-      {
-        name: "Hess Finch",
-        email: "hessfinch@zaj.com",
-        password: "5d5440e1e9aaf53ccb58523f",
-        location: "Mexico",
-        aboutMe: "Work in Zilch",
-        avatar: ""
+        avatar: "https://imgur.com/DrU0qgd.png"
       }
     ];
     usersSeed.map(async userData => {
