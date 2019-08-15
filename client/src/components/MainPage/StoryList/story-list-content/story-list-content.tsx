@@ -1,6 +1,7 @@
 import StoryListItem from '../story-list-item/story-list-item';
 import React, { Component } from 'react';
 import StoryVoting from '../../../StoryVoting/StoryVoting';
+import config from '../../../../config';
 
 interface IStoryListItem {
 	caption: string;
@@ -51,6 +52,11 @@ class StoryListContent extends Component<IStoryListItemsProps> {
 							this.props.openViewer(i);
 						}}
 					>
+						<img
+							alt="avatar"
+							className="avatar avatar-story avatar-voting"
+							src={config.DEFAULT_AVATAR}
+						/>
 						<StoryVoting
 							header={voting.header}
 							options={voting.options}
