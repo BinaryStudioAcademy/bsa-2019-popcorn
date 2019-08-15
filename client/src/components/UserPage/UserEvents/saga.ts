@@ -4,7 +4,8 @@ import {
 	GET_USER_EVENTS_SUCCESS,
 	START_UPLOAD_USER_EVENTS,
 	FINISH_UPLOAD_USER_EVENTS,
-	DELETE_OWN_USER_EVENT
+	DELETE_OWN_USER_EVENT,
+	UPDATE_USER_EVENT
 } from './actionsTypes';
 import config from '../../../config';
 import webApi from '../../../services/webApi.service';
@@ -37,15 +38,37 @@ export function* saveEvent(action) {
 		});
 
 		yield put({
-			type: FINISH_UPLOAD_USER_EVENTS,
+			type: GET_USER_EVENTS,
 			payload: {
-				newEvent: data
+				newEvent: data,
+				id: action.payload.event.userId
 			}
 		});
 	} catch (e) {
-		console.log('Error fetch events by userId:', e.message);
+		console.log('Error create event', e.message);
 	}
 }
+
+export function* updateEvent(action) {
+	try {
+		const data = yield call(webApi, {
+			endpoint: config.API_URL + '/api/event',
+			method: 'PUT',
+			body: action.payload.event
+		});
+
+		yield put({
+			type: GET_USER_EVENTS,
+			payload: {
+				// newEvent: data,
+				id: action.payload.event.userId
+			}
+		});
+	} catch (e) {
+		console.log('Error update event:', e.message);
+	}
+}
+
 export function* deleteEvent(action) {
 	const { id, currentUserId } = action.payload;
 	try {
@@ -56,7 +79,7 @@ export function* deleteEvent(action) {
 
 		yield put({
 			type: GET_USER_EVENTS,
-			payload: currentUserId
+			payload: { id: currentUserId }
 		});
 	} catch (e) {
 		console.log('Error delete event by ID:', e.message);
@@ -70,11 +93,19 @@ function* watchFetchEvents() {
 function* watchSaveEvent() {
 	yield takeEvery(START_UPLOAD_USER_EVENTS, saveEvent);
 }
+function* watchupdateEvent() {
+	yield takeEvery(UPDATE_USER_EVENT, updateEvent);
+}
 
 function* watchDeleteEvent() {
 	yield takeEvery(DELETE_OWN_USER_EVENT, deleteEvent);
 }
 
 export default function* events() {
-	yield all([watchFetchEvents(), , watchSaveEvent(), watchDeleteEvent()]);
+	yield all([
+		watchFetchEvents(),
+		watchSaveEvent(),
+		watchupdateEvent(),
+		watchDeleteEvent()
+	]);
 }

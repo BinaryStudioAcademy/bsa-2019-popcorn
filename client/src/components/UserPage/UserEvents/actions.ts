@@ -1,7 +1,8 @@
 import {
 	GET_USER_EVENTS,
 	DELETE_OWN_USER_EVENT,
-	START_UPLOAD_USER_EVENTS
+	START_UPLOAD_USER_EVENTS,
+	UPDATE_USER_EVENT
 } from './actionsTypes';
 
 export const getUserEvents = (id: string) => {
@@ -22,8 +23,16 @@ export const saveEvent = (event: any) => {
 	};
 };
 
+export const updateEvent = (event: any) => {
+	return {
+		type: UPDATE_USER_EVENT,
+		payload: {
+			event
+		}
+	};
+};
+
 export const deleteEvent = (id: string, currentUserId: string) => {
-	console.log('Удаляем шляпу');
 	return {
 		type: DELETE_OWN_USER_EVENT,
 		payload: {

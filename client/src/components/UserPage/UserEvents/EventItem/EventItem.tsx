@@ -13,9 +13,10 @@ import {
 interface IProps {
 	event: IEventFormatClient;
 	deleteEvent: null | ((id: string, currentUserId: string) => any);
+	editEvent: null | ((event: IEventFormatClient) => any);
 }
 
-const EventItem: React.FC<IProps> = ({ event, deleteEvent }) => {
+const EventItem: React.FC<IProps> = ({ event, deleteEvent, editEvent }) => {
 	const {
 		id,
 		userId: currentUserId,
@@ -47,12 +48,10 @@ const EventItem: React.FC<IProps> = ({ event, deleteEvent }) => {
 							/>
 							<span>Kyiv. Ukraine (mock)</span>
 						</div>
-						{movieId && (
-							<div className="event-movie">
-								<FontAwesomeIcon className="icon-movie" icon={faVideo} />
-								The Mountain (2019) (mock)
-							</div>
-						)}
+						<div className="event-movie">
+							<FontAwesomeIcon className="icon-movie" icon={faVideo} />
+							The Mountain (2019) (mock)
+						</div>
 						<div className="event-users">
 							<FontAwesomeIcon className="icon-users" icon={faUsers} />
 							{eventVisitors.length} users subscribe
@@ -68,9 +67,14 @@ const EventItem: React.FC<IProps> = ({ event, deleteEvent }) => {
 								{String(dateRange.endDate)}
 							</Moment>
 						</div>
-						{deleteEvent !== null ? (
+						{deleteEvent && editEvent !== null ? (
 							<div className="event-buttons">
-								<button className="edit-button">Edit</button>
+								<button
+									className="edit-button"
+									onClick={() => editEvent(event)}
+								>
+									Edit
+								</button>
 								<button
 									className="delete-button"
 									onClick={() => deleteEvent(id, currentUserId)}
