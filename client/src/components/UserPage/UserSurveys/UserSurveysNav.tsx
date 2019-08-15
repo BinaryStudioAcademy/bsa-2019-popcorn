@@ -4,9 +4,9 @@ import SurveyEditorNav from '../SurveyEditor/SurveyEditorNav';
 import UserSurveys from './UserSurveys';
 import newSurvey from './newSurveyConfig';
 import { connect } from 'react-redux';
-import { fetchSurveys, addSurvey } from './UserSurveys.redux/actions';
+import { fetchSurveys, addSurvey, updateSurvey } from './UserSurveys.redux/actions';
 import { bindActionCreators } from 'redux';
-import { transformDataToProps, transformDataToServerFormat } from './UserSurveys.service';
+import { transformDataToProps, transformDataToServerFormatCreate, transformDataToServerFormatUpdate } from './UserSurveys.service';
 import { isEqual } from 'lodash';
 
 interface IProps {
@@ -14,10 +14,11 @@ interface IProps {
 	surveys: any;
 	fetchSurveys: () => any;
 	addSurvey: (any) => any;
+	updateSurvey: (string, any) => any;
 }
 
 interface IState {
-	surveys: Array<any>
+	surveys: any
 }
 
 const { id, userInfo } = {
@@ -32,14 +33,22 @@ class UserSurveysNav extends React.Component<IProps, IState> {
 	constructor(props: IProps) {
 		super(props);
 		this.state = {
-			surveys: []
+			surveys: undefined
 		};
 	}
 
 	componentDidMount() {
 		this.props.fetchSurveys();
-		const surveys = transformDataToProps(this.props.surveys);
-		this.setState({ surveys });
+		console.log(this.props.surveys)
+	}
+
+	static getDerivedStateFromProps(props, state) {
+		if (!isEqual(props.surveys, state.surveys)) {
+			return {
+				surveys: transformDataToProps(props.surveys)
+			}
+		}
+		return null;
 	}
 
 	shouldComponentUpdate(nextProps, nextState) {
@@ -48,18 +57,19 @@ class UserSurveysNav extends React.Component<IProps, IState> {
 	
 	updateInfo = newSurvey => {
 		const survey = this.state.surveys.some(survey => survey.id === newSurvey.id);
-
 		if (!survey) {
-			const body = transformDataToServerFormat(newSurvey);
+			const body = transformDataToServerFormatCreate(newSurvey);
 			this.props.addSurvey(body)
 		}
-		// if (!survey) setState([newSurvey, ...state]);
 		else {
-			const newState = this.state.surveys.map(survey => {
-				if (survey.id === newSurvey.id) return newSurvey;
-				return survey;
-			});
+			// const newState = this.state.surveys.map(survey => {
+			// 	if (survey.id === newSurvey.id) return newSurvey;
+			// 	return survey;
+			// });
 			// setState([...newState]);
+			const body = transformDataToServerFormatUpdate(newSurvey);
+
+			this.props.updateSurvey(newSurvey.id, body);
 			console.log('need to be update');
 		}
 	};
@@ -74,6 +84,7 @@ class UserSurveysNav extends React.Component<IProps, IState> {
 
 	render() {
 		const { mainPath } = this.props;
+		if (!this.state.surveys) return <div>почекайте</div>
 		return (
 		<Switch>
 			<Route
@@ -128,7 +139,8 @@ const mapStateToProps = (rootState, props) => ({
 
 const actions = {
 	fetchSurveys,
-	addSurvey
+	addSurvey,
+	updateSurvey
 };
 
 const mapDispatchToProps = dispatch => bindActionCreators(actions, dispatch);

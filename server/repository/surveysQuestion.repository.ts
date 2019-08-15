@@ -5,6 +5,7 @@ import { SurveysQuestion } from "../models/SurveysQuestionModel";
 import SurveysRepository from "./surveys.repository";
 import SurveysQuestionOptionRepository from "./surveysQuestionOption.repository";
 import { Surveys } from "../models/SurveysModel";
+import SurveysQuestionAnswerRepository from "./surveysQuestionAnswer.repository";
 
 @EntityRepository(SurveysQuestionEntity)
 class SurveysQuestionRepository extends Repository<SurveysQuestion> {
@@ -48,10 +49,24 @@ class SurveysQuestionRepository extends Repository<SurveysQuestion> {
     }
   }
 
-  async updateSurveysQuestionById(id: string, surveysQuestion: SurveysQuestion, next?) {
+  async updateSurveysQuestionById(id: string, surveysQuestion: SurveysQuestion, surveyId: string, next?) {
     try {
-      await this.update({id}, surveysQuestion);
+      // await this.update({id}, { 
+      //   type: surveysQuestion.type,
+      //   title: surveysQuestion.title,
+      //   firstLabel: surveysQuestion.firstLabel,
+      //   lastLabel: surveysQuestion.lastLabel,
+      //   image: surveysQuestion.image,
+      //   required: surveysQuestion.required
+      // });
+      const survey = await getCustomRepository(SurveysRepository).findOne({ id: surveyId });
+      surveysQuestion.surveys = survey;
+      await this.save(surveysQuestion);
       const updatedSurveysQuestion = await this.findOne(id);
+      Promise.all(surveysQuestion.surveysQuestionOption.map(option => 
+        getCustomRepository(SurveysQuestionOptionRepository).updateQuestionOptionById(option.id, option, id, next)
+      ));
+
       return updatedSurveysQuestion
         ? updatedSurveysQuestion
         : next({status: 404, message: 'Surveys Option is not found'}, null);

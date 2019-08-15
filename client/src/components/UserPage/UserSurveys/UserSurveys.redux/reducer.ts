@@ -1,7 +1,7 @@
 import { SET_SURVEYS } from './actionTypes';
 
 const initialState = {
-	surveys: []
+	surveys: undefined
 };
 
 export default function(state = initialState, action) {

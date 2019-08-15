@@ -79,7 +79,7 @@ const countParticipants = (questions) => {
   return uniqueUserIds.size;
 }
 
-export const transformDataToServerFormat = data => {
+export const transformDataToServerFormatCreate = data => {
   return {
     id: data.user_id,
     surveys: {
@@ -94,6 +94,26 @@ export const transformDataToServerFormat = data => {
       image: question.image_link,
       required: question.required,
       surveysQuestionOption: question.options.map(option => ({
+        title: option.value
+      }))
+    }))
+  }
+}
+
+export const transformDataToServerFormatUpdate = data => {
+  return {
+    title: data.title,
+    description: data.description,
+    surveysQuestion: data.questions.map(question => ({
+      id: question.id,
+      type: question.type,
+      title: question.title,
+      firstLabel: question.firstLabel,
+      lastLabel: question.lastLabel,
+      image: question.image_link,
+      required: question.required,
+      surveysQuestionOption: question.options.map(option => ({
+        id: option.id,
         title: option.value
       }))
     }))

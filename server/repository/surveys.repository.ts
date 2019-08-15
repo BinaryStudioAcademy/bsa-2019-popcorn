@@ -10,6 +10,7 @@ import SurveysQuestionRepository from "./surveysQuestion.repository";
 class SurveysRepository extends Repository<SurveysModel> {
 
   async createSurveys(id: string, surveys: SurveysModel, surveysQuestion: Array<SurveysQuestion>, next?) {
+    console.log('create', id, surveys,surveysQuestion)
     try {
       const user = await getCustomRepository(UserRepository).findOne(id); 
       if (!user) {
@@ -69,11 +70,15 @@ class SurveysRepository extends Repository<SurveysModel> {
 
   async updateSurveysById(id: string, surveys: SurveysModel, next?) {
     try {
-      await this.update({ id }, surveys);
       const updatedSurveys = await this.getSurveysById(id, next);
-      return updatedSurveys
-        ? updatedSurveys
-        : next({status: 404, message: 'Voiting is not found'}, null);
+      if (!updatedSurveys) next({status: 404, message: 'Voiting is not found'}, null);
+
+      await this.update({ id }, {title: surveys.title, description: surveys.description});
+      Promise.all(surveys.surveysQuestion.map(question => {
+        console.log(question)
+        getCustomRepository(SurveysQuestionRepository).updateSurveysQuestionById(question.id, question, id, next)
+      }));
+     
     } catch(err) {
       return next({status: err.status, message: err.message}, null);
     }
