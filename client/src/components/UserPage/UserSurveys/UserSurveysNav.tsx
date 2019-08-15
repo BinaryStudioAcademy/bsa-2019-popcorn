@@ -4,10 +4,17 @@ import SurveyEditorNav from '../SurveyEditor/SurveyEditorNav';
 import UserSurveys from './UserSurveys';
 import newSurvey from './newSurveyConfig';
 import { connect } from 'react-redux';
-import { fetchSurveys, addSurvey, updateSurvey, deleteSurvey } from './UserSurveys.redux/actions';
+import { 
+	fetchSurveys, 
+	addSurvey, 
+	updateSurvey, 
+	deleteSurvey,
+	recreateSurvey 
+} from './UserSurveys.redux/actions';
 import { bindActionCreators } from 'redux';
 import { transformDataToProps, transformDataToServerFormatCreate, transformDataToServerFormatUpdate } from './UserSurveys.service';
 import { isEqual } from 'lodash';
+import Spinner from '../../shared/Spinner';
 
 interface IProps {
 	mainPath: string;
@@ -16,6 +23,7 @@ interface IProps {
 	addSurvey: (any) => any;
 	updateSurvey: (string, any) => any;
 	deleteSurvey: (string) => any;
+	recreateSurvey: (string, any) => any;
 }
 
 interface IState {
@@ -52,28 +60,30 @@ class UserSurveysNav extends React.Component<IProps, IState> {
 	}
 
 	updateInfo = newSurvey => {
-		const survey = this.state.surveys.some(survey => survey.id === newSurvey.id);
+		const survey = this.state.surveys.find(survey => survey.id === newSurvey.id);
 		if (!survey) {
 			const body = transformDataToServerFormatCreate(newSurvey);
 			this.props.addSurvey(body)
 		}
 		else {
-			const body = transformDataToServerFormatUpdate(newSurvey);
-
-			this.props.updateSurvey(newSurvey.id, body);
+			if (isEqual(survey.questions, newSurvey.questions)) {
+				const body = transformDataToServerFormatUpdate(newSurvey);
+				this.props.updateSurvey(newSurvey.id, body);
+			}
+			else {
+				const body = transformDataToServerFormatCreate(newSurvey);
+				this.props.recreateSurvey(newSurvey.id, body);
+			}
 		}
 	};
 
 	deleteSurvey = deletedSurvey => {
-		/* const index = this.state.surveys.indexOf(deletedSurvey);
-		const newState = [...this.state.surveys];
-		newState.splice(index, 1); */
 		this.props.deleteSurvey(deletedSurvey.id);
 	};
 
 	render() {
 		const { mainPath } = this.props;
-		if (!this.state.surveys) return <div>почекайте</div>
+		if (!this.state.surveys) return <Spinner />
 		return (
 		<Switch>
 			<Route
@@ -130,7 +140,8 @@ const actions = {
 	fetchSurveys,
 	addSurvey,
 	updateSurvey,
-	deleteSurvey
+	deleteSurvey,
+	recreateSurvey
 };
 
 const mapDispatchToProps = dispatch => bindActionCreators(actions, dispatch);

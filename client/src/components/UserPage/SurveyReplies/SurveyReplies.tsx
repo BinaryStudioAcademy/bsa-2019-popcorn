@@ -45,6 +45,7 @@ interface IProps {
 
 const SurveyReplies: React.FC<IProps> = (props: IProps) => {
 	const { mainPath, surveyInfo } = props;
+	console.log(surveyInfo);
 
 	return (
 		<div>

@@ -1,4 +1,4 @@
-import { FETCH_SURVEYS, ADD_SURVEY, UPDATE_SURVEY, DELETE_SURVEY } from './actionTypes';
+import { FETCH_SURVEYS, ADD_SURVEY, UPDATE_SURVEY, DELETE_SURVEY, RECREATE_SURVEY } from './actionTypes';
 
 export const fetchSurveys = () => {
 	return {
@@ -27,3 +27,11 @@ export const deleteSurvey = (id) => ({
     id
   }
 });
+
+export const recreateSurvey = (id, data) => ({
+  type: RECREATE_SURVEY,
+  payload: {
+    data,
+    id
+  }
+})
