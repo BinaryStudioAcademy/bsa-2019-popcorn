@@ -29,8 +29,12 @@
 			font-size: $menu-font-size;
 			font-family: $base-font-family;
 			font-weight: 600;
-			color: $text-base-color;
 			cursor: pointer;
+
+			&:first-of-type {
+				pointer-events: none;
+				color: #bbbbbb;
+			}
 		}
 
 		button:active,

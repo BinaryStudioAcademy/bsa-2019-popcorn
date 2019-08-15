@@ -2,18 +2,21 @@
 
 .story-voting-option {
 	display: inline-block;
+	height: 100%;
 }
 .story-voting-option-button {
 	background-color: $button-background;
 	font-family: $base-font-family;
-	font-size: $form-font-size;
+	font-size: $base-font-size;
 	box-shadow: 0px 5px 12px rgba(255, 171, 7, 0.4);
 	border: 1px solid $border-color;
-	padding: 11px 27px 11px 27px;
+	padding: 5px 10px 5px 10px;
 	color: $white;
-	min-width: 4.5em;
+	width: 70px;
+	height: calc(100% - 27px);
 	outline: none;
 	text-transform: uppercase;
+	word-wrap: break-word;
 }
 .story-voting-option-button:hover {
 	transform: scale(1.1);
@@ -22,7 +25,7 @@
 	margin-top: 0.5em;
 	padding: 0.5em;
 	font-family: $base-font-family;
-	font-size: $form-font-size;
+	font-size: $base-font-size;
 	color: $white;
 	letter-spacing: 0;
 }

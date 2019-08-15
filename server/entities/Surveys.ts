@@ -21,6 +21,9 @@ export class Surveys {
   @Column()
   description: string;
 
+  @Column({ default: "Open" })
+  type: string;
+
   @ManyToOne(type => User, { onDelete: "CASCADE" })
   user: User;
 

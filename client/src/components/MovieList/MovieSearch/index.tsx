@@ -28,7 +28,9 @@ const MovieSearch = ({ movies, fetchFilms, alreadySearch, setMovieSeries }) => {
 					placeholder="Search"
 					value={value}
 					className="search-input"
-					onChange={e => setValue(e.target.value)}
+					onChange={e => (
+						setValue(e.target.value), e.target.value && startFetchFilms()
+					)}
 				/>
 			</span>
 			<span className="filter hover">

@@ -7,7 +7,8 @@ import {
 	faTimesCircle
 } from '@fortawesome/free-solid-svg-icons';
 
-const options = ['survey', 'top', 'vote', 'event'];
+const options = ['survey', 'top', 'vote'];
+// 'vote', 'event'
 
 class ChooseExtra extends React.Component {
 	state = {
@@ -27,34 +28,42 @@ class ChooseExtra extends React.Component {
 		const setOption = option => this.setState({ option });
 
 		return (
-			<div className={'modal modal-story'}>
-				<div className={'nav-block-wrp'}>
-					<span onClick={back}>
-						<FontAwesomeIcon
-							icon={faArrowCircleLeft}
-							className={'fontAwesomeIcon'}
-						/>
-					</span>
-					<span onClick={close}>
-						<FontAwesomeIcon
-							icon={faTimesCircle}
-							className={'fontAwesomeIcon'}
-						/>
-					</span>
-				</div>
-				<div className={'content-extra'}>
-					{options &&
-						options.map(option => {
-							return (
-								<div className={'extra-item'} onClick={() => setOption(option)}>
-									<span>Add {option}</span>
-									<FontAwesomeIcon
-										icon={faChevronRight}
-										style={{ color: '#ffab07' }}
-									/>
-								</div>
-							);
-						})}
+			<div className={'modal-wrp'}>
+				<div className={'modal modal-story'}>
+					<div className={'nav-block-wrp'}>
+						<span onClick={back}>
+							<FontAwesomeIcon
+								icon={faArrowCircleLeft}
+								className={'fontAwesomeIcon'}
+							/>
+						</span>
+						<span onClick={close}>
+							<FontAwesomeIcon
+								icon={faTimesCircle}
+								className={'fontAwesomeIcon'}
+							/>
+						</span>
+					</div>
+					<div className={'content-extra'}>
+						<div className="extra-header">Choose Extra</div>
+						<div>
+							{options &&
+								options.map(option => {
+									return (
+										<div
+											className={'extra-item'}
+											onClick={() => setOption(option)}
+										>
+											<span>Add {option}</span>
+											<FontAwesomeIcon
+												icon={faChevronRight}
+												style={{ color: '#ffab07' }}
+											/>
+										</div>
+									);
+								})}
+						</div>
+					</div>
 				</div>
 			</div>
 		);

@@ -4,6 +4,7 @@ import * as Yup from 'yup';
 import './Registration.scss';
 import { NavLink, Redirect } from 'react-router-dom';
 import logo from '../../../assets/icons/general/popcorn-logo.svg';
+import Spinner from '../../shared/Spinner';
 
 interface Values {
 	name: string;
@@ -19,6 +20,8 @@ interface IProps {
 
 interface IState {
 	isLoading: boolean;
+	takenError: string | null;
+	formikValues: Values;
 }
 
 const initialFormikValues = {
@@ -26,6 +29,9 @@ const initialFormikValues = {
 	email: '',
 	password: ''
 };
+
+const EMAIL_IS_TAKEN = 'Email is already taken.';
+const USERNAME_IS_TAKEN = 'Username is already taken.';
 
 function validateEmail(value) {
 	let error;
@@ -52,14 +58,41 @@ function validatePassword(value) {
 }
 
 class Registration extends React.Component<IProps, IState> {
-	state: IState = {
-		isLoading: false
+	constructor(props) {
+		super(props);
+		this.state = {
+			isLoading: false,
+			takenError: '',
+			formikValues: {
+				name: '',
+				password: '',
+				email: ''
+			}
+		};
+	}
+
+	cancelError = () => {
+		this.setState({ ...this.state, isLoading: false, takenError: '' });
 	};
+
+	componentDidMount() {
+		const takenError = this.props.registerError;
+		this.setState({ takenError });
+	}
+	static getDerivedStateFromProps(props, currentState) {
+		if (currentState.takenError !== props.registerError) {
+			return {
+				...currentState,
+				takenError: props.registerError,
+				isLoading: false
+			};
+		}
+		return null;
+	}
 
 	public render() {
 		const { registration, isAuthorized, registerError } = this.props;
-		const { isLoading } = this.state;
-
+		const { isLoading, takenError } = this.state;
 		return (
 			<div className={'form-wrapper'}>
 				{isAuthorized ? (
@@ -71,48 +104,55 @@ class Registration extends React.Component<IProps, IState> {
 						</div>
 						<h1 className="form-heading">Join Pop Corn</h1>
 						<Formik
-							initialValues={{ ...initialFormikValues }}
+							initialValues={initialFormikValues}
 							onSubmit={async (values, actions) => {
 								const { isLoading } = this.state;
 								if (isLoading) {
-									// block button
 									return;
 								}
-								this.setState({ ...this.state, isLoading: true });
-								registration({ ...values }); // { name, email, password } --- will update props isAuthorized
-								// .then((s: any) => { return 0 })
-								// .catch((error: any) => {
-								//   actions.setFieldError('email', error.message);
-								//   this.setState({ isLoading: false });
-								// });
+								Object.keys(values).forEach(key => {
+									initialFormikValues[key] = values[key];
+								});
+								registration({ ...values });
+								this.setState({
+									...this.state,
+									formikValues: values,
+									isLoading: true
+								});
 							}}
 							validationSchema={Yup.object().shape({
 								name: Yup.string()
 									.strict(false)
 									.trim()
-									.min(3, 'Its too short Name')
-									.max(20, 'Its too long Name')
+									.min(3, 'Username must be at least 3 characters')
+									.max(20, 'Username must be no more than 20 characters')
 									.required('Name is required'),
 								email: Yup.string()
-									.max(320, 'Its too long email')
+									.max(320, 'Email must be no more than 320 characters')
 									.email('Email is invalid')
 									.required('Email is required'),
 								password: Yup.string()
 									.min(6, 'Password must be at least 6 characters')
-									.max(64, 'Password is too long')
+									.max(64, 'Password must be no more than 64 characters')
 									.required('Password is required')
 							})}
-							render={({ errors, status, touched }) => (
+							render={props => (
 								<Form>
 									<div className="form-group">
-										<label className="form-label">
+										<label
+											className="form-label"
+											onChange={() => this.cancelError()}
+										>
 											<Field
 												name="name"
 												type="text"
+												value={props.values.name}
 												placeholder="First and Last name"
 												className={
 													'form-input' +
-													(errors.name && touched.name ? ' is-invalid' : '')
+													(props.errors.name && props.touched.name
+														? ' is-invalid'
+														: '')
 												}
 											/>
 											<ErrorMessage
@@ -120,15 +160,23 @@ class Registration extends React.Component<IProps, IState> {
 												component="span"
 												className="form-input-error"
 											/>
+											{takenError === USERNAME_IS_TAKEN && (
+												<p className="error-message">{registerError}</p>
+											)}
 										</label>
-										<label className="form-label">
+										<label
+											className="form-label"
+											onChange={() => this.cancelError()}
+										>
 											<Field
 												name="email"
 												type="text"
 												placeholder="Email address"
 												className={
 													'form-input' +
-													(errors.email && touched.email ? ' is-invalid' : '')
+													(props.errors.email && props.touched.email
+														? ' is-invalid'
+														: '')
 												}
 												validate={validateEmail}
 											/>
@@ -137,6 +185,9 @@ class Registration extends React.Component<IProps, IState> {
 												component="span"
 												className="form-input-error"
 											/>
+											{takenError === EMAIL_IS_TAKEN && (
+												<p className="error-message">{registerError}</p>
+											)}
 										</label>
 										<label className="form-label">
 											<Field
@@ -145,7 +196,7 @@ class Registration extends React.Component<IProps, IState> {
 												placeholder="Password"
 												className={
 													'form-input' +
-													(errors.password && touched.password
+													(props.errors.password && props.touched.password
 														? ' is-invalid'
 														: '')
 												}
@@ -157,7 +208,7 @@ class Registration extends React.Component<IProps, IState> {
 												className="form-input-error"
 											/>
 										</label>
-										<div className="register-error">{registerError}</div>
+
 										<div className="form-btn-wrapper">
 											<button
 												type="submit"
@@ -165,8 +216,8 @@ class Registration extends React.Component<IProps, IState> {
 											>
 												Sign Up
 											</button>
-											{isLoading ? 'loading...' : null}
 										</div>
+										{isLoading && <Spinner />}
 									</div>
 								</Form>
 							)}

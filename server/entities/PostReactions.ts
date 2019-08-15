@@ -10,9 +10,13 @@ export class PostReactions {
   @Column()
   smile: boolean;
 
-  @ManyToOne(type => Post, post => post.id)
+  @ManyToOne(type => Post, post => post.id, {
+    onDelete: "CASCADE"
+  })
   post: Post;
 
-  @ManyToOne(type => User, user => user.id)
+  @ManyToOne(type => User, user => user.id, {
+    onDelete: "CASCADE"
+  })
   user: User;
 }

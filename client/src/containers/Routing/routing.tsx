@@ -18,6 +18,7 @@ import {
 import Spinner from '../../components/shared/Spinner/index';
 import Reset from '../../components/authorization/Reset';
 import Restore from '../../components/authorization/Restore';
+import StoryVotingCreation from '../../components/StoryVotingCreation/StoryVotingCreation';
 
 interface IValues {
 	email: string;

@@ -1,11 +1,12 @@
-import React, { Component, ReactInstance } from 'react';
+import React, { Component } from 'react';
 import StoryListContent from '../story-list-content/story-list-content';
 import AddStoryItem from '../add-story-item/add-story-item';
-import AddStoryPopup from '../add-story-popup/add-story-popup';
 import './story-list.scss';
+import './add-story-popup.scss';
 import Spinner from '../../../shared/Spinner';
 import config from '../../../../config';
 import StoryViewer from '../../StoryViewer/StoryViewer';
+import { Redirect } from 'react-router';
 
 interface IStoryListItem {
 	caption: string;
@@ -16,7 +17,21 @@ interface IStoryListItem {
 		id: string;
 		any;
 	};
-	any;
+	type: string;
+	voting?: {
+		backColor: string;
+		backImage: string;
+		deltaPositionHeadX: number;
+		deltaPositionHeadY: number;
+		deltaPositionOptionBlockX: number;
+		deltaPositionOptionBlockY: number;
+		header: string;
+		id: string;
+		options: Array<{
+			body: string;
+			voted: number;
+		}>;
+	};
 }
 
 interface IStoryListProps {
@@ -35,9 +50,11 @@ interface IState {
 	isShownViewer: boolean;
 	currentStory: number;
 	class: string;
+	modal: boolean;
 }
 
 class StoryList extends Component<IStoryListProps, IState> {
+	updateModal: (value: boolean) => void;
 	constructor(props) {
 		super(props);
 
@@ -49,12 +66,18 @@ class StoryList extends Component<IStoryListProps, IState> {
 			scrollLeft: 0,
 			isShownViewer: false,
 			currentStory: -1,
-			class: ''
+			class: '',
+			modal: false
 		};
+		this.updateModal = this.handleUpdateModal.bind(this);
 	}
+	handleUpdateModal = (value: boolean) => {
+		this.setState({ isPopupShown: value });
+	};
 
 	onOpenPopupClick = () => {
-		this.setState({ isPopupShown: true });
+		this.setState({ modal: true });
+		// this.setState({ isPopupShown: true });
 	};
 
 	onClosePopupClick = () => {
@@ -90,6 +113,7 @@ class StoryList extends Component<IStoryListProps, IState> {
 
 		const { currentStory } = this.state;
 		const mockStories = stories.map(story => ({
+			...story,
 			image_url: story.image_url,
 			bckg_color: '#eedcff',
 			users: [],
@@ -131,14 +155,14 @@ class StoryList extends Component<IStoryListProps, IState> {
 			fetchStories();
 			return <Spinner />;
 		}
+		if (this.state.modal) {
+			this.setState({ modal: false });
+			return <Redirect to={'/create'} />;
+		}
 
 		return (
 			<div className="story-list-wrapper">
 				{this.viewerIsShown()}
-				<AddStoryPopup
-					onClosePopupClick={this.onClosePopupClick}
-					isShown={this.state.isPopupShown}
-				/>
 				<div className="story-list">
 					<AddStoryItem
 						onOpenPopupClick={this.onOpenPopupClick}

@@ -70,10 +70,19 @@ class UserSurveys extends React.Component<IProps, IState> {
 		};
 	}
 
-	componentWillReceiveProps(nextProps) {
+	/* 	componentWillReceiveProps(nextProps) {
 		if (!isEqual(nextProps.surveys, this.state.surveys)) {
 			this.setState({ surveys: nextProps.surveys });
 		}
+	} */
+
+	static getDerivedStateFromProps(props, state) {
+		if (!isEqual(props.surveys, state.surveys)) {
+			return {
+				surveys: props.surveys
+			};
+		}
+		return null;
 	}
 
 	showModal = (event, id) => {

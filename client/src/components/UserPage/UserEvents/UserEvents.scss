@@ -1,4 +1,25 @@
-.UserEvents {
+@import '../../../styles/variables.scss';
+.user-events {
+	.create-event-button {
+		border: 1px solid $border-color;
+		box-shadow: 0px 0px 11px $input-shadow-color;
+		color: $text-secondary-color;
+		border-radius: 2px;
+		padding: 6px;
+		font-size: 24px;
+		line-height: 15px;
+		align-items: center;
+		letter-spacing: $header-letter-spacing;
+		display: flex;
+		justify-content: center;
+		height: 45px;
+		margin: 20px 0px;
+		cursor: pointer;
+	}
+	.create-event-button:hover {
+		background-color: darken($white, 10);
+		color: darken($text-secondary-color, 10);
+	}
 	.event-list-container {
 		padding: 3px;
 	}

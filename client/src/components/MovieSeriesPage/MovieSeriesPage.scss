@@ -24,6 +24,26 @@ $header-letter-spacing: 0.9px;
 	margin-bottom: 15px;
 	text-align: left;
 
+	.movie-title-rating {
+		display: flex;
+		position: relative;
+		align-items: center;
+	}
+	.rating {
+		position: absolute;
+		right: 20px;
+		font-size: 22px;
+	}
+
+	.icon-star {
+		color: #ffcd1e;
+	}
+
+	.max-rating {
+		font-size: 0.6em;
+		color: $text-secondary-color;
+	}
+
 	.title {
 		display: block;
 		margin-bottom: 5px;
