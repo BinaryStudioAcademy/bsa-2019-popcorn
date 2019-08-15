@@ -125,6 +125,12 @@ class Login extends React.Component<IProps, IState, IValues> {
 						);
 					}}
 				/>
+				<div className="form-hint">
+					<NavLink to={'/reset'} className="form-hint-link">
+						Forget password?
+					</NavLink>
+					<i className="icon icon-arrow-right" />
+				</div>
 				{this.linkToRegistration()}
 			</div>
 		) : (
