@@ -284,7 +284,7 @@ class SurveyQuestion extends Component<IProps, IState> {
 							accept=".jpg, .jpeg, .png"
 							disabled={this.state.isUploading}
 						/>
-						<label htmlFor="image" className="upload-image-button">
+						<label htmlFor="image">
 							<p>
 								<FontAwesomeIcon icon={faImage} title="Add image" />
 							</p>
