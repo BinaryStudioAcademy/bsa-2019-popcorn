@@ -4,6 +4,7 @@ import { NavLink, Redirect } from 'react-router-dom';
 import * as Yup from 'yup';
 import logo from '../../../assets/icons/general/popcorn-logo.svg';
 import './style.scss';
+import { Effect } from 'formik-effect';
 
 interface IValues {
 	email: string;
@@ -112,10 +113,10 @@ class Login extends React.Component<IProps, IState, IValues> {
 							.required('Email is required'),
 						password: Yup.string()
 							.max(64, 'Password must be no more than 64 characters')
-							.min(5, 'Password must be at least 5 characters')
+							.min(6, 'Password must be at least 6 characters')
 							.required('Password is required')
 					})}
-					render={({ errors, status, touched }) => {
+					render={({ values, errors, status, touched }) => {
 						return this.renderForm(
 							loginError,
 							isLoading,
