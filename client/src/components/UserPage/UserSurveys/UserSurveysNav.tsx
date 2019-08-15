@@ -39,7 +39,6 @@ class UserSurveysNav extends React.Component<IProps, IState> {
 
 	componentDidMount() {
 		this.props.fetchSurveys();
-		console.log(this.props.surveys)
 	}
 
 	static getDerivedStateFromProps(props, state) {
@@ -51,10 +50,6 @@ class UserSurveysNav extends React.Component<IProps, IState> {
 		return null;
 	}
 
-	shouldComponentUpdate(nextProps, nextState) {
-		return !isEqual(this.state, nextState);
-	}
-	
 	updateInfo = newSurvey => {
 		const survey = this.state.surveys.some(survey => survey.id === newSurvey.id);
 		if (!survey) {
@@ -62,15 +57,9 @@ class UserSurveysNav extends React.Component<IProps, IState> {
 			this.props.addSurvey(body)
 		}
 		else {
-			// const newState = this.state.surveys.map(survey => {
-			// 	if (survey.id === newSurvey.id) return newSurvey;
-			// 	return survey;
-			// });
-			// setState([...newState]);
 			const body = transformDataToServerFormatUpdate(newSurvey);
 
 			this.props.updateSurvey(newSurvey.id, body);
-			console.log('need to be update');
 		}
 	};
 
@@ -78,8 +67,6 @@ class UserSurveysNav extends React.Component<IProps, IState> {
 		const index = this.state.surveys.indexOf(deletedSurvey);
 		const newState = [...this.state.surveys];
 		newState.splice(index, 1);
-		// setState(newState);
-		console.log('need to be deleted')
 	};
 
 	render() {

@@ -9,7 +9,6 @@ export function* fetchSurveys(action) {
 			method: 'GET',
 			endpoint: config.API_URL + '/api/surveys'
 		});
-
 		yield put({
 			type: SET_SURVEYS,
 			payload: {
@@ -34,7 +33,7 @@ export function* addSurvey(action) {
 				...action.payload.data
 			}
 		});
-    if (data.ok) yield put({ type: FETCH_SURVEYS });
+    if (data) yield put({ type: FETCH_SURVEYS });
 	} catch (e) {
 		console.log('survey saga create survey: ', e.message);
 	}
