@@ -3,27 +3,23 @@
 .top-list {
 	font-family: $base-font-family;
 
-	grid-template-columns: 1fr 1fr;
+	grid-template-rows: 250px 1fr;
 	display: grid;
-	height: 365px;
 	background: $background-gray;
 	border: 1px solid $border-color;
 	border-radius: 2px;
+	padding: 20px;
 }
 .top-list-component {
 	grid-column: 2/4;
 	margin: 15px;
 }
 .top-list-img {
-	margin: 35px;
-	overflow: hidden;
 	img {
-		width: 120%;
 	}
 }
 
 .top-list-items {
-	margin-right: 21px;
 }
 
 .top-list-heading {
