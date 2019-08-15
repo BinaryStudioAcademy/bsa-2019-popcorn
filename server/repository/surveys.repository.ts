@@ -12,7 +12,6 @@ class SurveysRepository extends Repository<SurveysModel> {
   async createSurveys(id: string, surveys: SurveysModel, surveysQuestion: Array<SurveysQuestion>, next?) {
     try {
       const user = await getCustomRepository(UserRepository).findOne(id); 
-      console.log(id, surveys);
       if (!user) {
         return next({status: 404, message: 'User is not found'}, null);
       }

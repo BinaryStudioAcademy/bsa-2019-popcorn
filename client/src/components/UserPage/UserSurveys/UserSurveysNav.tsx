@@ -47,7 +47,6 @@ class UserSurveysNav extends React.Component<IProps, IState> {
 	}
 	
 	updateInfo = newSurvey => {
-		console.log('kkyky')
 		const survey = this.state.surveys.some(survey => survey.id === newSurvey.id);
 
 		if (!survey) {
@@ -74,7 +73,6 @@ class UserSurveysNav extends React.Component<IProps, IState> {
 	};
 
 	render() {
-		console.log('render')
 		const { mainPath } = this.props;
 		return (
 		<Switch>

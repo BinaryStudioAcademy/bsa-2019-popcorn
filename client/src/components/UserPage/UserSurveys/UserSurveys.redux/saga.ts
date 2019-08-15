@@ -26,7 +26,6 @@ function* watchFetch() {
 }
 
 export function* addSurvey(action) {
-  console.log(action.payload);
   try {
 		const data = yield call(webApi, {
 			method: 'POST',
