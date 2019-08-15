@@ -188,7 +188,6 @@ class StoryVotingCreation extends React.Component<
 			.catch(error => {
 				this.setState({ isUploading: false, errorMsg: error.message });
 			});
-		console.log(this.state.imageUrl);
 		target.value = '';
 	}
 

@@ -44,7 +44,6 @@ class StoryListContent extends Component<IStoryListItemsProps> {
 		const storyList = storyListItems.map((item, i) => {
 			if (item.type === 'voting' && item.voting) {
 				const voting = item.voting;
-				console.log(voting);
 				return (
 					<div
 						className={'story-list-item-wrapper voting-wrp'}
