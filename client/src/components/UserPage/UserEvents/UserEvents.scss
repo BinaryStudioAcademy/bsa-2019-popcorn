@@ -14,6 +14,7 @@
 		justify-content: center;
 		height: 45px;
 		margin: 20px 0px;
+		cursor: pointer;
 	}
 	.create-event-button:hover {
 		background-color: darken($white, 10);
