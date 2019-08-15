@@ -81,7 +81,7 @@ const countParticipants = (questions) => {
 
 export const transformDataToServerFormat = data => {
   return {
-    user_id: data.user_id,
+    id: data.user_id,
     surveys: {
       title: data.title,
       description: data.description

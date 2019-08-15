@@ -25,13 +25,14 @@ function* watchFetch() {
 	yield takeEvery(FETCH_SURVEYS, fetchSurveys);
 }
 
-export function* createSurvey(action) {
+export function* addSurvey(action) {
+  console.log(action.payload);
   try {
 		const data = yield call(webApi, {
 			method: 'POST',
       endpoint: config.API_URL + '/api/surveys',
       body: {
-				...action.payload.body
+				...action.payload.data
 			}
 		});
     if (data.ok) yield put({ type: FETCH_SURVEYS });
@@ -41,7 +42,7 @@ export function* createSurvey(action) {
 }
 
 function* watchAdd() {
-	yield takeEvery(ADD_SURVEY, createSurvey);
+	yield takeEvery(ADD_SURVEY, addSurvey);
 }
 
 export default function* survey() {
