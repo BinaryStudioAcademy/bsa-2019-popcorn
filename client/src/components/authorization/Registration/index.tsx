@@ -5,6 +5,7 @@ import './Registration.scss';
 import { NavLink, Redirect } from 'react-router-dom';
 import logo from '../../../assets/icons/general/popcorn-logo.svg';
 import { tsConstructSignatureDeclaration } from '@babel/types';
+import Spinner from '../../shared/Spinner';
 
 interface Values {
 	name: string;
@@ -21,6 +22,7 @@ interface IProps {
 interface IState {
 	isLoading: boolean;
 	takenError: string | null;
+	formikValues: Values;
 }
 
 const initialFormikValues = {
@@ -61,14 +63,37 @@ class Registration extends React.Component<IProps, IState> {
 		super(props);
 		this.state = {
 			isLoading: false,
-			takenError: this.props.registerError
+			takenError: '',
+			formikValues: {
+				name: '',
+				password: '',
+				email: ''
+			}
 		};
+	}
+
+	cancelError = () => {
+		this.setState({ ...this.state, isLoading: false, takenError: '' });
+	};
+
+	componentDidMount() {
+		const takenError = this.props.registerError;
+		this.setState({ takenError });
+	}
+	static getDerivedStateFromProps(props, currentState) {
+		if (currentState.takenError !== props.registerError) {
+			return {
+				...currentState,
+				takenError: props.registerError,
+				isLoading: false
+			};
+		}
+		return null;
 	}
 
 	public render() {
 		const { registration, isAuthorized, registerError } = this.props;
-		const { isLoading } = this.state;
-		const takenError = this.state.takenError || registerError;
+		const { isLoading, takenError } = this.state;
 		return (
 			<div className={'form-wrapper'}>
 				{isAuthorized ? (
@@ -80,7 +105,7 @@ class Registration extends React.Component<IProps, IState> {
 						</div>
 						<h1 className="form-heading">Join Pop Corn</h1>
 						<Formik
-							initialValues={{ ...initialFormikValues }}
+							initialValues={initialFormikValues}
 							onSubmit={async (values, actions) => {
 								const { isLoading } = this.state;
 								if (isLoading) {
@@ -89,11 +114,12 @@ class Registration extends React.Component<IProps, IState> {
 								Object.keys(values).forEach(key => {
 									initialFormikValues[key] = values[key];
 								});
-								initialFormikValues.name = values.name;
-								initialFormikValues.email = values.email;
-								initialFormikValues.password = values.password;
 								registration({ ...values });
-								this.setState({ ...this.state, isLoading: true });
+								this.setState({
+									...this.state,
+									formikValues: values,
+									isLoading: true
+								});
 							}}
 							validationSchema={Yup.object().shape({
 								name: Yup.string()
@@ -116,9 +142,7 @@ class Registration extends React.Component<IProps, IState> {
 									<div className="form-group">
 										<label
 											className="form-label"
-											onChange={() =>
-												this.setState({ ...this.state, takenError: '' })
-											}
+											onChange={() => this.cancelError()}
 										>
 											<Field
 												name="name"
@@ -143,9 +167,7 @@ class Registration extends React.Component<IProps, IState> {
 										</label>
 										<label
 											className="form-label"
-											onChange={() =>
-												this.setState({ ...this.state, takenError: '' })
-											}
+											onChange={() => this.cancelError()}
 										>
 											<Field
 												name="email"
@@ -187,7 +209,7 @@ class Registration extends React.Component<IProps, IState> {
 												className="form-input-error"
 											/>
 										</label>
-										<div className="register-error">{registerError}</div>
+
 										<div className="form-btn-wrapper">
 											<button
 												type="submit"
@@ -196,6 +218,7 @@ class Registration extends React.Component<IProps, IState> {
 												Sign Up
 											</button>
 										</div>
+										{isLoading && <Spinner />}
 									</div>
 								</Form>
 							)}
