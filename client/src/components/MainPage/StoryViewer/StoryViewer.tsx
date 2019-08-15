@@ -5,11 +5,11 @@ import StorySeenByModal from '../StorySeenByModal/StorySeenByModal';
 import './StoryViewer.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
-	faTimes,
+	faChevronLeft,
+	faChevronRight,
 	faEllipsisH,
 	faEye,
-	faChevronRight,
-	faChevronLeft
+	faTimes
 } from '@fortawesome/free-solid-svg-icons';
 import config from '../../../config';
 import StoryVoting from '../../StoryVoting/StoryVoting';
@@ -40,6 +40,7 @@ interface IProps {
 				voted: number;
 			}>;
 		};
+		activity?: string;
 	}>;
 	currentUser: {
 		userId: string;
@@ -166,19 +167,32 @@ class StoryViewer extends PureComponent<IProps, IState> {
 											backgroundColor: story.bckg_color
 										}}
 									>
-										{this.isOwnStory(story) && (
-											<div className="seen">
-												<p
-													className="seen-by-info"
-													onClick={this.toogleSeenByModal}
+										<div className={'seen'}>
+											<p
+												className={'seen-by-info'}
+												onClick={this.toogleSeenByModal}
+												style={{ width: '100%' }}
+											>
+												<span
+													style={{
+														display: 'flex',
+														justifyContent: 'SPACE-BETWEEN',
+														padding: '0 15px',
+														width: '100%'
+													}}
 												>
-													<FontAwesomeIcon icon={faEye} />
-													<span className="seen-by-amount">
-														{story.users.length}
-													</span>
-												</p>
-											</div>
-										)}
+													{this.isOwnStory(story) && (
+														<span>
+															<FontAwesomeIcon icon={faEye} />
+															<span className="seen-by-amount">
+																{story.users.length}
+															</span>
+														</span>
+													)}
+													{story.type && story.activity}
+												</span>
+											</p>
+										</div>
 									</main>
 								)}
 							</div>
