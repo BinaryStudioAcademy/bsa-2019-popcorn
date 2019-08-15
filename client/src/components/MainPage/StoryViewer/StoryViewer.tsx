@@ -158,6 +158,7 @@ class StoryViewer extends PureComponent<IProps, IState> {
 										backColor={story.voting.backColor}
 										userId={this.props.currentUser.userId}
 										inEditor={false}
+										image_url={story.voting.backImage || ''}
 									/>
 								)}
 								{story.type === 'voting' ? null : (

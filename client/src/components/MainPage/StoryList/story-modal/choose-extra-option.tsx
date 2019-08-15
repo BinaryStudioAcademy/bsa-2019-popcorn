@@ -68,44 +68,46 @@ class ChooseExtraOption extends React.Component<IProps, IState> {
 		};
 
 		return (
-			<div className={'modal modal-story'}>
-				<div className={'nav-block-wrp'}>
-					<span onClick={back}>
-						<FontAwesomeIcon
-							icon={faArrowCircleLeft}
-							className={'fontAwesomeIcon'}
-						/>
-					</span>
-					<span onClick={close}>
-						<FontAwesomeIcon
-							icon={faTimesCircle}
-							className={'fontAwesomeIcon'}
-						/>
-					</span>
-				</div>
-				<div className={'choose-extra-option-wrp'}>
-					<div className={'create'} onClick={create}>
-						<span>
+			<div className={'modal-wrp'}>
+				<div className={'modal modal-story'}>
+					<div className={'nav-block-wrp'}>
+						<span onClick={back}>
 							<FontAwesomeIcon
-								icon={faPlus}
-								style={{ marginRight: '2px', fontSize: '.8em' }}
+								icon={faArrowCircleLeft}
+								className={'fontAwesomeIcon'}
 							/>
-							Create {option}
+						</span>
+						<span onClick={close}>
+							<FontAwesomeIcon
+								icon={faTimesCircle}
+								className={'fontAwesomeIcon'}
+							/>
 						</span>
 					</div>
+					<div className={'choose-extra-option-wrp'}>
+						<div className={'create'} onClick={create}>
+							<span>
+								<FontAwesomeIcon
+									icon={faPlus}
+									style={{ marginRight: '2px', fontSize: '.8em' }}
+								/>
+								Create {option}
+							</span>
+						</div>
 
-					<div className={'recent-created'}>
-						{options &&
-							options.map(item => (
-								<span
-									key={item.id}
-									onClick={() => {
-										choose(item);
-									}}
-								>
-									{item.name}
-								</span>
-							))}
+						<div className={'recent-created'}>
+							{options &&
+								options.map(item => (
+									<span
+										key={item.id}
+										onClick={() => {
+											choose(item);
+										}}
+									>
+										{item.name}
+									</span>
+								))}
+						</div>
 					</div>
 				</div>
 			</div>

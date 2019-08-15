@@ -25,6 +25,7 @@ type StoryVotingProps = {
 	) => void;
 	backColor: { r: string; g: string; b: string; a: string } | string;
 	backImage?: string;
+	image_url?: string;
 	userId: string;
 	createVoting?: (voting: IVoting) => any;
 	inEditor: boolean;
@@ -147,12 +148,13 @@ class StoryVoting extends React.Component<StoryVotingProps, StoryVotingState> {
 	}
 
 	onSave = () => {
-		const { header, userId, backColor, backImage, options } = this.props;
+		const { header, userId, backColor, image_url, options } = this.props;
 		const { deltaPositionHead, deltaPositionOptionBlock } = this.state;
 		const rgba =
 			typeof this.props.backColor === 'string'
 				? this.props.backColor
 				: `rgba(${this.props.backColor.r},${this.props.backColor.b},${this.props.backColor.g},${this.props.backColor.a})`;
+		const backImage = image_url;
 		this.props.createVoting &&
 			this.props.createVoting({
 				userId,
@@ -175,9 +177,8 @@ class StoryVoting extends React.Component<StoryVotingProps, StoryVotingState> {
 				: `rgba(${this.props.backColor.r},${this.props.backColor.b},${this.props.backColor.g},${this.props.backColor.a})`;
 
 		const backgroundStyle = {
-			background: this.props.backImage
-				? `url(${this.props.backImage}) no-repeat`
-				: rgba
+			backgroundImage: `url(${this.props.image_url})`,
+			backgroundColor: rgba
 		};
 
 		if (this.state.redirect) return <Redirect to={'/create'} />;
@@ -185,10 +186,14 @@ class StoryVoting extends React.Component<StoryVotingProps, StoryVotingState> {
 		const setRedirect = () => this.setState({ redirect: true });
 
 		return (
-			<div>
-				<div className="story-voting" style={backgroundStyle}>
+			<div className="story-voting-wrp">
+				<div
+					className="story-voting"
+					id="voting-preview"
+					style={backgroundStyle}
+				>
 					<Draggable
-						bounds=".story-voting"
+						bounds="parent"
 						defaultPosition={{
 							x: positions.headerPosition.left,
 							y: positions.headerPosition.top
@@ -199,7 +204,7 @@ class StoryVoting extends React.Component<StoryVotingProps, StoryVotingState> {
 						<div className="story-voting-header">{this.props.header}</div>
 					</Draggable>
 					<Draggable
-						bounds=".story-voting"
+						bounds="parent"
 						defaultPosition={{
 							x: positions.buttonsPosition.left,
 							y: positions.buttonsPosition.top
@@ -213,7 +218,7 @@ class StoryVoting extends React.Component<StoryVotingProps, StoryVotingState> {
 					</Draggable>
 				</div>
 				{this.state.inEditor && (
-					<div className={'btn-wrp'}>
+					<div>
 						<button
 							className={'btn'}
 							onClick={() => {
