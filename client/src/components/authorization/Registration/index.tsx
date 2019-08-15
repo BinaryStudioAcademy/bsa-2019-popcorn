@@ -19,8 +19,7 @@ interface IProps {
 
 interface IState {
 	isLoading: boolean;
-	emailIsTaken: boolean;
-	userNameIsTaken: boolean;
+	takenError: string | null;
 }
 
 const initialFormikValues = {
@@ -28,6 +27,9 @@ const initialFormikValues = {
 	email: '',
 	password: ''
 };
+
+const EMAIL_IS_TAKEN = 'Email is already taken.';
+const USERNAME_IS_TAKEN = 'Username is already taken.';
 
 function validateEmail(value) {
 	let error;
@@ -58,27 +60,15 @@ class Registration extends React.Component<IProps, IState> {
 		super(props);
 		this.state = {
 			isLoading: false,
-			emailIsTaken: false,
-			userNameIsTaken: false
+			takenError: this.props.registerError
 		};
-	}
-
-	componentDidUpdate(prevProps) {
-		const registerError = this.props.registerError;
-		if (prevProps.registerError !== registerError) {
-			if (registerError === 'Email is already taken.') {
-				this.setState({ emailIsTaken: true });
-			}
-			if (registerError === 'Username is already taken.') {
-				this.setState({ userNameIsTaken: true });
-			}
-		}
 	}
 
 	public render() {
 		const { registration, isAuthorized, registerError } = this.props;
-		const { isLoading, userNameIsTaken, emailIsTaken } = this.state;
-
+		const { isLoading } = this.state;
+		const takenError = this.state.takenError || registerError;
+		console.log(takenError);
 		return (
 			<div className={'form-wrapper'}>
 				{isAuthorized ? (
@@ -109,16 +99,16 @@ class Registration extends React.Component<IProps, IState> {
 								name: Yup.string()
 									.strict(false)
 									.trim()
-									.min(3, 'Its too short Name')
-									.max(20, 'Its too long Name')
+									.min(3, 'Username must be at least 3 characters')
+									.max(20, 'Username must be no more than 20 characters')
 									.required('Name is required'),
 								email: Yup.string()
-									.max(320, 'Its too long email')
+									.max(320, 'Email must be no more than 320 characters')
 									.email('Email is invalid')
 									.required('Email is required'),
 								password: Yup.string()
 									.min(6, 'Password must be at least 6 characters')
-									.max(64, 'Password is too long')
+									.max(64, 'Password must be no more than 64 characters')
 									.required('Password is required')
 							})}
 							render={({ errors, status, touched }) => (
@@ -126,7 +116,7 @@ class Registration extends React.Component<IProps, IState> {
 									<div className="form-group">
 										<label
 											className="form-label"
-											onChange={() => this.setState({ userNameIsTaken: false })}
+											onChange={() => this.setState({ takenError: ' ' })}
 										>
 											<Field
 												name="name"
@@ -142,13 +132,13 @@ class Registration extends React.Component<IProps, IState> {
 												component="span"
 												className="form-input-error"
 											/>
-											{userNameIsTaken && (
+											{takenError === USERNAME_IS_TAKEN && (
 												<p className="error-message">{registerError}</p>
 											)}
 										</label>
 										<label
 											className="form-label"
-											onChange={() => this.setState({ emailIsTaken: false })}
+											onChange={() => this.setState({ takenError: ' ' })}
 										>
 											<Field
 												name="email"
@@ -165,7 +155,7 @@ class Registration extends React.Component<IProps, IState> {
 												component="span"
 												className="form-input-error"
 											/>
-											{emailIsTaken && (
+											{takenError === EMAIL_IS_TAKEN && (
 												<p className="error-message">{registerError}</p>
 											)}
 										</label>
@@ -196,7 +186,6 @@ class Registration extends React.Component<IProps, IState> {
 											>
 												Sign Up
 											</button>
-											{isLoading ? 'loading...' : null}
 										</div>
 									</div>
 								</Form>
