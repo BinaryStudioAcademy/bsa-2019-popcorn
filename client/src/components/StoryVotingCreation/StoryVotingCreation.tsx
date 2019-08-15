@@ -177,7 +177,9 @@ class StoryVotingCreation extends React.Component<
 		data.append('file', target.files[0]);
 		uploadFile(data)
 			.then(({ imageUrl }) => {
-				let url = imageUrl.split(`\\`);
+				let url;
+				if (imageUrl.indexOf(`\\`) !== -1) url = imageUrl.split(`\\`);
+				else url = imageUrl.split(`/`);
 				url.shift();
 				url = url.join('/');
 
