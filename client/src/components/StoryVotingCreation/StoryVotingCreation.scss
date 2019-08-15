@@ -89,15 +89,19 @@ body {
 }
 
 .image-uploading {
-	display: flex;
-	flex-direction: column;
+	height: 43px;
+	border-radius: 55px;
+	display: inline-flex;
 	align-items: center;
-	background: $orange;
-	color: white;
-	width: 50px;
-	height: 50px;
-	padding: 15px;
-	border-radius: 50%;
+	padding: 0 15px;
+	border: none;
+	outline: none;
+	font-size: $header-medium;
+	font-weight: bold;
+	background-color: $button-background;
+	color: $white;
+	box-shadow: 0px 5px 12px $button-shadow-color;
+	cursor: pointer;
 
 	svg:hover {
 		cursor: pointer;

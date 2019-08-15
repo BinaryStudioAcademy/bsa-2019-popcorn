@@ -177,7 +177,8 @@ class StoryVoting extends React.Component<StoryVotingProps, StoryVotingState> {
 		const backgroundStyle = {
 			background: this.props.backImage
 				? `url(${this.props.backImage}) no-repeat`
-				: rgba
+				: rgba,
+			backgroundSize: '300px 622px'
 		};
 
 		if (this.state.redirect) return <Redirect to={'/create'} />;
