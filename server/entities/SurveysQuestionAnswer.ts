@@ -14,7 +14,10 @@ export class SurveysQuestionAnswer {
   @ManyToOne(type => SurveysQuestion, { onDelete: "CASCADE" })
   surveysQuestion: SurveysQuestion;
 
-  @ManyToOne(type => SurveysQuestionOption, { onDelete: "CASCADE" })
+  @ManyToOne(type => SurveysQuestionOption, {
+    onDelete: "CASCADE",
+    nullable: true
+  })
   surveysQuestionOption: SurveysQuestionOption;
 
   @ManyToOne(type => User, { onDelete: "CASCADE" })
