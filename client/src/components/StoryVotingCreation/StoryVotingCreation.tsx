@@ -203,15 +203,16 @@ class StoryVotingCreation extends React.Component<
 					value={el.body}
 					onChange={this.handleInputTextChange(idx)}
 				/>
-				{idx > 1 ? (
+				{
 					<button
 						type="button"
 						onClick={this.handleRemoveInput(idx)}
+						style={idx > 1 ? { opacity: 1 } : { opacity: 0 }}
 						className="delete-input-button"
 					>
 						<CrossIcon />
 					</button>
-				) : null}
+				}
 			</div>
 		));
 	};
@@ -282,14 +283,15 @@ class StoryVotingCreation extends React.Component<
 						</div>
 						<div className="story-voting-option-input-container">
 							{this.createInputs()}
+							<button
+								className="add-option-button"
+								type="button"
+								onClick={this.handleAddOption}
+							>
+								Add Option
+							</button>
 						</div>
-						<button
-							className="add-option-button"
-							type="button"
-							onClick={this.handleAddOption}
-						>
-							Add Option
-						</button>
+
 						<div className="color-picker">
 							<label className="color-picker-label">Select back color:</label>
 							<div

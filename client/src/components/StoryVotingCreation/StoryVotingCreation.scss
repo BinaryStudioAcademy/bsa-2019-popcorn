@@ -7,7 +7,7 @@ body {
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-	justify-content: space-around;
+	justify-content: space-evenly;
 	height: calc(100% - 50px);
 	button {
 		margin: 5px;
@@ -26,7 +26,6 @@ body {
 	.head {
 		display: flex;
 		align-items: center;
-		margin-bottom: 4em;
 	}
 	.author {
 		width: 3em;
@@ -70,10 +69,10 @@ body {
 		outline: none;
 		background: none;
 		box-shadow: none;
+		align-self: center;
 		padding: 0;
-		align-self: flex-start;
-		height: 1em;
-		width: 1em;
+		height: 2em;
+		width: 2em;
 		svg {
 			path {
 				fill: black;
@@ -117,7 +116,6 @@ body {
 .color-picker {
 	display: flex;
 	align-items: center;
-	margin: 1em;
 	position: relative;
 }
 
