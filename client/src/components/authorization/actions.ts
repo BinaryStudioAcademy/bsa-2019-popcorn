@@ -1,4 +1,5 @@
 import {
+	LOGOUT,
 	FETCH_LOGIN,
 	FETCH_USER_BY_TOKEN,
 	FETCH_REGISTRATION,
@@ -26,6 +27,12 @@ export const authorize = (values: IValues): any => {
 		}
 	};
 };
+
+export const unauthorize = (): any => {
+	return {
+		type: LOGOUT
+	}
+}
 
 export const fetchByToken = (token: string): any => {
 	return {
