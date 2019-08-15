@@ -5,7 +5,7 @@ import { faStar } from '@fortawesome/free-solid-svg-icons';
 interface IProps {
 	movieSeriesData: {
 		title: string;
-		year?: number;
+		release_date?: string;
 		genre?: string[];
 		rating?: number;
 		any?;
@@ -17,14 +17,21 @@ const MovieSeriesPageHeader: React.FC<IProps> = ({ movieSeriesData }) => {
 	const genre = movieSeriesData.genre && movieSeriesData.genre.join(', ');
 	return (
 		<header className="movie-series-page-header">
-			<div className="title">{movieSeriesData.title}</div>
-			<div className="info">
-				<span className="info-item">{movieSeriesData.year}</span>
-				<span className="info-item">{genre}</span>
-				<span className="info-item">
+			<div className="movie-title-rating">
+				<div className="title">
+					{movieSeriesData.title}
+					{movieSeriesData.release_date
+						? '(' + movieSeriesData.release_date.slice(0, 4) + ')'
+						: null}
+				</div>
+				<span className="rating">
 					<FontAwesomeIcon className="icon-star" icon={faStar} />
 					{movieSeriesData.rating || defaultRating}
+					<span className="max-rating">/5</span>
 				</span>
+			</div>
+			<div className="info">
+				<span className="info-item">Action, Drama, Horror</span>
 			</div>
 		</header>
 	);

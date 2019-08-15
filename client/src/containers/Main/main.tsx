@@ -30,7 +30,7 @@ const { notifications } = {
 type Movie = {
 	id: string;
 	title: string;
-	year?: number;
+	release_date?: string;
 	image: string;
 	duration: string;
 	genres: Array<string>;
