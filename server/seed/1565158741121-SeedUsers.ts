@@ -11,7 +11,8 @@ export class SeedUsers1565158741121 implements MigrationInterface {
         password: "admin1",
         location: "Lebanon",
         aboutMe: "Work in Canopoly",
-        avatar: "https://imgur.com/fvLQf0V.png"
+        avatar: "https://imgur.com/fvLQf0V.png",
+        male: true
       },
       {
         name: "Shawn Leonard",
@@ -19,7 +20,8 @@ export class SeedUsers1565158741121 implements MigrationInterface {
         password: "5d5440e1271362283b0bae72",
         location: "Spain",
         aboutMe: "Work in Phormula",
-        avatar: "https://imgur.com/G1km9tV.png"
+        avatar: "https://imgur.com/G1km9tV.png",
+        male: true
       },
       {
         name: "Peterson Hull",
@@ -27,7 +29,8 @@ export class SeedUsers1565158741121 implements MigrationInterface {
         password: "5d5440e187d0336c0de0c33b",
         location: "Guyana",
         aboutMe: "Work in Zosis",
-        avatar: "https://imgur.com/MViYeqK.png"
+        avatar: "https://imgur.com/MViYeqK.png",
+        male: true
       },
       {
         name: "Brittany Herring",
@@ -35,7 +38,8 @@ export class SeedUsers1565158741121 implements MigrationInterface {
         password: "5d5440e1f5a75940f1a4a804",
         location: "Qatar",
         aboutMe: "Work in Comtract",
-        avatar: "https://imgur.com/JfqF1lO.png"
+        avatar: "https://imgur.com/JfqF1lO.png",
+        female: true
       },
       {
         name: "Ramos Fernandez",
@@ -43,7 +47,8 @@ export class SeedUsers1565158741121 implements MigrationInterface {
         password: "5d5440e13d63211446c43b29",
         location: "Israel",
         aboutMe: "Work in Remotion",
-        avatar: "https://imgur.com/un80lX2.png"
+        avatar: "https://imgur.com/un80lX2.png",
+        male: true
       },
       {
         name: "Marshall Solis",
@@ -51,7 +56,8 @@ export class SeedUsers1565158741121 implements MigrationInterface {
         password: "5d5440e181a79e6ca28ca608",
         location: "Solomon Islands",
         aboutMe: "Work in Ecratic",
-        avatar: "https://imgur.com/eTPLhuF.png"
+        avatar: "https://imgur.com/eTPLhuF.png",
+        male: true
       },
       {
         name: "Christi Scott",
@@ -59,7 +65,8 @@ export class SeedUsers1565158741121 implements MigrationInterface {
         password: "5d5440e1fed85750693e7404",
         location: "Jordan",
         aboutMe: "Work in Rodeology",
-        avatar: "https://imgur.com/FzZAFGj.png"
+        avatar: "https://imgur.com/FzZAFGj.png",
+        female: true
       },
       {
         name: "Hubbard Sykes",
@@ -67,7 +74,8 @@ export class SeedUsers1565158741121 implements MigrationInterface {
         password: "5d5440e1e48fee3713eb74ea",
         location: "Western Sahara",
         aboutMe: "Work in Acrodance",
-        avatar: "https://imgur.com/vuUqpeH.png"
+        avatar: "https://imgur.com/vuUqpeH.png",
+        male: true
       },
       {
         name: "Ola Hogan",
@@ -75,7 +83,8 @@ export class SeedUsers1565158741121 implements MigrationInterface {
         password: "5d5440e1e5e832aa4ec157d1",
         location: "Oman",
         aboutMe: "Work in Filodyne",
-        avatar: "https://imgur.com/DrU0qgd.png"
+        avatar: "https://imgur.com/DrU0qgd.png",
+        female: true
       }
     ];
     usersSeed.map(async userData => {
@@ -86,6 +95,8 @@ export class SeedUsers1565158741121 implements MigrationInterface {
       user.location = userData.location;
       user.aboutMe = userData.aboutMe;
       user.avatar = userData.avatar;
+      user.male = userData.male || null;
+      user.female = userData.female || null;
       await getCustomRepository(UserRepository).save(user);
     });
   }

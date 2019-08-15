@@ -12,6 +12,8 @@ export class User {
   password: string;
   location: string;
   aboutMe: string;
+  male: boolean;
+  female: boolean;
   votings: Voting[];
   votingOptionReactions: VotingOptionReaction[];
   avatar: string;
