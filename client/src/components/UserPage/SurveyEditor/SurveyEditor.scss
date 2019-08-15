@@ -222,6 +222,10 @@ $user-tab-list-space-top: $user-tab-space + $user-tab-active-line;
 					font-size: 30px;
 					color: $text-secondary-color;
 
+					.edit-form {
+						display: none;
+					}
+
 					p {
 						width: fit-content;
 						margin-left: auto;
