@@ -82,11 +82,11 @@ const UserPageTabs: React.SFC<IProps> = ({
 					render={props => (
 						<UserSurveysNav
 							id={profileInfo.id}
-							userInfo={
+							userInfo={{
 								id: profileInfo.id,
 								name: profileInfo.name,
-								image_link: 
-							 }
+								image_link: profileInfo.avatar
+					 		}}
 							mainPath={`${mainPath}/surveys`}
 						/>
 					)}
