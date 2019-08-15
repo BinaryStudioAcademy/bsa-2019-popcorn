@@ -148,13 +148,9 @@ class PostStoryEditor extends React.Component<
 				)}
 				<div className="footer">
 					{this.props.type === 'story' && (
-						<p className="checker">
+						<p className="checker" onClick={this.onToggleCheckbox}>
 							Create post also{' '}
-							<input
-								type="checkbox"
-								checked={this.state.checkboxValue}
-								onChange={this.onToggleCheckbox}
-							/>
+							<input type="checkbox" checked={this.state.checkboxValue} />
 						</p>
 					)}
 				</div>

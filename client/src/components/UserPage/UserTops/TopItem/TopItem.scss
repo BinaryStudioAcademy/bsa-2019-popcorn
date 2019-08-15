@@ -10,7 +10,7 @@
 
 .top-item {
 	color: $text-secondary-color;
-	padding: 5px;
+	padding: 10px;
 	border-radius: 3px;
 	display: grid;
 	grid-template-columns: 1fr 60px 60px 60px;
@@ -36,6 +36,7 @@
 
 	.edit-top {
 		padding: 10px;
+		grid-column: 3/4;
 	}
 
 	.delete-top {

@@ -54,8 +54,12 @@
 		position: absolute;
 		bottom: 36px;
 		.checker {
+			cursor: pointer;
 			float: left;
 			color: $text-secondary-color;
+			input {
+				cursor: pointer;
+			}
 		}
 
 		div {

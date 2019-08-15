@@ -16,6 +16,7 @@ import {
 	FETCH_RESTORE_PASSWORD,
 	FETCH_USER_BY_TOKEN,
 	LOGIN,
+	LOGOUT,
 	RESET_ERROR,
 	RESET_OK,
 	RESTORE_ERROR,
@@ -31,12 +32,12 @@ export function* uploadAvatar(action) {
 		const data = yield call(uploadFile, action.payload.file);
 
 		// remove public in order to save public path to img in server
-		let url = data.imageUrl.split(`\\`);
+		let url = data.imageUrl.split(`/`);
 		url.shift();
 
 		yield put({
 			type: SET_TEMP_AVATAR,
-			payload: { uploadUrl: config.API_URL + url.join('/') }
+			payload: { uploadUrl: config.API_URL + '/' + url.join('/') }
 		});
 	} catch (e) {
 		console.log('user page saga catch: uploadAvatar', e.message);
@@ -45,9 +46,13 @@ export function* uploadAvatar(action) {
 
 export function* setAvatar(action) {
 	try {
-		const res = yield call(axios.put, config.API_URL + action.payload.id, {
-			avatar: action.payload.url
-		});
+		const res = yield call(
+			axios.put,
+			config.API_URL + '/api/user/' + action.payload.id,
+			{
+				avatar: action.payload.url
+			}
+		);
 
 		yield put({
 			type: FINISH_UPLOAD_AVATAR,
@@ -113,6 +118,14 @@ export function* fetchUser(action) {
 	}
 }
 
+export function* unathorizeUser(action) {
+	try {
+		localStorage.removeItem('token');
+	} catch (e) {
+		console.log('Something went wrong with logout');
+	}
+}
+
 export function* fetchRegistration(action) {
 	try {
 		const data = yield call(axios.post, config.API_URL + '/api/auth/register', {
@@ -129,7 +142,7 @@ export function* fetchRegistration(action) {
 		yield put({
 			type: SET_REGISTER_ERROR,
 			payload: {
-				registerError: e.message
+				registerError: e.response.data.message
 			}
 		});
 	}
@@ -210,6 +223,10 @@ function* watchFetchLogin() {
 	yield takeEvery(FETCH_LOGIN, fetchLogin);
 }
 
+function* watchFetchLogout() {
+	yield takeEvery(LOGOUT, unathorizeUser);
+}
+
 function* watchFetchUser() {
 	yield takeEvery(FETCH_USER_BY_TOKEN, fetchUser);
 }
@@ -239,6 +256,7 @@ export default function* profile() {
 		watchFetchRegistration(),
 		watchFetchPosts(),
 		watchFetchResetPassword(),
-		watchFetchRestorePassword()
+		watchFetchRestorePassword(),
+		watchFetchLogout()
 	]);
 }

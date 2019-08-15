@@ -8,14 +8,25 @@ import {
 import EventRepository from "../repository/event.repository";
 import { getRepository, getCustomRepository } from "typeorm";
 
-export const getEvents = async (userId: string): Promise<Event[]> =>
-  await getCustomRepository(EventRepository).getEvents(userId);
+export const getEventsByUserId = async (userId: string): Promise<any[]> => {
+  const myEvents = await getCustomRepository(EventRepository).getEvents(userId);
+  const interestedEvents = await getEventsByVisitorId(userId);
+  return myEvents.concat(interestedEvents);
+};
 
-export const getEventById = async (eventId: number): Promise<Event> =>
+export const getEventById = async (eventId: string): Promise<Event> =>
   await getCustomRepository(EventRepository).getEvent(eventId);
 
-export const createEvent = async (event: Event): Promise<Event[]> =>
-  await getCustomRepository(EventRepository).save([event]);
+export const createEvent = async (event: any): Promise<Event> => {
+  const responseEvent = await getCustomRepository(EventRepository).save(event);
+  const newVisitor = {
+    status: "going",
+    userId: responseEvent.userId,
+    eventId: responseEvent.id
+  };
+  const visitor = await createVisitor(newVisitor as any);
+  return { ...responseEvent, eventVisitors: visitor };
+};
 
 export const updateEvent = async (updatedEvent: Event): Promise<Event[]> => {
   let event = await getCustomRepository(EventRepository).findOne(
@@ -64,10 +75,14 @@ export const getVisitorsByEventId = async (
 ): Promise<EventVisitor[]> =>
   await getRepository(VisitorEntity).find({ eventId });
 
-export const getEventsByVisitorId = async (
-  userId: string
-): Promise<EventVisitor[]> =>
-  await getCustomRepository(EventRepository).getEventsByVisitorId(userId);
+export const getEventsByVisitorId = async (userId: string): Promise<any[]> => {
+  const visitorEvents = await getCustomRepository(
+    EventRepository
+  ).getEventsByVisitorId(userId);
+  const result = visitorEvents.map(visitorEvent => visitorEvent.event);
+  return result;
+};
+
 export const createVisitor = async (
   visitor: EventVisitor
 ): Promise<EventVisitor[]> =>
@@ -80,6 +95,7 @@ export const updateVisitor = async (
   visitor = { ...visitor, status: updatedVisitor.status };
   return await getRepository(VisitorEntity).save([visitor]);
 };
+
 export const deleteVisitorById = async (
   visitorId: number
 ): Promise<EventVisitor> => {

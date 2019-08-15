@@ -13,13 +13,17 @@ export class EventVisitor {
   @PrimaryGeneratedColumn("uuid")
   id: string;
 
-  @ManyToOne(type => User, user => user.id)
+  @ManyToOne(type => User, user => user.id, {
+    onDelete: "CASCADE"
+  })
   @JoinColumn()
   user: User;
 
-  @ManyToOne(type => Event, event => event.eventVisitors)
+  @ManyToOne(type => Event, event => event.eventVisitors, {
+    onDelete: "CASCADE"
+  })
   @JoinColumn()
-  event: string;
+  event: Event;
 
   @Column()
   status: string;

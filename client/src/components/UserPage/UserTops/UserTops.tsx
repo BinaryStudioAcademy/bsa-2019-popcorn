@@ -32,7 +32,8 @@ const topItemsMock: ITopItem[] = [
 			{ title: 'The Avengers', id: '1', comment: 'Nice' },
 			{ title: 'Spider-Man', id: '2', comment: 'Nice' },
 			{ title: 'Batman', id: '3', comment: 'Nice' }
-		]
+		],
+		isOwnTop: true
 	},
 	{
 		id: '2',
@@ -42,7 +43,8 @@ const topItemsMock: ITopItem[] = [
 			{ title: 'The Avengers', id: '1', comment: 'Nice' },
 			{ title: 'Spider-Man', id: '2', comment: 'Nice' },
 			{ title: 'Batman', id: '3', comment: 'Nice' }
-		]
+		],
+		isOwnTop: true
 	},
 	{
 		id: '3',
@@ -52,7 +54,19 @@ const topItemsMock: ITopItem[] = [
 			{ title: 'The Avengers', id: '1', comment: 'Nice' },
 			{ title: 'Spider-Man', id: '2', comment: 'Nice' },
 			{ title: 'Batman', id: '3', comment: 'Nice' }
-		]
+		],
+		isOwnTop: true
+	},
+	{
+		id: '4',
+		title: "Somebody's Top",
+		topImageUrl: 'https://www.w3schools.com/images/colorpicker.gif',
+		moviesList: [
+			{ title: 'The Avengers', id: '1', comment: 'Nice' },
+			{ title: 'Spider-Man', id: '2', comment: 'Nice' },
+			{ title: 'Batman', id: '3', comment: 'Nice' }
+		],
+		isOwnTop: false
 	}
 ];
 
@@ -61,7 +75,8 @@ const newTop = (): ITopItem => {
 		id: Date.now().toString(),
 		title: '',
 		moviesList: [],
-		topImageUrl: ''
+		topImageUrl: '',
+		isOwnTop: true
 	};
 };
 
@@ -72,7 +87,6 @@ class UserTops extends React.Component<IUserTopProps, IUserTopsState> {
 			topList: topItemsMock
 		};
 	}
-
 	deleteTop = (topId: string) => {
 		const topList = this.state.topList.filter(
 			(topItem: ITopItem) => topItem.id !== topId
@@ -104,7 +118,7 @@ class UserTops extends React.Component<IUserTopProps, IUserTopsState> {
 
 		const topList = this.state.topList;
 		return (
-			<div>
+			<div className="user-tops">
 				{url_callback && (
 					<button onClick={redirect} className={'btn'}>
 						Back to story
@@ -113,17 +127,22 @@ class UserTops extends React.Component<IUserTopProps, IUserTopsState> {
 				<div className="create-top-button hover" onClick={this.createTop}>
 					Create Top
 				</div>
-				{topList.map((topItem: ITopItem) => (
-					<TopItem
-						key={topItem.id}
-						saveUserTop={this.saveUserTop}
-						topItem={topItem}
-						deleteTop={this.deleteTop}
-						uploadUrl={this.props.uploadUrl}
-						urlForTop={this.props.urlForTop}
-						uploadImage={this.props.uploadImage}
-					/>
-				))}
+				{topList.map(
+					(topItem: ITopItem) =>
+						((topItem.isOwnTop &&
+							window.location.pathname == '/user-page/tops') ||
+							window.location.pathname == '/movie-tops') && (
+							<TopItem
+								key={topItem.id}
+								saveUserTop={this.saveUserTop}
+								topItem={topItem}
+								deleteTop={this.deleteTop}
+								uploadUrl={this.props.uploadUrl}
+								urlForTop={this.props.urlForTop}
+								uploadImage={this.props.uploadImage}
+							/>
+						)
+				)}
 			</div>
 		);
 	}
