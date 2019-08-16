@@ -117,14 +117,17 @@
 
 			.search-input {
 				border: none;
-				margin-bottom: 5px;
+				margin: 6px 10px 0px 10px;
 				width: 240px;
+				display: block;
 			}
 			.search-input:focus {
 				outline: none;
 			}
 			.search-icon {
 				margin: 6px 10px 0px 10px;
+				display: block;
+				float: left;
 			}
 		}
 	}
