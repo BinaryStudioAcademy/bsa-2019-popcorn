@@ -24,6 +24,7 @@ interface IQuestion {
 	required: boolean;
 	options?: Array<{
 		id: string;
+		index: number;
 		question_id: string;
 		value: string;
 	}>;
@@ -139,6 +140,7 @@ class SurveyEditor extends Component<IProps, IState> {
 			required: false,
 			options: [
 				{
+					index: 0,
 					id: uuid(),
 					question_id: id,
 					value: 'Option 1'
@@ -193,6 +195,7 @@ class SurveyEditor extends Component<IProps, IState> {
 					required: false,
 					options: [
 						{
+							index: 0,
 							id: uuid(),
 							question_id: id,
 							value: 'Option 1'

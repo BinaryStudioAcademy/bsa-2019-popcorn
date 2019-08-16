@@ -26,6 +26,7 @@ export default () => {
 				required: false,
 				options: [
 					{
+						index: 0,
 						id: uuid(),
 						question_id: questionId,
 						value: 'Option 1'
