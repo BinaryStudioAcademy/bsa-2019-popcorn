@@ -41,7 +41,7 @@ const DragDrop: React.FC<IDragDropProps> = ({
 							style={getListStyle(snapshot.isDraggingOver)}
 						>
 							{moviesList.map((movie, index) => {
-								if (index !== moviesList.length) 
+								if (index !== moviesList.length - 1) 
 								return (
 									<Draggable
 										className="film-input-item"
@@ -77,7 +77,7 @@ const DragDrop: React.FC<IDragDropProps> = ({
 					)}
 				</Droppable>
 			</DragDropContext>
-{/* 			<div className="film-input-wrap">
+			<div className="film-input-wrap">
 				<div className="numeration">{moviesList.length}</div>
 				<FilmInput
 					movie={moviesList[moviesList.length - 1]}
@@ -85,7 +85,7 @@ const DragDrop: React.FC<IDragDropProps> = ({
 					deleteFilmInput={deleteFilmInput}
 					last={true}
 				/>
-			</div> */}
+			</div>
 		</div>
 	);
 };
