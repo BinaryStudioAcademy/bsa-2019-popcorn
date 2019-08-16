@@ -84,7 +84,7 @@ class ProfileComponent extends Component<ProfileProps> {
 	}
 
 	render() {
-		const {
+		let {
 			name,
 			location,
 			aboutMe,
@@ -93,6 +93,15 @@ class ProfileComponent extends Component<ProfileProps> {
 			avatar,
 			id
 		} = this.props.profileInfo;
+
+		if (!male && !female) {
+			female = true;
+		}
+
+		if (!location) {
+			location = 'Kyiv';
+		}
+
 		const { uploadUrl, cancelAvatar, setAvatar } = this.props;
 		return (
 			<div className={'UserProfileComponent'}>
