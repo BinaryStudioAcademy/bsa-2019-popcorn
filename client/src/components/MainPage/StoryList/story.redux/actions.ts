@@ -15,11 +15,13 @@ export const fetchStories = () => {
 	};
 };
 
-export const setCaption = caption => {
+export const setCaption = (caption, start, end) => {
 	return {
 		type: SET_CAPTION_NEWSTORY,
 		payload: {
-			caption
+			caption,
+			start,
+			end
 		}
 	};
 };
