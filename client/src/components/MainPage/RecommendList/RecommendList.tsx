@@ -24,11 +24,11 @@ const RecommendList: React.FC = ({  }: RecommendList) => {
 			></RecommendItem>
 			<RecommendItem
 				recommendItem={{
-					date: '22 July',
-					name: 'Big Beauty reunion',
+					date: '26 June',
+					name: 'The Great Gatsby',
 					image:
-						'https://i1.wp.com/www.revistabula.com/wp/wp-content/uploads/2019/01/O-Lagosta-1.jpg?resize=610%2C350&ssl=1',
-					rating: 4
+						'https://www.thewrap.com/wp-content/uploads/files/2013/May/05/89511/main_image/gatsbybiginside.png',
+					rating: 3
 				}}
 			></RecommendItem>
 		</div>

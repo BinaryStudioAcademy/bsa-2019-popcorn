@@ -2,6 +2,8 @@ import React from 'react';
 import { Redirect } from 'react-router';
 import PostStoryEditor from '../../PostStoryEditor/PostStoryEditor';
 import INewStory from '../INewStory';
+import { faPlusCircle } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 interface IProps {
 	newStory: INewStory;
@@ -54,14 +56,25 @@ class getAddStoryPopupContent extends React.Component<IProps> {
 						>
 							{newStory.activity && newStory.activity.name}
 						</PostStoryEditor>
+						<button
+							className={'btn'}
+							onClick={addExtra}
+							style={{
+								width: '50px',
+								minWidth: 'auto',
+								position: 'absolute',
+								top: '5px',
+								right: '65px',
+								height: '43px',
+								display: 'flex',
+								justifyContent: 'center'
+							}}
+						>
+							<FontAwesomeIcon icon={faPlusCircle} />
+						</button>
 					</div>
 
 					<div className={'btn-wrp'}>
-						<div className={'extra'}>
-							<button className={'btn'} onClick={addExtra}>
-								Add extra
-							</button>
-						</div>
 						<div className={'cancel-save'}>
 							<button onClick={close} className={'btn'}>
 								Cancel
