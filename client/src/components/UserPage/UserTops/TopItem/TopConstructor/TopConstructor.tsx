@@ -47,6 +47,7 @@ const TopConstructor: React.FC<ITopConstructorProps> = ({
 			updatedMovies.push(emptyInput);
 		}
 		setMovies(updatedMovies);
+		console.log(movies);
 	}
 	function save() {
 		saveTop(movies);
