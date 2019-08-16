@@ -2,7 +2,12 @@ import React, { Component } from 'react';
 import { v4 as uuid } from 'uuid';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import TextareaAutosize from '@material-ui/core/TextareaAutosize';
-import { faCopy, faTimes, faTrashAlt, faImage } from '@fortawesome/free-solid-svg-icons';
+import {
+	faCopy,
+	faTimes,
+	faTrashAlt,
+	faImage
+} from '@fortawesome/free-solid-svg-icons';
 import MultipleChoice from '../SurveyEditorItems/MultipleChoice';
 import ShortAnswer from '../SurveyEditorItems/ShortAnswer';
 import LinearScale from '../SurveyEditorItems/LinearScale';
@@ -263,7 +268,7 @@ class SurveyQuestion extends Component<IProps, IState> {
 							<p>
 								<FontAwesomeIcon icon={faImage} title="Add image" />
 							</p>
-						</label> 
+						</label>
 					</div>
 				</div>
 			</div>

@@ -6,7 +6,7 @@ import feedReducer from '../components/MainPage/FeedBlock/FeedBlock.redux/reduce
 import eventsReducer from '../components/UserPage/UserEvents/reduser';
 import userTopsReducer from '../components/UserPage/UserTops/reducer';
 import adminPanelReducer from '../components/AdminPanelPage/AdminPanelPage.redux/reducer';
-import surveyReducer from '../components/UserPage/UserSurveys/UserSurveys.redux/reducer'
+import surveyReducer from '../components/UserPage/UserSurveys/UserSurveys.redux/reducer';
 
 const reducers = {};
 

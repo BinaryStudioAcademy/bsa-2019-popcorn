@@ -8,14 +8,19 @@ import {
 } from './actionTypes';
 import INewStory from '../INewStory';
 
-const initialState: { stories: any; newStory: INewStory } = {
+const initialState: {
+	stories: any;
+	newStory: INewStory;
+	cursorPosition: { start: number; end: number };
+} = {
 	stories: null,
 	newStory: {
 		image_url: null,
 		caption: '',
 		activity: null,
 		type: ''
-	}
+	},
+	cursorPosition: { start: 0, end: 0 }
 };
 
 export default function(state = initialState, action) {
@@ -31,6 +36,10 @@ export default function(state = initialState, action) {
 				newStory: {
 					...state.newStory,
 					caption: action.payload.caption
+				},
+				cursorPosition: {
+					start: action.payload.start,
+					end: action.payload.end
 				}
 			};
 		case CHANGE_IMAGE:
