@@ -10,10 +10,12 @@
 	grid-template-rows: 30px 65px 65px 30px;
 	align-items: center;
 	justify-items: center;
+	background: #efefef;
+	width: max-content;
 }
 
 .story-pic {
-	height: 190px;
+	height: auto;
 	width: 120px;
 	grid-row: 1/-1;
 	grid-column: 1/-1;
