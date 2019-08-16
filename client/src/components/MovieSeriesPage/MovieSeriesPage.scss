@@ -13,7 +13,7 @@ $orange: #fb8700;
 $header-letter-spacing: 0.9px;
 
 .movie-series-page {
-	width: 70%;
+	width: 80%;
 	margin: 2% auto 0;
 	display: flex;
 	flex-direction: column;
@@ -96,6 +96,6 @@ $header-letter-spacing: 0.9px;
 .movie-series-page-tab-body {
 	position: relative;
 	display: grid;
-	grid-template-columns: 0.75fr 0.25fr;
+	grid-template-columns: 0.7fr 0.3fr;
 	grid-gap: 10px;
 }

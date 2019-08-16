@@ -8,18 +8,23 @@ import { connect } from 'react-redux';
 import Spinner from '../../shared/Spinner';
 import { fetchPosts } from './FeedBlock.redux/actions';
 import StoryList from '../StoryList';
+import { fetchStories } from '../StoryList/story.redux/actions';
 
 interface IProps {
 	posts: any;
+	stories: any;
 	fetchPosts: () => any;
+	fetchStories: () => any;
 }
 
 const FeedBlock = (props: IProps) => {
 	if (!props.posts) {
 		props.fetchPosts();
 	}
-
-	return props.posts ? (
+	if (!props.stories) {
+		props.fetchStories();
+	}
+	return props.posts && props.stories ? (
 		<div>
 			<StoryList scrollStep={1} />
 			<div className={'feed-block'}>
@@ -39,11 +44,13 @@ const FeedBlock = (props: IProps) => {
 
 const mapStateToProps = (rootState, props) => ({
 	...props,
-	posts: rootState.feed.posts
+	posts: rootState.feed.posts,
+	stories: rootState.story.stories
 });
 
 const actions = {
-	fetchPosts
+	fetchPosts,
+	fetchStories
 };
 const mapDispatchToProps = dispatch => bindActionCreators(actions, dispatch);
 

@@ -203,9 +203,6 @@ class UserEventsEditor extends React.Component<
 
 		return (
 			<div className="event-editor">
-				<button className="back-btn hover" onClick={this.onCancel}>
-					Back
-				</button>
 
 				<div className="inputs">
 					<label className="input-wrp">
@@ -233,7 +230,6 @@ class UserEventsEditor extends React.Component<
 								imageHandler={uploadFile}
 								imageStateHandler={image => this.setState({ image })}
 							/>
-							<PhotoIcon />
 						</div>
 					</label>
 
