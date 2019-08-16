@@ -7,7 +7,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 interface IProps {
 	newStory: INewStory;
-	setCaption: (caption: string) => any;
+	cursorPosition: { start: number; end: number };
+	setCaption: (caption: string, start: number, end: number) => any;
 	saveImage: (url: string) => any;
 	changeActivity: (
 		type: string,
@@ -49,6 +50,7 @@ class getAddStoryPopupContent extends React.Component<IProps> {
 						<PostStoryEditor
 							type={'story'}
 							body={newStory.caption || ''}
+							cursorPosition={this.props.cursorPosition}
 							imageUrl={newStory.image_url || ''}
 							changeBody={this.props.setCaption}
 							saveImage={this.props.saveImage}

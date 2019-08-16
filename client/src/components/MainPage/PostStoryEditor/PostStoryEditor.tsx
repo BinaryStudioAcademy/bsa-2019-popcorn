@@ -15,11 +15,12 @@ interface IPostStoryEditorProps {
 	saveImage: (url: string) => void;
 	body: string;
 	imageUrl: string;
-	changeBody: (text: string) => any;
+	changeBody: (text: string, start: number, end: number) => any;
 	changeActivity?: (
 		type: string,
 		activity: null | { id: string; name: string }
 	) => any;
+	cursorPosition: { start: number; end: number };
 }
 
 interface IPostStoryEditorState {
@@ -27,6 +28,8 @@ interface IPostStoryEditorState {
 	errorMsg: string;
 	isUploading: boolean;
 	savePhoto: boolean;
+	selectionStart: number;
+	selectionEnd: number;
 }
 
 class PostStoryEditor extends React.Component<
@@ -39,7 +42,9 @@ class PostStoryEditor extends React.Component<
 			checkboxValue: false,
 			errorMsg: '',
 			isUploading: false,
-			savePhoto: false
+			savePhoto: false,
+			selectionStart: 0,
+			selectionEnd: 0
 		};
 
 		this.onCancel = this.onCancel.bind(this);
@@ -48,11 +53,19 @@ class PostStoryEditor extends React.Component<
 		this.imageStateHandler = this.imageStateHandler.bind(this);
 	}
 
+	private textarea = React.createRef<HTMLTextAreaElement>();
+
 	onToggleCheckbox() {
 		// this.setState({
 		// 	...this.state,
 		// 	checkboxValue: !this.state.checkboxValue
 		// });
+	}
+	componentDidMount() {
+		if (this.textarea.current) {
+			this.textarea.current.selectionStart = this.props.cursorPosition.start;
+			this.textarea.current.selectionEnd = this.props.cursorPosition.end;
+		}
 	}
 
 	onCancel() {
@@ -111,9 +124,18 @@ class PostStoryEditor extends React.Component<
 					</div>
 				)}
 				<textarea
+					ref={this.textarea}
 					placeholder="Type a text here..."
-					value={this.props.body}
-					onChange={e => this.props.changeBody(e.target.value)}
+					defaultValue={this.props.body}
+					onChange={e => {
+						this.props.changeBody(
+							e.target.value,
+							this.textarea.current !== null
+								? this.textarea.current.selectionStart
+								: 2,
+							this.textarea.current ? this.textarea.current.selectionEnd : 0
+						);
+					}}
 					autoFocus
 					onFocus={function(e) {
 						const val = e.target.value;
