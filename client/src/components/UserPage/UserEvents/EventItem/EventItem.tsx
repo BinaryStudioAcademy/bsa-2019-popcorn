@@ -48,10 +48,10 @@ const EventItem: React.FC<IProps> = ({ event, deleteEvent, editEvent }) => {
 							/>
 							<span>Kyiv. Ukraine (mock)</span>
 						</div> */}
-						<div className="event-movie">
+						{/* <div className="event-movie">
 							<FontAwesomeIcon className="icon-movie" icon={faVideo} />
 							The Mountain (2019) (mock)
-						</div>
+						</div> */}
 						<div className="event-users">
 							<FontAwesomeIcon className="icon-users" icon={faUsers} />
 							{eventVisitors.length} users subscribe
