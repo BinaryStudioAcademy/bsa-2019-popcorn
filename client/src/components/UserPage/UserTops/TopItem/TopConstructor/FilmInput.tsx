@@ -14,7 +14,7 @@ interface IInputProps {
 	movieList: Array<any>; //movies from elastic search
 	clearSearch: () => void;
 	saveMovie: (movie: IMovie) => void;
-	last?: boolean
+	last?: boolean;
 }
 const FilmInput: React.FC<IInputProps> = ({
 	saveMovie,
@@ -55,10 +55,10 @@ const FilmInput: React.FC<IInputProps> = ({
 				placeholder="Type film here"
 				value={title}
 				onFocus={() => setFocused(true)}
-				onBlur={() => { 
-					clearSearch(); 
+				onBlur={() => {
+					clearSearch();
 					if (title.trim() === '' && comment.trim() === '')
-					deleteFilmInput(movie.id);
+						deleteFilmInput(movie.id);
 				}}
 			/>
 			{!isChosenTitle && alreadySearch && isFocused ? (
@@ -83,18 +83,15 @@ const FilmInput: React.FC<IInputProps> = ({
 					)}
 				</div>
 			) : null}
-			{
-				!last &&
-				<img
-					src={closeIcon}
-					onClick={() => deleteFilmInput(movie.id)}
-					alt="close"
-				/>
-			}
-			{
-				last && 
-				<div></div>
-			}
+			<span>
+				{!last && (
+					<img
+						src={closeIcon}
+						onClick={() => deleteFilmInput(movie.id)}
+						alt="close"
+					/>
+				)}
+			</span>
 
 			<textarea
 				maxLength={140}

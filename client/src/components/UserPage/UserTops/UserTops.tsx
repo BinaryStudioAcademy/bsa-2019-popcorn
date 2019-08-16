@@ -76,7 +76,8 @@ const newTop = (): ITopItem => {
 		title: '',
 		moviesList: [],
 		topImageUrl: '',
-		isOwnTop: true
+		isOwnTop: true,
+		isNewTop: true
 	};
 };
 

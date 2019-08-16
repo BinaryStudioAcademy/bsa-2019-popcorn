@@ -41,13 +41,15 @@ const DragDrop: React.FC<IDragDropProps> = ({
 							style={getListStyle(snapshot.isDraggingOver)}
 						>
 							{moviesList.map((movie, index) => {
-								if (index !== moviesList.length - 1) 
 								return (
 									<Draggable
 										className="film-input-item"
 										key={movie.id}
 										draggableId={movie.id}
 										index={index}
+										isDragDisabled={
+											index !== moviesList.length - 1 ? false : true
+										}
 									>
 										{(provided, snapshot) => (
 											<div
@@ -62,6 +64,9 @@ const DragDrop: React.FC<IDragDropProps> = ({
 												<div className="film-input-wrap">
 													<div className="numeration">{index + 1}</div>
 													<FilmInput
+														last={
+															index !== moviesList.length - 1 ? false : true
+														}
 														movie={movie}
 														saveMovie={saveMovie}
 														deleteFilmInput={deleteFilmInput}
@@ -77,15 +82,6 @@ const DragDrop: React.FC<IDragDropProps> = ({
 					)}
 				</Droppable>
 			</DragDropContext>
-			<div className="film-input-wrap">
-				<div className="numeration">{moviesList.length}</div>
-				<FilmInput
-					movie={moviesList[moviesList.length - 1]}
-					saveMovie={saveMovie}
-					deleteFilmInput={deleteFilmInput}
-					last={true}
-				/>
-			</div>
 		</div>
 	);
 };

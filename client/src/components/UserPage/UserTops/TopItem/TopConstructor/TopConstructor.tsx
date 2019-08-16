@@ -2,6 +2,10 @@ import React, { useEffect, useState } from 'react';
 import './TopConstructor.scss';
 import DragDrop from './DragDrop';
 import { IMovie } from '../TopItem';
+import { uniqueId } from 'lodash';
+const emptyInput = () => {
+	return { title: '', id: uniqueId('movie'), comment: '' };
+};
 
 const reorder = (list, startIndex, endIndex): any => {
 	const result = Array.from(list);
@@ -19,8 +23,7 @@ const TopConstructor: React.FC<ITopConstructorProps> = ({
 	saveTop,
 	moviesList
 }) => {
-	const emptyInput = { title: '', id: Date.now().toString(), comment: '' };
-	const [movies, setMovies] = useState([...moviesList, emptyInput]);
+	const [movies, setMovies] = useState([...moviesList, emptyInput()]);
 
 	function onDragEnd(result) {
 		if (!result.destination) {
@@ -44,7 +47,7 @@ const TopConstructor: React.FC<ITopConstructorProps> = ({
 			movie.id === updatedMovie.id ? updatedMovie : movie
 		);
 		if (updatedMovie.id === movies[movies.length - 1].id) {
-			updatedMovies.push(emptyInput);
+			updatedMovies.push(emptyInput());
 		}
 		setMovies(updatedMovies);
 		console.log(movies);
