@@ -22,17 +22,26 @@ export class SeedStory1565606634607 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
     const storySeed = [
       "https://i.imgur.com/o8Rh8cl.jpg",
+      "https://i.imgur.com/ZAlb6Ho.jpg",
       "https://i.imgur.com/WwzxGK0.png",
       "https://i.imgur.com/VVNNYyQ.jpg",
       "https://i.imgur.com/JUvRk3m.jpg",
+      "https://i.imgur.com/3yg29Um.jpg",
+      "https://i.imgur.com/SKB3aYr.jpg",
+      "https://i.imgur.com/YWMftDS.jpg",
       "https://i.imgur.com/JIO9NDe.jpg",
       "https://i.imgur.com/2Q2oVx6.jpg",
+      "https://i.imgur.com/P1LeOb1.jpg",
       "https://i.imgur.com/lNBp07l.jpg",
       "https://i.imgur.com/qegQqYi.jpg",
+      "https://i.imgur.com/VImODGo.jpg",
       "https://i.imgur.com/3EdFMIJ.jpg",
+      "https://i.imgur.com/ms8SNS1.jpg",
       "https://i.imgur.com/ATWRv26.png",
       "https://i.imgur.com/T2ZKWFW.jpg",
+      "https://i.imgur.com/OyCSAkv.jpg",
       "https://i.imgur.com/TUX1dIf.jpg",
+      "https://i.imgur.com/IDR6l4J.jpg",
       "https://i.imgur.com/0MdFJjP.jpg"
     ];
 
