@@ -4,8 +4,8 @@ export interface IEventFormatFromEditor {
 	title: string;
 	description: string;
 	location: {
-		lat: number;
-		lng: number;
+		lat: number | undefined;
+		lng: number | undefined;
 	};
 	dateRange: {
 		startDate: undefined | Date;
@@ -21,8 +21,8 @@ export interface IEventFormatClient extends IEventFormatFromEditor {
 	id: string;
 	eventVisitors: IVisitor[];
 	location: {
-		lat: number;
-		lng: number;
+		lat: number | undefined;
+		lng: number | undefined;
 	};
 }
 
@@ -31,8 +31,8 @@ export interface IventFormatToSave {
 	title: string;
 	description: string;
 	image: string;
-	location_lat: number;
-	location_lng: number;
+	location_lat: number | undefined;
+	location_lng: number | undefined;
 	start_date: undefined | Date;
 	end_date: undefined | Date;
 	isPrivate: boolean;
@@ -106,8 +106,8 @@ export const formatToDataBase = (
 		title,
 		description,
 		image,
-		location_lat: location.lat,
-		location_lng: location.lng,
+		location_lat: location && location.lat,
+		location_lng: location && location.lng,
 		start_date: dateRange.startDate,
 		end_date: dateRange.endDate,
 		isPrivate,
