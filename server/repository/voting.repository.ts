@@ -1,11 +1,12 @@
 import { EntityRepository, Repository } from "typeorm";
+import { Voting } from "../models/VotingModel";
+import { Voting as VotingEntity } from "../entities/Voting";
 import UserRepository from "./user.repository";
 import { getCustomRepository } from "typeorm";
 import { VotingOption } from "../models/VotingOptionModel";
 import VotingOptionRepository from "./votingOption.repository";
-import { Voting } from "../entities/Voting";
 
-@EntityRepository(Voting)
+@EntityRepository(VotingEntity)
 class VotingRepository extends Repository<Voting> {
   async createVoting(
     id: string,
