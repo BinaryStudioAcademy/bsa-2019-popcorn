@@ -22,7 +22,7 @@ const RecommendItem = ({
 		<div className="recommend-item">
 			<div className="recommend-item-header">
 				<div className="recommend-item-header-text">
-					Added to&nbsp;<strong>Popular</strong>
+					<strong>Review</strong>
 				</div>
 				<button className="recommend-item-settings">
 					<SettingIcon width="13" height="4" />
@@ -72,22 +72,22 @@ const RecommendItem = ({
 					<div>
 						<img
 							className="recommend-item-reaction-image"
-							src="https://pbs.twimg.com/profile_images/1088129693390385152/oYJSGsdq_400x400.jpg"
+							src="https://i.pravatar.cc/300?img=10"
 							alt="author"
 						/>
 						<img
 							className="recommend-item-reaction-image"
-							src="https://pbs.twimg.com/profile_images/1088129693390385152/oYJSGsdq_400x400.jpg"
+							src="https://i.pravatar.cc/300?img=11"
 							alt="author"
 						/>
 						<img
 							className="recommend-item-reaction-image"
-							src="https://pbs.twimg.com/profile_images/1088129693390385152/oYJSGsdq_400x400.jpg"
+							src="https://i.pravatar.cc/300?img=12"
 							alt="author"
 						/>
 						<img
 							className="recommend-item-reaction-image"
-							src="https://pbs.twimg.com/profile_images/1088129693390385152/oYJSGsdq_400x400.jpg"
+							src="https://i.pravatar.cc/300?img=15"
 							alt="author"
 						/>
 						<svg
