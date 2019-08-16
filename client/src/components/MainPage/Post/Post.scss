@@ -2,7 +2,7 @@
 
 .reaction-list {
 	display: grid;
-	grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+	grid-template-columns: repeat(auto-fill, minmax(70px, 1fr));
 	align-items: center;
 	padding-left: 16px;
 }
@@ -136,6 +136,7 @@
 	align-items: center;
 	text-align: left;
 	flex-direction: row;
+	margin-bottom: 10px;
 }
 
 .post-item-reaction-image {
