@@ -5,7 +5,8 @@ import {
 	SET_TEMP_AVATAR,
 	SET_USER_POSTS,
 	START_UPLOAD_AVATAR,
-	USER_POSTS
+	USER_POSTS,
+	SEND_POST
 } from './actionTypes';
 import { uploadFile } from '../../services/file.service';
 import axios from 'axios';
@@ -157,6 +158,16 @@ export function* fetchPosts(action) {
 	}
 }
 
+export function* sendPost(post) {
+	try {
+		yield call(axios.post, config.API_URL + '/api/post/', {
+			...post.payload.data
+		});
+	} catch (e) {
+		console.log('profile saga fetch posts:', e.message);
+	}
+}
+
 export function* resetPassword(action) {
 	try {
 		const data = yield call(webApi, {
@@ -202,6 +213,10 @@ export function* fetchRestorePassword(action) {
 	}
 }
 
+function* watchSendPost() {
+	yield takeEvery(SEND_POST, sendPost);
+}
+
 function* watchFetchFilms() {
 	yield takeEvery(START_UPLOAD_AVATAR, uploadAvatar);
 }
@@ -243,6 +258,7 @@ export default function* profile() {
 		watchFetchRegistration(),
 		watchFetchPosts(),
 		watchFetchResetPassword(),
-		watchFetchRestorePassword()
+		watchFetchRestorePassword(),
+		watchSendPost()
 	]);
 }

@@ -2,7 +2,8 @@ import {
 	CANCEL_TEMP_AVATAR,
 	SET_AVATAR,
 	START_UPLOAD_AVATAR,
-	USER_POSTS
+	USER_POSTS,
+	SEND_POST
 } from './actionTypes';
 
 export const uploadAvatar = (file: FormData, id: string): any => {
@@ -27,6 +28,15 @@ export const setAvatar = (url, id): any => {
 		payload: {
 			url,
 			id
+		}
+	};
+};
+
+export const setPost = (data): any => {
+	return {
+		type: SEND_POST,
+		payload: {
+			data
 		}
 	};
 };

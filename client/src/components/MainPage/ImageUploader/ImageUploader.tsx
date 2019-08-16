@@ -45,6 +45,7 @@ class ImageUploader extends React.Component<
 		this.props
 			.imageHandler(data)
 			.then(({ imageUrl }) => {
+				console.log(imageUrl);
 				this.setState({ imageUrl, isUploading: false, errorMsg: '' });
 				this.props.imageStateHandler(imageUrl);
 			})
@@ -56,7 +57,7 @@ class ImageUploader extends React.Component<
 
 	render() {
 		return (
-			<div className="edit-form">
+			<div>
 				{this.state.errorMsg && (
 					<span className="upload-error">{this.state.errorMsg}</span>
 				)}
