@@ -13,6 +13,7 @@ import { unauthorize } from '../../authorization/actions';
 import { NavLink, Link } from 'react-router-dom';
 import { setMovieSeries } from '../../MovieSeriesPage/Movie.redux/actions';
 import config from '../../../config';
+import Image from '../Image/Image';
 
 interface IProps {
 	userInfo: {
@@ -135,7 +136,11 @@ const Header = ({
 				</NavLink>
 			</div>
 			<div className="user-info header-buttons hover">
-				<img src={userInfo.avatar || config.DEFAULT_AVATAR} alt="avatar" />
+				<Image
+					src={userInfo.avatar}
+					defaultSrc={config.DEFAULT_AVATAR}
+					alt="avatar"
+				/>
 				<span className="user-name">{userInfo.name}</span>
 				<div className="modal">
 					<Link aria-current="page" className="hover" to="/user-page">
