@@ -41,6 +41,9 @@ class SurveysRepository extends Repository<Surveys> {
   async getSurveys(next?) {
     try {
       const a = await this.find({
+        order: {
+          created_at: "DESC"
+        },
         relations: [
           "surveysQuestion",
           "surveysQuestion.surveysQuestionOption",
