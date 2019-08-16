@@ -5,13 +5,14 @@ import StorySeenByModal from '../StorySeenByModal/StorySeenByModal';
 import './StoryViewer.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
-	faTimes,
+	faChevronLeft,
+	faChevronRight,
 	faEllipsisH,
 	faEye,
-	faChevronRight,
-	faChevronLeft
+	faTimes
 } from '@fortawesome/free-solid-svg-icons';
 import config from '../../../config';
+import StoryVoting from '../../StoryVoting/StoryVoting';
 
 interface IProps {
 	stories: Array<{
@@ -24,6 +25,22 @@ interface IProps {
 			image_url: string;
 		};
 		created_at: Date;
+		type: string;
+		voting?: {
+			backColor: string;
+			backImage: string;
+			deltaPositionHeadX: number;
+			deltaPositionHeadY: number;
+			deltaPositionOptionBlockX: number;
+			deltaPositionOptionBlockY: number;
+			header: string;
+			id: string;
+			options: Array<{
+				body: string;
+				voted: number;
+			}>;
+		};
+		activity?: string;
 	}>;
 	currentUser: {
 		userId: string;
@@ -125,26 +142,60 @@ class StoryViewer extends PureComponent<IProps, IState> {
 										<FontAwesomeIcon icon={faEllipsisH} />
 									</p>
 								</header>
-								<main
-									style={{
-										backgroundImage: 'url(' + story.image_url + ')',
-										backgroundColor: story.bckg_color
-									}}
-								>
-									{this.isOwnStory(story) && (
-										<div className="seen">
+
+								{story.type === 'voting' && story.voting && (
+									<StoryVoting
+										header={story.voting.header}
+										options={story.voting.options}
+										deltaPositionForHeader={{
+											x: story.voting.deltaPositionHeadX,
+											y: story.voting.deltaPositionHeadY
+										}}
+										deltaPositionForOptionBlock={{
+											x: story.voting.deltaPositionOptionBlockX,
+											y: story.voting.deltaPositionOptionBlockY
+										}}
+										backColor={story.voting.backColor}
+										userId={this.props.currentUser.userId}
+										inEditor={false}
+										image_url={story.voting.backImage || ''}
+									/>
+								)}
+								{story.type === 'voting' ? null : (
+									<main
+										style={{
+											backgroundImage: 'url(' + story.image_url + ')',
+											backgroundColor: story.bckg_color
+										}}
+									>
+										<div className={'seen'}>
 											<p
-												className="seen-by-info"
+												className={'seen-by-info'}
 												onClick={this.toogleSeenByModal}
+												style={{ width: '100%' }}
 											>
-												<FontAwesomeIcon icon={faEye} />
-												<span className="seen-by-amount">
-													{story.users.length}
+												<span
+													style={{
+														display: 'flex',
+														justifyContent: 'SPACE-BETWEEN',
+														padding: '0 15px',
+														width: '100%'
+													}}
+												>
+													{this.isOwnStory(story) && (
+														<span>
+															<FontAwesomeIcon icon={faEye} />
+															<span className="seen-by-amount">
+																{story.users.length}
+															</span>
+														</span>
+													)}
+													{story.type && story.activity}
 												</span>
 											</p>
 										</div>
-									)}
-								</main>
+									</main>
+								)}
 							</div>
 						))}
 					</div>

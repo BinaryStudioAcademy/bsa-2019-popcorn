@@ -6,9 +6,9 @@ interface IMovieListProps {
 	movies: null | Array<{
 		id: string;
 		title: string;
-		year?: number;
-		image: string;
-		duration: string;
+		release_date?: string;
+		poster_path: string;
+		runtime: number;
 		genres: Array<string>;
 		cast: Array<string>;
 	}>;

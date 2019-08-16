@@ -2,6 +2,7 @@ import React from 'react';
 import { IEventFormatClient } from '../UserEvents.service';
 import './EventItem.scss';
 import Moment from 'react-moment';
+import { ReactComponent as CloseIcon } from '../../../../assets/icons/general/closeIcon.svg';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
 	faMapMarkerAlt,
@@ -11,10 +12,14 @@ import {
 
 interface IProps {
 	event: IEventFormatClient;
+	deleteEvent: null | ((id: string, currentUserId: string) => any);
+	editEvent: null | ((event: IEventFormatClient) => any);
 }
 
-const EventItem: React.FC<IProps> = ({ event }) => {
+const EventItem: React.FC<IProps> = ({ event, deleteEvent, editEvent }) => {
 	const {
+		id,
+		userId: currentUserId,
 		title,
 		description,
 		location,
@@ -43,18 +48,16 @@ const EventItem: React.FC<IProps> = ({ event }) => {
 							/>
 							<span>Kyiv. Ukraine (mock)</span>
 						</div>
-						{movieId && (
-							<div className="event-movie">
-								<FontAwesomeIcon className="icon-movie" icon={faVideo} />
-								The Mountain (2019) (mock)
-							</div>
-						)}
+						<div className="event-movie">
+							<FontAwesomeIcon className="icon-movie" icon={faVideo} />
+							The Mountain (2019) (mock)
+						</div>
 						<div className="event-users">
 							<FontAwesomeIcon className="icon-users" icon={faUsers} />
 							{eventVisitors.length} users subscribe
 						</div>
 					</div>
-					<div className="event-date">
+					<div className="event-date-buttons">
 						<div className="event-date-range">
 							<Moment format=" D MMM HH:mm " local>
 								{String(dateRange.startDate)}
@@ -64,6 +67,22 @@ const EventItem: React.FC<IProps> = ({ event }) => {
 								{String(dateRange.endDate)}
 							</Moment>
 						</div>
+						{deleteEvent && editEvent !== null ? (
+							<div className="event-buttons">
+								<button
+									className="edit-button"
+									onClick={() => editEvent(event)}
+								>
+									Edit
+								</button>
+								<button
+									className="delete-button"
+									onClick={() => deleteEvent(id, currentUserId)}
+								>
+									<CloseIcon className="delete-button-svg" />
+								</button>
+							</div>
+						) : null}
 					</div>
 				</div>
 			</div>

@@ -53,9 +53,11 @@ const SurveyStatistics: React.FC<IProps> = (props: IProps) => {
 			label: ` ${value}`
 		}));
 		answers.map(({ option_id }) => {
-			const index = res.findIndex(item => item.id === option_id);
-			const value = Object.keys(res[index])[1];
-			++res[index][value];
+			if (option_id) {
+				const index = res.findIndex(item => item.id === option_id);
+				const value = Object.keys(res[index])[1];
+				++res[index][value];
+			}
 		});
 		return res;
 	};
@@ -69,8 +71,10 @@ const SurveyStatistics: React.FC<IProps> = (props: IProps) => {
 			option_id: id
 		}));
 		answers.map(({ option_id }) => {
-			const index = res.findIndex(item => item.option_id === option_id);
-			++res[index].value;
+			if (option_id) {
+				const index = res.findIndex(item => item.option_id === option_id);
+				++res[index].value;
+			}
 		});
 		return res;
 	};

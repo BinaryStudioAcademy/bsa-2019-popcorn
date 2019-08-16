@@ -12,11 +12,17 @@ export class Story {
   @PrimaryGeneratedColumn("uuid")
   id: string;
 
-  @Column()
+  @Column({ nullable: true })
   image_url: string;
 
   @Column({ default: "" })
   caption: string;
+
+  @Column({ nullable: true })
+  type: string;
+
+  @Column({ nullable: true })
+  activityId: string;
 
   @ManyToOne(type => User)
   @JoinColumn()

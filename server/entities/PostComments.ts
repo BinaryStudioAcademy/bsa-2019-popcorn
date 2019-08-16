@@ -10,9 +10,13 @@ export class PostComments {
   @Column()
   text: string;
 
-  @ManyToOne(type => User, user => user.id)
+  @ManyToOne(type => User, user => user.id, {
+    onDelete: "CASCADE"
+  })
   user: User;
 
-  @ManyToOne(type => Post, post => post.id)
+  @ManyToOne(type => Post, post => post.id, {
+    onDelete: "CASCADE"
+  })
   post: Post;
 }

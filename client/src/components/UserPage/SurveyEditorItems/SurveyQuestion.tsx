@@ -3,9 +3,9 @@ import { v4 as uuid } from 'uuid';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import TextareaAutosize from '@material-ui/core/TextareaAutosize';
 import {
+	faCopy,
 	faTimes,
 	faTrashAlt,
-	faCopy,
 	faImage
 } from '@fortawesome/free-solid-svg-icons';
 import MultipleChoice from '../SurveyEditorItems/MultipleChoice';
@@ -13,6 +13,8 @@ import ShortAnswer from '../SurveyEditorItems/ShortAnswer';
 import LinearScale from '../SurveyEditorItems/LinearScale';
 import { isEqual } from 'lodash';
 import './SurveyItem.scss';
+import { uploadFile } from '../../../services/file.service';
+import ImageUploader from '../../MainPage/ImageUploader/ImageUploader';
 
 const QUESTION_TYPES = [
 	'Multiple choice',
@@ -146,30 +148,6 @@ class SurveyQuestion extends Component<IProps, IState> {
 		});
 	};
 
-	handleUploadFile({ target }) {
-		const question = { ...this.state.questionInfo };
-
-		this.setState({ isUploading: true, imageError: '' });
-
-		if (target.files[0] && target.files[0].size > 1048576 * 3) {
-			target.value = '';
-			this.setState({
-				isUploading: false,
-				imageError: 'File is too big! (max 3MB)'
-			});
-			return;
-		}
-		//mock
-		let newQuestion = {
-			...question,
-			image_link: `https://www.belightsoft.com/products/imagetricks/img/intro-video-poster@2x.jpg`
-		};
-
-		this.setState({ isUploading: false });
-
-		this.props.changeQuestion(newQuestion);
-	}
-
 	deleteImg = () => {
 		const question = { ...this.state.questionInfo };
 
@@ -273,18 +251,20 @@ class SurveyQuestion extends Component<IProps, IState> {
 						>
 							<FontAwesomeIcon title="Delete question" icon={faTrashAlt} />
 						</p>
-						<input
-							name="image"
-							type="file"
-							onChange={ev => {
-								this.handleUploadFile(ev);
+						<ImageUploader
+							imageHandler={uploadFile}
+							imageStateHandler={image_link => {
+								const question = { ...this.state.questionInfo };
+
+								let newQuestion = {
+									...question,
+									image_link
+								};
+								this.props.changeQuestion(newQuestion);
 							}}
-							className="upload-image"
-							id="image"
-							accept=".jpg, .jpeg, .png"
-							disabled={this.state.isUploading}
 						/>
-						<label htmlFor="image" className="upload-image-button">
+
+						<label htmlFor="image">
 							<p>
 								<FontAwesomeIcon icon={faImage} title="Add image" />
 							</p>

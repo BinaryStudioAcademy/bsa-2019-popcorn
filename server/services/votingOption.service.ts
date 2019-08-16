@@ -4,12 +4,11 @@ import { VotingOption } from "../models/VotingOptionModel";
 import VotingOptionReactionRepository from "../repository/votingOptionReaction";
 
 export const getVotingOptionByVotingId = async (
-  id: string,
-  next
+  id: string
 ): Promise<VotingOption[]> => {
   return await getCustomRepository(
     VotingOptionRepository
-  ).getVotingOptionByVotingId(id, next);
+  ).getVotingOptionByVotingId(id);
 };
 
 export const updateVotingOptionById = async (

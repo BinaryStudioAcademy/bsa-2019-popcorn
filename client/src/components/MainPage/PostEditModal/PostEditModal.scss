@@ -5,15 +5,16 @@
 	right: 0;
 	top: 100%;
 	z-index: 100;
+	pointer-events: none;
 
 	.post-modal {
 		z-index: 100;
 		width: 200px;
 		background-color: $background-gray;
 		margin-left: auto;
-		color: $text-base-color;
 
 		button {
+			color: #bbbbbb;
 			display: block;
 			border: none;
 			height: 35px;
@@ -24,7 +25,6 @@
 			font-size: $menu-font-size;
 			font-family: $base-font-family;
 			font-weight: 600;
-			color: $text-base-color;
 			cursor: pointer;
 		}
 
@@ -34,7 +34,7 @@
 		}
 
 		.delete {
-			color: #ed4956;
+			// color: #ed4956;
 		}
 	}
 }

@@ -1,5 +1,17 @@
-@import '../../styles/variables.scss';
+@import '../../styles/variables';
 
+.prev-wrp {
+	width: 100%;
+	height: calc(100% - 50px);
+	display: flex;
+	justify-content: center;
+}
+.story-voting-wrp {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: space-around;
+}
 .story-voting {
 	display: flex;
 	flex-direction: column;
@@ -8,8 +20,10 @@
 	background-color: black;
 	position: relative;
 	width: 350px;
-	height: 500px;
-
+	height: 622px;
+	background-position: center;
+	background-size: 100%;
+	background-repeat: no-repeat;
 	button:hover {
 		cursor: pointer;
 	}
@@ -26,8 +40,9 @@
 }
 
 .story-voting-options-list {
-	max-width: 330px;
+	max-width: 350px;
 	text-align: center;
+	display: flex;
 }
 
 .back-to-editor-button {

@@ -37,7 +37,8 @@ export class SurveysQuestion {
 
   @OneToMany(
     type => SurveysQuestionOption,
-    surveysQuestionOption => surveysQuestionOption.surveysQuestion
+    surveysQuestionOption => surveysQuestionOption.surveysQuestion,
+    { nullable: true }
   )
   surveysQuestionOption: SurveysQuestionOption[];
 

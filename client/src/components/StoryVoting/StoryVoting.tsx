@@ -1,13 +1,14 @@
 import React from 'react';
 import StoryVotingOption from '../StoryVotingOption/StoryVotingOption';
-import { ReactComponent as CrossIcon } from '../../assets/icons/storyVote/crossIcon.svg';
 import './StoryVoting.scss';
 import Draggable from 'react-draggable';
+import IVoting from '../MainPage/StoryList/IVoting';
+import { Redirect } from 'react-router';
 
 type StoryVotingProps = {
 	header: string;
 	options: Array<{
-		text: string;
+		body: string;
 		voted: number;
 	}>;
 	deltaPositionForHeader: {
@@ -18,12 +19,16 @@ type StoryVotingProps = {
 		x: number;
 		y: number;
 	};
-	backToEditor: (
+	backToEditor?: (
 		deltaHead: { x: number; y: number },
 		deltaOptions: { x: number; y: number }
 	) => void;
-	backColor: { r: string; g: string; b: string; a: string };
+	backColor: { r: string; g: string; b: string; a: string } | string;
 	backImage?: string;
+	image_url?: string;
+	userId: string;
+	createVoting?: (voting: IVoting) => any;
+	inEditor: boolean;
 };
 
 type StoryVotingState = {
@@ -31,6 +36,7 @@ type StoryVotingState = {
 	inEditor: boolean;
 	deltaPositionHead: { x: number; y: number };
 	deltaPositionOptionBlock: { x: number; y: number };
+	redirect: boolean;
 };
 
 const firstRadius = '28px 0 0 28px';
@@ -48,7 +54,7 @@ class StoryVoting extends React.Component<StoryVotingProps, StoryVotingState> {
 		super(props);
 		this.state = {
 			answerSelected: false,
-			inEditor: true,
+			inEditor: props.inEditor,
 			deltaPositionHead: {
 				x: this.props.deltaPositionForHeader.x,
 				y: this.props.deltaPositionForHeader.y
@@ -56,7 +62,8 @@ class StoryVoting extends React.Component<StoryVotingProps, StoryVotingState> {
 			deltaPositionOptionBlock: {
 				x: this.props.deltaPositionForOptionBlock.x,
 				y: this.props.deltaPositionForOptionBlock.y
-			}
+			},
+			redirect: false
 		};
 		this.onAnswerSelect = this.onAnswerSelect.bind(this);
 		this.handleDragHead = this.handleDragHead.bind(this);
@@ -91,23 +98,22 @@ class StoryVoting extends React.Component<StoryVotingProps, StoryVotingState> {
 
 	calculatePositions() {
 		const headerPosition = {
-			top: 0 + this.state.deltaPositionHead.y,
-			left: 0 + this.state.deltaPositionHead.x
+			top: this.state.deltaPositionHead.y,
+			left: this.state.deltaPositionHead.x
 		};
 		const buttonsPosition = {
-			top: 0 + this.state.deltaPositionOptionBlock.y,
-			left: 0 + this.state.deltaPositionOptionBlock.x
+			top: this.state.deltaPositionOptionBlock.y,
+			left: this.state.deltaPositionOptionBlock.x
 		};
-		const positions = {
+		return {
 			headerPosition,
 			buttonsPosition
 		};
-		return positions;
 	}
 
 	createStoryVotingOptions() {
-		const allVotes = this.calculateAllVotes();
-		const votingOptions = this.props.options.map((el, index) => {
+		const allVotes = StoryVoting.calculateAllVotes();
+		return this.props.options.map((el, index) => {
 			if (index === 0)
 				return (
 					<StoryVotingOption
@@ -135,62 +141,95 @@ class StoryVoting extends React.Component<StoryVotingProps, StoryVotingState> {
 					/>
 				);
 		});
-		return votingOptions;
 	}
 
-	calculateAllVotes() {
-		const allVotes = storyVotingOptionsMock.reduce(
-			(a, b) => a + (b['voted'] || 0),
-			0
-		);
-		return allVotes;
+	static calculateAllVotes() {
+		return storyVotingOptionsMock.reduce((a, b) => a + (b['voted'] || 0), 0);
 	}
+
+	onSave = () => {
+		const { header, userId, backColor, image_url, options } = this.props;
+		const { deltaPositionHead, deltaPositionOptionBlock } = this.state;
+		const rgba =
+			typeof this.props.backColor === 'string'
+				? this.props.backColor
+				: `rgba(${this.props.backColor.r},${this.props.backColor.b},${this.props.backColor.g},${this.props.backColor.a})`;
+		const backImage = image_url;
+		this.props.createVoting &&
+			this.props.createVoting({
+				userId,
+				header,
+				deltaPositionHeadX: deltaPositionHead.x,
+				deltaPositionHeadY: deltaPositionHead.y,
+				deltaPositionOptionBlockX: deltaPositionOptionBlock.x,
+				deltaPositionOptionBlockY: deltaPositionOptionBlock.y,
+				backColor: rgba,
+				backImage,
+				options
+			});
+	};
 
 	render() {
 		const positions = this.calculatePositions();
+		const rgba =
+			typeof this.props.backColor === 'string'
+				? this.props.backColor
+				: `rgba(${this.props.backColor.r},${this.props.backColor.b},${this.props.backColor.g},${this.props.backColor.a})`;
+
 		const backgroundStyle = {
-			background: this.props.backImage
-				? `url(${this.props.backImage})`
-				: `rgba(${this.props.backColor.r},${this.props.backColor.b},${this.props.backColor.g},${this.props.backColor.a})`
+			backgroundImage: `url(${this.props.image_url})`,
+			backgroundColor: rgba
 		};
 
+		if (this.state.redirect) return <Redirect to={'/create'} />;
+
+		const setRedirect = () => this.setState({ redirect: true });
+
 		return (
-			<div className="story-voting" style={backgroundStyle}>
-				<button
-					onClick={() =>
-						this.props.backToEditor(
-							this.state.deltaPositionHead,
-							this.state.deltaPositionOptionBlock
-						)
-					}
-					className="back-to-editor-button"
+			<div className="story-voting-wrp">
+				<div
+					className="story-voting"
+					id="voting-preview"
+					style={backgroundStyle}
 				>
-					<CrossIcon width="3em" height="3em" />
-				</button>
-				<Draggable
-					bounds=".story-voting"
-					defaultPosition={{
-						x: positions.headerPosition.left,
-						y: positions.headerPosition.top
-					}}
-					onDrag={this.handleDragHead}
-					disabled={this.state.inEditor ? false : true}
-				>
-					<div className="story-voting-header">{this.props.header}</div>
-				</Draggable>
-				<Draggable
-					bounds=".story-voting"
-					defaultPosition={{
-						x: positions.buttonsPosition.left,
-						y: positions.buttonsPosition.top
-					}}
-					onDrag={this.handleDragOptionBlock}
-					disabled={this.state.inEditor ? false : true}
-				>
-					<div className="story-voting-options-list">
-						{this.createStoryVotingOptions()}
+					<Draggable
+						bounds="parent"
+						defaultPosition={{
+							x: positions.headerPosition.left,
+							y: positions.headerPosition.top
+						}}
+						onDrag={this.handleDragHead}
+						disabled={!this.state.inEditor}
+					>
+						<div className="story-voting-header">{this.props.header}</div>
+					</Draggable>
+					<Draggable
+						bounds="parent"
+						defaultPosition={{
+							x: positions.buttonsPosition.left,
+							y: positions.buttonsPosition.top
+						}}
+						onDrag={this.handleDragOptionBlock}
+						disabled={!this.state.inEditor}
+					>
+						<div className="story-voting-options-list">
+							{this.createStoryVotingOptions()}
+						</div>
+					</Draggable>
+				</div>
+				{this.state.inEditor && (
+					<div>
+						<button
+							className={'btn'}
+							onClick={() => {
+								this.onSave();
+								setRedirect();
+							}}
+						>
+							Save
+						</button>
 					</div>
-				</Draggable>
+				)}
 			</div>
 		);
 	}

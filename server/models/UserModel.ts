@@ -6,18 +6,20 @@ import { Surveys } from "./SurveysModel";
 import { SurveysQuestionAnswer } from "./SurveysQuestionAnswer";
 
 export class User {
-  id?: string;
+  id: string;
   name: string;
   email: string;
-  password?: string;
-  location?: string;
-  aboutMe?: string;
-  votings?: Voting[];
-  votingOptionReactions?: VotingOptionReaction[];
-  avatar?: string;
-  tops?: Top[];
-  stories?: Story[];
+  password: string;
+  location: string;
+  aboutMe: string;
+  male: boolean;
+  female: boolean;
+  votings: Voting[];
+  votingOptionReactions: VotingOptionReaction[];
+  avatar: string;
+  tops: Top[];
+  stories: Story[];
   reset_token: string;
-  surveys?: Surveys[];
-  surveysQuestionAnswer?: SurveysQuestionAnswer[];
+  surveys: Surveys[];
+  surveysQuestionAnswer: SurveysQuestionAnswer[];
 }

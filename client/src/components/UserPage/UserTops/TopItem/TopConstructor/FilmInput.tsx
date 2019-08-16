@@ -43,7 +43,10 @@ const FilmInput: React.FC<IInputProps> = ({
 	return (
 		<div key={movie.id} className="film-input-item ">
 			<input
-				onChange={e => searchFilms(e.target.value)}
+				onChange={e => {
+					saveMovie({ ...movie, title, comment: e.target.value });
+					searchFilms(e.target.value);
+				}}
 				maxLength={140}
 				type="text"
 				className="film-input"
@@ -82,10 +85,10 @@ const FilmInput: React.FC<IInputProps> = ({
 
 			<textarea
 				maxLength={140}
+				disabled={title.trim() === ''}
 				value={comment}
 				onChange={e => {
 					setComment(e.target.value);
-					saveMovie({ ...movie, title, comment: e.target.value });
 				}}
 				className="film-input comment-film-input"
 				placeholder="Type comment here"

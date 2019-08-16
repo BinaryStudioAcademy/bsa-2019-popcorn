@@ -1,5 +1,6 @@
 import React from 'react';
 import './ImageUploader.scss';
+import config from '../../../config';
 
 interface IPostImageUploaderProps {
 	imageHandler: (s: any) => any;
@@ -42,16 +43,33 @@ class ImageUploader extends React.Component<
 		const data = new FormData();
 		data.append('file', target.files[0]);
 
-		this.props
-			.imageHandler(data)
-			.then(({ imageUrl }) => {
-				console.log(imageUrl);
-				this.setState({ imageUrl, isUploading: false, errorMsg: '' });
-				this.props.imageStateHandler(imageUrl);
-			})
-			.catch(error => {
-				this.setState({ isUploading: false, errorMsg: error.message });
-			});
+		if (this.props.imageHandler)
+			this.props
+				.imageHandler(data)
+				.then(({ imageUrl }) => {
+					if (imageUrl.indexOf('\\') !== -1) {
+						let url = imageUrl.split(`\\`);
+						url.shift();
+						url = url.join('/');
+
+						url = config.API_URL + '/' + url;
+
+						this.setState({ imageUrl: url, isUploading: false, errorMsg: '' });
+						this.props.imageStateHandler(url);
+					} else {
+						let url = imageUrl.split(`/`);
+						url.shift();
+						url = url.join('/');
+
+						url = config.API_URL + '/' + url;
+
+						this.setState({ imageUrl: url, isUploading: false, errorMsg: '' });
+						this.props.imageStateHandler(url);
+					}
+				})
+				.catch(error => {
+					this.setState({ isUploading: false, errorMsg: error.message });
+				});
 		target.value = '';
 	}
 
@@ -70,9 +88,13 @@ class ImageUploader extends React.Component<
 					accept=".jpg, .jpeg, .png"
 					disabled={this.state.isUploading}
 				/>
-				<label htmlFor="image" className="upload-image-button">
-					Upload image
-				</label>
+				{this.props.children ? (
+					this.props.children
+				) : (
+					<label htmlFor="image" className="upload-image-button">
+						Upload image
+					</label>
+				)}
 			</div>
 		);
 	}

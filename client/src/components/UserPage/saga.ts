@@ -17,6 +17,7 @@ import {
 	FETCH_RESTORE_PASSWORD,
 	FETCH_USER_BY_TOKEN,
 	LOGIN,
+	LOGOUT,
 	RESET_ERROR,
 	RESET_OK,
 	RESTORE_ERROR,
@@ -115,6 +116,14 @@ export function* fetchUser(action) {
 		}
 	} catch (e) {
 		console.log('user saga fetchUser:', e.message);
+	}
+}
+
+export function* unathorizeUser(action) {
+	try {
+		localStorage.removeItem('token');
+	} catch (e) {
+		console.log('Something went wrong with logout');
 	}
 }
 
@@ -229,6 +238,10 @@ function* watchFetchLogin() {
 	yield takeEvery(FETCH_LOGIN, fetchLogin);
 }
 
+function* watchFetchLogout() {
+	yield takeEvery(LOGOUT, unathorizeUser);
+}
+
 function* watchFetchUser() {
 	yield takeEvery(FETCH_USER_BY_TOKEN, fetchUser);
 }
@@ -259,6 +272,7 @@ export default function* profile() {
 		watchFetchPosts(),
 		watchFetchResetPassword(),
 		watchFetchRestorePassword(),
-		watchSendPost()
+		watchSendPost(),
+		watchFetchLogout()
 	]);
 }

@@ -14,22 +14,32 @@ router
   )
   .get("/:id", errorHandlerMiddleware, (req, res, next) =>
     votingService
-      .getVotingById(req.params.id, next)
+      .getVotingById(req.params.id)
       .then(result => res.send(result))
       .catch(next)
   )
   .get("/:id/options", errorHandlerMiddleware, (req, res, next) =>
     votingOptionService
-      .getVotingOptionByVotingId(req.params.id, next)
+      .getVotingOptionByVotingId(req.params.id)
       .then(result => res.send(result))
       .catch(next)
   )
-  .post("/:id/options", errorHandlerMiddleware, (req, res, next) =>
-    votingService
-      .createVotingOptionByVotingId(req.params.id, req.body, next)
+  .post("/:id/options", errorHandlerMiddleware, (req, res, next) => {
+    Promise.all(
+      req.body.options.map(async option => {
+        return await votingService.createVotingOptionByVotingId(
+          req.params.id,
+          option,
+          next
+        );
+      })
+    )
       .then(result => res.send(result))
-      .catch(next)
-  )
+      .catch(e => {
+        console.log(e);
+        next(e);
+      });
+  })
   .put("/options/:id", errorHandlerMiddleware, (req, res, next) =>
     votingOptionService
       .updateVotingOptionById(req.params.id, req.body, next)
@@ -66,9 +76,9 @@ router
       .then(result => res.send(result))
       .catch(next)
   )
-  .post("/", errorHandlerMiddleware, (req, res, next) =>
+  .post("/", (req, res, next) =>
     votingService
-      .createVoting(req.body, next)
+      .createVoting(req.body)
       .then(result => res.send(result))
       .catch(next)
   )
