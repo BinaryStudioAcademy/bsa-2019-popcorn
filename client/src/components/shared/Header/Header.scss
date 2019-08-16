@@ -56,7 +56,6 @@
 
 		&:nth-of-type(2) .modal,
 		&:nth-of-type(3) .modal {
-			pointer-events: none;
 			color: #bbbbbb;
 		}
 	}
@@ -69,6 +68,12 @@
 
 	.user-info {
 		display: flex;
+
+		&:nth-of-type(2) .modal,
+		&:nth-of-type(3) .modal {
+			pointer-events: all;
+			color: $text-base-color;
+		}
 
 		span {
 			color: $text-base-color;
@@ -117,14 +122,17 @@
 
 			.search-input {
 				border: none;
-				margin-bottom: 5px;
+				margin: 6px 10px 0px 10px;
 				width: 240px;
+				display: block;
 			}
 			.search-input:focus {
 				outline: none;
 			}
 			.search-icon {
 				margin: 6px 10px 0px 10px;
+				display: block;
+				float: left;
 			}
 		}
 	}
