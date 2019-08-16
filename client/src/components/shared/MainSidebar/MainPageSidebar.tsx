@@ -40,7 +40,7 @@ const MainPageSidebar = ({ notifications }: IProps) => {
 					<p>Collections</p>
 				</div>
 				<div>
-					<p>Actors</p>
+					<p>Surveys</p>
 				</div>
 				<div>
 					<p>Tops</p>
