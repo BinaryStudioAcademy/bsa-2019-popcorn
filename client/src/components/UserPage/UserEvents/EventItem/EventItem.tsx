@@ -41,13 +41,13 @@ const EventItem: React.FC<IProps> = ({ event, deleteEvent, editEvent }) => {
 					<div className="event-main-information">
 						<div className="event-title">{title}</div>
 						<div className="event-description">{description}</div>
-						<div className="event-location">
+						{/* <div className="event-location">
 							<FontAwesomeIcon
 								className="icon-location"
 								icon={faMapMarkerAlt}
 							/>
 							<span>Kyiv. Ukraine (mock)</span>
-						</div>
+						</div> */}
 						<div className="event-movie">
 							<FontAwesomeIcon className="icon-movie" icon={faVideo} />
 							The Mountain (2019) (mock)

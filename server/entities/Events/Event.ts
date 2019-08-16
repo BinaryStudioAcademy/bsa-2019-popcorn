@@ -26,10 +26,10 @@ export class Event {
   @Column({ nullable: true })
   image: string;
 
-  @Column({ type: "float" })
+  @Column({ type: "float", nullable: true })
   location_lat: number;
 
-  @Column({ type: "float" })
+  @Column({ type: "float", nullable: true })
   location_lng: number;
 
   @Column()
