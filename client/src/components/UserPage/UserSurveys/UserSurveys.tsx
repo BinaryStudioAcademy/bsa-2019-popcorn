@@ -70,7 +70,7 @@ class UserSurveys extends React.Component<IProps, IState> {
 		};
 	}
 
-/* 	componentWillReceiveProps(nextProps) {
+	/* 	componentWillReceiveProps(nextProps) {
 		if (!isEqual(nextProps.surveys, this.state.surveys)) {
 			this.setState({ surveys: nextProps.surveys });
 		}
@@ -80,7 +80,7 @@ class UserSurveys extends React.Component<IProps, IState> {
 		if (!isEqual(props.surveys, state.surveys)) {
 			return {
 				surveys: props.surveys
-			}
+			};
 		}
 		return null;
 	}

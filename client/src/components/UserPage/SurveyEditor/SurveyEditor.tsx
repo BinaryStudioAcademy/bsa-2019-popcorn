@@ -360,7 +360,7 @@ class SurveyEditor extends Component<IProps, IState> {
 						>
 							Add question
 						</button>
-						<NavLink to='/user-page/surveys'>
+						<NavLink to="/user-page/surveys">
 							<button
 								type="button"
 								onClick={this.onSave}

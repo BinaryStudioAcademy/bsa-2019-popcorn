@@ -50,6 +50,7 @@ interface IProps {
 	fetchStories: () => any;
 	avatar: null | string;
 	newStory: INewStory;
+	cursorPosition: { start: number; end: number };
 	setCaption: (caption: string) => any;
 	top: { id: string; name: string; any };
 	survey: { id: string; name: string; any };
@@ -88,6 +89,7 @@ const ListBlock = ({ ...props }: IProps) => {
 						<GetAddStoryPopupContent
 							history={history}
 							newStory={props.newStory}
+							cursorPosition={props.cursorPosition}
 							setCaption={props.setCaption}
 							saveImage={props.saveImage}
 							changeActivity={props.changeActivity}
@@ -129,6 +131,7 @@ const mapStateToProps = (rootState, props) => ({
 	avatar: rootState.profile.profileInfo && rootState.profile.profileInfo.avatar,
 	userId: rootState.profile.profileInfo && rootState.profile.profileInfo.id,
 	newStory: rootState.story.newStory,
+	cursorPosition: rootState.story.cursorPosition,
 	top: mock.tops,
 	survey: mock.surveys
 });

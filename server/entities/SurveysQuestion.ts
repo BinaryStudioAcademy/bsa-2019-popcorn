@@ -35,8 +35,12 @@ export class SurveysQuestion {
   @ManyToOne(type => Surveys, { onDelete: "CASCADE" })
   surveys: Surveys;
 
-    @OneToMany(type => SurveysQuestionOption, surveysQuestionOption => surveysQuestionOption.surveysQuestion, { nullable: true })
-    surveysQuestionOption: SurveysQuestionOption[];
+  @OneToMany(
+    type => SurveysQuestionOption,
+    surveysQuestionOption => surveysQuestionOption.surveysQuestion,
+    { nullable: true }
+  )
+  surveysQuestionOption: SurveysQuestionOption[];
 
   @OneToMany(
     type => SurveysQuestionAnswer,
