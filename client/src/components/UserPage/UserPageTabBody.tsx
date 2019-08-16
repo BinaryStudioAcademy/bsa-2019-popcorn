@@ -86,7 +86,7 @@ const UserPageTabs: React.SFC<IProps> = ({
 								id: profileInfo.id,
 								name: profileInfo.name,
 								image_link: profileInfo.avatar
-					 		}}
+							}}
 							mainPath={`${mainPath}/surveys`}
 						/>
 					)}

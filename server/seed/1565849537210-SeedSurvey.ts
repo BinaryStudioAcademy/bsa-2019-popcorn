@@ -252,7 +252,7 @@ export class SeedSurvey1565849537210 implements MigrationInterface {
         const newOption = await getCustomRepository(
           SurveyQuestionOptionRepository
         ).createQuestionOption(option);
-        createAnswer(question, newOption);
+        // createAnswer(question, newOption);
         return newOption;
       });
 
@@ -270,8 +270,8 @@ export class SeedSurvey1565849537210 implements MigrationInterface {
           SurveyQuestionRepository
         ).save(question);
         createOptions(questionData.options, newQuestion);
-        if (!questionData.options.length)
-          createAnswer(newQuestion, "", "Game of Thrones");
+        // if (!questionData.options.length)
+        //   createAnswer(newQuestion, "", "Game of Thrones");
         return newQuestion;
       });
 

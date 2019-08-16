@@ -33,9 +33,16 @@ class SurveysQuestionOptionRepository extends Repository<
     }
   }
 
-  async updateQuestionOptionById(id: string, surveysQuestionOption: SurveysQuestionOption, surveysQuestionId: string, next?) {
+  async updateQuestionOptionById(
+    id: string,
+    surveysQuestionOption: SurveysQuestionOption,
+    surveysQuestionId: string,
+    next?
+  ) {
     try {
-      const question = await getCustomRepository(SurveysQuestionRepository).findOne({ id: surveysQuestionId });
+      const question = await getCustomRepository(
+        SurveysQuestionRepository
+      ).findOne({ id: surveysQuestionId });
       surveysQuestionOption.surveysQuestion = question;
       await this.save(surveysQuestionOption);
       const updatedQuestionOption = await this.findOne(id);

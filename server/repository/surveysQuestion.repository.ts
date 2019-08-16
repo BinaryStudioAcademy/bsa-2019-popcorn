@@ -57,15 +57,26 @@ class SurveysQuestionRepository extends Repository<SurveysQuestion> {
     }
   }
 
-  async updateSurveysQuestionById(id: string, surveysQuestion: SurveysQuestion, surveyId: string, next?) {
+  async updateSurveysQuestionById(
+    id: string,
+    surveysQuestion: SurveysQuestion,
+    surveyId: string,
+    next?
+  ) {
     try {
-      const survey = await getCustomRepository(SurveysRepository).findOne({ id: surveyId });
+      const survey = await getCustomRepository(SurveysRepository).findOne({
+        id: surveyId
+      });
       surveysQuestion.surveys = survey;
       await this.save(surveysQuestion);
       const updatedSurveysQuestion = await this.findOne(id);
-      Promise.all(surveysQuestion.surveysQuestionOption.map(option => 
-        getCustomRepository(SurveysQuestionOptionRepository).updateQuestionOptionById(option.id, option, id, next)
-      ));
+      Promise.all(
+        surveysQuestion.surveysQuestionOption.map(option =>
+          getCustomRepository(
+            SurveysQuestionOptionRepository
+          ).updateQuestionOptionById(option.id, option, id, next)
+        )
+      );
 
       return updatedSurveysQuestion
         ? updatedSurveysQuestion

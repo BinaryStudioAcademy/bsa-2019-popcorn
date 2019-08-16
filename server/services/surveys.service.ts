@@ -4,13 +4,18 @@ import { SurveysQuestion } from "../models/SurveysQuestionModel";
 import SurveysRepository from "../repository/surveys.repository";
 
 interface IRequest {
-  id: string,
-  surveys: Surveys, 
-  surveysQuestion: SurveysQuestion[]
+  id: string;
+  surveys: Surveys;
+  surveysQuestion: SurveysQuestion[];
 }
 
 export const createSurveys = async (body: IRequest, next): Promise<Surveys> => {
-  return await getCustomRepository(SurveysRepository).createSurveys(body.id, body.surveys, body.surveysQuestion, next);
+  return await getCustomRepository(SurveysRepository).createSurveys(
+    body.id,
+    body.surveys,
+    body.surveysQuestion,
+    next
+  );
 };
 
 export const getSurveys = async (next): Promise<Surveys[]> => {
