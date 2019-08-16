@@ -16,6 +16,7 @@ export default () => {
 		questions: [
 			{
 				id: questionId,
+				index: 0,
 				survey_id: surveyId,
 				title: 'Untitled question',
 				firstLabel: '',

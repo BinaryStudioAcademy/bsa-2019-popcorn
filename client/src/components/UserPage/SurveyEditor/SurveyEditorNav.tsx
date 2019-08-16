@@ -20,6 +20,7 @@ interface ISurvey {
 	};
 	participants: number;
 	questions: Array<{
+		index: number; 
 		id: string;
 		survey_id: string;
 		title: string;

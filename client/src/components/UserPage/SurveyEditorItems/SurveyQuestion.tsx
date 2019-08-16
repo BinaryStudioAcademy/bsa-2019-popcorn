@@ -24,6 +24,7 @@ const QUESTION_TYPES = [
 ];
 
 interface IQuestion {
+	index: number; 
 	id: string;
 	survey_id: string;
 	title: string;

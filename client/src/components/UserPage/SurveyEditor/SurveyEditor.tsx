@@ -13,6 +13,7 @@ import SurveyLinearScale from '../SurveyItems/SurveyLinearScale/SurveyLinearScal
 import '../Survey/Survey.scss';
 
 interface IQuestion {
+	index: number;
 	id: string;
 	survey_id: string;
 	title: string;
@@ -122,9 +123,15 @@ class SurveyEditor extends Component<IProps, IState> {
 		});
 	};
 
+	getNewIndex = () => {
+		const { index } = this.state.surveyInfo.questions.reduce((prev, current) => (prev.index > current.index) ? prev : current);
+		return index + 1;
+	}
+
 	addQuestion = () => {
 		const id = uuid();
 		const newQuestion: IQuestion = {
+			index: this.getNewIndex(),
 			id,
 			survey_id: this.state.surveyInfo.id,
 			title: 'Untitled question',
@@ -154,7 +161,7 @@ class SurveyEditor extends Component<IProps, IState> {
 
 	duplicateQuestion = question => {
 		const questions = this.state.surveyInfo.questions;
-		questions.push({ ...question, id: uuid() });
+		questions.push({ ...question, id: uuid(), index: this.getNewIndex() });
 
 		this.setState({
 			surveyInfo: {
@@ -179,6 +186,7 @@ class SurveyEditor extends Component<IProps, IState> {
 			questions = [
 				{
 					id,
+					index: 0,
 					survey_id: this.state.surveyInfo.id,
 					title: 'Untitled question',
 					type: 'Multiple choice',
@@ -294,6 +302,7 @@ class SurveyEditor extends Component<IProps, IState> {
 						if (this.state.currentElement === i) {
 							return (
 								<div key={i} className="editor-question">
+									<div>{ question.index }</div>
 									<SurveyQuestion
 										questionInfo={question}
 										changeQuestion={this.changeQuestion}
