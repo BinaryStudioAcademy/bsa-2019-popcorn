@@ -60,11 +60,11 @@ class getAddStoryPopupContent extends React.Component<IProps> {
 							className={'btn'}
 							onClick={addExtra}
 							style={{
-								width: '47px',
+								width: '50px',
 								minWidth: 'auto',
 								position: 'absolute',
-								top: '50px',
-								right: '5px',
+								top: '5px',
+								right: '65px',
 								height: '43px',
 								display: 'flex',
 								justifyContent: 'center'
