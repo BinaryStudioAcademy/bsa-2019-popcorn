@@ -8,6 +8,7 @@ type TMovie = {
 	overview: string;
 	budget: number;
 	vote_average: number;
+	video: string;
 };
 
 export default TMovie;

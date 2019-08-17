@@ -35,7 +35,7 @@ const descriptionItem = (
 	title: string,
 	body: string | ReactElement[] | number | undefined
 ) => (
-	<div className="descriptionItem">
+	<div className={'descriptionItem'}>
 		<span className="descriptionTitle">{title}:</span>
 		<span className="descriptionBody">{body}</span>
 	</div>
@@ -50,7 +50,8 @@ const FilmBasicTab = (props: IProps) => {
 		overview: description,
 		vote_average,
 		budget,
-		poster_path: imageLink
+		poster_path: imageLink,
+		video
 	} = props.movie;
 
 	const getFilmDuration = (runtime: number) => {
@@ -75,7 +76,7 @@ const FilmBasicTab = (props: IProps) => {
 		},
 		{
 			label: genres.length > 1 ? 'Genres' : 'Genre',
-			value: 'Action, Drama, Horror'
+			value: genres.filter(genre => genre).toString() || ''
 		},
 		{
 			label: 'Duration',
@@ -97,24 +98,19 @@ const FilmBasicTab = (props: IProps) => {
 
 	return (
 		<div className={'film-basic-wrp'}>
-			<section className="filmSection">
+			<section className={'filmSection'}>
 				<img
 					src={`https://image.tmdb.org/t/p/w500/${imageLink}`}
 					alt={title}
 					className="poster"
 				/>
-				<div className="descriptionWrapper">
+				<div className={'descriptionWrapper'}>
 					{movieData.map(({ label, value }) => descriptionItem(label, value))}
 				</div>
 			</section>
 			<section>
-				<div className="videoWrapper">
-					<iframe
-						className="video"
-						src="https://www.youtube.com/embed/KnrRy6kSFF0"
-						frameBorder="0"
-						title="https://www.youtube.com/embed/KnrRy6kSFF0"
-					></iframe>
+				<div className={'videoWrapper'}>
+					<iframe className="video" src={video} title={video} />
 				</div>
 			</section>
 		</div>

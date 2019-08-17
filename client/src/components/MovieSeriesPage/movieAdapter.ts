@@ -13,6 +13,7 @@ export default (movie: any): TMovie => {
 		genres: getGenre(movie.genres),
 		overview: movie.overview,
 		budget: movie.budget,
-		vote_average: 3.5
+		vote_average: 3.5,
+		video: 'https://www.youtube.com/embed/KnrRy6kSFF0'
 	};
 };
