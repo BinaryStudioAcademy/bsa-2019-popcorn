@@ -13,15 +13,21 @@ import routesWhiteList from "./config/routes-white-list.config";
 import { createConnection } from "typeorm";
 import db_config from "./config/orm.config";
 import "reflect-metadata";
+import socketInjector from "./socket/inject";
+const http = require("http");
 
 const app = express();
+const io = require("socket.io")(http.createServer(app));
+
 app.use(cors());
 app.use(express.static("public"));
 app.use(bodyParser.json());
 
+app.use(socketInjector(io));
+
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(passport.initialize());
-// app.use("/api/", authorizationMiddleware(routesWhiteList));
+app.use("/api/", authorizationMiddleware(routesWhiteList));
 
 routes(app);
 
