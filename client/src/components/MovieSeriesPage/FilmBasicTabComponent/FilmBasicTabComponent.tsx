@@ -51,7 +51,7 @@ const FilmBasicTab = (props: IProps) => {
 		overview: description,
 		vote_average,
 		budget,
-		poster_path: imageLink,
+		poster_path,
 		video
 	} = props.movie;
 
@@ -89,7 +89,7 @@ const FilmBasicTab = (props: IProps) => {
 	return (
 		<div className={'film-basic-wrp'}>
 			<section className={'filmSection'}>
-				<img src={imageLink} alt={title} className="poster" />
+				<img src={poster_path} alt={title} className="poster" />
 				<div className={'descriptionWrapper'}>
 					{movieData.map(({ label, value }) => descriptionItem(label, value))}
 				</div>

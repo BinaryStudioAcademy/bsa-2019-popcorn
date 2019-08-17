@@ -4,10 +4,10 @@ import MovieSeriesPageTabs from './MovieSeriesPageTabs';
 import MovieSeriesPageTabBody from './MovieSeriesPageTabBody';
 import './MovieSeriesPage.scss';
 import { Redirect } from 'react-router';
-import movieAdapter from './movieAdapter';
+import TMovie from './TMovie';
 
 interface IProps {
-	movie: any;
+	movie: TMovie;
 }
 
 const MovieSeriesPage: React.SFC<IProps> = ({ movie }) => {
@@ -17,7 +17,7 @@ const MovieSeriesPage: React.SFC<IProps> = ({ movie }) => {
 		<div className="movie-series-page">
 			<MovieSeriesPageHeader movieSeriesData={movie} />
 			<MovieSeriesPageTabs mainPath={mainPath} />
-			<MovieSeriesPageTabBody mainPath={mainPath} movie={movieAdapter(movie)} />
+			<MovieSeriesPageTabBody mainPath={mainPath} movie={movie} />
 		</div>
 	) : (
 		<Redirect to={'/movie-list'} />
