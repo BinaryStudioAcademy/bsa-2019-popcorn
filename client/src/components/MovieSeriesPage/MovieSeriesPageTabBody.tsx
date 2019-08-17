@@ -58,23 +58,28 @@ const messages = [
 
 interface IProps {
 	mainPath: string;
-	movie: null | Movie;
+	movie: Movie;
 }
 type Movie = {
 	id: string;
+	poster_path: string;
+	runtime: number;
 	title: string;
-	year?: number;
-	image: string;
-	duration: string;
+	release_date?: string;
 	genres: Array<string>;
 	cast: Array<string>;
+	overview: string;
+	vote_average: number;
+	budget: number;
 	any?;
 };
 const MovieSeriesPageTabBody: React.SFC<IProps> = ({ mainPath, movie }) => {
 	return (
 		<div className={'movie-series-page-tab-body'}>
 			<Switch>
-				<Route exact path={`${mainPath}`} component={FilmBasicTabComponent} />
+				<Route exact path={`${mainPath}`} render={() => 
+					<FilmBasicTabComponent movie={movie} />}
+				/>
 				<Route path={`${mainPath}/cast-crew`} component={StaffCast} />
 				<Route path={`${mainPath}/reviews`} component={MovieSeriesReviews} />
 				<Route path={`${mainPath}/posts`} component={MovieSeriesPosts} />
