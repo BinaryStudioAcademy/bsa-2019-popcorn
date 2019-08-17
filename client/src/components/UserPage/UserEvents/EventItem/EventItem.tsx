@@ -9,6 +9,8 @@ import {
 	faVideo,
 	faUsers
 } from '@fortawesome/free-solid-svg-icons';
+import Image from '../../../shared/Image/Image';
+import config from '../../../../config';
 
 interface IProps {
 	event: IEventFormatClient;
@@ -34,7 +36,11 @@ const EventItem: React.FC<IProps> = ({ event, deleteEvent, editEvent }) => {
 			<div className="event-wrapper">
 				<div className="event-left">
 					<div className="event-image-wrapper">
-						<img src={image} alt="events-image" />
+						<Image
+							src={image}
+							defaultSrc={config.DEFAULT_EVENT_IMAGE}
+							alt="events-image"
+						/>
 					</div>
 				</div>
 				<div className="event-right">
