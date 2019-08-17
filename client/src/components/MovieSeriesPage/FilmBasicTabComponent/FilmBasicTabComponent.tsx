@@ -3,21 +3,10 @@ import PropTypes from 'prop-types';
 import './FilmBasicTabComponent.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar } from '@fortawesome/free-solid-svg-icons';
+import TMovie from '../TMovie';
 
 interface IProps {
-	movie: {
-		id: string;
-		poster_path: string;
-		runtime: number;
-		title: string;
-		release_date?: string;
-		genres: Array<string>;
-		cast: Array<string>;
-		overview: string;
-		vote_average: number;
-		budget: number;
-		any?;	
-	};
+	movie: TMovie;
 }
 
 const starStyle = {
@@ -37,7 +26,7 @@ const rateBlock = (rate: number): ReactElement[] => {
 	const res: any = [];
 
 	for (let i = 0; i < 5; i++) {
-		i < rate/2 ? res.push(solidStar(i, true)) : res.push(solidStar(i, false));
+		i < rate / 2 ? res.push(solidStar(i, true)) : res.push(solidStar(i, false));
 	}
 	return res;
 };
@@ -59,9 +48,9 @@ const FilmBasicTab = (props: IProps) => {
 		genres,
 		runtime: duration,
 		overview: description,
-		vote_average: rate,
+		vote_average,
 		budget,
-		poster_path: imageLink 
+		poster_path: imageLink
 	} = props.movie;
 
 	const getFilmDuration = (runtime: number) => {
@@ -82,7 +71,7 @@ const FilmBasicTab = (props: IProps) => {
 		},
 		{
 			label: 'Release year',
-			value: releaseYear && releaseYear.slice(0, 4) || ''
+			value: (releaseYear && releaseYear.slice(0, 4)) || ''
 		},
 		{
 			label: genres.length > 1 ? 'Genres' : 'Genre',
@@ -90,7 +79,7 @@ const FilmBasicTab = (props: IProps) => {
 		},
 		{
 			label: 'Duration',
-			value: duration && getFilmDuration(duration) || ''
+			value: (duration && getFilmDuration(duration)) || ''
 		},
 		{
 			label: 'Description',
@@ -98,7 +87,7 @@ const FilmBasicTab = (props: IProps) => {
 		},
 		{
 			label: 'Rating',
-			value: rateBlock(rate)
+			value: rateBlock(vote_average)
 		},
 		{
 			label: 'Budget',
@@ -109,7 +98,11 @@ const FilmBasicTab = (props: IProps) => {
 	return (
 		<div className={'film-basic-wrp'}>
 			<section className="filmSection">
-				<img src={`https://image.tmdb.org/t/p/w500/${imageLink}`} alt={title} className="poster" />
+				<img
+					src={`https://image.tmdb.org/t/p/w500/${imageLink}`}
+					alt={title}
+					className="poster"
+				/>
 				<div className="descriptionWrapper">
 					{movieData.map(({ label, value }) => descriptionItem(label, value))}
 				</div>
@@ -118,9 +111,9 @@ const FilmBasicTab = (props: IProps) => {
 				<div className="videoWrapper">
 					<iframe
 						className="video"
-						src='https://www.youtube.com/embed/KnrRy6kSFF0'
+						src="https://www.youtube.com/embed/KnrRy6kSFF0"
 						frameBorder="0"
-						title='https://www.youtube.com/embed/KnrRy6kSFF0'
+						title="https://www.youtube.com/embed/KnrRy6kSFF0"
 					></iframe>
 				</div>
 			</section>
