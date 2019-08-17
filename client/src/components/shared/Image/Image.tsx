@@ -4,6 +4,7 @@ interface IProps {
 	src: string | undefined;
 	defaultSrc: string | undefined;
 	alt: string;
+	className?: string;
 }
 
 interface IState {
@@ -32,8 +33,11 @@ class Image extends React.Component<IProps, IState> {
 
 	render() {
 		const { src } = this.state;
+		const { className, alt } = this.props;
 
-		return <img src={src} onError={this.onError} alt={this.props.alt} />;
+		return (
+			<img src={src} onError={this.onError} alt={alt} className={className} />
+		);
 	}
 }
 
