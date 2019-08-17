@@ -4,11 +4,12 @@ type TMovie = {
 	runtime: number;
 	title: string;
 	release_date?: string;
-	genres: Array<string>;
+	genres: string;
 	overview: string;
 	budget: number;
 	vote_average: number;
 	video: string;
+	cast: string;
 };
 
 export default TMovie;

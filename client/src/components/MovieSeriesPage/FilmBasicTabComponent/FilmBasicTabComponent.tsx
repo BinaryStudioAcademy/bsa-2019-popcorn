@@ -4,6 +4,7 @@ import './FilmBasicTabComponent.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar } from '@fortawesome/free-solid-svg-icons';
 import TMovie from '../TMovie';
+import getFilmDuration from '../../../helpers/getFilmDuration';
 
 interface IProps {
 	movie: TMovie;
@@ -54,17 +55,6 @@ const FilmBasicTab = (props: IProps) => {
 		video
 	} = props.movie;
 
-	const getFilmDuration = (runtime: number) => {
-		if (!runtime || runtime <= 0) {
-			return null;
-		}
-		const minutes = runtime % 60;
-		const hours = Math.floor(runtime / 60);
-		const mm = minutes < 10 ? `0${minutes}` : minutes;
-		const hh = hours < 10 ? `0${hours}` : hours;
-		return `${hh}:${mm}`;
-	};
-
 	const movieData = [
 		{
 			label: 'Original title',
@@ -76,7 +66,7 @@ const FilmBasicTab = (props: IProps) => {
 		},
 		{
 			label: genres.length > 1 ? 'Genres' : 'Genre',
-			value: genres.filter(genre => genre).toString() || ''
+			value: genres
 		},
 		{
 			label: 'Duration',
@@ -99,18 +89,14 @@ const FilmBasicTab = (props: IProps) => {
 	return (
 		<div className={'film-basic-wrp'}>
 			<section className={'filmSection'}>
-				<img
-					src={`https://image.tmdb.org/t/p/w500/${imageLink}`}
-					alt={title}
-					className="poster"
-				/>
+				<img src={imageLink} alt={title} className="poster" />
 				<div className={'descriptionWrapper'}>
 					{movieData.map(({ label, value }) => descriptionItem(label, value))}
 				</div>
 			</section>
 			<section>
 				<div className={'videoWrapper'}>
-					<iframe className="video" src={video} title={video} />
+					<iframe className="video" src={video} title={video} frameBorder={0} />
 				</div>
 			</section>
 		</div>

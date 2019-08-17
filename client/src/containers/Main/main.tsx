@@ -20,25 +20,13 @@ import {
 } from '../../components/MovieSeriesPage/Movie.redux/actions';
 import Header from '../../components/shared/Header/Header';
 import UserTops from '../../components/UserPage/UserTops/UserTops';
+import TMovie from '../../components/MovieSeriesPage/TMovie';
 
 const { notifications } = {
 	notifications: {
 		newMessages: 0,
 		newEvents: 2
 	}
-};
-type Movie = {
-	id: string;
-	poster_path: string;
-	runtime: number;
-	title: string;
-	release_date?: string;
-	genres: Array<string>;
-	cast: Array<string>;
-	overview: string;
-	vote_average: number;
-	budget: number;
-	any?;
 };
 type userInfo = {
 	name: string;
@@ -49,10 +37,10 @@ type userInfo = {
 interface IProps {
 	isAuthorized: boolean;
 	userInfo: userInfo;
-	movieList: null | Array<Movie>;
+	movieList: null | Array<TMovie>;
 	fetchMovieList: () => any;
 	setMovieSeries: (movie: any) => any;
-	movieSeries: null | Movie;
+	movieSeries: null | Array<TMovie>;
 }
 
 const MovieListRender = (movieList, fetchMovieList, setMovieSeries) => {
