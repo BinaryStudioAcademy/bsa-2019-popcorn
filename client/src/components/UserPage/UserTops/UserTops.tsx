@@ -11,6 +11,7 @@ export interface IUserTopsState {
 }
 interface IUserTopProps {
 	uploadImage: (data: FormData, titleId: string) => void;
+	user: any;
 	uploadUrl: string;
 	urlForTop: string;
 	location?: {
@@ -23,6 +24,7 @@ interface IUserTopProps {
 	};
 }
 
+// add user info to each top
 const topItemsMock: ITopItem[] = [
 	{
 		id: '1',
@@ -106,6 +108,15 @@ class UserTops extends React.Component<IUserTopProps, IUserTopsState> {
 		this.setState({ topList });
 	};
 
+	isOwnTop(top) {
+		const { user: currentUser } = this.props;
+		if (top.user) { // delete this check when top will have user info 
+			return currentUser.role === 'admin' || currentUser.id === top.user.userId;
+		} else {
+			return true;
+		}	
+	}
+
 	render() {
 		const url_callback =
 			this.props.location &&
@@ -129,13 +140,14 @@ class UserTops extends React.Component<IUserTopProps, IUserTopsState> {
 				</div>
 				{topList.map(
 					(topItem: ITopItem) =>
-						((topItem.isOwnTop &&
+						((this.isOwnTop(topItem) &&
 							window.location.pathname == '/user-page/tops') ||
 							window.location.pathname == '/movie-tops') && (
 							<TopItem
 								key={topItem.id}
 								saveUserTop={this.saveUserTop}
 								topItem={topItem}
+								isOwnTop={this.isOwnTop(topItem)}
 								deleteTop={this.deleteTop}
 								uploadUrl={this.props.uploadUrl}
 								urlForTop={this.props.urlForTop}
@@ -150,6 +162,7 @@ class UserTops extends React.Component<IUserTopProps, IUserTopsState> {
 
 const mapStateToProps = (rootState, props) => ({
 	...props,
+	user: rootState.profile.profileInfo,
 	uploadUrl: rootState.userTops.uploadUrl,
 	urlForTop: rootState.userTops.urlForTop
 });
