@@ -13,7 +13,7 @@ export class SurveysQuestionOption {
   @PrimaryGeneratedColumn("uuid")
   id: string;
 
-  @Column()
+  @Column({ nullable: true })
   index: number;
 
   @Column()
