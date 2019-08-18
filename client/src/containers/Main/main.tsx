@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Redirect, Route, Switch } from 'react-router-dom';
 import MainPageSidebar from '../../components/shared/MainSidebar/MainPageSidebar';
 import MovieList from '../../components/MovieList/MovieList';
@@ -41,6 +41,7 @@ type Movie = {
 	any?;
 };
 type userInfo = {
+	id: string;
 	name: string;
 	image: string;
 	any;

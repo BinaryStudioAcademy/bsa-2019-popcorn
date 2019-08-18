@@ -13,11 +13,16 @@ import routesWhiteList from "./config/routes-white-list.config";
 import { createConnection } from "typeorm";
 import db_config from "./config/orm.config";
 import "reflect-metadata";
+
 import socketInjector from "./socket/inject";
+import socketHandlers from "./socket/handlers";
+
 const http = require("http");
 
 const app = express();
 const io = require("socket.io")(http.createServer(app));
+
+io.on("connection", socketHandlers);
 
 app.use(cors());
 app.use(express.static("public"));
