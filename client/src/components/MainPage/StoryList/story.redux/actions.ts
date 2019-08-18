@@ -1,4 +1,5 @@
 import {
+	ADD_STORY,
 	CHANGE_ACTIVITY,
 	CHANGE_IMAGE,
 	CREATE_STORY,
@@ -61,6 +62,15 @@ export const createVoting = (voting: IVoting) => {
 		type: CREATE_VOTING,
 		payload: {
 			voting
+		}
+	};
+};
+
+export const addStory = story => {
+	return {
+		type: ADD_STORY,
+		payload: {
+			story
 		}
 	};
 };

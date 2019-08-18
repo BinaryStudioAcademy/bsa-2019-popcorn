@@ -20,6 +20,7 @@ import {
 } from '../../components/MovieSeriesPage/Movie.redux/actions';
 import Header from '../../components/shared/Header/Header';
 import UserTops from '../../components/UserPage/UserTops/UserTops';
+import SocketService from '../../services/socket.service';
 import TMovie from '../../components/MovieSeriesPage/TMovie';
 
 const { notifications } = {
@@ -29,6 +30,7 @@ const { notifications } = {
 	}
 };
 type userInfo = {
+	id: string;
 	name: string;
 	image: string;
 	any;
@@ -68,6 +70,9 @@ const Main = ({
 }: IProps) => {
 	if (!isAuthorized || !localStorage.getItem('token'))
 		return <Redirect to="/login" />;
+
+	new SocketService(userInfo.id);
+
 	return (
 		<div className={'main-wrap'}>
 			{isAuthorized ? <Header userInfo={userInfo} /> : null}

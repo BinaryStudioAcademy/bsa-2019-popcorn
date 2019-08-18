@@ -1,5 +1,6 @@
 import StoryList from './story-list/story-list';
 import {
+	addStory,
 	changeActivity,
 	createStory,
 	createVoting,
@@ -62,6 +63,7 @@ interface IProps {
 	createStory: (newStory: INewStory, userId: string) => any;
 	userId: string;
 	createVoting: (voting: IVoting) => any;
+	addStory: (story: any) => any;
 }
 
 const mock = {
@@ -142,7 +144,8 @@ const actions = {
 	saveImage,
 	changeActivity,
 	createStory,
-	createVoting
+	createVoting,
+	addStory
 };
 const mapDispatchToProps = dispatch => bindActionCreators(actions, dispatch);
 
