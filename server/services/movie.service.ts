@@ -1,14 +1,26 @@
 import { Movie } from "../models/MovieModel";
 import MovieRepository from "../repository/movie.repository";
-import { getCustomRepository, Like } from "typeorm";
+import MovieRateRepository from "../repository/movieRate.repository";
+import { getCustomRepository, Like, getRepository } from "typeorm";
 import * as elasticRepository from "../repository/movieElastic.repository";
 
-export const getMovies = async (): Promise<Movie[]> => {
+export const getMovies = async (): Promise<any[]> => {
   let data = await elasticRepository.get();
 
   data = data.hits.hits;
 
-  return data.map(movie => movie._source);
+  const arrayMovies = data.map(movie => movie._source);
+  const result = await Promise.all(
+    arrayMovies.map(async (movie: any) => {
+      movie.rate = await getCustomRepository(MovieRateRepository)
+        .createQueryBuilder("movieRate")
+        .select("AVG(movieRate.rate)", "average")
+        .where("movieRate.movieId = :id", { id: movie.id })
+        .getRawOne();
+      return movie;
+    })
+  );
+  return result;
 };
 
 export const getMovieById = async (movieId: number): Promise<Movie> =>
@@ -36,4 +48,8 @@ export const getByTitle = async (title: string): Promise<Movie[]> => {
   data = data.hits.hits;
 
   return data.map(movie => movie._source);
+};
+
+export const saveMovieRate = async (newRate: any) => {
+  return await getCustomRepository(MovieRateRepository).save(newRate);
 };
