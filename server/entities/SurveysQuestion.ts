@@ -15,6 +15,9 @@ export class SurveysQuestion {
   id: string;
 
   @Column()
+  index: number;
+
+  @Column()
   title: string;
 
   @Column({ nullable: true })

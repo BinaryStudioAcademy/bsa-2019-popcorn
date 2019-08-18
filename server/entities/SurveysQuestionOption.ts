@@ -14,6 +14,9 @@ export class SurveysQuestionOption {
   id: string;
 
   @Column()
+  index: number;
+
+  @Column()
   title: string;
 
   @ManyToOne(type => SurveysQuestion, { onDelete: "CASCADE" })

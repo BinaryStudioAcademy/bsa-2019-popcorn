@@ -11,6 +11,7 @@ interface ISurvey {
 	};
 	participants: number;
 	questions: Array<{
+		index: number;
 		id: string;
 		survey_id: string;
 		title: string;
@@ -20,6 +21,7 @@ interface ISurvey {
 		image_link?: string;
 		required: boolean;
 		options?: Array<{
+			index: number;
 			id: string;
 			question_id: string;
 			value: string;
@@ -48,6 +50,7 @@ export const transformDataToProps = (data): Array<ISurvey> => {
 		},
 		participants: countParticipants(survey.surveysQuestion),
 		questions: survey.surveysQuestion.map(question => ({
+			index: question.index,
 			id: question.id,
 			survey_id: survey.id,
 			title: question.title,
@@ -57,6 +60,7 @@ export const transformDataToProps = (data): Array<ISurvey> => {
 			image_link: question.image,
 			required: question.required,
 			options: question.surveysQuestionOption.map(option => ({
+				index: option.index,
 				id: option.id,
 				question_id: question.id,
 				value: option.title
@@ -90,6 +94,7 @@ export const transformDataToServerFormatCreate = data => {
 			description: data.description
 		},
 		surveysQuestion: data.questions.map(question => ({
+			index: question.index,
 			type: question.type,
 			title: question.title,
 			firstLabel: question.firstLabel,
@@ -97,6 +102,7 @@ export const transformDataToServerFormatCreate = data => {
 			image: question.image_link,
 			required: question.required,
 			surveysQuestionOption: question.options.map(option => ({
+				index: option.index,
 				title: option.value
 			}))
 		}))
@@ -109,6 +115,7 @@ export const transformDataToServerFormatUpdate = data => {
 		description: data.description,
 		type: data.type,
 		surveysQuestion: data.questions.map(question => ({
+			index: question.index,
 			id: question.id,
 			type: question.type,
 			title: question.title,
@@ -117,6 +124,7 @@ export const transformDataToServerFormatUpdate = data => {
 			image: question.image_link,
 			required: question.required,
 			surveysQuestionOption: question.options.map(option => ({
+				index: option.index,
 				id: option.id,
 				title: option.value
 			}))
@@ -124,3 +132,14 @@ export const transformDataToServerFormatUpdate = data => {
 		user: data.user
 	};
 };
+
+const sortObjectsByIndex = objs => objs.sort((a, b) => (a.index > b.index) ? 1 : ((b.index > a.index) ? -1 : 0)); 
+
+export const setArrangementInSurveys = data => {
+	data.forEach(survey => {
+		survey.surveysQuestion = sortObjectsByIndex(survey.surveysQuestion);
+		survey.surveysQuestion.forEach(question => {
+			question.surveysQuestionOption = sortObjectsByIndex(question.surveysQuestionOption);
+		});
+	});
+}

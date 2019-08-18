@@ -2,7 +2,7 @@ import {
 	ADD_STORY,
 	CHANGE_ACTIVITY,
 	CHANGE_IMAGE,
-	DELETE_NEW_STORY,
+	RESET_NEW_STORY,
 	SET_CAPTION_NEWSTORY,
 	SET_STORIES
 } from './actionTypes';
@@ -67,7 +67,7 @@ export default function(state = initialState, action) {
 				...state,
 				stories
 			};
-		case DELETE_NEW_STORY:
+		case RESET_NEW_STORY:
 			return {
 				...state,
 				newStory: {
