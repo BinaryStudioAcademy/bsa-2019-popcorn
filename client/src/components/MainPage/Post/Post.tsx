@@ -12,12 +12,14 @@ import PostContent from '../PostContent/PostContent';
 import config from '../../../config';
 import Reactions from '../Reactions/Reactions';
 import PostReaction from './PostReaction/PostReaction';
+import { connect } from 'react-redux';
 
 type IPostProps = {
 	post: {
 		user: {
 			name: string;
 			avatar: string;
+			id: string;
 			any;
 		};
 		created_At?: string;
@@ -40,6 +42,7 @@ type IPostProps = {
 			tagName: string;
 		}[];
 	};
+	user: any;
 };
 interface IReactItem {
 	id: number;
@@ -80,7 +83,8 @@ class Post extends PureComponent<IPostProps, IPostState> {
 	};
 
 	isOwnPost() {
-		return true;
+		const { user: currentUser, post: { user: postOwner } } = this.props;
+		return currentUser.role === 'admin' || currentUser.id === postOwner.id;
 	}
 	toggleModal = () => {
 		this.setState({ isModalShown: !this.state.isModalShown });
@@ -202,4 +206,11 @@ class Post extends PureComponent<IPostProps, IPostState> {
 	}
 }
 
-export default Post;
+const mapStateToProps = (rootState, props) => ({
+	...props,
+	user: rootState.profile.profileInfo
+});
+
+export default connect(
+	mapStateToProps,
+)(Post);
