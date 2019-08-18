@@ -57,6 +57,12 @@ router
       .saveMovieRate(req.body)
       .then((response: any) => res.send(response))
       .catch(next)
-  );
+  )
+  .get("/rate/user", (req: Request, res: Response, next: NextFunction) => {
+    return movieService
+      .getMovieRate(req.body) // get movie by userId and movieId
+      .then((response: any) => res.send(response))
+      .catch(next);
+  });
 
 export default router;

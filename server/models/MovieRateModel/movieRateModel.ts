@@ -1,4 +1,4 @@
-export class classMovieRate {
+export class MovieRate {
   id: string;
   userId: string;
   movieId: string;

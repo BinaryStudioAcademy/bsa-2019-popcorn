@@ -1,4 +1,5 @@
 import { Movie } from "../models/MovieModel";
+import { MovieRate } from "../models/MovieRateModel/movieRateModel";
 import MovieRepository from "../repository/movie.repository";
 import MovieRateRepository from "../repository/movieRate.repository";
 import { getCustomRepository, Like, getRepository } from "typeorm";
@@ -64,4 +65,11 @@ export const saveMovieRate = async (newRate: any) => {
     );
   }
   return await getCustomRepository(MovieRateRepository).save(newRate);
+};
+
+export const getMovieRate = async (rate: MovieRate): Promise<MovieRate> => {
+  return await getCustomRepository(MovieRateRepository).findOne({
+    userId: rate.userId,
+    movieId: rate.movieId
+  });
 };
