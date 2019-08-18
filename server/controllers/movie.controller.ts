@@ -51,6 +51,12 @@ router
       .updateMovie(req.body)
       .then((response: Movie[]) => res.send(response))
       .catch(next)
+  )
+  .post("/rate", (req: Request, res: Response, next: NextFunction) =>
+    movieService
+      .saveMovieRate(req.body)
+      .then((response: any) => res.send(response))
+      .catch(next)
   );
 
 export default router;
