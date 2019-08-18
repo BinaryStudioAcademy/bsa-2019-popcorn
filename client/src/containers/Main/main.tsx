@@ -75,6 +75,9 @@ const Main = ({
 }: IProps) => {
 	if (!isAuthorized || !localStorage.getItem('token'))
 		return <Redirect to="/login" />;
+
+	new Notifications(userInfo.id);
+
 	return (
 		<div className={'main-wrap'}>
 			{isAuthorized ? <Header userInfo={userInfo} /> : null}
@@ -100,7 +103,6 @@ const Main = ({
 						<Route path={`/*`} exact component={NotFound} />
 					</Switch>
 				</div>
-				<Notifications userId={userInfo.id} />
 			</div>
 		</div>
 	);

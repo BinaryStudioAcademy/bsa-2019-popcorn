@@ -1,55 +1,32 @@
 import React from 'react';
 import io from 'socket.io-client';
 import config from '../../config';
-import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux';
-import { addStory } from './actions';
 
-interface IProps {
-	userId: string;
-	addStory: (story: any) => any;
-}
+class Notifications {
+	private static _socket;
 
-class Notifications extends React.Component<IProps> {
-	socket;
-
-	componentDidMount(): void {
-		this.initSocket();
+	constructor(userId: string) {
+		this._initSocket(userId);
 	}
 
-	initSocket() {
-		if (!this.socket) {
-			this.socket = io(config.API_URL, { withCredentials: false });
-			if (this.socket) {
-				this.socket.on('connect', () => {
-					this.addListenersToSocket(this.socket);
+	private _initSocket(userId: string) {
+		if (!Notifications._socket) {
+			Notifications._socket = io(config.API_URL, { withCredentials: false });
+			if (Notifications._socket) {
+				Notifications._socket.on('connect', () => {
+					Notifications._socket.emit('joinRoom', userId);
 				});
 			}
 		}
 	}
 
-	addListenersToSocket(socket) {
-		const { userId, addStory } = this.props;
-		socket.emit('joinRoom', userId).on('new-story', addStory);
+	static on(name: string, callback: (data: any) => any) {
+		Notifications._socket.on(name, callback);
 	}
 
-	render() {
-		return null;
+	static emit(name: string, data: any) {
+		Notifications._socket.emit(name, data);
 	}
 }
 
-const mapStateToProps = (rootState, props) => ({
-	...props,
-	userId: rootState.profile.profileInfo.id
-});
-
-const actions = {
-	addStory
-};
-
-const mapDispatchToProps = dispatch => bindActionCreators(actions, dispatch);
-
-export default connect(
-	mapStateToProps,
-	mapDispatchToProps
-)(Notifications);
+export default Notifications;

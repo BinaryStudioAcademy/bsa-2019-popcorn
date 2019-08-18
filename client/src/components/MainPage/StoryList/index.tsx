@@ -1,5 +1,6 @@
 import StoryList from './story-list/story-list';
 import {
+	addStory,
 	changeActivity,
 	createStory,
 	createVoting,
@@ -17,6 +18,7 @@ import ChooseExtraOption from './story-modal/choose-extra-option';
 import INewStory from './INewStory';
 import CreateVote from './story-modal/create-vote';
 import IVoting from './IVoting';
+import Notifications from '../../Notifications';
 
 interface IStoryListItem {
 	caption: string;
@@ -142,7 +144,8 @@ const actions = {
 	saveImage,
 	changeActivity,
 	createStory,
-	createVoting
+	createVoting,
+	addStory
 };
 const mapDispatchToProps = dispatch => bindActionCreators(actions, dispatch);
 

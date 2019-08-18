@@ -7,6 +7,7 @@ import Spinner from '../../../shared/Spinner';
 import config from '../../../../config';
 import StoryViewer from '../../StoryViewer/StoryViewer';
 import { Redirect } from 'react-router';
+import Notifications from '../../../Notifications';
 
 interface IStoryListItem {
 	caption: string;
@@ -18,6 +19,7 @@ interface IStoryListItem {
 		any;
 	};
 	type: string;
+	addStory: (story: any) => any;
 	voting?: {
 		backColor: string;
 		backImage: string;
@@ -70,7 +72,13 @@ class StoryList extends Component<IStoryListProps, IState> {
 			modal: false
 		};
 		this.updateModal = this.handleUpdateModal.bind(this);
+		this.addSocketEvents(props.addStory);
 	}
+
+	addSocketEvents = addStory => {
+		Notifications.on('new-story', addStory);
+	};
+
 	handleUpdateModal = (value: boolean) => {
 		this.setState({ isPopupShown: value });
 	};
