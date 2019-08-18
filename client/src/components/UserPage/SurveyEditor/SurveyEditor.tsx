@@ -305,7 +305,6 @@ class SurveyEditor extends Component<IProps, IState> {
 						if (this.state.currentElement === i) {
 							return (
 								<div key={i} className="editor-question">
-									<div>{ question.index }</div>
 									<SurveyQuestion
 										questionInfo={question}
 										changeQuestion={this.changeQuestion}
