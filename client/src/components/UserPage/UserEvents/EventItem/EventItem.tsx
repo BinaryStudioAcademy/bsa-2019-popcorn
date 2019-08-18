@@ -16,9 +16,10 @@ interface IProps {
 	event: IEventFormatClient;
 	deleteEvent: null | ((id: string, currentUserId: string) => any);
 	editEvent: null | ((event: IEventFormatClient) => any);
+	isOwnEvent: boolean;
 }
 
-const EventItem: React.FC<IProps> = ({ event, deleteEvent, editEvent }) => {
+const EventItem: React.FC<IProps> = ({ event, deleteEvent, editEvent, isOwnEvent }) => {
 	const {
 		id,
 		userId: currentUserId,
@@ -73,7 +74,7 @@ const EventItem: React.FC<IProps> = ({ event, deleteEvent, editEvent }) => {
 								{String(dateRange.endDate)}
 							</Moment>
 						</div>
-						{deleteEvent && editEvent !== null ? (
+						{isOwnEvent && (deleteEvent && editEvent !== null ? (
 							<div className="event-buttons">
 								<button
 									className="edit-button"
@@ -88,7 +89,7 @@ const EventItem: React.FC<IProps> = ({ event, deleteEvent, editEvent }) => {
 									<CloseIcon className="delete-button-svg" />
 								</button>
 							</div>
-						) : null}
+						) : null)}
 					</div>
 				</div>
 			</div>

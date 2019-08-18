@@ -18,6 +18,7 @@ interface IProps {
 	getUserEvents: (id: string) => any;
 	deleteEvent: (id: string, currentUserId: string) => any;
 	currentUserId: string;
+	currentUserRole: string;
 	saveEvent: (event: any) => void;
 	updateEvent: (event: any) => void;
 }
@@ -60,6 +61,11 @@ class UserEvents extends React.Component<IProps, IState> {
 		}
 	};
 
+	isOwnEvent = (event) => {
+		const { userId } = event;
+		return this.props.currentUserId === userId || this.props.currentUserRole === 'admin';
+	}
+
 	renderEventList = (eventList: IEventFormatClient[], deleteEventAction: any) =>
 		eventList.map(event => (
 			<EventItem
@@ -67,6 +73,7 @@ class UserEvents extends React.Component<IProps, IState> {
 				key={event.id}
 				deleteEvent={deleteEventAction}
 				editEvent={this.editEvent}
+				isOwnEvent={this.isOwnEvent(event)}
 			/>
 		));
 
@@ -135,6 +142,7 @@ const mapStateToProps = (state, props) => {
 	return {
 		...props,
 		currentUserId: state.profile.profileInfo.id,
+		currentUserRole: state.profile.profileInfo.role,
 		userEvents: state.events.userEvents
 	};
 };
