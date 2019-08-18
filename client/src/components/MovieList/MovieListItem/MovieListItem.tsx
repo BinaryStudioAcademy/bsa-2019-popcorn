@@ -4,43 +4,26 @@ import { ReactComponent as DurationIcon } from '../../../assets/icons/general/mo
 import { NavLink } from 'react-router-dom';
 import config from '../../../config';
 import Image from '../../shared/Image/Image';
+import TMovie from '../../MovieSeriesPage/TMovie';
+import getFilmDuration from '../../../helpers/getFilmDuration';
 
 interface IMovieListItemProps {
-	movie: {
-		id: string;
-		title: string;
-		release_date?: string;
-		poster_path: string;
-		runtime: number;
-		genres: Array<string>;
-		cast: Array<string>;
-	};
+	movie: TMovie;
 	key: string;
 	setMovieSeries: (movie: any) => any;
 }
-
-const getFilmDuration = (runtime: number) => {
-	if (!runtime || runtime <= 0) {
-		return null;
-	}
-	const minutes = runtime % 60;
-	const hours = Math.floor(runtime / 60);
-	const mm = minutes < 10 ? `0${minutes}` : minutes;
-	const hh = hours < 10 ? `0${hours}` : hours;
-	return `${hh}:${mm}`;
-};
 
 const MovieListItem: React.FC<IMovieListItemProps> = ({
 	movie,
 	setMovieSeries
 }) => {
 	const duration = getFilmDuration(movie.runtime);
-	const src = `https://image.tmdb.org/t/p/w500/${movie.poster_path}`;
+
 	return (
 		<div className="movie-item">
 			<div className="movie-poster-wrp">
 				<Image
-					src={src}
+					src={movie.poster_path}
 					defaultSrc={config.DEFAULT_MOVIE_IMAGE}
 					alt="movie-poster"
 					className="movie-poster"
@@ -60,8 +43,7 @@ const MovieListItem: React.FC<IMovieListItemProps> = ({
 					</div>
 				</NavLink>
 				<div>
-					{/*movie.genres.slice(0,3).join(', ')*/}
-					<span className="movie-genre">{'Action, Drama, Horror'}</span>
+					<span className="movie-genre">{movie.genres}</span>
 					{duration && (
 						<span className="movie-duration">
 							<DurationIcon />
@@ -69,9 +51,8 @@ const MovieListItem: React.FC<IMovieListItemProps> = ({
 						</span>
 					)}
 				</div>
-				{/*movie.cast.join(', ')*/}
 				<div className="movie-cast">
-					<b>Main cast:</b> {'Matt Damon, Jessica Chastain, Kristen Wiig'}
+					<b>Main cast:</b> {movie.cast}
 				</div>
 			</div>
 		</div>
