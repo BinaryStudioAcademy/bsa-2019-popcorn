@@ -64,6 +64,7 @@ interface IProps {
 	createStory: (newStory: INewStory, userId: string) => any;
 	userId: string;
 	createVoting: (voting: IVoting) => any;
+	addStory: (story: any) => any;
 }
 
 const mock = {
