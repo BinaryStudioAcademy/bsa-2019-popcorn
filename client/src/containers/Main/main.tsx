@@ -20,9 +20,8 @@ import {
 } from '../../components/MovieSeriesPage/Movie.redux/actions';
 import Header from '../../components/shared/Header/Header';
 import UserTops from '../../components/UserPage/UserTops/UserTops';
-import Notifications from '../../components/Notifications/index';
+import SocketService from '../../services/socket.service';
 import TMovie from '../../components/MovieSeriesPage/TMovie';
-
 
 const { notifications } = {
 	notifications: {
@@ -72,7 +71,7 @@ const Main = ({
 	if (!isAuthorized || !localStorage.getItem('token'))
 		return <Redirect to="/login" />;
 
-	new Notifications(userInfo.id);
+	new SocketService(userInfo.id);
 
 	return (
 		<div className={'main-wrap'}>

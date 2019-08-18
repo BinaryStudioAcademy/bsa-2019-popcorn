@@ -18,7 +18,6 @@ import ChooseExtraOption from './story-modal/choose-extra-option';
 import INewStory from './INewStory';
 import CreateVote from './story-modal/create-vote';
 import IVoting from './IVoting';
-import Notifications from '../../Notifications';
 
 interface IStoryListItem {
 	caption: string;

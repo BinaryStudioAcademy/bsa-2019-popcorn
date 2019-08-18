@@ -7,19 +7,20 @@ import Spinner from '../../../shared/Spinner';
 import config from '../../../../config';
 import StoryViewer from '../../StoryViewer/StoryViewer';
 import { Redirect } from 'react-router';
-import Notifications from '../../../Notifications';
+import SocketService from '../../../../services/socket.service';
+import INewStory from '../INewStory';
+import IVoting from '../IVoting';
 
 interface IStoryListItem {
 	caption: string;
 	image_url: string;
 	user: {
 		avatar: string;
-		name: string;
 		id: string;
+		name: string;
 		any;
 	};
 	type: string;
-	addStory: (story: any) => any;
 	voting?: {
 		backColor: string;
 		backImage: string;
@@ -34,6 +35,26 @@ interface IStoryListItem {
 			voted: number;
 		}>;
 	};
+}
+interface IProps {
+	scrollStep: number;
+	stories: null | Array<IStoryListItem>;
+	fetchStories: () => any;
+	avatar: null | string;
+	newStory: INewStory;
+	cursorPosition: { start: number; end: number };
+	setCaption: (caption: string) => any;
+	top: { id: string; name: string; any };
+	survey: { id: string; name: string; any };
+	saveImage: (url: string) => any;
+	changeActivity: (
+		type: string,
+		activity: { id: string; name: string } | null
+	) => any;
+	createStory: (newStory: INewStory, userId: string) => any;
+	userId: string;
+	createVoting: (voting: IVoting) => any;
+	addStory: (story: any) => any;
 }
 
 interface IStoryListProps {
@@ -55,7 +76,7 @@ interface IState {
 	modal: boolean;
 }
 
-class StoryList extends Component<IStoryListProps, IState> {
+class StoryList extends Component<IProps, IState> {
 	updateModal: (value: boolean) => void;
 	constructor(props) {
 		super(props);
@@ -76,7 +97,7 @@ class StoryList extends Component<IStoryListProps, IState> {
 	}
 
 	addSocketEvents = addStory => {
-		Notifications.on('new-story', addStory);
+		SocketService.on('new-story', addStory);
 	};
 
 	handleUpdateModal = (value: boolean) => {
