@@ -8,6 +8,7 @@ import MovieSeriesPosts from './MovieSeriesPosts/MovieSeriesPosts';
 import MovieSeriesAwards from './MovieSeriesAwards/MovieSeriesAwards';
 import MovieSeriesStatistics from './MovieSeriesStatistics/MovieSeriesStatistics';
 import StaffCast from './StaffCast/StaffCast';
+import TMovie from './TMovie';
 
 const messages = [
 	{
@@ -32,28 +33,44 @@ const messages = [
 		body: 'I am going to watch it',
 		photo: 'https://i.pravatar.cc/300?img=10',
 		date: '2 hours ago'
+	},
+	{
+		id: '4',
+		name: 'Forrest Meadows',
+		body: 'I am going to watch it',
+		photo: 'https://i.pravatar.cc/300?img=10',
+		date: '2 hours ago'
+	},
+	{
+		id: '5',
+		name: 'Forrest Meadows',
+		body: 'I am going to watch it',
+		photo: 'https://i.pravatar.cc/300?img=10',
+		date: '2 hours ago'
+	},
+	{
+		id: '6',
+		name: 'Forrest Meadows',
+		body: 'I am going to watch it',
+		photo: 'https://i.pravatar.cc/300?img=10',
+		date: '2 hours ago'
 	}
 ];
 
 interface IProps {
 	mainPath: string;
-	movie: null | Movie;
+	movie: TMovie;
 }
-type Movie = {
-	id: string;
-	title: string;
-	year?: number;
-	image: string;
-	duration: string;
-	genres: Array<string>;
-	cast: Array<string>;
-	any?;
-};
+
 const MovieSeriesPageTabBody: React.SFC<IProps> = ({ mainPath, movie }) => {
 	return (
 		<div className={'movie-series-page-tab-body'}>
 			<Switch>
-				<Route exact path={`${mainPath}`} component={FilmBasicTabComponent} />
+				<Route
+					exact
+					path={`${mainPath}`}
+					render={() => <FilmBasicTabComponent movie={movie} />}
+				/>
 				<Route path={`${mainPath}/cast-crew`} component={StaffCast} />
 				<Route path={`${mainPath}/reviews`} component={MovieSeriesReviews} />
 				<Route path={`${mainPath}/posts`} component={MovieSeriesPosts} />

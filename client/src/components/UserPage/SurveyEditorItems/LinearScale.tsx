@@ -14,6 +14,7 @@ interface IQuestion {
 	image_link?: string;
 	required: boolean;
 	options?: Array<{
+		index: number;
 		id: string;
 		question_id: string;
 		value: string;
@@ -41,6 +42,7 @@ class LinearScale extends Component<IProps, IQuestion> {
 		const options = Array(Number(event.target.value))
 			.fill(0)
 			.map((e, i) => ({
+				index: i,
 				id: uuid(),
 				question_id: this.state.id,
 				value: `${i + 1}`

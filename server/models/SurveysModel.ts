@@ -5,6 +5,7 @@ export class Surveys {
   id: string;
   title: string;
   description: string;
+  type: string;
   user: User;
   surveysQuestion: SurveysQuestion[];
   created_at: Date;

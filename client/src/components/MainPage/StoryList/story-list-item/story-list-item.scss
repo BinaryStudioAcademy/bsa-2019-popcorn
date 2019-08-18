@@ -10,10 +10,12 @@
 	grid-template-rows: 30px 65px 65px 30px;
 	align-items: center;
 	justify-items: center;
+	background: #efefef;
+	width: max-content;
 }
 
 .story-pic {
-	height: 190px;
+	height: auto;
 	width: 120px;
 	grid-row: 1/-1;
 	grid-column: 1/-1;
@@ -28,11 +30,16 @@
 	grid-column: 1/2;
 	z-index: 2;
 }
-
+.avatar-voting {
+	position: absolute;
+	top: 5px;
+	left: 5px;
+}
 .story-name {
 	font-family: Inter;
 	font-weight: 500;
 	font-size: 12px;
 	line-height: 15px;
 	letter-spacing: 0.4px;
+	min-height: 30px;
 }

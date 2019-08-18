@@ -12,6 +12,7 @@ import './../Survey/Survey.scss';
 import './SurveyIndividual.scss';
 
 interface IOption {
+	index: number;
 	id: string;
 	question_id: string;
 	value: string;
@@ -107,7 +108,6 @@ class SurveyIndividual extends PureComponent<IProps, IState> {
 			surveyInfo: { questions }
 		} = this.props;
 		const { currUserIndex, usersIdList } = this.state;
-
 		return (
 			<div className="survey">
 				<div className="survey-background" />
@@ -132,20 +132,6 @@ class SurveyIndividual extends PureComponent<IProps, IState> {
 						{questions.map((question, i) => {
 							if (question.type === 'Multiple choice') {
 								return (
-									<SurveyMultipleAnswer
-										key={i}
-										questionInfo={question}
-										setAnswer={() => {}}
-										disable={true}
-										answers={this.getCurrUserAnswer(
-											question.id,
-											usersIdList[currUserIndex],
-											question.answers
-										)}
-									/>
-								);
-							} else if (question.type === 'Checkboxes') {
-								return (
 									<SurveySingleAnswer
 										key={i}
 										questionInfo={question}
@@ -158,6 +144,20 @@ class SurveyIndividual extends PureComponent<IProps, IState> {
 												question.answers
 											)[0]
 										}
+									/>
+								);
+							} else if (question.type === 'Checkboxes') {
+								return (
+									<SurveyMultipleAnswer
+										key={i}
+										questionInfo={question}
+										setAnswer={() => {}}
+										disable={true}
+										answers={this.getCurrUserAnswer(
+											question.id,
+											usersIdList[currUserIndex],
+											question.answers
+										)}
 									/>
 								);
 							} else if (question.type === 'Short Answer') {

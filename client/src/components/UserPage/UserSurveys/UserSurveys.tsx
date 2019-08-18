@@ -27,6 +27,7 @@ interface ISurvey {
 		image_link?: string;
 		required: boolean;
 		options?: Array<{
+			index: number;
 			id: string;
 			question_id: string;
 			value: string;
@@ -70,10 +71,19 @@ class UserSurveys extends React.Component<IProps, IState> {
 		};
 	}
 
-	componentWillReceiveProps(nextProps) {
+	/* 	componentWillReceiveProps(nextProps) {
 		if (!isEqual(nextProps.surveys, this.state.surveys)) {
 			this.setState({ surveys: nextProps.surveys });
 		}
+	} */
+
+	static getDerivedStateFromProps(props, state) {
+		if (!isEqual(props.surveys, state.surveys)) {
+			return {
+				surveys: props.surveys
+			};
+		}
+		return null;
 	}
 
 	showModal = (event, id) => {

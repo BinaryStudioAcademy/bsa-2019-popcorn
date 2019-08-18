@@ -13,7 +13,9 @@
 		text-decoration: none;
 		color: inherit;
 		display: flex;
-		align-items: center;
+		align-items: flex-start;
+		padding-top: 3px;
+		height: 100%;
 
 		&:active {
 			color: inherit;
@@ -22,6 +24,7 @@
 			font-weight: 900;
 			font-size: 24px;
 			letter-spacing: $header-letter-spacing;
+			margin-top: 16px;
 		}
 		.logo-wrapper {
 			font-size: 0;
@@ -50,6 +53,11 @@
 		text-align: center;
 		letter-spacing: $base-letter-spacing;
 		color: $text-base-color;
+
+		&:nth-of-type(2) .modal,
+		&:nth-of-type(3) .modal {
+			color: #bbbbbb;
+		}
 	}
 
 	.fa-chevron-down {
@@ -60,6 +68,12 @@
 
 	.user-info {
 		display: flex;
+
+		&:nth-of-type(2) .modal,
+		&:nth-of-type(3) .modal {
+			pointer-events: all;
+			color: $text-base-color;
+		}
 
 		span {
 			color: $text-base-color;
@@ -108,14 +122,17 @@
 
 			.search-input {
 				border: none;
-				margin-bottom: 5px;
+				margin: 6px 10px 0px 10px;
 				width: 240px;
+				display: block;
 			}
 			.search-input:focus {
 				outline: none;
 			}
 			.search-icon {
 				margin: 6px 10px 0px 10px;
+				display: block;
+				float: left;
 			}
 		}
 	}
@@ -178,6 +195,14 @@
 			&:hover {
 				cursor: pointer;
 			}
+		}
+	}
+
+	.user-info {
+		position: static;
+		.modal {
+			left: calc(100% - 150px);
+			top: 72px;
 		}
 	}
 

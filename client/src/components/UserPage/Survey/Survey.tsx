@@ -35,6 +35,7 @@ interface IProps {
 			image_link?: string;
 			required: boolean;
 			options?: Array<{
+				index: number;
 				id: string;
 				question_id: string;
 				value: string;
@@ -71,18 +72,22 @@ class Survey extends PureComponent<IProps, IState> {
 	validate = () => {
 		const { questions } = this.props.surveyInfo;
 		const { answers } = this.state;
-		const requiredQuestions = questions.filter(question => question.required === true);
+		const requiredQuestions = questions.filter(
+			question => question.required === true
+		);
 		const validate = !requiredQuestions.some(question => {
-			const answer: any = answers.find(answer => answer.questionId === question.id);
+			const answer: any = answers.find(
+				answer => answer.questionId === question.id
+			);
 			if (question.type !== 'Short Answer') {
 				if (answer.options.length === 0) return true;
 			} else {
-				if (answer.value.trim() === '') return true; 
+				if (answer.value.trim() === '') return true;
 			}
 			return false;
-		}); 
+		});
 		return validate;
-	}
+	};
 
 	setSingleAnswer = answerInfo => {
 		const { questionId, optionId } = answerInfo;
@@ -109,7 +114,7 @@ class Survey extends PureComponent<IProps, IState> {
 		this.setState({
 			answers: newAnswers
 		});
-	}
+	};
 
 	setMultipleAnswer = answerInfo => {
 		const { questionId, optionId, value } = answerInfo;
@@ -141,7 +146,7 @@ class Survey extends PureComponent<IProps, IState> {
 
 	sendAnswer = () => {
 		this.setState({ isDisabled: false });
-		const validate = this.validate()
+		const validate = this.validate();
 
 		if (!validate) {
 			this.setState({ isDisabled: true });
@@ -196,29 +201,34 @@ class Survey extends PureComponent<IProps, IState> {
 								/>
 							);
 						} else if (question.type === 'Short Answer') {
-							return <SurveyShortAnswer 
-								key={i} 
-								questionInfo={question} 
-								setAnswer={this.setShortAnswer}
-							/>;
-						} else return <SurveyLinearScale 
-							key={i} 
-							questionInfo={question} 
-							setAnswer={this.setSingleAnswer}
-						/>;
+							return (
+								<SurveyShortAnswer
+									key={i}
+									questionInfo={question}
+									setAnswer={this.setShortAnswer}
+								/>
+							);
+						} else
+							return (
+								<SurveyLinearScale
+									key={i}
+									questionInfo={question}
+									setAnswer={this.setSingleAnswer}
+								/>
+							);
 					})}
-				 	<div className="button">
-					 	{
-							this.state.isDisabled && 
-							<div className="error-message">Please, answer all required questions.</div>
-						}
-						{ 
-							!this.props.isPreview && 
+					<div className="button">
+						{this.state.isDisabled && (
+							<div className="error-message">
+								Please, answer all required questions.
+							</div>
+						)}
+						{!this.props.isPreview && (
 							<button type="button" onClick={this.sendAnswer}>
 								Send
 							</button>
-						}
-                    </div> 
+						)}
+					</div>
 				</form>
 			</div>
 		);

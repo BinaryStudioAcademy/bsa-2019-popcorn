@@ -40,7 +40,14 @@ class Restore extends React.Component<IProps, IState> {
 		const { isLoading } = this.state;
 
 		if (restoreMessage)
-			return <div className={'form-wrapper'}>{restoreMessage}</div>;
+			return (
+				<div className="form-wrapper">
+					<NavLink to={'/login'} className="form-hint-link">
+						{restoreMessage}
+					</NavLink>
+					<i className="icon icon-arrow-right" />
+				</div>
+			);
 
 		return (
 			<div className={'form-wrapper'}>

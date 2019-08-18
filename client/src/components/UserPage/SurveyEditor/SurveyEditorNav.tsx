@@ -20,6 +20,7 @@ interface ISurvey {
 	};
 	participants: number;
 	questions: Array<{
+		index: number; 
 		id: string;
 		survey_id: string;
 		title: string;
@@ -29,6 +30,7 @@ interface ISurvey {
 		image_link?: string;
 		required: boolean;
 		options?: Array<{
+			index: number;
 			id: string;
 			question_id: string;
 			value: string;
@@ -114,7 +116,13 @@ const SurveyEditorNav: React.FC<IProps> = (props: IProps) => {
 							<NavLink to={mainPath} className="preview-back">
 								<FontAwesomeIcon icon={faArrowLeft} />
 							</NavLink>
-							<Survey surveyInfo={survey} isPreview={true}/>
+							<Survey
+								surveyInfo={{
+									...survey,
+									created_at: new Date(survey.created_at)
+								}}
+								isPreview={true}
+							/>
 						</div>
 					)}
 				/>

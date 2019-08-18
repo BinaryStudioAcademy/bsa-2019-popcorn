@@ -4,7 +4,7 @@ import { getCustomRepository } from "typeorm";
 import { User } from "../models/UserModel";
 import { sendToken } from "./email.service";
 
-import crypto from "crypto";
+const crypto = require("crypto");
 
 export const login = async ({ id }) => ({
   token: tokenHelper.createToken({ id }),

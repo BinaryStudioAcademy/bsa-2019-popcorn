@@ -112,7 +112,7 @@ class Login extends React.Component<IProps, IState, IValues> {
 							.required('Email is required'),
 						password: Yup.string()
 							.max(64, 'Password must be no more than 64 characters')
-							.min(5, 'Password must be at least 5 characters')
+							.min(6, 'Password must be at least 6 characters')
 							.required('Password is required')
 					})}
 					render={({ errors, status, touched }) => {
@@ -125,6 +125,12 @@ class Login extends React.Component<IProps, IState, IValues> {
 						);
 					}}
 				/>
+				<div className="form-hint">
+					<NavLink to={'/reset'} className="form-hint-link">
+						Forget password?
+					</NavLink>
+					<i className="icon icon-arrow-right" />
+				</div>
 				{this.linkToRegistration()}
 			</div>
 		) : (

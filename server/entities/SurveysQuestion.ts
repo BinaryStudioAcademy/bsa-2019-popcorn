@@ -15,6 +15,9 @@ export class SurveysQuestion {
   id: string;
 
   @Column()
+  index: number;
+
+  @Column()
   title: string;
 
   @Column({ nullable: true })
@@ -37,7 +40,8 @@ export class SurveysQuestion {
 
   @OneToMany(
     type => SurveysQuestionOption,
-    surveysQuestionOption => surveysQuestionOption.surveysQuestion
+    surveysQuestionOption => surveysQuestionOption.surveysQuestion,
+    { nullable: true }
   )
   surveysQuestionOption: SurveysQuestionOption[];
 

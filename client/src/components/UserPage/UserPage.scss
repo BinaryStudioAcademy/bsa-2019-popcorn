@@ -44,3 +44,11 @@ $user-tab-list-space-top: $user-tab-space + $user-tab-active-line;
 		}
 	}
 }
+
+.no-info-yet {
+	margin-top: 200px;
+	font-size: $header-large;
+	margin-bottom: auto;
+	text-align: center;
+	color: $text-secondary-color;
+}

@@ -6,6 +6,7 @@ import {
 } from './actionTypes';
 import {
 	LOGIN,
+	LOGOUT,
 	RESET_ERROR,
 	RESET_OK,
 	RESTORE_ERROR,
@@ -51,6 +52,12 @@ export default function(state = initialState, action) {
 			return {
 				...state,
 				profileInfo: action.payload.user
+			};
+		case LOGOUT:
+			return {
+				...state,
+				profileInfo: null,
+				userPosts: null
 			};
 		case SET_USER_POSTS:
 			return {

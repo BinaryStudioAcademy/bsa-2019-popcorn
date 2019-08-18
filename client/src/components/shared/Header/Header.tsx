@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronDown } from '@fortawesome/free-solid-svg-icons';
 import './Header.scss';
@@ -9,15 +9,18 @@ import MovieSearch from '../../MovieList/MovieSearch/index';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { fetchFilms } from '../Header/actions';
+import { unauthorize } from '../../authorization/actions';
 import { NavLink, Link } from 'react-router-dom';
 import { setMovieSeries } from '../../MovieSeriesPage/Movie.redux/actions';
 import config from '../../../config';
+import Image from '../Image/Image';
 
 interface IProps {
 	userInfo: {
 		//temporary put ? to use mocks inside component
 		name: string;
 		image: string;
+		avatar?: string;
 	};
 	moviesSearch?: Array<{
 		id: string;
@@ -31,6 +34,7 @@ interface IProps {
 	fetchFilms: () => void;
 	alreadySearch: boolean;
 	setMovieSeries: (movie: any) => any;
+	unauthorize: () => void;
 }
 
 const user = {
@@ -40,11 +44,12 @@ const user = {
 };
 
 const Header = ({
-	userInfo = user,
+	userInfo,
 	moviesSearch,
 	fetchFilms,
 	alreadySearch,
-	setMovieSeries
+	setMovieSeries,
+	unauthorize
 }: IProps) => {
 	const MOVIES_IN_CINEMA = 'Movies in cinema';
 	const MOVIE_TOPS = 'Movie tops';
@@ -55,6 +60,9 @@ const Header = ({
 	const POPULAR_MOVIES = 'Popular Movies';
 	const POPULAR_TV_SERIES = 'Popular TV Series';
 	const POPULAR_USERS = 'Popular Users';
+	const PROFILE = 'Profile';
+	const SETTINGS = 'Settings';
+	const LOGOUT = 'Logout';
 	return (
 		<div className="header">
 			<NavLink to="/" className="header-logo-link">
@@ -127,10 +135,23 @@ const Header = ({
 					<img className="notify-icon hover" src={notifyIcon} alt="bell" />
 				</NavLink>
 			</div>
-			<NavLink to={'/user-page'} className="user-info hover">
-				<img src={userInfo.image || config.DEFAULT_AVATAR} alt="avatar" />
+			<div className="user-info header-buttons hover">
+				<Image
+					src={userInfo.avatar}
+					defaultSrc={config.DEFAULT_AVATAR}
+					alt="avatar"
+				/>
 				<span className="user-name">{userInfo.name}</span>
-			</NavLink>
+				<div className="modal">
+					<Link aria-current="page" className="hover" to="/user-page">
+						{PROFILE}
+					</Link>
+					<Link aria-current="page" className="hover" to="/settings">
+						{SETTINGS}
+					</Link>
+					<a onClick={() => unauthorize()}>{LOGOUT}</a>
+				</div>
+			</div>
 		</div>
 	);
 };
@@ -143,7 +164,8 @@ const mapStateToProps = (rootState, props) => ({
 
 const actions = {
 	fetchFilms,
-	setMovieSeries
+	setMovieSeries,
+	unauthorize
 };
 
 const mapDispatchToProps = dispatch => bindActionCreators(actions, dispatch);

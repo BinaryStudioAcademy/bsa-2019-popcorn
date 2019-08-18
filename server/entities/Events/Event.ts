@@ -23,13 +23,13 @@ export class Event {
   @Column()
   description: string;
 
-  @Column()
+  @Column({ nullable: true })
   image: string;
 
-  @Column({ type: "float" })
+  @Column({ type: "float", nullable: true })
   location_lat: number;
 
-  @Column({ type: "float" })
+  @Column({ type: "float", nullable: true })
   location_lng: number;
 
   @Column()
@@ -49,10 +49,10 @@ export class Event {
   @JoinColumn()
   movie: Movie;
 
-  @Column()
+  @Column({ nullable: true })
   userId: string;
 
-  @Column()
+  @Column({ nullable: true })
   movieId: string;
 
   @OneToMany(type => EventComment, event_comment => event_comment.event)

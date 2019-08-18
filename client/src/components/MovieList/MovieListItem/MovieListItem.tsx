@@ -1,19 +1,14 @@
 import React from 'react';
 import './MovieListItem.scss';
-import { ReactComponent as GenreIcon } from '../../../assets/icons/general/movie/genre-icon.svg';
 import { ReactComponent as DurationIcon } from '../../../assets/icons/general/movie/duration-icon.svg';
 import { NavLink } from 'react-router-dom';
+import config from '../../../config';
+import Image from '../../shared/Image/Image';
+import TMovie from '../../MovieSeriesPage/TMovie';
+import getFilmDuration from '../../../helpers/getFilmDuration';
 
 interface IMovieListItemProps {
-	movie: {
-		id: string;
-		title: string;
-		year?: number;
-		image: string;
-		duration: string;
-		genres: Array<string>;
-		cast: Array<string>;
-	};
+	movie: TMovie;
 	key: string;
 	setMovieSeries: (movie: any) => any;
 }
@@ -22,10 +17,17 @@ const MovieListItem: React.FC<IMovieListItemProps> = ({
 	movie,
 	setMovieSeries
 }) => {
+	const duration = getFilmDuration(movie.runtime);
+
 	return (
 		<div className="movie-item">
 			<div className="movie-poster-wrp">
-				<img className="movie-poster" alt="movie-poster" src={movie.image} />
+				<Image
+					src={movie.poster_path}
+					defaultSrc={config.DEFAULT_MOVIE_IMAGE}
+					alt="movie-poster"
+					className="movie-poster"
+				/>
 			</div>
 			<div className="movie-info">
 				<NavLink
@@ -34,23 +36,23 @@ const MovieListItem: React.FC<IMovieListItemProps> = ({
 					onClick={() => setMovieSeries(movie)}
 				>
 					<div className="movie-title">
-						{movie.title} {movie.year}
+						{movie.title}{' '}
+						{movie.release_date
+							? '(' + movie.release_date.slice(0, 4) + ')'
+							: null}
 					</div>
 				</NavLink>
 				<div>
-					{/*movie.genres.slice(0,3).join(', ')*/}
-					<span className="movie-genre">
-						<GenreIcon />
-						{'Action, Drama, Horror'}
-					</span>
-					<span className="movie-duration">
-						<DurationIcon />
-						{movie.duration}
-					</span>
+					<span className="movie-genre">{movie.genres}</span>
+					{duration && (
+						<span className="movie-duration">
+							<DurationIcon />
+							{duration}
+						</span>
+					)}
 				</div>
-				{/*movie.cast.join(', ')*/}
 				<div className="movie-cast">
-					<b>Main cast:</b> {'Matt Damon, Jessica Chastain, Kristen Wiig'}
+					<b>Main cast:</b> {movie.cast}
 				</div>
 			</div>
 		</div>

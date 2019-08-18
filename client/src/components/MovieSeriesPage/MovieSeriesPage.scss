@@ -13,7 +13,7 @@ $orange: #fb8700;
 $header-letter-spacing: 0.9px;
 
 .movie-series-page {
-	width: 85%;
+	width: 80%;
 	margin: 2% auto 0;
 	display: flex;
 	flex-direction: column;
@@ -23,6 +23,26 @@ $header-letter-spacing: 0.9px;
 .movie-series-page-header {
 	margin-bottom: 15px;
 	text-align: left;
+
+	.movie-title-rating {
+		display: flex;
+		position: relative;
+		align-items: center;
+	}
+	.rating {
+		position: absolute;
+		right: 20px;
+		font-size: 22px;
+	}
+
+	.icon-star {
+		color: #ffcd1e;
+	}
+
+	.max-rating {
+		font-size: 0.6em;
+		color: $text-secondary-color;
+	}
 
 	.title {
 		display: block;
@@ -44,6 +64,11 @@ $header-letter-spacing: 0.9px;
 
 .movie-series-page-tabs {
 	margin-bottom: $tab-space;
+	position: sticky;
+	top: 0;
+	z-index: 2;
+	background-color: $white;
+	padding-bottom: 5px;
 
 	.movie-series-page-tab-list {
 		list-style-type: none;

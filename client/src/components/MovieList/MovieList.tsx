@@ -1,17 +1,10 @@
 import React from 'react';
 import './MovieList.scss';
 import MovieListItem from './MovieListItem/MovieListItem';
+import TMovie from '../MovieSeriesPage/TMovie';
 
 interface IMovieListProps {
-	movies: null | Array<{
-		id: string;
-		title: string;
-		year?: number;
-		image: string;
-		duration: string;
-		genres: Array<string>;
-		cast: Array<string>;
-	}>;
+	movies: Array<TMovie>;
 	setMovieSeries: (movie: any) => any;
 }
 

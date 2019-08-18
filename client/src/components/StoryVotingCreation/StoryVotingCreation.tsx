@@ -3,10 +3,20 @@ import { ReactComponent as CrossIcon } from '../../assets/icons/storyVote/crossI
 import { SketchPicker } from 'react-color';
 import StoryVoting from '../StoryVoting/StoryVoting';
 import './StoryVotingCreation.scss';
+import { uploadFile } from '../../services/file.service';
+import config from '../../config';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import {
+	faArrowCircleLeft,
+	faTimesCircle
+} from '@fortawesome/free-solid-svg-icons';
+import { faCamera } from '@fortawesome/free-solid-svg-icons/faCamera';
+import { Redirect } from 'react-router';
+import IVoting from '../MainPage/StoryList/IVoting';
 
 type StoryVotingCreationState = {
 	header: string;
-	inputs: Array<{ text: string; voted: 0 }>;
+	inputs: Array<{ body: string; voted: 0 }>;
 	previewIsShown: boolean;
 	deltaPositionHeader: { x: number; y: number };
 	deltaPositionOptionBlock: { x: number; y: number };
@@ -20,17 +30,22 @@ type StoryVotingCreationState = {
 		b: string;
 		a: string;
 	};
+	open: boolean;
+	back: boolean;
 };
 
 class StoryVotingCreation extends React.Component<
-	{ uploadImage: (data: any) => any },
+	{
+		userId: string;
+		createVoting: (voting: IVoting) => any;
+	},
 	StoryVotingCreationState
 > {
 	constructor(props) {
 		super(props);
 		this.state = {
 			header: '',
-			inputs: [{ text: '', voted: 0 }, { text: '', voted: 0 }],
+			inputs: [{ body: '', voted: 0 }, { body: '', voted: 0 }],
 			previewIsShown: false,
 			deltaPositionHeader: {
 				x: 0,
@@ -49,7 +64,9 @@ class StoryVotingCreation extends React.Component<
 				g: '0',
 				b: '0',
 				a: '1'
-			}
+			},
+			open: true,
+			back: true
 		};
 		this.handleInputTextChange = this.handleInputTextChange.bind(this);
 		this.handleRemoveInput = this.handleRemoveInput.bind(this);
@@ -66,7 +83,7 @@ class StoryVotingCreation extends React.Component<
 
 	handleShowPreview = () => {
 		if (
-			this.state.inputs.filter(el => el.text == '').length === 0 &&
+			this.state.inputs.filter(el => el.body == '').length === 0 &&
 			this.state.header !== ''
 		)
 			this.setState({
@@ -119,7 +136,7 @@ class StoryVotingCreation extends React.Component<
 	handleInputTextChange = idx => evt => {
 		const newInputs = this.state.inputs.map((el, sidx) => {
 			if (idx !== sidx) return el;
-			return { ...el, text: evt.target.value };
+			return { ...el, body: evt.target.value };
 		});
 		this.setState({ inputs: newInputs });
 	};
@@ -133,7 +150,7 @@ class StoryVotingCreation extends React.Component<
 	handleAddOption = () => {
 		if (this.state.inputs.length < 5)
 			this.setState({
-				inputs: this.state.inputs.concat([{ text: '', voted: 0 }])
+				inputs: this.state.inputs.concat([{ body: '', voted: 0 }])
 			});
 	};
 
@@ -158,10 +175,17 @@ class StoryVotingCreation extends React.Component<
 
 		const data = new FormData();
 		data.append('file', target.files[0]);
-		this.props
-			.uploadImage(data)
+		uploadFile(data)
 			.then(({ imageUrl }) => {
-				this.setState({ imageUrl, isUploading: false, errorMsg: '' });
+				let url;
+				if (imageUrl.indexOf(`\\`) !== -1) url = imageUrl.split(`\\`);
+				else url = imageUrl.split(`/`);
+				url.shift();
+				url = url.join('/');
+
+				url = config.API_URL + '/' + url;
+
+				this.setState({ imageUrl: url, isUploading: false, errorMsg: '' });
 			})
 			.catch(error => {
 				this.setState({ isUploading: false, errorMsg: error.message });
@@ -169,13 +193,9 @@ class StoryVotingCreation extends React.Component<
 		target.value = '';
 	}
 
-	handleSaveClick = () => {};
-
-	handleCancelClick = () => {};
-
 	createInputs = () => {
-		const inputs = this.state.inputs.map((el, idx) => (
-			<div className="story-voting-option-with-button">
+		return this.state.inputs.map((el, idx) => (
+			<div className={'story-voting-option-with-button'}>
 				<input
 					className="story-voting-option-input"
 					type="text"
@@ -183,21 +203,21 @@ class StoryVotingCreation extends React.Component<
 						outline: this.state.errorMsg === '' ? 'none' : '1px solid red'
 					}}
 					placeholder={`Option ${idx + 1} `}
-					value={el.text}
+					value={el.body}
 					onChange={this.handleInputTextChange(idx)}
 				/>
-				{idx > 1 ? (
+				{
 					<button
 						type="button"
 						onClick={this.handleRemoveInput(idx)}
+						style={idx > 1 ? { opacity: 1 } : { opacity: 0 }}
 						className="delete-input-button"
 					>
 						<CrossIcon />
 					</button>
-				) : null}
+				}
 			</div>
 		));
-		return inputs;
 	};
 
 	render() {
@@ -209,92 +229,123 @@ class StoryVotingCreation extends React.Component<
 				background: `rgba(${this.state.backgroundColor.r},${this.state.backgroundColor.g},${this.state.backgroundColor.b},${this.state.backgroundColor.a})`
 			}
 		};
-		return this.state.previewIsShown ? (
-			<StoryVoting
-				backColor={this.state.backgroundColor}
-				backImage={this.state.imageUrl}
-				deltaPositionForOptionBlock={this.state.deltaPositionOptionBlock}
-				deltaPositionForHeader={this.state.deltaPositionHeader}
-				backToEditor={this.handleShowEditor}
-				header={this.state.header}
-				options={this.state.inputs}
-			/>
-		) : (
-			<div className="story-voting-creation-form">
-				<div className="head">
-					<img
-						className="author"
-						src="https://pbs.twimg.com/profile_images/1088129693390385152/oYJSGsdq_400x400.jpg"
-					></img>
-					<input
-						className="story-voting-header-input"
-						style={styles.errorsStyle}
-						type="text"
-						placeholder={'Ask a question...'}
-						value={this.state.header}
-						onChange={this.handleHeaderInputChange}
-					></input>
+
+		if (!this.state.open) return <Redirect to={'/'} />;
+		if (!this.state.back) return <Redirect to={'/create/extra'} />;
+
+		const close = () => this.setState({ open: false });
+		const back = () => {
+			if (this.state.previewIsShown)
+				return this.setState({ previewIsShown: false });
+			this.setState({ back: false });
+		};
+
+		return (
+			<div style={{ height: '100%' }}>
+				<div className={'nav-block-wrp'}>
+					<span onClick={back}>
+						<FontAwesomeIcon
+							icon={faArrowCircleLeft}
+							className={'fontAwesomeIcon'}
+						/>
+					</span>
+					<span onClick={close}>
+						<FontAwesomeIcon
+							icon={faTimesCircle}
+							className={'fontAwesomeIcon'}
+						/>
+					</span>
 				</div>
-				<div className="story-voting-option-input-container">
-					{this.createInputs()}
-				</div>
-				<button
-					className="add-option-button"
-					type="button"
-					onClick={this.handleAddOption}
-				>
-					Add Option
-				</button>
-				<div className="color-picker">
-					<label className="color-picker-label">Select back color:</label>
-					<div
-						onClick={this.handleShowColorPicker}
-						className="color-picker-btn"
-					>
-						<div
-							style={styles.backStyle}
-							className="color-picker-btn-preview"
-						></div>
+				{this.state.previewIsShown ? (
+					<div className={'prev-wrp'}>
+						<StoryVoting
+							backColor={this.state.backgroundColor}
+							image_url={this.state.imageUrl}
+							deltaPositionForOptionBlock={this.state.deltaPositionOptionBlock}
+							deltaPositionForHeader={this.state.deltaPositionHeader}
+							backToEditor={this.handleShowEditor}
+							header={this.state.header}
+							options={this.state.inputs}
+							userId={this.props.userId}
+							createVoting={this.props.createVoting}
+							inEditor={true}
+						/>
 					</div>
-					{this.state.displayColorPicker ? (
-						<div className="color-picker-popover">
-							<div
-								className="color-picker-cover"
-								onClick={this.handleHideColorPicker}
-							/>
-							<SketchPicker
-								color={this.state.backgroundColor}
-								onChange={this.handleColorChange}
+				) : (
+					<div className="story-voting-creation-form">
+						<div className="head">
+							<img className="author" src={config.DEFAULT_AVATAR} alt={''} />
+							<input
+								className="story-voting-header-input"
+								style={styles.errorsStyle}
+								type="text"
+								placeholder={'Ask a question...'}
+								value={this.state.header}
+								onChange={this.handleHeaderInputChange}
 							/>
 						</div>
-					) : null}
-				</div>
-				<div className="image-uploading">
-					<label htmlFor="image" className="upload-image-button">
-						Upload image? :
-					</label>
-					<input
-						name="image"
-						type="file"
-						onChange={this.handleUploadFile}
-						className="upload-image"
-						id="image"
-						accept=".jpg, .jpeg, .png"
-						disabled={this.state.isUploading}
-					/>
-				</div>
-				<div className="errors-field">{this.state.errorMsg}</div>
-				<button
-					type="button"
-					className="show-voting-preview-button"
-					onClick={this.handleShowPreview}
-				>
-					Show Preview
-				</button>
-				<div className="form-action-buttons">
-					<button className="cancel-btn-vote-creation">Cancel</button>
-					<button className="save-btn-vote-creation">Save</button>
-				</div>
+						<div className="story-voting-option-input-container">
+							{this.createInputs()}
+							<button
+								className="add-option-button"
+								type="button"
+								onClick={this.handleAddOption}
+							>
+								Add Option
+							</button>
+						</div>
+
+						<div className="color-picker">
+							<label className="color-picker-label">Select back color:</label>
+							<div
+								onClick={this.handleShowColorPicker}
+								className="color-picker-btn"
+							>
+								<div
+									style={styles.backStyle}
+									className="color-picker-btn-preview"
+								/>
+							</div>
+							{this.state.displayColorPicker ? (
+								<div className="color-picker-popover">
+									<div
+										className="color-picker-cover"
+										onClick={this.handleHideColorPicker}
+									/>
+									<SketchPicker
+										color={this.state.backgroundColor}
+										onChange={this.handleColorChange}
+									/>
+								</div>
+							) : null}
+						</div>
+						<div className="image-uploading">
+							<label htmlFor="image" className="upload-image-button">
+								<FontAwesomeIcon icon={faCamera} className="fontAwesomeIcon" />
+							</label>
+							<input
+								name="image"
+								type="file"
+								onChange={this.handleUploadFile}
+								className="upload-image"
+								id="image"
+								accept=".jpg, .jpeg, .png"
+								disabled={this.state.isUploading}
+							/>
+						</div>
+						<div className="errors-field">{this.state.errorMsg}</div>
+
+						<div>
+							<button
+								type="button"
+								className={'btn'}
+								onClick={this.handleShowPreview}
+							>
+								Show Preview
+							</button>
+						</div>
+					</div>
+				)}
 			</div>
 		);
 	}

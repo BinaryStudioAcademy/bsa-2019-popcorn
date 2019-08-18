@@ -13,7 +13,7 @@ export class VotingOption {
   @PrimaryGeneratedColumn("uuid")
   id: string;
 
-  @Column()
+  @Column({ nullable: true })
   body: string;
 
   @ManyToOne(type => Voting, { onDelete: "CASCADE" })

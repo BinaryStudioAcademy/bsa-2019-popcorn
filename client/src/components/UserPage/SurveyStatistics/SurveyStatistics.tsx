@@ -5,6 +5,7 @@ import './../Survey/Survey.scss';
 import './SurveyStatistics.scss';
 
 interface IOption {
+	index: number;
 	id: string;
 	question_id: string;
 	value: string;
@@ -53,9 +54,11 @@ const SurveyStatistics: React.FC<IProps> = (props: IProps) => {
 			label: ` ${value}`
 		}));
 		answers.map(({ option_id }) => {
-			const index = res.findIndex(item => item.id === option_id);
-			const value = Object.keys(res[index])[1];
-			++res[index][value];
+			if (option_id) {
+				const index = res.findIndex(item => item.id === option_id);
+				const value = Object.keys(res[index])[1];
+				++res[index][value];
+			}
 		});
 		return res;
 	};
@@ -69,8 +72,10 @@ const SurveyStatistics: React.FC<IProps> = (props: IProps) => {
 			option_id: id
 		}));
 		answers.map(({ option_id }) => {
-			const index = res.findIndex(item => item.option_id === option_id);
-			++res[index].value;
+			if (option_id) {
+				const index = res.findIndex(item => item.option_id === option_id);
+				++res[index].value;
+			}
 		});
 		return res;
 	};
@@ -90,6 +95,7 @@ const SurveyStatistics: React.FC<IProps> = (props: IProps) => {
 				{checkForAnswers(questions) ? (
 					questions.map(
 						question =>
+							question.type !== 'Short Answer' &&
 							question.options && (
 								<div key={question.id} className="question-container">
 									<h3 className="survey-question question-title">

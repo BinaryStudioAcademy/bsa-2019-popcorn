@@ -1,36 +1,46 @@
 // formater for event data
-
-export interface IEventFormatClient {
-	id: string;
+export interface IEventFormatFromEditor {
+	id?: string;
 	title: string;
 	description: string;
 	location: {
-		lat: number;
-		lng: number;
+		lat: number | undefined;
+		lng: number | undefined;
 	};
 	dateRange: {
-		startDate: Date;
-		endDate: Date;
+		startDate: undefined | Date;
+		endDate: undefined | Date;
 	};
+	movieId: null | string;
 	userId: string;
 	image: string;
 	isPrivate: boolean;
-	movieId: string;
-	eventVisitors: IVisitor[];
 }
 
-export interface IEventFormatDataBase {
+export interface IEventFormatClient extends IEventFormatFromEditor {
 	id: string;
+	eventVisitors: IVisitor[];
+	location: {
+		lat: number | undefined;
+		lng: number | undefined;
+	};
+}
+
+export interface IventFormatToSave {
+	id?: string;
 	title: string;
 	description: string;
 	image: string;
-	location_lat: number;
-	location_lng: number;
-	start_date: Date;
-	end_date: Date;
+	location_lat: number | undefined;
+	location_lng: number | undefined;
+	start_date: undefined | Date;
+	end_date: undefined | Date;
 	isPrivate: boolean;
 	userId: string;
-	movieId: string;
+	movieId: null | string;
+}
+export interface IEventFormatDataBase extends IventFormatToSave {
+	id: string;
 	eventVisitors: IVisitor[];
 }
 
@@ -79,7 +89,9 @@ export const formatToClient = (
 	return formatEvent;
 };
 
-export const formatToDataBase = (event: IEventFormatClient): any => {
+export const formatToDataBase = (
+	event: IEventFormatFromEditor
+): IventFormatToSave => {
 	const {
 		title,
 		description,
@@ -90,17 +102,22 @@ export const formatToDataBase = (event: IEventFormatClient): any => {
 		isPrivate,
 		movieId
 	} = event;
-	const formatEvent = {
+	let formatEvent = {
 		title,
 		description,
 		image,
-		location_lat: location.lat,
-		location_lng: location.lng,
+		location_lat: location && location.lat,
+		location_lng: location && location.lng,
 		start_date: dateRange.startDate,
 		end_date: dateRange.endDate,
 		isPrivate,
 		userId,
 		movieId
 	};
+
+	if (event.id) {
+		formatEvent['id'] = event.id;
+	}
+
 	return formatEvent;
 };
