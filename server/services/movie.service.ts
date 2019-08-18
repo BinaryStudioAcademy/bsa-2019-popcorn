@@ -51,5 +51,17 @@ export const getByTitle = async (title: string): Promise<Movie[]> => {
 };
 
 export const saveMovieRate = async (newRate: any) => {
+  const { movieId, userId } = newRate;
+  const rateInDB = await getCustomRepository(MovieRateRepository).findOne({
+    movieId,
+    userId
+  });
+  if (rateInDB) {
+    rateInDB.rate = newRate.rate;
+    return await getCustomRepository(MovieRateRepository).update(
+      { id: rateInDB.id },
+      { ...rateInDB }
+    );
+  }
   return await getCustomRepository(MovieRateRepository).save(newRate);
 };
