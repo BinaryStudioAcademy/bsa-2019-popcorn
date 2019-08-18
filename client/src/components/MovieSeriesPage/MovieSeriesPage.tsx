@@ -9,22 +9,27 @@ import { connect } from 'react-redux';
 import { StringifyOptions } from 'querystring';
 import Spinner from '../shared/Spinner';
 import { bindActionCreators } from 'redux';
+import { fetchUserRate } from './Movie.redux/actions';
 
 interface IProps {
 	movie: TMovie;
 	currentUserId: string;
 	userRate: number;
-	setUserRate: (userId: string, movieId: string) => any;
+	setUserRate: (userId: string, movieId: string) => object;
+	fetchUserRate: (userId: string, movieId: string) => object;
 }
 
 const MovieSeriesPage: React.SFC<IProps> = ({
 	movie,
 	currentUserId,
 	userRate,
-	setUserRate
+	setUserRate,
+	fetchUserRate
 }) => {
 	const mainPath = '/movie-series';
+	console.log(userRate);
 	if (!userRate) {
+		fetchUserRate('5', '4');
 		return <Spinner />;
 	}
 
@@ -46,8 +51,11 @@ const mapStateToProps = (state, props) => ({
 });
 
 const mapDispatchToProps = dispatch => {
-	const actions = {};
+	const actions = { fetchUserRate };
 	return bindActionCreators(actions, dispatch);
 };
 
-export default connect(mapStateToProps)(MovieSeriesPage);
+export default connect(
+	mapStateToProps,
+	mapDispatchToProps
+)(MovieSeriesPage);

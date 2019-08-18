@@ -11,7 +11,9 @@ import webApi from '../../../services/webApi.service';
 import {
 	FETCH_MOVIE_LIST,
 	SET_MOVIE_LIST,
-	SET_ElASTIC_MOVIE_LIST
+	SET_ElASTIC_MOVIE_LIST,
+	FETCH_MOVIE_USER_RATE,
+	FETCH_MOVIE_USER_RATE_SUCCESS
 } from './actionTypes';
 import config from '../../../config';
 
@@ -70,6 +72,25 @@ export function* fetchElasticSearchFilms(action) {
 	}
 }
 
+export function* fetchUserRate(action) {
+	const { userId, movieId } = action.payload;
+	try {
+		const data = yield call(webApi, {
+			endpoint: config.API_URL + `/api/movie/rate/user/${userId}/${movieId}`,
+			method: 'GET'
+		});
+
+		yield put({
+			type: FETCH_MOVIE_USER_RATE_SUCCESS,
+			payload: {
+				userRate: data
+			}
+		});
+	} catch (error) {
+		console.log(error);
+	}
+}
+
 function* watchFetchFilms() {
 	yield takeEvery(START_FETCH_SEARCH_FILMS, fetchFilms);
 }
@@ -82,10 +103,15 @@ function* watchFetchElasticSearchFilms() {
 	yield takeEvery(START_SEARCH_ELASTIC_FILMS, fetchElasticSearchFilms);
 }
 
+function* watchFetchUserRate() {
+	yield takeEvery(FETCH_MOVIE_USER_RATE, fetchUserRate);
+}
+
 export default function* header() {
 	yield all([
 		watchFetchFilms(),
 		watchFetchMovieList(),
-		watchFetchElasticSearchFilms()
+		watchFetchElasticSearchFilms(),
+		watchFetchUserRate()
 	]);
 }
