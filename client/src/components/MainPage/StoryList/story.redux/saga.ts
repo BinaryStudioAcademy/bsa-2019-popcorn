@@ -4,7 +4,7 @@ import {
 	CHANGE_ACTIVITY,
 	CREATE_STORY,
 	CREATE_VOTING,
-	DELETE_NEW_STORY,
+	RESET_NEW_STORY,
 	FETCH_STORIES,
 	SET_STORIES
 } from './actionTypes';
@@ -43,14 +43,7 @@ export function* createStory(action) {
 		});
 
 		yield put({
-			type: ADD_STORY,
-			payload: {
-				story
-			}
-		});
-
-		yield put({
-			type: DELETE_NEW_STORY
+			type: RESET_NEW_STORY
 		});
 	} catch (e) {
 		console.log('story saga create story: ', e.message);
