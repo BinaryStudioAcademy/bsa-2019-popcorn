@@ -3,11 +3,11 @@ import UserRepository from "../repository/user.repository";
 import SurveyRepository from "../repository/surveys.repository";
 import SurveyQuestionRepository from "../repository/surveysQuestion.repository";
 import SurveyQuestionOptionRepository from "../repository/surveysQuestionOption.repository";
-import SurveyQuestionAnswerRepository from "../repository/surveysQuestionAnswer.repository";
 import { Surveys } from "../models/SurveysModel";
 import { SurveysQuestion } from "../models/SurveysQuestionModel";
 import { SurveysQuestionOption } from "../models/SurveysQuestionOption";
-import { SurveysQuestionAnswer } from "../models/SurveysQuestionAnswer";
+import { SurveysQuestionAnswer } from "../entities/SurveysQuestionAnswer";
+import SurveysQuestionAnswerRepository from "../repository/surveysQuestionAnswer.repository";
 
 export class SeedSurvey1566123343520 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
@@ -262,16 +262,6 @@ export class SeedSurvey1566123343520 implements MigrationInterface {
       }
     ];
 
-    const createAnswer = async (question, option?, value?) => {
-      const answer = new SurveysQuestionAnswer();
-      answer.value = value || "";
-      answer.surveysQuestionOption = option || null;
-      answer.surveysQuestion = question;
-      const users = await getCustomRepository(UserRepository).find();
-      answer.user = users[Math.floor(Math.random() * users.length)];
-      await getCustomRepository(SurveyQuestionAnswerRepository).save(answer);
-    };
-
     const createOptions = (optionsData, question) =>
     
       optionsData.map(async optionData => {
@@ -282,7 +272,6 @@ export class SeedSurvey1566123343520 implements MigrationInterface {
         const newOption = await getCustomRepository(
           SurveyQuestionOptionRepository
         ).createQuestionOption(option);
-        // createAnswer(question, newOption);
         return newOption;
       });
 
@@ -301,8 +290,6 @@ export class SeedSurvey1566123343520 implements MigrationInterface {
           SurveyQuestionRepository
         ).save(question);
         createOptions(questionData.options, newQuestion);
-        // if (!questionData.options.length)
-        //   createAnswer(newQuestion, "", "Game of Thrones");
         return newQuestion;
       });
 

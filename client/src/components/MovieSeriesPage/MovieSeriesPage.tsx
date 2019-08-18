@@ -6,16 +6,19 @@ import './MovieSeriesPage.scss';
 import { Redirect } from 'react-router';
 
 interface IProps {
-	movie?: null | Movie;
+	movie: null | Movie;
 }
 type Movie = {
 	id: string;
+	poster_path: string;
+	runtime: number;
 	title: string;
 	release_date?: string;
-	image: string;
-	duration: string;
 	genres: Array<string>;
 	cast: Array<string>;
+	overview: string;
+	vote_average: number;
+	budget: number;
 	any?;
 };
 

@@ -2,7 +2,8 @@ import React from 'react';
 import './MovieListItem.scss';
 import { ReactComponent as DurationIcon } from '../../../assets/icons/general/movie/duration-icon.svg';
 import { NavLink } from 'react-router-dom';
-import { release } from 'os';
+import config from '../../../config';
+import Image from '../../shared/Image/Image';
 
 interface IMovieListItemProps {
 	movie: {
@@ -34,13 +35,15 @@ const MovieListItem: React.FC<IMovieListItemProps> = ({
 	setMovieSeries
 }) => {
 	const duration = getFilmDuration(movie.runtime);
+	const src = `https://image.tmdb.org/t/p/w500/${movie.poster_path}`;
 	return (
 		<div className="movie-item">
 			<div className="movie-poster-wrp">
-				<img
-					className="movie-poster"
+				<Image
+					src={src}
+					defaultSrc={config.DEFAULT_MOVIE_IMAGE}
 					alt="movie-poster"
-					src={`https://image.tmdb.org/t/p/w500/${movie.poster_path}`}
+					className="movie-poster"
 				/>
 			</div>
 			<div className="movie-info">
