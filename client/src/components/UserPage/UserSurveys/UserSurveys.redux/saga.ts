@@ -17,10 +17,11 @@ export function* fetchSurveys(action) {
 			method: 'GET',
 			endpoint: config.API_URL + '/api/surveys'
 		});
+		setArrangementInSurveys(data);
 		yield put({
 			type: SET_SURVEYS,
 			payload: {
-				surveys: setArrangementInSurveys(data)
+				surveys: data
 			}
 		});
 	} catch (e) {

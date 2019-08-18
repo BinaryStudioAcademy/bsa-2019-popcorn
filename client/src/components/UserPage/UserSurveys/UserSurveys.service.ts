@@ -136,12 +136,10 @@ export const transformDataToServerFormatUpdate = data => {
 const sortObjectsByIndex = objs => objs.sort((a, b) => (a.index > b.index) ? 1 : ((b.index > a.index) ? -1 : 0)); 
 
 export const setArrangementInSurveys = data => {
-	data.map(survey => {
-		survey.surveysQuestion = sortObjectsByIndex(survey.surveysQuestion).map(question => {
+	data.forEach(survey => {
+		survey.surveysQuestion = sortObjectsByIndex(survey.surveysQuestion);
+		survey.surveysQuestion.forEach(question => {
 			question.surveysQuestionOption = sortObjectsByIndex(question.surveysQuestionOption);
-			return question;
 		});
-		return survey;
 	});
-	return data;
 }
