@@ -17,10 +17,10 @@ const UserPosts: React.FC<IProps> = ({ posts, getUsersPosts }) => {
 	}
 	return (
 		<div className="UserPosts">
-			{posts ? (
-				<PostList styleCustom={userPostStyle} type="userPosts" posts={posts} />
-			) : (
+			{posts.length === 0 ? (
 				<div className="no-info-yet">No posts yet</div>
+			) : (
+				<PostList styleCustom={userPostStyle} type="userPosts" posts={posts} />
 			)}
 		</div>
 	);
