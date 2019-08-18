@@ -4,6 +4,7 @@ import { faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 import { isEqual } from 'lodash';
 import { NavLink } from 'react-router-dom';
 import './UserSurveys.scss';
+import { connect } from 'react-redux';
 
 interface ISurvey {
 	id: string;
@@ -47,6 +48,7 @@ interface IProps {
 	updateInfo: (ISurvey) => void;
 	deleteSurvey: (ISurvey) => void;
 	surveys: Array<ISurvey>;
+	user: any;
 	location?: {
 		state?: {
 			url_callback?: string;
@@ -162,6 +164,12 @@ class UserSurveys extends React.Component<IProps, IState> {
 		);
 	};
 
+	isOwnSurvey(survey) {
+		const { user: currentUser } = this.props;
+		const { user_id } = survey;
+		return currentUser.role === 'admin' || currentUser.id === user_id;
+	}
+
 	render() {
 		const { surveys } = this.state;
 		const { mainPath } = this.props;
@@ -188,6 +196,7 @@ class UserSurveys extends React.Component<IProps, IState> {
 					</NavLink>
 					<div className="survey-list">
 						{surveys.map((survey, i) => {
+							// add "if (this.isOwnSurvey(survey))" check when it will survey list with surveys of all users
 							return (
 								<NavLink key={i} exact={!i} to={`${mainPath}/${survey.id}`}>
 									<div className="survey-list-item">
@@ -215,4 +224,11 @@ class UserSurveys extends React.Component<IProps, IState> {
 	}
 }
 
-export default UserSurveys;
+const mapStateToProps = (rootState, props) => ({
+	...props,
+	user: rootState.profile.profileInfo
+});
+
+export default connect(
+	mapStateToProps,
+)(UserSurveys);
