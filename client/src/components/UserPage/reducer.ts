@@ -56,7 +56,8 @@ export default function(state = initialState, action) {
 		case LOGOUT:
 			return {
 				...state,
-				profileInfo: null
+				profileInfo: null,
+				userPosts: null
 			};
 		case SET_USER_POSTS:
 			return {
