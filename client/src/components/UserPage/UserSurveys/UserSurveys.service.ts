@@ -50,7 +50,7 @@ export const transformDataToProps = (data): Array<ISurvey> => {
 		},
 		participants: countParticipants(survey.surveysQuestion),
 		questions: survey.surveysQuestion.map(question => ({
-			index: question.option,
+			index: question.index,
 			id: question.id,
 			survey_id: survey.id,
 			title: question.title,

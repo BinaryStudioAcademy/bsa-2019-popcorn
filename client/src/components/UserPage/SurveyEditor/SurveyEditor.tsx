@@ -93,7 +93,7 @@ class SurveyEditor extends Component<IProps, IState> {
 			newQuestion.title = 'Untitled question';
 		newQuestion.options = newQuestion.options.map((option, i) => {
 			if (option.value.trim() === '')
-				return { ...option, value: `Option ${i + 1}` };
+				return { ...option, value: `Option ${i + 1}`, index: 0 };
 			return option;
 		});
 
@@ -125,6 +125,7 @@ class SurveyEditor extends Component<IProps, IState> {
 	};
 
 	getNewIndex = () => {
+		if (this.state.surveyInfo.questions.length === 0) return 0;
 		const { index } = this.state.surveyInfo.questions.reduce((prev, current) => (prev.index > current.index) ? prev : current);
 		return index + 1;
 	}
