@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Redirect, Route, Switch } from 'react-router-dom';
 import MainPageSidebar from '../../components/shared/MainSidebar/MainPageSidebar';
 import MovieList from '../../components/MovieList/MovieList';
