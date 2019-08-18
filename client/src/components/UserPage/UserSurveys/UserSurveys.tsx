@@ -48,7 +48,8 @@ interface IProps {
 	updateInfo: (ISurvey) => void;
 	deleteSurvey: (ISurvey) => void;
 	surveys: Array<ISurvey>;
-	user: any;
+	userId: string;
+	userRole: string;
 	location?: {
 		state?: {
 			url_callback?: string;
@@ -165,9 +166,9 @@ class UserSurveys extends React.Component<IProps, IState> {
 	};
 
 	isOwnSurvey(survey) {
-		const { user: currentUser } = this.props;
+		const { userId, userRole } = this.props;
 		const { user_id } = survey;
-		return currentUser.role === 'admin' || currentUser.id === user_id;
+		return userRole === 'admin' || userId === user_id;
 	}
 
 	render() {
@@ -226,7 +227,8 @@ class UserSurveys extends React.Component<IProps, IState> {
 
 const mapStateToProps = (rootState, props) => ({
 	...props,
-	user: rootState.profile.profileInfo
+	userId: rootState.profile.profileInfo.id,
+	userRole: rootState.profile.profileInfo.role
 });
 
 export default connect(

@@ -47,7 +47,8 @@ interface IProps {
 		userId: string;
 	};
 	currentStory: number;
-	user: any;
+	userId: string;
+	userRole: string;
 	closeViewer: () => void;
 }
 
@@ -70,8 +71,8 @@ class StoryViewer extends PureComponent<IProps, IState> {
 	}
 
 	isOwnStory(story) {
-		const { user: currentUser } = this.props;
-		return currentUser.role === 'admin' || currentUser.id === story.userInfo.userId;
+		const { userId, userRole } = this.props;
+		return userRole === 'admin' || userId === story.userInfo.userId;
 	}
 
 	toogleModal = () => {
@@ -220,7 +221,8 @@ class StoryViewer extends PureComponent<IProps, IState> {
 
 const mapStateToProps = (rootState, props) => ({
 	...props,
-	user: rootState.profile.profileInfo
+	userId: rootState.profile.profileInfo.id,
+	userRole: rootState.profile.profileInfo.role
 });
 
 export default connect(

@@ -42,7 +42,8 @@ type IPostProps = {
 			tagName: string;
 		}[];
 	};
-	user: any;
+	userId: string;
+	userRole: string;
 };
 interface IReactItem {
 	id: number;
@@ -83,8 +84,8 @@ class Post extends PureComponent<IPostProps, IPostState> {
 	};
 
 	isOwnPost() {
-		const { user: currentUser, post: { user: postOwner } } = this.props;
-		return currentUser.role === 'admin' || currentUser.id === postOwner.id;
+		const { userId, userRole, post: { user: postOwner } } = this.props;
+		return userRole === 'admin' || userId === postOwner.id;
 	}
 	toggleModal = () => {
 		this.setState({ isModalShown: !this.state.isModalShown });
@@ -208,7 +209,8 @@ class Post extends PureComponent<IPostProps, IPostState> {
 
 const mapStateToProps = (rootState, props) => ({
 	...props,
-	user: rootState.profile.profileInfo
+	userId: rootState.profile.profileInfo.id,
+	userRole: rootState.profile.profileInfo.role
 });
 
 export default connect(

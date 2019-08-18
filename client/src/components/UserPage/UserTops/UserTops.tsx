@@ -11,7 +11,8 @@ export interface IUserTopsState {
 }
 interface IUserTopProps {
 	uploadImage: (data: FormData, titleId: string) => void;
-	user: any;
+	userId: string;
+	userRole: string;
 	uploadUrl: string;
 	urlForTop: string;
 	location?: {
@@ -109,9 +110,9 @@ class UserTops extends React.Component<IUserTopProps, IUserTopsState> {
 	};
 
 	isOwnTop(top) {
-		const { user: currentUser } = this.props;
+		const { userId, userRole } = this.props;
 		if (top.user) { // delete this check when top will have user info 
-			return currentUser.role === 'admin' || currentUser.id === top.user.userId;
+			return userRole === 'admin' || userId === top.user.userId;
 		} else {
 			return true;
 		}	
@@ -162,7 +163,8 @@ class UserTops extends React.Component<IUserTopProps, IUserTopsState> {
 
 const mapStateToProps = (rootState, props) => ({
 	...props,
-	user: rootState.profile.profileInfo,
+	userId: rootState.profile.profileInfo.id,
+	userRole: rootState.profile.profileInfo.role,
 	uploadUrl: rootState.userTops.uploadUrl,
 	urlForTop: rootState.userTops.urlForTop
 });
