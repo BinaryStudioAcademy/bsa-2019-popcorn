@@ -179,7 +179,7 @@ class SurveyEditor extends Component<IProps, IState> {
 	deleteQuestion = question => {
 		let { questions } = this.state.surveyInfo;
 		const index = questions.reduce(
-			(index, item, i) => (item.id === question.id ? index + i : 0),
+			(index, item, i) => (item.id === question.id ? index + i : index),
 			0
 		);
 		questions.splice(index, 1);
