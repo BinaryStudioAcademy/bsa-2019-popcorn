@@ -20,6 +20,7 @@ import {
 } from '../../components/MovieSeriesPage/Movie.redux/actions';
 import Header from '../../components/shared/Header/Header';
 import UserTops from '../../components/UserPage/UserTops/UserTops';
+import Notifications from '../../components/Notifications/index';
 
 const { notifications } = {
 	notifications: {
@@ -99,6 +100,7 @@ const Main = ({
 						<Route path={`/*`} exact component={NotFound} />
 					</Switch>
 				</div>
+				<Notifications userId={userInfo.id} />
 			</div>
 		</div>
 	);
