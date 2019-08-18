@@ -13,6 +13,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import config from '../../../config';
 import StoryVoting from '../../StoryVoting/StoryVoting';
+import { connect } from 'react-redux';
 
 interface IProps {
 	stories: Array<{
@@ -46,6 +47,7 @@ interface IProps {
 		userId: string;
 	};
 	currentStory: number;
+	user: any;
 	closeViewer: () => void;
 }
 
@@ -68,7 +70,8 @@ class StoryViewer extends PureComponent<IProps, IState> {
 	}
 
 	isOwnStory(story) {
-		return this.props.currentUser.userId === story.userInfo.userId;
+		const { user: currentUser } = this.props;
+		return currentUser.role === 'admin' || currentUser.id === story.userInfo.userId;
 	}
 
 	toogleModal = () => {
@@ -215,4 +218,11 @@ class StoryViewer extends PureComponent<IProps, IState> {
 	}
 }
 
-export default StoryViewer;
+const mapStateToProps = (rootState, props) => ({
+	...props,
+	user: rootState.profile.profileInfo
+});
+
+export default connect(
+	mapStateToProps,
+)(StoryViewer);
