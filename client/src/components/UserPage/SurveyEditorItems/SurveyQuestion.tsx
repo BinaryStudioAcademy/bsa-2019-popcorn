@@ -24,6 +24,7 @@ const QUESTION_TYPES = [
 ];
 
 interface IQuestion {
+	index: number; 
 	id: string;
 	survey_id: string;
 	title: string;
@@ -33,6 +34,7 @@ interface IQuestion {
 	image_link?: string;
 	required: boolean;
 	options?: Array<{
+		index: number;
 		id: string;
 		question_id: string;
 		value: string;
@@ -84,6 +86,7 @@ class SurveyQuestion extends Component<IProps, IState> {
 				secondLabel: '',
 				options: [
 					{
+						index: 0,
 						id: uuid(),
 						question_id: question.id,
 						value: 'Option 1'
@@ -96,6 +99,7 @@ class SurveyQuestion extends Component<IProps, IState> {
 				type,
 				options: [
 					{
+						index: 0,
 						id: uuid(),
 						question_id: question.id,
 						value: 'Option 1'
@@ -112,11 +116,13 @@ class SurveyQuestion extends Component<IProps, IState> {
 				type,
 				options: [
 					{
+						index: 0,
 						id: uuid(),
 						question_id: question.id,
 						value: '1'
 					},
 					{
+						index: 1,
 						id: uuid(),
 						question_id: question.id,
 						value: '2'
