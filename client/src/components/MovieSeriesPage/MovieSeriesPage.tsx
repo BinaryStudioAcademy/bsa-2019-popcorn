@@ -4,23 +4,11 @@ import MovieSeriesPageTabs from './MovieSeriesPageTabs';
 import MovieSeriesPageTabBody from './MovieSeriesPageTabBody';
 import './MovieSeriesPage.scss';
 import { Redirect } from 'react-router';
+import TMovie from './TMovie';
 
 interface IProps {
-	movie: null | Movie;
+	movie: TMovie;
 }
-type Movie = {
-	id: string;
-	poster_path: string;
-	runtime: number;
-	title: string;
-	release_date?: string;
-	genres: Array<string>;
-	cast: Array<string>;
-	overview: string;
-	vote_average: number;
-	budget: number;
-	any?;
-};
 
 const MovieSeriesPage: React.SFC<IProps> = ({ movie }) => {
 	const mainPath = '/movie-series';

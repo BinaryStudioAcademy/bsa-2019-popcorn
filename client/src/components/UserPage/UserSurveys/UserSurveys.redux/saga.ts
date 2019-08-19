@@ -9,7 +9,7 @@ import {
 } from './actionTypes';
 import webApi from '../../../../services/webApi.service';
 import config from '../../../../config';
-import { func } from 'prop-types';
+import { setArrangementInSurveys } from '../UserSurveys.service';
 
 export function* fetchSurveys(action) {
 	try {
@@ -17,6 +17,7 @@ export function* fetchSurveys(action) {
 			method: 'GET',
 			endpoint: config.API_URL + '/api/surveys'
 		});
+		setArrangementInSurveys(data);
 		yield put({
 			type: SET_SURVEYS,
 			payload: {

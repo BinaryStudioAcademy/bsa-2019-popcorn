@@ -150,6 +150,10 @@ export function* fetchRegistration(action) {
 }
 
 export function* fetchPosts(action) {
+	const init: RequestInit = {
+		headers: { Authorization: `Bearer ${action.payload.token}` }
+	};
+
 	try {
 		const data = yield call(
 			axios.get,
