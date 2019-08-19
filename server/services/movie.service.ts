@@ -25,9 +25,9 @@ export const getMovies = async (): Promise<any[]> => {
   return result;
 };
 
-export const getMovieById = async (movieId: number): Promise<any> => {
-  const data = await getMovies();
-  const movie = data.find(movie => movie.id == movieId);
+export const getMovieById = async (movieId: string): Promise<any> => {
+  const data = await elasticRepository.getById(movieId);
+  const movie = data.hits.hits[0]._source;
   const rate = await getCustomRepository(MovieRateRepository)
     .createQueryBuilder("movieRate")
     .select("AVG(movieRate.rate)", "average")
@@ -36,7 +36,6 @@ export const getMovieById = async (movieId: number): Promise<any> => {
   movie.rate = rate ? parseFloat(rate.average).toFixed(2) : null;
   return movie;
 };
-// await getCustomRepository(MovieRepository).findOne(movieId);
 
 export const createMovie = async (movie: Movie): Promise<Movie[]> =>
   await getCustomRepository(MovieRepository).save([movie]);
