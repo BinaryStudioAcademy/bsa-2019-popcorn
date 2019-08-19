@@ -14,6 +14,7 @@ import {
 import config from '../../../config';
 import StoryVoting from '../../StoryVoting/StoryVoting';
 import { connect } from 'react-redux';
+import { NavLink } from 'react-router-dom';
 
 interface IProps {
 	stories: Array<{
@@ -42,6 +43,11 @@ interface IProps {
 			}>;
 		};
 		activity?: string;
+		filmId?: string;
+		film?: {
+			title: string;
+			id: string;
+		};
 	}>;
 	currentUser: {
 		userId: string;
@@ -195,6 +201,11 @@ class StoryViewer extends PureComponent<IProps, IState> {
 														</span>
 													)}
 													{story.type && story.activity}
+													{story.filmId && story.film && (
+														<NavLink to={'/movie-series/' + story.film.id}>
+															{story.film.title}
+														</NavLink>
+													)}
 												</span>
 											</p>
 										</div>
@@ -225,6 +236,4 @@ const mapStateToProps = (rootState, props) => ({
 	userRole: rootState.profile.profileInfo.role
 });
 
-export default connect(
-	mapStateToProps,
-)(StoryViewer);
+export default connect(mapStateToProps)(StoryViewer);
