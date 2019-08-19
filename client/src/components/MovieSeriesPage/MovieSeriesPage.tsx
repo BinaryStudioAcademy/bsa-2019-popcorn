@@ -3,14 +3,10 @@ import MovieSeriesPageHeader from './MovieSeriesPageHeader';
 import MovieSeriesPageTabs from './MovieSeriesPageTabs';
 import MovieSeriesPageTabBody from './MovieSeriesPageTabBody';
 import './MovieSeriesPage.scss';
-import { Redirect } from 'react-router';
-import TMovie from './TMovie';
 import { connect } from 'react-redux';
-import { StringifyOptions } from 'querystring';
 import Spinner from '../shared/Spinner';
 import { bindActionCreators } from 'redux';
 import { fetchUserRate, fetchMovie, setUserRate } from './Movie.redux/actions';
-import movieAdapter from './movieAdapter';
 
 interface IProps {
 	fetchedMovie: any;
@@ -49,6 +45,7 @@ const MovieSeriesPage: React.SFC<IProps> = props => {
 		return <Spinner />;
 	}
 	const movie = fetchedMovie;
+
 	return (
 		<div className="movie-series-page">
 			<MovieSeriesPageHeader
