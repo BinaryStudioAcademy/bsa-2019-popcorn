@@ -9,49 +9,61 @@ import { connect } from 'react-redux';
 import { StringifyOptions } from 'querystring';
 import Spinner from '../shared/Spinner';
 import { bindActionCreators } from 'redux';
-import { fetchUserRate } from './Movie.redux/actions';
+import { fetchUserRate, fetchMovie } from './Movie.redux/actions';
+import movieAdapter from './movieAdapter';
 
 interface IProps {
-	movie: TMovie;
+	movieSeries: TMovie;
+	fetchedMovie: any;
 	currentUserId: string;
 	userRate: number;
 	setUserRate: (userId: string, movieId: string) => object;
 	fetchUserRate: (userId: string, movieId: string) => object;
+	fetchMovie: (movieId: string) => object;
+	match: any;
 }
 
-const MovieSeriesPage: React.SFC<IProps> = ({
-	movie,
-	currentUserId,
-	userRate,
-	setUserRate,
-	fetchUserRate
-}) => {
-	const mainPath = '/movie-series';
-	console.log(userRate);
+const MovieSeriesPage: React.SFC<IProps> = props => {
+	const {
+		fetchedMovie,
+		movieSeries,
+		currentUserId,
+		userRate,
+		setUserRate,
+		fetchUserRate,
+		fetchMovie
+	} = props;
+	const mainPath = `/movie-series/${props.match.params.id}`;
+
+	if (!movieSeries && !fetchedMovie) {
+		fetchMovie(props.match.params.id);
+		return <Spinner />;
+	}
 	if (!userRate) {
 		fetchUserRate('5', '4');
 		return <Spinner />;
 	}
+	console.log(fetchedMovie);
+	const movie = movieSeries || fetchedMovie;
 
-	return movie ? (
+	return (
 		<div className="movie-series-page">
 			<MovieSeriesPageHeader movieSeriesData={movie} />
 			<MovieSeriesPageTabs mainPath={mainPath} />
 			<MovieSeriesPageTabBody mainPath={mainPath} movie={movie} />
 		</div>
-	) : (
-		<Redirect to={'/movie-list'} />
 	);
 };
 
 const mapStateToProps = (state, props) => ({
 	...props,
 	currentUserId: state.profile.profileInfo.id,
-	userRate: state.movie.userRate
+	userRate: state.movie.userRate,
+	fetchedMovie: state.movie.fetchedMovie
 });
 
 const mapDispatchToProps = dispatch => {
-	const actions = { fetchUserRate };
+	const actions = { fetchUserRate, fetchMovie };
 	return bindActionCreators(actions, dispatch);
 };
 

@@ -42,7 +42,7 @@ interface IProps {
 	movieList: null | Array<TMovie>;
 	fetchMovieList: () => any;
 	setMovieSeries: (movie: any) => any;
-	movieSeries: null | Array<TMovie>;
+	movieSeries: null | TMovie;
 }
 
 const MovieListRender = (movieList, fetchMovieList, setMovieSeries) => {
@@ -53,11 +53,8 @@ const MovieListRender = (movieList, fetchMovieList, setMovieSeries) => {
 	return <MovieList movies={movieList} setMovieSeries={setMovieSeries} />;
 };
 
-const MovieSeriesRender = movieSeries => {
-	if (!movieSeries) {
-		return <Redirect to={'/movie-list'} />;
-	}
-	return <MovieSeriesPage movie={movieSeries} />;
+const MovieSeriesRender = (movieSeries, props) => {
+	return <MovieSeriesPage {...props} movieSeries={movieSeries} />;
 };
 
 const Main = ({
@@ -85,8 +82,8 @@ const Main = ({
 						<Route path={`/event-page`} component={EventPage} />
 						<Route path={`/admin-panel-page`} component={AdminPanelPage} />
 						<Route
-							path={`/movie-series`}
-							render={() => MovieSeriesRender(movieSeries)}
+							path={`/movie-series/:id`}
+							render={props => MovieSeriesRender(movieSeries, props)}
 						/>
 						<Route
 							path={`/movie-list`}

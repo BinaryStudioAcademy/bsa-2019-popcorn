@@ -31,7 +31,7 @@ const MovieListItem: React.FC<IMovieListItemProps> = ({
 			</div>
 			<div className="movie-info">
 				<NavLink
-					to={'/movie-series'}
+					to={`/movie-series/${movie.id}`}
 					className="movie-link"
 					onClick={() => setMovieSeries(movie)}
 				>
