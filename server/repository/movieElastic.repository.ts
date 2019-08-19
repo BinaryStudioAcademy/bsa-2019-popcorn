@@ -50,20 +50,3 @@ export const getByTitle = async (title: string) => {
   );
   return response.json();
 };
-
-export const getById = async (id: string) => {
-  const response = await fetch(
-    process.env.ELASTIC_API_URL + "/popcorn/_search",
-    {
-      method: "POST",
-      body: JSON.stringify({
-        query: {
-          match: {
-            id: id
-          }
-        }
-      })
-    }
-  );
-  return response.json();
-};
