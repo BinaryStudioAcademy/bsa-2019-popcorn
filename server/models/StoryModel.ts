@@ -8,4 +8,5 @@ export class Story {
   type: string;
   activityId: string;
   filmId: string;
+  movieOption: string;
 }

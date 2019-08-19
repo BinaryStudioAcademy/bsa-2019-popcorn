@@ -30,4 +30,7 @@ export class Story {
 
   @Column({ nullable: true })
   filmId: string;
+
+  @Column({ nullable: true })
+  movieOption: string;
 }

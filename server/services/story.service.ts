@@ -35,7 +35,8 @@ export const createStory = async ({
   type,
   activityId,
   activity,
-  filmId
+  filmId,
+  movieOption
 }): Promise<any> => {
   let story: any = new Story();
   story.id = uuid();
@@ -47,6 +48,7 @@ export const createStory = async ({
   story.type = type;
   story.activityId = activityId;
   story.filmId = filmId;
+  story.movieOption = movieOption;
 
   await getCustomRepository(StoryRepository).save(story);
 
