@@ -5,7 +5,7 @@ import TMovie from '../MovieSeriesPage/TMovie';
 
 interface IMovieListProps {
 	movies: Array<TMovie>;
-	setMovieSeries: (movie: any) => any;
+	setMovieSeries?: (movie: any) => any;
 }
 
 const MovieList: React.FC<IMovieListProps> = ({ movies, setMovieSeries }) => {

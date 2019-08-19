@@ -18,6 +18,8 @@ import ChooseExtraOption from './story-modal/choose-extra-option';
 import INewStory from './INewStory';
 import CreateVote from './story-modal/create-vote';
 import IVoting from './IVoting';
+import TMovie from '../../MovieSeriesPage/TMovie';
+import { fetchSearch } from '../../MovieSeriesPage/Movie.redux/actions';
 
 interface IStoryListItem {
 	caption: string;
@@ -64,6 +66,8 @@ interface IProps {
 	userId: string;
 	createVoting: (voting: IVoting) => any;
 	addStory: (story: any) => any;
+	movies: null | Array<TMovie>;
+	fetchSearch: (title: string) => any;
 }
 
 const mock = {
@@ -97,6 +101,8 @@ const ListBlock = ({ ...props }: IProps) => {
 							changeActivity={props.changeActivity}
 							createStory={props.createStory}
 							userId={props.userId}
+							movies={props.movies}
+							fetchSearch={props.fetchSearch}
 						/>
 					)}
 				/>
@@ -135,7 +141,8 @@ const mapStateToProps = (rootState, props) => ({
 	newStory: rootState.story.newStory,
 	cursorPosition: rootState.story.cursorPosition,
 	top: mock.tops,
-	survey: mock.surveys
+	survey: mock.surveys,
+	movies: rootState.movie.moviesSearchInCreating
 });
 
 const actions = {
@@ -145,7 +152,8 @@ const actions = {
 	changeActivity,
 	createStory,
 	createVoting,
-	addStory
+	addStory,
+	fetchSearch
 };
 const mapDispatchToProps = dispatch => bindActionCreators(actions, dispatch);
 

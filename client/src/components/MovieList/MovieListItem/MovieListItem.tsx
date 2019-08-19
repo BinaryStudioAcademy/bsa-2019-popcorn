@@ -10,7 +10,7 @@ import getFilmDuration from '../../../helpers/getFilmDuration';
 interface IMovieListItemProps {
 	movie: TMovie;
 	key: string;
-	setMovieSeries: (movie: any) => any;
+	setMovieSeries?: (movie: any) => any;
 }
 
 const MovieListItem: React.FC<IMovieListItemProps> = ({
@@ -33,7 +33,7 @@ const MovieListItem: React.FC<IMovieListItemProps> = ({
 				<NavLink
 					to={'/movie-series'}
 					className="movie-link"
-					onClick={() => setMovieSeries(movie)}
+					onClick={() => setMovieSeries && setMovieSeries(movie)}
 				>
 					<div className="movie-title">
 						{movie.title}{' '}

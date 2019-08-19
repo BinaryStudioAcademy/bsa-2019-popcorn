@@ -8,6 +8,8 @@ import {
 import { faCamera } from '@fortawesome/free-solid-svg-icons/faCamera';
 import ImageUploader from '../ImageUploader/ImageUploader';
 import { uploadFile } from '../../../services/file.service';
+import TMovie from '../../MovieSeriesPage/TMovie';
+import MovieList from '../../MovieList/MovieList';
 
 interface IPostStoryEditorProps {
 	id?: string;
@@ -21,6 +23,8 @@ interface IPostStoryEditorProps {
 		activity: null | { id: string; name: string }
 	) => any;
 	cursorPosition: { start: number; end: number };
+	movies: null | Array<TMovie>;
+	fetchSearch?: (title: string) => any;
 }
 
 interface IPostStoryEditorState {
@@ -137,7 +141,10 @@ class PostStoryEditor extends React.Component<
 					placeholder="Type a text here..."
 					defaultValue={this.props.body}
 					onChange={e => {
-						console.log(PostStoryEditor.findMovie(e.target.value));
+						const title = PostStoryEditor.findMovie(e.target.value);
+						if (title.trim() && this.props.fetchSearch)
+							this.props.fetchSearch(title);
+
 						this.props.changeBody(
 							e.target.value,
 							this.textarea.current !== null
@@ -167,6 +174,11 @@ class PostStoryEditor extends React.Component<
 								className={'fontAwesomeIcon'}
 							/>
 						</span>
+					</div>
+				)}
+				{this.props.movies && (
+					<div className={'movie-list-wrp'}>
+						<MovieList movies={this.props.movies} />
 					</div>
 				)}
 				{/*<div className="footer">*/}

@@ -4,6 +4,7 @@ import PostStoryEditor from '../../PostStoryEditor/PostStoryEditor';
 import INewStory from '../INewStory';
 import { faPlusCircle } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import TMovie from '../../../MovieSeriesPage/TMovie';
 
 interface IProps {
 	newStory: INewStory;
@@ -19,6 +20,8 @@ interface IProps {
 	history: {
 		push: (path: string) => void;
 	};
+	movies: null | Array<TMovie>;
+	fetchSearch: (title: string) => any;
 }
 
 class getAddStoryPopupContent extends React.Component<IProps> {
@@ -55,6 +58,8 @@ class getAddStoryPopupContent extends React.Component<IProps> {
 							changeBody={this.props.setCaption}
 							saveImage={this.props.saveImage}
 							changeActivity={this.props.changeActivity}
+							movies={this.props.movies}
+							fetchSearch={this.props.fetchSearch}
 						>
 							{newStory.activity && newStory.activity.name}
 						</PostStoryEditor>
