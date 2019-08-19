@@ -23,7 +23,8 @@ const solidStar = (key: number, type: boolean): any => (
 	/>
 );
 
-const rateBlock = (rate: number): ReactElement[] => {
+const rateBlock = (rateString: string): ReactElement[] => {
+	const rate = parseFloat(rateString);
 	const res: any = [];
 
 	for (let i = 0; i < 5; i++) {
@@ -78,7 +79,7 @@ const FilmBasicTab = (props: IProps) => {
 		},
 		{
 			label: 'Rating',
-			value: rateBlock(parseInt(vote_average))
+			value: rateBlock(vote_average)
 		},
 		{
 			label: 'Budget',
