@@ -207,6 +207,7 @@ class UserEventsEditor extends React.Component<
 					<label className="input-wrp">
 						<span className="label">Title: </span>
 						<input
+							maxLength={64}
 							type="text"
 							className="text-input"
 							placeholder="Enter event title here..."
