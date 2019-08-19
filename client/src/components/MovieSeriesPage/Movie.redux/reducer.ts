@@ -2,7 +2,8 @@ import { FINISH_FETCH_SEARCH_FILMS } from '../../shared/Header/actionTypes';
 import {
 	SET_MOVIE_LIST,
 	SET_MOVIE_SERIES,
-	FETCH_MOVIE_USER_RATE_SUCCESS
+	FETCH_MOVIE_USER_RATE_SUCCESS,
+	FETCH_MOVIE_BY_ID_SUCCESS
 } from './actionTypes';
 import TMovie from '../TMovie';
 import movieAdapter from '../movieAdapter';
@@ -13,12 +14,14 @@ const initialState: {
 	movieList: null | Array<TMovie>;
 	movieSeries: null | TMovie;
 	userRate: null | string;
+	fetchedMovie: null | TMovie;
 } = {
 	moviesSearch: [],
 	alreadySearch: false,
 	movieList: null,
 	movieSeries: null,
-	userRate: null
+	userRate: null,
+	fetchedMovie: null
 };
 
 export default function(state = initialState, action) {
@@ -45,6 +48,11 @@ export default function(state = initialState, action) {
 			return {
 				...state,
 				userRate: action.payload.userRate
+			};
+		case FETCH_MOVIE_BY_ID_SUCCESS:
+			return {
+				...state,
+				fetchedMovie: movieAdapter(action.payload.fetchedMovie)
 			};
 		default:
 			return state;
