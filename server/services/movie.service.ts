@@ -24,8 +24,11 @@ export const getMovies = async (): Promise<any[]> => {
   return result;
 };
 
-export const getMovieById = async (movieId: number): Promise<Movie> =>
-  await getCustomRepository(MovieRepository).findOne(movieId);
+export const getMovieById = async (movieId: number): Promise<any> => {
+  const data = await getMovies();
+  return data.find(movie => movie.id == movieId);
+};
+// await getCustomRepository(MovieRepository).findOne(movieId);
 
 export const createMovie = async (movie: Movie): Promise<Movie[]> =>
   await getCustomRepository(MovieRepository).save([movie]);
