@@ -43,9 +43,9 @@ const MovieSeriesPage: React.SFC<IProps> = props => {
 		fetchUserRate('5', '4');
 		return <Spinner />;
 	}
-	console.log(fetchedMovie);
-	const movie = movieSeries || fetchedMovie;
 
+	const movie = movieSeries || fetchedMovie;
+	console.log(movie);
 	return (
 		<div className="movie-series-page">
 			<MovieSeriesPageHeader movieSeriesData={movie} />

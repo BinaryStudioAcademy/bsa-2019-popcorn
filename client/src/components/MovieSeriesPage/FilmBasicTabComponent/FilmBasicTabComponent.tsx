@@ -27,7 +27,7 @@ const rateBlock = (rate: number): ReactElement[] => {
 	const res: any = [];
 
 	for (let i = 0; i < 5; i++) {
-		i < rate / 2 ? res.push(solidStar(i, true)) : res.push(solidStar(i, false));
+		i < rate ? res.push(solidStar(i, true)) : res.push(solidStar(i, false));
 	}
 	return res;
 };
@@ -78,7 +78,7 @@ const FilmBasicTab = (props: IProps) => {
 		},
 		{
 			label: 'Rating',
-			value: rateBlock(vote_average)
+			value: rateBlock(parseInt(vote_average))
 		},
 		{
 			label: 'Budget',

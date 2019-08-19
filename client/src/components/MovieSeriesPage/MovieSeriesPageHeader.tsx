@@ -7,12 +7,12 @@ interface IProps {
 		title: string;
 		release_date?: string;
 		genre?: string[];
-		rating?: number;
+		vote_average?: string;
 		any?;
 	};
 }
 
-const defaultRating = 3.5;
+const defaultRating = 0;
 const MovieSeriesPageHeader: React.FC<IProps> = ({ movieSeriesData }) => {
 	const genre = movieSeriesData.genre && movieSeriesData.genre.join(', ');
 	return (
@@ -26,7 +26,7 @@ const MovieSeriesPageHeader: React.FC<IProps> = ({ movieSeriesData }) => {
 				</div>
 				<span className="rating">
 					<FontAwesomeIcon className="icon-star" icon={faStar} />
-					{movieSeriesData.rating || defaultRating}
+					{movieSeriesData.vote_average || defaultRating}
 					<span className="max-rating">/5</span>
 				</span>
 			</div>
