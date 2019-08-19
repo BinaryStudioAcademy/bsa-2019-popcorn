@@ -11,6 +11,7 @@ import {
 } from '../UserEvents.service';
 import ImageUploader from '../../../MainPage/ImageUploader/ImageUploader';
 import { uploadFile } from '../../../../services/file.service';
+import MapComponent from '../EventMap/Map';
 
 interface IUserEventsEditorProps {
 	id?: string;
@@ -22,11 +23,10 @@ interface IUserEventsEditorProps {
 interface IUserEventsEditorState {
 	title: string;
 	description: string;
-	location:
-		{
-			lat: number | undefined;
-			lng: number | undefined;
-		};
+	location: {
+		lat: number | undefined;
+		lng: number | undefined;
+	};
 	dateRange: {
 		startDate: Date | undefined;
 		endDate: Date | undefined;
@@ -47,7 +47,7 @@ class UserEventsEditor extends React.Component<
 			title: '',
 			movieId: null,
 			description: '',
-			location: {lat: undefined, lng: undefined},
+			location: { lat: undefined, lng: undefined },
 			dateRange: {
 				startDate: undefined,
 				endDate: undefined
@@ -185,7 +185,7 @@ class UserEventsEditor extends React.Component<
 		this.setState({
 			title: '',
 			description: '',
-			location: {lat: undefined, lng: undefined},
+			location: { lat: undefined, lng: undefined },
 			dateRange: {
 				startDate: undefined,
 				endDate: undefined
@@ -201,7 +201,6 @@ class UserEventsEditor extends React.Component<
 
 		return (
 			<div className="event-editor">
-
 				<div className="inputs">
 					<label className="input-wrp">
 						<span className="label">Title: </span>
@@ -271,13 +270,14 @@ class UserEventsEditor extends React.Component<
 						</div>
 					</div>
 
-					{/* <div className="input-wrp">
+					<div className="input-wrp">
 						<span className="label">Location: </span>
-						<MapWithASearchBox
+						{/* <MapWithASearchBox
 							onLocationChanged={this.onLocationChanged}
 							defaultMarkerPosition={this.state.location}
-						/> 
-					</div> */}
+						/>  */}
+						<MapComponent />
+					</div>
 
 					<div className="input-wrp">
 						<span className="label">Privacy: </span>
