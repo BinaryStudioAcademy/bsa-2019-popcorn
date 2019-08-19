@@ -28,12 +28,12 @@ router
       .then((response: Movie[]) => res.send(response))
       .catch(next)
   )
-  // .get("/:id", (req: Request, res: Response, next: NextFunction) =>
-  //   movieService
-  //     .getMovieById(req.params.id)
-  //     .then((movie: Movie) => res.send(movie))
-  //     .catch(next)
-  // )
+  .get("/:id", (req: Request, res: Response, next: NextFunction) =>
+    movieService
+      .getMovieById(req.params.id)
+      .then((movie: Movie) => res.send(movie))
+      .catch(next)
+  )
   .post("/", (req: Request, res: Response, next: NextFunction) =>
     movieService
       .createMovie(req.body)
