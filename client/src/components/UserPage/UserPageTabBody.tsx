@@ -36,6 +36,8 @@ interface IProps {
 	uploadUrl?: string;
 	cancelAvatar: () => any;
 	setAvatar: (url: string, id: string) => any;
+	userPosts?: any; //todo
+	getUsersPosts: (id: string) => any;
 }
 
 const UserPageTabs: React.SFC<IProps> = ({
@@ -44,7 +46,9 @@ const UserPageTabs: React.SFC<IProps> = ({
 	profileInfo,
 	uploadUrl,
 	cancelAvatar,
-	setAvatar
+	setAvatar,
+	userPosts,
+	getUsersPosts
 }) => {
 	return (
 		<div className={'user-tab-body'}>
@@ -62,7 +66,15 @@ const UserPageTabs: React.SFC<IProps> = ({
 						/>
 					)}
 				/>
-				<Route path={`${mainPath}/posts`} component={() => <UserPosts />} />
+				<Route
+					path={`${mainPath}/posts`}
+					component={() => (
+						<UserPosts
+							posts={userPosts}
+							getUsersPosts={() => getUsersPosts(profileInfo.id)}
+						/>
+					)}
+				/>
 				<Route path={`${mainPath}/reviews`} component={UserReviews} />
 				<Route path={`${mainPath}/events`} component={UserEvents} />
 				<Route

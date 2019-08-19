@@ -3,16 +3,15 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimesCircle } from '@fortawesome/free-solid-svg-icons';
 
 interface IProps {
-	link: string;
 	title: string;
-	clearExtra: (data: any) => any;
+	setExtra: (data: any) => any;
 }
 
 const Extra = (props: IProps) => {
 	return (
 		<div className="extra">
 			<div>{props.title}</div>
-			<div onClick={() => props.clearExtra('')}>
+			<div onClick={() => props.setExtra('')}>
 				<FontAwesomeIcon icon={faTimesCircle} className={'fontAwesomeIcon'} />
 			</div>
 		</div>

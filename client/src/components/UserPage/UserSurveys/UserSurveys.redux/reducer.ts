@@ -1,8 +1,7 @@
 import { SET_SURVEYS } from './actionTypes';
 
 const initialState = {
-	surveys: [],
-	loading: true
+	surveys: undefined
 };
 
 export default function(state = initialState, action) {
@@ -10,8 +9,7 @@ export default function(state = initialState, action) {
 		case SET_SURVEYS:
 			return {
 				...state,
-				surveys: action.payload.surveys,
-				loading: action.payload.loading
+				surveys: action.payload.surveys
 			};
 		default:
 			return state;

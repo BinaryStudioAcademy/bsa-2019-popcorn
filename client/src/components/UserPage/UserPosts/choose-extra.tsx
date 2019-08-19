@@ -1,90 +1,65 @@
 import React from 'react';
 import { Redirect } from 'react-router';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import ChooseExtraOption from './choose-extra-option';
 import {
 	faArrowCircleLeft,
 	faChevronRight,
 	faTimesCircle
 } from '@fortawesome/free-solid-svg-icons';
 
-const options = ['top', 'survey'];
+const options = ['top'];
 
 interface IPropsExtra {
-	toggleModal: () => any;
+	addExtra: () => any;
 	setExtra: (data: any) => any;
 }
 
-interface IStateExtra {
-	modalOption: boolean;
-	option: string;
-}
-
-class ChooseExtra extends React.Component<IPropsExtra, IStateExtra> {
+class ChooseExtra extends React.Component<IPropsExtra> {
 	constructor(props: IPropsExtra) {
 		super(props);
 		this.state = {
-			modalOption: false,
 			option: ''
 		};
-		this.toggleModalOption = this.toggleModalOption.bind(this);
-	}
-
-	toggleModalOption(data) {
-		this.setState({
-			modalOption: !this.state.modalOption,
-			option: data
-		});
 	}
 
 	render() {
-		const { toggleModal } = this.props;
+		const { addExtra } = this.props;
 
 		return (
-			<>
-				{this.state.modalOption ? (
-					<ChooseExtraOption
-						setExtra={this.props.setExtra}
-						toggleModalOption={this.toggleModalOption}
-						option={this.state.option}
-					/>
-				) : (
-					<div className={'modal modal-story'}>
-						<div className={'nav-block-wrp'}>
-							<span onClick={() => toggleModal()}>
-								<FontAwesomeIcon
-									icon={faArrowCircleLeft}
-									className={'fontAwesomeIcon'}
-								/>
-							</span>
-							<span onClick={() => toggleModal()}>
-								<FontAwesomeIcon
-									icon={faTimesCircle}
-									className={'fontAwesomeIcon'}
-								/>
-							</span>
-						</div>
-						<div className={'content-extra'}>
-							{options &&
-								options.map((option, i) => {
-									return (
-										<div
-											key={i}
-											className={'extra-item'}
-											onClick={() => this.toggleModalOption(option)}
-										>
-											<span>Add {option}</span>
-											<FontAwesomeIcon
-												icon={faChevronRight}
-												style={{ color: '#ffab07' }}
-											/>
-										</div>
-									);
-								})}
-						</div>
-					</div>
-				)}
-			</>
+			<div className={'modal modal-story'}>
+				<div className={'nav-block-wrp'}>
+					<span onClick={() => addExtra()}>
+						<FontAwesomeIcon
+							icon={faArrowCircleLeft}
+							className={'fontAwesomeIcon'}
+						/>
+					</span>
+					<span onClick={() => addExtra()}>
+						<FontAwesomeIcon
+							icon={faTimesCircle}
+							className={'fontAwesomeIcon'}
+						/>
+					</span>
+				</div>
+				<div className={'content-extra'}>
+					{options &&
+						options.map((option, i) => {
+							return (
+								<div
+									key={i}
+									className={'extra-item'}
+									onClick={() => this.props.setExtra(option)}
+								>
+									<span>Add {option}</span>
+									<FontAwesomeIcon
+										icon={faChevronRight}
+										style={{ color: '#ffab07' }}
+									/>
+								</div>
+							);
+						})}
+				</div>
+			</div>
 		);
 	}
 }

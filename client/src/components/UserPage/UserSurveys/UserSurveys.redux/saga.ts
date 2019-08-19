@@ -21,8 +21,7 @@ export function* fetchSurveys(action) {
 		yield put({
 			type: SET_SURVEYS,
 			payload: {
-				surveys: data,
-				loading: false
+				surveys: data
 			}
 		});
 	} catch (e) {

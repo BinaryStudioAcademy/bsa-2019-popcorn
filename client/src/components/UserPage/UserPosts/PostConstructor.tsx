@@ -10,24 +10,22 @@ import Extra from './extra';
 import ChooseExtraOption from './choose-extra-option';
 
 import { setPost } from '../actions';
-import { getUsersPosts } from '../../UserPage/actions';
 
 import { uploadFile } from '../../../services/file.service';
 
 interface IPostConstructorProps {
-	userId: string;
+	id?: string;
 	setPost: (data: any) => any;
-	getUsersPosts: (data: any) => any;
 }
 
 interface IPostConstructorState {
 	image_url: string;
 	description: string;
+	extraOption: string;
+	showExtra?: boolean;
+	extra?: boolean;
+	showExtraOption?: boolean;
 	title: string;
-	userId: string;
-	extraLink: string;
-	extraTitle: string;
-	modalExtra: boolean;
 }
 
 class PostConstructor extends React.Component<
@@ -39,34 +37,18 @@ class PostConstructor extends React.Component<
 		this.state = {
 			image_url: '',
 			description: '',
-			title: 'test title',
-			userId: this.props.userId,
-			extraLink: '',
-			extraTitle: '',
-			modalExtra: false
+			showExtra: false,
+			extra: false,
+			showExtraOption: false,
+			extraOption: '',
+			title: 'test title'
 		};
 		this.imageStateHandler = this.imageStateHandler.bind(this);
+		this.uploadImage = this.uploadImage.bind(this);
+		this.addExtra = this.addExtra.bind(this);
 		this.onSave = this.onSave.bind(this);
-		this.setExtraData = this.setExtraData.bind(this);
-		this.toggleModal = this.toggleModal.bind(this);
-	}
-
-	setExtraData(data) {
-		data
-			? this.setState({
-					extraLink: data.link,
-					extraTitle: data.title
-			  })
-			: this.setState({
-					extraLink: '',
-					extraTitle: ''
-			  });
-	}
-
-	toggleModal() {
-		this.setState({
-			modalExtra: !this.state.modalExtra
-		});
+		this.setExtra = this.setExtra.bind(this);
+		this.showExtraOptionModal = this.showExtraOptionModal.bind(this);
 	}
 
 	imageStateHandler(data) {
@@ -82,19 +64,51 @@ class PostConstructor extends React.Component<
 		});
 	}
 
+	addExtra() {
+		this.setState({ showExtra: !this.state.showExtra });
+	}
+
+	showExtraOptionModal() {
+		this.setState({
+			showExtraOption: !this.state.showExtraOption
+		});
+	}
+
+	uploadImage() {
+		return new Promise((resolve, reject) => {
+			setTimeout(() => {
+				if (true) {
+					resolve({ imageUrl: 'http://placehold.it/100x100' });
+				}
+				reject({ message: 'error' });
+			}, 1000);
+		});
+	}
+
 	onSave() {
 		if (this.state.description.trim() === '') return;
 
-		(async () => {
-			await this.props.setPost(this.state);
-			await this.props.getUsersPosts(this.props.userId);
-			await this.setState({
-				image_url: '',
-				description: '',
-				extraLink: '',
-				extraTitle: ''
-			});
-		})();
+		this.props.setPost(this.state);
+
+		this.setState({
+			image_url: '',
+			description: '',
+			showExtra: false,
+			extra: false,
+			extraOption: ''
+		});
+	}
+
+	setExtra(data) {
+		data
+			? this.setState({
+					showExtra: !this.state.showExtra,
+					extraOption: data,
+					showExtraOption: !this.state.showExtraOption
+			  })
+			: this.setState({
+					extraOption: ''
+			  });
 	}
 
 	render() {
@@ -104,7 +118,7 @@ class PostConstructor extends React.Component<
 					<img
 						className="postconstr-img"
 						src={this.state.image_url}
-						alt="post content"
+						alt="post image"
 					/>
 				) : null}
 				<textarea
@@ -113,31 +127,36 @@ class PostConstructor extends React.Component<
 					onChange={e => this.onChangeData(e.target.value, 'description')}
 				/>
 
-				{this.state.extraLink ? (
-					<Extra
-						title={this.state.extraTitle}
-						link={this.state.extraLink}
-						clearExtra={this.setExtraData}
-					/>
+				{this.state.extraOption ? (
+					<Extra title={this.state.extraOption} setExtra={this.setExtra} />
 				) : null}
-				{this.state.modalExtra ? (
+				{this.state.showExtra ? (
 					<ChooseExtra
-						toggleModal={this.toggleModal}
-						setExtra={this.setExtraData}
+						setExtra={this.setExtra}
+						addExtra={() => this.addExtra()}
 					/>
 				) : null}
+				{this.state.showExtraOption ? (
+					<ChooseExtraOption
+						showExtraOptionModal={this.showExtraOptionModal}
+						option={this.state.extraOption}
+					/>
+				) : null}
+
 				<div className="postconstr-btn-group">
 					<div className="postconstr-btn-sm">
-						<button className={'btn'} onClick={() => this.toggleModal()}>
-							Add extra
-						</button>
+						{!this.state.extra ? (
+							<button className={'btn'} onClick={() => this.addExtra()}>
+								Add extra
+							</button>
+						) : null}
 						<ImageUploader
 							imageHandler={uploadFile}
 							imageStateHandler={this.imageStateHandler}
 						/>
 					</div>
 					<button className="save-btn" onClick={this.onSave}>
-						Post
+						Save
 					</button>
 				</div>
 			</div>
@@ -150,8 +169,7 @@ const mapStateToProps = (rootState, props) => ({
 });
 
 const actions = {
-	setPost,
-	getUsersPosts
+	setPost
 };
 
 const mapDispatchToProps = dispatch => bindActionCreators(actions, dispatch);

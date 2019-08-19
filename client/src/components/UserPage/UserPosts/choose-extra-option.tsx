@@ -6,16 +6,10 @@ import {
 	faPlus
 } from '@fortawesome/free-solid-svg-icons';
 import { Redirect } from 'react-router';
-import { fetchSurveys } from '../UserSurveys/UserSurveys.redux/actions';
-import { connect } from 'react-redux';
 
 interface IProps {
 	option: string;
-	survey: any;
-	loading: boolean;
-	toggleModalOption: (data: any) => any;
-	setExtra: (data: any) => any;
-	fetchSurveys: () => any;
+	showExtraOptionModal: () => any;
 }
 
 const mock = [
@@ -32,20 +26,16 @@ const mock = [
 
 class ChooseExtraOption extends React.Component<IProps> {
 	state = {
+		open: true,
+		back: true,
 		create: true
 	};
 
-	componentDidMount() {
-		this.props.fetchSurveys();
-	}
-
-	setOption(data) {
-		this.props.setExtra(data);
-	}
-
 	render() {
-		const { option, survey = [], loading } = this.props;
+		const option = this.props.option;
 
+		if (!this.state.open) return <Redirect to={'/'} />;
+		if (!this.state.back || !option) return <Redirect to={'/create/extra'} />;
 		if (!this.state.create)
 			return (
 				<Redirect
@@ -55,18 +45,20 @@ class ChooseExtraOption extends React.Component<IProps> {
 				/>
 			);
 
+		const close = () => this.props.showExtraOptionModal();
+		const back = () => this.props.showExtraOptionModal();
 		const create = () => this.setState({ create: false });
 
 		return (
 			<div className={'modal modal-story'}>
 				<div className={'nav-block-wrp'}>
-					<span onClick={this.props.toggleModalOption}>
+					<span onClick={back}>
 						<FontAwesomeIcon
 							icon={faArrowCircleLeft}
 							className={'fontAwesomeIcon'}
 						/>
 					</span>
-					<span onClick={this.props.toggleModalOption}>
+					<span onClick={close}>
 						<FontAwesomeIcon
 							icon={faTimesCircle}
 							className={'fontAwesomeIcon'}
@@ -85,18 +77,12 @@ class ChooseExtraOption extends React.Component<IProps> {
 					</div>
 
 					<div className={'recent-created'}>
-						{!loading
-							? survey.map((item, i) => (
-									<span
-										key={i}
-										onClick={() =>
-											this.setOption({ title: item.title, link: item.id })
-										}
-									>
-										{item.title}
-									</span>
-							  ))
-							: null}
+						{mock &&
+							mock.map((item, i) => (
+								<span key={i} onClick={back}>
+									{item.name}
+								</span>
+							))}
 					</div>
 				</div>
 			</div>
@@ -104,16 +90,4 @@ class ChooseExtraOption extends React.Component<IProps> {
 	}
 }
 
-const mapStateToProps = rootState => ({
-	survey: rootState.survey.surveys,
-	loading: rootState.survey.loading
-});
-
-const mapDispatchToProps = {
-	fetchSurveys
-};
-
-export default connect(
-	mapStateToProps,
-	mapDispatchToProps
-)(ChooseExtraOption);
+export default ChooseExtraOption;

@@ -5,8 +5,6 @@ export class Post {
   title: string;
   description: string;
   image_url: string;
-  extraTitle?: string;
-  extraLink?: string;
   user: User;
   comments: PostComment[];
 }
