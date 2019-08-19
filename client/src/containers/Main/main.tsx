@@ -53,8 +53,8 @@ const MovieListRender = (movieList, fetchMovieList, setMovieSeries) => {
 	return <MovieList movies={movieList} setMovieSeries={setMovieSeries} />;
 };
 
-const MovieSeriesRender = (movieSeries, props) => {
-	return <MovieSeriesPage {...props} movieSeries={movieSeries} />;
+const MovieSeriesRender = props => {
+	return <MovieSeriesPage {...props} />;
 };
 
 const Main = ({
@@ -83,7 +83,7 @@ const Main = ({
 						<Route path={`/admin-panel-page`} component={AdminPanelPage} />
 						<Route
 							path={`/movie-series/:id`}
-							render={props => MovieSeriesRender(movieSeries, props)}
+							render={props => MovieSeriesRender(props)}
 						/>
 						<Route
 							path={`/movie-list`}
