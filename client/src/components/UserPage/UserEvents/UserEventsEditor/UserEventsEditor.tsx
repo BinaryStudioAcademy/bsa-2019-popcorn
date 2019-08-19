@@ -22,12 +22,10 @@ interface IUserEventsEditorProps {
 interface IUserEventsEditorState {
 	title: string;
 	description: string;
-	location:
-		| {
-				lat: number;
-				lng: number;
-		  }
-		| undefined;
+	location: {
+		lat: number | undefined;
+		lng: number | undefined;
+	};
 	dateRange: {
 		startDate: Date | undefined;
 		endDate: Date | undefined;
@@ -48,7 +46,7 @@ class UserEventsEditor extends React.Component<
 			title: '',
 			movieId: null,
 			description: '',
-			location: undefined,
+			location: { lat: undefined, lng: undefined },
 			dateRange: {
 				startDate: undefined,
 				endDate: undefined
@@ -148,7 +146,6 @@ class UserEventsEditor extends React.Component<
 		if (
 			this.state.title.trim() === '' ||
 			this.state.description.trim() === '' ||
-			!this.state.location ||
 			!this.state.dateRange.startDate ||
 			!this.state.dateRange.endDate
 		)
@@ -187,7 +184,7 @@ class UserEventsEditor extends React.Component<
 		this.setState({
 			title: '',
 			description: '',
-			location: undefined,
+			location: { lat: undefined, lng: undefined },
 			dateRange: {
 				startDate: undefined,
 				endDate: undefined
@@ -203,10 +200,6 @@ class UserEventsEditor extends React.Component<
 
 		return (
 			<div className="event-editor">
-				<button className="back-btn hover" onClick={this.onCancel}>
-					Back
-				</button>
-
 				<div className="inputs">
 					<label className="input-wrp">
 						<span className="label">Title: </span>
@@ -233,7 +226,6 @@ class UserEventsEditor extends React.Component<
 								imageHandler={uploadFile}
 								imageStateHandler={image => this.setState({ image })}
 							/>
-							<PhotoIcon />
 						</div>
 					</label>
 
@@ -277,13 +269,13 @@ class UserEventsEditor extends React.Component<
 						</div>
 					</div>
 
-					<div className="input-wrp">
+					{/* <div className="input-wrp">
 						<span className="label">Location: </span>
-						{/* <MapWithASearchBox
+						<MapWithASearchBox
 							onLocationChanged={this.onLocationChanged}
 							defaultMarkerPosition={this.state.location}
-						/> */}
-					</div>
+						/> 
+					</div> */}
 
 					<div className="input-wrp">
 						<span className="label">Privacy: </span>

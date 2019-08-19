@@ -1,10 +1,12 @@
 import StoryList from './story-list/story-list';
 import {
+	addStory,
 	changeActivity,
 	createStory,
 	createVoting,
 	fetchStories,
 	saveImage,
+	saveMovie,
 	setCaption
 } from './story.redux/actions';
 import { bindActionCreators } from 'redux';
@@ -17,6 +19,11 @@ import ChooseExtraOption from './story-modal/choose-extra-option';
 import INewStory from './INewStory';
 import CreateVote from './story-modal/create-vote';
 import IVoting from './IVoting';
+import TMovie from '../../MovieSeriesPage/TMovie';
+import {
+	fetchSearch,
+	resetSearch
+} from '../../MovieSeriesPage/Movie.redux/actions';
 
 interface IStoryListItem {
 	caption: string;
@@ -50,6 +57,7 @@ interface IProps {
 	fetchStories: () => any;
 	avatar: null | string;
 	newStory: INewStory;
+	cursorPosition: { start: number; end: number };
 	setCaption: (caption: string) => any;
 	top: { id: string; name: string; any };
 	survey: { id: string; name: string; any };
@@ -61,6 +69,12 @@ interface IProps {
 	createStory: (newStory: INewStory, userId: string) => any;
 	userId: string;
 	createVoting: (voting: IVoting) => any;
+	addStory: (story: any) => any;
+	movies: null | Array<TMovie>;
+	fetchSearch: (title: string) => any;
+	title: string;
+	resetSearch: () => any;
+	saveMovie: (movie: TMovie) => any;
 }
 
 const mock = {
@@ -88,11 +102,17 @@ const ListBlock = ({ ...props }: IProps) => {
 						<GetAddStoryPopupContent
 							history={history}
 							newStory={props.newStory}
+							cursorPosition={props.cursorPosition}
 							setCaption={props.setCaption}
 							saveImage={props.saveImage}
 							changeActivity={props.changeActivity}
 							createStory={props.createStory}
 							userId={props.userId}
+							movies={props.movies}
+							fetchSearch={props.fetchSearch}
+							title={props.title}
+							resetSearch={props.resetSearch}
+							saveMovie={props.saveMovie}
 						/>
 					)}
 				/>
@@ -129,8 +149,11 @@ const mapStateToProps = (rootState, props) => ({
 	avatar: rootState.profile.profileInfo && rootState.profile.profileInfo.avatar,
 	userId: rootState.profile.profileInfo && rootState.profile.profileInfo.id,
 	newStory: rootState.story.newStory,
+	title: rootState.story.title,
+	cursorPosition: rootState.story.cursorPosition,
 	top: mock.tops,
-	survey: mock.surveys
+	survey: mock.surveys,
+	movies: rootState.movie.moviesSearchInCreating
 });
 
 const actions = {
@@ -139,7 +162,11 @@ const actions = {
 	saveImage,
 	changeActivity,
 	createStory,
-	createVoting
+	createVoting,
+	addStory,
+	fetchSearch,
+	resetSearch,
+	saveMovie
 };
 const mapDispatchToProps = dispatch => bindActionCreators(actions, dispatch);
 

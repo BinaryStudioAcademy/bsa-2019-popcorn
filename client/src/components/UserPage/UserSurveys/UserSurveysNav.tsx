@@ -4,15 +4,19 @@ import SurveyEditorNav from '../SurveyEditor/SurveyEditorNav';
 import UserSurveys from './UserSurveys';
 import newSurvey from './newSurveyConfig';
 import { connect } from 'react-redux';
-import { 
-	fetchSurveys, 
-	addSurvey, 
-	updateSurvey, 
+import {
+	fetchSurveys,
+	addSurvey,
+	updateSurvey,
 	deleteSurvey,
-	recreateSurvey 
+	recreateSurvey
 } from './UserSurveys.redux/actions';
 import { bindActionCreators } from 'redux';
-import { transformDataToProps, transformDataToServerFormatCreate, transformDataToServerFormatUpdate } from './UserSurveys.service';
+import {
+	transformDataToProps,
+	transformDataToServerFormatCreate,
+	transformDataToServerFormatUpdate
+} from './UserSurveys.service';
 import { isEqual } from 'lodash';
 import Spinner from '../../shared/Spinner';
 
@@ -25,14 +29,14 @@ interface IProps {
 	deleteSurvey: (string) => any;
 	recreateSurvey: (string, any) => any;
 	userInfo: {
-		id: string,
-		name: string,
-		image_link: string
-	}
+		id: string;
+		name: string;
+		image_link: string;
+	};
 }
 
 interface IState {
-	surveys: any
+	surveys: any;
 }
 
 class UserSurveysNav extends React.Component<IProps, IState> {
@@ -51,23 +55,23 @@ class UserSurveysNav extends React.Component<IProps, IState> {
 		if (!isEqual(props.surveys, state.surveys)) {
 			return {
 				surveys: transformDataToProps(props.surveys)
-			}
+			};
 		}
 		return null;
 	}
 
 	updateInfo = newSurvey => {
-		const survey = this.state.surveys.find(survey => survey.id === newSurvey.id);
+		const survey = this.state.surveys.find(
+			survey => survey.id === newSurvey.id
+		);
 		if (!survey) {
 			const body = transformDataToServerFormatCreate(newSurvey);
-			this.props.addSurvey(body)
-		}
-		else {
+			this.props.addSurvey(body);
+		} else {
 			if (isEqual(survey.questions, newSurvey.questions)) {
 				const body = transformDataToServerFormatUpdate(newSurvey);
 				this.props.updateSurvey(newSurvey.id, body);
-			}
-			else {
+			} else {
 				const body = transformDataToServerFormatCreate(newSurvey);
 				this.props.recreateSurvey(newSurvey.id, body);
 			}
@@ -80,53 +84,53 @@ class UserSurveysNav extends React.Component<IProps, IState> {
 
 	render() {
 		const { mainPath, userInfo } = this.props;
-		if (!this.state.surveys) return <Spinner />
+		if (!this.state.surveys) return <Spinner />;
 		return (
-		<Switch>
-			<Route
-				exact
-				path={mainPath}
-				render={routeProps => (
-					<UserSurveys
-						{...routeProps}
-						updateInfo={this.updateInfo}
-						surveys={this.state.surveys}
-						mainPath={mainPath}
-						deleteSurvey={this.deleteSurvey}
-					/>
-				)}
-			/>
-			<Route
-				path={`${mainPath}/create`}
-				render={() => (
-					<SurveyEditorNav
-						mainPath={`${mainPath}/create`}
-						surveyInfo={{
-							...newSurvey(),
-							user_id: userInfo.id,
-							user: { ...userInfo }
-						}}
-						updateInfo={this.updateInfo}
-					/>
-				)}
-			/>
-			{this.state.surveys.map((survey, i) => (
+			<Switch>
 				<Route
-					key={i}
-					path={`${mainPath}/${survey.id}`}
-					render={() => (
-						<SurveyEditorNav
+					exact
+					path={mainPath}
+					render={routeProps => (
+						<UserSurveys
+							{...routeProps}
 							updateInfo={this.updateInfo}
-							mainPath={`${mainPath}/${survey.id}`}
-							surveyInfo={survey}
+							surveys={this.state.surveys}
+							mainPath={mainPath}
+							deleteSurvey={this.deleteSurvey}
 						/>
 					)}
 				/>
-			))}
-		</Switch>
-	);
-	}	
-};
+				<Route
+					path={`${mainPath}/create`}
+					render={() => (
+						<SurveyEditorNav
+							mainPath={`${mainPath}/create`}
+							surveyInfo={{
+								...newSurvey(),
+								user_id: userInfo.id,
+								user: { ...userInfo }
+							}}
+							updateInfo={this.updateInfo}
+						/>
+					)}
+				/>
+				{this.state.surveys.map((survey, i) => (
+					<Route
+						key={i}
+						path={`${mainPath}/${survey.id}`}
+						render={() => (
+							<SurveyEditorNav
+								updateInfo={this.updateInfo}
+								mainPath={`${mainPath}/${survey.id}`}
+								surveyInfo={survey}
+							/>
+						)}
+					/>
+				))}
+			</Switch>
+		);
+	}
+}
 
 const mapStateToProps = (rootState, props) => ({
 	...props,

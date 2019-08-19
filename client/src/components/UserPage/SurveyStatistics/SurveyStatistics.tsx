@@ -5,6 +5,7 @@ import './../Survey/Survey.scss';
 import './SurveyStatistics.scss';
 
 interface IOption {
+	index: number;
 	id: string;
 	question_id: string;
 	value: string;
@@ -94,6 +95,7 @@ const SurveyStatistics: React.FC<IProps> = (props: IProps) => {
 				{checkForAnswers(questions) ? (
 					questions.map(
 						question =>
+							question.type !== 'Short Answer' &&
 							question.options && (
 								<div key={question.id} className="question-container">
 									<h3 className="survey-question question-title">

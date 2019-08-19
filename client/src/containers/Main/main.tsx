@@ -20,6 +20,8 @@ import {
 } from '../../components/MovieSeriesPage/Movie.redux/actions';
 import Header from '../../components/shared/Header/Header';
 import UserTops from '../../components/UserPage/UserTops/UserTops';
+import SocketService from '../../services/socket.service';
+import TMovie from '../../components/MovieSeriesPage/TMovie';
 
 const { notifications } = {
 	notifications: {
@@ -27,16 +29,8 @@ const { notifications } = {
 		newEvents: 2
 	}
 };
-type Movie = {
-	id: string;
-	title: string;
-	release_date?: string;
-	image: string;
-	duration: string;
-	genres: Array<string>;
-	cast: Array<string>;
-};
 type userInfo = {
+	id: string;
 	name: string;
 	image: string;
 	any;
@@ -45,10 +39,10 @@ type userInfo = {
 interface IProps {
 	isAuthorized: boolean;
 	userInfo: userInfo;
-	movieList: null | Array<Movie>;
+	movieList: null | Array<TMovie>;
 	fetchMovieList: () => any;
 	setMovieSeries: (movie: any) => any;
-	movieSeries: null | Movie;
+	movieSeries: null | Array<TMovie>;
 }
 
 const MovieListRender = (movieList, fetchMovieList, setMovieSeries) => {
@@ -57,6 +51,13 @@ const MovieListRender = (movieList, fetchMovieList, setMovieSeries) => {
 		return <Spinner />;
 	}
 	return <MovieList movies={movieList} setMovieSeries={setMovieSeries} />;
+};
+
+const MovieSeriesRender = movieSeries => {
+	if (!movieSeries) {
+		return <Redirect to={'/movie-list'} />;
+	}
+	return <MovieSeriesPage movie={movieSeries} />;
 };
 
 const Main = ({
@@ -69,6 +70,9 @@ const Main = ({
 }: IProps) => {
 	if (!isAuthorized || !localStorage.getItem('token'))
 		return <Redirect to="/login" />;
+
+	new SocketService(userInfo.id);
+
 	return (
 		<div className={'main-wrap'}>
 			{isAuthorized ? <Header userInfo={userInfo} /> : null}
@@ -82,7 +86,7 @@ const Main = ({
 						<Route path={`/admin-panel-page`} component={AdminPanelPage} />
 						<Route
 							path={`/movie-series`}
-							render={() => <MovieSeriesPage movie={movieSeries} />}
+							render={() => MovieSeriesRender(movieSeries)}
 						/>
 						<Route
 							path={`/movie-list`}

@@ -1,15 +1,23 @@
 import { all, takeEvery, call, put } from '@redux-saga/core/effects';
-import { FETCH_SURVEYS, SET_SURVEYS, ADD_SURVEY, UPDATE_SURVEY, DELETE_SURVEY, RECREATE_SURVEY } from './actionTypes';
+import {
+	FETCH_SURVEYS,
+	SET_SURVEYS,
+	ADD_SURVEY,
+	UPDATE_SURVEY,
+	DELETE_SURVEY,
+	RECREATE_SURVEY
+} from './actionTypes';
 import webApi from '../../../../services/webApi.service';
 import config from '../../../../config';
-import { func } from 'prop-types';
+import { setArrangementInSurveys } from '../UserSurveys.service';
 
 export function* fetchSurveys(action) {
-  try {
+	try {
 		const data = yield call(webApi, {
 			method: 'GET',
 			endpoint: config.API_URL + '/api/surveys'
 		});
+		setArrangementInSurveys(data);
 		yield put({
 			type: SET_SURVEYS,
 			payload: {
@@ -26,15 +34,15 @@ function* watchFetch() {
 }
 
 export function* addSurvey(action) {
-  try {
+	try {
 		const data = yield call(webApi, {
 			method: 'POST',
-      endpoint: config.API_URL + '/api/surveys',
-      body: {
+			endpoint: config.API_URL + '/api/surveys',
+			body: {
 				...action.payload.data
 			}
 		});
-    if (data) yield put({ type: FETCH_SURVEYS });
+		if (data) yield put({ type: FETCH_SURVEYS });
 	} catch (e) {
 		console.log('survey saga create survey: ', e.message);
 	}
@@ -45,15 +53,15 @@ function* watchAdd() {
 }
 
 export function* updateSurvey(action) {
-  try {
+	try {
 		const data = yield call(webApi, {
 			method: 'PUT',
-      endpoint: config.API_URL + '/api/surveys/' + action.payload.id,
-      body: {
+			endpoint: config.API_URL + '/api/surveys/' + action.payload.id,
+			body: {
 				...action.payload.data
 			}
 		});
-    if (data) yield put({ type: FETCH_SURVEYS });
+		if (data) yield put({ type: FETCH_SURVEYS });
 	} catch (e) {
 		console.log('survey saga update survey: ', e.message);
 	}
@@ -70,7 +78,7 @@ function* deleteSurvey(action) {
 			endpoint: config.API_URL + '/api/surveys/' + action.payload.id
 		});
 		if (data) yield put({ type: FETCH_SURVEYS });
-	} catch(e) {
+	} catch (e) {
 		console.log('survey saga delete survey: ', e.message);
 	}
 }
@@ -95,7 +103,7 @@ function* recreateSurvey(action) {
 			});
 			if (data) yield put({ type: FETCH_SURVEYS });
 		}
-	} catch(e) {
+	} catch (e) {
 		console.log('survey saga recreate survey: ', e.message);
 	}
 }
@@ -105,5 +113,11 @@ function* watchRecreate() {
 }
 
 export default function* survey() {
-	yield all([watchFetch(), watchAdd(), watchUpdate(), watchDelete(), watchRecreate()]);
+	yield all([
+		watchFetch(),
+		watchAdd(),
+		watchUpdate(),
+		watchDelete(),
+		watchRecreate()
+	]);
 }

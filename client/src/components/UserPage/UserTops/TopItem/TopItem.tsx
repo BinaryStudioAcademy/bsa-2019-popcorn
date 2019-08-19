@@ -22,6 +22,7 @@ export interface IMovie {
 
 interface ITopItemProps {
 	topItem: ITopItem;
+	isOwnTop: boolean;
 	deleteTop: (topId: string) => void;
 	saveUserTop: (topItem: ITopItem) => void;
 	uploadImage: (data: any, titleId: string) => void;
@@ -32,6 +33,7 @@ interface ITopItemProps {
 const TopItem: React.FC<ITopItemProps> = ({
 	saveUserTop,
 	topItem,
+	isOwnTop,
 	deleteTop,
 	uploadImage,
 	uploadUrl,
@@ -39,7 +41,9 @@ const TopItem: React.FC<ITopItemProps> = ({
 }) => {
 	const [editTop, canEditTop] = useState(topItem.isNewTop || false);
 	const [title, setTitle] = useState(topItem.title);
-	const [isOwnTop] = useState(topItem.isOwnTop);
+	// const [isOwnTop] = useState(topItem.isOwnTop);
+	// const [topImageUrl, setTopImageUrl] = useState(topItem.topImageUrl);
+	// const [isOwnTop] = useState(topItem.isOwnTop);
 	const [topImageUrl, setTopImageUrl] = useState(topItem.topImageUrl);
 	useEffect(() => {
 		if (urlForTop == topItem.id) {

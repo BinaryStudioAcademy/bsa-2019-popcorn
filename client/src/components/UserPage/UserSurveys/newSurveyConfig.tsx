@@ -16,6 +16,7 @@ export default () => {
 		questions: [
 			{
 				id: questionId,
+				index: 0,
 				survey_id: surveyId,
 				title: 'Untitled question',
 				firstLabel: '',
@@ -25,6 +26,7 @@ export default () => {
 				required: false,
 				options: [
 					{
+						index: 0,
 						id: uuid(),
 						question_id: questionId,
 						value: 'Option 1'

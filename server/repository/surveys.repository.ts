@@ -1,6 +1,6 @@
-import {EntityRepository, Repository} from "typeorm";
-import {Surveys} from "../entities/Surveys";
-import {Surveys as SurveysModel} from "../models/SurveysModel";
+import { EntityRepository, Repository } from "typeorm";
+import { Surveys } from "../entities/Surveys";
+import { Surveys as SurveysModel } from "../models/SurveysModel";
 import UserRepository from "./user.repository";
 import { getCustomRepository } from "typeorm";
 import { SurveysQuestion } from "../models/SurveysQuestionModel";
@@ -41,6 +41,9 @@ class SurveysRepository extends Repository<Surveys> {
   async getSurveys(next?) {
     try {
       const a = await this.find({
+        order: {
+          created_at: "DESC"
+        },
         relations: [
           "surveysQuestion",
           "surveysQuestion.surveysQuestionOption",
@@ -49,10 +52,10 @@ class SurveysRepository extends Repository<Surveys> {
           "surveysQuestion.surveysQuestionAnswer.surveysQuestionOption",
           "user"
         ]
-    });
+      });
       return a;
-    } catch(err) {
-      return next({status: err.status, message: err.message}, null);
+    } catch (err) {
+      return next({ status: err.status, message: err.message }, null);
     }
   }
 
@@ -81,14 +84,19 @@ class SurveysRepository extends Repository<Surveys> {
   async updateSurveysById(id: string, surveys: SurveysModel, next?) {
     try {
       const updatedSurveys = await this.getSurveysById(id, next);
-      if (!updatedSurveys) next({status: 404, message: 'Voiting is not found'}, null);
+      if (!updatedSurveys)
+        next({ status: 404, message: "Voiting is not found" }, null);
 
-      return await this.update({ id }, {title: surveys.title, 
-        description: surveys.description, 
-        type: surveys.type});
-     
-    } catch(err) {
-      return next({status: err.status, message: err.message}, null);
+      return await this.update(
+        { id },
+        {
+          title: surveys.title,
+          description: surveys.description,
+          type: surveys.type
+        }
+      );
+    } catch (err) {
+      return next({ status: err.status, message: err.message }, null);
     }
   }
 

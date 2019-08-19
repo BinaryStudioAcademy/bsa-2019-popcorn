@@ -13,6 +13,8 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import config from '../../../config';
 import StoryVoting from '../../StoryVoting/StoryVoting';
+import { connect } from 'react-redux';
+import { NavLink } from 'react-router-dom';
 
 interface IProps {
 	stories: Array<{
@@ -41,11 +43,18 @@ interface IProps {
 			}>;
 		};
 		activity?: string;
+		filmId?: string;
+		film?: {
+			title: string;
+			id: string;
+		};
 	}>;
 	currentUser: {
 		userId: string;
 	};
 	currentStory: number;
+	userId: string;
+	userRole: string;
 	closeViewer: () => void;
 }
 
@@ -68,7 +77,8 @@ class StoryViewer extends PureComponent<IProps, IState> {
 	}
 
 	isOwnStory(story) {
-		return this.props.currentUser.userId === story.userInfo.userId;
+		const { userId, userRole } = this.props;
+		return userRole === 'admin' || userId === story.userInfo.userId;
 	}
 
 	toogleModal = () => {
@@ -191,6 +201,11 @@ class StoryViewer extends PureComponent<IProps, IState> {
 														</span>
 													)}
 													{story.type && story.activity}
+													{story.filmId && story.film && (
+														<NavLink to={'/movie-series/' + story.film.id}>
+															{story.film.title}
+														</NavLink>
+													)}
 												</span>
 											</p>
 										</div>
@@ -215,4 +230,10 @@ class StoryViewer extends PureComponent<IProps, IState> {
 	}
 }
 
-export default StoryViewer;
+const mapStateToProps = (rootState, props) => ({
+	...props,
+	userId: rootState.profile.profileInfo.id,
+	userRole: rootState.profile.profileInfo.role
+});
+
+export default connect(mapStateToProps)(StoryViewer);

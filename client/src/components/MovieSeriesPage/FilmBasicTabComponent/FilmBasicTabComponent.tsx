@@ -3,23 +3,11 @@ import PropTypes from 'prop-types';
 import './FilmBasicTabComponent.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar } from '@fortawesome/free-solid-svg-icons';
+import TMovie from '../TMovie';
+import getFilmDuration from '../../../helpers/getFilmDuration';
 
 interface IProps {
-	film: {
-		title: string;
-		releaseYear: number;
-		genres: string[];
-		duration: string;
-		description: string;
-		rate: number;
-		budget: number;
-		image: {
-			link: string;
-		};
-		video: {
-			link: string;
-		};
-	};
+	movie: TMovie;
 }
 
 const starStyle = {
@@ -39,16 +27,16 @@ const rateBlock = (rate: number): ReactElement[] => {
 	const res: any = [];
 
 	for (let i = 0; i < 5; i++) {
-		i < rate ? res.push(solidStar(i, true)) : res.push(solidStar(i, false));
+		i < rate / 2 ? res.push(solidStar(i, true)) : res.push(solidStar(i, false));
 	}
 	return res;
 };
 
 const descriptionItem = (
 	title: string,
-	body: string | ReactElement[] | number
+	body: string | ReactElement[] | number | undefined
 ) => (
-	<div className="descriptionItem">
+	<div className={'descriptionItem'}>
 		<span className="descriptionTitle">{title}:</span>
 		<span className="descriptionBody">{body}</span>
 	</div>
@@ -57,15 +45,15 @@ const descriptionItem = (
 const FilmBasicTab = (props: IProps) => {
 	const {
 		title,
-		releaseYear,
+		release_date: releaseYear,
 		genres,
-		duration,
-		description,
-		rate,
+		runtime: duration,
+		overview: description,
+		vote_average,
 		budget,
-		image: { link: imageLink },
-		video: { link: videoLink }
-	} = props.film;
+		poster_path,
+		video
+	} = props.movie;
 
 	const movieData = [
 		{
@@ -74,15 +62,15 @@ const FilmBasicTab = (props: IProps) => {
 		},
 		{
 			label: 'Release year',
-			value: releaseYear
+			value: (releaseYear && releaseYear.slice(0, 4)) || ''
 		},
 		{
 			label: genres.length > 1 ? 'Genres' : 'Genre',
-			value: genres.join(', ')
+			value: genres
 		},
 		{
 			label: 'Duration',
-			value: duration
+			value: (duration && getFilmDuration(duration)) || ''
 		},
 		{
 			label: 'Description',
@@ -90,7 +78,7 @@ const FilmBasicTab = (props: IProps) => {
 		},
 		{
 			label: 'Rating',
-			value: rateBlock(rate)
+			value: rateBlock(vote_average)
 		},
 		{
 			label: 'Budget',
@@ -100,22 +88,15 @@ const FilmBasicTab = (props: IProps) => {
 
 	return (
 		<div className={'film-basic-wrp'}>
-			<section className="filmSection">
-				<div className="posterWrapper">
-					<img src={imageLink} alt={title} className="poster" />
-				</div>
-				<div className="descriptionWrapper">
+			<section className={'filmSection'}>
+				<img src={poster_path} alt={title} className="poster" />
+				<div className={'descriptionWrapper'}>
 					{movieData.map(({ label, value }) => descriptionItem(label, value))}
 				</div>
 			</section>
 			<section>
-				<div className="videoWrapper">
-					<iframe
-						className="video"
-						src={videoLink}
-						frameBorder="0"
-						title={videoLink}
-					></iframe>
+				<div className={'videoWrapper'}>
+					<iframe className="video" src={video} title={video} frameBorder={0} />
 				</div>
 			</section>
 		</div>
@@ -123,29 +104,7 @@ const FilmBasicTab = (props: IProps) => {
 };
 
 FilmBasicTab.propTypes = {
-	film: PropTypes.object
-};
-
-const filmMock = {
-	title: 'Inglourious Basterds',
-	releaseYear: 2009,
-	genres: ['Adventure', 'Drama', 'War'],
-	duration: '153 min',
-	description:
-		"In Nazi-occupied France during World War II, a plan to assassinate Nazi leaders by a group of Jewish U.S. soldiers coincides with a theatre owner's vengeful plans for the same.",
-	rate: 4,
-	budget: 75000000,
-	image: {
-		link:
-			'https://m.media-amazon.com/images/M/MV5BOTJiNDEzOWYtMTVjOC00ZjlmLWE0NGMtZmE1OWVmZDQ2OWJhXkEyXkFqcGdeQXVyNTIzOTk5ODM@._V1_SY1000_SX675_AL_.jpg'
-	},
-	video: {
-		link: 'https://www.youtube.com/embed/KnrRy6kSFF0'
-	}
-};
-
-FilmBasicTab.defaultProps = {
-	film: filmMock
+	movie: PropTypes.object
 };
 
 export default FilmBasicTab;

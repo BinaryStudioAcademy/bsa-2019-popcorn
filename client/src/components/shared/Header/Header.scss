@@ -2,7 +2,9 @@
 
 .header {
 	font-family: $base-font-family;
-	display: flex;
+	display: grid;
+	grid-template-columns: 250px 70px 40px 70px 380px 56px 110px;
+	grid-gap: 10px;
 	height: 72px;
 	justify-content: space-around;
 	align-items: center;
@@ -56,7 +58,6 @@
 
 		&:nth-of-type(2) .modal,
 		&:nth-of-type(3) .modal {
-			pointer-events: none;
 			color: #bbbbbb;
 		}
 	}
@@ -69,6 +70,12 @@
 
 	.user-info {
 		display: flex;
+
+		&:nth-of-type(2) .modal,
+		&:nth-of-type(3) .modal {
+			pointer-events: all;
+			color: $text-base-color;
+		}
 
 		span {
 			color: $text-base-color;
@@ -117,14 +124,17 @@
 
 			.search-input {
 				border: none;
-				margin-bottom: 5px;
+				margin: 6px 10px 0px 10px;
 				width: 240px;
+				display: block;
 			}
 			.search-input:focus {
 				outline: none;
 			}
 			.search-icon {
 				margin: 6px 10px 0px 10px;
+				display: block;
+				float: left;
 			}
 		}
 	}
@@ -188,7 +198,6 @@
 				cursor: pointer;
 			}
 		}
-
 	}
 
 	.user-info {

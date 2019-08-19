@@ -14,6 +14,9 @@ export class SurveysQuestion {
   @PrimaryGeneratedColumn("uuid")
   id: string;
 
+  @Column({ nullable: true })
+  index: number;
+
   @Column()
   title: string;
 
@@ -35,8 +38,12 @@ export class SurveysQuestion {
   @ManyToOne(type => Surveys, { onDelete: "CASCADE" })
   surveys: Surveys;
 
-    @OneToMany(type => SurveysQuestionOption, surveysQuestionOption => surveysQuestionOption.surveysQuestion, { nullable: true })
-    surveysQuestionOption: SurveysQuestionOption[];
+  @OneToMany(
+    type => SurveysQuestionOption,
+    surveysQuestionOption => surveysQuestionOption.surveysQuestion,
+    { nullable: true }
+  )
+  surveysQuestionOption: SurveysQuestionOption[];
 
   @OneToMany(
     type => SurveysQuestionAnswer,

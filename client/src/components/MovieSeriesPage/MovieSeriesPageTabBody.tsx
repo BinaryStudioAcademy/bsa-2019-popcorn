@@ -8,6 +8,7 @@ import MovieSeriesPosts from './MovieSeriesPosts/MovieSeriesPosts';
 import MovieSeriesAwards from './MovieSeriesAwards/MovieSeriesAwards';
 import MovieSeriesStatistics from './MovieSeriesStatistics/MovieSeriesStatistics';
 import StaffCast from './StaffCast/StaffCast';
+import TMovie from './TMovie';
 
 const messages = [
 	{
@@ -58,23 +59,18 @@ const messages = [
 
 interface IProps {
 	mainPath: string;
-	movie: null | Movie;
+	movie: TMovie;
 }
-type Movie = {
-	id: string;
-	title: string;
-	year?: number;
-	image: string;
-	duration: string;
-	genres: Array<string>;
-	cast: Array<string>;
-	any?;
-};
+
 const MovieSeriesPageTabBody: React.SFC<IProps> = ({ mainPath, movie }) => {
 	return (
 		<div className={'movie-series-page-tab-body'}>
 			<Switch>
-				<Route exact path={`${mainPath}`} component={FilmBasicTabComponent} />
+				<Route
+					exact
+					path={`${mainPath}`}
+					render={() => <FilmBasicTabComponent movie={movie} />}
+				/>
 				<Route path={`${mainPath}/cast-crew`} component={StaffCast} />
 				<Route path={`${mainPath}/reviews`} component={MovieSeriesReviews} />
 				<Route path={`${mainPath}/posts`} component={MovieSeriesPosts} />

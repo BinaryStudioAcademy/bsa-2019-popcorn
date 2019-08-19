@@ -1,35 +1,25 @@
 import { FINISH_FETCH_SEARCH_FILMS } from '../../shared/Header/actionTypes';
 import {
+	RESET_SEARCH_MOVIE,
 	SET_MOVIE_LIST,
 	SET_MOVIE_SERIES,
-	CLEAR_ElASTIC_MOVIE_LIST,
-	SET_ElASTIC_MOVIE_LIST
+	SET_SEARCH_MOVIE
 } from './actionTypes';
-
-type Movie = {
-	id: string;
-	title: string;
-	year?: number;
-	image: string;
-	duration: string;
-	genres: Array<string>;
-	cast: Array<string>;
-};
+import TMovie from '../TMovie';
+import movieAdapter from '../movieAdapter';
 
 const initialState: {
-	moviesSearch: Array<Movie>;
-	elasticSearchMovies: Array<any>;
+	moviesSearch: Array<TMovie>;
 	alreadySearch: boolean;
-	alreadyElasticSearch: boolean;
-	movieList: null | Array<Movie>;
-	movieSeries: null | Movie;
+	movieList: null | Array<TMovie>;
+	movieSeries: null | TMovie;
+	moviesSearchInCreating: null | Array<TMovie>;
 } = {
 	moviesSearch: [],
-	elasticSearchMovies: [],
 	alreadySearch: false,
 	movieList: null,
 	movieSeries: null,
-	alreadyElasticSearch: false
+	moviesSearchInCreating: null
 };
 
 export default function(state = initialState, action) {
@@ -37,13 +27,13 @@ export default function(state = initialState, action) {
 		case FINISH_FETCH_SEARCH_FILMS:
 			return {
 				...state,
-				moviesSearch: action.payload.films,
+				moviesSearch: (action.payload.films || []).map(movieAdapter),
 				alreadySearch: true
 			};
 		case SET_MOVIE_LIST:
 			return {
 				...state,
-				movieList: action.payload.movies,
+				movieList: (action.payload.movies || []).map(movieAdapter),
 				alreadySearch: true
 			};
 		case SET_MOVIE_SERIES:
@@ -52,18 +42,17 @@ export default function(state = initialState, action) {
 				movieSeries: action.payload.movie,
 				alreadySearch: true
 			};
-		case SET_ElASTIC_MOVIE_LIST:
+		case SET_SEARCH_MOVIE:
 			return {
 				...state,
-				elasticSearchMovies: action.payload.elasticSearchMovies,
-				alreadyElasticSearch: true
+				moviesSearchInCreating: (action.payload.movies || []).map(movieAdapter)
 			};
-		case CLEAR_ElASTIC_MOVIE_LIST:
+		case RESET_SEARCH_MOVIE:
 			return {
 				...state,
-				elasticSearchMovies: [],
-				alreadyElasticSearch: false
+				moviesSearchInCreating: null
 			};
+
 		default:
 			return state;
 	}

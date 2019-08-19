@@ -2,7 +2,12 @@ import React, { Component } from 'react';
 import { v4 as uuid } from 'uuid';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import TextareaAutosize from '@material-ui/core/TextareaAutosize';
-import { faCopy, faTimes, faTrashAlt, faImage } from '@fortawesome/free-solid-svg-icons';
+import {
+	faCopy,
+	faTimes,
+	faTrashAlt,
+	faImage
+} from '@fortawesome/free-solid-svg-icons';
 import MultipleChoice from '../SurveyEditorItems/MultipleChoice';
 import ShortAnswer from '../SurveyEditorItems/ShortAnswer';
 import LinearScale from '../SurveyEditorItems/LinearScale';
@@ -19,6 +24,7 @@ const QUESTION_TYPES = [
 ];
 
 interface IQuestion {
+	index: number;
 	id: string;
 	survey_id: string;
 	title: string;
@@ -28,6 +34,7 @@ interface IQuestion {
 	image_link?: string;
 	required: boolean;
 	options?: Array<{
+		index: number;
 		id: string;
 		question_id: string;
 		value: string;
@@ -79,6 +86,7 @@ class SurveyQuestion extends Component<IProps, IState> {
 				secondLabel: '',
 				options: [
 					{
+						index: 0,
 						id: uuid(),
 						question_id: question.id,
 						value: 'Option 1'
@@ -91,6 +99,7 @@ class SurveyQuestion extends Component<IProps, IState> {
 				type,
 				options: [
 					{
+						index: 0,
 						id: uuid(),
 						question_id: question.id,
 						value: 'Option 1'
@@ -107,11 +116,13 @@ class SurveyQuestion extends Component<IProps, IState> {
 				type,
 				options: [
 					{
+						index: 0,
 						id: uuid(),
 						question_id: question.id,
 						value: '1'
 					},
 					{
+						index: 1,
 						id: uuid(),
 						question_id: question.id,
 						value: '2'
@@ -263,7 +274,7 @@ class SurveyQuestion extends Component<IProps, IState> {
 							<p>
 								<FontAwesomeIcon icon={faImage} title="Add image" />
 							</p>
-						</label> 
+						</label>
 					</div>
 				</div>
 			</div>

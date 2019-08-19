@@ -13,6 +13,7 @@ import SurveyLinearScale from '../SurveyItems/SurveyLinearScale/SurveyLinearScal
 import '../Survey/Survey.scss';
 
 interface IQuestion {
+	index: number;
 	id: string;
 	survey_id: string;
 	title: string;
@@ -23,6 +24,7 @@ interface IQuestion {
 	required: boolean;
 	options?: Array<{
 		id: string;
+		index: number;
 		question_id: string;
 		value: string;
 	}>;
@@ -91,7 +93,7 @@ class SurveyEditor extends Component<IProps, IState> {
 			newQuestion.title = 'Untitled question';
 		newQuestion.options = newQuestion.options.map((option, i) => {
 			if (option.value.trim() === '')
-				return { ...option, value: `Option ${i + 1}` };
+				return { ...option, value: `Option ${i + 1}`, index: 0 };
 			return option;
 		});
 
@@ -122,9 +124,18 @@ class SurveyEditor extends Component<IProps, IState> {
 		});
 	};
 
+	getNewIndex = () => {
+		if (this.state.surveyInfo.questions.length === 0) return 0;
+		const { index } = this.state.surveyInfo.questions.reduce((prev, current) =>
+			prev.index > current.index ? prev : current
+		);
+		return index + 1;
+	};
+
 	addQuestion = () => {
 		const id = uuid();
 		const newQuestion: IQuestion = {
+			index: this.getNewIndex(),
 			id,
 			survey_id: this.state.surveyInfo.id,
 			title: 'Untitled question',
@@ -132,6 +143,7 @@ class SurveyEditor extends Component<IProps, IState> {
 			required: false,
 			options: [
 				{
+					index: 0,
 					id: uuid(),
 					question_id: id,
 					value: 'Option 1'
@@ -154,7 +166,7 @@ class SurveyEditor extends Component<IProps, IState> {
 
 	duplicateQuestion = question => {
 		const questions = this.state.surveyInfo.questions;
-		questions.push({ ...question, id: uuid() });
+		questions.push({ ...question, id: uuid(), index: this.getNewIndex() });
 
 		this.setState({
 			surveyInfo: {
@@ -169,7 +181,7 @@ class SurveyEditor extends Component<IProps, IState> {
 	deleteQuestion = question => {
 		let { questions } = this.state.surveyInfo;
 		const index = questions.reduce(
-			(index, item, i) => (item.id === question.id ? index + i : 0),
+			(index, item, i) => (item.id === question.id ? index + i : index),
 			0
 		);
 		questions.splice(index, 1);
@@ -179,12 +191,14 @@ class SurveyEditor extends Component<IProps, IState> {
 			questions = [
 				{
 					id,
+					index: 0,
 					survey_id: this.state.surveyInfo.id,
 					title: 'Untitled question',
 					type: 'Multiple choice',
 					required: false,
 					options: [
 						{
+							index: 0,
 							id: uuid(),
 							question_id: id,
 							value: 'Option 1'
@@ -360,7 +374,7 @@ class SurveyEditor extends Component<IProps, IState> {
 						>
 							Add question
 						</button>
-						<NavLink to='/user-page/surveys'>
+						<NavLink to="/user-page/surveys">
 							<button
 								type="button"
 								onClick={this.onSave}
