@@ -85,6 +85,15 @@ class PostStoryEditor extends React.Component<
 		this.props.saveImage(data);
 	}
 
+	static findMovie(str: string) {
+		let find = str.match(/\$(.+)(.*?)(\s*?)/g);
+		if (find && find[0]) {
+			find = find[0].split(' ');
+			if (find) return find[0].slice(1);
+		}
+		return '';
+	}
+
 	render() {
 		return (
 			<div className={'edit-form'}>
@@ -128,6 +137,7 @@ class PostStoryEditor extends React.Component<
 					placeholder="Type a text here..."
 					defaultValue={this.props.body}
 					onChange={e => {
+						console.log(PostStoryEditor.findMovie(e.target.value));
 						this.props.changeBody(
 							e.target.value,
 							this.textarea.current !== null
