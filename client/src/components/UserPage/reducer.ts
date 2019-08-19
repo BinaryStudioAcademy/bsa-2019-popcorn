@@ -18,11 +18,12 @@ import {
 const initialState = {
 	profileInfo: null,
 	uploadUrl: '',
-	userPosts: null,
+	userPosts: [],
 	loginError: null,
 	registerError: null,
 	resetMessage: '',
-	restoreMessage: ''
+	restoreMessage: '',
+	loading: true
 };
 
 const ok_message = 'Check your email';
@@ -61,7 +62,8 @@ export default function(state = initialState, action) {
 		case SET_USER_POSTS:
 			return {
 				...state,
-				userPosts: action.payload.userPosts
+				userPosts: action.payload.userPosts,
+				loading: action.payload.loading
 			};
 		case SET_LOGIN_ERROR:
 			return {

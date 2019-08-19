@@ -6,10 +6,16 @@ import {
 	faPlus
 } from '@fortawesome/free-solid-svg-icons';
 import { Redirect } from 'react-router';
+import { fetchSurveys } from '../UserSurveys/UserSurveys.redux/actions';
+import { connect } from 'react-redux';
 
 interface IProps {
 	option: string;
-	showExtraOptionModal: () => any;
+	survey: any;
+	loading: boolean;
+	toggleModalOption: (data: any) => any;
+	setExtra: (data: any) => any;
+	fetchSurveys: () => any;
 }
 
 const mock = [
@@ -26,16 +32,20 @@ const mock = [
 
 class ChooseExtraOption extends React.Component<IProps> {
 	state = {
-		open: true,
-		back: true,
 		create: true
 	};
 
-	render() {
-		const option = this.props.option;
+	componentDidMount() {
+		this.props.fetchSurveys();
+	}
 
-		if (!this.state.open) return <Redirect to={'/'} />;
-		if (!this.state.back || !option) return <Redirect to={'/create/extra'} />;
+	setOption(data) {
+		this.props.setExtra(data);
+	}
+
+	render() {
+		const { option, survey = [], loading } = this.props;
+
 		if (!this.state.create)
 			return (
 				<Redirect
@@ -45,20 +55,18 @@ class ChooseExtraOption extends React.Component<IProps> {
 				/>
 			);
 
-		const close = () => this.props.showExtraOptionModal();
-		const back = () => this.props.showExtraOptionModal();
 		const create = () => this.setState({ create: false });
 
 		return (
 			<div className={'modal modal-story'}>
 				<div className={'nav-block-wrp'}>
-					<span onClick={back}>
+					<span onClick={this.props.toggleModalOption}>
 						<FontAwesomeIcon
 							icon={faArrowCircleLeft}
 							className={'fontAwesomeIcon'}
 						/>
 					</span>
-					<span onClick={close}>
+					<span onClick={this.props.toggleModalOption}>
 						<FontAwesomeIcon
 							icon={faTimesCircle}
 							className={'fontAwesomeIcon'}
@@ -77,12 +85,18 @@ class ChooseExtraOption extends React.Component<IProps> {
 					</div>
 
 					<div className={'recent-created'}>
-						{mock &&
-							mock.map((item, i) => (
-								<span key={i} onClick={back}>
-									{item.name}
-								</span>
-							))}
+						{!loading
+							? survey.map((item, i) => (
+									<span
+										key={i}
+										onClick={() =>
+											this.setOption({ title: item.title, link: item.id })
+										}
+									>
+										{item.title}
+									</span>
+							  ))
+							: null}
 					</div>
 				</div>
 			</div>
@@ -90,4 +104,16 @@ class ChooseExtraOption extends React.Component<IProps> {
 	}
 }
 
-export default ChooseExtraOption;
+const mapStateToProps = rootState => ({
+	survey: rootState.survey.surveys,
+	loading: rootState.survey.loading
+});
+
+const mapDispatchToProps = {
+	fetchSurveys
+};
+
+export default connect(
+	mapStateToProps,
+	mapDispatchToProps
+)(ChooseExtraOption);

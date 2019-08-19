@@ -4,6 +4,7 @@ import { ReactComponent as FeedIcon } from '../../../assets/icons/general/newsFe
 import './PostList.scss';
 
 type post = {
+	id: string;
 	user: {
 		name: string;
 		avatar: string;
@@ -40,7 +41,7 @@ const PostList = (props: IProps) => {
 				<span>News feed</span>
 			</div>
 			{props.posts.map(post => (
-				<Post post={post} />
+				<Post key={post.id} post={post} />
 			))}
 		</div>
 	);

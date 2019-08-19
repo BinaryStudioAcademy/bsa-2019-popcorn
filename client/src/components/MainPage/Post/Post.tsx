@@ -12,6 +12,8 @@ import PostContent from '../PostContent/PostContent';
 import config from '../../../config';
 import Reactions from '../Reactions/Reactions';
 import PostReaction from './PostReaction/PostReaction';
+import { string } from 'yup';
+import { NavLink } from 'react-router-dom';
 
 type IPostProps = {
 	post: {
@@ -23,6 +25,8 @@ type IPostProps = {
 		created_At?: string;
 		image_url: string;
 		description?: string;
+		extraTitle?: string;
+		extraLink?: string;
 		content?: {
 			image: string;
 			link: string;
@@ -116,11 +120,14 @@ class Post extends PureComponent<IPostProps, IPostState> {
 				created_At,
 				image_url,
 				description,
+				extraTitle,
+				extraLink,
 				content,
 				comments,
 				tags
 			}
 		} = this.props;
+
 		const reactionsShow = this.state.hover ? (
 			<Reactions
 				onReactionClick={this.onReactionClick}
@@ -128,6 +135,7 @@ class Post extends PureComponent<IPostProps, IPostState> {
 				MouseEnterLikeButton={this.MouseEnterLikeButton}
 			/>
 		) : null;
+
 		return (
 			<div className="post-item">
 				<div className="post-item-header">
@@ -152,6 +160,11 @@ class Post extends PureComponent<IPostProps, IPostState> {
 				)}
 				{description && <div className="post-body">{description}</div>}
 				{content && <PostContent content={content} />}
+				{
+					<NavLink to={`/user-page/surveys/${extraLink}/questions`}>
+						{extraTitle}
+					</NavLink>
+				}
 				{reactionsShow}
 				<div className="post-item-action-buttons">
 					<div className="post-item-last-reaction">

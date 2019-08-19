@@ -151,15 +151,16 @@ export function* fetchRegistration(action) {
 
 export function* fetchPosts(action) {
 	try {
-		const data = yield call(webApi, {
-			endpoint: config.API_URL + '/api/post/user/' + action.payload.id,
-			method: 'GET'
-		});
+		const data = yield call(
+			axios.get,
+			config.API_URL + '/api/post/user/' + action.payload.id
+		);
 
 		yield put({
 			type: SET_USER_POSTS,
 			payload: {
-				userPosts: data
+				userPosts: data.data,
+				loading: false
 			}
 		});
 	} catch (e) {
@@ -172,8 +173,14 @@ export function* sendPost(post) {
 		yield call(axios.post, config.API_URL + '/api/post/', {
 			...post.payload.data
 		});
+		yield put({
+			type: SET_USER_POSTS,
+			payload: {
+				loading: true
+			}
+		});
 	} catch (e) {
-		console.log('profile saga fetch posts:', e.message);
+		console.log('profile saga fetch posts:', e);
 	}
 }
 
