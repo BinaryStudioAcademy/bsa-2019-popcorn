@@ -54,7 +54,12 @@ interface IProps {
 	avatar: null | string;
 	newStory: INewStory;
 	cursorPosition: { start: number; end: number };
-	setCaption: (caption: string) => any;
+	setCaption: (
+		caption: string,
+		start: number,
+		end: number,
+		title: string
+	) => any;
 	top: { id: string; name: string; any };
 	survey: { id: string; name: string; any };
 	saveImage: (url: string) => any;
@@ -68,6 +73,7 @@ interface IProps {
 	addStory: (story: any) => any;
 	movies: null | Array<TMovie>;
 	fetchSearch: (title: string) => any;
+	title: string;
 }
 
 const mock = {
@@ -103,6 +109,7 @@ const ListBlock = ({ ...props }: IProps) => {
 							userId={props.userId}
 							movies={props.movies}
 							fetchSearch={props.fetchSearch}
+							title={props.title}
 						/>
 					)}
 				/>
@@ -139,6 +146,7 @@ const mapStateToProps = (rootState, props) => ({
 	avatar: rootState.profile.profileInfo && rootState.profile.profileInfo.avatar,
 	userId: rootState.profile.profileInfo && rootState.profile.profileInfo.id,
 	newStory: rootState.story.newStory,
+	title: rootState.story.title,
 	cursorPosition: rootState.story.cursorPosition,
 	top: mock.tops,
 	survey: mock.surveys,

@@ -12,6 +12,7 @@ const initialState: {
 	stories: any;
 	newStory: INewStory;
 	cursorPosition: { start: number; end: number };
+	title: string;
 } = {
 	stories: null,
 	newStory: {
@@ -20,7 +21,8 @@ const initialState: {
 		activity: null,
 		type: ''
 	},
-	cursorPosition: { start: 0, end: 0 }
+	cursorPosition: { start: 0, end: 0 },
+	title: ''
 };
 
 export default function(state = initialState, action) {
@@ -40,7 +42,8 @@ export default function(state = initialState, action) {
 				cursorPosition: {
 					start: action.payload.start,
 					end: action.payload.end
-				}
+				},
+				title: action.payload.title
 			};
 		case CHANGE_IMAGE:
 			return {

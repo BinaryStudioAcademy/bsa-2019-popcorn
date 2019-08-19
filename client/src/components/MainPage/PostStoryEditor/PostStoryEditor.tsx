@@ -17,7 +17,7 @@ interface IPostStoryEditorProps {
 	saveImage: (url: string) => void;
 	body: string;
 	imageUrl: string;
-	changeBody: (text: string, start: number, end: number) => any;
+	changeBody: (text: string, start: number, end: number, title: string) => any;
 	changeActivity?: (
 		type: string,
 		activity: null | { id: string; name: string }
@@ -25,6 +25,7 @@ interface IPostStoryEditorProps {
 	cursorPosition: { start: number; end: number };
 	movies: null | Array<TMovie>;
 	fetchSearch?: (title: string) => any;
+	title: string;
 }
 
 interface IPostStoryEditorState {
@@ -65,6 +66,7 @@ class PostStoryEditor extends React.Component<
 		// 	checkboxValue: !this.state.checkboxValue
 		// });
 	}
+
 	componentDidMount() {
 		if (this.textarea.current) {
 			this.textarea.current.selectionStart = this.props.cursorPosition.start;
@@ -99,6 +101,16 @@ class PostStoryEditor extends React.Component<
 	}
 
 	render() {
+		const changeBody = (e, title) => {
+			this.props.changeBody(
+				e.target.value,
+				this.textarea.current !== null
+					? this.textarea.current.selectionStart
+					: 2,
+				this.textarea.current ? this.textarea.current.selectionEnd : 0,
+				title
+			);
+		};
 		return (
 			<div className={'edit-form'}>
 				{this.state.errorMsg && (
@@ -142,16 +154,14 @@ class PostStoryEditor extends React.Component<
 					defaultValue={this.props.body}
 					onChange={e => {
 						const title = PostStoryEditor.findMovie(e.target.value);
-						if (title.trim() && this.props.fetchSearch)
-							this.props.fetchSearch(title);
+						if (title.trim() && title.trim() !== this.props.title) {
+							if (this.props.fetchSearch) {
+								this.props.fetchSearch(title);
 
-						this.props.changeBody(
-							e.target.value,
-							this.textarea.current !== null
-								? this.textarea.current.selectionStart
-								: 2,
-							this.textarea.current ? this.textarea.current.selectionEnd : 0
-						);
+								return changeBody(e, title.trim());
+							}
+						}
+						changeBody(e, this.props.title);
 					}}
 					autoFocus
 					onFocus={function(e) {

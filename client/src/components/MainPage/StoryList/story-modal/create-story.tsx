@@ -9,7 +9,12 @@ import TMovie from '../../../MovieSeriesPage/TMovie';
 interface IProps {
 	newStory: INewStory;
 	cursorPosition: { start: number; end: number };
-	setCaption: (caption: string, start: number, end: number) => any;
+	setCaption: (
+		caption: string,
+		start: number,
+		end: number,
+		title: string
+	) => any;
 	saveImage: (url: string) => any;
 	changeActivity: (
 		type: string,
@@ -22,6 +27,7 @@ interface IProps {
 	};
 	movies: null | Array<TMovie>;
 	fetchSearch: (title: string) => any;
+	title: string;
 }
 
 class getAddStoryPopupContent extends React.Component<IProps> {
@@ -60,6 +66,7 @@ class getAddStoryPopupContent extends React.Component<IProps> {
 							changeActivity={this.props.changeActivity}
 							movies={this.props.movies}
 							fetchSearch={this.props.fetchSearch}
+							title={this.props.title}
 						>
 							{newStory.activity && newStory.activity.name}
 						</PostStoryEditor>
