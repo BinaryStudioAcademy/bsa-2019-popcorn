@@ -11,8 +11,8 @@ export const getMovies = async (): Promise<Movie[]> => {
   return data.map(movie => movie._source);
 };
 
-export const getMovieById = async (movieId: number): Promise<Movie> =>
-  await getCustomRepository(MovieRepository).findOne(movieId);
+export const getMovieById = async (movieId: string): Promise<any> =>
+  (await elasticRepository.getById(movieId)).hits.hits[0]._source;
 
 export const createMovie = async (movie: Movie): Promise<Movie[]> =>
   await getCustomRepository(MovieRepository).save([movie]);

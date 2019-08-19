@@ -27,4 +27,7 @@ export class Story {
   @ManyToOne(type => User)
   @JoinColumn()
   user: User;
+
+  @Column({ nullable: true })
+  filmId: string;
 }

@@ -10,6 +10,7 @@ import { Redirect } from 'react-router';
 import SocketService from '../../../../services/socket.service';
 import INewStory from '../INewStory';
 import IVoting from '../IVoting';
+import TMovie from '../../../MovieSeriesPage/TMovie';
 
 interface IStoryListItem {
 	caption: string;

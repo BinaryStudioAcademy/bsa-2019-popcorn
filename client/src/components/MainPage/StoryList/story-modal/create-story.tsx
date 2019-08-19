@@ -4,11 +4,17 @@ import PostStoryEditor from '../../PostStoryEditor/PostStoryEditor';
 import INewStory from '../INewStory';
 import { faPlusCircle } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import TMovie from '../../../MovieSeriesPage/TMovie';
 
 interface IProps {
 	newStory: INewStory;
 	cursorPosition: { start: number; end: number };
-	setCaption: (caption: string, start: number, end: number) => any;
+	setCaption: (
+		caption: string,
+		start: number,
+		end: number,
+		title: string
+	) => any;
 	saveImage: (url: string) => any;
 	changeActivity: (
 		type: string,
@@ -19,6 +25,11 @@ interface IProps {
 	history: {
 		push: (path: string) => void;
 	};
+	movies: null | Array<TMovie>;
+	fetchSearch: (title: string) => any;
+	title: string;
+	resetSearch: () => any;
+	saveMovie: (movie: TMovie) => any;
 }
 
 class getAddStoryPopupContent extends React.Component<IProps> {
@@ -27,14 +38,14 @@ class getAddStoryPopupContent extends React.Component<IProps> {
 		extra: true
 	};
 
-	valid({ image_url, caption, type }: INewStory) {
+	static valid({ image_url, caption, type }: INewStory) {
 		return (image_url && caption) || type === 'voting';
 	}
 
 	render() {
 		const newStory = this.props.newStory;
 
-		const disabled = !this.valid(newStory);
+		const disabled = !getAddStoryPopupContent.valid(newStory);
 
 		if (!this.state.open) return <Redirect to={'/'} />;
 		if (!this.state.extra) return <Redirect to={'/create/extra'} />;
@@ -55,6 +66,11 @@ class getAddStoryPopupContent extends React.Component<IProps> {
 							changeBody={this.props.setCaption}
 							saveImage={this.props.saveImage}
 							changeActivity={this.props.changeActivity}
+							movies={this.props.movies}
+							fetchSearch={this.props.fetchSearch}
+							title={this.props.title}
+							resetSearch={this.props.resetSearch}
+							saveMovie={this.props.saveMovie}
 						>
 							{newStory.activity && newStory.activity.name}
 						</PostStoryEditor>

@@ -11,7 +11,9 @@ import webApi from '../../../services/webApi.service';
 import {
 	FETCH_MOVIE_LIST,
 	SET_MOVIE_LIST,
-	SET_ElASTIC_MOVIE_LIST
+	SET_ElASTIC_MOVIE_LIST,
+	FETCH_SEARCH,
+	SET_SEARCH_MOVIE
 } from './actionTypes';
 import config from '../../../config';
 
@@ -70,6 +72,22 @@ export function* fetchElasticSearchFilms(action) {
 	}
 }
 
+export function* fetchSearch(action) {
+	try {
+		let movies = yield call(webApi, {
+			endpoint: `${config.API_URL}/api/movie/find?title=${action.payload.title}`,
+			method: 'GET'
+		});
+		yield put({
+			type: SET_SEARCH_MOVIE,
+			payload: {
+				movies
+			}
+		});
+	} catch (e) {
+		console.log('movie saga fetchSearch: ', e.message);
+	}
+}
 function* watchFetchFilms() {
 	yield takeEvery(START_FETCH_SEARCH_FILMS, fetchFilms);
 }
@@ -81,11 +99,15 @@ function* watchFetchMovieList() {
 function* watchFetchElasticSearchFilms() {
 	yield takeEvery(START_SEARCH_ELASTIC_FILMS, fetchElasticSearchFilms);
 }
+function* watchFetchSearch() {
+	yield takeEvery(FETCH_SEARCH, fetchSearch);
+}
 
 export default function* header() {
 	yield all([
 		watchFetchFilms(),
 		watchFetchMovieList(),
-		watchFetchElasticSearchFilms()
+		watchFetchElasticSearchFilms(),
+		watchFetchSearch()
 	]);
 }
