@@ -24,6 +24,7 @@ import {
 	fetchSearch,
 	resetSearch
 } from '../../MovieSeriesPage/Movie.redux/actions';
+import CreateStoryFilm from './story-modal/create-story-film';
 
 interface IStoryListItem {
 	caption: string;
@@ -117,6 +118,7 @@ const ListBlock = ({ ...props }: IProps) => {
 					)}
 				/>
 				<Route exact path={`/create/extra`} component={ChooseExtra} />
+				<Route exact path={`/create/extra/movie`} component={CreateStoryFilm} />
 				<Route
 					path={`/create/extra/vote`}
 					component={() => (
