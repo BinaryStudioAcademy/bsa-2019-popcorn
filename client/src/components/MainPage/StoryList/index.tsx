@@ -19,7 +19,10 @@ import INewStory from './INewStory';
 import CreateVote from './story-modal/create-vote';
 import IVoting from './IVoting';
 import TMovie from '../../MovieSeriesPage/TMovie';
-import { fetchSearch } from '../../MovieSeriesPage/Movie.redux/actions';
+import {
+	fetchSearch,
+	resetSearch
+} from '../../MovieSeriesPage/Movie.redux/actions';
 
 interface IStoryListItem {
 	caption: string;
@@ -54,12 +57,7 @@ interface IProps {
 	avatar: null | string;
 	newStory: INewStory;
 	cursorPosition: { start: number; end: number };
-	setCaption: (
-		caption: string,
-		start: number,
-		end: number,
-		title: string
-	) => any;
+	setCaption: (caption: string) => any;
 	top: { id: string; name: string; any };
 	survey: { id: string; name: string; any };
 	saveImage: (url: string) => any;
@@ -74,6 +72,7 @@ interface IProps {
 	movies: null | Array<TMovie>;
 	fetchSearch: (title: string) => any;
 	title: string;
+	resetSearch: () => any;
 }
 
 const mock = {
@@ -110,6 +109,7 @@ const ListBlock = ({ ...props }: IProps) => {
 							movies={props.movies}
 							fetchSearch={props.fetchSearch}
 							title={props.title}
+							resetSearch={props.resetSearch}
 						/>
 					)}
 				/>
@@ -161,7 +161,8 @@ const actions = {
 	createStory,
 	createVoting,
 	addStory,
-	fetchSearch
+	fetchSearch,
+	resetSearch
 };
 const mapDispatchToProps = dispatch => bindActionCreators(actions, dispatch);
 

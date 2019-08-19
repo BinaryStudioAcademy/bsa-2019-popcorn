@@ -1,5 +1,6 @@
 import { FINISH_FETCH_SEARCH_FILMS } from '../../shared/Header/actionTypes';
 import {
+	RESET_SEARCH_MOVIE,
 	SET_MOVIE_LIST,
 	SET_MOVIE_SERIES,
 	SET_SEARCH_MOVIE
@@ -46,6 +47,12 @@ export default function(state = initialState, action) {
 				...state,
 				moviesSearchInCreating: (action.payload.movies || []).map(movieAdapter)
 			};
+		case RESET_SEARCH_MOVIE:
+			return {
+				...state,
+				moviesSearchInCreating: null
+			};
+
 		default:
 			return state;
 	}

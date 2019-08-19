@@ -2,7 +2,8 @@ import {
 	FETCH_MOVIE_LIST,
 	SET_MOVIE_SERIES,
 	CLEAR_ElASTIC_MOVIE_LIST,
-	FECTH_SEARCH
+	FECTH_SEARCH,
+	RESET_SEARCH_MOVIE
 } from './actionTypes';
 
 export const fetchMovieList = (): any => {
@@ -32,5 +33,11 @@ export const fetchSearch = (title: string): any => {
 		payload: {
 			title
 		}
+	};
+};
+
+export const resetSearch = (): any => {
+	return {
+		type: RESET_SEARCH_MOVIE
 	};
 };

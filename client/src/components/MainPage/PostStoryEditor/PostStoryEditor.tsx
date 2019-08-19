@@ -25,7 +25,8 @@ interface IPostStoryEditorProps {
 	cursorPosition: { start: number; end: number };
 	movies: null | Array<TMovie>;
 	fetchSearch?: (title: string) => any;
-	title: string;
+	title?: string;
+	resetSearch?: () => any;
 }
 
 interface IPostStoryEditorState {
@@ -162,6 +163,9 @@ class PostStoryEditor extends React.Component<
 							}
 						}
 						changeBody(e, this.props.title);
+
+						if (!title.trim() && this.props.title && this.props.resetSearch)
+							this.props.resetSearch();
 					}}
 					autoFocus
 					onFocus={function(e) {

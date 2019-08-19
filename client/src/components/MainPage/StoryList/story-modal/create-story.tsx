@@ -28,6 +28,7 @@ interface IProps {
 	movies: null | Array<TMovie>;
 	fetchSearch: (title: string) => any;
 	title: string;
+	resetSearch: () => any;
 }
 
 class getAddStoryPopupContent extends React.Component<IProps> {
@@ -67,6 +68,7 @@ class getAddStoryPopupContent extends React.Component<IProps> {
 							movies={this.props.movies}
 							fetchSearch={this.props.fetchSearch}
 							title={this.props.title}
+							resetSearch={this.props.resetSearch}
 						>
 							{newStory.activity && newStory.activity.name}
 						</PostStoryEditor>
