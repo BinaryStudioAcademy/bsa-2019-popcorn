@@ -27,6 +27,7 @@ interface IPostStoryEditorProps {
 	fetchSearch?: (title: string) => any;
 	title?: string;
 	resetSearch?: () => any;
+	saveMovie?: (movie: TMovie) => any;
 }
 
 interface IPostStoryEditorState {
@@ -192,7 +193,19 @@ class PostStoryEditor extends React.Component<
 				)}
 				{this.props.movies && (
 					<div className={'movie-list-wrp'}>
-						<MovieList movies={this.props.movies} />
+						{this.props.movies.length > 0 ? (
+							<MovieList
+								movies={this.props.movies}
+								saveMovie={movie => {
+									if (this.props.saveMovie && this.props.resetSearch) {
+										this.props.saveMovie(movie);
+										this.props.resetSearch();
+									}
+								}}
+							/>
+						) : (
+							<div>Not found</div>
+						)}
 					</div>
 				)}
 				{/*<div className="footer">*/}

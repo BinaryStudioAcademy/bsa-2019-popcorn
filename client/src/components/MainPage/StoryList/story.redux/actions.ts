@@ -5,10 +5,12 @@ import {
 	CREATE_STORY,
 	CREATE_VOTING,
 	FETCH_STORIES,
+	SAVE_MOVIE,
 	SET_CAPTION_NEWSTORY
 } from './actionTypes';
 import INewStory from '../INewStory';
 import IVoting from '../IVoting';
+import TMovie from '../../../MovieSeriesPage/TMovie';
 
 export const fetchStories = () => {
 	return {
@@ -72,6 +74,15 @@ export const addStory = story => {
 		type: ADD_STORY,
 		payload: {
 			story
+		}
+	};
+};
+
+export const saveMovie = (movie: TMovie) => {
+	return {
+		type: SAVE_MOVIE,
+		payload: {
+			movie
 		}
 	};
 };

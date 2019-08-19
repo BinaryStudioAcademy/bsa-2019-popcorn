@@ -6,6 +6,7 @@ import {
 	createVoting,
 	fetchStories,
 	saveImage,
+	saveMovie,
 	setCaption
 } from './story.redux/actions';
 import { bindActionCreators } from 'redux';
@@ -73,6 +74,7 @@ interface IProps {
 	fetchSearch: (title: string) => any;
 	title: string;
 	resetSearch: () => any;
+	saveMovie: (movie: TMovie) => any;
 }
 
 const mock = {
@@ -110,6 +112,7 @@ const ListBlock = ({ ...props }: IProps) => {
 							fetchSearch={props.fetchSearch}
 							title={props.title}
 							resetSearch={props.resetSearch}
+							saveMovie={props.saveMovie}
 						/>
 					)}
 				/>
@@ -162,7 +165,8 @@ const actions = {
 	createVoting,
 	addStory,
 	fetchSearch,
-	resetSearch
+	resetSearch,
+	saveMovie
 };
 const mapDispatchToProps = dispatch => bindActionCreators(actions, dispatch);
 
