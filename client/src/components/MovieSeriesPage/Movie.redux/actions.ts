@@ -3,7 +3,8 @@ import {
 	SET_MOVIE_SERIES,
 	CLEAR_ElASTIC_MOVIE_LIST,
 	FETCH_MOVIE_USER_RATE,
-	FETCH_MOVIE_BY_ID
+	FETCH_MOVIE_BY_ID,
+	SET_USER_RATE
 } from './actionTypes';
 
 export const fetchMovieList = (): any => {
@@ -42,6 +43,18 @@ export const fetchMovie = (movieId: string): object => {
 		type: FETCH_MOVIE_BY_ID,
 		payload: {
 			movieId
+		}
+	};
+};
+
+export const setUserRate = (userRate: any): object => {
+	const { userId, movieId, rate } = userRate;
+	return {
+		type: SET_USER_RATE,
+		payload: {
+			userId,
+			movieId,
+			rate
 		}
 	};
 };
