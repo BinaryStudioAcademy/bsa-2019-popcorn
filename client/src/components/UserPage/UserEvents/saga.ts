@@ -30,7 +30,6 @@ export function* fetchEvents(action) {
 
 export function* saveEvent(action) {
 	try {
-		console.log('hee', action.payload.event);
 		const data = yield call(webApi, {
 			endpoint: config.API_URL + '/api/event',
 			method: 'Post',

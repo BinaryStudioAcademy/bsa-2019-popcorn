@@ -12,7 +12,7 @@ router
       .then((tops: Top[]) => res.send(tops))
       .catch(next)
   )
-  .get("/:id", (req: Request, res: Response, next: NextFunction) =>
+  .get("/:id", (req: any, res: Response, next: NextFunction) =>
     topService
       .getTopById(req.params.id)
       .then((top: Top) => res.send(top))
@@ -30,7 +30,7 @@ router
       .then((updatedTop: Top) => res.send(updatedTop))
       .catch(next)
   )
-  .delete("/:id", (req: Request, res: Response, next: NextFunction) =>
+  .delete("/:id", (req: any, res: Response, next: NextFunction) =>
     topService
       .deleteTopById(req.params.id)
       .then((deletedTop: Top) => res.send(deletedTop))

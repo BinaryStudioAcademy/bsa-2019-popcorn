@@ -10,7 +10,7 @@ router
       .then((response: Array<Story>) => res.send(response))
       .catch(next)
   )
-  .get("/:id", (req: Request, res: Response, next: NextFunction) =>
+  .get("/:id", (req: any, res: Response, next: NextFunction) =>
     StoryService.getStorybyId(req.params.id)
       .then((response: Story) => res.send(response))
       .catch(next)
@@ -28,7 +28,7 @@ router
       .then((response: Story) => res.send(response))
       .catch(next)
   )
-  .delete("/:id", (req: Request, res: Response, next: NextFunction) =>
+  .delete("/:id", (req: any, res: Response, next: NextFunction) =>
     StoryService.deleteStoryById(req.params.id)
       .then((response: Story) => res.send(response))
       .catch(next)
