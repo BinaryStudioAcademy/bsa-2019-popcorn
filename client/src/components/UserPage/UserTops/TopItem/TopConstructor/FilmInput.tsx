@@ -46,6 +46,7 @@ const FilmInput: React.FC<IInputProps> = ({
 		<div key={movie.id} className="film-input-item ">
 			<input
 				onChange={e => {
+					const title = e.target.value;
 					saveMovie({ ...movie, title, comment });
 					searchFilms(e.target.value);
 				}}
@@ -57,7 +58,7 @@ const FilmInput: React.FC<IInputProps> = ({
 				onFocus={() => setFocused(true)}
 				onBlur={() => {
 					clearSearch();
-					if (title.trim() === '' && comment.trim() === '')
+					if (title.trim() === '' && comment.trim() === '' && !last)
 						deleteFilmInput(movie.id);
 				}}
 			/>
@@ -95,10 +96,12 @@ const FilmInput: React.FC<IInputProps> = ({
 
 			<textarea
 				maxLength={140}
-				disabled={title.trim() === ''}
+				disabled={title.trim() === '' && comment.trim() === ''}
 				value={comment}
 				onChange={e => {
-					setComment(e.target.value);
+					const comment = e.target.value;
+					saveMovie({ ...movie, comment });
+					setComment(comment);
 				}}
 				className="film-input comment-film-input"
 				placeholder="Type comment here"
