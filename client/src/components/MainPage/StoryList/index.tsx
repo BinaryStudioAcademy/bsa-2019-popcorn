@@ -22,6 +22,7 @@ import IVoting from './IVoting';
 import TMovie from '../../MovieSeriesPage/TMovie';
 import {
 	fetchSearch,
+	fetchSearchToAddMovieInStory,
 	resetSearch
 } from '../../MovieSeriesPage/Movie.redux/actions';
 import CreateStoryFilm from './story-modal/create-story-film';
@@ -75,7 +76,10 @@ interface IProps {
 	fetchSearch: (title: string) => any;
 	title: string;
 	resetSearch: () => any;
-	saveMovie: (movie: TMovie) => any;
+	saveMovie: (movie: TMovie, movieOption?: string) => any;
+	fetchSearchToAddMovieInStory: (title: string) => any;
+	searchTitle: string;
+	moviesSearchAddMovieToStory: null | Array<TMovie>;
 }
 
 const mock = {
@@ -92,6 +96,7 @@ const mock = {
 };
 
 const ListBlock = ({ ...props }: IProps) => {
+	console.log(props);
 	return (
 		<div>
 			<StoryList {...props} />
@@ -118,7 +123,19 @@ const ListBlock = ({ ...props }: IProps) => {
 					)}
 				/>
 				<Route exact path={`/create/extra`} component={ChooseExtra} />
-				<Route exact path={`/create/extra/movie`} component={CreateStoryFilm} />
+				<Route
+					exact
+					path={`/create/extra/movie`}
+					component={other_props => (
+						<CreateStoryFilm
+							{...other_props}
+							fetchSearchToAddMovieInStory={props.fetchSearchToAddMovieInStory}
+							moviesSearchAddMovieToStory={props.moviesSearchAddMovieToStory}
+							searchTitle={props.searchTitle}
+							saveMovie={props.saveMovie}
+						/>
+					)}
+				/>
 				<Route
 					path={`/create/extra/vote`}
 					component={() => (
@@ -155,7 +172,9 @@ const mapStateToProps = (rootState, props) => ({
 	cursorPosition: rootState.story.cursorPosition,
 	top: mock.tops,
 	survey: mock.surveys,
-	movies: rootState.movie.moviesSearchInCreating
+	movies: rootState.movie.moviesSearchInCreating,
+	moviesSearchAddMovieToStory: rootState.movie.moviesSearchAddMovieToStory,
+	searchTitle: rootState.movie.searchTitle
 });
 
 const actions = {
@@ -168,7 +187,8 @@ const actions = {
 	addStory,
 	fetchSearch,
 	resetSearch,
-	saveMovie
+	saveMovie,
+	fetchSearchToAddMovieInStory
 };
 const mapDispatchToProps = dispatch => bindActionCreators(actions, dispatch);
 
