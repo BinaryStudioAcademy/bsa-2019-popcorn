@@ -10,19 +10,7 @@ export const getMovies = async (): Promise<any[]> => {
 
   data = data.hits.hits;
 
-  const arrayMovies = data.map(movie => movie._source);
-  const result = await Promise.all(
-    arrayMovies.map(async (movie: any) => {
-      const rate = await getCustomRepository(MovieRateRepository)
-        .createQueryBuilder("movieRate")
-        .select("AVG(movieRate.rate)", "average")
-        .where("movieRate.movieId = :id", { id: movie.id })
-        .getRawOne();
-      movie.rate = rate.average ? parseFloat(rate.average).toFixed(2) : null;
-      return movie;
-    })
-  );
-  return result;
+  return data.map(movie => movie._source);
 };
 
 export const getMovieById = async (movieId: string): Promise<any> => {
