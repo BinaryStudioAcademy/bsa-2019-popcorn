@@ -22,7 +22,7 @@ const initialState: {
 		caption: '',
 		activity: null,
 		type: '',
-		filmId: null
+		movieId: null
 	},
 	cursorPosition: { start: 0, end: 0 },
 	title: ''
@@ -90,7 +90,7 @@ export default function(state = initialState, action) {
 				newStory: {
 					...state.newStory,
 					image_url: action.payload.movie.poster_path,
-					filmId: action.payload.movie.id,
+					movieId: action.payload.movie.id,
 					caption: replaceFilmSearch(
 						state.newStory.caption || '',
 						action.payload.movie.title

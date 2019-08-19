@@ -12,7 +12,7 @@ import {
 	FETCH_MOVIE_LIST,
 	SET_MOVIE_LIST,
 	SET_ElASTIC_MOVIE_LIST,
-	FECTH_SEARCH,
+	FETCH_SEARCH,
 	SET_SEARCH_MOVIE
 } from './actionTypes';
 import config from '../../../config';
@@ -100,7 +100,7 @@ function* watchFetchElasticSearchFilms() {
 	yield takeEvery(START_SEARCH_ELASTIC_FILMS, fetchElasticSearchFilms);
 }
 function* watchFetchSearch() {
-	yield takeEvery(FECTH_SEARCH, fetchSearch);
+	yield takeEvery(FETCH_SEARCH, fetchSearch);
 }
 
 export default function* header() {
