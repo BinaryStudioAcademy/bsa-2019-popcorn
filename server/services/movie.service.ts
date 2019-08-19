@@ -13,11 +13,12 @@ export const getMovies = async (): Promise<any[]> => {
   const arrayMovies = data.map(movie => movie._source);
   const result = await Promise.all(
     arrayMovies.map(async (movie: any) => {
-      movie.rate = await getCustomRepository(MovieRateRepository)
+      const rate = await getCustomRepository(MovieRateRepository)
         .createQueryBuilder("movieRate")
         .select("AVG(movieRate.rate)", "average")
         .where("movieRate.movieId = :id", { id: movie.id })
         .getRawOne();
+      movie.rate = rate.average ? parseFloat(rate.average).toFixed(2) : null;
       return movie;
     })
   );
@@ -26,7 +27,14 @@ export const getMovies = async (): Promise<any[]> => {
 
 export const getMovieById = async (movieId: number): Promise<any> => {
   const data = await getMovies();
-  return data.find(movie => movie.id == movieId);
+  const movie = data.find(movie => movie.id == movieId);
+  const rate = await getCustomRepository(MovieRateRepository)
+    .createQueryBuilder("movieRate")
+    .select("AVG(movieRate.rate)", "average")
+    .where("movieRate.movieId = :id", { id: movie.id })
+    .getRawOne();
+  movie.rate = rate ? parseFloat(rate.average).toFixed(2) : null;
+  return movie;
 };
 // await getCustomRepository(MovieRepository).findOne(movieId);
 
