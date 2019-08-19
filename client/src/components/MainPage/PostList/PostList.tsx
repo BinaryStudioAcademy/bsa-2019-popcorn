@@ -30,15 +30,19 @@ type post = {
 };
 interface IProps {
 	posts: Array<post>;
+	type?: string;
+	styleCustom?: any;
 }
 
 const PostList = (props: IProps) => {
 	return (
-		<div className="feed-list">
-			<div className="feed-heading">
-				<FeedIcon />
-				<span>News feed</span>
-			</div>
+		<div className="feed-list" style={props.styleCustom}>
+			{props.type === 'userPosts' ? null : (
+				<div className="feed-heading">
+					<FeedIcon />
+					<span>News feed</span>
+				</div>
+			)}
 			{props.posts.map(post => (
 				<Post post={post} />
 			))}

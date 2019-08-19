@@ -16,7 +16,9 @@ import {
 	FETCH_MOVIE_USER_RATE_SUCCESS,
 	FETCH_MOVIE_BY_ID,
 	FETCH_MOVIE_BY_ID_SUCCESS,
-	SET_USER_RATE
+	SET_USER_RATE,
+	FETCH_SEARCH,
+	SET_SEARCH_MOVIE
 } from './actionTypes';
 import config from '../../../config';
 
@@ -144,6 +146,22 @@ export function* setUserRate(action) {
 	}
 }
 
+export function* fetchSearch(action) {
+	try {
+		let movies = yield call(webApi, {
+			endpoint: `${config.API_URL}/api/movie/find?title=${action.payload.title}`,
+			method: 'GET'
+		});
+		yield put({
+			type: SET_SEARCH_MOVIE,
+			payload: {
+				movies
+			}
+		});
+	} catch (e) {
+		console.log('movie saga fetchSearch: ', e.message);
+	}
+}
 function* watchFetchFilms() {
 	yield takeEvery(START_FETCH_SEARCH_FILMS, fetchFilms);
 }
@@ -154,6 +172,9 @@ function* watchFetchMovieList() {
 
 function* watchFetchElasticSearchFilms() {
 	yield takeEvery(START_SEARCH_ELASTIC_FILMS, fetchElasticSearchFilms);
+}
+function* watchFetchSearch() {
+	yield takeEvery(FETCH_SEARCH, fetchSearch);
 }
 
 function* watchFetchUserRate() {
@@ -175,6 +196,7 @@ export default function* header() {
 		watchFetchElasticSearchFilms(),
 		watchFetchUserRate(),
 		watchFetchMovie(),
-		watchSetUserRate()
+		watchSetUserRate(),
+		watchFetchSearch()
 	]);
 }

@@ -8,3 +8,4 @@ export const ADD_STORY = 'ADD_STORY';
 export const RESET_NEW_STORY = 'RESET_NEW_STORY';
 
 export const CREATE_VOTING = 'CREATE_VOTING';
+export const SAVE_MOVIE = 'SAVE_MOVIE';

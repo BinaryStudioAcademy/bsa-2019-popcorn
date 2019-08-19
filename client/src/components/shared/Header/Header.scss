@@ -2,7 +2,9 @@
 
 .header {
 	font-family: $base-font-family;
-	display: flex;
+	display: grid;
+	grid-template-columns: 250px 70px 40px 70px 380px 56px 110px;
+	grid-gap: 10px;
 	height: 72px;
 	justify-content: space-around;
 	align-items: center;
