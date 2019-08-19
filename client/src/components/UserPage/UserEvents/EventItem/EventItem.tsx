@@ -19,7 +19,12 @@ interface IProps {
 	isOwnEvent: boolean;
 }
 
-const EventItem: React.FC<IProps> = ({ event, deleteEvent, editEvent, isOwnEvent }) => {
+const EventItem: React.FC<IProps> = ({
+	event,
+	deleteEvent,
+	editEvent,
+	isOwnEvent
+}) => {
 	const {
 		id,
 		userId: currentUserId,
@@ -69,27 +74,33 @@ const EventItem: React.FC<IProps> = ({ event, deleteEvent, editEvent, isOwnEvent
 							<Moment format=" D MMM HH:mm " local>
 								{String(dateRange.startDate)}
 							</Moment>
-							-
-							<Moment format=" D MMM HH:mm " local>
-								{String(dateRange.endDate)}
-							</Moment>
+							{dateRange.endDate && (
+								<span>
+									{' '}
+									-
+									<Moment format=" D MMM HH:mm " local>
+										{String(dateRange.endDate)}
+									</Moment>
+								</span>
+							)}
 						</div>
-						{isOwnEvent && (deleteEvent && editEvent !== null ? (
-							<div className="event-buttons">
-								<button
-									className="edit-button"
-									onClick={() => editEvent(event)}
-								>
-									Edit
-								</button>
-								<button
-									className="delete-button"
-									onClick={() => deleteEvent(id, currentUserId)}
-								>
-									<CloseIcon className="delete-button-svg" />
-								</button>
-							</div>
-						) : null)}
+						{isOwnEvent &&
+							(deleteEvent && editEvent !== null ? (
+								<div className="event-buttons">
+									<button
+										className="edit-button"
+										onClick={() => editEvent(event)}
+									>
+										Edit
+									</button>
+									<button
+										className="delete-button"
+										onClick={() => deleteEvent(id, currentUserId)}
+									>
+										<CloseIcon className="delete-button-svg" />
+									</button>
+								</div>
+							) : null)}
 					</div>
 				</div>
 			</div>

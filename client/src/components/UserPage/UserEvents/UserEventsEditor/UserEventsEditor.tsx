@@ -144,12 +144,7 @@ class UserEventsEditor extends React.Component<
 	};
 
 	onSave() {
-		if (
-			this.state.title.trim() === '' ||
-			this.state.description.trim() === '' ||
-			!this.state.dateRange.startDate ||
-			!this.state.dateRange.endDate
-		)
+		if (this.state.title.trim() === '' || !this.state.dateRange.startDate)
 			return;
 
 		if (this.props.id) {
@@ -219,6 +214,7 @@ class UserEventsEditor extends React.Component<
 							onChange={e => this.onChangeData(e, 'title')}
 						/>
 					</label>
+					<span className="required-title">*required</span>
 
 					<label className="input-wrp">
 						<span className="label">Image: </span>
@@ -284,6 +280,7 @@ class UserEventsEditor extends React.Component<
 								showTimeSelect
 								dateFormat="MMMM d, yyyy h:mm aa"
 							/>
+							<span className="required">*required</span>
 						</div>
 					</div>
 

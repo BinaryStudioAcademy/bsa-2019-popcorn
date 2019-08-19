@@ -23,6 +23,7 @@
 			margin-bottom: 20px;
 			&:first-child {
 				margin-top: 20px;
+				margin-bottom: 0;
 			}
 			svg {
 				width: 30px;
@@ -32,6 +33,17 @@
 					fill: $text-base-color;
 				}
 			}
+		}
+		.required {
+			color: rgb(192, 0, 0);
+			position: relative;
+			font-size: 0.8em;
+		}
+		.required-title {
+			color: rgb(192, 0, 0);
+			position: relative;
+			font-size: 0.8em;
+			margin: 5px 0px 10px 20%;
 		}
 		.label {
 			display: inline-block;
