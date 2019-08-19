@@ -81,9 +81,11 @@ export const saveMovieRate = async (newRate: any) => {
 export const getMovieRate = async (
   userId: string,
   movieId: string
-): Promise<MovieRate> => {
-  return await getCustomRepository(MovieRateRepository).findOne({
+): Promise<any> => {
+  const data = await getCustomRepository(MovieRateRepository).findOne({
     userId,
     movieId
   });
+  if (data) return data;
+  return { userId, movieId, rate: 0 };
 };
