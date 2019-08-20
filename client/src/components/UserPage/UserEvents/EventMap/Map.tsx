@@ -143,7 +143,7 @@ class MapComponent extends React.Component<Props, State> {
 					options={options}
 				/>
 				<Map
-					style={styles.basic}
+					style={styles.outdoor}
 					containerStyle={mapStyle}
 					center={center || currentLocation || [30, 50]}
 					onClick={this.onMapClick}
