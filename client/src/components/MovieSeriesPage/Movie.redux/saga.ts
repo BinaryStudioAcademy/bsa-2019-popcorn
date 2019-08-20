@@ -214,10 +214,9 @@ function* watchFetchSearch() {
 	yield takeEvery(FETCH_SEARCH, fetchSearch);
 }
 
-
 function* watchFetchSearchMovie() {
 	yield takeEvery(FETCH_SEARCH_TO_ADD_MOVIE, fetchSearchMovie);
-
+}
 function* watchFetchUserRate() {
 	yield takeEvery(FETCH_MOVIE_USER_RATE, fetchUserRate);
 }
@@ -239,6 +238,6 @@ export default function* header() {
 		watchFetchMovie(),
 		watchSetUserRate(),
 		watchFetchSearch(),
-    watchFetchSearchMovie()
+		watchFetchSearchMovie()
 	]);
 }
