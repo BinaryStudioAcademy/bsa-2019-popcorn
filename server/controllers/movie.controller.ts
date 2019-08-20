@@ -9,7 +9,7 @@ router
 
   .get("/", (req: Request, res: Response, next: NextFunction) =>
     movieService
-      .getMovies()
+      .getMovies(req.query)
       .then((movies: Movie[]) => res.send(movies))
       .catch(next)
   )

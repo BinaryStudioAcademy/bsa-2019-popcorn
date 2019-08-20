@@ -3,25 +3,23 @@ import {
 	FINISH_FETCH_SEARCH_FILMS,
 	START_FETCH_SEARCH_FILMS
 } from '../../shared/Header/actionTypes';
-import {
-	START_SEARCH_ELASTIC_FILMS,
-	FINISH_SEARCH_ELASTIC_FILMS
-} from '../../UserPage/UserTops/actionTypes';
+import { START_SEARCH_ELASTIC_FILMS } from '../../UserPage/UserTops/actionTypes';
 import webApi from '../../../services/webApi.service';
 import {
-	FETCH_MOVIE_LIST,
-	SET_MOVIE_LIST,
-	SET_ElASTIC_MOVIE_LIST,
-	FETCH_MOVIE_USER_RATE,
-	FETCH_MOVIE_USER_RATE_SUCCESS,
 	FETCH_MOVIE_BY_ID,
 	FETCH_MOVIE_BY_ID_SUCCESS,
-	SET_USER_RATE,
+	FETCH_MOVIE_LIST,
+	FETCH_MOVIE_USER_RATE,
+	FETCH_MOVIE_USER_RATE_SUCCESS,
 	FETCH_SEARCH,
-	SET_SEARCH_MOVIE,
 	FETCH_SEARCH_TO_ADD_MOVIE,
+	LOAD_MORE_MOVIE,
+	LOADING,
+	SET_ElASTIC_MOVIE_LIST,
+	SET_MOVIE_LIST,
+	SET_SEARCH_MOVIE,
 	SET_SEARCH_MOVIE_TO_ADD,
-	LOADING
+	SET_USER_RATE
 } from './actionTypes';
 import config from '../../../config';
 
@@ -199,6 +197,25 @@ export function* fetchSearchMovie(action) {
 		console.log('movie saga fetchSearchMovie: ', e.message);
 	}
 }
+
+export function* loadMoreMovie(action) {
+	const { size, from } = action.payload;
+	try {
+		const data = yield call(webApi, {
+			endpoint: `${config.API_URL}/api/movie?from=${from}&size=${size}`,
+			method: 'GET'
+		});
+		yield put({
+			type: LOAD_MORE_MOVIE,
+			payload: {
+				movies: data
+			}
+		});
+	} catch (e) {
+		console.log('movie saga loadMoreMovie: ', e.message);
+	}
+}
+
 function* watchFetchFilms() {
 	yield takeEvery(START_FETCH_SEARCH_FILMS, fetchFilms);
 }
@@ -210,6 +227,7 @@ function* watchFetchMovieList() {
 function* watchFetchElasticSearchFilms() {
 	yield takeEvery(START_SEARCH_ELASTIC_FILMS, fetchElasticSearchFilms);
 }
+
 function* watchFetchSearch() {
 	yield takeEvery(FETCH_SEARCH, fetchSearch);
 }
@@ -217,6 +235,7 @@ function* watchFetchSearch() {
 function* watchFetchSearchMovie() {
 	yield takeEvery(FETCH_SEARCH_TO_ADD_MOVIE, fetchSearchMovie);
 }
+
 function* watchFetchUserRate() {
 	yield takeEvery(FETCH_MOVIE_USER_RATE, fetchUserRate);
 }
@@ -229,6 +248,10 @@ function* watchSetUserRate() {
 	yield takeEvery(SET_USER_RATE, setUserRate);
 }
 
+function* watchLoadMoreMovie() {
+	yield takeEvery(LOAD_MORE_MOVIE, loadMoreMovie);
+}
+
 export default function* header() {
 	yield all([
 		watchFetchFilms(),
@@ -238,6 +261,7 @@ export default function* header() {
 		watchFetchMovie(),
 		watchSetUserRate(),
 		watchFetchSearch(),
-		watchFetchSearchMovie()
+		watchFetchSearchMovie(),
+		watchLoadMoreMovie()
 	]);
 }

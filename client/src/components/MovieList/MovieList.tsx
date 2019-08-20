@@ -2,12 +2,14 @@ import React from 'react';
 import './MovieList.scss';
 import MovieListItem from './MovieListItem/MovieListItem';
 import TMovie from '../MovieSeriesPage/TMovie';
+import InfiniteScroll from 'react-infinite-scroll-component';
 
 interface IMovieListProps {
 	movies: Array<TMovie>;
 	setMovieSeries?: (movie: any) => any;
 	saveMovie?: (movie: TMovie) => any;
 	twoColumns?: boolean;
+	loadMoreMovie?: (size: number, from: number) => any;
 }
 
 const MovieList: React.FC<IMovieListProps> = ({

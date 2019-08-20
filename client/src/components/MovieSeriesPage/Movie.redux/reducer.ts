@@ -7,7 +7,8 @@ import {
 	SET_SEARCH_MOVIE,
 	SET_SEARCH_MOVIE_TO_ADD,
 	FETCH_MOVIE_USER_RATE_SUCCESS,
-	FETCH_MOVIE_BY_ID_SUCCESS
+	FETCH_MOVIE_BY_ID_SUCCESS,
+	LOAD_MORE_MOVIE
 } from './actionTypes';
 import TMovie from '../TMovie';
 import movieAdapter from '../movieAdapter';
@@ -88,6 +89,14 @@ export default function(state = initialState, action) {
 			return {
 				...state,
 				isLoading: action.payload.loading
+			};
+		case LOAD_MORE_MOVIE:
+			return {
+				...state,
+				moviesSearch: [
+					...state.moviesSearch,
+					(action.payload.movies || []).map(movieAdapter)
+				]
 			};
 		default:
 			return state;

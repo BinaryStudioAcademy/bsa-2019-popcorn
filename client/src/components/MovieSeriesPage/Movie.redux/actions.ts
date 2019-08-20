@@ -7,7 +7,8 @@ import {
 	SET_USER_RATE,
 	FETCH_SEARCH,
 	RESET_SEARCH_MOVIE,
-	FETCH_SEARCH_TO_ADD_MOVIE
+	FETCH_SEARCH_TO_ADD_MOVIE,
+	LOAD_MORE_MOVIE
 } from './actionTypes';
 
 export const fetchMovieList = (): any => {
@@ -82,6 +83,16 @@ export const fetchSearchToAddMovieInStory = (title: string): any => {
 		type: FETCH_SEARCH_TO_ADD_MOVIE,
 		payload: {
 			title
+		}
+	};
+};
+
+export const loadMoreMovie = (size: number, from: number): any => {
+	return {
+		type: LOAD_MORE_MOVIE,
+		payload: {
+			size,
+			from
 		}
 	};
 };

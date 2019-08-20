@@ -16,6 +16,7 @@ import { connect } from 'react-redux';
 import Spinner from '../../components/shared/Spinner';
 import {
 	fetchMovieList,
+	loadMoreMovie,
 	setMovieSeries
 } from '../../components/MovieSeriesPage/Movie.redux/actions';
 import Header from '../../components/shared/Header/Header';
@@ -43,6 +44,7 @@ interface IProps {
 	fetchMovieList: () => any;
 	setMovieSeries: (movie: any) => any;
 	movieSeries: null | TMovie;
+	loadMoreMovie: (size: number, from: number) => any;
 }
 
 const MovieListRender = (movieList, fetchMovieList, setMovieSeries) => {
@@ -116,7 +118,8 @@ const mapStateToProps = (rootState, props) => ({
 
 const actions = {
 	fetchMovieList,
-	setMovieSeries
+	setMovieSeries,
+	loadMoreMovie
 };
 
 const mapDispatchToProps = dispatch => bindActionCreators(actions, dispatch);
