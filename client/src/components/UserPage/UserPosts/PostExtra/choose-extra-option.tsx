@@ -62,7 +62,7 @@ class ChooseExtraOption extends React.Component<IProps> {
 			return (
 				<Redirect
 					to={{
-						pathname: `/user-page/${option}s`
+						pathname: `/user-page/${this.props.userInfo.id}/${option}s`
 					}}
 				/>
 			);
