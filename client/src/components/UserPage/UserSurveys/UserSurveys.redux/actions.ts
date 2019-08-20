@@ -6,9 +6,10 @@ import {
 	RECREATE_SURVEY
 } from './actionTypes';
 
-export const fetchSurveys = () => {
+export const fetchSurveys = id => {
 	return {
-		type: FETCH_SURVEYS
+		type: FETCH_SURVEYS,
+		payload: { userId: id }
 	};
 };
 

@@ -67,6 +67,12 @@
 	height: 70px;
 	padding: 25px;
 	margin: 0;
+
+	.user-link {
+		text-decoration: none;
+		color: $text-base-color;
+		display: flex;
+	}
 }
 
 .post-item-image {

@@ -23,7 +23,7 @@ import Spinner from '../../shared/Spinner';
 interface IProps {
 	mainPath: string;
 	surveys: any;
-	fetchSurveys: () => any;
+	fetchSurveys: (id: string) => any;
 	addSurvey: (any) => any;
 	updateSurvey: (string, any) => any;
 	deleteSurvey: (string) => any;
@@ -48,7 +48,7 @@ class UserSurveysNav extends React.Component<IProps, IState> {
 	}
 
 	componentDidMount() {
-		this.props.fetchSurveys();
+		this.props.fetchSurveys(this.props.userInfo.id);
 	}
 
 	static getDerivedStateFromProps(props, state) {
@@ -134,7 +134,8 @@ class UserSurveysNav extends React.Component<IProps, IState> {
 
 const mapStateToProps = (rootState, props) => ({
 	...props,
-	surveys: rootState.survey.surveys
+	surveys: rootState.survey.surveys,
+	userId: rootState.profile.selectedProfileInfo.id
 });
 
 const actions = {

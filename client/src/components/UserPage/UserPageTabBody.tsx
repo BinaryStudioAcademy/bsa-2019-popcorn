@@ -9,6 +9,7 @@ import UserLists from './UserLists/UserLists';
 import UserWatched from './UserWatched/UserWatched';
 import ProfileComponent from './ProfileComponent/ProfileComponent';
 import UserSurveysNav from './UserSurveys/UserSurveysNav';
+import ISelectedProfileInfo from './SelectedProfileInterface';
 import mock from './Survey/mock';
 import {
 	cancelAvatar,
@@ -38,6 +39,7 @@ interface IProps {
 	setAvatar: (url: string, id: string) => any;
 	userPosts?: any; //todo
 	getUsersPosts: (id: string) => any;
+	selectedProfileInfo: ISelectedProfileInfo;
 }
 
 const UserPageTabs: React.SFC<IProps> = ({
@@ -48,9 +50,10 @@ const UserPageTabs: React.SFC<IProps> = ({
 	cancelAvatar,
 	setAvatar,
 	userPosts,
-	getUsersPosts
+	getUsersPosts,
+	selectedProfileInfo
 }) => {
-	return (
+	return selectedProfileInfo ? (
 		<div className={'user-tab-body'}>
 			<Switch>
 				<Route
@@ -59,7 +62,7 @@ const UserPageTabs: React.SFC<IProps> = ({
 					render={() => (
 						<ProfileComponent
 							uploadAvatar={uploadAvatar}
-							profileInfo={profileInfo}
+							profileInfo={selectedProfileInfo}
 							uploadUrl={uploadUrl}
 							cancelAvatar={cancelAvatar}
 							setAvatar={setAvatar}
@@ -70,8 +73,9 @@ const UserPageTabs: React.SFC<IProps> = ({
 					path={`${mainPath}/posts`}
 					component={() => (
 						<UserPosts
+							userId={selectedProfileInfo.id}
 							posts={userPosts}
-							getUsersPosts={() => getUsersPosts(profileInfo.id)}
+							getUsersPosts={() => getUsersPosts(selectedProfileInfo.id)}
 						/>
 					)}
 				/>
@@ -83,9 +87,9 @@ const UserPageTabs: React.SFC<IProps> = ({
 						<UserSurveysNav
 							id={profileInfo.id}
 							userInfo={{
-								id: profileInfo.id,
-								name: profileInfo.name,
-								image_link: profileInfo.avatar
+								id: selectedProfileInfo.id,
+								name: selectedProfileInfo.name,
+								image_link: selectedProfileInfo.avatar
 							}}
 							mainPath={`${mainPath}/surveys`}
 						/>
@@ -96,14 +100,15 @@ const UserPageTabs: React.SFC<IProps> = ({
 				<Route path={`${mainPath}/watched`} component={UserWatched} />
 			</Switch>
 		</div>
-	);
+	) : null;
 };
 
 const mapStateToProps = (rootState, props) => ({
 	...props,
 	profileInfo: rootState.profile.profileInfo,
 	uploadUrl: rootState.profile.uploadUrl,
-	userPosts: rootState.profile.userPosts
+	userPosts: rootState.profile.userPosts,
+	selectedProfileInfo: rootState.profile.selectedProfileInfo
 });
 
 const actions = {
