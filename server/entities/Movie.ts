@@ -1,9 +1,7 @@
 import {
   Entity,
   PrimaryGeneratedColumn,
-  Column,
-  OneToOne,
-  JoinColumn
+  Column
 } from "typeorm";
 
 @Entity()
