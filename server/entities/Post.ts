@@ -24,10 +24,10 @@ export class Post {
   @Column()
   image_url: string;
 
-  @Column()
+  @Column({ nullable: true })
   extraTitle: string;
 
-  @Column()
+  @Column({ nullable: true })
   extraLink: string;
 
   @ManyToOne(type => User, user => user.id)

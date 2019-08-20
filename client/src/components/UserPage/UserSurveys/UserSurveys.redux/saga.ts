@@ -12,6 +12,7 @@ import {
 import webApi from '../../../../services/webApi.service';
 import config from '../../../../config';
 import { setArrangementInSurveys } from '../UserSurveys.service';
+import { transformDataToProps } from '../UserSurveys.service';
 
 export function* fetchSurveys(action) {
 	try {
@@ -99,17 +100,18 @@ function* getSurveyById(action) {
 			endpoint: config.API_URL + '/api/surveys/' + action.payload.id
 		});
 
-		const question = yield call(webApi, {
-			method: 'GET',
-			endpoint: config.API_URL + `/api/surveys/${data.id}/question`
-		});
+		const formattedData = transformDataToProps([data])[0];
+		// const question = yield call(webApi, {
+		// 	method: 'GET',
+		// 	endpoint: config.API_URL + `/api/surveys/${data.id}/question`
+		// });
 
-		data.questions = question;
+		// data.questions = question;
 
 		if (data)
 			yield put({
 				type: SET_SURVEY_BYID,
-				payload: { survey: data, loading: false }
+				payload: { survey: formattedData, loading: false }
 			});
 	} catch (e) {
 		console.log('survey saga get by id: ', e.message);
