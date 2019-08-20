@@ -1,3 +1,5 @@
+import { IDiscussionMessage } from './DiscussionComponent/DiscussionComponent';
+
 type TMovie = {
 	id: string;
 	poster_path: string;
@@ -10,6 +12,7 @@ type TMovie = {
 	vote_average: string;
 	video: string;
 	cast: string;
+	messages: IDiscussionMessage[];
 };
 
 export default TMovie;

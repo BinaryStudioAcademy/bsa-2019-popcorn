@@ -61,7 +61,7 @@ const MovieSeriesPage: React.SFC<IProps> = props => {
 			<MovieSeriesPageTabBody
 				mainPath={mainPath}
 				movie={movie}
-				userInfo={{ avatar, userId, username }}
+				currentUser={{ avatar, id: userId, name: username }}
 			/>
 		</div>
 	);
