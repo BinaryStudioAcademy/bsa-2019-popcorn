@@ -93,7 +93,7 @@ class UserTops extends React.Component<IUserTopProps, IUserTopsState> {
 			isCreated: false
 		};
 	}
-	
+
 	deleteTop = (topId: string) => {
 		let { isCreated } = this.state;
 		const topList = this.state.topList.filter((topItem: ITopItem) => {
@@ -168,8 +168,9 @@ class UserTops extends React.Component<IUserTopProps, IUserTopsState> {
 				{topList.map(
 					(topItem: ITopItem) =>
 						((this.isOwnTop(topItem) &&
-							window.location.pathname == '/user-page/tops') ||
-							window.location.pathname == '/movie-tops') && (
+							window.location.pathname ==
+								'/user-page/' + this.props.userId + '/tops') ||
+							window.location.pathname == '/movie-tops/') && (
 							<TopItem
 								key={topItem.id}
 								saveUserTop={this.saveUserTop}
