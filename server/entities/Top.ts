@@ -1,4 +1,4 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, OneToMany  } from "typeorm";
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, OneToMany } from "typeorm";
 import { User } from "./User";
 import { MovieInTop } from './MovieInTop';
 
@@ -10,7 +10,7 @@ export class Top {
   @Column()
   title: string;
 
-  @Column()
+  @Column({ nullable: true })
   description: string;
 
   @Column({ default: "" })
@@ -22,9 +22,9 @@ export class Top {
   @Column({ nullable: true })
   userId: string;
 
-  @ManyToOne(type => User, user => user.tops)
-  user: User;
-
   @OneToMany((type) => MovieInTop, (movieInTop) => movieInTop.top)
   movieInTop: MovieInTop[];
+
+  @ManyToOne(type => User, user => user.tops)
+  user: User;
 }

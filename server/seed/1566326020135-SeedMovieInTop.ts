@@ -15,7 +15,7 @@ export class SeedMovieInTop1566326020135 implements MigrationInterface {
 
             const tops = await topService.getTopsByUserId(user.id);
 
-            const moviesSeed: any[] = await movieService.getMovies({size: 3, from: 1});
+            const moviesSeed: any[] = await movieService.getMovies({ size: 0, from: 5 });
             console.log(moviesSeed.length);
             const movieInTopSeed = [];
             

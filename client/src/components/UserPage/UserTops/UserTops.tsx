@@ -1,8 +1,9 @@
 import React from 'react';
 import './UserTops.scss';
 
+import { isEqual } from 'lodash';
+import Spinner from '../../shared/Spinner';
 import TopItem from './TopItem/TopItem';
-import { ITopItem } from './TopItem/TopItem';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import {
@@ -12,11 +13,17 @@ import {
 	updateTop,
 	deleteTop
 } from './UserTops.redux/actions';
+import {
+	ITopItem,
+	convertServerDataFormatToClient
+} from './UserTops.service';
 export interface IUserTopsState {
 	topList: ITopItem[];
 	isCreated: boolean;
 }
 interface IUserTopProps {
+	topList: any;
+	fetchTops: (userId: string) => any[];
 	uploadImage: (data: FormData, titleId: string) => void;
 	userId: string;
 	userRole: string;
@@ -100,6 +107,20 @@ class UserTops extends React.Component<IUserTopProps, IUserTopsState> {
 		};
 	}
 
+	componentDidMount() {
+		this.props.fetchTops(this.props.userId);
+	}
+
+	static getDerivedStateFromProps(props, state) {
+		if (!state.newTop && !isEqual(props.topList, state.topList)) {
+			return {
+				...state,
+				topList: convertServerDataFormatToClient(props.topList)
+			};
+		}
+		return null;
+	}
+
 	deleteTop = (topId: string) => {
 		let { isCreated } = this.state;
 		const topList = this.state.topList.filter((topItem: ITopItem) => {
@@ -161,6 +182,10 @@ class UserTops extends React.Component<IUserTopProps, IUserTopsState> {
 
 		const topList = this.state.topList;
 		console.log(topList);
+
+		if (!this.props.topList) {	
+			return <Spinner />;
+		}
 		return (
 			<div className="user-tops">
 				{url_callback && (
