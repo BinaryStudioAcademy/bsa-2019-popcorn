@@ -8,6 +8,7 @@ import { bindActionCreators } from 'redux';
 import { uploadImage } from './actions';
 export interface IUserTopsState {
 	topList: ITopItem[];
+	isCreated: boolean;
 }
 interface IUserTopProps {
 	uploadImage: (data: FormData, titleId: string) => void;
@@ -88,26 +89,48 @@ class UserTops extends React.Component<IUserTopProps, IUserTopsState> {
 	constructor(props) {
 		super(props);
 		this.state = {
-			topList: topItemsMock
+			topList: topItemsMock,
+			isCreated: false
 		};
 	}
+	
 	deleteTop = (topId: string) => {
-		const topList = this.state.topList.filter(
-			(topItem: ITopItem) => topItem.id !== topId
-		);
-		this.setState({ topList });
+		let { isCreated } = this.state;
+		const topList = this.state.topList.filter((topItem: ITopItem) => {
+			if (topItem.id === topId) {
+				if (topItem.isNewTop) {
+					isCreated = !isCreated;
+				}
+				return false;
+			}
+			return true;
+		});
+
+		this.setState({ topList, isCreated });
 	};
 
 	createTop = () => {
-		const { topList } = this.state;
-		this.setState({ topList: [...topList, newTop()] });
+		const { isCreated } = this.state;
+
+		if (!isCreated) {
+			const { topList } = this.state;
+			this.setState({
+				topList: [...topList, newTop()],
+				isCreated: true
+			});
+		}
 	};
 
 	saveUserTop = (updatedTopItem: ITopItem) => {
+		if (updatedTopItem.isNewTop) {
+			delete updatedTopItem.isNewTop;
+		}
+
 		const topList = this.state.topList.map(topItem =>
 			topItem.id === updatedTopItem.id ? updatedTopItem : topItem
 		);
-		this.setState({ topList });
+
+		this.setState({ topList, isCreated: false });
 	};
 
 	isOwnTop(top) {
@@ -131,6 +154,7 @@ class UserTops extends React.Component<IUserTopProps, IUserTopsState> {
 				: null;
 
 		const topList = this.state.topList;
+		console.log(topList);
 		return (
 			<div className="user-tops">
 				{url_callback && (

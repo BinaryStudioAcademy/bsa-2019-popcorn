@@ -20,7 +20,7 @@ export interface IDragDropProps {
 	moviesList: IMovie[];
 	onDragEnd: (result: any) => void;
 	deleteFilmInput: (movieId: string) => void;
-	saveMovie: (movie: IMovie) => void;
+	saveMovie: (movie: IMovie, newId?: string) => void;
 }
 
 const DragDrop: React.FC<IDragDropProps> = ({
