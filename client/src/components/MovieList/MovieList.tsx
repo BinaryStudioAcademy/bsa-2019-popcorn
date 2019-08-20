@@ -2,7 +2,7 @@ import React from 'react';
 import './MovieList.scss';
 import MovieListItem from './MovieListItem/MovieListItem';
 import TMovie from '../MovieSeriesPage/TMovie';
-import InfiniteScroll from 'react-infinite-scroll-component';
+import InfiniteScroll from 'react-infinite-scroller';
 import Spinner from '../shared/Spinner';
 
 interface IMovieListProps {
@@ -34,7 +34,6 @@ const MovieList: React.FC<IMovieListProps> = ({
 		);
 	});
 	const next = () => {
-		console.log('next');
 		if (loadMoreMovie) {
 			loadMoreMovie(filter.size, filter.from);
 			filter.from = filter.from + filter.size;
@@ -45,10 +44,14 @@ const MovieList: React.FC<IMovieListProps> = ({
 		: {};
 	return (
 		<InfiniteScroll
-			dataLength={movieListItems.length}
-			next={next}
-			loader={<Spinner />}
-			hasMore={true}
+			pageStart={1}
+			loadMore={next}
+			loader={
+				<div className={'loading-wrp'}>
+					<Spinner />
+				</div>
+			}
+			hasMore={movies.length === filter.from}
 		>
 			<div className="movie-list" style={style}>
 				{movieListItems}
