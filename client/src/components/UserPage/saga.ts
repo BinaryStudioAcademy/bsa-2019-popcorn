@@ -32,7 +32,11 @@ export function* uploadAvatar(action) {
 		const data = yield call(uploadFile, action.payload.file);
 
 		// remove public in order to save public path to img in server
-		let url = data.imageUrl.split(`/`);
+		let url;
+		if (data.imageUrl.indexOf('\\') !== -1) {
+			url = data.imageUrl.split(`\\`);
+		} else url = data.imageUrl.split(`/`);
+
 		url.shift();
 
 		yield put({
@@ -46,17 +50,17 @@ export function* uploadAvatar(action) {
 
 export function* setAvatar(action) {
 	try {
-		const res = yield call(
-			axios.put,
-			config.API_URL + '/api/user/' + action.payload.id,
-			{
+		const res = yield call(webApi, {
+			method: 'PUT',
+			endpoint: config.API_URL + '/api/user/' + action.payload.id,
+			body: {
 				avatar: action.payload.url
 			}
-		);
+		});
 
 		yield put({
 			type: FINISH_UPLOAD_AVATAR,
-			payload: { user: res.data.data.user }
+			payload: { user: res.data.user }
 		});
 	} catch (e) {
 		console.log('user page saga catch: setAvatar', e.message);

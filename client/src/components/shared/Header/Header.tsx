@@ -37,12 +37,6 @@ interface IProps {
 	unauthorize: () => void;
 }
 
-const user = {
-	name: 'Sofi Dub',
-	image:
-		'https://s3-alpha-sig.figma.com/img/919e/1a5a/da4f250d469108191ad9d4af68b2a639?Expires=1566172800&Signature=Kou41Z8bd8ig~9nLibgCH5gfaOc0K~9Io82-umabjJnomveXbPcqMWfD911bHy6h77reHT6ecNYFHCzmXkQNy3vEF-OzgJYgV875TI2rX~cPt1FaSJC5wCeybEfTrlBlCcdzSFn8iVcP~C8GTx-l6CIjyugGAhvr7xJ-hfAdlf~5Mll0Sy92dSKn8q7OkJdfsMvEEFVQ3rGHn8GGQZg1a60gif0VaQhuVX1gcRgwrsak~cerS1bnDvo93B1lFOIk85wlhY2hPwQrmCtI9A-qaAtbIxmzmxkRpuVUpDrX6Jd4hXpksbd7urSJ91Dg7tv9WzRZvIkLnPXflCfmPw~slw__&Key-Pair-Id=APKAINTVSUGEWH5XD5UA'
-};
-
 const Header = ({
 	userInfo,
 	moviesSearch,
@@ -63,6 +57,9 @@ const Header = ({
 	const PROFILE = 'Profile';
 	const SETTINGS = 'Settings';
 	const LOGOUT = 'Logout';
+
+	const { avatar } = userInfo;
+
 	return (
 		<div className="header">
 			<NavLink to="/" className="header-logo-link">
@@ -136,11 +133,7 @@ const Header = ({
 				</NavLink>
 			</div>
 			<div className="user-info header-buttons hover">
-				<Image
-					src={userInfo.avatar}
-					defaultSrc={config.DEFAULT_AVATAR}
-					alt="avatar"
-				/>
+				<Image src={avatar} defaultSrc={config.DEFAULT_AVATAR} alt="avatar" />
 				<span className="user-name">{userInfo.name}</span>
 				<div className="modal">
 					<Link aria-current="page" className="hover" to="/user-page">
@@ -157,9 +150,10 @@ const Header = ({
 };
 
 const mapStateToProps = (rootState, props) => ({
+	...props,
+	userInfo: rootState.profile.profileInfo,
 	moviesSearch: rootState.movie.moviesSearch,
-	alreadySearch: rootState.movie.alreadySearch,
-	...props
+	alreadySearch: rootState.movie.alreadySearch
 });
 
 const actions = {

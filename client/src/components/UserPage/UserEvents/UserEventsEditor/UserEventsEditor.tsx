@@ -2,8 +2,6 @@ import React from 'react';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import './UserEventsEditor.scss';
-// import MapWithASearchBox from '../EventMap/EventMapSearch';
-import { ReactComponent as PhotoIcon } from '../../../../assets/icons/general/photoIcon.svg';
 import {
 	formatToDataBase,
 	IEventFormatClient,
@@ -11,6 +9,7 @@ import {
 } from '../UserEvents.service';
 import ImageUploader from '../../../MainPage/ImageUploader/ImageUploader';
 import { uploadFile } from '../../../../services/file.service';
+import MapComponent from '../EventMap/Map';
 
 interface IUserEventsEditorProps {
 	id?: string;
@@ -269,13 +268,15 @@ class UserEventsEditor extends React.Component<
 						</div>
 					</div>
 
-					{/* <div className="input-wrp">
+					<div className="input-wrp">
 						<span className="label">Location: </span>
-						<MapWithASearchBox
-							onLocationChanged={this.onLocationChanged}
-							defaultMarkerPosition={this.state.location}
-						/> 
-					</div> */}
+						<div className="map">
+							<MapComponent
+								onLocationChanged={this.onLocationChanged}
+								currentLocation={this.props.event && this.props.event.location}
+							/>
+						</div>
+					</div>
 
 					<div className="input-wrp">
 						<span className="label">Privacy: </span>
