@@ -15,7 +15,6 @@ import {
 	FETCH_SEARCH_TO_ADD_MOVIE,
 	LOAD_MORE_MOVIE,
 	LOADING,
-	SET_ElASTIC_MOVIE_LIST,
 	SET_LOAD_MORE_MOVIE,
 	SET_MOVIE_LIST,
 	SET_SEARCH_MOVIE,
@@ -205,7 +204,6 @@ function* watchFetchFilms() {
 function* watchFetchMovieList() {
 	yield takeEvery(FETCH_MOVIE_LIST, fetchMovieList);
 }
-
 
 function* watchFetchSearch() {
 	yield takeEvery(FETCH_SEARCH, fetchSearch);

@@ -4,6 +4,8 @@ import MovieRepository from "../repository/movie.repository";
 import MovieRateRepository from "../repository/movieRate.repository";
 import { getCustomRepository, Like, getRepository } from "typeorm";
 import * as elasticRepository from "../repository/movieElastic.repository";
+import DiscussionRepository from "../repository/discussion.repository";
+import { ExtendedDiscussion } from "models/DiscussionModel";
 
 export const getMovies = async ({ size, from }): Promise<any[]> => {
   let data = await elasticRepository.get(size, from);
@@ -15,7 +17,11 @@ export const getMovies = async ({ size, from }): Promise<any[]> => {
 
 export const getMovieById = async (movieId: string): Promise<any> => {
   const data = await elasticRepository.getById(movieId);
-  const movie = data.hits.hits[0]._source;
+  let movie = data.hits.hits[0]._source;
+  const messages = await getCustomRepository(DiscussionRepository).getMessages(
+    movieId
+  );
+  movie.messages = messages;
   const rate = await getCustomRepository(MovieRateRepository)
     .createQueryBuilder("movieRate")
     .select("AVG(movieRate.rate)", "average")
@@ -51,8 +57,7 @@ export const getByTitle = async (title: string): Promise<Movie[]> => {
     moviesSet.set(movie.id, movie);
   });
   let response = [];
-  for (let movie of moviesSet.values())
-    response.push(movie);
+  for (let movie of moviesSet.values()) response.push(movie);
   return response;
 };
 
@@ -82,4 +87,14 @@ export const getMovieRate = async (
   });
   if (data) return data;
   return { userId, movieId, rate: 0 };
+};
+
+export const saveDiscussionMessage = async (
+  discussion: ExtendedDiscussion
+): Promise<any> => {
+  const result = await getCustomRepository(DiscussionRepository).save(
+    discussion
+  );
+  console.log("saved discussion", result);
+  return result;
 };
