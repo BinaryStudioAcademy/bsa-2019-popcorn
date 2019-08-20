@@ -167,8 +167,11 @@ class UserSurveys extends React.Component<IProps, IState> {
 	};
 
 	isOwnSurvey(survey) {
-		const { userId, userRole } = this.props;
+		const { userId, userRole, selectedProfileId } = this.props;
 		const { user_id } = survey;
+		console.log(userRole);
+		console.log(user_id);
+		console.log(selectedProfileId);
 		return userRole === 'admin' || userId === user_id;
 	}
 
@@ -205,8 +208,7 @@ class UserSurveys extends React.Component<IProps, IState> {
 								<NavLink key={i} exact={!i} to={`${mainPath}/${survey.id}`}>
 									<div className="survey-list-item">
 										<span>{survey.title}</span>
-										{this.props.selectedProfileId === this.props.userId ||
-										this.props.userRole === 'admin' ? (
+										{this.isOwnSurvey(survey) ? (
 											<p className="buttons">
 												{this.typeSurveyBttn(survey)}
 												<button

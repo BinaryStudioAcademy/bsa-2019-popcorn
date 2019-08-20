@@ -147,7 +147,7 @@ const Header = ({
 					<Link
 						aria-current="page"
 						className="hover"
-						to={`user-page/${userInfo.id}`}
+						to={`/user-page/${userInfo.id}`}
 					>
 						{PROFILE}
 					</Link>

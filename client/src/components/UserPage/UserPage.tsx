@@ -13,7 +13,6 @@ interface IProps {
 		path: string;
 		params: any;
 	};
-	location: any;
 	getSelectedUserInfo: (id: string) => any;
 	selectedProfileInfo: any;
 }
@@ -21,10 +20,8 @@ interface IProps {
 const User: React.SFC<IProps> = ({
 	match,
 	getSelectedUserInfo,
-	location,
 	selectedProfileInfo
 }) => {
-	const {} = match;
 	if (match.params.id) {
 		if (selectedProfileInfo && match.params.id !== selectedProfileInfo.id) {
 			getSelectedUserInfo(match.params.id);
@@ -35,6 +32,7 @@ const User: React.SFC<IProps> = ({
 		}
 	}
 	const mainPath = `/user-page/${match.params.id}`;
+
 	return selectedProfileInfo ? (
 		<div className={'user'}>
 			<UserPageTabs mainPath={mainPath} />
