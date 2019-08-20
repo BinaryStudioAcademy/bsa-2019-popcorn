@@ -21,6 +21,7 @@ interface IProps {
 	currentUserRole: string;
 	saveEvent: (event: any) => void;
 	updateEvent: (event: any) => void;
+	currentProfileUserId: string;
 }
 
 interface IState {
@@ -43,8 +44,8 @@ class UserEvents extends React.Component<IProps, IState> {
 	}
 
 	componentDidMount() {
-		const { currentUserId } = this.props;
-		this.props.getUserEvents(currentUserId);
+		const { currentProfileUserId } = this.props;
+		this.props.getUserEvents(currentProfileUserId);
 	}
 
 	editEvent = (editableEvent: null | IEventFormatClient = null) => {
@@ -81,7 +82,12 @@ class UserEvents extends React.Component<IProps, IState> {
 		));
 
 	render() {
-		const { userEvents, currentUserId, deleteEvent } = this.props;
+		const {
+			userEvents,
+			currentUserId,
+			deleteEvent,
+			currentProfileUserId
+		} = this.props;
 		const { openEventEditor, editableEvent } = this.state;
 		if (!userEvents) {
 			return <Spinner />;
@@ -97,12 +103,14 @@ class UserEvents extends React.Component<IProps, IState> {
 		});
 		return (
 			<div className="user-events">
-				<div
-					className="create-event-button hover"
-					onClick={() => this.editEvent()}
-				>
-					{openEventEditor ? BACK_TO_EVENTS_TEXT : CREATE_EVENT_TEXT}{' '}
-				</div>
+				{currentProfileUserId === currentUserId ? (
+					<div
+						className="create-event-button hover"
+						onClick={() => this.editEvent()}
+					>
+						{openEventEditor ? BACK_TO_EVENTS_TEXT : CREATE_EVENT_TEXT}{' '}
+					</div>
+				) : null}
 				{openEventEditor ? (
 					<UserEventsEditor
 						closeEditor={this.editEvent}
@@ -145,6 +153,7 @@ const mapStateToProps = (state, props) => {
 	return {
 		...props,
 		currentUserId: state.profile.profileInfo.id,
+		currentProfileUserId: state.profile.selectedProfileInfo.id,
 		currentUserRole: state.profile.profileInfo.role,
 		userEvents: state.events.userEvents
 	};

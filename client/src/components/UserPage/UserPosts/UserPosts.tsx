@@ -1,16 +1,18 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import PostList from '../../MainPage/PostList/PostList';
 import Spinner from '../../shared/Spinner';
+
 interface IProps {
 	posts?: any;
 	getUsersPosts: () => any;
+	userId: string;
 }
 const userPostStyle = {
 	marginRight: '0px',
 	paddingRight: '0px',
 	marginTop: '40px'
 };
-const UserPosts: React.FC<IProps> = ({ posts, getUsersPosts }) => {
+const UserPosts: React.FC<IProps> = ({ posts, getUsersPosts, userId }) => {
 	if (!posts) {
 		getUsersPosts();
 		return <Spinner />;

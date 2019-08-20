@@ -75,7 +75,20 @@ class SurveysRepository extends Repository<Surveys> {
       const user = await getCustomRepository(UserRepository).findOne(id);
       if (!user)
         return next({ status: 404, message: "User is not found" }, null);
-      return await this.find({ user });
+      return await this.find({
+        where: { user },
+        order: {
+          created_at: "DESC"
+        },
+        relations: [
+          "surveysQuestion",
+          "surveysQuestion.surveysQuestionOption",
+          "surveysQuestion.surveysQuestionAnswer",
+          "surveysQuestion.surveysQuestionAnswer.user",
+          "surveysQuestion.surveysQuestionAnswer.surveysQuestionOption",
+          "user"
+        ]
+      });
     } catch (err) {
       return next({ status: err.status, message: err.message }, null);
     }

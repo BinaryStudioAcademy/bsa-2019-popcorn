@@ -42,15 +42,14 @@ const TopConstructor: React.FC<ITopConstructorProps> = ({
 		setMovies(updatedMovies);
 	}
 
-	function saveMovie(updatedMovie: IMovie) {
+	function saveMovie(updatedMovie: IMovie, newId: string = updatedMovie.id) {
 		let updatedMovies = movies.map(movie =>
-			movie.id === updatedMovie.id ? updatedMovie : movie
+			movie.id === updatedMovie.id ? { ...updatedMovie, id: newId } : movie
 		);
 		if (updatedMovie.id === movies[movies.length - 1].id) {
 			updatedMovies.push(emptyInput());
 		}
 		setMovies(updatedMovies);
-		console.log(movies);
 	}
 	function save() {
 		saveTop(movies);
