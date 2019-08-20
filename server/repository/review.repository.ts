@@ -15,6 +15,18 @@ class ReviewRepository extends Repository<Review> {
       return next({ status: err.status, message: err.message });
     }
   }
+
+  async getReviewsByMovieId(movieId: string, next) {
+    try {
+      return await getCustomRepository(ReviewRepository).find({
+        where: { movieId: movieId },
+        relations: ["user"]
+        // select: { text: true, movieId: true, user: { id: true } }
+      });
+    } catch (err) {
+      return next({ status: err.status, message: err.message });
+    }
+  }
 }
 
 export default ReviewRepository;
