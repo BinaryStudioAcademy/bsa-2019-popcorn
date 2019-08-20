@@ -93,6 +93,9 @@
 			width: 80%;
 			float: right;
 		}
+		.react-datepicker-popper {
+			z-index: 9999;
+		}
 		input.text-input,
 		textarea,
 		.time-picker input {
