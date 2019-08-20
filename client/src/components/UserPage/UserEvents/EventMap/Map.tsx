@@ -1,7 +1,8 @@
 import * as React from 'react';
-import ReactMapboxGl, { Marker } from 'react-mapbox-gl';
+import ReactMapboxGl, { Marker, Feature, Layer } from 'react-mapbox-gl';
 import styled from 'styled-components';
 import Dropdown from './dropdown';
+import './Map.scss';
 
 // tslint:disable-next-line:no-var-requires
 const { token, styles } = require('./config.json');
@@ -30,6 +31,13 @@ const mapStyle = {
 	width: '100%',
 	height: '100%'
 };
+const POSITION_CIRCLE_PAINT = {
+	'circle-stroke-width': 4,
+	'circle-radius': 10,
+	'circle-blur': 0.15,
+	'circle-color': '#3770C6',
+	'circle-stroke-color': 'white'
+};
 
 export interface Place {
 	id: string;
@@ -57,7 +65,8 @@ const req = (url: string, body?: any, method = 'GET') =>
 
 export interface Props {
 	// tslint:disable-next-line:no-any
-	onStyleLoad?: (map: any) => any;
+	onLocationChanged: (newCord: { lat: number; lng: number }) => void;
+	currentLocation?: { lat: number | undefined; lng: number | undefined } | null;
 }
 
 class MapComponent extends React.Component<Props, State> {
@@ -86,6 +95,8 @@ class MapComponent extends React.Component<Props, State> {
 
 	private onSelectItem = (index: number) => {
 		const selected = this.state.options[index];
+		const [lng, lat] = selected.center;
+		this.props.onLocationChanged({ lng, lat });
 		this.setState({
 			selected,
 			center: selected.center
@@ -97,13 +108,23 @@ class MapComponent extends React.Component<Props, State> {
 		this.fetch(query);
 	};
 
-	private onStyleLoad = (map: any) => {
-		const { onStyleLoad } = this.props;
-		return onStyleLoad && onStyleLoad(map);
+	private onDragEnd = (event: any) => {
+		this.props.onLocationChanged(event.lngLat);
 	};
 
 	public render() {
 		const { options, selected, center } = this.state;
+
+		let currentLocation;
+		if (this.props.currentLocation)
+			if (this.props.currentLocation.lat && this.props.currentLocation.lng)
+				currentLocation = [
+					this.props.currentLocation.lng,
+					this.props.currentLocation.lat
+				];
+
+		console.log(this.props.currentLocation);
+
 		return (
 			<Container>
 				<Dropdown
@@ -111,17 +132,33 @@ class MapComponent extends React.Component<Props, State> {
 					onSelectItem={this.onSelectItem}
 					options={options}
 				/>
-				<Map
-					style={styles.dark}
-					containerStyle={mapStyle}
-					center={center}
-					onStyleLoad={this.onStyleLoad}
-				>
-					{selected && (
-						<Marker coordinates={selected.center}>
-							<Mark />
-						</Marker>
-					)}
+				<Map style={styles.basic} containerStyle={mapStyle} center={center}>
+					{(selected && (
+						<Layer
+							type="circle"
+							id="position-marker"
+							paint={POSITION_CIRCLE_PAINT}
+						>
+							<Feature
+								coordinates={selected.center}
+								draggable={true}
+								onDragEnd={this.onDragEnd}
+							/>
+						</Layer>
+					)) ||
+						(currentLocation && (
+							<Layer
+								type="circle"
+								id="position-marker"
+								paint={POSITION_CIRCLE_PAINT}
+							>
+								<Feature
+									coordinates={currentLocation}
+									draggable={true}
+									onDragEnd={this.onDragEnd}
+								/>
+							</Layer>
+						))}
 				</Map>
 			</Container>
 		);

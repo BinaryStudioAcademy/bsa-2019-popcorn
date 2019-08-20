@@ -276,7 +276,10 @@ class UserEventsEditor extends React.Component<
 							onLocationChanged={this.onLocationChanged}
 							defaultMarkerPosition={this.state.location}
 						/>  */}
-						<MapComponent />
+						<MapComponent
+							onLocationChanged={this.onLocationChanged}
+							currentLocation={this.props.event && this.props.event.location}
+						/>
 					</div>
 
 					<div className="input-wrp">
