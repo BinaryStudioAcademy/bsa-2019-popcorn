@@ -105,6 +105,7 @@ class UserSurveysNav extends React.Component<IProps, IState> {
 					render={() => (
 						<SurveyEditorNav
 							mainPath={`${mainPath}/create`}
+							redirPath={mainPath}
 							surveyInfo={{
 								...newSurvey(),
 								user_id: userInfo.id,
@@ -121,6 +122,7 @@ class UserSurveysNav extends React.Component<IProps, IState> {
 						render={() => (
 							<SurveyEditorNav
 								updateInfo={this.updateInfo}
+								redirPath={mainPath}
 								mainPath={`${mainPath}/${survey.id}`}
 								surveyInfo={survey}
 							/>
