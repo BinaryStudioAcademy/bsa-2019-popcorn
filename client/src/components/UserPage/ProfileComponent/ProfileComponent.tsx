@@ -10,17 +10,10 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import config from '../../../config';
+import ISelectedProfileInfo from '../SelectedProfileInterface';
 
 type ProfileProps = {
-	profileInfo: {
-		id: string;
-		name: string;
-		male: boolean;
-		female: boolean;
-		location: string;
-		aboutMe: string;
-		avatar: string;
-	};
+	profileInfo: ISelectedProfileInfo;
 	uploadAvatar?: (FormData, string) => any;
 	uploadUrl?: string;
 	cancelAvatar?: () => any;

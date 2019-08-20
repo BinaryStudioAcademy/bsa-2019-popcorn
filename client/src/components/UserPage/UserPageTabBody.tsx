@@ -9,6 +9,7 @@ import UserLists from './UserLists/UserLists';
 import UserWatched from './UserWatched/UserWatched';
 import ProfileComponent from './ProfileComponent/ProfileComponent';
 import UserSurveysNav from './UserSurveys/UserSurveysNav';
+import ISelectedProfileInfo from './SelectedProfileInterface';
 import mock from './Survey/mock';
 import {
 	cancelAvatar,
@@ -20,16 +21,6 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
 const surveys = mock;
-
-interface ISelectedProfileInfo {
-	id: string;
-	name: string;
-	male: boolean;
-	female: boolean;
-	location: string;
-	aboutMe: string;
-	avatar: string;
-}
 
 interface IProps {
 	mainPath: string;
