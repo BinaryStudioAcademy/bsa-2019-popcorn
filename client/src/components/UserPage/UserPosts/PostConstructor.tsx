@@ -9,6 +9,7 @@ import ChooseExtra from './PostExtra/choose-extra';
 import Extra from '././PostExtra/extra';
 
 import { setPost } from '../actions';
+import { fetchPosts } from '../../MainPage/FeedBlock/FeedBlock.redux/actions';
 import { getUsersPosts } from '../../UserPage/actions';
 
 import { uploadFile } from '../../../services/file.service';
@@ -17,6 +18,7 @@ interface IPostConstructorProps {
 	userId: string;
 	setPost: (data: any) => any;
 	getUsersPosts: (data: any) => any;
+	fetchPosts: () => any;
 }
 
 interface IPostConstructorState {
@@ -83,17 +85,14 @@ class PostConstructor extends React.Component<
 
 	onSave() {
 		if (this.state.description.trim() === '') return;
-
-		(async () => {
-			await this.props.setPost(this.state);
-			await this.props.getUsersPosts(this.props.userId);
-			await this.setState({
-				image_url: '',
-				description: '',
-				extraLink: '',
-				extraTitle: ''
-			});
-		})();
+		this.props.setPost(this.state);
+		this.props.fetchPosts();
+		this.setState({
+			image_url: '',
+			description: '',
+			extraLink: '',
+			extraTitle: ''
+		});
 	}
 
 	render() {
@@ -150,7 +149,8 @@ const mapStateToProps = (rootState, props) => ({
 
 const actions = {
 	setPost,
-	getUsersPosts
+	getUsersPosts,
+	fetchPosts
 };
 
 const mapDispatchToProps = dispatch => bindActionCreators(actions, dispatch);
