@@ -4,30 +4,26 @@ import SocketService from '../../../services/socket.service';
 import './DiscussionComponent.scss';
 import config from '../../../config';
 
+export interface IDiscussionUser {
+	avatar?: string;
+	id: string;
+	name: string;
+}
+
+export interface IDiscussionMessage {
+	id: string;
+	text: string;
+	createdAt: string;
+	user: IDiscussionUser;
+}
 interface IDiscussionProps {
-	messages: {
-		id: string;
-		name: string;
-		body: string;
-		photo: string;
-		date: string;
-	}[];
-	userInfo: {
-		avatar?: string;
-		userId: string;
-		username: string;
-	};
+	messages: IDiscussionMessage[];
+	currentUser: IDiscussionUser;
 	movieId: string;
 }
 
 interface IDiscussionState {
-	messagesState: {
-		id: string;
-		name: string;
-		body: string;
-		photo: string;
-		date: string;
-	}[];
+	messagesState: IDiscussionMessage[];
 	inputIsEmpty: boolean;
 }
 
@@ -84,17 +80,17 @@ class DiscussionComponent extends Component<
 
 	sendMessage = () => {
 		if (!this.newMessage.current) return;
-		const { userInfo, movieId } = this.props;
-		const userId = userInfo.userId;
-		const name = userInfo.username;
-		const photo = userInfo.avatar || config.DEFAULT_AVATAR;
-		const body = this.newMessage.current.value;
+		const { currentUser, movieId } = this.props;
+		const id = currentUser.id;
+		const name = currentUser.name;
+		const avatar = currentUser.avatar;
+		const text = this.newMessage.current.value;
 
-		let date = this.getDateString();
+		let createdAt = this.getDateString();
 		const dataMessage = {
-			userInfo: { userId, name, photo },
-			body,
-			date,
+			user: { id, name, avatar },
+			text,
+			createdAt,
 			movieId
 		};
 		this.newMessage.current.value = '';
@@ -106,15 +102,15 @@ class DiscussionComponent extends Component<
 		this.addMessage(dataMessage);
 	};
 
-	addMessage = ({ userInfo: { userId, name, photo }, body, date }) => {
-		const isMyMessage = userId === this.props.userInfo.userId;
+	addMessage = ({ user: { id, name, avatar }, text, createdAt }) => {
+		const isMyMessage = id === this.props.currentUser.id;
 		name = isMyMessage ? 'Me' : name;
+		avatar = avatar || config.DEFAULT_AVATAR;
 		let newMessageItem = {
 			id: (Math.random() * (9000 - 1) + 1).toString(),
-			name,
-			photo,
-			body,
-			date
+			text,
+			createdAt,
+			user: { id, name, avatar }
 		};
 		let arr = this.state.messagesState;
 		arr.push(newMessageItem);
@@ -146,13 +142,20 @@ class DiscussionComponent extends Component<
 				<div className="MessageContainer" ref={this.discussionComponent}>
 					{messages.map(message => (
 						<div className="messageItem" key={message.id}>
-							<img src={message.photo} alt="userPhoto" />
+							<img
+								src={message.user.avatar || config.DEFAULT_AVATAR}
+								alt="userPhoto"
+							/>
 							<div className="messageBody">
 								<div className="messageInfo">
-									<div className="name">{message.name}</div>
-									<div className="date">{message.date}</div>
+									<div className="name">
+										{message.user.id === this.props.currentUser.id
+											? 'Me'
+											: message.user.name}
+									</div>
+									<div className="date">{message.createdAt}</div>
 								</div>
-								<div className="body">{message.body}</div>
+								<div className="body">{message.text}</div>
 							</div>
 						</div>
 					))}

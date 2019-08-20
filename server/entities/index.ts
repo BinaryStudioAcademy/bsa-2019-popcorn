@@ -15,7 +15,7 @@ import { SurveysQuestion } from "./SurveysQuestion";
 import { SurveysQuestionAnswer } from "./SurveysQuestionAnswer";
 import { SurveysQuestionOption } from "./SurveysQuestionOption";
 import { MovieRate } from "./MovieRate/MovieRate";
-
+import { Discussion } from "./Discussion";
 export default [
   User,
   Post,
@@ -34,5 +34,6 @@ export default [
   SurveysQuestion,
   SurveysQuestionAnswer,
   SurveysQuestionOption,
-  MovieRate
+  MovieRate,
+  Discussion
 ];
