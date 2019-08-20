@@ -8,6 +8,8 @@ import {
 import { faCamera } from '@fortawesome/free-solid-svg-icons/faCamera';
 import ImageUploader from '../ImageUploader/ImageUploader';
 import { uploadFile } from '../../../services/file.service';
+import TMovie from '../../MovieSeriesPage/TMovie';
+import MovieList from '../../MovieList/MovieList';
 
 interface IPostStoryEditorProps {
 	id?: string;
@@ -15,12 +17,17 @@ interface IPostStoryEditorProps {
 	saveImage: (url: string) => void;
 	body: string;
 	imageUrl: string;
-	changeBody: (text: string, start: number, end: number) => any;
+	changeBody: (text: string, start: number, end: number, title: string) => any;
 	changeActivity?: (
 		type: string,
 		activity: null | { id: string; name: string }
 	) => any;
 	cursorPosition: { start: number; end: number };
+	movies: null | Array<TMovie>;
+	fetchSearch?: (title: string) => any;
+	title?: string;
+	resetSearch?: () => any;
+	saveMovie?: (movie: TMovie) => any;
 }
 
 interface IPostStoryEditorState {
@@ -61,6 +68,7 @@ class PostStoryEditor extends React.Component<
 		// 	checkboxValue: !this.state.checkboxValue
 		// });
 	}
+
 	componentDidMount() {
 		if (this.textarea.current) {
 			this.textarea.current.selectionStart = this.props.cursorPosition.start;
@@ -85,7 +93,26 @@ class PostStoryEditor extends React.Component<
 		this.props.saveImage(data);
 	}
 
+	static findMovie(str: string) {
+		let find = str.match(/\$(.+)(.*?)(\s*?)/g);
+		if (find && find[0]) {
+			find = find[0].split(' ');
+			if (find) return find[0].slice(1);
+		}
+		return '';
+	}
+
 	render() {
+		const changeBody = (e, title) => {
+			this.props.changeBody(
+				e.target.value,
+				this.textarea.current !== null
+					? this.textarea.current.selectionStart
+					: 2,
+				this.textarea.current ? this.textarea.current.selectionEnd : 0,
+				title
+			);
+		};
 		return (
 			<div className={'edit-form'}>
 				{this.state.errorMsg && (
@@ -128,13 +155,18 @@ class PostStoryEditor extends React.Component<
 					placeholder="Type a text here..."
 					defaultValue={this.props.body}
 					onChange={e => {
-						this.props.changeBody(
-							e.target.value,
-							this.textarea.current !== null
-								? this.textarea.current.selectionStart
-								: 2,
-							this.textarea.current ? this.textarea.current.selectionEnd : 0
-						);
+						const title = PostStoryEditor.findMovie(e.target.value);
+						if (title.trim() && title.trim() !== this.props.title) {
+							if (this.props.fetchSearch) {
+								this.props.fetchSearch(title);
+
+								return changeBody(e, title.trim());
+							}
+						}
+						changeBody(e, this.props.title);
+
+						if (!title.trim() && this.props.title && this.props.resetSearch)
+							this.props.resetSearch();
 					}}
 					autoFocus
 					onFocus={function(e) {
@@ -157,6 +189,23 @@ class PostStoryEditor extends React.Component<
 								className={'fontAwesomeIcon'}
 							/>
 						</span>
+					</div>
+				)}
+				{this.props.movies && (
+					<div className={'movie-list-wrp'}>
+						{this.props.movies.length > 0 ? (
+							<MovieList
+								movies={this.props.movies}
+								saveMovie={movie => {
+									if (this.props.saveMovie && this.props.resetSearch) {
+										this.props.saveMovie(movie);
+										this.props.resetSearch();
+									}
+								}}
+							/>
+						) : (
+							<div>Not found</div>
+						)}
 					</div>
 				)}
 				{/*<div className="footer">*/}

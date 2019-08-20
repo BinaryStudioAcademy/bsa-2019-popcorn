@@ -61,10 +61,13 @@ class UserEvents extends React.Component<IProps, IState> {
 		}
 	};
 
-	isOwnEvent = (event) => {
+	isOwnEvent = event => {
 		const { userId } = event;
-		return this.props.currentUserId === userId || this.props.currentUserRole === 'admin';
-	}
+		return (
+			this.props.currentUserId === userId ||
+			this.props.currentUserRole === 'admin'
+		);
+	};
 
 	renderEventList = (eventList: IEventFormatClient[], deleteEventAction: any) =>
 		eventList.map(event => (

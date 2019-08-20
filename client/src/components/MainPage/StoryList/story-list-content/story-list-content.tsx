@@ -45,6 +45,7 @@ class StoryListContent extends Component<IStoryListItemsProps> {
 		const storyList = storyListItems.map((item, i) => {
 			if (item.type === 'voting' && item.voting) {
 				const voting = item.voting;
+				const avatar = item.user.avatar;
 				return (
 					<div
 						className={'story-list-item-wrapper voting-wrp'}
@@ -55,7 +56,7 @@ class StoryListContent extends Component<IStoryListItemsProps> {
 						<img
 							alt="avatar"
 							className="avatar avatar-story avatar-voting"
-							src={config.DEFAULT_AVATAR}
+							src={avatar || config.DEFAULT_AVATAR}
 						/>
 						<StoryVoting
 							header={voting.header}

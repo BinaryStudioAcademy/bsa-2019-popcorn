@@ -7,4 +7,6 @@ export class Story {
   user: User;
   type: string;
   activityId: string;
+  movieId: string;
+  movieOption: string;
 }

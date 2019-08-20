@@ -7,7 +7,7 @@ type TMovie = {
 	genres: string;
 	overview: string;
 	budget: number;
-	vote_average: number;
+	vote_average: string;
 	video: string;
 	cast: string;
 };
