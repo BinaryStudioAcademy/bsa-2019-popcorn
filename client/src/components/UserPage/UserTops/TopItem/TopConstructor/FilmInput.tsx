@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import closeIcon from '../../../../../assets/icons/general/closeIcon.svg';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { clearSearch } from '../../../../MovieSeriesPage/Movie.redux/actions';
+import { clearSearch } from '../../../../MovieSeriesPage/Movie.redux/actions'; //fix
 import { fetchFilms } from '../../actions';
 import { IMovie } from '../TopItem';
 
@@ -13,7 +13,7 @@ interface IInputProps {
 	fetchFilms: (title: string) => void;
 	movieList: Array<any>; //movies from elastic search
 	clearSearch: () => void;
-	saveMovie: (movie: IMovie) => void;
+	saveMovie: (movie: IMovie, newId?: string) => void;
 	last?: boolean;
 }
 const FilmInput: React.FC<IInputProps> = ({
@@ -36,10 +36,10 @@ const FilmInput: React.FC<IInputProps> = ({
 		setIsChoosenTitle(false);
 	}
 
-	function changeTitle({ movieId, title }) {
+	function changeTitle({ newId, title }) {
 		setTitle(title);
 		setIsChoosenTitle(true);
-		saveMovie({ ...movie, id: movieId, title, comment });
+		saveMovie({ ...movie, title, comment }, newId);
 	}
 
 	return (
@@ -65,20 +65,22 @@ const FilmInput: React.FC<IInputProps> = ({
 			{!isChosenTitle && alreadySearch && isFocused ? (
 				<div className="modal modal-top">
 					{movieList && movieList.length > 0 ? (
-						movieList.map((searchedMovie, index) => (
-							<div
-								className="hover"
-								key={index}
-								onClick={() =>
-									changeTitle({
-										movieId: movie.id,
-										title: searchedMovie._source.title
-									})
-								}
-							>
-								{searchedMovie._source.title}
-							</div>
-						))
+						movieList.map((searchedMovie, index) => {
+							return (
+								<div
+									className="hover"
+									key={index}
+									onClick={() => {
+										changeTitle({
+											newId: searchedMovie.id,
+											title: searchedMovie.title
+										});
+									}}
+								>
+									{searchedMovie.title}
+								</div>
+							);
+						})
 					) : (
 						<span>Nothing was found</span>
 					)}
@@ -111,8 +113,8 @@ const FilmInput: React.FC<IInputProps> = ({
 };
 
 const mapStateToProps = (rootState, props) => ({
-	movieList: rootState.movie.elasticSearchMovies,
-	alreadySearch: rootState.movie.alreadyElasticSearch,
+	movieList: rootState.userTops.elasticSearchMovies,
+	alreadySearch: rootState.userTops.alreadySearch,
 	...props
 });
 const actions = {
