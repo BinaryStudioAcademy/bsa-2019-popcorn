@@ -21,6 +21,16 @@ import { bindActionCreators } from 'redux';
 
 const surveys = mock;
 
+interface ISelectedProfileInfo {
+	id: string;
+	name: string;
+	male: boolean;
+	female: boolean;
+	location: string;
+	aboutMe: string;
+	avatar: string;
+}
+
 interface IProps {
 	mainPath: string;
 	uploadAvatar: (FormData, string) => any;
@@ -38,15 +48,7 @@ interface IProps {
 	setAvatar: (url: string, id: string) => any;
 	userPosts?: any; //todo
 	getUsersPosts: (id: string) => any;
-	selectedProfileInfo: {
-		id: string;
-		name: string;
-		male: boolean;
-		female: boolean;
-		location: string;
-		aboutMe: string;
-		avatar: string;
-	};
+	selectedProfileInfo: ISelectedProfileInfo;
 }
 
 const UserPageTabs: React.SFC<IProps> = ({
