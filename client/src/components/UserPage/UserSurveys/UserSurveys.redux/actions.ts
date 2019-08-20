@@ -1,5 +1,6 @@
 import {
 	FETCH_SURVEYS,
+	FETCH_USER_SURVEYS,
 	ADD_SURVEY,
 	UPDATE_SURVEY,
 	DELETE_SURVEY,
@@ -7,10 +8,16 @@ import {
 	GET_SURVEY_BYID
 } from './actionTypes';
 
+export const fetchUserSurveys = id => {
+	return {
+		type: FETCH_USER_SURVEYS,
+		payload: { userId: id }
+	};
+};
+
 export const fetchSurveys = id => {
 	return {
-		type: FETCH_SURVEYS,
-		payload: { userId: id }
+		type: FETCH_SURVEYS
 	};
 };
 

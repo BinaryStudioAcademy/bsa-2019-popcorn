@@ -5,8 +5,8 @@ import MovieRateRepository from "../repository/movieRate.repository";
 import { getCustomRepository, Like, getRepository } from "typeorm";
 import * as elasticRepository from "../repository/movieElastic.repository";
 
-export const getMovies = async (): Promise<any[]> => {
-  let data = await elasticRepository.get();
+export const getMovies = async ({ size, from }): Promise<any[]> => {
+  let data = await elasticRepository.get(size, from);
 
   data = data.hits.hits;
 
@@ -51,8 +51,7 @@ export const getByTitle = async (title: string): Promise<Movie[]> => {
     moviesSet.set(movie.id, movie);
   });
   let response = [];
-  for (let movie of moviesSet.values())
-    response.push(movie);
+  for (let movie of moviesSet.values()) response.push(movie);
   return response;
 };
 

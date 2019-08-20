@@ -5,6 +5,7 @@ import UserSurveys from './UserSurveys';
 import newSurvey from './newSurveyConfig';
 import { connect } from 'react-redux';
 import {
+	fetchUserSurveys,
 	fetchSurveys,
 	addSurvey,
 	updateSurvey,
@@ -23,7 +24,8 @@ import Spinner from '../../shared/Spinner';
 interface IProps {
 	mainPath: string;
 	surveys: any;
-	fetchSurveys: (id: string) => any;
+	fetchUserSurveys: (id: string) => any;
+	fetchSurveys: () => any;
 	addSurvey: (any) => any;
 	updateSurvey: (string, any) => any;
 	deleteSurvey: (string) => any;
@@ -33,6 +35,7 @@ interface IProps {
 		name: string;
 		image_link: string;
 	};
+	type: 'all' | 'specific';
 }
 
 interface IState {
@@ -48,7 +51,9 @@ class UserSurveysNav extends React.Component<IProps, IState> {
 	}
 
 	componentDidMount() {
-		this.props.fetchSurveys(this.props.userInfo.id);
+		if (this.props.type == 'all') this.props.fetchSurveys();
+		else if (this.props.type === 'specific')
+			this.props.fetchUserSurveys(this.props.userInfo.id);
 	}
 
 	static getDerivedStateFromProps(props, state) {
@@ -83,7 +88,7 @@ class UserSurveysNav extends React.Component<IProps, IState> {
 	};
 
 	render() {
-		const { mainPath, userInfo } = this.props;
+		const { mainPath, userInfo, type } = this.props;
 		if (!this.state.surveys) return <Spinner />;
 		return (
 			<Switch>
@@ -96,6 +101,7 @@ class UserSurveysNav extends React.Component<IProps, IState> {
 							updateInfo={this.updateInfo}
 							surveys={this.state.surveys}
 							mainPath={mainPath}
+							type={type}
 							deleteSurvey={this.deleteSurvey}
 						/>
 					)}
@@ -105,6 +111,7 @@ class UserSurveysNav extends React.Component<IProps, IState> {
 					render={() => (
 						<SurveyEditorNav
 							mainPath={`${mainPath}/create`}
+							redirPath={mainPath}
 							surveyInfo={{
 								...newSurvey(),
 								user_id: userInfo.id,
@@ -121,6 +128,7 @@ class UserSurveysNav extends React.Component<IProps, IState> {
 						render={() => (
 							<SurveyEditorNav
 								updateInfo={this.updateInfo}
+								redirPath={mainPath}
 								mainPath={`${mainPath}/${survey.id}`}
 								surveyInfo={survey}
 							/>
@@ -135,10 +143,13 @@ class UserSurveysNav extends React.Component<IProps, IState> {
 const mapStateToProps = (rootState, props) => ({
 	...props,
 	surveys: rootState.survey.surveys,
-	userId: rootState.profile.selectedProfileInfo.id
+	userId: rootState.profile.selectedProfileInfo
+		? rootState.profile.selectedProfileInfo.id
+		: null
 });
 
 const actions = {
+	fetchUserSurveys,
 	fetchSurveys,
 	addSurvey,
 	updateSurvey,
