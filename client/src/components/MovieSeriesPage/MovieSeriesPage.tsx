@@ -10,12 +10,14 @@ import { fetchUserRate, fetchMovie, setUserRate } from './Movie.redux/actions';
 
 interface IProps {
 	fetchedMovie: any;
-	currentUserId: string;
 	userRate: IUserRate;
 	setUserRate: (userRate: any) => object;
 	fetchUserRate: (userId: string, movieId: string) => object;
 	fetchMovie: (movieId: string) => object;
 	match: any;
+	avatar?: string;
+	userId: string;
+	username: string;
 }
 
 export interface IUserRate {
@@ -28,11 +30,13 @@ export interface IUserRate {
 const MovieSeriesPage: React.SFC<IProps> = props => {
 	const {
 		fetchedMovie,
-		currentUserId,
 		userRate,
 		setUserRate,
 		fetchUserRate,
-		fetchMovie
+		fetchMovie,
+		avatar,
+		userId,
+		username
 	} = props;
 	const mainPath = `/movie-series/${props.match.params.id}`;
 
@@ -41,7 +45,7 @@ const MovieSeriesPage: React.SFC<IProps> = props => {
 		return <Spinner />;
 	}
 	if (!userRate || userRate.movieId != props.match.params.id) {
-		fetchUserRate(currentUserId, props.match.params.id);
+		fetchUserRate(userId, props.match.params.id);
 		return <Spinner />;
 	}
 	const movie = fetchedMovie;
@@ -54,16 +58,22 @@ const MovieSeriesPage: React.SFC<IProps> = props => {
 				setUserRate={rateObj => setUserRate(rateObj)}
 			/>
 			<MovieSeriesPageTabs mainPath={mainPath} />
-			<MovieSeriesPageTabBody mainPath={mainPath} movie={movie} />
+			<MovieSeriesPageTabBody
+				mainPath={mainPath}
+				movie={movie}
+				userInfo={{ avatar, userId, username }}
+			/>
 		</div>
 	);
 };
 
-const mapStateToProps = (state, props) => ({
+const mapStateToProps = (rootState, props) => ({
 	...props,
-	currentUserId: state.profile.profileInfo.id,
-	userRate: state.movie.userRate,
-	fetchedMovie: state.movie.fetchedMovie
+	userRate: rootState.movie.userRate,
+	fetchedMovie: rootState.movie.fetchedMovie,
+	avatar: rootState.profile.profileInfo && rootState.profile.profileInfo.avatar,
+	userId: rootState.profile.profileInfo && rootState.profile.profileInfo.id,
+	username: rootState.profile.profileInfo && rootState.profile.profileInfo.name
 });
 
 const mapDispatchToProps = dispatch => {
