@@ -120,5 +120,9 @@ h2 {
 		}
 	}
 }
+.upload-error {
+	color: rgba(255, 0, 0, 0.6);
+	padding: 0 15px;
+}
 
 // the :export directive is the magic sauce for webpack

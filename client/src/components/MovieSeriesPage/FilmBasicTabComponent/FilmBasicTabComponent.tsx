@@ -23,11 +23,12 @@ const solidStar = (key: number, type: boolean): any => (
 	/>
 );
 
-const rateBlock = (rate: number): ReactElement[] => {
+const rateBlock = (rateString: string): ReactElement[] => {
+	const rate = parseFloat(rateString);
 	const res: any = [];
 
 	for (let i = 0; i < 5; i++) {
-		i < rate / 2 ? res.push(solidStar(i, true)) : res.push(solidStar(i, false));
+		i < rate ? res.push(solidStar(i, true)) : res.push(solidStar(i, false));
 	}
 	return res;
 };
