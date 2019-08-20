@@ -119,6 +119,7 @@ const ListBlock = ({ ...props }: IProps) => {
 							title={props.title}
 							resetSearch={props.resetSearch}
 							saveMovie={props.saveMovie}
+							isLoading={props.isLoading}
 						/>
 					)}
 				/>

@@ -77,9 +77,17 @@ export function* fetchElasticSearchFilms(action) {
 
 export function* fetchSearch(action) {
 	try {
+		yield put({
+			type: LOADING,
+			payload: { loading: true }
+		});
 		let movies = yield call(webApi, {
 			endpoint: `${config.API_URL}/api/movie/find?title=${action.payload.title}`,
 			method: 'GET'
+		});
+		yield put({
+			type: LOADING,
+			payload: { loading: false }
 		});
 		yield put({
 			type: SET_SEARCH_MOVIE,
