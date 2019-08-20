@@ -3,7 +3,8 @@ import {
 	ADD_SURVEY,
 	UPDATE_SURVEY,
 	DELETE_SURVEY,
-	RECREATE_SURVEY
+	RECREATE_SURVEY,
+	GET_SURVEY_BYID
 } from './actionTypes';
 
 export const fetchSurveys = () => {
@@ -38,6 +39,13 @@ export const recreateSurvey = (id, data) => ({
 	type: RECREATE_SURVEY,
 	payload: {
 		data,
+		id
+	}
+});
+
+export const getSurveyById = id => ({
+	type: GET_SURVEY_BYID,
+	payload: {
 		id
 	}
 });

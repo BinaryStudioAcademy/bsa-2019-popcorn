@@ -7,7 +7,6 @@ import ImageUploader from '../../MainPage/ImageUploader/ImageUploader';
 
 import ChooseExtra from './choose-extra';
 import Extra from './extra';
-import ChooseExtraOption from './choose-extra-option';
 
 import { setPost } from '../actions';
 import { getUsersPosts } from '../../UserPage/actions';

@@ -8,7 +8,7 @@ import {
 	faTimesCircle
 } from '@fortawesome/free-solid-svg-icons';
 
-const options = ['top', 'survey'];
+const options = ['survey', 'top', 'vote', 'event'];
 
 interface IPropsExtra {
 	toggleModal: () => any;

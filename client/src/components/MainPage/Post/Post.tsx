@@ -160,11 +160,7 @@ class Post extends PureComponent<IPostProps, IPostState> {
 				)}
 				{description && <div className="post-body">{description}</div>}
 				{content && <PostContent content={content} />}
-				{
-					<NavLink to={`/user-page/surveys/${extraLink}/questions`}>
-						{extraTitle}
-					</NavLink>
-				}
+				{<NavLink to={`${extraLink}`}>{extraTitle}</NavLink>}
 				{reactionsShow}
 				<div className="post-item-action-buttons">
 					<div className="post-item-last-reaction">

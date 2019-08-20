@@ -10,7 +10,7 @@ import ReactTimeAgo from 'react-time-ago';
 import JavascriptTimeAgo from 'javascript-time-ago';
 import en from 'javascript-time-ago/locale/en';
 
-JavascriptTimeAgo.locale(en);
+// JavascriptTimeAgo.locale(en);
 
 interface IProps {
 	surveyInfo: {
@@ -172,7 +172,7 @@ class Survey extends PureComponent<IProps, IState> {
 					<div className="info">
 						<img src={user.image_link} alt="" />
 						<span>{user.name}</span>
-						<ReactTimeAgo date={created_at} timeStyle="twitter" locale="ru" />
+						{/* <ReactTimeAgo date={created_at} timeStyle="twitter" locale="ru" /> */}
 						<span className="participants">
 							{participants} <FontAwesomeIcon icon={faUsers} />
 						</span>

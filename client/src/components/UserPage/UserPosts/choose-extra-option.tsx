@@ -7,28 +7,22 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { Redirect } from 'react-router';
 import { fetchSurveys } from '../UserSurveys/UserSurveys.redux/actions';
+import { getUserEvents } from '../UserEvents/actions';
 import { connect } from 'react-redux';
 
 interface IProps {
 	option: string;
 	survey: any;
+	userEvents: any;
 	loading: boolean;
+	userInfo: {
+		id: string;
+	};
 	toggleModalOption: (data: any) => any;
 	setExtra: (data: any) => any;
 	fetchSurveys: () => any;
+	getUserEvents: (data: string) => any;
 }
-
-const mock = [
-	{
-		name: 'Big Title 1'
-	},
-	{
-		name: 'Title 2'
-	},
-	{
-		name: 'Title 3'
-	}
-];
 
 class ChooseExtraOption extends React.Component<IProps> {
 	state = {
@@ -36,7 +30,14 @@ class ChooseExtraOption extends React.Component<IProps> {
 	};
 
 	componentDidMount() {
-		this.props.fetchSurveys();
+		switch (this.props.option) {
+			case 'survey':
+				this.props.fetchSurveys();
+				break;
+			case 'event':
+				this.props.getUserEvents(this.props.userInfo.id);
+				break;
+		}
 	}
 
 	setOption(data) {
@@ -44,7 +45,18 @@ class ChooseExtraOption extends React.Component<IProps> {
 	}
 
 	render() {
-		const { option, survey = [], loading } = this.props;
+		const { option, survey = [], userEvents = [], loading } = this.props;
+
+		let data: any = [];
+
+		switch (this.props.option) {
+			case 'survey':
+				data = [...survey];
+				break;
+			case 'event':
+				data = [...userEvents];
+				break;
+		}
 
 		if (!this.state.create)
 			return (
@@ -85,12 +97,15 @@ class ChooseExtraOption extends React.Component<IProps> {
 					</div>
 
 					<div className={'recent-created'}>
-						{!loading
-							? survey.map((item, i) => (
+						{data
+							? data.map((item, i) => (
 									<span
 										key={i}
 										onClick={() =>
-											this.setOption({ title: item.title, link: item.id })
+											this.setOption({
+												title: item.title,
+												link: `/${option}-page/${item.id}`
+											})
 										}
 									>
 										{item.title}
@@ -106,11 +121,14 @@ class ChooseExtraOption extends React.Component<IProps> {
 
 const mapStateToProps = rootState => ({
 	survey: rootState.survey.surveys,
-	loading: rootState.survey.loading
+	loading: rootState.survey.loading,
+	userEvents: rootState.events.userEvents,
+	userInfo: rootState.profile.profileInfo
 });
 
 const mapDispatchToProps = {
-	fetchSurveys
+	fetchSurveys,
+	getUserEvents
 };
 
 export default connect(

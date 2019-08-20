@@ -5,7 +5,9 @@ import {
 	ADD_SURVEY,
 	UPDATE_SURVEY,
 	DELETE_SURVEY,
-	RECREATE_SURVEY
+	RECREATE_SURVEY,
+	SET_SURVEY_BYID,
+	GET_SURVEY_BYID
 } from './actionTypes';
 import webApi from '../../../../services/webApi.service';
 import config from '../../../../config';
@@ -87,6 +89,34 @@ function* watchDelete() {
 	yield takeEvery(DELETE_SURVEY, deleteSurvey);
 }
 
+function* getSurveyById(action) {
+	try {
+		const data = yield call(webApi, {
+			method: 'GET',
+			endpoint: config.API_URL + '/api/surveys/' + action.payload.id
+		});
+
+		const question = yield call(webApi, {
+			method: 'GET',
+			endpoint: config.API_URL + `/api/surveys/${data.id}/question`
+		});
+
+		data.questions = question;
+
+		if (data)
+			yield put({
+				type: SET_SURVEY_BYID,
+				payload: { survey: data, loading: false }
+			});
+	} catch (e) {
+		console.log('survey saga get by id: ', e.message);
+	}
+}
+
+function* watchgetSurveyById() {
+	yield takeEvery(GET_SURVEY_BYID, getSurveyById);
+}
+
 function* recreateSurvey(action) {
 	try {
 		const deletedData = yield call(webApi, {
@@ -118,6 +148,7 @@ export default function* survey() {
 		watchAdd(),
 		watchUpdate(),
 		watchDelete(),
-		watchRecreate()
+		watchRecreate(),
+		watchgetSurveyById()
 	]);
 }
