@@ -57,6 +57,7 @@ interface IProps {
 	surveyInfo: ISurvey;
 	updateInfo: (ISurvey) => void;
 	saveInfo: (ISurvey) => void;
+	redirPath: string;
 }
 
 interface IState {
@@ -258,7 +259,7 @@ class SurveyEditor extends Component<IProps, IState> {
 	};
 
 	render() {
-		const { mainPath } = this.props;
+		const { mainPath, redirPath } = this.props;
 		const { title, description, questions } = this.state.surveyInfo;
 
 		return (
@@ -374,7 +375,7 @@ class SurveyEditor extends Component<IProps, IState> {
 						>
 							Add question
 						</button>
-						<NavLink to={'/user-page/' + this.props.surveyInfo.user_id}>
+						<NavLink to={redirPath}>
 							<button
 								type="button"
 								onClick={this.onSave}
