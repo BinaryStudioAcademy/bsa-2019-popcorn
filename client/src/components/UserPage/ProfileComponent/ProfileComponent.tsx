@@ -85,6 +85,12 @@ class ProfileComponent extends Component<ProfileProps, IProfileComponentState> {
 		});
 	};
 
+	onEditCancel = () => {
+		this.setState({
+			isEditing: false
+		});
+	};
+
 	handleUploadFile(e) {
 		this.setState({ errorMsg: '' });
 
@@ -268,7 +274,10 @@ class ProfileComponent extends Component<ProfileProps, IProfileComponentState> {
 							</div>
 						</div>
 					) : (
-						<ProfileEditor user={this.props.profileInfo} />
+						<ProfileEditor
+							user={this.props.profileInfo}
+							onEditCancel={this.onEditCancel}
+						/>
 					)}
 				</div>
 			</div>
