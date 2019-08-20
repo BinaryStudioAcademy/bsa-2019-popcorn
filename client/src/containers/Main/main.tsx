@@ -16,6 +16,7 @@ import { connect } from 'react-redux';
 import Spinner from '../../components/shared/Spinner';
 import {
 	fetchMovieList,
+	loadMoreMovie,
 	setMovieSeries
 } from '../../components/MovieSeriesPage/Movie.redux/actions';
 import Header from '../../components/shared/Header/Header';
@@ -43,14 +44,27 @@ interface IProps {
 	fetchMovieList: () => any;
 	setMovieSeries: (movie: any) => any;
 	movieSeries: null | TMovie;
+	loadMoreMovie: (size: number, from: number) => any;
 }
 
-const MovieListRender = (movieList, fetchMovieList, setMovieSeries) => {
+const MovieListRender = (
+	movieList,
+	fetchMovieList,
+	setMovieSeries,
+	loadMoreMovie
+) => {
 	if (!movieList) {
 		fetchMovieList();
 		return <Spinner />;
 	}
-	return <MovieList movies={movieList} setMovieSeries={setMovieSeries} />;
+	return (
+		<MovieList
+			movies={movieList}
+			setMovieSeries={setMovieSeries}
+			twoColumns={true}
+			loadMoreMovie={loadMoreMovie}
+		/>
+	);
 };
 
 const MovieSeriesRender = props => {
@@ -63,7 +77,8 @@ const Main = ({
 	movieList,
 	fetchMovieList,
 	setMovieSeries,
-	movieSeries
+	movieSeries,
+	loadMoreMovie
 }: IProps) => {
 	if (!isAuthorized || !localStorage.getItem('token'))
 		return <Redirect to="/login" />;
@@ -88,7 +103,12 @@ const Main = ({
 						<Route
 							path={`/movie-list`}
 							render={() =>
-								MovieListRender(movieList, fetchMovieList, setMovieSeries)
+								MovieListRender(
+									movieList,
+									fetchMovieList,
+									setMovieSeries,
+									loadMoreMovie
+								)
 							}
 						/>
 						<Route path={`/movie-tops`} render={() => <UserTops />} />
@@ -110,7 +130,8 @@ const mapStateToProps = (rootState, props) => ({
 
 const actions = {
 	fetchMovieList,
-	setMovieSeries
+	setMovieSeries,
+	loadMoreMovie
 };
 
 const mapDispatchToProps = dispatch => bindActionCreators(actions, dispatch);
