@@ -16,6 +16,7 @@ import {
 	LOAD_MORE_MOVIE,
 	LOADING,
 	SET_ElASTIC_MOVIE_LIST,
+	SET_LOAD_MORE_MOVIE,
 	SET_MOVIE_LIST,
 	SET_SEARCH_MOVIE,
 	SET_SEARCH_MOVIE_TO_ADD,
@@ -206,7 +207,7 @@ export function* loadMoreMovie(action) {
 			method: 'GET'
 		});
 		yield put({
-			type: LOAD_MORE_MOVIE,
+			type: SET_LOAD_MORE_MOVIE,
 			payload: {
 				movies: data
 			}

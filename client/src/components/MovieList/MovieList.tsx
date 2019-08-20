@@ -3,6 +3,7 @@ import './MovieList.scss';
 import MovieListItem from './MovieListItem/MovieListItem';
 import TMovie from '../MovieSeriesPage/TMovie';
 import InfiniteScroll from 'react-infinite-scroll-component';
+import Spinner from '../shared/Spinner';
 
 interface IMovieListProps {
 	movies: Array<TMovie>;
@@ -12,11 +13,14 @@ interface IMovieListProps {
 	loadMoreMovie?: (size: number, from: number) => any;
 }
 
+const filter = { from: 50, size: 50 };
+
 const MovieList: React.FC<IMovieListProps> = ({
 	movies,
 	setMovieSeries,
 	saveMovie,
-	twoColumns = false
+	twoColumns = false,
+	loadMoreMovie
 }) => {
 	if (!movies) return <div>Any movie in list</div>;
 	const movieListItems = movies.map(movie => {
@@ -29,14 +33,27 @@ const MovieList: React.FC<IMovieListProps> = ({
 			/>
 		);
 	});
-
+	const next = () => {
+		console.log('next');
+		if (loadMoreMovie) {
+			loadMoreMovie(filter.size, filter.from);
+			filter.from = filter.from + filter.size;
+		}
+	};
 	const style = twoColumns
 		? { display: 'grid', gridTemplateColumns: '.5fr .5fr' }
 		: {};
 	return (
-		<div className="movie-list" style={style}>
-			{movieListItems}
-		</div>
+		<InfiniteScroll
+			dataLength={movieListItems.length}
+			next={next}
+			loader={<Spinner />}
+			hasMore={true}
+		>
+			<div className="movie-list" style={style}>
+				{movieListItems}
+			</div>
+		</InfiniteScroll>
 	);
 };
 

@@ -47,7 +47,12 @@ interface IProps {
 	loadMoreMovie: (size: number, from: number) => any;
 }
 
-const MovieListRender = (movieList, fetchMovieList, setMovieSeries) => {
+const MovieListRender = (
+	movieList,
+	fetchMovieList,
+	setMovieSeries,
+	loadMoreMovie
+) => {
 	if (!movieList) {
 		fetchMovieList();
 		return <Spinner />;
@@ -57,6 +62,7 @@ const MovieListRender = (movieList, fetchMovieList, setMovieSeries) => {
 			movies={movieList}
 			setMovieSeries={setMovieSeries}
 			twoColumns={true}
+			loadMoreMovie={loadMoreMovie}
 		/>
 	);
 };
@@ -71,7 +77,8 @@ const Main = ({
 	movieList,
 	fetchMovieList,
 	setMovieSeries,
-	movieSeries
+	movieSeries,
+	loadMoreMovie
 }: IProps) => {
 	if (!isAuthorized || !localStorage.getItem('token'))
 		return <Redirect to="/login" />;
@@ -96,7 +103,12 @@ const Main = ({
 						<Route
 							path={`/movie-list`}
 							render={() =>
-								MovieListRender(movieList, fetchMovieList, setMovieSeries)
+								MovieListRender(
+									movieList,
+									fetchMovieList,
+									setMovieSeries,
+									loadMoreMovie
+								)
 							}
 						/>
 						<Route path={`/movie-tops`} render={() => <UserTops />} />
