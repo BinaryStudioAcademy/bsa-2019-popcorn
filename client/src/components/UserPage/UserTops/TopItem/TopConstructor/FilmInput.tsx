@@ -1,9 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import closeIcon from '../../../../../assets/icons/general/closeIcon.svg';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { clearSearch } from '../../../../MovieSeriesPage/Movie.redux/actions'; //fix
-import { fetchFilms } from '../../UserTops.redux/actions';
+import { fetchFilms, clearSearch } from '../../UserTops.redux/actions';
 import { IMovie } from '../TopItem';
 
 interface IInputProps {
@@ -28,6 +27,10 @@ const FilmInput: React.FC<IInputProps> = ({
 }) => {
 	const [title, setTitle] = useState(movie.title);
 	const [comment, setComment] = useState(movie.comment);
+	useEffect(() => {
+		if (movie.title === '') setTitle('');
+		if (movie.comment === '') setComment('');
+	});
 	const [isChosenTitle, setIsChoosenTitle] = useState(false);
 	const [isFocused, setFocused] = useState(false);
 	function searchFilms(title: string) {
@@ -40,6 +43,7 @@ const FilmInput: React.FC<IInputProps> = ({
 		setTitle(title);
 		setIsChoosenTitle(true);
 		saveMovie({ ...movie, title, comment }, newId);
+		clearSearch();
 	}
 
 	return (
@@ -57,9 +61,9 @@ const FilmInput: React.FC<IInputProps> = ({
 				value={title}
 				onFocus={() => setFocused(true)}
 				onBlur={() => {
-					clearSearch();
 					if (title.trim() === '' && comment.trim() === '' && !last)
 						deleteFilmInput(movie.id);
+					if (!last) clearSearch();
 				}}
 			/>
 			{!isChosenTitle && alreadySearch && isFocused ? (
