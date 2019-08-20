@@ -32,7 +32,6 @@ class ChooseExtraOption extends React.Component<IProps> {
 	componentDidMount() {
 		switch (this.props.option) {
 			case 'survey':
-				console.log('hello');
 				this.props.fetchUserSurveys(this.props.userInfo.id);
 				break;
 			case 'event':
@@ -59,15 +58,22 @@ class ChooseExtraOption extends React.Component<IProps> {
 				break;
 		}
 
-		if (!this.state.create)
-			return (
+		if (!this.state.create) {
+			console.log('here', option);
+			return option === 'survey' ? (
+				<Redirect
+					to={{
+						pathname: `/user-page/${this.props.userInfo.id}/${option}s/create/questions?backTo=post`
+					}}
+				/>
+			) : (
 				<Redirect
 					to={{
 						pathname: `/user-page/${this.props.userInfo.id}/${option}s`
 					}}
 				/>
 			);
-
+		}
 		const create = () => this.setState({ create: false });
 
 		return (

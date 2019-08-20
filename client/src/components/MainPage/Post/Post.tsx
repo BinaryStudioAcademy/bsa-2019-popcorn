@@ -3,8 +3,8 @@ import AddComment from '../../shared/AddComment/AddComment';
 import './Post.scss';
 import { ReactComponent as SettingIcon } from '../../../assets/icons/general/settings.svg';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faHeart } from '@fortawesome/free-regular-svg-icons';
-import { faShare } from '@fortawesome/free-solid-svg-icons';
+import { faHeart, faCalendarAlt } from '@fortawesome/free-regular-svg-icons';
+import { faShare, faTasks, faTrophy } from '@fortawesome/free-solid-svg-icons';
 import Comment from '../Comment/Comment';
 import Tag from '../Tag/Tag';
 import PostEditModal from '../PostEditModal/PostEditModal';
@@ -138,6 +138,8 @@ class Post extends PureComponent<IPostProps, IPostState> {
 			}
 		} = this.props;
 
+		const linkType = extraLink ? extraLink.split('/')[1] : extraLink;
+
 		const reactionsShow = this.state.hover ? (
 			<Reactions
 				onReactionClick={this.onReactionClick}
@@ -172,7 +174,18 @@ class Post extends PureComponent<IPostProps, IPostState> {
 				)}
 				{description && <div className="post-body">{description}</div>}
 				{content && <PostContent content={content} />}
-				{<NavLink to={`${extraLink}`}>{extraTitle}</NavLink>}
+				{extraTitle && (
+					<div className="extra">
+						{linkType === 'event-page' && (
+							<FontAwesomeIcon icon={faCalendarAlt} />
+						)}
+						{linkType === 'survey-page' && <FontAwesomeIcon icon={faTasks} />}
+						{linkType === 'top-page' && <FontAwesomeIcon icon={faTrophy} />}
+						<span className="extra-link">
+							{<NavLink to={`${extraLink}`}>{extraTitle}</NavLink>}
+						</span>
+					</div>
+				)}
 				{reactionsShow}
 				<div className="post-item-action-buttons">
 					<div className="post-item-last-reaction">
