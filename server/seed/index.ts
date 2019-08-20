@@ -6,7 +6,7 @@ import { SeedPostReaction1565847243749 } from "./1565847243749-SeedPostReaction"
 import { SeedSurvey1566123343520 } from "./1566123343520-SeedSurvey";
 import { SeedVoting1565848454004 } from "./1565848454004-SeedVoting";
 import { SeedSurveyAnswers1565963322768 } from "./1565963322768-SeedSurveyAnswers";
-import { SeedAdmin1566138938621 } from './1566138938621-SeedAdmin';
+import { SeedAdmin1566138938621 } from "./1566138938621-SeedAdmin";
 
 export default [
   SeedUsers1565158741121,
