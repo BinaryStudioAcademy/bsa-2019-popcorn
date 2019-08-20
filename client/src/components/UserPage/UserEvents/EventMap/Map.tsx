@@ -49,7 +49,7 @@ export interface State {
 	query: string;
 	options: Place[];
 	selected?: Place;
-	center: [number, number];
+	center?: [number, number];
 }
 
 const req = (url: string, body?: any, method = 'GET') =>
@@ -74,7 +74,7 @@ class MapComponent extends React.Component<Props, State> {
 		query: '',
 		options: [],
 		selected: undefined,
-		center: [-0.1148677, 51.5139573]
+		center: undefined
 	};
 
 	private fetch = (query: string) => {
@@ -82,13 +82,11 @@ class MapComponent extends React.Component<Props, State> {
 			.then((res: any) => res.json())
 			.then((data: any) => {
 				this.setState({
-					options: data.features
-						.filter((place: any) => place.place_type.includes('poi'))
-						.map((poi: any) => ({
-							id: poi.id,
-							center: poi.center,
-							name: poi.text
-						}))
+					options: data.features.map((poi: any) => ({
+						id: poi.id,
+						center: poi.center,
+						name: poi.text
+					}))
 				});
 			});
 	};
@@ -132,7 +130,11 @@ class MapComponent extends React.Component<Props, State> {
 					onSelectItem={this.onSelectItem}
 					options={options}
 				/>
-				<Map style={styles.basic} containerStyle={mapStyle} center={center}>
+				<Map
+					style={styles.basic}
+					containerStyle={mapStyle}
+					center={center || currentLocation || [30, 50]}
+				>
 					{(selected && (
 						<Layer
 							type="circle"
