@@ -1,6 +1,7 @@
 import { all, takeEvery, call, put } from '@redux-saga/core/effects';
 import {
 	FETCH_SURVEYS,
+	FETCH_USER_SURVEYS,
 	SET_SURVEYS,
 	ADD_SURVEY,
 	UPDATE_SURVEY,
@@ -11,11 +12,35 @@ import webApi from '../../../../services/webApi.service';
 import config from '../../../../config';
 import { setArrangementInSurveys } from '../UserSurveys.service';
 
-export function* fetchSurveys(action) {
+export function* fetchUserSurveys(action) {
 	try {
 		const data = yield call(webApi, {
 			method: 'GET',
 			endpoint: config.API_URL + '/api/surveys/user/' + action.payload.userId
+		});
+		if (data) {
+			setArrangementInSurveys(data);
+		}
+		yield put({
+			type: SET_SURVEYS,
+			payload: {
+				surveys: data
+			}
+		});
+	} catch (e) {
+		console.log('survey saga fetch surveys: ', e.message);
+	}
+}
+
+function* watchFetchUser() {
+	yield takeEvery(FETCH_USER_SURVEYS, fetchUserSurveys);
+}
+
+export function* fetchSurveys() {
+	try {
+		const data = yield call(webApi, {
+			method: 'GET',
+			endpoint: config.API_URL + '/api/surveys'
 		});
 		if (data) {
 			setArrangementInSurveys(data);
@@ -116,6 +141,7 @@ function* watchRecreate() {
 
 export default function* survey() {
 	yield all([
+		watchFetchUser(),
 		watchFetch(),
 		watchAdd(),
 		watchUpdate(),

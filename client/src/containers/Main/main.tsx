@@ -20,6 +20,7 @@ import {
 } from '../../components/MovieSeriesPage/Movie.redux/actions';
 import Header from '../../components/shared/Header/Header';
 import UserTops from '../../components/UserPage/UserTops/UserTops';
+import UserSurveysNav from '../../components/UserPage/UserSurveys/UserSurveysNav';
 import SocketService from '../../services/socket.service';
 import TMovie from '../../components/MovieSeriesPage/TMovie';
 
@@ -57,6 +58,17 @@ const MovieSeriesRender = props => {
 	return <MovieSeriesPage {...props} />;
 };
 
+const allSurveysRender = props => {
+	return (
+		<UserSurveysNav
+			id={props.id}
+			userInfo={props}
+			mainPath={'/surveys-list/'}
+			type="all"
+		/>
+	);
+};
+
 const Main = ({
 	isAuthorized,
 	userInfo,
@@ -91,6 +103,10 @@ const Main = ({
 								MovieListRender(movieList, fetchMovieList, setMovieSeries)
 							}
 						/>
+						<Route
+							path={`/surveys-list`}
+							render={() => allSurveysRender(userInfo)}
+						></Route>
 						<Route path={`/movie-tops`} render={() => <UserTops />} />
 						<Route path={`/*`} exact component={NotFound} />
 					</Switch>
