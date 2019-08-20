@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import closeIcon from '../../../../../assets/icons/general/closeIcon.svg';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { clearSearch } from '../../../../MovieSeriesPage/Movie.redux/actions';
+import { clearSearch } from '../../../../MovieSeriesPage/Movie.redux/actions'; //fix
 import { fetchFilms } from '../../actions';
 import { IMovie } from '../TopItem';
 
@@ -65,20 +65,24 @@ const FilmInput: React.FC<IInputProps> = ({
 			{!isChosenTitle && alreadySearch && isFocused ? (
 				<div className="modal modal-top">
 					{movieList && movieList.length > 0 ? (
-						movieList.map((searchedMovie, index) => (
-							<div
-								className="hover"
-								key={index}
-								onClick={() =>
-									changeTitle({
-										movieId: movie.id,
-										title: searchedMovie._source.title
-									})
-								}
-							>
-								{searchedMovie._source.title}
-							</div>
-						))
+						movieList.map((searchedMovie, index) => {
+							console.log('hrete', searchedMovie);
+							return (
+								<div
+									className="hover"
+									key={index}
+									onClick={() => {
+										console.log(searchedMovie);
+										changeTitle({
+											movieId: searchedMovie.id,
+											title: searchedMovie.title
+										});
+									}}
+								>
+									{searchedMovie.title}
+								</div>
+							);
+						})
 					) : (
 						<span>Nothing was found</span>
 					)}
@@ -111,8 +115,8 @@ const FilmInput: React.FC<IInputProps> = ({
 };
 
 const mapStateToProps = (rootState, props) => ({
-	movieList: rootState.movie.elasticSearchMovies,
-	alreadySearch: rootState.movie.alreadyElasticSearch,
+	movieList: rootState.userTops.elasticSearchMovies,
+	alreadySearch: rootState.userTops.alreadySearch,
 	...props
 });
 const actions = {

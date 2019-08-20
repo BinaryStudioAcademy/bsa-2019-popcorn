@@ -1,8 +1,10 @@
-import { SET_TOP_IMAGE } from './actionTypes';
+import { SET_TOP_IMAGE, SET_ElASTIC_MOVIE_LIST } from './actionTypes';
 
 const initialState = {
 	uploadUrl: null,
-	urlForTop: null
+	urlForTop: null,
+	alreadySearch: false,
+	elasticSearchMovies: null
 };
 export default function(state = initialState, action) {
 	switch (action.type) {
@@ -12,6 +14,15 @@ export default function(state = initialState, action) {
 				...state,
 				uploadUrl,
 				urlForTop: topId
+			};
+		}
+		case SET_ElASTIC_MOVIE_LIST: {
+			let { elasticSearchMovies } = action.payload;
+			console.log('reducer', elasticSearchMovies);
+			return {
+				...state,
+				elasticSearchMovies,
+				alreadySearch: true
 			};
 		}
 		default:
