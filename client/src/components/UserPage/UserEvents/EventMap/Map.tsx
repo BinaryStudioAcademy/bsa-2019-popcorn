@@ -110,6 +110,20 @@ class MapComponent extends React.Component<Props, State> {
 		this.props.onLocationChanged(event.lngLat);
 	};
 
+	private onMapClick = (map: any, event: any) => {
+		if (event) {
+			this.props.onLocationChanged(event.lngLat);
+			this.setState({
+				selected: {
+					id: '1',
+					center: [event.lngLat.lng, event.lngLat.lat],
+					name: 'custom marker'
+				},
+				center: [event.lngLat.lng, event.lngLat.lat]
+			});
+		}
+	};
+
 	public render() {
 		const { options, selected, center } = this.state;
 
@@ -120,8 +134,6 @@ class MapComponent extends React.Component<Props, State> {
 					this.props.currentLocation.lng,
 					this.props.currentLocation.lat
 				];
-
-		console.log(this.props.currentLocation);
 
 		return (
 			<Container>
@@ -134,6 +146,7 @@ class MapComponent extends React.Component<Props, State> {
 					style={styles.basic}
 					containerStyle={mapStyle}
 					center={center || currentLocation || [30, 50]}
+					onClick={this.onMapClick}
 				>
 					{(selected && (
 						<Layer
