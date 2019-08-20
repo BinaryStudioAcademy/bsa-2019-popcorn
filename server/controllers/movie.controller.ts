@@ -1,6 +1,5 @@
 import { Router, NextFunction, Request, Response } from "express";
 import * as movieService from "../services/movie.service";
-import { getByTitle } from "../repository/movieElastic.repository";
 import { Movie } from "../models/MovieModel";
 
 const router = Router();
@@ -18,14 +17,8 @@ router
       .getByTitle(req.query.title)
       .then(movies => res.send(movies))
       .catch(e => {
-        console.log(e.message);
         res.send({ message: e.message });
       })
-      .catch(next)
-  )
-  .get("/elastic", (req: Request, res: Response, next: NextFunction) =>
-    getByTitle(req.query.title)
-      .then((response: Movie[]) => res.send(response))
       .catch(next)
   )
   .get("/:id", (req: any, res: Response, next: NextFunction) =>

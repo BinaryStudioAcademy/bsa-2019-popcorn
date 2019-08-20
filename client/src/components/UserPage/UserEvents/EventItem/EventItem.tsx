@@ -74,10 +74,15 @@ const EventItem: React.FC<IProps> = ({
 							<Moment format=" D MMM HH:mm " local>
 								{String(dateRange.startDate)}
 							</Moment>
-							-
-							<Moment format=" D MMM HH:mm " local>
-								{String(dateRange.endDate)}
-							</Moment>
+							{dateRange.endDate && (
+								<span>
+									{' '}
+									-
+									<Moment format=" D MMM HH:mm " local>
+										{String(dateRange.endDate)}
+									</Moment>
+								</span>
+							)}
 						</div>
 						{isOwnEvent &&
 							(deleteEvent && editEvent !== null ? (

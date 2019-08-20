@@ -42,9 +42,11 @@ class MultipleChoice extends Component<IProps, IQuestion> {
 
 	getNewIndex = () => {
 		if (!this.state.options) return 0;
-		const { index } = this.state.options.reduce((prev, current) => (prev.index > current.index) ? prev : current);
+		const { index } = this.state.options.reduce((prev, current) =>
+			prev.index > current.index ? prev : current
+		);
 		return index + 1;
-	}
+	};
 
 	addOption = () => {
 		const options = this.state.options;

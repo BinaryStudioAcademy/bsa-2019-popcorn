@@ -57,6 +57,7 @@ interface IProps {
 	surveyInfo: ISurvey;
 	updateInfo: (ISurvey) => void;
 	saveInfo: (ISurvey) => void;
+	redirPath: string;
 }
 
 interface IState {
@@ -126,9 +127,11 @@ class SurveyEditor extends Component<IProps, IState> {
 
 	getNewIndex = () => {
 		if (this.state.surveyInfo.questions.length === 0) return 0;
-		const { index } = this.state.surveyInfo.questions.reduce((prev, current) => (prev.index > current.index) ? prev : current);
+		const { index } = this.state.surveyInfo.questions.reduce((prev, current) =>
+			prev.index > current.index ? prev : current
+		);
 		return index + 1;
-	}
+	};
 
 	addQuestion = () => {
 		const id = uuid();
@@ -256,7 +259,7 @@ class SurveyEditor extends Component<IProps, IState> {
 	};
 
 	render() {
-		const { mainPath } = this.props;
+		const { mainPath, redirPath } = this.props;
 		const { title, description, questions } = this.state.surveyInfo;
 
 		return (
@@ -372,7 +375,7 @@ class SurveyEditor extends Component<IProps, IState> {
 						>
 							Add question
 						</button>
-						<NavLink to="/user-page/surveys">
+						<NavLink to={redirPath}>
 							<button
 								type="button"
 								onClick={this.onSave}

@@ -60,9 +60,18 @@ const messages = [
 interface IProps {
 	mainPath: string;
 	movie: TMovie;
+	userInfo: {
+		avatar?: string;
+		userId: string;
+		username: string;
+	};
 }
 
-const MovieSeriesPageTabBody: React.SFC<IProps> = ({ mainPath, movie }) => {
+const MovieSeriesPageTabBody: React.SFC<IProps> = ({
+	mainPath,
+	movie,
+	userInfo
+}) => {
 	return (
 		<div className={'movie-series-page-tab-body'}>
 			<Switch>
@@ -80,7 +89,11 @@ const MovieSeriesPageTabBody: React.SFC<IProps> = ({ mainPath, movie }) => {
 					component={MovieSeriesStatistics}
 				/>
 			</Switch>
-			<DiscussionComponent messages={messages} />
+			<DiscussionComponent
+				movieId={movie.id}
+				messages={messages}
+				userInfo={userInfo}
+			/>
 		</div>
 	);
 };

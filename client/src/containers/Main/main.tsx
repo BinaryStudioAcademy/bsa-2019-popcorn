@@ -93,7 +93,7 @@ const Main = ({
 				<div>
 					<Switch>
 						<Route exact path={[`/`, '/create*']} component={MainPage} />
-						<Route path={`/user-page`} component={UserPage} />
+						<Route path={`/user-page/:id`} component={UserPage} />
 						<Route path={`/event-page`} component={EventPage} />
 						<Route path={`/admin-panel-page`} component={AdminPanelPage} />
 						<Route

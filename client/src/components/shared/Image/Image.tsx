@@ -32,11 +32,16 @@ class Image extends React.Component<IProps, IState> {
 	};
 
 	render() {
-		const { src } = this.state;
-		const { className, alt } = this.props;
+		const { errored } = this.state;
+		const { className, alt, src, defaultSrc } = this.props;
 
 		return (
-			<img src={src} onError={this.onError} alt={alt} className={className} />
+			<img
+				src={errored ? defaultSrc : src}
+				onError={this.onError}
+				alt={alt}
+				className={className}
+			/>
 		);
 	}
 }

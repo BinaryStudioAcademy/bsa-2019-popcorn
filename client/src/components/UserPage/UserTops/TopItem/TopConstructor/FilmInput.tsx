@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import closeIcon from '../../../../../assets/icons/general/closeIcon.svg';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { clearSearch } from '../../../../MovieSeriesPage/Movie.redux/actions';
+import { clearSearch } from '../../../../MovieSeriesPage/Movie.redux/actions'; //fix
 import { fetchFilms } from '../../actions';
 import { IMovie } from '../TopItem';
 
@@ -13,7 +13,8 @@ interface IInputProps {
 	fetchFilms: (title: string) => void;
 	movieList: Array<any>; //movies from elastic search
 	clearSearch: () => void;
-	saveMovie: (movie: IMovie) => void;
+	saveMovie: (movie: IMovie, newId?: string) => void;
+	last?: boolean;
 }
 const FilmInput: React.FC<IInputProps> = ({
 	saveMovie,
@@ -22,7 +23,8 @@ const FilmInput: React.FC<IInputProps> = ({
 	deleteFilmInput,
 	alreadySearch,
 	movieList,
-	fetchFilms
+	fetchFilms,
+	last
 }) => {
 	const [title, setTitle] = useState(movie.title);
 	const [comment, setComment] = useState(movie.comment);
@@ -34,17 +36,18 @@ const FilmInput: React.FC<IInputProps> = ({
 		setIsChoosenTitle(false);
 	}
 
-	function changeTitle({ movieId, title }) {
+	function changeTitle({ newId, title }) {
 		setTitle(title);
 		setIsChoosenTitle(true);
-		saveMovie({ ...movie, id: movieId, title, comment });
+		saveMovie({ ...movie, title, comment }, newId);
 	}
 
 	return (
 		<div key={movie.id} className="film-input-item ">
 			<input
 				onChange={e => {
-					saveMovie({ ...movie, title, comment: e.target.value });
+					const title = e.target.value;
+					saveMovie({ ...movie, title, comment });
 					searchFilms(e.target.value);
 				}}
 				maxLength={140}
@@ -53,42 +56,54 @@ const FilmInput: React.FC<IInputProps> = ({
 				placeholder="Type film here"
 				value={title}
 				onFocus={() => setFocused(true)}
-				onBlur={() => clearSearch()}
+				onBlur={() => {
+					clearSearch();
+					if (title.trim() === '' && comment.trim() === '' && !last)
+						deleteFilmInput(movie.id);
+				}}
 			/>
 			{!isChosenTitle && alreadySearch && isFocused ? (
 				<div className="modal modal-top">
 					{movieList && movieList.length > 0 ? (
-						movieList.map((searchedMovie, index) => (
-							<div
-								className="hover"
-								key={index}
-								onClick={() =>
-									changeTitle({
-										movieId: movie.id,
-										title: searchedMovie._source.title
-									})
-								}
-							>
-								{searchedMovie._source.title}
-							</div>
-						))
+						movieList.map((searchedMovie, index) => {
+							return (
+								<div
+									className="hover"
+									key={index}
+									onClick={() => {
+										changeTitle({
+											newId: searchedMovie.id,
+											title: searchedMovie.title
+										});
+									}}
+								>
+									{searchedMovie.title}
+								</div>
+							);
+						})
 					) : (
 						<span>Nothing was found</span>
 					)}
 				</div>
 			) : null}
-			<img
-				src={closeIcon}
-				onClick={() => deleteFilmInput(movie.id)}
-				alt="close"
-			/>
+			<span>
+				{!last && (
+					<img
+						src={closeIcon}
+						onClick={() => deleteFilmInput(movie.id)}
+						alt="close"
+					/>
+				)}
+			</span>
 
 			<textarea
 				maxLength={140}
-				disabled={title.trim() === ''}
+				disabled={title.trim() === '' && comment.trim() === ''}
 				value={comment}
 				onChange={e => {
-					setComment(e.target.value);
+					const comment = e.target.value;
+					saveMovie({ ...movie, comment });
+					setComment(comment);
 				}}
 				className="film-input comment-film-input"
 				placeholder="Type comment here"
@@ -98,8 +113,8 @@ const FilmInput: React.FC<IInputProps> = ({
 };
 
 const mapStateToProps = (rootState, props) => ({
-	movieList: rootState.movie.elasticSearchMovies,
-	alreadySearch: rootState.movie.alreadyElasticSearch,
+	movieList: rootState.userTops.elasticSearchMovies,
+	alreadySearch: rootState.userTops.alreadySearch,
 	...props
 });
 const actions = {

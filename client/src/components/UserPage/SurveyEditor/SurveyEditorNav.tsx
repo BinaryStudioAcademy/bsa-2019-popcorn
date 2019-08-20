@@ -20,7 +20,7 @@ interface ISurvey {
 	};
 	participants: number;
 	questions: Array<{
-		index: number; 
+		index: number;
 		id: string;
 		survey_id: string;
 		title: string;
@@ -47,12 +47,13 @@ interface ISurvey {
 
 interface IProps {
 	mainPath: string;
+	redirPath: string;
 	surveyInfo: ISurvey;
 	updateInfo: (ISurvey) => void;
 }
 
 const SurveyEditorNav: React.FC<IProps> = (props: IProps) => {
-	const { mainPath, surveyInfo } = props;
+	const { mainPath, surveyInfo, redirPath } = props;
 
 	const [survey, setSurvey] = useState({ ...surveyInfo });
 
@@ -70,6 +71,7 @@ const SurveyEditorNav: React.FC<IProps> = (props: IProps) => {
 						<SurveyEditorBody
 							updateInfo={updateInfo}
 							saveInfo={props.updateInfo}
+							redirPath={redirPath}
 							mainPath={mainPath}
 							surveyInfo={survey}
 						/>
@@ -81,6 +83,7 @@ const SurveyEditorNav: React.FC<IProps> = (props: IProps) => {
 					render={() => (
 						<SurveyEditorBody
 							updateInfo={updateInfo}
+							redirPath={redirPath}
 							mainPath={mainPath}
 							surveyInfo={survey}
 						/>
@@ -93,6 +96,7 @@ const SurveyEditorNav: React.FC<IProps> = (props: IProps) => {
 						<SurveyEditorBody
 							updateInfo={updateInfo}
 							mainPath={mainPath}
+							redirPath={redirPath}
 							surveyInfo={survey}
 						/>
 					)}
@@ -104,6 +108,7 @@ const SurveyEditorNav: React.FC<IProps> = (props: IProps) => {
 						<SurveyEditorBody
 							updateInfo={updateInfo}
 							mainPath={mainPath}
+							redirPath={redirPath}
 							surveyInfo={survey}
 						/>
 					)}

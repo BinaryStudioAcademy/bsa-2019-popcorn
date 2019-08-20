@@ -30,7 +30,7 @@ export function* fetchFilms(action) {
 			endpoint: `${config.API_URL}/api/movie/find?title=${action.payload.text}`,
 			method: 'GET'
 		});
-
+		console.log('da1', films);
 		yield put({
 			type: FINISH_FETCH_SEARCH_FILMS,
 			payload: {
@@ -57,25 +57,6 @@ export function* fetchMovieList() {
 		});
 	} catch (e) {
 		console.log('movie saga fetchMovieList:', e.message);
-	}
-}
-
-export function* fetchElasticSearchFilms(action) {
-	try {
-		let response = yield call(webApi, {
-			endpoint: `${config.API_URL}/api/movie/elastic?title=${action.payload.title}`,
-			method: 'GET'
-		});
-
-		yield put({
-			type: SET_ElASTIC_MOVIE_LIST, //FINISH_SEARCH_ELASTIC_FILMS,
-			payload: {
-				elasticSearchMovies: response.hits.hits
-			}
-		});
-	} catch (e) {
-		console.log(e);
-		// TODO show error
 	}
 }
 
@@ -225,9 +206,6 @@ function* watchFetchMovieList() {
 	yield takeEvery(FETCH_MOVIE_LIST, fetchMovieList);
 }
 
-function* watchFetchElasticSearchFilms() {
-	yield takeEvery(START_SEARCH_ELASTIC_FILMS, fetchElasticSearchFilms);
-}
 
 function* watchFetchSearch() {
 	yield takeEvery(FETCH_SEARCH, fetchSearch);
@@ -257,7 +235,6 @@ export default function* header() {
 	yield all([
 		watchFetchFilms(),
 		watchFetchMovieList(),
-		watchFetchElasticSearchFilms(),
 		watchFetchUserRate(),
 		watchFetchMovie(),
 		watchSetUserRate(),

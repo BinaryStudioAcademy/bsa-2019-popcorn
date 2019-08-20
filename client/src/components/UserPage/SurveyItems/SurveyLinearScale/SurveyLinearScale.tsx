@@ -48,7 +48,11 @@ const SurveyLinearScale = (props: IProps) => {
 		image_link
 	} = questionInfo;
 
-	const sortedOptions = options && options.sort((a,b) => (a.index > b.index) ? 1 : ((b.index > a.index) ? -1 : 0)); 
+	const sortedOptions =
+		options &&
+		options.sort((a, b) =>
+			a.index > b.index ? 1 : b.index > a.index ? -1 : 0
+		);
 	return (
 		<div className="question-container">
 			<p className={`survey-question required-${required}`}>{title}</p>
