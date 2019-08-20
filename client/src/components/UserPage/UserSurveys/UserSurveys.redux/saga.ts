@@ -132,12 +132,6 @@ function* getSurveyById(action) {
 		}
 
 		const formattedData = transformDataToProps(surveys);
-		// const question = yield call(webApi, {
-		// 	method: 'GET',
-		// 	endpoint: config.API_URL + `/api/surveys/${data.id}/question`
-		// });
-
-		// data.questions = question;
 
 		if (data)
 			yield put({

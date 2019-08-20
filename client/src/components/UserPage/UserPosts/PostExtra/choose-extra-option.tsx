@@ -6,7 +6,7 @@ import {
 	faPlus
 } from '@fortawesome/free-solid-svg-icons';
 import { Redirect } from 'react-router';
-import { fetchSurveys } from '../../UserSurveys/UserSurveys.redux/actions';
+import { fetchUserSurveys } from '../../UserSurveys/UserSurveys.redux/actions';
 import { getUserEvents } from '../../UserEvents/actions';
 import { connect } from 'react-redux';
 
@@ -20,7 +20,7 @@ interface IProps {
 	};
 	toggleModalOption: (data: any) => any;
 	setExtra: (data: any) => any;
-	fetchSurveys: (id: string) => any;
+	fetchUserSurveys: (id: string) => any;
 	getUserEvents: (id: string) => any;
 }
 
@@ -32,7 +32,8 @@ class ChooseExtraOption extends React.Component<IProps> {
 	componentDidMount() {
 		switch (this.props.option) {
 			case 'survey':
-				this.props.fetchSurveys(this.props.userInfo.id);
+				console.log('hello');
+				this.props.fetchUserSurveys(this.props.userInfo.id);
 				break;
 			case 'event':
 				this.props.getUserEvents(this.props.userInfo.id);
@@ -127,7 +128,7 @@ const mapStateToProps = rootState => ({
 });
 
 const mapDispatchToProps = {
-	fetchSurveys,
+	fetchUserSurveys,
 	getUserEvents
 };
 
