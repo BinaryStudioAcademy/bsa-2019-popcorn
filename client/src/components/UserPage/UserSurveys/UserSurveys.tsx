@@ -231,6 +231,4 @@ const mapStateToProps = (rootState, props) => ({
 	userRole: rootState.profile.profileInfo.role
 });
 
-export default connect(
-	mapStateToProps,
-)(UserSurveys);
+export default connect(mapStateToProps)(UserSurveys);

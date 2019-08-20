@@ -22,7 +22,8 @@ const initialState: {
 		caption: '',
 		activity: null,
 		type: '',
-		movieId: null
+		movieId: null,
+		movieOption: ''
 	},
 	cursorPosition: { start: 0, end: 0 },
 	title: ''
@@ -94,7 +95,8 @@ export default function(state = initialState, action) {
 					caption: replaceFilmSearch(
 						state.newStory.caption || '',
 						action.payload.movie.title
-					)
+					),
+					movieOption: action.payload.movieOption || ''
 				}
 			};
 		default:

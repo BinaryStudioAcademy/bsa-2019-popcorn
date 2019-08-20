@@ -84,7 +84,11 @@ class Post extends PureComponent<IPostProps, IPostState> {
 	};
 
 	isOwnPost() {
-		const { userId, userRole, post: { user: postOwner } } = this.props;
+		const {
+			userId,
+			userRole,
+			post: { user: postOwner }
+		} = this.props;
 		return userRole === 'admin' || userId === postOwner.id;
 	}
 	toggleModal = () => {
@@ -213,6 +217,4 @@ const mapStateToProps = (rootState, props) => ({
 	userRole: rootState.profile.profileInfo.role
 });
 
-export default connect(
-	mapStateToProps,
-)(Post);
+export default connect(mapStateToProps)(Post);
