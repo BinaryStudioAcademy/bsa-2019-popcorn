@@ -22,11 +22,10 @@ interface IUserEventsEditorProps {
 interface IUserEventsEditorState {
 	title: string;
 	description: string;
-	location:
-		{
-			lat: number | undefined;
-			lng: number | undefined;
-		};
+	location: {
+		lat: number | undefined;
+		lng: number | undefined;
+	};
 	dateRange: {
 		startDate: Date | undefined;
 		endDate: Date | undefined;
@@ -47,7 +46,7 @@ class UserEventsEditor extends React.Component<
 			title: '',
 			movieId: null,
 			description: '',
-			location: {lat: undefined, lng: undefined},
+			location: { lat: undefined, lng: undefined },
 			dateRange: {
 				startDate: undefined,
 				endDate: undefined
@@ -185,7 +184,7 @@ class UserEventsEditor extends React.Component<
 		this.setState({
 			title: '',
 			description: '',
-			location: {lat: undefined, lng: undefined},
+			location: { lat: undefined, lng: undefined },
 			dateRange: {
 				startDate: undefined,
 				endDate: undefined
@@ -201,7 +200,6 @@ class UserEventsEditor extends React.Component<
 
 		return (
 			<div className="event-editor">
-
 				<div className="inputs">
 					<label className="input-wrp">
 						<span className="label">Title: </span>

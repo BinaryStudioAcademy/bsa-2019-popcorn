@@ -14,6 +14,7 @@ interface IInputProps {
 	movieList: Array<any>; //movies from elastic search
 	clearSearch: () => void;
 	saveMovie: (movie: IMovie) => void;
+	last?: boolean;
 }
 const FilmInput: React.FC<IInputProps> = ({
 	saveMovie,
@@ -22,7 +23,8 @@ const FilmInput: React.FC<IInputProps> = ({
 	deleteFilmInput,
 	alreadySearch,
 	movieList,
-	fetchFilms
+	fetchFilms,
+	last
 }) => {
 	const [title, setTitle] = useState(movie.title);
 	const [comment, setComment] = useState(movie.comment);
@@ -44,7 +46,8 @@ const FilmInput: React.FC<IInputProps> = ({
 		<div key={movie.id} className="film-input-item ">
 			<input
 				onChange={e => {
-					saveMovie({ ...movie, title, comment: e.target.value });
+					const title = e.target.value;
+					saveMovie({ ...movie, title, comment });
 					searchFilms(e.target.value);
 				}}
 				maxLength={140}
@@ -53,7 +56,11 @@ const FilmInput: React.FC<IInputProps> = ({
 				placeholder="Type film here"
 				value={title}
 				onFocus={() => setFocused(true)}
-				onBlur={() => clearSearch()}
+				onBlur={() => {
+					clearSearch();
+					if (title.trim() === '' && comment.trim() === '' && !last)
+						deleteFilmInput(movie.id);
+				}}
 			/>
 			{!isChosenTitle && alreadySearch && isFocused ? (
 				<div className="modal modal-top">
@@ -77,18 +84,24 @@ const FilmInput: React.FC<IInputProps> = ({
 					)}
 				</div>
 			) : null}
-			<img
-				src={closeIcon}
-				onClick={() => deleteFilmInput(movie.id)}
-				alt="close"
-			/>
+			<span>
+				{!last && (
+					<img
+						src={closeIcon}
+						onClick={() => deleteFilmInput(movie.id)}
+						alt="close"
+					/>
+				)}
+			</span>
 
 			<textarea
 				maxLength={140}
-				disabled={title.trim() === ''}
+				disabled={title.trim() === '' && comment.trim() === ''}
 				value={comment}
 				onChange={e => {
-					setComment(e.target.value);
+					const comment = e.target.value;
+					saveMovie({ ...movie, comment });
+					setComment(comment);
 				}}
 				className="film-input comment-film-input"
 				placeholder="Type comment here"

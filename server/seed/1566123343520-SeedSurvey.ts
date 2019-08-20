@@ -263,7 +263,6 @@ export class SeedSurvey1566123343520 implements MigrationInterface {
     ];
 
     const createOptions = (optionsData, question) =>
-    
       optionsData.map(async optionData => {
         const option = new SurveysQuestionOption();
         option.title = optionData.value;
