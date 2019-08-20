@@ -34,9 +34,19 @@ export const getReviewsByMovieId = async (
     );
   }
   movie = movie.hits.hits[0]._source;
-  console.log(movie);
   const reviews = await getCustomRepository(
     ReviewRepository
   ).getReviewsByMovieId(movieId, next);
   return { reviews, movie };
 };
+
+export const getReviewByMovieIdUserId = async (
+  userId: string,
+  movieId: string,
+  next
+) =>
+  await getCustomRepository(ReviewRepository).getReviewByMovieIdUserId(
+    userId,
+    movieId,
+    next
+  );

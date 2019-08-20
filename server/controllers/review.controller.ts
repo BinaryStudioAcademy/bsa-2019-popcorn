@@ -16,6 +16,12 @@ router
       .getReviewsByMovieId(req.params.id, next)
       .then(result => res.send(result))
       .catch(next)
+  )
+  .get("/:userId/:movieId", errorHandlerMiddleware, (req, res, next) =>
+    reviewService
+      .getReviewByMovieIdUserId(req.params.userId, req.params.movieId, next)
+      .then(result => res.send(result))
+      .catch(next)
   );
 
 export default router;
