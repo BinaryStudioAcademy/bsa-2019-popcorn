@@ -2,36 +2,15 @@ import React from 'react';
 import Post from '../Post/Post';
 import { ReactComponent as FeedIcon } from '../../../assets/icons/general/newsFeed.svg';
 import './PostList.scss';
+import IComment from '../Post/IComment';
+import IPost from '../Post/IPost';
 
-type post = {
-	user: {
-		name: string;
-		avatar: string;
-		any;
-	};
-	created_At?: string;
-	image_url: string;
-	description?: string;
-	content?: {
-		image: string;
-		link: string;
-		description: string;
-	};
-	comments?: {
-		id: string;
-		author: string;
-		commentDate: string;
-		commentBody: string;
-	}[];
-	tags?: {
-		id: string;
-		tagName: string;
-	}[];
-};
 interface IProps {
-	posts: Array<post>;
+	posts: Array<IPost>;
 	type?: string;
 	styleCustom?: any;
+	createComment?: (userId: string, text: string, postId: string) => any;
+	addNewComment?: (comment: IComment) => any;
 }
 
 const PostList = (props: IProps) => {
@@ -44,7 +23,11 @@ const PostList = (props: IProps) => {
 				</div>
 			)}
 			{props.posts.map(post => (
-				<Post post={post} />
+				<Post
+					post={post}
+					createComment={props.createComment}
+					addNewComment={props.addNewComment}
+				/>
 			))}
 		</div>
 	);

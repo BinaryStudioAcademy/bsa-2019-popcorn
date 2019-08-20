@@ -14,37 +14,16 @@ import Reactions from '../Reactions/Reactions';
 import PostReaction from './PostReaction/PostReaction';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+import IPost from './IPost';
+import IComment from './IComment';
+import SocketService from '../../../services/socket.service';
 
 type IPostProps = {
-	post: {
-		user: {
-			name: string;
-			avatar: string;
-			id: string;
-			any;
-		};
-		created_At?: string;
-		image_url: string;
-		description?: string;
-		content?: {
-			image: string;
-			link: string;
-			description: string;
-		};
-		comments?: {
-			id: string;
-			author: string;
-			commentDate: string;
-			commentBody: string;
-			parentId?: string;
-		}[];
-		tags?: {
-			id: string;
-			tagName: string;
-		}[];
-	};
+	post: IPost;
 	userId: string;
 	userRole: string;
+	createComment?: (userId: string, text: string, postId: string) => any;
+	addNewComment?: (comment: IComment) => any;
 };
 interface IReactItem {
 	id: number;
@@ -64,6 +43,10 @@ class Post extends PureComponent<IPostProps, IPostState> {
 			hover: false,
 			reactionList: []
 		};
+		SocketService.on(
+			'new-comment',
+			comment => props.addNewComment && props.addNewComment(comment)
+		);
 	}
 	MouseEnterLikeButton = () => {
 		this.setState({ hover: true });
@@ -122,6 +105,7 @@ class Post extends PureComponent<IPostProps, IPostState> {
 	render() {
 		const {
 			post: {
+				id,
 				user,
 				created_At,
 				image_url,
@@ -129,7 +113,8 @@ class Post extends PureComponent<IPostProps, IPostState> {
 				content,
 				comments,
 				tags
-			}
+			},
+			createComment
 		} = this.props;
 		const reactionsShow = this.state.hover ? (
 			<Reactions
@@ -202,13 +187,17 @@ class Post extends PureComponent<IPostProps, IPostState> {
 					<div>
 						{this.nestedComments.map(item => (
 							<div style={{ width: '100%' }}>
-								<div className="horizontal-stroke"></div>
+								<div className={'horizontal-stroke'} />
 								<Comment commentItem={item} key={item.id} />
 							</div>
 						))}
 					</div>
 				)}
-				<AddComment></AddComment>
+				<AddComment
+					createComment={text => {
+						createComment && createComment(this.props.userId, text, id);
+					}}
+				/>
 			</div>
 		);
 	}

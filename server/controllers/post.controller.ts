@@ -39,7 +39,7 @@ router
     postService
       .createComment(req.body)
       .then(comment => {
-        req.io("new-comment", { comment });
+        req.io.emit("new-comment", { comment });
         res.send();
       })
       .catch(next);

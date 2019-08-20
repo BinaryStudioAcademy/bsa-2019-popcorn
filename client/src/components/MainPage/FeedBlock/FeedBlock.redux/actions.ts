@@ -18,17 +18,11 @@ export const createComment = (userId: string, text: string, postId: string) => {
 	};
 };
 
-export const addNewComment = (
-	userId: string,
-	comment: IComment,
-	postId: string
-) => {
+export const addNewComment = (comment: IComment) => {
 	return {
 		type: ADD_NEW_COMMENT,
 		payload: {
-			userId,
-			comment,
-			postId
+			comment
 		}
 	};
 };
