@@ -54,6 +54,13 @@ h2 {
 		width: 100%;
 		height: auto;
 	}
+
+	.edit-icon {
+		position: relative;
+		bottom: 20px;
+		left: 70%;
+		width: 20px;
+	}
 	.profileRow {
 		letter-spacing: $base-letter-spacing;
 		display: flex;

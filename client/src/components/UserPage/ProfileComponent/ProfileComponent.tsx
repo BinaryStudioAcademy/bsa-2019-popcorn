@@ -6,12 +6,14 @@ import {
 	faTimesCircle,
 	faVenus,
 	faMars,
-	faMapMarkerAlt
+	faMapMarkerAlt,
+	faEdit
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import config from '../../../config';
 import ISelectedProfileInfo from '../SelectedProfileInterface';
 import { connect } from 'react-redux';
+import ProfileEditor from './ProfileEditor/ProfileEditor';
 
 type ProfileProps = {
 	profileInfo: ISelectedProfileInfo;
@@ -24,6 +26,7 @@ type ProfileProps = {
 };
 interface IProfileComponentState {
 	errorMsg?: string;
+	isEditing: boolean;
 }
 const favMovies: Array<{ id: string; movie: string }> = [
 	{
@@ -62,7 +65,8 @@ class ProfileComponent extends Component<ProfileProps, IProfileComponentState> {
 	constructor(props: ProfileProps) {
 		super(props);
 		this.state = {
-			errorMsg: ''
+			errorMsg: '',
+			isEditing: false
 		};
 	}
 
@@ -74,6 +78,12 @@ class ProfileComponent extends Component<ProfileProps, IProfileComponentState> {
 		} = this.props;
 		return userRole === 'admin' || userId === ownerId;
 	}
+
+	onEdit = () => {
+		this.setState({
+			isEditing: true
+		});
+	};
 
 	handleUploadFile(e) {
 		this.setState({ errorMsg: '' });
@@ -122,6 +132,7 @@ class ProfileComponent extends Component<ProfileProps, IProfileComponentState> {
 		}
 
 		const { uploadUrl, cancelAvatar, setAvatar } = this.props;
+		const { isEditing } = this.state;
 
 		const isOwnProfile = this.isOwnProfile();
 		return (
@@ -190,53 +201,75 @@ class ProfileComponent extends Component<ProfileProps, IProfileComponentState> {
 						</div>
 					)}
 
-					<div className="ProfileInfo">
-						<div className="profileRow-username">{name}</div>
-						<div className="profileRow-info">
-							{male && (
-								<div className="user-gender">
-									<FontAwesomeIcon icon={faMars} className="fontAwesomeIcon" />
-									Male
-								</div>
-							)}
-							{female && (
-								<div className="user-gender">
-									<FontAwesomeIcon icon={faVenus} className="fontAwesomeIcon" />
-									Female
-								</div>
-							)}
+					{!isEditing ? (
+						<div className="ProfileInfo">
+							<div className="profileRow-username">
+								{name}
+								{isOwnProfile && (
+									<span onClick={this.onEdit}>
+										<FontAwesomeIcon
+											icon={faEdit}
+											className="fontAwesomeIcon edit-icon"
+										/>
+									</span>
+								)}
+							</div>
+							<div className="profileRow-info">
+								{male && (
+									<div className="user-gender">
+										<FontAwesomeIcon
+											icon={faMars}
+											className="fontAwesomeIcon"
+										/>
+										Male
+									</div>
+								)}
+								{female && (
+									<div className="user-gender">
+										<FontAwesomeIcon
+											icon={faVenus}
+											className="fontAwesomeIcon"
+										/>
+										Female
+									</div>
+								)}
 
-							{location && (
-								<div className="user-location">
-									<FontAwesomeIcon
-										icon={faMapMarkerAlt}
-										className="fontAwesomeIcon"
-									/>
-									{location}
+								{location && (
+									<div className="user-location">
+										<FontAwesomeIcon
+											icon={faMapMarkerAlt}
+											className="fontAwesomeIcon"
+										/>
+										{location}
+									</div>
+								)}
+							</div>
+							<div className="profileRow">
+								<p className="field">About: </p>
+								<div className="content">{aboutMe || '-'}</div>
+							</div>
+							<div className="profileRow">
+								<p className="field">Favorite movies: </p>
+								<div className="content">
+									{favMovies.length > 0
+										? favMovies.map(movie => (
+												<p key={movie.id}>{movie.movie}</p>
+										  ))
+										: '-'}
 								</div>
-							)}
-						</div>
-						<div className="profileRow">
-							<p className="field">About: </p>
-							<div className="content">{aboutMe || '-'}</div>
-						</div>
-						<div className="profileRow">
-							<p className="field">Favorite movies: </p>
-							<div className="content">
-								{favMovies.length > 0
-									? favMovies.map(movie => <p key={movie.id}>{movie.movie}</p>)
-									: '-'}
+							</div>
+							<div className="profileRow">
+								<p className="field">Favorite TV-shows: </p>
+								<div className="content">
+									{favShows.length > 0
+										? favShows.map(movie => <p key={movie.id}>{movie.movie}</p>)
+										: '-'}
+								</div>
 							</div>
 						</div>
-						<div className="profileRow">
-							<p className="field">Favorite TV-shows: </p>
-							<div className="content">
-								{favShows.length > 0
-									? favShows.map(movie => <p key={movie.id}>{movie.movie}</p>)
-									: '-'}
-							</div>
-						</div>
-					</div>
+					) : (
+						<ProfileEditor user={this.props.profileInfo} />
+					)}
 				</div>
 			</div>
 		);
