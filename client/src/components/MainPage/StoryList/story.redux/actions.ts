@@ -78,11 +78,12 @@ export const addStory = story => {
 	};
 };
 
-export const saveMovie = (movie: TMovie) => {
+export const saveMovie = (movie: TMovie, movieOption = '') => {
 	return {
 		type: SAVE_MOVIE,
 		payload: {
-			movie
+			movie,
+			movieOption
 		}
 	};
 };

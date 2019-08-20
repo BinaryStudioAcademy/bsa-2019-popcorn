@@ -4,4 +4,5 @@ export default interface INewStory {
 	activity: null | { id: string; name: string };
 	type: string;
 	movieId: null | string;
+	movieOption: string;
 }

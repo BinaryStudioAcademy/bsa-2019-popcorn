@@ -43,11 +43,12 @@ interface IProps {
 			}>;
 		};
 		activity?: string;
-		filmId?: string;
-		film?: {
+		movieId?: string;
+		movie?: {
 			title: string;
 			id: string;
 		};
+		movieOption?: string;
 	}>;
 	currentUser: {
 		userId: string;
@@ -148,6 +149,11 @@ class StoryViewer extends PureComponent<IProps, IState> {
 									/>
 									<span className="username">{story.userInfo.name}</span>
 									<TimeAgo date={story.created_at} timeStyle="twitter" />
+									{story.movieOption && (
+										<span style={{ marginLeft: '5px' }}>
+											{story.movieOption}
+										</span>
+									)}
 									<p className="ellipsis" onClick={this.toogleModal}>
 										<FontAwesomeIcon icon={faEllipsisH} />
 									</p>
@@ -201,9 +207,9 @@ class StoryViewer extends PureComponent<IProps, IState> {
 														</span>
 													)}
 													{story.type && story.activity}
-													{story.filmId && story.film && (
-														<NavLink to={'/movie-series/' + story.film.id}>
-															{story.film.title}
+													{story.movieId && story.movie && (
+														<NavLink to={'/movie-series/' + story.movie.id}>
+															{story.movie.title}
 														</NavLink>
 													)}
 												</span>

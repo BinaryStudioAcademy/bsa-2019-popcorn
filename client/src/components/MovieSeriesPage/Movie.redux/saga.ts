@@ -18,7 +18,10 @@ import {
 	FETCH_MOVIE_BY_ID_SUCCESS,
 	SET_USER_RATE,
 	FETCH_SEARCH,
-	SET_SEARCH_MOVIE
+	SET_SEARCH_MOVIE,
+	FETCH_SEARCH_TO_ADD_MOVIE,
+	SET_SEARCH_MOVIE_TO_ADD,
+	LOADING
 } from './actionTypes';
 import config from '../../../config';
 
@@ -148,9 +151,17 @@ export function* setUserRate(action) {
 
 export function* fetchSearch(action) {
 	try {
+		yield put({
+			type: LOADING,
+			payload: { loading: true }
+		});
 		let movies = yield call(webApi, {
 			endpoint: `${config.API_URL}/api/movie/find?title=${action.payload.title}`,
 			method: 'GET'
+		});
+		yield put({
+			type: LOADING,
+			payload: { loading: false }
 		});
 		yield put({
 			type: SET_SEARCH_MOVIE,
@@ -160,6 +171,32 @@ export function* fetchSearch(action) {
 		});
 	} catch (e) {
 		console.log('movie saga fetchSearch: ', e.message);
+	}
+}
+
+export function* fetchSearchMovie(action) {
+	try {
+		yield put({
+			type: LOADING,
+			payload: { loading: true }
+		});
+		let movies = yield call(webApi, {
+			endpoint: `${config.API_URL}/api/movie/find?title=${action.payload.title}`,
+			method: 'GET'
+		});
+		yield put({
+			type: LOADING,
+			payload: { loading: false }
+		});
+		yield put({
+			type: SET_SEARCH_MOVIE_TO_ADD,
+			payload: {
+				movies,
+				searchTitle: action.payload.title
+			}
+		});
+	} catch (e) {
+		console.log('movie saga fetchSearchMovie: ', e.message);
 	}
 }
 function* watchFetchFilms() {
@@ -176,6 +213,10 @@ function* watchFetchElasticSearchFilms() {
 function* watchFetchSearch() {
 	yield takeEvery(FETCH_SEARCH, fetchSearch);
 }
+
+
+function* watchFetchSearchMovie() {
+	yield takeEvery(FETCH_SEARCH_TO_ADD_MOVIE, fetchSearchMovie);
 
 function* watchFetchUserRate() {
 	yield takeEvery(FETCH_MOVIE_USER_RATE, fetchUserRate);
@@ -197,6 +238,7 @@ export default function* header() {
 		watchFetchUserRate(),
 		watchFetchMovie(),
 		watchSetUserRate(),
-		watchFetchSearch()
+		watchFetchSearch(),
+    watchFetchSearchMovie()
 	]);
 }

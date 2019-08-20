@@ -5,6 +5,7 @@ import INewStory from '../INewStory';
 import { faPlusCircle } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import TMovie from '../../../MovieSeriesPage/TMovie';
+import Spinner from '../../../shared/Spinner';
 
 interface IProps {
 	newStory: INewStory;
@@ -30,6 +31,7 @@ interface IProps {
 	title: string;
 	resetSearch: () => any;
 	saveMovie: (movie: TMovie) => any;
+	isLoading: boolean;
 }
 
 class getAddStoryPopupContent extends React.Component<IProps> {
@@ -109,6 +111,7 @@ class getAddStoryPopupContent extends React.Component<IProps> {
 							</button>
 						</div>
 					</div>
+					{this.props.isLoading && <Spinner />}
 				</div>
 			</div>
 		);

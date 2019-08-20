@@ -18,7 +18,7 @@ export const getStories = async (): Promise<Array<Story>> => {
         case "voting":
           story.voting = await getVotingById(story.activityId);
       }
-      if (story.filmId) story.film = await getMovieById(story.filmId);
+      if (story.movieId) story.movie = await getMovieById(story.movieId);
 
       return story;
     })
@@ -35,7 +35,8 @@ export const createStory = async ({
   type,
   activityId,
   activity,
-  filmId
+  movieId,
+  movieOption
 }): Promise<any> => {
   let story: any = new Story();
   story.id = uuid();
@@ -46,7 +47,8 @@ export const createStory = async ({
   story.image_url = image_url;
   story.type = type;
   story.activityId = activityId;
-  story.filmId = filmId;
+  story.movieId = movieId;
+  story.movieOption = movieOption;
 
   await getCustomRepository(StoryRepository).save(story);
 
@@ -55,7 +57,7 @@ export const createStory = async ({
   } else if (type) {
     story.activity = activity.name;
   }
-  if (filmId) story.film = await getMovieById(filmId);
+  if (movieId) story.movie = await getMovieById(movieId);
 
   return story;
 };

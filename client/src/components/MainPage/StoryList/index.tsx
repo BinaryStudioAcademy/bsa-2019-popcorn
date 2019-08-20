@@ -22,8 +22,10 @@ import IVoting from './IVoting';
 import TMovie from '../../MovieSeriesPage/TMovie';
 import {
 	fetchSearch,
+	fetchSearchToAddMovieInStory,
 	resetSearch
 } from '../../MovieSeriesPage/Movie.redux/actions';
+import CreateStoryFilm from './story-modal/create-story-film';
 
 interface IStoryListItem {
 	caption: string;
@@ -74,7 +76,11 @@ interface IProps {
 	fetchSearch: (title: string) => any;
 	title: string;
 	resetSearch: () => any;
-	saveMovie: (movie: TMovie) => any;
+	saveMovie: (movie: TMovie, movieOption?: string) => any;
+	fetchSearchToAddMovieInStory: (title: string) => any;
+	searchTitle: string;
+	moviesSearchAddMovieToStory: null | Array<TMovie>;
+	isLoading: boolean;
 }
 
 const mock = {
@@ -113,10 +119,25 @@ const ListBlock = ({ ...props }: IProps) => {
 							title={props.title}
 							resetSearch={props.resetSearch}
 							saveMovie={props.saveMovie}
+							isLoading={props.isLoading}
 						/>
 					)}
 				/>
 				<Route exact path={`/create/extra`} component={ChooseExtra} />
+				<Route
+					exact
+					path={`/create/extra/movie`}
+					component={other_props => (
+						<CreateStoryFilm
+							{...other_props}
+							fetchSearchToAddMovieInStory={props.fetchSearchToAddMovieInStory}
+							moviesSearchAddMovieToStory={props.moviesSearchAddMovieToStory}
+							searchTitle={props.searchTitle}
+							saveMovie={props.saveMovie}
+							isLoading={props.isLoading}
+						/>
+					)}
+				/>
 				<Route
 					path={`/create/extra/vote`}
 					component={() => (
@@ -153,7 +174,10 @@ const mapStateToProps = (rootState, props) => ({
 	cursorPosition: rootState.story.cursorPosition,
 	top: mock.tops,
 	survey: mock.surveys,
-	movies: rootState.movie.moviesSearchInCreating
+	movies: rootState.movie.moviesSearchInCreating,
+	moviesSearchAddMovieToStory: rootState.movie.moviesSearchAddMovieToStory,
+	searchTitle: rootState.movie.searchTitle,
+	isLoading: rootState.movie.isLoading
 });
 
 const actions = {
@@ -166,7 +190,8 @@ const actions = {
 	addStory,
 	fetchSearch,
 	resetSearch,
-	saveMovie
+	saveMovie,
+	fetchSearchToAddMovieInStory
 };
 const mapDispatchToProps = dispatch => bindActionCreators(actions, dispatch);
 
