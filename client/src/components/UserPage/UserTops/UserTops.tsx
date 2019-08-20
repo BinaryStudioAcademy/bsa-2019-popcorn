@@ -112,7 +112,7 @@ class UserTops extends React.Component<IUserTopProps, IUserTopsState> {
 	}
 
 	static getDerivedStateFromProps(props, state) {
-		if (!state.newTop && !isEqual(props.topList, state.topList)) {
+		if (!isEqual(props.topList, state.topList)) {
 			return {
 				...state,
 				topList: convertServerDataFormatToClient(props.topList)
@@ -183,7 +183,7 @@ class UserTops extends React.Component<IUserTopProps, IUserTopsState> {
 		const topList = this.state.topList;
 		console.log(topList);
 
-		if (!topList) {	
+		if (!this.props.topList) {	
 			return <Spinner />;
 		}
 		return (
