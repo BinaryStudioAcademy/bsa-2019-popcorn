@@ -19,7 +19,12 @@ interface IProps {
 	isOwnEvent: boolean;
 }
 
-const EventItem: React.FC<IProps> = ({ event, deleteEvent, editEvent, isOwnEvent }) => {
+const EventItem: React.FC<IProps> = ({
+	event,
+	deleteEvent,
+	editEvent,
+	isOwnEvent
+}) => {
 	const {
 		id,
 		userId: currentUserId,
@@ -74,22 +79,23 @@ const EventItem: React.FC<IProps> = ({ event, deleteEvent, editEvent, isOwnEvent
 								{String(dateRange.endDate)}
 							</Moment>
 						</div>
-						{isOwnEvent && (deleteEvent && editEvent !== null ? (
-							<div className="event-buttons">
-								<button
-									className="edit-button"
-									onClick={() => editEvent(event)}
-								>
-									Edit
-								</button>
-								<button
-									className="delete-button"
-									onClick={() => deleteEvent(id, currentUserId)}
-								>
-									<CloseIcon className="delete-button-svg" />
-								</button>
-							</div>
-						) : null)}
+						{isOwnEvent &&
+							(deleteEvent && editEvent !== null ? (
+								<div className="event-buttons">
+									<button
+										className="edit-button"
+										onClick={() => editEvent(event)}
+									>
+										Edit
+									</button>
+									<button
+										className="delete-button"
+										onClick={() => deleteEvent(id, currentUserId)}
+									>
+										<CloseIcon className="delete-button-svg" />
+									</button>
+								</div>
+							) : null)}
 					</div>
 				</div>
 			</div>

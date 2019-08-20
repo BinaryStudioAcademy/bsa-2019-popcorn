@@ -1,9 +1,11 @@
 import { Movie } from "../models/MovieModel";
+import { MovieRate } from "../models/MovieRateModel/movieRateModel";
 import MovieRepository from "../repository/movie.repository";
-import { getCustomRepository, Like } from "typeorm";
+import MovieRateRepository from "../repository/movieRate.repository";
+import { getCustomRepository, Like, getRepository } from "typeorm";
 import * as elasticRepository from "../repository/movieElastic.repository";
 
-export const getMovies = async (): Promise<Movie[]> => {
+export const getMovies = async (): Promise<any[]> => {
   let data = await elasticRepository.get();
 
   data = data.hits.hits;
@@ -11,8 +13,17 @@ export const getMovies = async (): Promise<Movie[]> => {
   return data.map(movie => movie._source);
 };
 
-export const getMovieById = async (movieId: string): Promise<any> =>
-  (await elasticRepository.getById(movieId)).hits.hits[0]._source;
+export const getMovieById = async (movieId: string): Promise<any> => {
+  const data = await elasticRepository.getById(movieId);
+  const movie = data.hits.hits[0]._source;
+  const rate = await getCustomRepository(MovieRateRepository)
+    .createQueryBuilder("movieRate")
+    .select("AVG(movieRate.rate)", "average")
+    .where("movieRate.movieId = :id", { id: movie.id })
+    .getRawOne();
+  movie.rate = rate ? parseFloat(rate.average).toFixed(2) : null;
+  return movie;
+};
 
 export const createMovie = async (movie: Movie): Promise<Movie[]> =>
   await getCustomRepository(MovieRepository).save([movie]);
@@ -36,4 +47,32 @@ export const getByTitle = async (title: string): Promise<Movie[]> => {
   data = data.hits.hits;
 
   return data.map(movie => movie._source);
+};
+
+export const saveMovieRate = async (newRate: any) => {
+  const { movieId, userId } = newRate;
+  const rateInDB = await getCustomRepository(MovieRateRepository).findOne({
+    movieId,
+    userId
+  });
+  if (rateInDB) {
+    rateInDB.rate = newRate.rate;
+    return await getCustomRepository(MovieRateRepository).update(
+      { id: rateInDB.id },
+      { ...rateInDB }
+    );
+  }
+  return await getCustomRepository(MovieRateRepository).save(newRate);
+};
+
+export const getMovieRate = async (
+  userId: string,
+  movieId: string
+): Promise<any> => {
+  const data = await getCustomRepository(MovieRateRepository).findOne({
+    userId,
+    movieId
+  });
+  if (data) return data;
+  return { userId, movieId, rate: 0 };
 };

@@ -14,6 +14,7 @@ import { Surveys } from "./Surveys";
 import { SurveysQuestion } from "./SurveysQuestion";
 import { SurveysQuestionAnswer } from "./SurveysQuestionAnswer";
 import { SurveysQuestionOption } from "./SurveysQuestionOption";
+import { MovieRate } from "./MovieRate/MovieRate";
 
 export default [
   User,
@@ -32,5 +33,6 @@ export default [
   Surveys,
   SurveysQuestion,
   SurveysQuestionAnswer,
-  SurveysQuestionOption
+  SurveysQuestionOption,
+  MovieRate
 ];
