@@ -16,6 +16,28 @@
 		flex-direction: column;
 		width: 80%;
 
+		.time-error-start .react-datepicker-wrapper:first-of-type input {
+			animation: error 1s 1;
+		}
+		.time-error-end .react-datepicker-wrapper:nth-of-type(2) input {
+			animation: error 1s 1;
+		}
+
+		@keyframes error {
+			0% {
+				border-color: $border-color;
+			}
+			25% {
+				border-color: red;
+			}
+			75% {
+				border-color: red;
+			}
+			100% {
+				border-color: $border-color;
+			}
+		}
+
 		.map {
 			max-width: 80%;
 			float: right;
@@ -40,6 +62,7 @@
 			margin-bottom: 20px;
 			&:first-child {
 				margin-top: 20px;
+				margin-bottom: 0;
 			}
 			svg {
 				width: 30px;
@@ -50,6 +73,17 @@
 				}
 			}
 		}
+		.required {
+			color: rgb(192, 0, 0);
+			position: relative;
+			font-size: 0.8em;
+		}
+		.required-title {
+			color: rgb(192, 0, 0);
+			position: relative;
+			font-size: 0.8em;
+			margin: 5px 0px 10px 20%;
+		}
 		.label {
 			display: inline-block;
 			margin-top: 12px;
@@ -58,6 +92,9 @@
 		.time-picker {
 			width: 80%;
 			float: right;
+		}
+		.react-datepicker-popper {
+			z-index: 9999;
 		}
 		input.text-input,
 		textarea,
@@ -143,6 +180,22 @@
 				}
 			}
 		}
+	}
+}
+
+.img-uploader {
+	.cancel-btn {
+		margin: 0 auto;
+		display: block;
+		height: 43px;
+		border-radius: 55px;
+		width: 120px;
+		border: none;
+		outline: none;
+		font-size: $header-medium;
+		font-weight: bold;
+		background-color: $background-gray;
+		color: rgba($text-base-color, 0.7);
 	}
 }
 
