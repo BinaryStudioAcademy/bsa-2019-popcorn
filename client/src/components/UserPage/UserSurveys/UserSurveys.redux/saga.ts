@@ -17,9 +17,9 @@ export function* fetchSurveys(action) {
 			method: 'GET',
 			endpoint: config.API_URL + '/api/surveys/user/' + action.payload.userId
 		});
-		console.log(data);
-		//if(data){
-		//setArrangementInSurveys(data);}
+		if (data) {
+			setArrangementInSurveys(data);
+		}
 		yield put({
 			type: SET_SURVEYS,
 			payload: {

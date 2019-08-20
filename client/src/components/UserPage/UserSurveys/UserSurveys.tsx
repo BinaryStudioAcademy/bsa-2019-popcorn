@@ -169,9 +169,6 @@ class UserSurveys extends React.Component<IProps, IState> {
 	isOwnSurvey(survey) {
 		const { userId, userRole, selectedProfileId } = this.props;
 		const { user_id } = survey;
-		console.log(userRole);
-		console.log(user_id);
-		console.log(selectedProfileId);
 		return userRole === 'admin' || userId === user_id;
 	}
 
