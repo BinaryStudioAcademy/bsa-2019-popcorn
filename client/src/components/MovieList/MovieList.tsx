@@ -42,7 +42,7 @@ const MovieList: React.FC<IMovieListProps> = ({
 	const style = twoColumns
 		? { display: 'grid', gridTemplateColumns: '.5fr .5fr' }
 		: {};
-	return (
+	return loadMoreMovie ? (
 		<InfiniteScroll
 			pageStart={1}
 			loadMore={next}
@@ -57,6 +57,10 @@ const MovieList: React.FC<IMovieListProps> = ({
 				{movieListItems}
 			</div>
 		</InfiniteScroll>
+	) : (
+		<div className="movie-list" style={style}>
+			{movieListItems}
+		</div>
 	);
 };
 
