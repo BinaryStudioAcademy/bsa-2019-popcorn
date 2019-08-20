@@ -125,7 +125,13 @@ function* getSurveyById(action) {
 			endpoint: config.API_URL + '/api/surveys/' + action.payload.id
 		});
 
-		const formattedData = transformDataToProps([data])[0];
+		const surveys = [data];
+
+		if (data) {
+			setArrangementInSurveys(surveys);
+		}
+
+		const formattedData = transformDataToProps(surveys);
 		// const question = yield call(webApi, {
 		// 	method: 'GET',
 		// 	endpoint: config.API_URL + `/api/surveys/${data.id}/question`
@@ -136,7 +142,7 @@ function* getSurveyById(action) {
 		if (data)
 			yield put({
 				type: SET_SURVEY_BYID,
-				payload: { survey: formattedData, loading: false }
+				payload: { survey: formattedData[0], loading: false }
 			});
 	} catch (e) {
 		console.log('survey saga get by id: ', e.message);
