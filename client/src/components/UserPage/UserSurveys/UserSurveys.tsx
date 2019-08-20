@@ -4,6 +4,7 @@ import { faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 import { isEqual } from 'lodash';
 import { NavLink } from 'react-router-dom';
 import './UserSurveys.scss';
+import { connect } from 'react-redux';
 
 interface ISurvey {
 	id: string;
@@ -27,6 +28,7 @@ interface ISurvey {
 		image_link?: string;
 		required: boolean;
 		options?: Array<{
+			index: number;
 			id: string;
 			question_id: string;
 			value: string;
@@ -46,6 +48,8 @@ interface IProps {
 	updateInfo: (ISurvey) => void;
 	deleteSurvey: (ISurvey) => void;
 	surveys: Array<ISurvey>;
+	userId: string;
+	userRole: string;
 	location?: {
 		state?: {
 			url_callback?: string;
@@ -54,6 +58,7 @@ interface IProps {
 	history?: {
 		push: (path: string) => any;
 	};
+	selectedProfileId: string;
 }
 
 interface IState {
@@ -161,6 +166,12 @@ class UserSurveys extends React.Component<IProps, IState> {
 		);
 	};
 
+	isOwnSurvey(survey) {
+		const { userId, userRole, selectedProfileId } = this.props;
+		const { user_id } = survey;
+		return userRole === 'admin' || userId === user_id;
+	}
+
 	render() {
 		const { surveys } = this.state;
 		const { mainPath } = this.props;
@@ -182,26 +193,31 @@ class UserSurveys extends React.Component<IProps, IState> {
 					</button>
 				)}
 				<div className="userSurveys">
-					<NavLink to={`${mainPath}/create`} className="create-button">
-						<button>Create survey</button>
-					</NavLink>
+					{this.props.selectedProfileId === this.props.userId ? (
+						<NavLink to={`${mainPath}/create`} className="create-button">
+							<button>Create survey</button>
+						</NavLink>
+					) : null}
 					<div className="survey-list">
 						{surveys.map((survey, i) => {
+							// add "if (this.isOwnSurvey(survey))" check when it will survey list with surveys of all users
 							return (
 								<NavLink key={i} exact={!i} to={`${mainPath}/${survey.id}`}>
 									<div className="survey-list-item">
 										<span>{survey.title}</span>
-										<p className="buttons">
-											{this.typeSurveyBttn(survey)}
-											<button
-												className="delete-bttn"
-												onClick={event => {
-													this.showModal(event, i);
-												}}
-											>
-												<FontAwesomeIcon icon={faTrashAlt} />
-											</button>
-										</p>
+										{this.isOwnSurvey(survey) ? (
+											<p className="buttons">
+												{this.typeSurveyBttn(survey)}
+												<button
+													className="delete-bttn"
+													onClick={event => {
+														this.showModal(event, i);
+													}}
+												>
+													<FontAwesomeIcon icon={faTrashAlt} />
+												</button>
+											</p>
+										) : null}
 									</div>
 								</NavLink>
 							);
@@ -214,4 +230,11 @@ class UserSurveys extends React.Component<IProps, IState> {
 	}
 }
 
-export default UserSurveys;
+const mapStateToProps = (rootState, props) => ({
+	...props,
+	userId: rootState.profile.profileInfo.id,
+	userRole: rootState.profile.profileInfo.role,
+	selectedProfileId: rootState.profile.selectedProfileInfo.id
+});
+
+export default connect(mapStateToProps)(UserSurveys);

@@ -27,4 +27,10 @@ export class Story {
   @ManyToOne(type => User)
   @JoinColumn()
   user: User;
+
+  @Column({ nullable: true })
+  movieId: string;
+
+  @Column({ nullable: true })
+  movieOption: string;
 }

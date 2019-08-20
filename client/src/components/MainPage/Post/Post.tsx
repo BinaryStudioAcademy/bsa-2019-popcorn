@@ -14,12 +14,15 @@ import Reactions from '../Reactions/Reactions';
 import PostReaction from './PostReaction/PostReaction';
 import { string } from 'yup';
 import { NavLink } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 
 type IPostProps = {
 	post: {
 		user: {
 			name: string;
 			avatar: string;
+			id: string;
 			any;
 		};
 		created_At?: string;
@@ -44,6 +47,8 @@ type IPostProps = {
 			tagName: string;
 		}[];
 	};
+	userId: string;
+	userRole: string;
 };
 interface IReactItem {
 	id: number;
@@ -84,7 +89,12 @@ class Post extends PureComponent<IPostProps, IPostState> {
 	};
 
 	isOwnPost() {
-		return true;
+		const {
+			userId,
+			userRole,
+			post: { user: postOwner }
+		} = this.props;
+		return userRole === 'admin' || userId === postOwner.id;
 	}
 	toggleModal = () => {
 		this.setState({ isModalShown: !this.state.isModalShown });
@@ -139,17 +149,19 @@ class Post extends PureComponent<IPostProps, IPostState> {
 		return (
 			<div className="post-item">
 				<div className="post-item-header">
-					<img
-						className="post-item-avatar"
-						src={(user && user.avatar) || config.DEFAULT_AVATAR}
-						alt="author"
-					/>
-					<div className="post-item-info">
-						<div className="post-item-author-name">{user.name}</div>
-						{created_At && (
-							<div className="post-item-post-time">{created_At}</div>
-						)}
-					</div>
+					<Link className="user-link" to={`/user-page/${user.id}`}>
+						<img
+							className="post-item-avatar"
+							src={(user && user.avatar) || config.DEFAULT_AVATAR}
+							alt="author"
+						/>
+						<div className="post-item-info">
+							<div className="post-item-author-name">{user.name}</div>
+							{created_At && (
+								<div className="post-item-post-time">{created_At}</div>
+							)}
+						</div>
+					</Link>
 					<button className="post-item-settings" onClick={this.toggleModal}>
 						<SettingIcon />
 					</button>
@@ -211,4 +223,10 @@ class Post extends PureComponent<IPostProps, IPostState> {
 	}
 }
 
-export default Post;
+const mapStateToProps = (rootState, props) => ({
+	...props,
+	userId: rootState.profile.profileInfo.id,
+	userRole: rootState.profile.profileInfo.role
+});
+
+export default connect(mapStateToProps)(Post);

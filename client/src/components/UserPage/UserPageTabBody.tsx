@@ -9,6 +9,7 @@ import UserLists from './UserLists/UserLists';
 import UserWatched from './UserWatched/UserWatched';
 import ProfileComponent from './ProfileComponent/ProfileComponent';
 import UserSurveysNav from './UserSurveys/UserSurveysNav';
+import ISelectedProfileInfo from './SelectedProfileInterface';
 import mock from './Survey/mock';
 import {
 	cancelAvatar,
@@ -36,6 +37,9 @@ interface IProps {
 	uploadUrl?: string;
 	cancelAvatar: () => any;
 	setAvatar: (url: string, id: string) => any;
+	userPosts?: any; //todo
+	getUsersPosts: (id: string) => any;
+	selectedProfileInfo: ISelectedProfileInfo;
 }
 
 const UserPageTabs: React.SFC<IProps> = ({
@@ -44,9 +48,12 @@ const UserPageTabs: React.SFC<IProps> = ({
 	profileInfo,
 	uploadUrl,
 	cancelAvatar,
-	setAvatar
+	setAvatar,
+	userPosts,
+	getUsersPosts,
+	selectedProfileInfo
 }) => {
-	return (
+	return selectedProfileInfo ? (
 		<div className={'user-tab-body'}>
 			<Switch>
 				<Route
@@ -55,14 +62,23 @@ const UserPageTabs: React.SFC<IProps> = ({
 					render={() => (
 						<ProfileComponent
 							uploadAvatar={uploadAvatar}
-							profileInfo={profileInfo}
+							profileInfo={selectedProfileInfo}
 							uploadUrl={uploadUrl}
 							cancelAvatar={cancelAvatar}
 							setAvatar={setAvatar}
 						/>
 					)}
 				/>
-				<Route path={`${mainPath}/posts`} component={() => <UserPosts />} />
+				<Route
+					path={`${mainPath}/posts`}
+					component={() => (
+						<UserPosts
+							userId={selectedProfileInfo.id}
+							posts={userPosts}
+							getUsersPosts={() => getUsersPosts(selectedProfileInfo.id)}
+						/>
+					)}
+				/>
 				<Route path={`${mainPath}/reviews`} component={UserReviews} />
 				<Route path={`${mainPath}/events`} component={UserEvents} />
 				<Route
@@ -71,9 +87,9 @@ const UserPageTabs: React.SFC<IProps> = ({
 						<UserSurveysNav
 							id={profileInfo.id}
 							userInfo={{
-								id: profileInfo.id,
-								name: profileInfo.name,
-								image_link: profileInfo.avatar
+								id: selectedProfileInfo.id,
+								name: selectedProfileInfo.name,
+								image_link: selectedProfileInfo.avatar
 							}}
 							mainPath={`${mainPath}/surveys`}
 						/>
@@ -84,14 +100,15 @@ const UserPageTabs: React.SFC<IProps> = ({
 				<Route path={`${mainPath}/watched`} component={UserWatched} />
 			</Switch>
 		</div>
-	);
+	) : null;
 };
 
 const mapStateToProps = (rootState, props) => ({
 	...props,
 	profileInfo: rootState.profile.profileInfo,
 	uploadUrl: rootState.profile.uploadUrl,
-	userPosts: rootState.profile.userPosts
+	userPosts: rootState.profile.userPosts,
+	selectedProfileInfo: rootState.profile.selectedProfileInfo
 });
 
 const actions = {

@@ -7,3 +7,5 @@ export const SET_AVATAR = 'SET_AVATAR';
 export const USER_POSTS = 'USER_POSTS';
 export const SET_USER_POSTS = 'SET_USER_POSTS';
 export const SEND_POST = 'SEND_POST';
+export const GET_SELECTED_USER_INFO = 'GET_SELECTED_USER_INFO';
+export const SET_SELECTED_USER = 'SET_SELECTED_USER';

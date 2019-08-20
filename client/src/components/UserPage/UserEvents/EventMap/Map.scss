@@ -1,0 +1,7 @@
+@import '../../../../styles/variables.scss';
+
+.mapboxgl-canvas {
+	position: static !important;
+	left: 0;
+	height: 400px;
+}

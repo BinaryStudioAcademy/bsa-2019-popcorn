@@ -1,58 +1,31 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import PostList from '../../MainPage/PostList/PostList';
 import Spinner from '../../shared/Spinner';
-import PostConstructor from './PostConstructor';
-import { connect } from 'react-redux';
-import * as actions from '../../UserPage/actions';
 
 interface IProps {
-	userInfo?: any;
-	userPosts?: any;
-	loading: boolean;
-	getUsersPosts: (userId: string) => any;
+	posts?: any;
+	getUsersPosts: () => any;
+	userId: string;
 }
-
-interface IState {}
-
-class UserPosts extends React.Component<IProps, IState> {
-	constructor(props: IProps) {
-		super(props);
-		this.state = {};
+const userPostStyle = {
+	marginRight: '0px',
+	paddingRight: '0px',
+	marginTop: '40px'
+};
+const UserPosts: React.FC<IProps> = ({ posts, getUsersPosts, userId }) => {
+	if (!posts) {
+		getUsersPosts();
+		return <Spinner />;
 	}
-
-	render() {
-		if (this.props.loading) {
-			this.props.getUsersPosts(this.props.userInfo.id);
-		}
-
-		return (
-			<>
-				{this.props.loading ? (
-					<Spinner />
-				) : (
-					<div className="UserPosts">
-						<div className="UserPostCreator">
-							<PostConstructor userId={this.props.userInfo.id} />
-						</div>
-						<PostList posts={this.props.userPosts} />
-					</div>
-				)}
-			</>
-		);
-	}
-}
-
-const mapStateToProps = rootState => ({
-	userInfo: rootState.profile.profileInfo,
-	userPosts: rootState.profile.userPosts,
-	loading: rootState.profile.loading
-});
-
-const mapDispatchToProps = {
-	...actions
+	return (
+		<div className="UserPosts">
+			{posts.length === 0 ? (
+				<div className="no-info-yet">No posts yet</div>
+			) : (
+				<PostList styleCustom={userPostStyle} type="userPosts" posts={posts} />
+			)}
+		</div>
+	);
 };
 
-export default connect(
-	mapStateToProps,
-	mapDispatchToProps
-)(UserPosts);
+export default UserPosts;

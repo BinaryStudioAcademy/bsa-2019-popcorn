@@ -8,6 +8,7 @@ import MovieSeriesPosts from './MovieSeriesPosts/MovieSeriesPosts';
 import MovieSeriesAwards from './MovieSeriesAwards/MovieSeriesAwards';
 import MovieSeriesStatistics from './MovieSeriesStatistics/MovieSeriesStatistics';
 import StaffCast from './StaffCast/StaffCast';
+import TMovie from './TMovie';
 
 const messages = [
 	{
@@ -58,27 +59,26 @@ const messages = [
 
 interface IProps {
 	mainPath: string;
-	movie: Movie;
+	movie: TMovie;
+	userInfo: {
+		avatar?: string;
+		userId: string;
+		username: string;
+	};
 }
-type Movie = {
-	id: string;
-	poster_path: string;
-	runtime: number;
-	title: string;
-	release_date?: string;
-	genres: Array<string>;
-	cast: Array<string>;
-	overview: string;
-	vote_average: number;
-	budget: number;
-	any?;
-};
-const MovieSeriesPageTabBody: React.SFC<IProps> = ({ mainPath, movie }) => {
+
+const MovieSeriesPageTabBody: React.SFC<IProps> = ({
+	mainPath,
+	movie,
+	userInfo
+}) => {
 	return (
 		<div className={'movie-series-page-tab-body'}>
 			<Switch>
-				<Route exact path={`${mainPath}`} render={() => 
-					<FilmBasicTabComponent movie={movie} />}
+				<Route
+					exact
+					path={`${mainPath}`}
+					render={() => <FilmBasicTabComponent movie={movie} />}
 				/>
 				<Route path={`${mainPath}/cast-crew`} component={StaffCast} />
 				<Route path={`${mainPath}/reviews`} component={MovieSeriesReviews} />
@@ -89,7 +89,11 @@ const MovieSeriesPageTabBody: React.SFC<IProps> = ({ mainPath, movie }) => {
 					component={MovieSeriesStatistics}
 				/>
 			</Switch>
-			<DiscussionComponent messages={messages} />
+			<DiscussionComponent
+				movieId={movie.id}
+				messages={messages}
+				userInfo={userInfo}
+			/>
 		</div>
 	);
 };

@@ -12,6 +12,7 @@ import './../Survey/Survey.scss';
 import './SurveyIndividual.scss';
 
 interface IOption {
+	index: number;
 	id: string;
 	question_id: string;
 	value: string;

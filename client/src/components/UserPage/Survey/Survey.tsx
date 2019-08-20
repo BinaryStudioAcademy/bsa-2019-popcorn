@@ -35,6 +35,7 @@ interface IProps {
 			image_link?: string;
 			required: boolean;
 			options?: Array<{
+				index: number;
 				id: string;
 				question_id: string;
 				value: string;

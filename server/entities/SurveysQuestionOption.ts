@@ -13,6 +13,9 @@ export class SurveysQuestionOption {
   @PrimaryGeneratedColumn("uuid")
   id: string;
 
+  @Column({ nullable: true })
+  index: number;
+
   @Column()
   title: string;
 

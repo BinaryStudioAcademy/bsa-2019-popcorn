@@ -12,15 +12,17 @@ export const createPost = async (post: any): Promise<Post> => {
 export const getPosts = async (): Promise<Post[]> =>
   await getCustomRepository(PostRepository).find({ relations: ["user"] });
 
-export const deletePostById = async (postId: number): Promise<Post> => {
-  const post = await getCustomRepository(PostRepository).findOne(postId);
+export const deletePostById = async (postId: string): Promise<Post> => {
+  const post = await getCustomRepository(PostRepository).findOne({
+    id: postId
+  });
   return await getCustomRepository(PostRepository).remove(post);
 };
 
-export const getPostById = async (postId: number): Promise<Post> =>
-  await getCustomRepository(PostRepository).findOne(postId);
+export const getPostById = async (postId: string): Promise<Post> =>
+  await getCustomRepository(PostRepository).findOne({ id: postId });
 
-export const getPostsByUserId = async (userId: number): Promise<Post[]> =>
+export const getPostsByUserId = async (userId: string): Promise<Post[]> =>
   await getCustomRepository(PostRepository).find({
     relations: ["user"],
     where: { user: { id: userId } }

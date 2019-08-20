@@ -28,7 +28,7 @@ router
       .then((response: Movie[]) => res.send(response))
       .catch(next)
   )
-  .get("/:id", (req: Request, res: Response, next: NextFunction) =>
+  .get("/:id", (req: any, res: Response, next: NextFunction) =>
     movieService
       .getMovieById(req.params.id)
       .then((movie: Movie) => res.send(movie))
@@ -40,17 +40,32 @@ router
       .then((response: Movie[]) => res.send(response))
       .catch(next)
   )
-  .delete("/:id", (req: Request, res: Response, next: NextFunction) =>
-    movieService
-      .deleteMovieById(req.params.id)
-      .then((response: Movie) => res.send(response))
-      .catch(next)
-  )
+  // .delete("/:id", (req: Request, res: Response, next: NextFunction) =>
+  //   movieService
+  //     .deleteMovieById(req.params.id)
+  //     .then((response: Movie) => res.send(response))
+  //     .catch(next)
+  // )
   .put("/", (req: Request, res: Response, next: NextFunction) =>
     movieService
       .updateMovie(req.body)
       .then((response: Movie[]) => res.send(response))
       .catch(next)
+  )
+  .post("/rate", (req: Request, res: Response, next: NextFunction) =>
+    movieService
+      .saveMovieRate(req.body)
+      .then((response: any) => res.send(response))
+      .catch(next)
+  )
+  .get(
+    "/rate/user/:userId/:movieId",
+    (req: any, res: Response, next: NextFunction) => {
+      return movieService
+        .getMovieRate(req.params.userId, req.params.movieId) // get movie by userId and movieId
+        .then((response: any) => res.send(response))
+        .catch(next);
+    }
   );
 
 export default router;

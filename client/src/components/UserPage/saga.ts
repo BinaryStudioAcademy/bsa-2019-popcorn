@@ -6,7 +6,9 @@ import {
 	SET_USER_POSTS,
 	START_UPLOAD_AVATAR,
 	USER_POSTS,
-	SEND_POST
+	SEND_POST,
+	GET_SELECTED_USER_INFO,
+	SET_SELECTED_USER
 } from './actionTypes';
 import { uploadFile } from '../../services/file.service';
 import axios from 'axios';
@@ -28,12 +30,32 @@ import {
 import config from '../../config';
 import webApi from '../../services/webApi.service';
 
+export function* getSelectedUser(action) {
+	try {
+		const data = yield call(webApi, {
+			method: 'GET',
+			endpoint: config.API_URL + '/api/user/' + action.payload.id
+		});
+
+		yield put({
+			type: SET_SELECTED_USER,
+			payload: { user: data.data }
+		});
+	} catch (e) {
+		console.log(e.message);
+	}
+}
+
 export function* uploadAvatar(action) {
 	try {
 		const data = yield call(uploadFile, action.payload.file);
 
 		// remove public in order to save public path to img in server
-		let url = data.imageUrl.split(`/`);
+		let url;
+		if (data.imageUrl.indexOf('\\') !== -1) {
+			url = data.imageUrl.split(`\\`);
+		} else url = data.imageUrl.split(`/`);
+
 		url.shift();
 
 		yield put({
@@ -47,17 +69,17 @@ export function* uploadAvatar(action) {
 
 export function* setAvatar(action) {
 	try {
-		const res = yield call(
-			axios.put,
-			config.API_URL + '/api/user/' + action.payload.id,
-			{
+		const res = yield call(webApi, {
+			method: 'PUT',
+			endpoint: config.API_URL + '/api/user/' + action.payload.id,
+			body: {
 				avatar: action.payload.url
 			}
-		);
+		});
 
 		yield put({
 			type: FINISH_UPLOAD_AVATAR,
-			payload: { user: res.data.data.user }
+			payload: { user: res.data.user }
 		});
 	} catch (e) {
 		console.log('user page saga catch: setAvatar', e.message);
@@ -233,6 +255,10 @@ function* watchSendPost() {
 	yield takeEvery(SEND_POST, sendPost);
 }
 
+function* watchGetSelectedUser() {
+	yield takeEvery(GET_SELECTED_USER_INFO, getSelectedUser);
+}
+
 function* watchFetchFilms() {
 	yield takeEvery(START_UPLOAD_AVATAR, uploadAvatar);
 }
@@ -271,6 +297,7 @@ function* watchFetchRestorePassword() {
 
 export default function* profile() {
 	yield all([
+		watchGetSelectedUser(),
 		watchFetchFilms(),
 		watchSetAvatar(),
 		watchFetchLogin(),

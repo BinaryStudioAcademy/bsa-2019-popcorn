@@ -11,14 +11,17 @@ import {
 } from './actionTypes';
 import webApi from '../../../../services/webApi.service';
 import config from '../../../../config';
-import { func } from 'prop-types';
+import { setArrangementInSurveys } from '../UserSurveys.service';
 
 export function* fetchSurveys(action) {
 	try {
 		const data = yield call(webApi, {
 			method: 'GET',
-			endpoint: config.API_URL + '/api/surveys'
+			endpoint: config.API_URL + '/api/surveys/user/' + action.payload.userId
 		});
+		if (data) {
+			setArrangementInSurveys(data);
+		}
 		yield put({
 			type: SET_SURVEYS,
 			payload: {

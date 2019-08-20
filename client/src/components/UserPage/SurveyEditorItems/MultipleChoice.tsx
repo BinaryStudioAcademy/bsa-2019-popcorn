@@ -16,6 +16,7 @@ interface IQuestion {
 	image_link?: string;
 	required: boolean;
 	options?: Array<{
+		index: number;
 		id: string;
 		question_id: string;
 		value: string;
@@ -39,12 +40,21 @@ class MultipleChoice extends Component<IProps, IQuestion> {
 		}
 	}
 
+	getNewIndex = () => {
+		if (!this.state.options) return 0;
+		const { index } = this.state.options.reduce((prev, current) =>
+			prev.index > current.index ? prev : current
+		);
+		return index + 1;
+	};
+
 	addOption = () => {
 		const options = this.state.options;
 		if (!options) return;
 		const value = options.length + 1;
 		const newOption = {
 			id: uuid(),
+			index: this.getNewIndex(),
 			question_id: this.state.id,
 			value: `Option ${value}`
 		};

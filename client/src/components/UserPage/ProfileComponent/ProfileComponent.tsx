@@ -10,22 +10,18 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import config from '../../../config';
+import ISelectedProfileInfo from '../SelectedProfileInterface';
 
 type ProfileProps = {
-	profileInfo: {
-		id: string;
-		name: string;
-		male: boolean;
-		female: boolean;
-		location: string;
-		aboutMe: string;
-		avatar: string;
-	};
+	profileInfo: ISelectedProfileInfo;
 	uploadAvatar?: (FormData, string) => any;
 	uploadUrl?: string;
 	cancelAvatar?: () => any;
 	setAvatar?: (url: string, id: string) => any;
 };
+interface IProfileComponentState {
+	errorMsg?: string;
+}
 const favMovies: Array<{ id: string; movie: string }> = [
 	{
 		id: Math.random() * (9000 - 1) + 1 + '',
@@ -70,12 +66,35 @@ const favShows: Array<{ id: string; movie: string }> = [
 //     </svg>
 // );
 
-class ProfileComponent extends Component<ProfileProps> {
+class ProfileComponent extends Component<ProfileProps, IProfileComponentState> {
 	constructor(props: ProfileProps) {
 		super(props);
+		this.state = {
+			errorMsg: ''
+		};
 	}
 
 	handleUploadFile(e) {
+		this.setState({ errorMsg: '' });
+
+		if (
+			e.target.files[0].type !== 'image/jpeg' &&
+			e.target.files[0].type !== 'image/jpg' &&
+			e.target.files[0].type !== 'image/png'
+		) {
+			e.target.value = '';
+			this.setState({
+				errorMsg: 'Wrong file format! (only jpeg, png, jpg are allowed)'
+			});
+			return;
+		} else if (e.target.files[0] && e.target.files[0].size > 1048576 * 3) {
+			e.target.value = '';
+			this.setState({
+				errorMsg: 'File is too big! (max 3MB)'
+			});
+			return;
+		}
+
 		const data = new FormData();
 		data.append('file', e.target.files[0]);
 		if (this.props.uploadAvatar)
@@ -93,7 +112,6 @@ class ProfileComponent extends Component<ProfileProps> {
 			avatar,
 			id
 		} = this.props.profileInfo;
-
 		if (!male && !female) {
 			female = true;
 		}
@@ -105,6 +123,9 @@ class ProfileComponent extends Component<ProfileProps> {
 		const { uploadUrl, cancelAvatar, setAvatar } = this.props;
 		return (
 			<div className={'UserProfileComponent'}>
+				{this.state.errorMsg && (
+					<span className="upload-error">{this.state.errorMsg}</span>
+				)}
 				<div className={'ProfileWrap'}>
 					{uploadUrl ? (
 						<div className={'profilePhotoWrap'}>

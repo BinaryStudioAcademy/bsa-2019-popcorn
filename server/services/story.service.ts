@@ -3,6 +3,7 @@ import { getCustomRepository } from "typeorm";
 import StoryRepository from "../repository/story.repository";
 import UserRepository from "../repository/user.repository";
 import { getVotingById } from "./voting.service";
+import { getMovieById } from "./movie.service";
 
 const uuid = require("uuid/v4");
 
@@ -17,6 +18,8 @@ export const getStories = async (): Promise<Array<Story>> => {
         case "voting":
           story.voting = await getVotingById(story.activityId);
       }
+      if (story.movieId) story.movie = await getMovieById(story.movieId);
+
       return story;
     })
   );
@@ -31,7 +34,9 @@ export const createStory = async ({
   image_url,
   type,
   activityId,
-  activity
+  activity,
+  movieId,
+  movieOption
 }): Promise<any> => {
   let story: any = new Story();
   story.id = uuid();
@@ -42,6 +47,8 @@ export const createStory = async ({
   story.image_url = image_url;
   story.type = type;
   story.activityId = activityId;
+  story.movieId = movieId;
+  story.movieOption = movieOption;
 
   await getCustomRepository(StoryRepository).save(story);
 
@@ -50,6 +57,7 @@ export const createStory = async ({
   } else if (type) {
     story.activity = activity.name;
   }
+  if (movieId) story.movie = await getMovieById(movieId);
 
   return story;
 };

@@ -20,6 +20,7 @@ interface ISurvey {
 	};
 	participants: number;
 	questions: Array<{
+		index: number;
 		id: string;
 		survey_id: string;
 		title: string;
@@ -29,6 +30,7 @@ interface ISurvey {
 		image_link?: string;
 		required: boolean;
 		options?: Array<{
+			index: number;
 			id: string;
 			question_id: string;
 			value: string;

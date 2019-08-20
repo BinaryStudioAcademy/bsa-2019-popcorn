@@ -25,6 +25,7 @@ interface IProps {
 		image_link?: string;
 		required: boolean;
 		options?: Array<{
+			index: number;
 			id: string;
 			question_id: string;
 			value: string;
@@ -47,14 +48,19 @@ const SurveyLinearScale = (props: IProps) => {
 		image_link
 	} = questionInfo;
 
+	const sortedOptions =
+		options &&
+		options.sort((a, b) =>
+			a.index > b.index ? 1 : b.index > a.index ? -1 : 0
+		);
 	return (
 		<div className="question-container">
 			<p className={`survey-question required-${required}`}>{title}</p>
 			{image_link && <img className="question-image" alt="" src={image_link} />}
 			<div className="linear-scale">
 				<span className="label">{firstLabel}</span>
-				{options !== undefined &&
-					options.map((option, i) => (
+				{sortedOptions !== undefined &&
+					sortedOptions.map((option, i) => (
 						<p key={i} className="linear-scale-item">
 							<label>
 								{option.value}

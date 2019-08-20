@@ -1,10 +1,12 @@
 import StoryList from './story-list/story-list';
 import {
+	addStory,
 	changeActivity,
 	createStory,
 	createVoting,
 	fetchStories,
 	saveImage,
+	saveMovie,
 	setCaption
 } from './story.redux/actions';
 import { bindActionCreators } from 'redux';
@@ -17,6 +19,13 @@ import ChooseExtraOption from './story-modal/choose-extra-option';
 import INewStory from './INewStory';
 import CreateVote from './story-modal/create-vote';
 import IVoting from './IVoting';
+import TMovie from '../../MovieSeriesPage/TMovie';
+import {
+	fetchSearch,
+	fetchSearchToAddMovieInStory,
+	resetSearch
+} from '../../MovieSeriesPage/Movie.redux/actions';
+import CreateStoryFilm from './story-modal/create-story-film';
 
 interface IStoryListItem {
 	caption: string;
@@ -62,6 +71,16 @@ interface IProps {
 	createStory: (newStory: INewStory, userId: string) => any;
 	userId: string;
 	createVoting: (voting: IVoting) => any;
+	addStory: (story: any) => any;
+	movies: null | Array<TMovie>;
+	fetchSearch: (title: string) => any;
+	title: string;
+	resetSearch: () => any;
+	saveMovie: (movie: TMovie, movieOption?: string) => any;
+	fetchSearchToAddMovieInStory: (title: string) => any;
+	searchTitle: string;
+	moviesSearchAddMovieToStory: null | Array<TMovie>;
+	isLoading: boolean;
 }
 
 const mock = {
@@ -95,10 +114,30 @@ const ListBlock = ({ ...props }: IProps) => {
 							changeActivity={props.changeActivity}
 							createStory={props.createStory}
 							userId={props.userId}
+							movies={props.movies}
+							fetchSearch={props.fetchSearch}
+							title={props.title}
+							resetSearch={props.resetSearch}
+							saveMovie={props.saveMovie}
+							isLoading={props.isLoading}
 						/>
 					)}
 				/>
 				<Route exact path={`/create/extra`} component={ChooseExtra} />
+				<Route
+					exact
+					path={`/create/extra/movie`}
+					component={other_props => (
+						<CreateStoryFilm
+							{...other_props}
+							fetchSearchToAddMovieInStory={props.fetchSearchToAddMovieInStory}
+							moviesSearchAddMovieToStory={props.moviesSearchAddMovieToStory}
+							searchTitle={props.searchTitle}
+							saveMovie={props.saveMovie}
+							isLoading={props.isLoading}
+						/>
+					)}
+				/>
 				<Route
 					path={`/create/extra/vote`}
 					component={() => (
@@ -131,9 +170,14 @@ const mapStateToProps = (rootState, props) => ({
 	avatar: rootState.profile.profileInfo && rootState.profile.profileInfo.avatar,
 	userId: rootState.profile.profileInfo && rootState.profile.profileInfo.id,
 	newStory: rootState.story.newStory,
+	title: rootState.story.title,
 	cursorPosition: rootState.story.cursorPosition,
 	top: mock.tops,
-	survey: mock.surveys
+	survey: mock.surveys,
+	movies: rootState.movie.moviesSearchInCreating,
+	moviesSearchAddMovieToStory: rootState.movie.moviesSearchAddMovieToStory,
+	searchTitle: rootState.movie.searchTitle,
+	isLoading: rootState.movie.isLoading
 });
 
 const actions = {
@@ -142,7 +186,12 @@ const actions = {
 	saveImage,
 	changeActivity,
 	createStory,
-	createVoting
+	createVoting,
+	addStory,
+	fetchSearch,
+	resetSearch,
+	saveMovie,
+	fetchSearchToAddMovieInStory
 };
 const mapDispatchToProps = dispatch => bindActionCreators(actions, dispatch);
 
