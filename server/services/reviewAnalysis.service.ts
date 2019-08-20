@@ -1,4 +1,4 @@
-const Sentiment = require('sentiment');
+const Sentiment = require("sentiment");
 
 export const getRatingByReview = (review: string, next): any => {
   const sentiment = new Sentiment();

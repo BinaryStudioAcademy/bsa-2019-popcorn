@@ -111,11 +111,12 @@ class UserTops extends React.Component<IUserTopProps, IUserTopsState> {
 
 	isOwnTop(top) {
 		const { userId, userRole } = this.props;
-		if (top.user) { // delete this check when top will have user info 
+		if (top.user) {
+			// delete this check when top will have user info
 			return userRole === 'admin' || userId === top.user.userId;
 		} else {
 			return true;
-		}	
+		}
 	}
 
 	render() {
