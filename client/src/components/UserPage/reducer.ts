@@ -2,7 +2,8 @@ import {
 	CANCEL_TEMP_AVATAR,
 	FINISH_UPLOAD_AVATAR,
 	SET_TEMP_AVATAR,
-	SET_USER_POSTS
+	SET_USER_POSTS,
+	SET_SELECTED_USER
 } from './actionTypes';
 import {
 	LOGIN,
@@ -22,7 +23,8 @@ const initialState = {
 	loginError: null,
 	registerError: null,
 	resetMessage: '',
-	restoreMessage: ''
+	restoreMessage: '',
+	selectedProfileInfo: null
 };
 
 const ok_message = 'Check your email';
@@ -30,6 +32,12 @@ const restore_ok_message = 'Your password has been changed';
 
 export default function(state = initialState, action) {
 	switch (action.type) {
+		case SET_SELECTED_USER:
+			return {
+				...state,
+				userPosts: null,
+				selectedProfileInfo: action.payload.user.user
+			};
 		case FINISH_UPLOAD_AVATAR:
 			return {
 				...state,
