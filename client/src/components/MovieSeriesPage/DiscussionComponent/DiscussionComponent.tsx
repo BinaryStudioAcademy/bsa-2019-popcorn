@@ -1,7 +1,8 @@
 import React, { Component, createRef } from 'react';
 import { ReactComponent as SendLogo } from '../../../assets/icons/general/messager/paper-plane.svg';
-
+import SocketService from '../../../services/socket.service';
 import './DiscussionComponent.scss';
+import config from '../../../config';
 
 interface IDiscussionProps {
 	messages: {
@@ -11,6 +12,12 @@ interface IDiscussionProps {
 		photo: string;
 		date: string;
 	}[];
+	userInfo: {
+		avatar?: string;
+		userId: string;
+		username: string;
+	};
+	movieId: string;
 }
 
 interface IDiscussionState {
@@ -34,9 +41,17 @@ class DiscussionComponent extends Component<
 			messagesState: this.props.messages,
 			inputIsEmpty: true
 		};
+		this.addSocketEvents(this.addMessage, props.movieId);
 	}
 	private newMessage = createRef<HTMLTextAreaElement>();
 	private userPhoto = createRef<HTMLImageElement>();
+	private discussionComponent = createRef<HTMLDivElement>();
+
+	addSocketEvents = (addMessage, movieId) => {
+		SocketService.join(`${movieId}`);
+		SocketService.on('add-message-to-discussion', addMessage);
+	};
+
 	inputChange = () => {
 		if (this.newMessage.current) {
 			let checkInput = this.newMessage.current.value.match(/^(?!\s*$).*/)
@@ -66,31 +81,69 @@ class DiscussionComponent extends Component<
 	pad(n: number) {
 		return n < 10 ? '0' + n : n;
 	}
-	addMessage = () => {
-		if (this.newMessage.current && this.userPhoto.current) {
-			let dateString = this.getDateString();
-			let newMessageItem = {
-				id: (Math.random() * (9000 - 1) + 1).toString(),
-				name: 'Me',
-				photo: this.userPhoto.current.src,
-				body: this.newMessage.current.value,
-				date: dateString
-			};
-			this.newMessage.current.value = '';
-			this.newMessage.current.focus();
-			let arr = this.state.messagesState;
-			arr.push(newMessageItem);
-			this.setState({
-				messagesState: arr,
-				inputIsEmpty: true
-			});
-		}
+
+	sendMessage = () => {
+		if (!this.newMessage.current) return;
+		const { userInfo, movieId } = this.props;
+		const userId = userInfo.userId;
+		const name = userInfo.username;
+		const photo = userInfo.avatar || config.DEFAULT_AVATAR;
+		const body = this.newMessage.current.value;
+
+		let date = this.getDateString();
+		const dataMessage = {
+			userInfo: { userId, name, photo },
+			body,
+			date,
+			movieId
+		};
+		this.newMessage.current.value = '';
+		this.newMessage.current.focus();
+		this.setState({
+			inputIsEmpty: true
+		});
+		SocketService.emit('send-message-to-discussion', dataMessage);
+		this.addMessage(dataMessage);
 	};
+
+	addMessage = ({ userInfo: { userId, name, photo }, body, date }) => {
+		const isMyMessage = userId === this.props.userInfo.userId;
+		name = isMyMessage ? 'Me' : name;
+		let newMessageItem = {
+			id: (Math.random() * (9000 - 1) + 1).toString(),
+			name,
+			photo,
+			body,
+			date
+		};
+		let arr = this.state.messagesState;
+		arr.push(newMessageItem);
+		this.setState(
+			{
+				messagesState: arr
+			},
+			isMyMessage ? () => this.scrollToBottom() : undefined
+		);
+	};
+
+	scrollToBottom = () => {
+		if (!this.discussionComponent.current) return;
+		const scrollHeight = this.discussionComponent.current.scrollHeight;
+		const height = this.discussionComponent.current.clientHeight;
+		const maxScrollTop = scrollHeight - height;
+		this.discussionComponent.current.scrollTop =
+			maxScrollTop > 0 ? maxScrollTop : 0;
+	};
+
+	componentWillUnmount() {
+		SocketService.leave(this.props.movieId);
+	}
+
 	render() {
 		const messages = this.state.messagesState;
 		return (
 			<div className="UserDiscussionComponent" id="scroller">
-				<div className="MessageContainer">
+				<div className="MessageContainer" ref={this.discussionComponent}>
 					{messages.map(message => (
 						<div className="messageItem" key={message.id}>
 							<img src={message.photo} alt="userPhoto" />
@@ -115,7 +168,7 @@ class DiscussionComponent extends Component<
 								onChange={this.inputChange}
 							></textarea>
 							<button
-								onClick={this.addMessage}
+								onClick={this.sendMessage}
 								disabled={this.state.inputIsEmpty}
 							>
 								<SendLogo />
