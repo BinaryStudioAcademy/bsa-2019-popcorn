@@ -1,5 +1,6 @@
 import { FINISH_FETCH_SEARCH_FILMS } from '../../shared/Header/actionTypes';
 import {
+	LOADING,
 	RESET_SEARCH_MOVIE,
 	SET_MOVIE_LIST,
 	SET_MOVIE_SERIES,
@@ -17,6 +18,7 @@ const initialState: {
 	moviesSearchInCreating: null | Array<TMovie>;
 	moviesSearchAddMovieToStory: null | Array<TMovie>;
 	searchTitle: string;
+	isLoading: boolean;
 } = {
 	moviesSearch: [],
 	alreadySearch: false,
@@ -24,6 +26,7 @@ const initialState: {
 	movieSeries: null,
 	moviesSearchInCreating: null,
 	moviesSearchAddMovieToStory: null,
+	isLoading: false,
 	searchTitle: ''
 };
 
@@ -65,7 +68,11 @@ export default function(state = initialState, action) {
 				...state,
 				moviesSearchInCreating: null
 			};
-
+		case LOADING:
+			return {
+				...state,
+				isLoading: action.payload.loading
+			};
 		default:
 			return state;
 	}

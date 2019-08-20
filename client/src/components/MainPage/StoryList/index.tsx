@@ -80,6 +80,7 @@ interface IProps {
 	fetchSearchToAddMovieInStory: (title: string) => any;
 	searchTitle: string;
 	moviesSearchAddMovieToStory: null | Array<TMovie>;
+	isLoading: boolean;
 }
 
 const mock = {
@@ -96,7 +97,6 @@ const mock = {
 };
 
 const ListBlock = ({ ...props }: IProps) => {
-	console.log(props);
 	return (
 		<div>
 			<StoryList {...props} />
@@ -133,6 +133,7 @@ const ListBlock = ({ ...props }: IProps) => {
 							moviesSearchAddMovieToStory={props.moviesSearchAddMovieToStory}
 							searchTitle={props.searchTitle}
 							saveMovie={props.saveMovie}
+							isLoading={props.isLoading}
 						/>
 					)}
 				/>
@@ -174,7 +175,8 @@ const mapStateToProps = (rootState, props) => ({
 	survey: mock.surveys,
 	movies: rootState.movie.moviesSearchInCreating,
 	moviesSearchAddMovieToStory: rootState.movie.moviesSearchAddMovieToStory,
-	searchTitle: rootState.movie.searchTitle
+	searchTitle: rootState.movie.searchTitle,
+	isLoading: rootState.movie.isLoading
 });
 
 const actions = {

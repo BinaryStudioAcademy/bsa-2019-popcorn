@@ -6,6 +6,7 @@ import {
 	faArrowCircleLeft,
 	faTimesCircle
 } from '@fortawesome/free-solid-svg-icons';
+import Spinner from '../../../shared/Spinner';
 
 const options = ["I've watched", "I'm going to watch", 'I recommend'];
 interface IProps {
@@ -16,6 +17,7 @@ interface IProps {
 	history: {
 		push: (path: string) => void;
 	};
+	isLoading: boolean;
 }
 const CreateStoryFilm = ({ ...props }: IProps) => {
 	const [option, setOption] = useState(options[0]);
@@ -59,18 +61,20 @@ const CreateStoryFilm = ({ ...props }: IProps) => {
 					))}
 				</select>
 			</div>
+			{props.isLoading && <Spinner />}
 			<div style={{ height: '380px', overflowY: 'scroll' }}>
-				{props.moviesSearchAddMovieToStory ? (
-					<MovieList
-						movies={props.moviesSearchAddMovieToStory}
-						saveMovie={(movie: TMovie) => {
-							props.saveMovie(movie, option);
-							props.history.push('/create');
-						}}
-					/>
-				) : (
-					<div>Not found</div>
-				)}
+				{props.moviesSearchAddMovieToStory &&
+					(props.moviesSearchAddMovieToStory.length !== 0 ? (
+						<MovieList
+							movies={props.moviesSearchAddMovieToStory}
+							saveMovie={(movie: TMovie) => {
+								props.saveMovie(movie, option);
+								props.history.push('/create');
+							}}
+						/>
+					) : (
+						<div>Not found</div>
+					))}
 			</div>
 		</div>
 	);

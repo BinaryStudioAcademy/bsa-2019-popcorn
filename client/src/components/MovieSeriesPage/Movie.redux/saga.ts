@@ -15,7 +15,8 @@ import {
 	FETCH_SEARCH,
 	SET_SEARCH_MOVIE,
 	FETCH_SEARCH_TO_ADD_MOVIE,
-	SET_SEARCH_MOVIE_TO_ADD
+	SET_SEARCH_MOVIE_TO_ADD,
+	LOADING
 } from './actionTypes';
 import config from '../../../config';
 
@@ -93,9 +94,17 @@ export function* fetchSearch(action) {
 
 export function* fetchSearchMovie(action) {
 	try {
+		yield put({
+			type: LOADING,
+			payload: { loading: true }
+		});
 		let movies = yield call(webApi, {
 			endpoint: `${config.API_URL}/api/movie/find?title=${action.payload.title}`,
 			method: 'GET'
+		});
+		yield put({
+			type: LOADING,
+			payload: { loading: false }
 		});
 		yield put({
 			type: SET_SEARCH_MOVIE_TO_ADD,
