@@ -1,6 +1,6 @@
 import * as React from 'react';
 import styled from 'styled-components';
-import { Place } from './Map';
+import { IPlace } from './Map';
 
 const Input = styled.input`
 	width: 100%;
@@ -40,13 +40,13 @@ const Item = styled.li`
 	cursor: pointer;
 `;
 
-export interface Props {
-	options: Place[];
+export interface IProps {
+	options: IPlace[];
 	onSearch: (evt: any) => void;
 	onSelectItem: (item: number) => void;
 }
 
-class Dropdown extends React.Component<Props, {}> {
+class Dropdown extends React.Component<IProps, {}> {
 	public state = {
 		value: ''
 	};
@@ -78,7 +78,7 @@ class Dropdown extends React.Component<Props, {}> {
 				<Input
 					onChange={this.onSearch}
 					value={value}
-					placeholder="Search for a venue"
+					placeholder="Search for a place"
 				/>
 				{value.length > 2 && (
 					<List>

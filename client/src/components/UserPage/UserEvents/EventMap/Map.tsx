@@ -39,16 +39,16 @@ const POSITION_CIRCLE_PAINT = {
 	'circle-stroke-color': 'white'
 };
 
-export interface Place {
+export interface IPlace {
 	id: string;
 	name: string;
 	center: [number, number];
 }
 
-export interface State {
+export interface IState {
 	query: string;
-	options: Place[];
-	selected?: Place;
+	options: IPlace[];
+	selected?: IPlace;
 	center?: [number, number];
 }
 
@@ -63,14 +63,14 @@ const req = (url: string, body?: any, method = 'GET') =>
 		body
 	});
 
-export interface Props {
+export interface IProps {
 	// tslint:disable-next-line:no-any
 	onLocationChanged: (newCord: { lat: number; lng: number }) => void;
 	currentLocation?: { lat: number | undefined; lng: number | undefined } | null;
 }
 
-class MapComponent extends React.Component<Props, State> {
-	public state: State = {
+class MapComponent extends React.Component<IProps, IState> {
+	public state: IState = {
 		query: '',
 		options: [],
 		selected: undefined,
