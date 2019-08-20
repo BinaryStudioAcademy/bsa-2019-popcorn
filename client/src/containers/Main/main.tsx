@@ -50,7 +50,13 @@ const MovieListRender = (movieList, fetchMovieList, setMovieSeries) => {
 		fetchMovieList();
 		return <Spinner />;
 	}
-	return <MovieList movies={movieList} setMovieSeries={setMovieSeries} />;
+	return (
+		<MovieList
+			movies={movieList}
+			setMovieSeries={setMovieSeries}
+			twoColumns={true}
+		/>
+	);
 };
 
 const MovieSeriesRender = props => {
