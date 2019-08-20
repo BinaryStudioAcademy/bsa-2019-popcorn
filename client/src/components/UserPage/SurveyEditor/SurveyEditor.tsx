@@ -126,9 +126,11 @@ class SurveyEditor extends Component<IProps, IState> {
 
 	getNewIndex = () => {
 		if (this.state.surveyInfo.questions.length === 0) return 0;
-		const { index } = this.state.surveyInfo.questions.reduce((prev, current) => (prev.index > current.index) ? prev : current);
+		const { index } = this.state.surveyInfo.questions.reduce((prev, current) =>
+			prev.index > current.index ? prev : current
+		);
 		return index + 1;
-	}
+	};
 
 	addQuestion = () => {
 		const id = uuid();
@@ -372,7 +374,7 @@ class SurveyEditor extends Component<IProps, IState> {
 						>
 							Add question
 						</button>
-						<NavLink to="/user-page/surveys">
+						<NavLink to={'/user-page/' + this.props.surveyInfo.user_id}>
 							<button
 								type="button"
 								onClick={this.onSave}
