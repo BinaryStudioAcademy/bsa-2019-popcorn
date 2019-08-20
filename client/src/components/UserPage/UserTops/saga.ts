@@ -35,7 +35,6 @@ export function* fetchElasticSearchFilms(action) {
 			endpoint: `${config.API_URL}/api/movie/find?title=${action.payload.title}`,
 			method: 'GET'
 		});
-		console.log('da', data);
 
 		yield put({
 			type: SET_ElASTIC_MOVIE_LIST, //FINISH_SEARCH_ELASTIC_FILMS,
@@ -45,7 +44,6 @@ export function* fetchElasticSearchFilms(action) {
 		});
 	} catch (e) {
 		console.log(e);
-		// TODO show error
 	}
 }
 

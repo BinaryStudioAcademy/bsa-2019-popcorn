@@ -45,8 +45,15 @@ export const getByTitle = async (title: string): Promise<Movie[]> => {
   let data = await elasticRepository.getByTitle(title);
 
   data = data.hits.hits;
-
-  return data.map(movie => movie._source);
+  const movies = data.map(movie => movie._source);
+  let moviesSet = new Map();
+  movies.forEach(movie => {
+    moviesSet.set(movie.id, movie);
+  });
+  let response = [];
+  for (let movie of moviesSet.values())
+    response.push(movie);
+  return response;
 };
 
 export const saveMovieRate = async (newRate: any) => {

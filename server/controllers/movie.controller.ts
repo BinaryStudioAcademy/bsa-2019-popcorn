@@ -17,7 +17,6 @@ router
       .getByTitle(req.query.title)
       .then(movies => res.send(movies))
       .catch(e => {
-        console.log(e.message);
         res.send({ message: e.message });
       })
       .catch(next)

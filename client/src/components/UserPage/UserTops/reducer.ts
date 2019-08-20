@@ -18,7 +18,6 @@ export default function(state = initialState, action) {
 		}
 		case SET_ElASTIC_MOVIE_LIST: {
 			let { elasticSearchMovies } = action.payload;
-			console.log('reducer', elasticSearchMovies);
 			return {
 				...state,
 				elasticSearchMovies,

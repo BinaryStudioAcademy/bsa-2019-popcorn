@@ -13,7 +13,7 @@ interface IInputProps {
 	fetchFilms: (title: string) => void;
 	movieList: Array<any>; //movies from elastic search
 	clearSearch: () => void;
-	saveMovie: (movie: IMovie) => void;
+	saveMovie: (movie: IMovie, newId?: string) => void;
 	last?: boolean;
 }
 const FilmInput: React.FC<IInputProps> = ({
@@ -36,10 +36,10 @@ const FilmInput: React.FC<IInputProps> = ({
 		setIsChoosenTitle(false);
 	}
 
-	function changeTitle({ movieId, title }) {
+	function changeTitle({ newId, title }) {
 		setTitle(title);
 		setIsChoosenTitle(true);
-		saveMovie({ ...movie, id: movieId, title, comment });
+		saveMovie({ ...movie, title, comment }, newId);
 	}
 
 	return (
@@ -66,15 +66,13 @@ const FilmInput: React.FC<IInputProps> = ({
 				<div className="modal modal-top">
 					{movieList && movieList.length > 0 ? (
 						movieList.map((searchedMovie, index) => {
-							console.log('hrete', searchedMovie);
 							return (
 								<div
 									className="hover"
 									key={index}
 									onClick={() => {
-										console.log(searchedMovie);
 										changeTitle({
-											movieId: searchedMovie.id,
+											newId: searchedMovie.id,
 											title: searchedMovie.title
 										});
 									}}
