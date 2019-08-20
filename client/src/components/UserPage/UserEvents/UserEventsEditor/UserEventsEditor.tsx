@@ -33,6 +33,8 @@ interface IUserEventsEditorState {
 	movieId: null | string;
 	isPrivate: boolean;
 	isDropDownOpen: boolean;
+	startTimeError: boolean;
+	endTimeError: boolean;
 }
 
 class UserEventsEditor extends React.Component<
@@ -52,7 +54,9 @@ class UserEventsEditor extends React.Component<
 			},
 			image: '',
 			isPrivate: false,
-			isDropDownOpen: false
+			isDropDownOpen: false,
+			startTimeError: false,
+			endTimeError: false
 		};
 
 		this.onCancel = this.onCancel.bind(this);
@@ -62,6 +66,7 @@ class UserEventsEditor extends React.Component<
 		this.validateDateRange = this.validateDateRange.bind(this);
 		this.onToggleDropDown = this.onToggleDropDown.bind(this);
 		this.onLocationChanged = this.onLocationChanged.bind(this);
+		this.onDeleteImage = this.onDeleteImage.bind(this);
 	}
 
 	componentDidMount() {
@@ -113,8 +118,13 @@ class UserEventsEditor extends React.Component<
 		if (this.validateDateRange(dateRange)) {
 			this.setState({
 				...this.state,
-				dateRange
+				dateRange,
+				startTimeError: false,
+				endTimeError: false
 			});
+		} else {
+			if (newDate.startDate) this.setState({ startTimeError: true });
+			if (newDate.endDate) this.setState({ endTimeError: true });
 		}
 	}
 
@@ -142,12 +152,7 @@ class UserEventsEditor extends React.Component<
 	};
 
 	onSave() {
-		if (
-			this.state.title.trim() === '' ||
-			this.state.description.trim() === '' ||
-			!this.state.dateRange.startDate ||
-			!this.state.dateRange.endDate
-		)
+		if (this.state.title.trim() === '' || !this.state.dateRange.startDate)
 			return;
 
 		if (this.props.id) {
@@ -194,8 +199,23 @@ class UserEventsEditor extends React.Component<
 		this.props.closeEditor();
 	}
 
+	onDeleteImage(e) {
+		e.preventDefault();
+		this.setState({
+			image: ''
+		});
+	}
+
 	render() {
 		const DROPDOWN_LABEL = this.state.isPrivate ? 'Private' : 'Public';
+		let pickerClasses;
+		if (this.state.startTimeError) {
+			pickerClasses = 'time-picker time-error-start';
+		} else if (this.state.endTimeError) {
+			pickerClasses = 'time-picker time-error-end';
+		} else {
+			pickerClasses = 'time-picker';
+		}
 
 		return (
 			<div className="event-editor">
@@ -203,6 +223,7 @@ class UserEventsEditor extends React.Component<
 					<label className="input-wrp">
 						<span className="label">Title: </span>
 						<input
+							maxLength={64}
 							type="text"
 							className="text-input"
 							placeholder="Enter event title here..."
@@ -210,16 +231,27 @@ class UserEventsEditor extends React.Component<
 							onChange={e => this.onChangeData(e, 'title')}
 						/>
 					</label>
+					<span className="required-title">*required</span>
 
 					<label className="input-wrp">
 						<span className="label">Image: </span>
 						<div className="img-uploader hover">
 							{this.state.image && (
-								<img
-									alt="event image"
-									src={this.state.image}
-									className="event-image"
-								/>
+								<div>
+									<img
+										alt="event image"
+										src={this.state.image}
+										className="event-image"
+										onClick={e => e.preventDefault()}
+									/>
+									<button
+										type="button"
+										onClick={this.onDeleteImage}
+										className="cancel-btn hover"
+									>
+										Delete image
+									</button>
+								</div>
 							)}
 							<ImageUploader
 								imageHandler={uploadFile}
@@ -240,7 +272,7 @@ class UserEventsEditor extends React.Component<
 
 					<div className="input-wrp">
 						<span className="label">Time: </span>
-						<div className="time-picker">
+						<div className={pickerClasses}>
 							<DatePicker
 								selected={this.state.dateRange.startDate}
 								selectsStart
@@ -265,6 +297,7 @@ class UserEventsEditor extends React.Component<
 								showTimeSelect
 								dateFormat="MMMM d, yyyy h:mm aa"
 							/>
+							<span className="required">*required</span>
 						</div>
 					</div>
 
