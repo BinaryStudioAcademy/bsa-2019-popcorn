@@ -29,17 +29,17 @@ export const fetchTops = (userId: string) => {
 };
 
 export const addTop = (newTop: any) => ({
-    type: ActionTypes.ADD_TOP,
-    payload: {
-        newTop
-    }
+	type: ActionTypes.ADD_TOP,
+	payload: {
+		newTop
+	}
 });
 
-export const updateTop = (updatedTop) => ({
-    type: ActionTypes.UPDATE_TOP,
-    payload: {
-        updatedTop
-    }
+export const updateTop = updatedTop => ({
+	type: ActionTypes.UPDATE_TOP,
+	payload: {
+		updatedTop
+	}
 });
 
 export const deleteTop = (topId: string) => {
@@ -48,5 +48,11 @@ export const deleteTop = (topId: string) => {
 		payload: {
 			topId
 		}
+	};
+};
+
+export const clearSearch = () => {
+	return {
+		type: ActionTypes.FINISH_SEARCH_ELASTIC_FILMS
 	};
 };
