@@ -18,6 +18,7 @@ import Image from '../Image/Image';
 interface IProps {
 	userInfo: {
 		//temporary put ? to use mocks inside component
+		id: string;
 		name: string;
 		image: string;
 		avatar?: string;
@@ -143,7 +144,11 @@ const Header = ({
 				/>
 				<span className="user-name">{userInfo.name}</span>
 				<div className="modal">
-					<Link aria-current="page" className="hover" to="/user-page">
+					<Link
+						aria-current="page"
+						className="hover"
+						to={`user-page/${userInfo.id}`}
+					>
 						{PROFILE}
 					</Link>
 					<Link aria-current="page" className="hover" to="/settings">

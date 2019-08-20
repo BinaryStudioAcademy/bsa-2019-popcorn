@@ -93,7 +93,6 @@ class ProfileComponent extends Component<ProfileProps> {
 			avatar,
 			id
 		} = this.props.profileInfo;
-
 		if (!male && !female) {
 			female = true;
 		}

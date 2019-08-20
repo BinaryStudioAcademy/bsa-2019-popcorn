@@ -15,9 +15,11 @@ export function* fetchSurveys(action) {
 	try {
 		const data = yield call(webApi, {
 			method: 'GET',
-			endpoint: config.API_URL + '/api/surveys'
+			endpoint: config.API_URL + '/api/surveys/user/' + action.payload.userId
 		});
-		setArrangementInSurveys(data);
+		console.log(data);
+		//if(data){
+		//setArrangementInSurveys(data);}
 		yield put({
 			type: SET_SURVEYS,
 			payload: {

@@ -13,6 +13,7 @@ import config from '../../../config';
 import Reactions from '../Reactions/Reactions';
 import PostReaction from './PostReaction/PostReaction';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 
 type IPostProps = {
 	post: {
@@ -84,7 +85,11 @@ class Post extends PureComponent<IPostProps, IPostState> {
 	};
 
 	isOwnPost() {
-		const { userId, userRole, post: { user: postOwner } } = this.props;
+		const {
+			userId,
+			userRole,
+			post: { user: postOwner }
+		} = this.props;
 		return userRole === 'admin' || userId === postOwner.id;
 	}
 	toggleModal = () => {
@@ -136,17 +141,19 @@ class Post extends PureComponent<IPostProps, IPostState> {
 		return (
 			<div className="post-item">
 				<div className="post-item-header">
-					<img
-						className="post-item-avatar"
-						src={(user && user.avatar) || config.DEFAULT_AVATAR}
-						alt="author"
-					/>
-					<div className="post-item-info">
-						<div className="post-item-author-name">{user.name}</div>
-						{created_At && (
-							<div className="post-item-post-time">{created_At}</div>
-						)}
-					</div>
+					<Link className="user-link" to={`/user-page/${user.id}`}>
+						<img
+							className="post-item-avatar"
+							src={(user && user.avatar) || config.DEFAULT_AVATAR}
+							alt="author"
+						/>
+						<div className="post-item-info">
+							<div className="post-item-author-name">{user.name}</div>
+							{created_At && (
+								<div className="post-item-post-time">{created_At}</div>
+							)}
+						</div>
+					</Link>
 					<button className="post-item-settings" onClick={this.toggleModal}>
 						<SettingIcon />
 					</button>
@@ -213,6 +220,4 @@ const mapStateToProps = (rootState, props) => ({
 	userRole: rootState.profile.profileInfo.role
 });
 
-export default connect(
-	mapStateToProps,
-)(Post);
+export default connect(mapStateToProps)(Post);

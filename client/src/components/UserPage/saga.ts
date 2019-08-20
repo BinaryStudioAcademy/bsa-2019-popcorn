@@ -5,7 +5,9 @@ import {
 	SET_TEMP_AVATAR,
 	SET_USER_POSTS,
 	START_UPLOAD_AVATAR,
-	USER_POSTS
+	USER_POSTS,
+	GET_SELECTED_USER_INFO,
+	SET_SELECTED_USER
 } from './actionTypes';
 import { uploadFile } from '../../services/file.service';
 import axios from 'axios';
@@ -26,6 +28,22 @@ import {
 } from '../authorization/actionTypes';
 import config from '../../config';
 import webApi from '../../services/webApi.service';
+
+export function* getSelectedUser(action) {
+	try {
+		const data = yield call(webApi, {
+			method: 'GET',
+			endpoint: config.API_URL + '/api/user/' + action.payload.id
+		});
+
+		yield put({
+			type: SET_SELECTED_USER,
+			payload: { user: data.data }
+		});
+	} catch (e) {
+		console.log(e.message);
+	}
+}
 
 export function* uploadAvatar(action) {
 	try {
@@ -211,6 +229,10 @@ export function* fetchRestorePassword(action) {
 	}
 }
 
+function* watchGetSelectedUser() {
+	yield takeEvery(GET_SELECTED_USER_INFO, getSelectedUser);
+}
+
 function* watchFetchFilms() {
 	yield takeEvery(START_UPLOAD_AVATAR, uploadAvatar);
 }
@@ -249,6 +271,7 @@ function* watchFetchRestorePassword() {
 
 export default function* profile() {
 	yield all([
+		watchGetSelectedUser(),
 		watchFetchFilms(),
 		watchSetAvatar(),
 		watchFetchLogin(),
