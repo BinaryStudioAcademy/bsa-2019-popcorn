@@ -5,7 +5,13 @@ import TopItem from './TopItem/TopItem';
 import { ITopItem } from './TopItem/TopItem';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { uploadImage } from './actions';
+import {
+	uploadImage,
+	fetchTops,
+	addTop,
+	updateTop,
+	deleteTop
+} from './UserTops.redux/actions';
 export interface IUserTopsState {
 	topList: ITopItem[];
 	isCreated: boolean;
@@ -193,11 +199,16 @@ const mapStateToProps = (rootState, props) => ({
 	userId: rootState.profile.profileInfo.id,
 	userRole: rootState.profile.profileInfo.role,
 	uploadUrl: rootState.userTops.uploadUrl,
-	urlForTop: rootState.userTops.urlForTop
+	urlForTop: rootState.userTops.urlForTop,
+	topList: rootState.userTops.topList
 });
 
 const actions = {
-	uploadImage
+	uploadImage,
+	fetchTops,
+	addTop,
+	updateTop,
+	deleteTop
 };
 
 const mapDispatchToProps = dispatch => bindActionCreators(actions, dispatch);
