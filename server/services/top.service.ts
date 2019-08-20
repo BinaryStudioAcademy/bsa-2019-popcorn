@@ -26,7 +26,7 @@ export const getTopsByUserId = async (userId: string): Promise<any[]> => {
       movieInTop.movie = await movieService.getMovieById(movieInTop.movieId);
     }
   }
-  console.log(topWithMovies[0].movieInTop[0].movie.title);
+  // console.log(topWithMovies[0].movieInTop[0].movie.title);
   return topWithMovies;
 }
 

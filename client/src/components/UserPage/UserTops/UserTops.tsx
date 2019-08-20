@@ -18,7 +18,7 @@ import {
 	convertServerDataFormatToClient
 } from './UserTops.service';
 export interface IUserTopsState {
-	topList: ITopItem[];
+	topList: any;
 	isCreated: boolean;
 }
 interface IUserTopProps {
@@ -40,52 +40,52 @@ interface IUserTopProps {
 }
 
 // add user info to each top
-const topItemsMock: ITopItem[] = [
-	{
-		id: '1',
-		title: 'My Top 1',
-		topImageUrl: '',
-		moviesList: [
-			{ title: 'The Avengers', id: '1', comment: 'Nice' },
-			{ title: 'Spider-Man', id: '2', comment: 'Nice' },
-			{ title: 'Batman', id: '3', comment: 'Nice' }
-		],
-		isOwnTop: true
-	},
-	{
-		id: '2',
-		title: 'My Top 2',
-		topImageUrl: '',
-		moviesList: [
-			{ title: 'The Avengers', id: '1', comment: 'Nice' },
-			{ title: 'Spider-Man', id: '2', comment: 'Nice' },
-			{ title: 'Batman', id: '3', comment: 'Nice' }
-		],
-		isOwnTop: true
-	},
-	{
-		id: '3',
-		title: 'My Top 3',
-		topImageUrl: '',
-		moviesList: [
-			{ title: 'The Avengers', id: '1', comment: 'Nice' },
-			{ title: 'Spider-Man', id: '2', comment: 'Nice' },
-			{ title: 'Batman', id: '3', comment: 'Nice' }
-		],
-		isOwnTop: true
-	},
-	{
-		id: '4',
-		title: "Somebody's Top",
-		topImageUrl: 'https://www.w3schools.com/images/colorpicker.gif',
-		moviesList: [
-			{ title: 'The Avengers', id: '1', comment: 'Nice' },
-			{ title: 'Spider-Man', id: '2', comment: 'Nice' },
-			{ title: 'Batman', id: '3', comment: 'Nice' }
-		],
-		isOwnTop: false
-	}
-];
+// const topItemsMock: ITopItem[] = [
+// 	{
+// 		id: '1',
+// 		title: 'My Top 1',
+// 		topImageUrl: '',
+// 		moviesList: [
+// 			{ title: 'The Avengers', id: '1', comment: 'Nice' },
+// 			{ title: 'Spider-Man', id: '2', comment: 'Nice' },
+// 			{ title: 'Batman', id: '3', comment: 'Nice' }
+// 		],
+// 		isOwnTop: true
+// 	},
+// 	{
+// 		id: '2',
+// 		title: 'My Top 2',
+// 		topImageUrl: '',
+// 		moviesList: [
+// 			{ title: 'The Avengers', id: '1', comment: 'Nice' },
+// 			{ title: 'Spider-Man', id: '2', comment: 'Nice' },
+// 			{ title: 'Batman', id: '3', comment: 'Nice' }
+// 		],
+// 		isOwnTop: true
+// 	},
+// 	{
+// 		id: '3',
+// 		title: 'My Top 3',
+// 		topImageUrl: '',
+// 		moviesList: [
+// 			{ title: 'The Avengers', id: '1', comment: 'Nice' },
+// 			{ title: 'Spider-Man', id: '2', comment: 'Nice' },
+// 			{ title: 'Batman', id: '3', comment: 'Nice' }
+// 		],
+// 		isOwnTop: true
+// 	},
+// 	{
+// 		id: '4',
+// 		title: "Somebody's Top",
+// 		topImageUrl: 'https://www.w3schools.com/images/colorpicker.gif',
+// 		moviesList: [
+// 			{ title: 'The Avengers', id: '1', comment: 'Nice' },
+// 			{ title: 'Spider-Man', id: '2', comment: 'Nice' },
+// 			{ title: 'Batman', id: '3', comment: 'Nice' }
+// 		],
+// 		isOwnTop: false
+// 	}
+// ];
 
 const newTop = (): ITopItem => {
 	return {
@@ -102,7 +102,7 @@ class UserTops extends React.Component<IUserTopProps, IUserTopsState> {
 	constructor(props) {
 		super(props);
 		this.state = {
-			topList: topItemsMock,
+			topList: undefined,
 			isCreated: false
 		};
 	}
@@ -183,7 +183,7 @@ class UserTops extends React.Component<IUserTopProps, IUserTopsState> {
 		const topList = this.state.topList;
 		console.log(topList);
 
-		if (!this.props.topList) {	
+		if (!topList) {	
 			return <Spinner />;
 		}
 		return (

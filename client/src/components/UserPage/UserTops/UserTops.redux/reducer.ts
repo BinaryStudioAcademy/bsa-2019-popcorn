@@ -5,7 +5,7 @@ const initialState = {
 	urlForTop: null,
 	alreadySearch: false,
 	elasticSearchMovies: null,
-	topList: []
+	topList: new Array()
 };
 
 export default function (state = initialState, action) {

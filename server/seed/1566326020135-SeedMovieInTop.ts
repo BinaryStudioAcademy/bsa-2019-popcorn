@@ -12,11 +12,10 @@ export class SeedMovieInTop1566326020135 implements MigrationInterface {
             const user = await getCustomRepository(UserRepository).getByEmail(
                 "test@gmail.com"
             );
+            
+            const tops: any[] = await topService.getTopsByUserId(user.id);        
+            const moviesSeed: any[] = await movieService.getMovies({ size: 3, from: 0 });
 
-            const tops = await topService.getTopsByUserId(user.id);
-
-            const moviesSeed: any[] = await movieService.getMovies({ size: 0, from: 5 });
-            console.log(moviesSeed.length);
             const movieInTopSeed = [];
             
             for (let i = 0; i < 3; i++) {
