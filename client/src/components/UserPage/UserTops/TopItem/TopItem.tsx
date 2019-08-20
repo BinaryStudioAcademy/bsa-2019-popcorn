@@ -10,6 +10,7 @@ export interface ITopItem {
 	moviesList: IMovie[];
 	topImageUrl: string;
 	isOwnTop: boolean;
+	isNewTop?: boolean;
 }
 
 export interface IMovie {
@@ -38,10 +39,12 @@ const TopItem: React.FC<ITopItemProps> = ({
 	uploadUrl,
 	urlForTop
 }) => {
-	const [editTop, canEditTop] = useState(false);
+	const [editTop, canEditTop] = useState(topItem.isNewTop || false);
 	const [title, setTitle] = useState(topItem.title);
 	// const [isOwnTop] = useState(topItem.isOwnTop);
-	const [topImageUrl, setTopImageUrl] = useState('');
+	// const [topImageUrl, setTopImageUrl] = useState(topItem.topImageUrl);
+	// const [isOwnTop] = useState(topItem.isOwnTop);
+	const [topImageUrl, setTopImageUrl] = useState(topItem.topImageUrl);
 	useEffect(() => {
 		if (urlForTop == topItem.id) {
 			setTopImageUrl(uploadUrl);
