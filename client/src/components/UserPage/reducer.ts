@@ -19,7 +19,7 @@ import {
 const initialState = {
 	profileInfo: null,
 	uploadUrl: '',
-	userPosts: [],
+	userPosts: null,
 	loginError: null,
 	registerError: null,
 	resetMessage: '',

@@ -5,8 +5,8 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import ImageUploader from '../../MainPage/ImageUploader/ImageUploader';
 
-import ChooseExtra from './choose-extra';
-import Extra from './extra';
+import ChooseExtra from './PostExtra/choose-extra';
+import Extra from '././PostExtra/extra';
 
 import { setPost } from '../actions';
 import { getUsersPosts } from '../../UserPage/actions';

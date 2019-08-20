@@ -2,6 +2,7 @@ import React from 'react';
 import Survey from '../UserPage/Survey/Survey';
 import { connect } from 'react-redux';
 import * as actions from '../UserPage/UserSurveys/UserSurveys.redux/actions';
+import Spinner from '../shared/Spinner';
 
 interface ISurveyPageProps {
 	match: any;
@@ -22,7 +23,7 @@ class SurveyPage extends React.Component<ISurveyPageProps> {
 		return (
 			<>
 				{loading ? (
-					<div>loading</div>
+					<Spinner />
 				) : (
 					<div>
 						<Survey
