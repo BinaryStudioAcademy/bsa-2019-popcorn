@@ -34,6 +34,8 @@ interface IUserEventsEditorState {
 	movieId: null | string;
 	isPrivate: boolean;
 	isDropDownOpen: boolean;
+	startTimeError: boolean;
+	endTimeError: boolean;
 }
 
 class UserEventsEditor extends React.Component<
@@ -53,7 +55,9 @@ class UserEventsEditor extends React.Component<
 			},
 			image: '',
 			isPrivate: false,
-			isDropDownOpen: false
+			isDropDownOpen: false,
+			startTimeError: false,
+			endTimeError: false
 		};
 
 		this.onCancel = this.onCancel.bind(this);
@@ -115,8 +119,13 @@ class UserEventsEditor extends React.Component<
 		if (this.validateDateRange(dateRange)) {
 			this.setState({
 				...this.state,
-				dateRange
+				dateRange,
+				startTimeError: false,
+				endTimeError: false
 			});
+		} else {
+			if (newDate.startDate) this.setState({ startTimeError: true });
+			if (newDate.endDate) this.setState({ endTimeError: true });
 		}
 	}
 
@@ -200,6 +209,14 @@ class UserEventsEditor extends React.Component<
 
 	render() {
 		const DROPDOWN_LABEL = this.state.isPrivate ? 'Private' : 'Public';
+		let pickerClasses;
+		if (this.state.startTimeError) {
+			pickerClasses = 'time-picker time-error-start';
+		} else if (this.state.endTimeError) {
+			pickerClasses = 'time-picker time-error-end';
+		} else {
+			pickerClasses = 'time-picker';
+		}
 
 		return (
 			<div className="event-editor">
@@ -256,7 +273,7 @@ class UserEventsEditor extends React.Component<
 
 					<div className="input-wrp">
 						<span className="label">Time: </span>
-						<div className="time-picker">
+						<div className={pickerClasses}>
 							<DatePicker
 								selected={this.state.dateRange.startDate}
 								selectsStart
