@@ -122,6 +122,8 @@ class ProfileComponent extends Component<ProfileProps, IProfileComponentState> {
 		}
 
 		const { uploadUrl, cancelAvatar, setAvatar } = this.props;
+
+		const isOwnProfile = this.isOwnProfile();
 		return (
 			<div className={'UserProfileComponent'}>
 				{this.state.errorMsg && (
@@ -163,24 +165,28 @@ class ProfileComponent extends Component<ProfileProps, IProfileComponentState> {
 								style={{ width: '100%', height: '100%' }}
 								alt=""
 							/>
-							<input
-								name="image"
-								type="file"
-								onChange={e => this.handleUploadFile(e)}
-								className="upload-image"
-								id="image"
-								accept=".jpg, .jpeg, .png"
-								disabled={!!uploadUrl}
-								hidden
-							/>
-							<div className="upload-wrp">
-								<label htmlFor="image" className="upload-image-button">
-									<FontAwesomeIcon
-										icon={faCamera}
-										className="fontAwesomeIcon"
+							{isOwnProfile && (
+								<span>
+									<input
+										name="image"
+										type="file"
+										onChange={e => this.handleUploadFile(e)}
+										className="upload-image"
+										id="image"
+										accept=".jpg, .jpeg, .png"
+										disabled={!!uploadUrl}
+										hidden
 									/>
-								</label>
-							</div>
+									<div className="upload-wrp">
+										<label htmlFor="image" className="upload-image-button">
+											<FontAwesomeIcon
+												icon={faCamera}
+												className="fontAwesomeIcon"
+											/>
+										</label>
+									</div>
+								</span>
+							)}
 						</div>
 					)}
 
