@@ -1,0 +1,32 @@
+.modal-review {
+	padding: 25px;
+
+	.modal-title {
+		text-align: center;
+		font-size: 1.2em;
+	}
+
+	.movie-item-for-review {
+		width: 100%;
+		position: relative;
+		.movie-item {
+			border: none;
+			justify-content: center;
+
+			.movie-poster-wrp {
+				width: 15%;
+			}
+			.movie-title {
+				cursor: default;
+			}
+			.movie-info {
+				width: 40%;
+			}
+		}
+	}
+	.review-text-area {
+		outline: none;
+		width: 100%;
+		max-width: 100%;
+	}
+}
