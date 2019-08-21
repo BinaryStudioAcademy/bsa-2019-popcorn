@@ -34,6 +34,13 @@ router
       .updateReviewById(req.params.id, req.body, next)
       .then(result => res.send(result))
       .catch(next)
+  )
+  .delete("/:id", errorHandlerMiddleware, (req, res, next) =>
+    reviewService
+      .deleteReviewById(req.params.id, next)
+      .then(result => res.send(result))
+      .catch(next)
   );
+// TODO - get all reviews by user ID
 
 export default router;

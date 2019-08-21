@@ -73,6 +73,25 @@ class ReviewRepository extends Repository<Review> {
       return next({ status: err.status, message: err.message });
     }
   }
+
+  async deleteReviewById(id: string, next) {
+    try {
+      const data = await getCustomRepository(ReviewRepository).getReviewById(
+        id,
+        next
+      );
+      if (!data) {
+        return next(
+          { status: 404, message: "Review with that id not found" },
+          null
+        );
+      }
+      await this.delete({ id });
+      return { id };
+    } catch (err) {
+      return next({ status: err.status, message: err.message });
+    }
+  }
 }
 
 export default ReviewRepository;

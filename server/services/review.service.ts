@@ -66,3 +66,7 @@ export const updateReviewById = async (
 export const getReviewById = async (id: string, next) => {
   return await getCustomRepository(ReviewRepository).getReviewById(id, next);
 };
+
+export const deleteReviewById = async (id: string, next) => {
+  return await getCustomRepository(ReviewRepository).deleteReviewById(id, next);
+};
