@@ -72,14 +72,18 @@ class Survey extends PureComponent<IProps, IState> {
 			isDisabled: false
 		};
 	}
-	componentDidMount() {
-		this.setState({
-			answers: this.props.surveyInfo.questions.map(question => ({
-				questionId: question.id,
-				options: [],
-				value: ''
-			}))
-		});
+
+	static getDerivedStateFromProps(props, state) {
+		if (props.surveyInfo) {
+			return {
+				answers: props.surveyInfo.questions.map(question => ({
+					questionId: question.id,
+					options: [],
+					value: ''
+				}))
+			};
+		}
+		return null;
 	}
 
 	validate = () => {
@@ -173,7 +177,12 @@ class Survey extends PureComponent<IProps, IState> {
 	};
 
 	render() {
-		if (!this.state.answers || !this.props.surveyInfo) return <Spinner />;
+		if (
+			!this.state.answers ||
+			!this.props.surveyInfo ||
+			!this.props.surveyInfo.questions
+		)
+			return <Spinner />;
 
 		const { surveyInfo } = this.props;
 		const {
