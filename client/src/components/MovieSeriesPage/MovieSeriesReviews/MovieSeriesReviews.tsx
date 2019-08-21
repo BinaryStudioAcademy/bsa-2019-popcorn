@@ -29,14 +29,13 @@ const MovieSeriesReviews: React.FC<IProps> = props => {
 		props.fetchMovieReviews(props.movieId);
 		return <Spinner />;
 	}
-	console.log(reviews);
 	return (
 		<div className="MovieSeriesReviews">
 			{!reviews ? (
 				<Spinner />
 			) : (
 				reviews.map((item: IReview) => {
-					return <ReviewItem review={item} />;
+					return <ReviewItem review={item} key={item.id} />;
 				})
 			)}
 		</div>
