@@ -2,7 +2,9 @@ import {
 	GET_USER_EVENTS,
 	DELETE_OWN_USER_EVENT,
 	START_UPLOAD_USER_EVENTS,
-	UPDATE_USER_EVENT
+	UPDATE_USER_EVENT,
+	GET_All_EVENTS,
+	GET_EVENT_BY_ID
 } from './actionsTypes';
 
 export const getUserEvents = (id: string) => {
@@ -38,6 +40,21 @@ export const deleteEvent = (id: string, currentUserId: string) => {
 		payload: {
 			id,
 			currentUserId
+		}
+	};
+};
+
+export const getAllEvents = () => {
+	return {
+		type: GET_All_EVENTS
+	};
+};
+
+export const getEventById = (eventId: string) => {
+	return {
+		type: GET_EVENT_BY_ID,
+		payload: {
+			eventId
 		}
 	};
 };

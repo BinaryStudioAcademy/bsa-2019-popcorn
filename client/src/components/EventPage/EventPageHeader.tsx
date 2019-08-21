@@ -1,10 +1,11 @@
 import React from 'react';
-import { IEvent } from './EventPage';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar, faEnvelope, faPlus } from '@fortawesome/free-solid-svg-icons';
+import { IEventFormatClient } from '../UserPage/UserEvents/UserEvents.service';
+import config from '../../config';
 
 interface IProps {
-	event: IEvent;
+	event: IEventFormatClient;
 }
 
 const EventPageHeader: React.FC<IProps> = ({ event }) => {
@@ -12,7 +13,9 @@ const EventPageHeader: React.FC<IProps> = ({ event }) => {
 		<header className="event-page-header">
 			<div
 				className="header-photo"
-				style={{ backgroundImage: `url(${event.photo})` }}
+				style={{
+					backgroundImage: `url(${event.image || config.DEFAULT_EVENT_IMAGE})`
+				}}
 			></div>
 			<div className="header-basic">
 				<span className="header-title">{event.title}</span>

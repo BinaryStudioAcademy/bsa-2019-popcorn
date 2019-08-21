@@ -1,9 +1,14 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import EventPageHeader from './EventPageHeader';
 import EventPageTabs from './EventPageTabs';
 import EventPageTabBody from './EventPageTabBody';
 import './EventPage.scss';
 import UserEvents from '../UserPage/UserEvents/UserEvents';
+import {
+	formatToClient,
+	IEventFormatDataBase
+} from '../UserPage/UserEvents/UserEvents.service';
+import Spinner from '../shared/Spinner';
 
 export interface IEvent {
 	title: string;
@@ -16,31 +21,40 @@ export interface IEvent {
 
 interface IProps {
 	match: {
-		path: string;
+		url: string;
+		params: {
+			id: string;
+		};
 	};
+	getEventById: (eventId: string) => void;
+	searchedEvent: IEventFormatDataBase;
 }
 
-const event: IEvent = {
-	title: 'Best event in your life!',
-	description:
-		'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Eos iste ipsa commodi nihil eveniet. Eos, rerum modi? Ratione non perspiciatis dicta vel, reprehenderit suscipit cum illo? Placeat unde sint deleniti!',
-	location: 'location',
-	date: 'Субота, 24 серпня 2019 р. з 13:00 по 19:00',
-	photo: 'https://99px.ru/sstorage/53/2017/05/tmb_200648_1245.jpg',
-	isPrivate: false
-};
+const EventPage: React.SFC<IProps> = ({
+	match,
+	getEventById,
+	searchedEvent
+}) => {
+	const { url: mainPath } = match;
+	const [event, setEvent] = useState();
+	console.log(match);
+	useEffect(() => {
+		if (!event) {
+			getEventById(match.params.id);
+			searchedEvent && setEvent(formatToClient(searchedEvent));
 
-const EventPage: React.SFC<IProps> = ({ match }) => {
-	const { path: mainPath } = match;
+			console.log('hello', searchedEvent);
+		}
+	});
 
+	if (!event) return <Spinner />;
 	return (
-		<div className="event-page">
-			<UserEvents />
-			{/* <EventPageHeader event={event} />
+		<div>
+			<EventPageHeader event={event} />
 			<div className="event-page-main">
 				<EventPageTabs mainPath={mainPath} />
 				<EventPageTabBody mainPath={mainPath} event={event} />
-			</div> */}
+			</div>
 		</div>
 	);
 };

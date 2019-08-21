@@ -5,10 +5,11 @@ import About from './About/About';
 import Discussion from './Discussion/Discussion';
 import ParticipantList from './ParticipantList/ParticipantList';
 import InterestedList from './InterestedList/InterestedList';
+import { IEventFormatClient } from '../UserPage/UserEvents/UserEvents.service';
 
 interface IProps {
 	mainPath: string;
-	event: IEvent;
+	event: IEventFormatClient;
 }
 
 const EventPageTabBody: React.SFC<IProps> = ({ mainPath, event }) => {

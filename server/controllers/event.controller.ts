@@ -6,6 +6,12 @@ import { Event as EventEntity } from "../entities/Events";
 const router = Router();
 
 router
+  .get("/:id", (req: any, res: Response, next: NextFunction) =>
+    eventService
+      .getEventById(req.params.id)
+      .then((event: Event) => res.send(event))
+      .catch(next)
+  )
   .get("/", (req: any, res: Response, next: NextFunction) =>
     eventService
       .getAllEvents()
@@ -18,12 +24,7 @@ router
       .then((events: Event[]) => res.send(events))
       .catch(next)
   )
-  .get("/:id", (req: any, res: Response, next: NextFunction) =>
-    eventService
-      .getEventById(req.params.id)
-      .then((movie: Event) => res.send(movie))
-      .catch(next)
-  )
+
   .post("/", (req: any, res: Response, next: NextFunction) =>
     eventService
       .createEvent(req.body)
