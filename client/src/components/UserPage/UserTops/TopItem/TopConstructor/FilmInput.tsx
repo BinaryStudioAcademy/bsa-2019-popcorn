@@ -3,7 +3,7 @@ import closeIcon from '../../../../../assets/icons/general/closeIcon.svg';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { fetchFilms, clearSearch } from '../../UserTops.redux/actions';
-import { IMovie } from '../TopItem';
+import { IMovie } from '../../UserTops.service';
 
 interface IInputProps {
 	movie: IMovie;

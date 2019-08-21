@@ -13,8 +13,12 @@ export interface IMovie {
 	comment: string;
 }
 
-export function convertServerDataFormatToClient(serverData: any[]): ITopItem[] {
+export function convertServerDataFormatToClient(serverData: any[]): ITopItem[] | null {
     console.log(serverData);
+
+    if (!serverData) {
+        return null;
+    }
 
     const clientDataFormat: ITopItem[] = serverData.map((top) => {
         return {

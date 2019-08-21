@@ -1,11 +1,20 @@
 import * as ActionTypes from './actionTypes';
 
-const initialState = {
+interface IStateTops {
+	uploadUrl: any;
+	urlForTop: any;
+	alreadySearch: boolean;
+	elasticSearchMovies: any;
+	topList: any[];
+}
+
+const initialState: IStateTops = {
 	uploadUrl: null,
 	urlForTop: null,
 	alreadySearch: false,
 	elasticSearchMovies: null,
-	topList: new Array()
+	// topList: new Array()
+	topList: []
 };
 
 export default function(state = initialState, action) {
@@ -27,6 +36,7 @@ export default function(state = initialState, action) {
 			};
 		}
 		case ActionTypes.SET_TOPS: {
+			console.log(state.topList);
 			return {
 				...state,
 				topList: [...action.payload.topList]

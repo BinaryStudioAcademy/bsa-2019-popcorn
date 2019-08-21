@@ -20,10 +20,12 @@ import {
 export interface IUserTopsState {
 	topList: any;
 	isCreated: boolean;
+	isAction: boolean;
 }
 interface IUserTopProps {
-	topList: any;
+	topList: ITopItem[];
 	fetchTops: (userId: string) => any[];
+	deleteTop: (topId: string) => any;
 	uploadImage: (data: FormData, titleId: string) => void;
 	userId: string;
 	userRole: string;
@@ -103,7 +105,8 @@ class UserTops extends React.Component<IUserTopProps, IUserTopsState> {
 		super(props);
 		this.state = {
 			topList: undefined,
-			isCreated: false
+			isCreated: false,
+			isAction: true
 		};
 	}
 
@@ -112,7 +115,10 @@ class UserTops extends React.Component<IUserTopProps, IUserTopsState> {
 	}
 
 	static getDerivedStateFromProps(props, state) {
-		if (!isEqual(props.topList, state.topList)) {
+		if (
+			state.isAction &&
+			!isEqual(props.topList, state.topList)
+			) {
 			return {
 				...state,
 				topList: convertServerDataFormatToClient(props.topList)
@@ -121,29 +127,30 @@ class UserTops extends React.Component<IUserTopProps, IUserTopsState> {
 		return null;
 	}
 
-	deleteTop = (topId: string) => {
-		let { isCreated } = this.state;
-		const topList = this.state.topList.filter((topItem: ITopItem) => {
-			if (topItem.id === topId) {
-				if (topItem.isNewTop) {
-					isCreated = !isCreated;
-				}
-				return false;
-			}
-			return true;
-		});
-
-		this.setState({ topList, isCreated });
+	deleteTop = (top: ITopItem) => {
+		console.log(top.id);
+		
+		if (top.isNewTop) {
+			const topList = this.state.topList
+				.filter((topItem: ITopItem) => topItem.id !== top.id);	
+			this.setState({ topList, isCreated: false, isAction: false });
+		} else {
+			this.props.deleteTop(top.id);
+			this.setState({ isCreated: false, isAction: true });
+		}
 	};
 
 	createTop = () => {
 		const { isCreated } = this.state;
-
+		console.log(isCreated);
+		
 		if (!isCreated) {
 			const { topList } = this.state;
+			
 			this.setState({
 				topList: [...topList, newTop()],
-				isCreated: true
+				isCreated: true,
+				isAction: false
 			});
 		}
 	};
@@ -182,10 +189,11 @@ class UserTops extends React.Component<IUserTopProps, IUserTopsState> {
 
 		const topList = this.state.topList;
 		console.log(topList);
-
-		if (!this.props.topList) {	
+		
+		if (!topList) {	
 			return <Spinner />;
 		}
+
 		return (
 			<div className="user-tops">
 				{url_callback && (

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import './TopConstructor.scss';
 import DragDrop from './DragDrop';
-import { IMovie } from '../TopItem';
+import { IMovie } from '../../UserTops.service';
 import { uniqueId } from 'lodash';
 const emptyInput = () => {
 	return { title: '', id: uniqueId('movie'), comment: '' };

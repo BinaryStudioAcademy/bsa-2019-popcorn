@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import FilmInput from './FilmInput';
-import { IMovie } from '../TopItem';
+import { IMovie } from '../../UserTops.service';
 
 const grid = 8;
 
