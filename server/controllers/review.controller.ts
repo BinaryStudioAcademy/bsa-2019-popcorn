@@ -13,6 +13,12 @@ router
   )
   .get("/:id", errorHandlerMiddleware, (req, res, next) =>
     reviewService
+      .getReviewById(req.params.id, next)
+      .then(result => res.send(result))
+      .catch(next)
+  )
+  .get("/movie/:id", errorHandlerMiddleware, (req, res, next) =>
+    reviewService
       .getReviewsByMovieId(req.params.id, next)
       .then(result => res.send(result))
       .catch(next)
@@ -20,6 +26,12 @@ router
   .get("/:userId/:movieId", errorHandlerMiddleware, (req, res, next) =>
     reviewService
       .getReviewByMovieIdUserId(req.params.userId, req.params.movieId, next)
+      .then(result => res.send(result))
+      .catch(next)
+  )
+  .put("/:id", errorHandlerMiddleware, (req, res, next) =>
+    reviewService
+      .updateReviewById(req.params.id, req.body, next)
       .then(result => res.send(result))
       .catch(next)
   );

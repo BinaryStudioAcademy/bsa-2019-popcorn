@@ -50,3 +50,19 @@ export const getReviewByMovieIdUserId = async (
     movieId,
     next
   );
+
+export const updateReviewById = async (
+  id: string,
+  bodyRequest: IRequestBody,
+  next
+) => {
+  return await getCustomRepository(ReviewRepository).updateReviewById(
+    id,
+    bodyRequest,
+    next
+  );
+};
+
+export const getReviewById = async (id: string, next) => {
+  return await getCustomRepository(ReviewRepository).getReviewById(id, next);
+};

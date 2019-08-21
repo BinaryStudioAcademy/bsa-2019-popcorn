@@ -35,6 +35,40 @@ class ReviewRepository extends Repository<Review> {
         relations: ["user"]
         // select: { text: true, movieId: true, user: { id: true } }
       });
+      if (!data) {
+        return {};
+      }
+      return data;
+    } catch (err) {
+      return next({ status: err.status, message: err.message });
+    }
+  }
+
+  async updateReviewById(id: string, bodyRequest: any, next) {
+    try {
+      const data = await this.update({ id }, bodyRequest);
+      const updatedReview = await this.getReviewById(id, next);
+      return updatedReview
+        ? updatedReview
+        : next({ status: 404, message: "Review was not found" }, null);
+    } catch (err) {
+      console.log("keoafkpo");
+      return next({ status: err.status, message: err.message });
+    }
+  }
+
+  async getReviewById(id: string, next) {
+    try {
+      const data = getCustomRepository(ReviewRepository).find({
+        where: { id: id },
+        relations: ["user"]
+      });
+      if (!data) {
+        return next(
+          { status: 404, message: "Review with that id not found" },
+          null
+        );
+      }
       return data;
     } catch (err) {
       return next({ status: err.status, message: err.message });
