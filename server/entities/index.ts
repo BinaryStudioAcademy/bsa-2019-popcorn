@@ -2,7 +2,6 @@ import { User } from "./User";
 import { Post } from "./Post";
 import { PostReactions } from "./PostReactions";
 import { PostComments } from "./PostComments";
-
 import { Movie } from "./Movie";
 import { Top } from "./Top";
 import { MovieInTop } from './MovieInTop';
@@ -16,6 +15,8 @@ import { SurveysQuestion } from "./SurveysQuestion";
 import { SurveysQuestionAnswer } from "./SurveysQuestionAnswer";
 import { SurveysQuestionOption } from "./SurveysQuestionOption";
 import { MovieRate } from "./MovieRate/MovieRate";
+import { Review } from "./Review";
+import { Discussion } from "./Discussion";
 
 export default [
   User,
@@ -36,5 +37,7 @@ export default [
   SurveysQuestion,
   SurveysQuestionAnswer,
   SurveysQuestionOption,
-  MovieRate
+  MovieRate,
+  Review,
+  Discussion
 ];

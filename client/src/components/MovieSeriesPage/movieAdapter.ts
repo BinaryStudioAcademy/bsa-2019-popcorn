@@ -19,6 +19,7 @@ export default (movie: any): TMovie => {
 		budget: movie.budget,
 		vote_average: movie.rate,
 		video: 'https://www.youtube.com/embed/KnrRy6kSFF0',
-		cast: 'Matt Damon, Jessica Chastain, Kristen Wiig'
+		cast: 'Matt Damon, Jessica Chastain, Kristen Wiig',
+		messages: movie.messages
 	};
 };
