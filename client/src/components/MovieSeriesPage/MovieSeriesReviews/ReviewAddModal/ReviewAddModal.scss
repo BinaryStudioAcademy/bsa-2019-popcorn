@@ -1,0 +1,121 @@
+@import '../../../../styles/variables.scss';
+
+.modal-review {
+	padding: 25px;
+	position: relative;
+
+	.modal-title {
+		text-align: center;
+		color: $text-secondary-color;
+		font-size: 1.2em;
+		margin-bottom: 30px;
+		font-style: italic;
+
+		span {
+			font-style: initial;
+			font-weight: 600;
+		}
+	}
+
+	.review-buttons {
+		width: 100%;
+		margin-top: 15px;
+		display: flex;
+		justify-content: center;
+		box-sizing: border-box;
+
+		.close-button {
+			position: absolute;
+			top: 20px;
+			right: 20px;
+
+			svg {
+				width: 30px;
+				height: 30px;
+				cursor: pointer;
+				color: $border-focus-color;
+				transition: color 0.1s ease-in;
+
+				&:hover {
+					color: $text-secondary-color;
+				}
+			}
+		}
+
+		.edit-button-wrapper {
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+
+			.error-message {
+				color: rgba(168, 0, 0, 0.527);
+				font-style: italic;
+			}
+		}
+
+		.edit-button {
+			width: 200px;
+			height: 50px;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			background-color: $orange-light;
+			border: 2px solid #fb860086;
+			box-shadow: 0px 0px 5px 1px $button-shadow-color;
+			text-transform: uppercase;
+			font-weight: 600;
+			color: rgba($text-base-color, 0.7);
+			letter-spacing: $header-letter-spacing;
+			font-size: 1.1em;
+			cursor: pointer;
+
+			.error-message {
+				text-align: center;
+			}
+
+			&:hover {
+				border: none;
+			}
+		}
+	}
+
+	.movie-item-for-review {
+		width: 100%;
+
+		.movie-item {
+			border: none;
+			justify-content: center;
+			margin-bottom: 30px;
+
+			.movie-poster-wrp {
+				width: 15%;
+			}
+			.movie-title {
+				cursor: default;
+			}
+			.movie-info {
+				width: 40%;
+			}
+		}
+	}
+	.review-text-area {
+		outline: none;
+		width: 100%;
+		height: 300px;
+		max-height: 300px;
+		max-width: 100%;
+		resize: none;
+		border: 2px solid $border-color;
+		color: $text-secondary-color;
+		padding: 10px;
+		font: inherit;
+		box-shadow: 0px 0px 5px 3px $input-shadow-color;
+		font-size: $form-font-size;
+		letter-spacing: $input-letter-spacing;
+		transition: all 0.5s ease;
+
+		&:focus {
+			border: 2px solid $border-focus-color;
+		}
+	}
+}
