@@ -8,7 +8,8 @@ import {
 	SET_SEARCH_MOVIE_TO_ADD,
 	FETCH_MOVIE_USER_RATE_SUCCESS,
 	FETCH_MOVIE_BY_ID_SUCCESS,
-	SET_LOAD_MORE_MOVIE
+	SET_LOAD_MORE_MOVIE,
+	FETCH_REVIEW_BY_USER_MOVIE_ID_SUCCESS
 } from './actionTypes';
 import TMovie from '../TMovie';
 import movieAdapter from '../movieAdapter';
@@ -24,6 +25,7 @@ const initialState: {
 	moviesSearchAddMovieToStory: null | Array<TMovie>;
 	searchTitle: string;
 	isLoading: boolean;
+	ownReview: any;
 } = {
 	moviesSearch: [],
 	alreadySearch: false,
@@ -34,7 +36,8 @@ const initialState: {
 	isLoading: false,
 	searchTitle: '',
 	userRate: null,
-	fetchedMovie: null
+	fetchedMovie: null,
+	ownReview: null
 };
 
 export default function(state = initialState, action) {
@@ -97,6 +100,11 @@ export default function(state = initialState, action) {
 					...state.movieList,
 					...(action.payload.movies || []).map(movieAdapter)
 				]
+			};
+		case FETCH_REVIEW_BY_USER_MOVIE_ID_SUCCESS:
+			return {
+				...state,
+				ownReview: action.payload.review
 			};
 		default:
 			return state;

@@ -1,8 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar } from '@fortawesome/free-solid-svg-icons';
 import StarRating from '../shared/StarRating/StarRating';
 import { IUserRate } from './MovieSeriesPage';
+import Spinner from '../shared/Spinner';
+import ReviewAddModal from '../MovieSeriesPage/MovieSeriesReviews/ReviewAddModal/ReviewAddModal';
 
 interface IProps {
 	movieSeriesData: {
@@ -13,17 +15,44 @@ interface IProps {
 	};
 	userRate?: IUserRate;
 	setUserRate: (userRate: object) => any;
+	ownReview: any;
+	fetchReview: (userId: string, movieID: string) => any;
+	userId: string;
+	movieId: string;
 }
 
 const MovieSeriesPageHeader: React.FC<IProps> = ({
 	movieSeriesData,
 	userRate,
-	setUserRate
+	setUserRate,
+	ownReview,
+	fetchReview,
+	userId,
+	movieId
 }) => {
+	const [modal, setModal] = useState(false);
 	const genre = movieSeriesData.genre && movieSeriesData.genre.join(', ');
 	const rate: number = userRate ? +userRate.rate : 0;
+
+	const onModalClick = () => {
+		setModal(true);
+		fetchReview(userId, movieId);
+
+		// props.fetchAction();
+	};
+
+	const renderModalReview = () => {
+		// ...
+	};
 	return (
 		<header className="movie-series-page-header">
+			{modal && (
+				<ReviewAddModal
+					ownReview={ownReview!}
+					setModal={setModal}
+					movie={movieSeriesData}
+				/>
+			)}
 			<div className="movie-title-rating">
 				<div className="title">
 					{movieSeriesData.title}
@@ -31,6 +60,7 @@ const MovieSeriesPageHeader: React.FC<IProps> = ({
 						? '(' + movieSeriesData.release_date.slice(0, 4) + ')'
 						: null}
 				</div>
+				<button onClick={() => onModalClick()}>REVIEW</button>
 				<StarRating
 					size={5}
 					default={rate}

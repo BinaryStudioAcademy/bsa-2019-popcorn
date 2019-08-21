@@ -8,7 +8,8 @@ import {
 	FETCH_SEARCH,
 	RESET_SEARCH_MOVIE,
 	FETCH_SEARCH_TO_ADD_MOVIE,
-	LOAD_MORE_MOVIE
+	LOAD_MORE_MOVIE,
+	FETCH_REVIEW_BY_USER_MOVIE_ID
 } from './actionTypes';
 
 export const fetchMovieList = (): any => {
@@ -93,6 +94,21 @@ export const loadMoreMovie = (size: number, from: number): any => {
 		payload: {
 			size,
 			from
+		}
+	};
+};
+
+export const fetchReviewByMovieUserId = (
+	userId: string,
+	movieId: string
+): any => {
+	console.log('ЗАПУСТИЛСЯ');
+	console.log(userId, movieId);
+	return {
+		type: FETCH_REVIEW_BY_USER_MOVIE_ID,
+		payload: {
+			userId,
+			movieId
 		}
 	};
 };
