@@ -20,7 +20,8 @@ class ReviewRepository extends Repository<Review> {
     try {
       return await this.find({
         where: { movieId: movieId },
-        relations: ["user"]
+        relations: ["user"],
+        order: { created_at: "DESC" }
         // select: { text: true, movieId: true, user: { id: true } }
       });
     } catch (err) {
