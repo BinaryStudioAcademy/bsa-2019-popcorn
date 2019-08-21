@@ -14,8 +14,6 @@ export interface IMovie {
 }
 
 export function convertServerDataFormatToClient(serverData: any[]): ITopItem[] | null {
-    console.log(serverData);
-
     if (!serverData) {
         return null;
     }

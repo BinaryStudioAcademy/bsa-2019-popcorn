@@ -5,7 +5,7 @@ interface IStateTops {
 	urlForTop: any;
 	alreadySearch: boolean;
 	elasticSearchMovies: any;
-	topList: any[];
+	topList: any;
 }
 
 const initialState: IStateTops = {
@@ -14,7 +14,7 @@ const initialState: IStateTops = {
 	alreadySearch: false,
 	elasticSearchMovies: null,
 	// topList: new Array()
-	topList: []
+	topList: undefined
 };
 
 export default function(state = initialState, action) {
@@ -42,7 +42,6 @@ export default function(state = initialState, action) {
 			};
 		}
 		case ActionTypes.ADD_TOP_SUCCESS: {
-			console.log(action.payload.newTop);
 			return {
 				...state,
 				topList: [...state.topList, action.payload.newTop]

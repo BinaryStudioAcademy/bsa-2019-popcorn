@@ -86,7 +86,7 @@ export function* addTop(action) {
 				...newTop
 			}
 		});
-		console.log(data);
+		
 		if (data) {
 			yield put({
 				type: ActionTypes.ADD_TOP_SUCCESS,

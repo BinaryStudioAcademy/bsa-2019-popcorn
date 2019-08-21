@@ -83,9 +83,7 @@ export const updateTop = async (updatedTop: Top): Promise<Top> => {
   return await getCustomRepository(TopRepository).save(top);
 };
 
-// export const updateUserTop = async (updatedTop: Top): Promise<Top> => {
 export const updateUserTop = async (updatedTop: any): Promise<any> => {
-  // console.log(updatedTop);
   let top: Top = await getCustomRepository(TopRepository).findOne(
     updatedTop.id
   );
@@ -97,23 +95,15 @@ export const updateUserTop = async (updatedTop: any): Promise<any> => {
 
   top = await getCustomRepository(TopRepository).save(top);
 
-  // console.log('======================')
-  // console.log(top);
-
   const activeTop = await getTopById(top.id);
-  // console.log('----------------');
-  // console.log(activeTop);
 
   for (let i = 0; i < activeTop.movieInTop.length; i++) {
     const movieInTop = await getCustomRepository(MovieInTopRepository).findOne(
       activeTop.movieInTop[i].id
     );
-    // console.log('-=-=-=-=-=-=-==-=-=-=');
-    // console.log(movieInTop.id);
+    
     await getCustomRepository(MovieInTopRepository).remove(movieInTop);
   }
-
-  // console.log(activeTop);
 
   for (let i = 0; i < updatedTop.moviesList.length; i++) {
     const movieInTop: any = {};
@@ -123,10 +113,6 @@ export const updateUserTop = async (updatedTop: any): Promise<any> => {
 
     await getCustomRepository(MovieInTopRepository).save(movieInTop);
   }
-  
-  // top = await getCustomRepository(TopRepository).findOne(
-  //   top.id
-  // );
 
   const receivedTop: Top = await getTopById(top.id);
     
@@ -136,11 +122,7 @@ export const updateUserTop = async (updatedTop: any): Promise<any> => {
     movieInTop.movie = await movieService.getMovieById(movieInTop.movieId);
   }
 
-  console.log(receivedTop);
-
   return receivedTop;
-  // top.userId = updatedTop.title;
-  // return await getCustomRepository(TopRepository).save(top);
 };
 
 export const deleteTopById = async (topId: number): Promise<Top> => {

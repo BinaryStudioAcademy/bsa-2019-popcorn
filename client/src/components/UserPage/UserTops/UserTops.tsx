@@ -130,7 +130,7 @@ class UserTops extends React.Component<IUserTopProps, IUserTopsState> {
 	}
 
 	deleteTop = (top: ITopItem) => {
-		console.log(top.id);
+		// console.log(top.id);
 		
 		if (top.isNewTop) {
 			const topList = this.state.topList
@@ -144,7 +144,7 @@ class UserTops extends React.Component<IUserTopProps, IUserTopsState> {
 
 	createTop = () => {
 		const { isCreated } = this.state;
-		console.log(isCreated);
+		// console.log(isCreated);
 		
 		if (!isCreated) {
 			const { topList } = this.state;
@@ -163,7 +163,7 @@ class UserTops extends React.Component<IUserTopProps, IUserTopsState> {
 		// }
 
 		if (updatedTopItem.isNewTop) {
-			console.log('creating');
+			// console.log('creating');
 
 			// delete updatedTopItem.isNewTop;
 			// delete updatedTopItem.isOwnTop;
@@ -174,7 +174,7 @@ class UserTops extends React.Component<IUserTopProps, IUserTopsState> {
 			this.props.addTop(addedTop);
 			this.setState({ isAction: true });
 		} else {
-			console.log('update');
+			// console.log('update');
 
 			const updatedTop: any = Object.assign({}, updatedTopItem);
 			updatedTop.userId = this.props.userId;
