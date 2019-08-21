@@ -34,9 +34,15 @@ const MovieSeriesReviews: React.FC<IProps> = props => {
 			{!reviews ? (
 				<Spinner />
 			) : (
-				reviews.map((item: IReview) => {
-					return <ReviewItem review={item} key={item.id} />;
-				})
+				<div>
+					{!reviews.length ? (
+						<div className="warning">No one Review</div>
+					) : (
+						reviews.map((item: IReview) => {
+							return <ReviewItem review={item} key={item.id} />;
+						})
+					)}
+				</div>
 			)}
 		</div>
 	);

@@ -6,4 +6,9 @@
 	width: 100%;
 	display: flex;
 	flex-direction: column;
+
+	.warning {
+		text-align: center;
+		font-style: italic;
+	}
 }
