@@ -6,7 +6,8 @@ import './EventPage.scss';
 import UserEvents from '../UserPage/UserEvents/UserEvents';
 import {
 	formatToClient,
-	IEventFormatDataBase
+	IEventFormatDataBase,
+	IDiscussionUser
 } from '../UserPage/UserEvents/UserEvents.service';
 import Spinner from '../shared/Spinner';
 
@@ -28,12 +29,14 @@ interface IProps {
 	};
 	getEventById: (eventId: string) => void;
 	searchedEvent: IEventFormatDataBase;
+	currentUser: IDiscussionUser;
 }
 
-const EventPage: React.SFC<IProps> = ({
+const EventPage: React.FC<IProps> = ({
 	match,
 	getEventById,
-	searchedEvent
+	searchedEvent,
+	currentUser
 }) => {
 	const { url: mainPath } = match;
 	const [event, setEvent] = useState();
@@ -53,7 +56,11 @@ const EventPage: React.SFC<IProps> = ({
 			<EventPageHeader event={event} />
 			<div className="event-page-main">
 				<EventPageTabs mainPath={mainPath} />
-				<EventPageTabBody mainPath={mainPath} event={event} />
+				<EventPageTabBody
+					mainPath={mainPath}
+					event={event}
+					currentUser={currentUser}
+				/>
 			</div>
 		</div>
 	);

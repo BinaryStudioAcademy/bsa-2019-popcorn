@@ -3,13 +3,7 @@ import { ReactComponent as SendLogo } from '../../../assets/icons/general/messag
 import SocketService from '../../../services/socket.service';
 import './DiscussionComponent.scss';
 import config from '../../../config';
-
-export interface IDiscussionUser {
-	avatar?: string;
-	id: string;
-	name: string;
-}
-
+import { IDiscussionUser } from '../../UserPage/UserEvents/UserEvents.service';
 export interface IDiscussionMessage {
 	id: string;
 	text: string;
@@ -19,12 +13,14 @@ export interface IDiscussionMessage {
 interface IDiscussionProps {
 	messages: IDiscussionMessage[];
 	currentUser: IDiscussionUser;
-	movieId: string;
+	entityId: string;
+	entityIdName: string;
 }
 
 interface IDiscussionState {
 	messagesState: IDiscussionMessage[];
 	inputIsEmpty: boolean;
+	roomId: string;
 }
 
 class DiscussionComponent extends Component<
@@ -35,16 +31,17 @@ class DiscussionComponent extends Component<
 		super(props);
 		this.state = {
 			messagesState: this.props.messages,
-			inputIsEmpty: true
+			inputIsEmpty: true,
+			roomId: String(props.entityIdName).concat(props.entityId)
 		};
-		this.addSocketEvents(this.addMessage, props.movieId);
+		this.addSocketEvents(this.addMessage, this.state.roomId);
 	}
 	private newMessage = createRef<HTMLTextAreaElement>();
 	private userPhoto = createRef<HTMLImageElement>();
 	private discussionComponent = createRef<HTMLDivElement>();
 
-	addSocketEvents = (addMessage, movieId) => {
-		SocketService.join(`${movieId}`);
+	addSocketEvents = (addMessage, roomId) => {
+		SocketService.join(`${roomId}`);
 		SocketService.on('add-message-to-discussion', addMessage);
 	};
 
@@ -80,7 +77,7 @@ class DiscussionComponent extends Component<
 
 	sendMessage = () => {
 		if (!this.newMessage.current) return;
-		const { currentUser, movieId } = this.props;
+		const { currentUser, entityId, entityIdName } = this.props;
 		const id = currentUser.id;
 		const name = currentUser.name;
 		const avatar = currentUser.avatar;
@@ -91,7 +88,8 @@ class DiscussionComponent extends Component<
 			user: { id, name, avatar },
 			text,
 			createdAt,
-			movieId
+			[entityIdName]: entityId,
+			entityIdName
 		};
 		this.newMessage.current.value = '';
 		this.newMessage.current.focus();
@@ -132,7 +130,7 @@ class DiscussionComponent extends Component<
 	};
 
 	componentWillUnmount() {
-		SocketService.leave(this.props.movieId);
+		SocketService.leave(this.state.roomId);
 	}
 
 	render() {

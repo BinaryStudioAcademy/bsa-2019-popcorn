@@ -129,7 +129,12 @@ const Main = ({
 						<Route
 							path={`/event-page/:id`}
 							render={props =>
-								EventPageRender({ ...props, searchedEvent, getEventById })
+								EventPageRender({
+									...props,
+									searchedEvent,
+									getEventById,
+									currentUser: userInfo
+								})
 							}
 						/>
 						<Route

@@ -10,6 +10,8 @@ class EventRepository extends Repository<Event> {
       .createQueryBuilder("event")
       .leftJoinAndSelect("event.eventComments", "comments")
       .leftJoinAndSelect("event.eventVisitors", "visitors")
+      .leftJoin("comments.user", "cuser")
+      .addSelect(["cuser.name", "cuser.avatar", "cuser.id"])
       .leftJoin("visitors.user", "user")
       .addSelect(["user.name", "user.avatar", "user.id"])
       .getMany();
@@ -20,6 +22,8 @@ class EventRepository extends Repository<Event> {
       .createQueryBuilder("event")
       .leftJoinAndSelect("event.eventComments", "comments")
       .leftJoinAndSelect("event.eventVisitors", "visitors")
+      .leftJoin("comments.user", "cuser")
+      .addSelect(["cuser.name", "cuser.avatar", "cuser.id"])
       .leftJoin("visitors.user", "user")
       .addSelect(["user.name", "user.avatar", "user.id"])
       .where("event.id = :id", { id: eventId })

@@ -2,9 +2,8 @@
 export interface IEventComment {
 	id: string;
 	text: string;
-	eventId: string;
-	userId: string;
-	createdAt: Date;
+	createdAt: string;
+	user: IDiscussionUser;
 }
 
 export interface IEventFormatFromEditor {
@@ -59,11 +58,13 @@ export interface IVisitor {
 	status: string;
 	userId: string;
 	eventId: string;
-	user: {
-		avatar: string;
-		name: string;
-		id: string;
-	};
+	user: IDiscussionUser;
+}
+
+export interface IDiscussionUser {
+	avatar?: string;
+	name: string;
+	id: string;
 }
 
 export const formatToClient = (

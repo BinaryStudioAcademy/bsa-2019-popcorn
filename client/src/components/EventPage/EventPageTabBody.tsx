@@ -4,16 +4,25 @@ import { Switch, Route } from 'react-router-dom';
 import About from './About/About';
 import Discussion from './Discussion/Discussion';
 import ParticipantList from './ParticipantList/ParticipantList';
-import { IEventFormatClient } from '../UserPage/UserEvents/UserEvents.service';
+import {
+	IEventFormatClient,
+	IDiscussionUser
+} from '../UserPage/UserEvents/UserEvents.service';
+import DiscussionComponent from '../MovieSeriesPage/DiscussionComponent/DiscussionComponent';
 
 interface IProps {
 	mainPath: string;
 	event: IEventFormatClient;
+	currentUser: IDiscussionUser;
 }
 const INTERESTED_STATUS = 'interested';
 const GOING_STATUS = 'going';
 
-const EventPageTabBody: React.SFC<IProps> = ({ mainPath, event }) => {
+const EventPageTabBody: React.FC<IProps> = ({
+	mainPath,
+	event,
+	currentUser
+}) => {
 	return (
 		<div className={'event-page-tab-body'}>
 			<Switch>
@@ -22,7 +31,17 @@ const EventPageTabBody: React.SFC<IProps> = ({ mainPath, event }) => {
 					path={`${mainPath}`}
 					component={() => <About event={event} />}
 				/>
-				<Route path={`${mainPath}/discussion`} render={() => <Discussion />} />
+				<Route
+					path={`${mainPath}/discussion`}
+					render={() => (
+						<DiscussionComponent
+							messages={event.eventComments}
+							currentUser={currentUser}
+							entityId={event.id}
+							entityIdName="eventId"
+						/>
+					)}
+				/>
 				<Route
 					path={`${mainPath}/participants`}
 					render={() => (
