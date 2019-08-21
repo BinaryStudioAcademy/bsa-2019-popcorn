@@ -8,12 +8,14 @@ import {
 import { Redirect } from 'react-router';
 import { fetchUserSurveys } from '../../UserSurveys/UserSurveys.redux/actions';
 import { getUserEvents } from '../../UserEvents/actions';
+import { fetchTops } from '../../UserTops/UserTops.redux/actions';
 import { connect } from 'react-redux';
 
 interface IProps {
 	option: string;
 	survey: any;
 	userEvents: any;
+	topList: any;
 	loading: boolean;
 	userInfo: {
 		id: string;
@@ -22,6 +24,7 @@ interface IProps {
 	setExtra: (data: any) => any;
 	fetchUserSurveys: (id: string) => any;
 	getUserEvents: (id: string) => any;
+	fetchTops: (id: string) => any;
 }
 
 class ChooseExtraOption extends React.Component<IProps> {
@@ -37,6 +40,9 @@ class ChooseExtraOption extends React.Component<IProps> {
 			case 'event':
 				this.props.getUserEvents(this.props.userInfo.id);
 				break;
+			case 'top':
+				this.props.fetchTops(this.props.userInfo.id);
+				break;
 		}
 	}
 
@@ -45,7 +51,13 @@ class ChooseExtraOption extends React.Component<IProps> {
 	}
 
 	render() {
-		const { option, survey = [], userEvents = [], loading } = this.props;
+		const {
+			option,
+			survey = [],
+			userEvents = [],
+			topList = [],
+			loading
+		} = this.props;
 
 		let data: any = [];
 
@@ -55,6 +67,9 @@ class ChooseExtraOption extends React.Component<IProps> {
 				break;
 			case 'event':
 				data = [...userEvents];
+				break;
+			case 'top':
+				data = [...topList];
 				break;
 		}
 
@@ -129,12 +144,14 @@ const mapStateToProps = rootState => ({
 	survey: rootState.survey.surveys,
 	loading: rootState.survey.loading,
 	userEvents: rootState.events.userEvents,
-	userInfo: rootState.profile.profileInfo
+	userInfo: rootState.profile.profileInfo,
+	topList: rootState.userTops.topList
 });
 
 const mapDispatchToProps = {
 	fetchUserSurveys,
-	getUserEvents
+	getUserEvents,
+	fetchTops
 };
 
 export default connect(
