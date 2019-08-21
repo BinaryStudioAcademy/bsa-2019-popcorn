@@ -28,8 +28,6 @@ export class SeedMovieInTop1566326020135 implements MigrationInterface {
                 }
             }
 
-            console.log(movieInTopSeed);
-            
             movieInTopSeed.map(async movieInTopData => {
                 const movieInTop = new MovieInTop();
                 movieInTop.comment = movieInTopData.comment;
