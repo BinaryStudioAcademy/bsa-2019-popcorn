@@ -12,13 +12,15 @@ import PostContent from '../PostContent/PostContent';
 import config from '../../../config';
 import Reactions from '../Reactions/Reactions';
 import PostReaction from './PostReaction/PostReaction';
-import { string } from 'yup';
 import { NavLink } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { deletePost } from '../FeedBlock/FeedBlock.redux/actions';
+import { bindActionCreators } from 'redux';
 
 type IPostProps = {
 	post: {
+		id: string;
 		user: {
 			name: string;
 			avatar: string;
@@ -49,6 +51,7 @@ type IPostProps = {
 	};
 	userId: string;
 	userRole: string;
+	deletePost: (id: string) => any;
 };
 interface IReactItem {
 	id: number;
@@ -88,6 +91,10 @@ class Post extends PureComponent<IPostProps, IPostState> {
 		this.setState({ reactionList });
 	};
 
+	deletePost = () => {
+		this.props.deletePost(this.props.post.id);
+	};
+
 	isOwnPost() {
 		const {
 			userId,
@@ -101,7 +108,7 @@ class Post extends PureComponent<IPostProps, IPostState> {
 	};
 	isModalShown() {
 		return this.state.isModalShown ? (
-			<PostEditModal isOwn={this.isOwnPost()} />
+			<PostEditModal isOwn={this.isOwnPost()} deletePost={this.deletePost} />
 		) : null;
 	}
 	nestComments(commentList) {
@@ -242,4 +249,12 @@ const mapStateToProps = (rootState, props) => ({
 	userRole: rootState.profile.profileInfo.role
 });
 
-export default connect(mapStateToProps)(Post);
+const actions = {
+	deletePost
+};
+const mapDispatchToProps = dispatch => bindActionCreators(actions, dispatch);
+
+export default connect(
+	mapStateToProps,
+	mapDispatchToProps
+)(Post);

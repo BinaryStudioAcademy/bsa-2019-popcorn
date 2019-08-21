@@ -62,7 +62,7 @@ class ChooseExtraOption extends React.Component<IProps> {
 			return option === 'survey' ? (
 				<Redirect
 					to={{
-						pathname: `/user-page/${this.props.userInfo.id}/${option}s/create/questions?backTo=post`
+						pathname: `/user-page/${this.props.userInfo.id}/${option}s/create/questions`
 					}}
 				/>
 			) : (
