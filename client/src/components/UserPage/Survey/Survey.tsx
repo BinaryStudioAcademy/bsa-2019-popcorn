@@ -14,6 +14,7 @@ import { bindActionCreators } from 'redux';
 import { postAnswers } from '../UserSurveys/UserSurveys.redux/actions';
 import { transformAnswers } from './Survey.service';
 import Spinner from '../../shared/Spinner';
+import { NavLink } from 'react-router-dom';
 
 // JavascriptTimeAgo.locale(en);
 
@@ -243,9 +244,11 @@ class Survey extends PureComponent<IProps, IState> {
 							</div>
 						)}
 						{!this.props.isPreview && (
-							<button type="button" onClick={this.sendAnswer}>
-								Send
-							</button>
+							<NavLink to="/">
+								<button type="button" onClick={this.sendAnswer}>
+									Send
+								</button>
+							</NavLink>
 						)}
 					</div>
 				</form>
