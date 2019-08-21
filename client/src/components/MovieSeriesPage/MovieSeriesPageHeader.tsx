@@ -47,7 +47,6 @@ const MovieSeriesPageHeader: React.FC<IProps> = ({
 		setModal(true);
 		fetchReview(userId, movieId);
 	};
-
 	return (
 		<header className="movie-series-page-header">
 			{modal && ownReview && (

@@ -22,6 +22,7 @@ interface IProps {
 	reviews: IReview[];
 	movieId: string;
 	fetchMovieReviews: any;
+	loading: boolean;
 }
 
 class MovieSeriesReviews extends React.Component<IProps> {
@@ -33,7 +34,7 @@ class MovieSeriesReviews extends React.Component<IProps> {
 		const { reviews } = this.props;
 		return (
 			<div className="MovieSeriesReviews">
-				{!reviews ? (
+				{this.props.loading ? (
 					<Spinner />
 				) : (
 					<div>
@@ -54,6 +55,7 @@ class MovieSeriesReviews extends React.Component<IProps> {
 const mapStateToProps = (rootState, props) => ({
 	...props,
 	reviews: rootState.review.reviewList,
+	loading: rootState.review.loading,
 	movieId: rootState.movie.fetchedMovie.id
 });
 
