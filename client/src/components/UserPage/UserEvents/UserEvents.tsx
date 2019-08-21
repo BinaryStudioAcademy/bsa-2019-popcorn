@@ -44,8 +44,8 @@ class UserEvents extends React.Component<IProps, IState> {
 	}
 
 	componentDidMount() {
-		const { currentProfileUserId } = this.props;
-		this.props.getUserEvents(currentProfileUserId);
+		const { currentUserId } = this.props;
+		this.props.getUserEvents(currentUserId);
 	}
 
 	editEvent = (editableEvent: null | IEventFormatClient = null) => {
@@ -103,14 +103,14 @@ class UserEvents extends React.Component<IProps, IState> {
 		});
 		return (
 			<div className="user-events">
-				{currentProfileUserId === currentUserId ? (
-					<div
-						className="create-event-button hover"
-						onClick={() => this.editEvent()}
-					>
-						{openEventEditor ? BACK_TO_EVENTS_TEXT : CREATE_EVENT_TEXT}{' '}
-					</div>
-				) : null}
+				{/* {currentProfileUserId === currentUserId ? ( */}
+				<div
+					className="create-event-button hover"
+					onClick={() => this.editEvent()}
+				>
+					{openEventEditor ? BACK_TO_EVENTS_TEXT : CREATE_EVENT_TEXT}{' '}
+				</div>
+				{/* // ) : null} */}
 				{openEventEditor ? (
 					<UserEventsEditor
 						closeEditor={this.editEvent}
@@ -153,7 +153,8 @@ const mapStateToProps = (state, props) => {
 	return {
 		...props,
 		currentUserId: state.profile.profileInfo.id,
-		currentProfileUserId: state.profile.selectedProfileInfo.id,
+		currentProfileUserId:
+			state.profile.selectedProfileInfo && state.profile.selectedProfileInfo.id,
 		currentUserRole: state.profile.profileInfo.role,
 		userEvents: state.events.userEvents
 	};

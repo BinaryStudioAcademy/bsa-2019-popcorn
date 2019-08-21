@@ -29,7 +29,7 @@ const MainPageSidebar = ({ notifications }: IProps) => {
 				</div>
 
 				<div>
-					<p>Events</p>
+					<NavLink to={'/event-page/'}>Events</NavLink>
 					{notifications.newEvents !== 0 && (
 						<p className="notifications">
 							<span>{notifications.newEvents}</span>

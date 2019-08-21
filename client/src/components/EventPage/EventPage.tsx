@@ -3,6 +3,7 @@ import EventPageHeader from './EventPageHeader';
 import EventPageTabs from './EventPageTabs';
 import EventPageTabBody from './EventPageTabBody';
 import './EventPage.scss';
+import UserEvents from '../UserPage/UserEvents/UserEvents';
 
 export interface IEvent {
 	title: string;
@@ -34,11 +35,12 @@ const EventPage: React.SFC<IProps> = ({ match }) => {
 
 	return (
 		<div className="event-page">
-			<EventPageHeader event={event} />
+			<UserEvents />
+			{/* <EventPageHeader event={event} />
 			<div className="event-page-main">
 				<EventPageTabs mainPath={mainPath} />
 				<EventPageTabBody mainPath={mainPath} event={event} />
-			</div>
+			</div> */}
 		</div>
 	);
 };
