@@ -52,7 +52,6 @@ class ReviewRepository extends Repository<Review> {
         ? updatedReview
         : next({ status: 404, message: "Review was not found" }, null);
     } catch (err) {
-      console.log("keoafkpo");
       return next({ status: err.status, message: err.message });
     }
   }
