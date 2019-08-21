@@ -13,6 +13,7 @@ export interface IReview {
 		avatar: string;
 		id: string;
 	};
+	analysis: string;
 	movieId: string;
 	text: string;
 	created_at: string;
@@ -23,6 +24,7 @@ interface IProps {
 	movieId: string;
 	fetchMovieReviews: any;
 	loading: boolean;
+	currentUserId: string;
 }
 
 class MovieSeriesReviews extends React.Component<IProps> {
@@ -31,7 +33,7 @@ class MovieSeriesReviews extends React.Component<IProps> {
 	}
 
 	render() {
-		const { reviews } = this.props;
+		const { reviews, currentUserId } = this.props;
 		return (
 			<div className="MovieSeriesReviews">
 				{this.props.loading ? (
@@ -42,7 +44,13 @@ class MovieSeriesReviews extends React.Component<IProps> {
 							<div className="warning">No one Review</div>
 						) : (
 							reviews.map((item: IReview) => {
-								return <ReviewItem review={item} key={item.id} />;
+								return (
+									<ReviewItem
+										review={item}
+										key={item.id}
+										currentUserId={currentUserId}
+									/>
+								);
 							})
 						)}
 					</div>
@@ -56,7 +64,8 @@ const mapStateToProps = (rootState, props) => ({
 	...props,
 	reviews: rootState.review.reviewList,
 	loading: rootState.review.loading,
-	movieId: rootState.movie.fetchedMovie.id
+	movieId: rootState.movie.fetchedMovie.id,
+	currentUserId: rootState.profile.profileInfo.id
 });
 
 const mapDispatchToProps = dispatch => {

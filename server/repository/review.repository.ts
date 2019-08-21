@@ -1,6 +1,7 @@
 import { EntityRepository, Repository, getCustomRepository } from "typeorm";
 import { Review } from "../entities/Review";
 import UserRepository from "./user.repository";
+import { getRatingByReview } from "../services/reviewAnalysis.service";
 
 @EntityRepository(Review)
 class ReviewRepository extends Repository<Review> {
@@ -10,7 +11,10 @@ class ReviewRepository extends Repository<Review> {
       if (!user) {
         return next({ status: 404, message: "User is not found" }, null);
       }
-      return await this.save({ user, movieId, text });
+      const ratingValue = getRatingByReview(text, next);
+      const analysis = ratingValue.result.toFixed(2);
+
+      return await this.save({ user, movieId, text, analysis });
     } catch (err) {
       return next({ status: err.status, message: err.message });
     }
@@ -47,6 +51,8 @@ class ReviewRepository extends Repository<Review> {
 
   async updateReviewById(id: string, bodyRequest: any, next) {
     try {
+      const ratingValue = getRatingByReview(bodyRequest.text, next);
+      bodyRequest.analysis = ratingValue.result.toFixed(2);
       const data = await this.update({ id }, bodyRequest);
       const updatedReview = await this.getReviewById(id, next);
       return updatedReview
