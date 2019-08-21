@@ -5,7 +5,8 @@ import {
 	UPDATE_SURVEY,
 	DELETE_SURVEY,
 	RECREATE_SURVEY,
-	GET_SURVEY_BYID
+	GET_SURVEY_BYID,
+	POST_ANSWERS
 } from './actionTypes';
 
 export const fetchUserSurveys = id => {
@@ -55,5 +56,12 @@ export const getSurveyById = id => ({
 	type: GET_SURVEY_BYID,
 	payload: {
 		id
+	}
+});
+
+export const postAnswers = data => ({
+	type: POST_ANSWERS,
+	payload: {
+		data
 	}
 });

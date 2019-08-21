@@ -9,6 +9,11 @@ import { faUsers } from '@fortawesome/free-solid-svg-icons';
 import ReactTimeAgo from 'react-time-ago';
 import JavascriptTimeAgo from 'javascript-time-ago';
 import en from 'javascript-time-ago/locale/en';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { postAnswers } from '../UserSurveys/UserSurveys.redux/actions';
+import { transformAnswers } from './Survey.service';
+import Spinner from '../../shared/Spinner';
 
 // JavascriptTimeAgo.locale(en);
 
@@ -43,6 +48,8 @@ interface IProps {
 		}>;
 	};
 	isPreview?: boolean;
+	currentUserId: string;
+	postAnswers: (any) => any;
 }
 
 interface IState {
@@ -60,13 +67,18 @@ class Survey extends PureComponent<IProps, IState> {
 	constructor(props: IProps) {
 		super(props);
 		this.state = {
-			answers: props.surveyInfo.questions.map(question => ({
+			answers: [],
+			isDisabled: false
+		};
+	}
+	componentDidMount() {
+		this.setState({
+			answers: this.props.surveyInfo.questions.map(question => ({
 				questionId: question.id,
 				options: [],
 				value: ''
-			})),
-			isDisabled: false
-		};
+			}))
+		});
 	}
 
 	validate = () => {
@@ -152,10 +164,16 @@ class Survey extends PureComponent<IProps, IState> {
 			this.setState({ isDisabled: true });
 			return;
 		}
-		console.log(this.state.answers);
+		const formattedAnswers = transformAnswers(
+			this.state.answers,
+			this.props.currentUserId
+		);
+		this.props.postAnswers(formattedAnswers);
 	};
 
 	render() {
+		if (!this.state.answers || !this.props.surveyInfo) return <Spinner />;
+
 		const { surveyInfo } = this.props;
 		const {
 			user,
@@ -165,6 +183,7 @@ class Survey extends PureComponent<IProps, IState> {
 			description,
 			questions
 		} = surveyInfo;
+
 		return (
 			<div className="survey">
 				<div className="survey-background" />
@@ -235,4 +254,19 @@ class Survey extends PureComponent<IProps, IState> {
 	}
 }
 
-export default Survey;
+const mapStateToProps = (rootState, props) => ({
+	...props,
+	surveys: rootState.survey.surveys,
+	userId: rootState.profile.selectedProfileInfo
+		? rootState.profile.selectedProfileInfo.id
+		: null,
+	currentUserId: rootState.profile.profileInfo.id
+});
+const actions = {
+	postAnswers
+};
+const mapDispatchToProps = dispatch => bindActionCreators(actions, dispatch);
+export default connect(
+	mapStateToProps,
+	mapDispatchToProps
+)(Survey);

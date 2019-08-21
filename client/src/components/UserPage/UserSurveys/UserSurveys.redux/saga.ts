@@ -8,7 +8,8 @@ import {
 	DELETE_SURVEY,
 	RECREATE_SURVEY,
 	SET_SURVEY_BYID,
-	GET_SURVEY_BYID
+	GET_SURVEY_BYID,
+	POST_ANSWERS
 } from './actionTypes';
 import webApi from '../../../../services/webApi.service';
 import config from '../../../../config';
@@ -171,6 +172,29 @@ function* recreateSurvey(action) {
 function* watchRecreate() {
 	yield takeEvery(RECREATE_SURVEY, recreateSurvey);
 }
+function* postAnswers(action) {
+	try {
+		yield all(
+			action.payload.data.map(answer =>
+				call(webApi, {
+					method: 'POST',
+					endpoint: config.API_URL + '/api/surveys/answer',
+					body: {
+						...answer
+					}
+				})
+			)
+		);
+
+		yield put({ type: FETCH_SURVEYS });
+	} catch (e) {
+		console.log('survey saga post answers: ', e.message);
+	}
+}
+
+function* watchPostAnswers() {
+	yield takeEvery(POST_ANSWERS, postAnswers);
+}
 
 export default function* survey() {
 	yield all([
@@ -180,6 +204,7 @@ export default function* survey() {
 		watchUpdate(),
 		watchDelete(),
 		watchRecreate(),
-		watchgetSurveyById()
+		watchgetSurveyById(),
+		watchPostAnswers()
 	]);
 }
