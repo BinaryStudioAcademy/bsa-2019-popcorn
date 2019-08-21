@@ -81,6 +81,7 @@ class ReviewAddModal extends React.Component<IProps, IState> {
 								<MovieItem movie={movie} key={movie.id} />
 							</div>
 							<textarea
+								autoFocus={true}
 								value={this.state.textArea}
 								onChange={e =>
 									this.setState({
