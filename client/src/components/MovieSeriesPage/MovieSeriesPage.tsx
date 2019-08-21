@@ -10,7 +10,9 @@ import {
 	fetchUserRate,
 	fetchMovie,
 	setUserRate,
-	fetchReviewByMovieUserId as fetchReview
+	fetchReviewByMovieUserId as fetchReview,
+	setReview,
+	removeReviewSet
 } from './Movie.redux/actions';
 
 interface IProps {
@@ -20,6 +22,13 @@ interface IProps {
 	fetchUserRate: (userId: string, movieId: string) => object;
 	fetchMovie: (movieId: string) => object;
 	fetchReview: (userId: string, movieId: string) => object;
+	setReview: (
+		userId: string,
+		movieId: string,
+		text: string,
+		prevId?: string
+	) => object;
+	removeReviewSet: () => object;
 	ownReview: any;
 	match: any;
 	avatar?: string;
@@ -45,7 +54,9 @@ const MovieSeriesPage: React.SFC<IProps> = props => {
 		userId,
 		username,
 		fetchReview,
-		ownReview
+		ownReview,
+		setReview,
+		removeReviewSet
 	} = props;
 	const mainPath = `/movie-series/${props.match.params.id}`;
 
@@ -57,13 +68,8 @@ const MovieSeriesPage: React.SFC<IProps> = props => {
 		fetchUserRate(userId, props.match.params.id);
 		return <Spinner />;
 	}
-	// if(!ownReview) {
-	// 	fetchReview(userId, props.match.params.id);
-	// 	return <Spinner />
-	// }
-	// console.log(ownReview);
+
 	const movie = fetchedMovie;
-	console.log(ownReview);
 
 	return (
 		<div className="movie-series-page">
@@ -75,6 +81,8 @@ const MovieSeriesPage: React.SFC<IProps> = props => {
 				fetchReview={fetchReview}
 				userId={userId}
 				movieId={movie.id}
+				setReview={setReview}
+				removeReviewSet={removeReviewSet}
 			/>
 			<MovieSeriesPageTabs mainPath={mainPath} />
 			<MovieSeriesPageTabBody
@@ -101,7 +109,9 @@ const mapDispatchToProps = dispatch => {
 		fetchUserRate,
 		fetchMovie,
 		setUserRate,
-		fetchReview
+		fetchReview,
+		setReview,
+		removeReviewSet
 	};
 	return bindActionCreators(actions, dispatch);
 };

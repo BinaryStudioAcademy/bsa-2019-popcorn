@@ -9,7 +9,9 @@ import {
 	RESET_SEARCH_MOVIE,
 	FETCH_SEARCH_TO_ADD_MOVIE,
 	LOAD_MORE_MOVIE,
-	FETCH_REVIEW_BY_USER_MOVIE_ID
+	FETCH_REVIEW_BY_USER_MOVIE_ID,
+	SET_REVIEW,
+	REMOVE_REVIEW_SET
 } from './actionTypes';
 
 export const fetchMovieList = (): any => {
@@ -102,13 +104,34 @@ export const fetchReviewByMovieUserId = (
 	userId: string,
 	movieId: string
 ): any => {
-	console.log('ЗАПУСТИЛСЯ');
-	console.log(userId, movieId);
 	return {
 		type: FETCH_REVIEW_BY_USER_MOVIE_ID,
 		payload: {
 			userId,
 			movieId
 		}
+	};
+};
+
+export const setReview = (
+	userId: string,
+	movieId: string,
+	text: string,
+	prevId = null
+) => {
+	return {
+		type: SET_REVIEW,
+		payload: {
+			userId,
+			movieId,
+			text,
+			prevId
+		}
+	};
+};
+
+export const removeReviewSet = () => {
+	return {
+		type: REMOVE_REVIEW_SET
 	};
 };

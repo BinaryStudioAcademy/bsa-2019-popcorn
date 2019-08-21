@@ -9,7 +9,9 @@ import {
 	FETCH_MOVIE_USER_RATE_SUCCESS,
 	FETCH_MOVIE_BY_ID_SUCCESS,
 	SET_LOAD_MORE_MOVIE,
-	FETCH_REVIEW_BY_USER_MOVIE_ID_SUCCESS
+	FETCH_REVIEW_BY_USER_MOVIE_ID_SUCCESS,
+	SET_REVIEW_SUCCESS,
+	REMOVE_REVIEW_SET
 } from './actionTypes';
 import TMovie from '../TMovie';
 import movieAdapter from '../movieAdapter';
@@ -104,7 +106,17 @@ export default function(state = initialState, action) {
 		case FETCH_REVIEW_BY_USER_MOVIE_ID_SUCCESS:
 			return {
 				...state,
-				ownReview: action.payload.review
+				ownReview: action.payload.review || { text: '' }
+			};
+		case SET_REVIEW_SUCCESS:
+			return {
+				...state,
+				ownReview: null
+			};
+		case REMOVE_REVIEW_SET:
+			return {
+				...state,
+				ownReview: null
 			};
 		default:
 			return state;
