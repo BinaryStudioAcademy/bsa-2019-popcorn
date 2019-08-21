@@ -18,7 +18,7 @@ class ReviewRepository extends Repository<Review> {
 
   async getReviewsByMovieId(movieId: string, next) {
     try {
-      return await getCustomRepository(ReviewRepository).find({
+      return await this.find({
         where: { movieId: movieId },
         relations: ["user"]
         // select: { text: true, movieId: true, user: { id: true } }
@@ -30,7 +30,7 @@ class ReviewRepository extends Repository<Review> {
 
   async getReviewByMovieIdUserId(userId: string, movieId: string, next) {
     try {
-      const data = await getCustomRepository(ReviewRepository).findOne({
+      const data = await this.findOne({
         where: { movieId: movieId, user: { id: userId } },
         relations: ["user"]
         // select: { text: true, movieId: true, user: { id: true } }
@@ -58,7 +58,7 @@ class ReviewRepository extends Repository<Review> {
 
   async getReviewById(id: string, next) {
     try {
-      const data = getCustomRepository(ReviewRepository).find({
+      const data = await this.find({
         where: { id: id },
         relations: ["user"]
       });
@@ -76,10 +76,7 @@ class ReviewRepository extends Repository<Review> {
 
   async deleteReviewById(id: string, next) {
     try {
-      const data = await getCustomRepository(ReviewRepository).getReviewById(
-        id,
-        next
-      );
+      const data = await this.getReviewById(id, next);
       if (!data) {
         return next(
           { status: 404, message: "Review with that id not found" },
