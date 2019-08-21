@@ -74,8 +74,7 @@ class SurveysRepository extends Repository<Surveys> {
           ]
         }
       );
-      if (!surveys)
-        return next({ status: 404, message: "Surveys is not found" }, null);
+      if (!surveys) return { status: 404, message: "Surveys is not found" };
       return surveys;
     } catch (err) {
       return next({ status: err.status, message: err.message }, null);

@@ -1,5 +1,6 @@
 import React from 'react';
 import './PostConstructor.scss';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -7,6 +8,7 @@ import ImageUploader from '../../MainPage/ImageUploader/ImageUploader';
 
 import ChooseExtra from './PostExtra/choose-extra';
 import Extra from '././PostExtra/extra';
+import { faPaperclip } from '@fortawesome/free-solid-svg-icons';
 
 import { setPost } from '../actions';
 import { fetchPosts } from '../../MainPage/FeedBlock/FeedBlock.redux/actions';
@@ -19,6 +21,8 @@ interface IPostConstructorProps {
 	setPost: (data: any) => any;
 	getUsersPosts: (data: any) => any;
 	fetchPosts: () => any;
+	userName: string;
+	userAvatar: string;
 }
 
 interface IPostConstructorState {
@@ -97,20 +101,34 @@ class PostConstructor extends React.Component<
 
 	render() {
 		return (
-			<div className="postconstr">
-				{this.state.image_url ? (
+			<div className="postconstr-wrp">
+				<div className="post-item-header">
 					<img
-						className="postconstr-img"
-						src={this.state.image_url}
-						alt="post content"
+						className="post-item-avatar"
+						src={this.props.userAvatar}
+						alt="author"
 					/>
-				) : null}
-				<textarea
-					placeholder="Type a text here..."
-					value={this.state.description}
-					onChange={e => this.onChangeData(e.target.value, 'description')}
-				/>
-
+					<div className="post-item-info">
+						<div className="post-item-author-name">{this.props.userName}</div>
+					</div>
+				</div>
+				<div className="postconstr">
+					<textarea
+						placeholder="Create new post..."
+						value={this.state.description}
+						onChange={e => this.onChangeData(e.target.value, 'description')}
+					/>
+					<div className="extra-buttons">
+						<ImageUploader
+							isIcon={true}
+							imageHandler={uploadFile}
+							imageStateHandler={this.imageStateHandler}
+						/>
+						<button className={'btn'} onClick={() => this.toggleModal()}>
+							<FontAwesomeIcon icon={faPaperclip} />
+						</button>
+					</div>
+				</div>
 				{this.state.extraLink ? (
 					<Extra
 						title={this.state.extraTitle}
@@ -124,16 +142,14 @@ class PostConstructor extends React.Component<
 						setExtra={this.setExtraData}
 					/>
 				) : null}
-				<div className="postconstr-btn-group">
-					<div className="postconstr-btn-sm">
-						<button className={'btn'} onClick={() => this.toggleModal()}>
-							Add extra
-						</button>
-						<ImageUploader
-							imageHandler={uploadFile}
-							imageStateHandler={this.imageStateHandler}
-						/>
-					</div>
+				{this.state.image_url ? (
+					<img
+						className="postconstr-img"
+						src={this.state.image_url}
+						alt="post content"
+					/>
+				) : null}
+				<div className="save-wrp">
 					<button className="save-btn" onClick={this.onSave}>
 						Post
 					</button>
@@ -144,7 +160,9 @@ class PostConstructor extends React.Component<
 }
 
 const mapStateToProps = (rootState, props) => ({
-	...props
+	...props,
+	userName: rootState.profile.profileInfo.name,
+	userAvatar: rootState.profile.profileInfo.avatar
 });
 
 const actions = {

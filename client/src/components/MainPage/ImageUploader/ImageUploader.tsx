@@ -1,10 +1,13 @@
 import React from 'react';
 import './ImageUploader.scss';
 import config from '../../../config';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCamera } from '@fortawesome/free-solid-svg-icons';
 
 interface IPostImageUploaderProps {
 	imageHandler: (s: any) => any;
 	imageStateHandler: (s: any) => any;
+	isIcon?: boolean;
 }
 
 interface IPostImageUploaderState {
@@ -92,6 +95,10 @@ class ImageUploader extends React.Component<
 				/>
 				{this.props.children ? (
 					this.props.children
+				) : this.props.isIcon ? (
+					<label htmlFor="image" className="upload-image-button">
+						<FontAwesomeIcon icon={faCamera} />
+					</label>
 				) : (
 					<label htmlFor="image" className="upload-image-button">
 						Upload image

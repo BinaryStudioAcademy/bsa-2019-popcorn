@@ -59,7 +59,6 @@ class ChooseExtraOption extends React.Component<IProps> {
 		}
 
 		if (!this.state.create) {
-			console.log('here', option);
 			return option === 'survey' ? (
 				<Redirect
 					to={{
