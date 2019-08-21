@@ -121,9 +121,9 @@ export function* subscribeToEvent(action) {
 			}
 		});
 		yield put({
-			type: SUBSCRIBE_TO_EVENT_SUCCESS,
+			type: GET_EVENT_BY_ID,
 			payload: {
-				newSubscriber: response
+				eventId
 			}
 		});
 	} catch (e) {

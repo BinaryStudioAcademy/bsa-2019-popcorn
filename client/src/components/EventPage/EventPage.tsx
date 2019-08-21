@@ -54,7 +54,7 @@ const EventPage: React.FC<IProps> = ({
 
 	if (!event) return <Spinner />;
 	return (
-		<div>
+		<div className="event-page">
 			<EventPageHeader
 				event={event}
 				subscibeToEvent={subscibeToEvent}

@@ -22,12 +22,12 @@ const EventPageHeader: React.FC<IProps> = ({
 	const eventId = event.id;
 	return (
 		<header className="event-page-header">
-			<div
-				className="header-photo"
-				style={{
-					backgroundImage: `url(${event.image || config.DEFAULT_EVENT_IMAGE})`
-				}}
-			></div>
+			<div className="event-image">
+				<img
+					src={event.image || config.DEFAULT_EVENT_IMAGE}
+					alt="event image"
+				/>
+			</div>
 			<div className="header-basic">
 				<span className="header-title">{event.title}</span>
 				<div className="header-meta-info">

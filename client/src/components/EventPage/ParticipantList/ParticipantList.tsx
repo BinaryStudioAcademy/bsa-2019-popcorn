@@ -17,7 +17,7 @@ const ParticipantList: React.FC<IProps> = ({ participants, status }) => {
 	return (
 		<div className="participant-list">
 			{sortedParticipantsByStatus.map(participant => (
-				<div>
+				<div key={participant.id}>
 					<div className="participant-avatar">
 						<img src={participant.user.avatar} alt="" />
 					</div>

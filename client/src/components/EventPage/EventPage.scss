@@ -24,7 +24,9 @@ $orange: #fb8700;
 		.header-title {
 			display: block;
 			margin: 10px 0;
-			font-size: 22px;
+			text-align: center;
+			font-size: 40px;
+			font-weight: bold;
 		}
 
 		.header-meta-info {
@@ -72,13 +74,18 @@ $orange: #fb8700;
 }
 
 .event-page {
-	width: 70%;
-	margin: 2% auto 0;
-	display: flex;
-	flex-direction: column;
-	color: $text-base-color;
+	margin: 40px 20px;
+	a {
+		text-decoration: none;
+	}
+	a:visited {
+		color: $text-base-color;
+	}
 }
 
+.event-image {
+	text-align: center;
+}
 .event-page-tabs {
 	margin-bottom: 20px;
 
@@ -102,5 +109,14 @@ $orange: #fb8700;
 			color: $text-base-color;
 			font-size: $header-medium;
 		}
+	}
+}
+
+.participant-list {
+	display: flex;
+	justify-content: space-evenly;
+	justify-items: normal;
+	img {
+		width: 50px;
 	}
 }
