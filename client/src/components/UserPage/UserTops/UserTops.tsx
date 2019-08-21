@@ -172,23 +172,22 @@ class UserTops extends React.Component<IUserTopProps, IUserTopsState> {
 			addedTop.userId = this.props.userId;
 
 			this.props.addTop(addedTop);
+			this.setState({ isAction: true });
 		} else {
 			console.log('update');
+
+			const updatedTop: any = Object.assign({}, updatedTopItem);
+			updatedTop.userId = this.props.userId;
+
+			this.props.updateTop(updatedTop);
+			this.setState({ isAction: true });
 		}
 
-		// const updatedTop: any = Object.assign({}, updatedTopItem);
-		// updatedTop.userId = this.props.userId;
+		// const topList = this.state.topList.map(topItem =>
+		// 	topItem.id === updatedTopItem.id ? updatedTopItem : topItem
+		// );
 
-		// this.props.updateTop(updatedTop);
-		// this.setState({ isAction: true });
-		console.log(updatedTopItem);
-
-
-		const topList = this.state.topList.map(topItem =>
-			topItem.id === updatedTopItem.id ? updatedTopItem : topItem
-		);
-
-		this.setState({ topList, isCreated: false });
+		// this.setState({ topList, isCreated: false });
 	};
 
 	isOwnTop(top) {
