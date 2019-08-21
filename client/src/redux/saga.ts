@@ -7,6 +7,7 @@ import eventsSaga from '../components/UserPage/UserEvents/saga';
 import userTopsSaga from '../components/UserPage/UserTops/saga';
 import adminPanelSaga from '../components/AdminPanelPage/AdminPanelPage.redux/saga';
 import surveySaga from '../components/UserPage/UserSurveys/UserSurveys.redux/saga';
+import reviewSaga from '../components/MovieSeriesPage/MovieSeriesReviews/saga';
 
 export default function* rootSaga() {
 	yield all([
@@ -17,6 +18,7 @@ export default function* rootSaga() {
 		eventsSaga(),
 		userTopsSaga(),
 		adminPanelSaga(),
-		surveySaga()
+		surveySaga(),
+		reviewSaga()
 	]);
 }
