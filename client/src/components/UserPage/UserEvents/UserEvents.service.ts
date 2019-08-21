@@ -54,11 +54,16 @@ export interface IEventFormatDataBase extends IventFormatToSave {
 	eventComments: IEventComment[];
 }
 
-interface IVisitor {
+export interface IVisitor {
 	id: string;
 	status: string;
 	userId: string;
 	eventId: string;
+	user: {
+		avatar: string;
+		name: string;
+		id: string;
+	};
 }
 
 export const formatToClient = (

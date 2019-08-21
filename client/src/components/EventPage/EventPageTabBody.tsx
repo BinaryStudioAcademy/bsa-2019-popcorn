@@ -21,9 +21,15 @@ const EventPageTabBody: React.SFC<IProps> = ({ mainPath, event }) => {
 					path={`${mainPath}`}
 					component={() => <About event={event} />}
 				/>
-				<Route path={`${mainPath}/discussion`} component={Discussion} />
-				<Route path={`${mainPath}/participants`} component={ParticipantList} />
-				<Route path={`${mainPath}/interested`} component={InterestedList} />
+				<Route path={`${mainPath}/discussion`} render={() => <Discussion />} />
+				<Route
+					path={`${mainPath}/participants`}
+					render={() => <ParticipantList participants={event.eventVisitors} />}
+				/>
+				<Route
+					path={`${mainPath}/interested`}
+					render={() => <InterestedList />}
+				/>
 			</Switch>
 		</div>
 	);
