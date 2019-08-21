@@ -4,7 +4,8 @@ import {
 	START_UPLOAD_USER_EVENTS,
 	UPDATE_USER_EVENT,
 	GET_All_EVENTS,
-	GET_EVENT_BY_ID
+	GET_EVENT_BY_ID,
+	SUBSCRIBE_TO_EVENT
 } from './actionsTypes';
 
 export const getUserEvents = (id: string) => {
@@ -55,6 +56,17 @@ export const getEventById = (eventId: string) => {
 		type: GET_EVENT_BY_ID,
 		payload: {
 			eventId
+		}
+	};
+};
+
+export const subscibeToEvent = ({ eventId, userId, status }) => {
+	return {
+		type: SUBSCRIBE_TO_EVENT,
+		payload: {
+			eventId,
+			userId,
+			status
 		}
 	};
 };

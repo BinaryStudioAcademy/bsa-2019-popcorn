@@ -9,7 +9,9 @@ import {
 	GET_All_EVENTS,
 	GET_ALL_EVENTS_SUCCESS,
 	GET_EVENT_BY_ID_SUCCESS,
-	GET_EVENT_BY_ID
+	GET_EVENT_BY_ID,
+	SUBSCRIBE_TO_EVENT_SUCCESS,
+	SUBSCRIBE_TO_EVENT
 } from './actionsTypes';
 import config from '../../../config';
 import webApi from '../../../services/webApi.service';
@@ -106,6 +108,29 @@ export function* fetchAllEvents() {
 	}
 }
 
+export function* subscribeToEvent(action) {
+	const { status, userId, eventId } = action.payload;
+	try {
+		const response = yield call(webApi, {
+			endpoint: config.API_URL + `/api/event/visitor`,
+			method: 'POST',
+			body: {
+				status,
+				userId,
+				eventId
+			}
+		});
+		yield put({
+			type: SUBSCRIBE_TO_EVENT_SUCCESS,
+			payload: {
+				newSubscriber: response
+			}
+		});
+	} catch (e) {
+		console.log('Error fetch all events :', e.message);
+	}
+}
+
 export function* fetchEventById(action) {
 	try {
 		const event = yield call(webApi, {
@@ -146,6 +171,10 @@ function* watchFetchEventById() {
 	yield takeEvery(GET_EVENT_BY_ID, fetchEventById);
 }
 
+function* watchSubscribeToEvent() {
+	yield takeEvery(SUBSCRIBE_TO_EVENT, subscribeToEvent);
+}
+
 export default function* events() {
 	yield all([
 		watchFetchEvents(),
@@ -153,6 +182,7 @@ export default function* events() {
 		watchupdateEvent(),
 		watchDeleteEvent(),
 		watchFetchAllEvents(),
-		watchFetchEventById()
+		watchFetchEventById(),
+		watchSubscribeToEvent()
 	]);
 }

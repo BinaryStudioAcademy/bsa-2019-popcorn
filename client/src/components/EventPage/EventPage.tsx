@@ -30,13 +30,15 @@ interface IProps {
 	getEventById: (eventId: string) => void;
 	searchedEvent: IEventFormatDataBase;
 	currentUser: IDiscussionUser;
+	subscibeToEvent: ({ eventId, userId, status }) => void;
 }
 
 const EventPage: React.FC<IProps> = ({
 	match,
 	getEventById,
 	searchedEvent,
-	currentUser
+	currentUser,
+	subscibeToEvent
 }) => {
 	const { url: mainPath } = match;
 	const [event, setEvent] = useState();
@@ -53,7 +55,11 @@ const EventPage: React.FC<IProps> = ({
 	if (!event) return <Spinner />;
 	return (
 		<div>
-			<EventPageHeader event={event} />
+			<EventPageHeader
+				event={event}
+				subscibeToEvent={subscibeToEvent}
+				currentUser={currentUser}
+			/>
 			<div className="event-page-main">
 				<EventPageTabs mainPath={mainPath} />
 				<EventPageTabBody

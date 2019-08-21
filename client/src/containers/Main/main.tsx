@@ -22,7 +22,8 @@ import {
 } from '../../components/MovieSeriesPage/Movie.redux/actions';
 import {
 	getAllEvents,
-	getEventById
+	getEventById,
+	subscibeToEvent
 } from '../../components/UserPage/UserEvents/actions';
 import Header from '../../components/shared/Header/Header';
 import UserTops from '../../components/UserPage/UserTops/UserTops';
@@ -59,6 +60,7 @@ interface IProps {
 	allEvents: IEventFormatDataBase[];
 	searchedEvent: IEventFormatDataBase;
 	getEventById: (eventId: string) => void;
+	subscibeToEvent: ({ eventId, userId, status }) => void;
 }
 
 const MovieListRender = (
@@ -110,7 +112,8 @@ const Main = ({
 	allEvents,
 	getAllEvents,
 	searchedEvent,
-	getEventById
+	getEventById,
+	subscibeToEvent
 }: IProps) => {
 	if (!isAuthorized || !localStorage.getItem('token'))
 		return <Redirect to="/login" />;
@@ -133,7 +136,8 @@ const Main = ({
 									...props,
 									searchedEvent,
 									getEventById,
-									currentUser: userInfo
+									currentUser: userInfo,
+									subscibeToEvent
 								})
 							}
 						/>
@@ -188,7 +192,8 @@ const actions = {
 	setMovieSeries,
 	loadMoreMovie,
 	getAllEvents,
-	getEventById
+	getEventById,
+	subscibeToEvent
 };
 
 const mapDispatchToProps = dispatch => bindActionCreators(actions, dispatch);

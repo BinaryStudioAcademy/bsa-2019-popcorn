@@ -1,14 +1,25 @@
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar, faEnvelope, faPlus } from '@fortawesome/free-solid-svg-icons';
-import { IEventFormatClient } from '../UserPage/UserEvents/UserEvents.service';
+import {
+	IEventFormatClient,
+	IDiscussionUser
+} from '../UserPage/UserEvents/UserEvents.service';
 import config from '../../config';
 
 interface IProps {
 	event: IEventFormatClient;
+	subscibeToEvent: ({ eventId, userId, status }) => void;
+	currentUser: IDiscussionUser;
 }
 
-const EventPageHeader: React.FC<IProps> = ({ event }) => {
+const EventPageHeader: React.FC<IProps> = ({
+	event,
+	subscibeToEvent,
+	currentUser
+}) => {
+	const userId = currentUser.id;
+	const eventId = event.id;
 	return (
 		<header className="event-page-header">
 			<div
@@ -23,11 +34,25 @@ const EventPageHeader: React.FC<IProps> = ({ event }) => {
 					<div className="meta-info-left">
 						<div className="meta-info-item">
 							<FontAwesomeIcon icon={faStar} />
-							<span className="meta-info-name">Interested</span>
+							<span
+								className="meta-info-name"
+								onClick={() =>
+									subscibeToEvent({ userId, eventId, status: 'interested' })
+								}
+							>
+								Interested
+							</span>
 						</div>
 						<div className="meta-info-item">
 							<FontAwesomeIcon icon={faPlus} />
-							<span className="meta-info-name">Going</span>
+							<span
+								className="meta-info-name"
+								onClick={() =>
+									subscibeToEvent({ userId, eventId, status: 'going' })
+								}
+							>
+								Going
+							</span>
 						</div>
 					</div>
 					<div className="meta-info-item">
