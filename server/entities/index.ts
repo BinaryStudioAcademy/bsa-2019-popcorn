@@ -4,6 +4,7 @@ import { PostReactions } from "./PostReactions";
 import { PostComments } from "./PostComments";
 import { Movie } from "./Movie";
 import { Top } from "./Top";
+import { MovieInTop } from './MovieInTop';
 import { Story } from "./Story";
 import { Event, EventComment, EventVisitor } from "./Events";
 import { Voting } from "./Voting";
@@ -24,6 +25,7 @@ export default [
   PostComments,
   Movie,
   Top,
+  MovieInTop,
   Story,
   Event,
   EventComment,

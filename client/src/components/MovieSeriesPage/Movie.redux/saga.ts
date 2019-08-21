@@ -3,7 +3,7 @@ import {
 	FINISH_FETCH_SEARCH_FILMS,
 	START_FETCH_SEARCH_FILMS
 } from '../../shared/Header/actionTypes';
-import { START_SEARCH_ELASTIC_FILMS } from '../../UserPage/UserTops/actionTypes';
+import { START_SEARCH_ELASTIC_FILMS } from '../../UserPage/UserTops/UserTops.redux/actionTypes';
 import webApi from '../../../services/webApi.service';
 import {
 	FETCH_MOVIE_BY_ID,
