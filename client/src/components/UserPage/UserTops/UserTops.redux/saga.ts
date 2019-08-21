@@ -78,7 +78,7 @@ function* watchFetchTops() {
 export function* addTop(action) {
 	try {
 		const { newTop } = action.payload;
-		console.log(newTop);
+		
 		const data = yield call(webApi, {
 			method: 'POST',
 			endpoint: config.API_URL + `/api/top/user`,
@@ -86,7 +86,7 @@ export function* addTop(action) {
 				...newTop
 			}
 		});
-
+		console.log(data);
 		if (data) {
 			yield put({
 				type: ActionTypes.ADD_TOP_SUCCESS,
@@ -110,15 +110,20 @@ export function* updateTop(action) {
 
 		const data = yield call(webApi, {
 			method: 'PUT',
-			endpoint: config.API_URL + `/api/top/${updatedTop}`
-		});
-
-		yield put({
-			type: ActionTypes.UPDATE_TOP_SUCCESS,
-			payload: {
-				updatedTop: data
+			endpoint: config.API_URL + `/api/top/user`,
+			body: {
+				...updatedTop
 			}
 		});
+
+		if (data) {
+			yield put({
+				type: ActionTypes.UPDATE_TOP_SUCCESS,
+				payload: {
+					updatedTop: data
+				}
+			});
+		}
 	} catch (e) {
 		console.log('feed saga update top: ', e.message);
 	}

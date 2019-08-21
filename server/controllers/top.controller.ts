@@ -30,15 +30,21 @@ router
       .then((addedTop: Top) => res.send(addedTop))
       .catch(next)
   )
-  // .post("/user", (req: Request, res: Response, next: NextFunction) =>
-  //   topService
-  //     .createUserTop(req.body)
-  //     .then((addedTop: Top) => res.send(addedTop))
-  //     .catch(next)
-  // )
+  .post("/user", (req: Request, res: Response, next: NextFunction) =>
+    topService
+      .createUserTop(req.body)
+      .then((addedTop: any) => res.send(addedTop))
+      .catch(next)
+  )
   .put("/", (req: Request, res: Response, next: NextFunction) =>
     topService
       .updateTop(req.body)
+      .then((updatedTop: Top) => res.send(updatedTop))
+      .catch(next)
+  )
+  .put("/user", (req: Request, res: Response, next: NextFunction) =>
+    topService
+      .updateUserTop(req.body)
       .then((updatedTop: Top) => res.send(updatedTop))
       .catch(next)
   )

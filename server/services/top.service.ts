@@ -1,20 +1,11 @@
 import { Top } from "../models/TopModel";
+import { MovieInTop } from "../models/MovieInTopModel";
 import TopRepository from "../repository/top.repository";
+import MovieInTopRepository from "../repository/movieInTop.repository";
 import { getCustomRepository } from "typeorm";
 import * as movieService from "./movie.service";
 
-export const getTops = async (): Promise<Top[]> =>
-  await getCustomRepository(TopRepository).find();
-
-export const getTopById = async (topId: number): Promise<Top> =>
-  await getCustomRepository(TopRepository).findOne(topId);
-
-export const getTopsByUserId = async (userId: string): Promise<any[]> => {
-  const tops: Top[] = await getCustomRepository(TopRepository).find({
-    relations: ['movieInTop'],
-    where: { userId }
-  });
-
+const getTopWithMovies = async (tops: any) => {
   const topWithMovies: any[] = Object.assign([], tops);
 
   for (let i = 0; i < topWithMovies.length; i++) {
@@ -26,12 +17,64 @@ export const getTopsByUserId = async (userId: string): Promise<any[]> => {
       movieInTop.movie = await movieService.getMovieById(movieInTop.movieId);
     }
   }
-  
+
   return topWithMovies;
+}
+
+export const getTops = async (): Promise<Top[]> =>
+  await getCustomRepository(TopRepository).find();
+
+export const getTopById = async (topId: string): Promise<Top> =>
+  await getCustomRepository(TopRepository).findOne({
+    relations: ['movieInTop'],
+    where: { id: topId }
+  });
+
+export const getTopsByUserId = async (userId: string): Promise<any[]> => {
+  const tops: Top[] = await getCustomRepository(TopRepository).find({
+    relations: ['movieInTop'],
+    where: { userId }
+  });
+  
+  return await getTopWithMovies(tops);
 }
 
 export const createTop = async (top: Top): Promise<Top> =>
   await getCustomRepository(TopRepository).save(top);
+
+export const createUserTop = async (top: any): Promise<any> => {
+  const addedTop = {
+    title: top.title,
+    description: top.description || null,
+    topImageUrl: top.topImageUrl  || '',
+    genreId: top.genreId  || null,
+    userId: top.userId
+  };
+  const createdTop: Top =  await getCustomRepository(TopRepository).save(addedTop);
+
+  await Promise.all(
+    top.moviesList.map(async (movieInTop) => {
+      const addedMovieInTop = {
+        topId: createdTop.id,
+        comment: movieInTop.comment,
+        movieId: movieInTop.id
+      }
+
+      await getCustomRepository(MovieInTopRepository).save(addedMovieInTop);
+    })
+  )
+  
+  const receivedTop: Top = await getTopById(createdTop.id);
+
+  for (let j = 0; j < receivedTop.movieInTop.length; j++) {
+    const movieInTop: any = receivedTop.movieInTop[j];
+
+    movieInTop.movie = await movieService.getMovieById(movieInTop.movieId);
+  }
+
+  return receivedTop;
+}
+  
 
 export const updateTop = async (updatedTop: Top): Promise<Top> => {
   let top: Top = await getCustomRepository(TopRepository).findOne(
@@ -39,6 +82,60 @@ export const updateTop = async (updatedTop: Top): Promise<Top> => {
   );
   top = updatedTop;
   return await getCustomRepository(TopRepository).save(top);
+};
+
+// export const updateUserTop = async (updatedTop: Top): Promise<Top> => {
+export const updateUserTop = async (updatedTop: any): Promise<any> => {
+  // console.log(updatedTop);
+  // let top: Top = await getCustomRepository(TopRepository).findOne(
+  //   updatedTop.id
+  // );
+  
+  // top.title = updatedTop.title;
+  // top.description = updatedTop.description;
+  // top.topImageUrl = updatedTop.topImageUrl;
+  // top.genreId = updatedTop.genreId;
+
+  // top = await getCustomRepository(TopRepository).save(top);
+
+  // console.log('======================')
+  // console.log('---------------------------');
+  // console.log(top);
+  // console.log('---------------------------');
+  // console.log(await getTopById(top.id));
+  // console.log('---------------------------');
+  // console.log(await getTopsByUserId(top.userId));
+  // return await getTopById(top.id);
+  // return await getTopsByUserId(top.id);
+
+  // const activeTop = await getTopById(top.id);
+  //   console.log('------------');
+  // console.log(activeTop);
+
+  // for (let i = 0; i < activeTop.movieInTop.length; i++) {
+  //   const movie = await getCustomRepository(MovieInTopRepository).findOne(
+  //     top.id
+  //   );
+
+  //   await getCustomRepository(MovieInTopRepository).remove(movie);
+  // }
+
+  // for (let i = 0; i < updatedTop.moviesList.length; i++) {
+  //   const movieInTop: any = {};
+  //   movieInTop.comment = updatedTop.moviesList[i].comment;
+  //   movieInTop.topId = updatedTop.id;
+  //   movieInTop.movieId = updatedTop.moviesList[i].id;
+
+  //   await getCustomRepository(MovieInTopRepository).save(movieInTop);
+  // }
+
+    
+  // await getCustomRepository(MovieInTopRepository).find(
+  //   updatedTop.id
+  // );
+
+  // top.userId = updatedTop.title;
+  // return await getCustomRepository(TopRepository).save(top);
 };
 
 export const deleteTopById = async (topId: number): Promise<Top> => {

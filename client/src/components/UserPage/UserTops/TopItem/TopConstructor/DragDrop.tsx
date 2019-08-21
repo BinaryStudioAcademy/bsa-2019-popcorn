@@ -19,8 +19,8 @@ const getListStyle = isDraggingOver => ({
 export interface IDragDropProps {
 	moviesList: IMovie[];
 	onDragEnd: (result: any) => void;
-	deleteFilmInput: (movieId: string) => void;
-	saveMovie: (movie: IMovie, newId?: string) => void;
+	deleteFilmInput: (movieId: number) => void;
+	saveMovie: (movie: IMovie, newId?: number) => void;
 }
 
 const DragDrop: React.FC<IDragDropProps> = ({

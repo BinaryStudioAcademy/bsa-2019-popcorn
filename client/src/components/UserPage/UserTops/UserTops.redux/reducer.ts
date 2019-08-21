@@ -36,13 +36,13 @@ export default function(state = initialState, action) {
 			};
 		}
 		case ActionTypes.SET_TOPS: {
-			console.log(state.topList);
 			return {
 				...state,
 				topList: [...action.payload.topList]
 			};
 		}
 		case ActionTypes.ADD_TOP_SUCCESS: {
+			console.log(action.payload.newTop);
 			return {
 				...state,
 				topList: [...state.topList, action.payload.newTop]

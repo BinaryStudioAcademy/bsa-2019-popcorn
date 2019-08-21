@@ -7,7 +7,7 @@ import { IMovie } from '../../UserTops.service';
 
 interface IInputProps {
 	movie: IMovie;
-	deleteFilmInput: (movieId: string) => void;
+	deleteFilmInput: (movieId: number) => void;
 	alreadySearch: boolean;
 	fetchFilms: (title: string) => void;
 	movieList: Array<any>; //movies from elastic search

@@ -35,7 +35,7 @@ export const addTop = (newTop: any) => ({
 	}
 });
 
-export const updateTop = updatedTop => ({
+export const updateTop = (updatedTop: any) => ({
 	type: ActionTypes.UPDATE_TOP,
 	payload: {
 		updatedTop

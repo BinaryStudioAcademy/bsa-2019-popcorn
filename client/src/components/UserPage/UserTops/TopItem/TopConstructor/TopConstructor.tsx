@@ -37,12 +37,12 @@ const TopConstructor: React.FC<ITopConstructorProps> = ({
 		setMovies(updatedItems);
 	}
 
-	function deleteFilmInput(movieId: string) {
+	function deleteFilmInput(movieId: number) {
 		const updatedMovies = movies.filter(movie => movie.id !== movieId);
 		setMovies(updatedMovies);
 	}
 
-	function saveMovie(updatedMovie: IMovie, newId: string = updatedMovie.id) {
+	function saveMovie(updatedMovie: IMovie, newId: number = updatedMovie.id) {
 		let updatedMovies = movies.map(movie =>
 			movie.id === updatedMovie.id ? { ...updatedMovie, id: newId } : movie
 		);

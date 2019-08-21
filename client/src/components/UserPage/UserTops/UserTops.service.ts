@@ -8,7 +8,7 @@ export interface ITopItem {
 }
 
 export interface IMovie {
-	id: string;
+	id: number;
 	title: string;
 	comment: string;
 }
@@ -26,7 +26,7 @@ export function convertServerDataFormatToClient(serverData: any[]): ITopItem[] |
             title: top.title,
             topImageUrl: top.topImageUrl,
             moviesList: top.movieInTop.map(movieInTop => ({
-                id: movieInTop.id,
+                id: movieInTop.movie.id,
                 title: movieInTop.movie.title,
                 comment: movieInTop.comment
             })),

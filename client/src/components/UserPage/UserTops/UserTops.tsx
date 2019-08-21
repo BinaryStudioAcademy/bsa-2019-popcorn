@@ -25,6 +25,8 @@ export interface IUserTopsState {
 interface IUserTopProps {
 	topList: ITopItem[];
 	fetchTops: (userId: string) => any[];
+	addTop: (newTop: any) => any;
+ 	updateTop: (updatedTop: any) => any;
 	deleteTop: (topId: string) => any;
 	uploadImage: (data: FormData, titleId: string) => void;
 	userId: string;
@@ -156,9 +158,31 @@ class UserTops extends React.Component<IUserTopProps, IUserTopsState> {
 	};
 
 	saveUserTop = (updatedTopItem: ITopItem) => {
+		// if (updatedTopItem.isNewTop) {
+		// 	delete updatedTopItem.isNewTop;
+		// }
+
 		if (updatedTopItem.isNewTop) {
-			delete updatedTopItem.isNewTop;
+			console.log('creating');
+
+			// delete updatedTopItem.isNewTop;
+			// delete updatedTopItem.isOwnTop;
+
+			const addedTop: any = Object.assign({}, updatedTopItem);
+			addedTop.userId = this.props.userId;
+
+			this.props.addTop(addedTop);
+		} else {
+			console.log('update');
 		}
+
+		// const updatedTop: any = Object.assign({}, updatedTopItem);
+		// updatedTop.userId = this.props.userId;
+
+		// this.props.updateTop(updatedTop);
+		// this.setState({ isAction: true });
+		console.log(updatedTopItem);
+
 
 		const topList = this.state.topList.map(topItem =>
 			topItem.id === updatedTopItem.id ? updatedTopItem : topItem
