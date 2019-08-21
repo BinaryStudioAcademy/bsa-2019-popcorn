@@ -6,13 +6,13 @@ const green = {
 	setResult: opacity => `rgba(0, 255, 0, ${opacity})`
 };
 const yellow = {
-	MIN_RATE: -1,
+	MIN_RATE: -0.5,
 	MAX_RATE: 0.7,
 	setResult: opacity => `rgba(255, 255, 0, ${opacity})`
 };
 const red = {
 	MIN_RATE: -3,
-	MAX_RATE: -1,
+	MAX_RATE: -0.5,
 	setResult: opacity => `rgba(255, 0, 0, ${opacity})`
 };
 const DEFAULT_RGBA = 'rgba(255, 255, 255, 1)';
