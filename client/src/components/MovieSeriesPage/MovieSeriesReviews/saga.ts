@@ -9,7 +9,7 @@ import {
 export function* fetchMovieReviews(action) {
 	try {
 		const response = yield call(webApi, {
-			endpoint: `${config.API_URL}/api/review/${action.payload}`,
+			endpoint: `${config.API_URL}/api/review/movie/${action.payload}`,
 			method: 'GET'
 		});
 
