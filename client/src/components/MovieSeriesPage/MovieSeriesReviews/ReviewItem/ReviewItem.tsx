@@ -1,9 +1,11 @@
 import React, { ReactElement } from 'react';
 import './ReviewItem.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faStar } from '@fortawesome/free-solid-svg-icons';
 import { faChevronDown, faChevronUp } from '@fortawesome/free-solid-svg-icons';
 import { IReview } from '../MovieSeriesReviews';
+import Moment from 'react-moment';
+import Image from '../../../shared/Image/Image';
+import config from '../../../../config';
 
 interface IProps {
 	review: IReview;
@@ -64,13 +66,22 @@ class ReviewItem extends React.Component<IProps, IState> {
 					<div className="review-item-header">
 						<div className="review-item-header-profile">
 							<div className="profile-avatar">
-								<img src={user.avatar} alt={`${user.name} photo`} />
+								{/* <img src={user.avatar} alt={`${user.name} photo`} /> */}
+								<Image
+									src={user.avatar}
+									alt={user.name}
+									defaultSrc={config.DEFAULT_AVATAR}
+								/>
 							</div>
 							<div className="profile-name-wrapper">
 								<div className="profile-name">{user.name}</div>
 							</div>
 						</div>
-						<div className="profile-review-date">{created_at}</div>
+						<div className="profile-review-date">
+							<Moment format=" D MMM HH:mm " local>
+								{String(created_at)}
+							</Moment>
+						</div>
 					</div>
 					<div
 						ref={this.divRef as any}
