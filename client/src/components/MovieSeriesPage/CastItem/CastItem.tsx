@@ -1,13 +1,10 @@
 import React from 'react';
 import './CastItem.scss';
 import config from '../../../config';
+import { CastItemInfo } from '../CastList/CastType';
 
 type CastItemProps = {
-	castItemInfo: {
-		profile_path: string;
-		name: string;
-		character: string;
-	};
+	castItemInfo: CastItemInfo;
 };
 
 const CastItem = ({

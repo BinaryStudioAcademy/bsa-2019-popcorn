@@ -1,9 +1,10 @@
 import React from 'react';
 import StaffItem from '../StaffItem/StaffItem';
 import './StaffList.scss';
+import { StaffItemInfo } from './StaffType';
 
 type StaffListProps = {
-	crew: any;
+	crew: Array<StaffItemInfo>;
 };
 
 const generateStaffArray = (

@@ -1,9 +1,10 @@
 import React from 'react';
 import CastItem from '../CastItem/CastItem';
 import './CastList.scss';
+import { CastItemInfo } from './CastType';
 
 type CastListProps = {
-	cast: any;
+	cast: Array<CastItemInfo>;
 };
 
 type CastListState = {

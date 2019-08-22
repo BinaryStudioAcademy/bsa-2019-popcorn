@@ -1,13 +1,10 @@
 import React from 'react';
 import './StaffItem.scss';
 import config from '../../../config';
+import { StaffItemInfo } from '../StaffList/StaffType';
 
 type StaffItemProps = {
-	staffItemInfo: {
-		name: string;
-		job: string;
-		profile_path: string;
-	};
+	staffItemInfo: StaffItemInfo;
 };
 
 const StaffItem = ({
