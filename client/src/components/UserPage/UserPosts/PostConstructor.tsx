@@ -61,6 +61,7 @@ class PostConstructor extends React.Component<
 		};
 		this.imageStateHandler = this.imageStateHandler.bind(this);
 		this.onSave = this.onSave.bind(this);
+		this.onCancel = this.onCancel.bind(this);
 		this.onSaveCropped = this.onSaveCropped.bind(this);
 		this.setExtraData = this.setExtraData.bind(this);
 		this.toggleModal = this.toggleModal.bind(this);
@@ -113,6 +114,11 @@ class PostConstructor extends React.Component<
 		});
 	}
 
+	onCancel() {
+		this.setState({
+			image_url: ''
+		});
+	}
 	onSaveCropped() {
 		if (this.cropper.current) {
 			const dataUrl = this.cropper.current.getCroppedCanvas().toBlob(blob => {
@@ -194,24 +200,13 @@ class PostConstructor extends React.Component<
 								className="postconstr-img"
 								src={this.state.image_url}
 							/>
-							<span
-								/*onClick={() => {
-						this.props.croppedSaved && setAvatar
-							? setAvatar(uploadUrl, id)
-							: this.handleSaveCropped();
-					}}*/
-								onClick={this.onSaveCropped}
-							>
+							<span onClick={this.onSaveCropped}>
 								<FontAwesomeIcon
 									icon={faCheckCircle}
 									className="fontAwesomeIcon"
 								/>
 							</span>
-							<span
-							/*onClick={() => {
-						if (cancelAvatar) cancelAvatar();
-					}}*/
-							>
+							<span onClick={this.onCancel}>
 								<FontAwesomeIcon
 									icon={faTimesCircle}
 									className={'fontAwesomeIcon'}
