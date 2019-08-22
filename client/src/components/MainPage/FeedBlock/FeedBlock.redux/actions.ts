@@ -49,11 +49,13 @@ export const createReaction = (
 	};
 };
 
-export const addNewReaction = (reaction: IReaction) => {
+export const addNewReaction = (reactions: Array<IReaction>, postId: string) => {
+	console.log(reactions, postId);
 	return {
 		type: ADD_NEW_REACTION,
 		payload: {
-			reaction
+			reactions,
+			postId
 		}
 	};
 };

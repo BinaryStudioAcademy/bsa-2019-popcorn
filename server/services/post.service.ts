@@ -67,12 +67,13 @@ export const createReaction = async ({ userId, postId, type }) => {
     id: postId
   });
   if (!user || !post) throw new Error("Not Found");
-  return getCustomRepository(PostReactionsRepository).save({
+  await getCustomRepository(PostReactionsRepository).save({
     id: uuid(),
     user,
     post,
     type
   });
+  return { postId, reactions: await getReactions(post) };
 };
 
 export const getComments = async (post: Post): Promise<PostCommentsModel[]> =>
@@ -82,6 +83,10 @@ export const getComments = async (post: Post): Promise<PostCommentsModel[]> =>
   });
 
 export const getReactions = async (post: Post): Promise<PostReactions[]> =>
-  await getCustomRepository(PostReactionsRepository).find({
-    where: { post }
-  });
+  await getCustomRepository(PostReactionsRepository)
+    .createQueryBuilder("post_reactions")
+    .select("post_reactions.type AS type")
+    .addSelect("COUNT(*) AS count")
+    .groupBy("post_reactions.type")
+    .where({ post })
+    .getRawMany();

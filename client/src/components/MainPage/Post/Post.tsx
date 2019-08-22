@@ -60,6 +60,7 @@ class Post extends PureComponent<IPostProps, IPostState> {
 	};
 
 	onReactionClick = (reaction: IReactItem) => {
+		console.log(reaction);
 		if (this.props.createReaction)
 			this.props.createReaction(
 				reaction.name,
@@ -110,18 +111,16 @@ class Post extends PureComponent<IPostProps, IPostState> {
 
 	render() {
 		const {
-			post: {
-				id,
-				user,
-				created_At,
-				image_url,
-				description,
-				content,
-				comments,
-				tags
-			},
-			createComment
-		} = this.props;
+			id,
+			user,
+			created_At,
+			image_url,
+			description,
+			content,
+			comments,
+			tags
+		} = this.props.post;
+		const createComment = this.props.createComment;
 
 		const reactionsShow = this.state.hover ? (
 			<Reactions
@@ -178,8 +177,8 @@ class Post extends PureComponent<IPostProps, IPostState> {
 				<div className="reaction-list">
 					{this.props.post.reactions.map((item, index) => (
 						<PostReaction
-							key={index}
-							quantity={1}
+							key={item.type}
+							quantity={item.count}
 							name={item.type}
 							onReactionClick={this.onReactionClick}
 						/>

@@ -25,7 +25,7 @@ interface IProps {
 	fetchStories: () => any;
 	createComment: (userId: string, text: string, postId: string) => any;
 	addNewComment: (comment: IComment) => any;
-	addNewReaction?: (reaction: IReaction) => any;
+	addNewReaction?: (reactions: Array<IReaction>, postId: string) => any;
 }
 const addSocket = (addNewComment, addNewReaction) => {
 	if (wasAddedSockets) return;
@@ -33,8 +33,8 @@ const addSocket = (addNewComment, addNewReaction) => {
 		'new-comment',
 		comment => addNewComment && addNewComment(comment)
 	);
-	SocketService.on('new-reaction', reaction => {
-		addNewReaction && addNewReaction(reaction);
+	SocketService.on('new-reaction', obj => {
+		addNewReaction && addNewReaction(obj.reactions, obj.postId);
 	});
 	wasAddedSockets = true;
 };

@@ -48,7 +48,7 @@ router
     postService
       .createReaction(req.body)
       .then(reaction => {
-        req.io.emit("new-reaction", { reaction });
+        req.io.emit("new-reaction", reaction);
         res.send();
       })
       .catch(next);

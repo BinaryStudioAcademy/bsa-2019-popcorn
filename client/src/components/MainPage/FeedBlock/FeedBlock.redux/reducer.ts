@@ -32,13 +32,12 @@ export default function(state = initialState, action) {
 		case ADD_NEW_REACTION:
 			if (!state.posts) return state;
 			const postsForNewReact = [...state.posts];
-			const reaction = action.payload.reaction.reaction;
+			const { reactions, postId } = action.payload;
 
-			const i = findIndexInArray(postsForNewReact, 'id', reaction.post.id);
+			const i = findIndexInArray(postsForNewReact, 'id', postId);
 			if (i === -1) return state;
 			const postForNewReact = postsForNewReact[i];
-			if (!postForNewReact.reactions) postForNewReact.reactions = [reaction];
-			else postForNewReact.reactions.push(reaction);
+			postForNewReact.reactions = [...reactions];
 
 			return {
 				...state,
