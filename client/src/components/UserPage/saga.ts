@@ -76,7 +76,7 @@ export function* setAvatar(action) {
 				avatar: action.payload.url
 			}
 		});
-
+		console.log(res.data.user);
 		yield put({
 			type: FINISH_UPLOAD_AVATAR,
 			payload: { user: res.data.user }

@@ -45,6 +45,7 @@ export default function(state = initialState, action) {
 			return {
 				...state,
 				profileInfo: action.payload.user,
+				selectedProfileInfo: action.payload.user,
 				uploadUrl: '',
 				croppedSaved: false
 			};
@@ -62,7 +63,8 @@ export default function(state = initialState, action) {
 		case CANCEL_TEMP_AVATAR: {
 			return {
 				...state,
-				uploadUrl: ''
+				uploadUrl: '',
+				croppedSaved: false
 			};
 		}
 		case LOGIN:

@@ -127,6 +127,7 @@ class ProfileComponent extends Component<ProfileProps, IProfileComponentState> {
 			avatar,
 			id
 		} = this.props.profileInfo;
+		console.log(avatar);
 		if (!male && !female) {
 			female = true;
 		}
@@ -144,7 +145,7 @@ class ProfileComponent extends Component<ProfileProps, IProfileComponentState> {
 					{uploadUrl ? (
 						<div className={'profilePhotoWrap'}>
 							{this.props.croppedSaved ? (
-								<img src={uploadUrl} />
+								<img className="avatar-preview" src={uploadUrl} />
 							) : (
 								<Cropper
 									ref={this.cropper}
