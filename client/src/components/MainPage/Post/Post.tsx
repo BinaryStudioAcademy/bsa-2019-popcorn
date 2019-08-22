@@ -191,14 +191,15 @@ class Post extends Component<IPostProps, IPostState> {
 					</button>
 				</div>
 				<div className="reaction-list">
-					{this.props.post.reactions.map((item, index) => (
-						<PostReaction
-							key={item.type}
-							quantity={item.count}
-							name={item.type}
-							onReactionClick={this.onReactionClick}
-						/>
-					))}
+					{this.props.post.reactions &&
+						this.props.post.reactions.map((item, index) => (
+							<PostReaction
+								key={item.type}
+								quantity={item.count}
+								name={item.type}
+								onReactionClick={this.onReactionClick}
+							/>
+						))}
 				</div>
 				{comments ? (
 					<div>
