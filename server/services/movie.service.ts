@@ -1,6 +1,6 @@
 import { Movie } from "../models/MovieModel";
 import { MovieRate } from "../models/MovieRateModel/movieRateModel";
-import MovieRepository from "../repository/movie.repository";
+import MovieRepository, { getCredits } from "../repository/movie.repository";
 import MovieRateRepository from "../repository/movieRate.repository";
 import { getCustomRepository, Like, getRepository } from "typeorm";
 import * as elasticRepository from "../repository/movieElastic.repository";
@@ -13,6 +13,12 @@ export const getMovies = async ({ size, from }): Promise<any[]> => {
   data = data.hits.hits;
 
   return data.map(movie => movie._source);
+};
+
+export const getCastCrewById = async (movieId: number): Promise<any> => {
+  const credits = await getCredits(movieId);
+  console.log(credits.credits);
+  return credits.credits;
 };
 
 export const getMovieById = async (movieId: string): Promise<any> => {
@@ -28,6 +34,7 @@ export const getMovieById = async (movieId: string): Promise<any> => {
     .where("movieRate.movieId = :id", { id: movie.id })
     .getRawOne();
   movie.rate = rate ? parseFloat(rate.average).toFixed(2) : null;
+
   return movie;
 };
 

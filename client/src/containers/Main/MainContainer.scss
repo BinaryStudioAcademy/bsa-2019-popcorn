@@ -1,6 +1,7 @@
 .main-page {
 	display: grid;
 	grid-template-columns: 205px auto;
+	max-width: 100%;
 }
 
 .main-wrap {

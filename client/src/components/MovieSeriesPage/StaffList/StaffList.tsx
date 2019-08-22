@@ -2,26 +2,50 @@ import React from 'react';
 import StaffItem from '../StaffItem/StaffItem';
 import './StaffList.scss';
 
-type StaffListProps = {};
+type StaffListProps = {
+	crew: any;
+};
 
-const staffListMock = [
-	{ names: ['Pete Farrelly'], role: 'Director' },
-	{
-		names: [' Nick Vallelonga', 'Brian Hayes Currie', 'Peter Farrelly'],
-		role: 'Writers'
-	},
-	{ names: ['Pete Farrelly'], role: 'Music by' },
-	{ names: ['Universal Pictures', 'DreamWorks'], role: 'Studios' }
-];
+const generateStaffArray = (
+	staff: Array<{ name: string; job: string; profile_path: string }>
+) => {
+	const neededJobs = [
+		'Director',
+		'Story',
+		'Executive producer',
+		'Script Supervisor',
+		'Music by',
+		'Editor',
+		'Casting',
+		'Stunts',
+		'Costume Design',
+		'Director of Photography'
+	];
+	let neededStaff: Array<{
+		name: string;
+		job: string;
+		profile_path: string;
+	}> = [];
+	for (let i = 0; i < neededJobs.length; i++) {
+		const staffWithOneJob = staff
+			.filter(el => el.job === neededJobs[i])
+			.map(el => {
+				return { name: el.name, profile_path: el.profile_path, job: el.job };
+			});
+		staffWithOneJob.map(el => neededStaff.push(el));
+	}
+	return neededStaff;
+};
 
-const StaffList = () => {
+const StaffList = ({ crew }: StaffListProps) => {
+	let groupedStaff = generateStaffArray(crew);
 	return (
 		<div className={'staff-list'}>
 			<div className={'staff-list-header cross-line'}>
-				<span>Staff</span>
+				<span>Crew</span>
 			</div>
 			<div className={'staff-items-container'}>
-				{staffListMock.map(el => (
+				{groupedStaff.map(el => (
 					<StaffItem staffItemInfo={el} />
 				))}
 			</div>
