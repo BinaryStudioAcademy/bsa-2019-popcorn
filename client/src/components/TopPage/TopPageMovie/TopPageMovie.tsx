@@ -15,7 +15,7 @@ const TopPageMovie: React.SFC<ITopProps> = ({
     movie
 }) => {
     return (
-        <div className="movie-item" key={key}>
+        <li className="movie-item" key={key}>
             <div className="movie-poster-wrp">
 				<Image
 					src={movie.poster_path}
@@ -34,7 +34,7 @@ const TopPageMovie: React.SFC<ITopProps> = ({
                 </div>
                 <span className="author-comment">{movie.comment}</span>
             </div>
-        </div>
+        </li>
     )
 }
 

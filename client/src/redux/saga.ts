@@ -5,7 +5,6 @@ import storySaga from '../components/MainPage/StoryList/story.redux/saga';
 import feedSaga from '../components/MainPage/FeedBlock/FeedBlock.redux/saga';
 import eventsSaga from '../components/UserPage/UserEvents/saga';
 import userTopsSaga from '../components/UserPage/UserTops/UserTops.redux/saga';
-import topSaga from '../components/TopPage/TopPage.redux/saga';
 import adminPanelSaga from '../components/AdminPanelPage/AdminPanelPage.redux/saga';
 import surveySaga from '../components/UserPage/UserSurveys/UserSurveys.redux/saga';
 import reviewSaga from '../components/MovieSeriesPage/MovieSeriesReviews/saga';
@@ -18,7 +17,6 @@ export default function* rootSaga() {
 		feedSaga(),
 		eventsSaga(),
 		userTopsSaga(),
-		topSaga(),
 		adminPanelSaga(),
 		surveySaga(),
 		reviewSaga()

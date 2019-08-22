@@ -98,7 +98,7 @@ const Main = ({
 		return <Redirect to="/login" />;
 
 	new SocketService(userInfo.id);
-
+	
 	return (
 		<div className={'main-wrap'}>
 			{isAuthorized ? <Header userInfo={userInfo} /> : null}
