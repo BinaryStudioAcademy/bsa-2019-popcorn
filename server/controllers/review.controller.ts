@@ -23,6 +23,12 @@ router
       .then(result => res.send(result))
       .catch(next)
   )
+  .get("/user/:id", errorHandlerMiddleware, (req, res, next) =>
+    reviewService
+      .getReviewsByUserId(req.params.id, next)
+      .then(result => res.send(result))
+      .catch(next)
+  )
   .get("/:userId/:movieId", errorHandlerMiddleware, (req, res, next) =>
     reviewService
       .getReviewByMovieIdUserId(req.params.userId, req.params.movieId, next)
@@ -41,6 +47,5 @@ router
       .then(result => res.send(result))
       .catch(next)
   );
-// TODO - get all reviews by user ID
 
 export default router;

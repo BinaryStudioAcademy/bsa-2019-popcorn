@@ -1,6 +1,6 @@
 import { EntityRepository, Repository, getCustomRepository } from "typeorm";
 import { Review } from "../entities/Review";
-import UserRepository from "./user.repository";
+import UserRepository from "../repository/user.repository";
 import { getRatingByReview } from "../services/reviewAnalysis.service";
 
 @EntityRepository(Review)
@@ -92,6 +92,22 @@ class ReviewRepository extends Repository<Review> {
       }
       await this.delete({ id });
       return { id };
+    } catch (err) {
+      return next({ status: err.status, message: err.message });
+    }
+  }
+
+  async getReviewsByUserId(id: string, next) {
+    try {
+      const data = await this.find({
+        where: { user: { id } },
+        order: { created_at: "DESC" },
+        relations: ["user"]
+      });
+      if (!data) {
+        return next({ status: 404, message: "No one reviews" }, null);
+      }
+      return data;
     } catch (err) {
       return next({ status: err.status, message: err.message });
     }
