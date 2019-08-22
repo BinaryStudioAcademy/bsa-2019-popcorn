@@ -48,7 +48,10 @@ export function* fetchElasticSearchFilms(action) {
 }
 
 function* watchFetchElasticSearchFilms() {
-	yield takeEvery(ActionTypes.START_SEARCH_ELASTIC_FILMS, fetchElasticSearchFilms);
+	yield takeEvery(
+		ActionTypes.START_SEARCH_ELASTIC_FILMS,
+		fetchElasticSearchFilms
+	);
 }
 
 export function* fetchTops(action) {
@@ -78,7 +81,7 @@ function* watchFetchTops() {
 export function* addTop(action) {
 	try {
 		const { newTop } = action.payload;
-		
+
 		const data = yield call(webApi, {
 			method: 'POST',
 			endpoint: config.API_URL + `/api/top/user`,
@@ -86,7 +89,7 @@ export function* addTop(action) {
 				...newTop
 			}
 		});
-		
+
 		if (data) {
 			yield put({
 				type: ActionTypes.ADD_TOP_SUCCESS,

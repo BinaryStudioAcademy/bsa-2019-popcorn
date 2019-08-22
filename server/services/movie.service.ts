@@ -1,6 +1,8 @@
 import { Movie } from "../models/MovieModel";
 import { MovieRate } from "../models/MovieRateModel/movieRateModel";
-import MovieRepository, { getMovieVideoLinkById } from "../repository/movie.repository";
+import MovieRepository, {
+  getMovieVideoLinkById
+} from "../repository/movie.repository";
 import MovieRateRepository from "../repository/movieRate.repository";
 import { getCustomRepository, Like, getRepository } from "typeorm";
 import * as elasticRepository from "../repository/movieElastic.repository";

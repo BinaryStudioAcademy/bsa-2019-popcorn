@@ -92,10 +92,7 @@ const TopItem: React.FC<ITopItemProps> = ({
 					</div>
 				)}
 				{isOwnTop && (
-					<div
-						className="delete-top hover"
-						onClick={() => deleteTop(topItem)}
-					>
+					<div className="delete-top hover" onClick={() => deleteTop(topItem)}>
 						<CloseIcon />
 					</div>
 				)}

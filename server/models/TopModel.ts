@@ -1,6 +1,5 @@
-    
 import { User } from "./UserModel";
-import { MovieInTop } from './MovieInTopModel';
+import { MovieInTop } from "./MovieInTopModel";
 
 export class Top {
   id: string;
