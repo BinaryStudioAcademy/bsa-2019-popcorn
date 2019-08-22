@@ -9,6 +9,7 @@ interface IProfileEditorProps {
 		aboutMe: string;
 	};
 	onEditCancel: () => void;
+	onEditSave: (any) => void;
 }
 
 interface IProfileEditorState {
@@ -49,6 +50,9 @@ class ProfileEditor extends Component<
 
 	onEditCancel = () => {
 		this.props.onEditCancel();
+	};
+	onEditSave = () => {
+		this.props.onEditSave(this.state);
 	};
 
 	render() {
@@ -108,6 +112,7 @@ class ProfileEditor extends Component<
 				</div>
 
 				<button onClick={this.onEditCancel}>Cancel</button>
+				<button onClick={this.onEditSave}>Save</button>
 			</div>
 		);
 	}

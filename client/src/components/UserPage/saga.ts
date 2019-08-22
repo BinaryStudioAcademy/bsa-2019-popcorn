@@ -7,7 +7,8 @@ import {
 	START_UPLOAD_AVATAR,
 	USER_POSTS,
 	GET_SELECTED_USER_INFO,
-	SET_SELECTED_USER
+	SET_SELECTED_USER,
+	UPDATE_PROFILE
 } from './actionTypes';
 import { uploadFile } from '../../services/file.service';
 import axios from 'axios';
@@ -42,6 +43,13 @@ export function* getSelectedUser(action) {
 		});
 	} catch (e) {
 		console.log(e.message);
+	}
+}
+
+export function* updateProfile(action) {
+	try {
+	} catch (e) {
+		console.log('user saga update user:', e.message);
 	}
 }
 
@@ -237,6 +245,10 @@ function* watchGetSelectedUser() {
 	yield takeEvery(GET_SELECTED_USER_INFO, getSelectedUser);
 }
 
+function* watchUpdateProfile() {
+	yield takeEvery(UPDATE_PROFILE, updateProfile);
+}
+
 function* watchFetchFilms() {
 	yield takeEvery(START_UPLOAD_AVATAR, uploadAvatar);
 }
@@ -284,6 +296,7 @@ export default function* profile() {
 		watchFetchPosts(),
 		watchFetchResetPassword(),
 		watchFetchRestorePassword(),
-		watchFetchLogout()
+		watchFetchLogout(),
+		watchUpdateProfile()
 	]);
 }

@@ -3,7 +3,8 @@ import {
 	SET_AVATAR,
 	START_UPLOAD_AVATAR,
 	USER_POSTS,
-	GET_SELECTED_USER_INFO
+	GET_SELECTED_USER_INFO,
+	UPDATE_PROFILE
 } from './actionTypes';
 
 export const uploadAvatar = (file: FormData, id: string): any => {
@@ -44,6 +45,16 @@ export const getSelectedUserInfo = (id: string): any => {
 		type: GET_SELECTED_USER_INFO,
 		payload: {
 			id
+		}
+	};
+};
+
+export const updateProfile = (id, data): any => {
+	return {
+		type: UPDATE_PROFILE,
+		payload: {
+			id,
+			data
 		}
 	};
 };
