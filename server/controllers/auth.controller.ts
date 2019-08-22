@@ -55,7 +55,7 @@ router
   )
   .get("/user", jwtMiddleware, (req, res, next) => {
     userService
-      .getUserById(req.user.data.user.id)
+      .getUserById(req.user.id)
       .then(data => res.send(data))
       .catch(next);
   });
