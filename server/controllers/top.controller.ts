@@ -12,6 +12,13 @@ router
       .then((tops: Top[]) => res.send(tops))
       .catch(next)
   )
+
+  .get("/extended", (req: Request, res: Response, next: NextFunction) =>
+    topService
+      .getTopsWithMovies()
+      .then((tops: Top[]) => res.send(tops))
+      .catch(next)
+  )
   .get("/:id", (req: Request, res: Response, next: NextFunction) =>
     topService
       .getTopById(req.params.id)
