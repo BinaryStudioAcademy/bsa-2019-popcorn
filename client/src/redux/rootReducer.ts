@@ -8,6 +8,7 @@ import userTopsReducer from '../components/UserPage/UserTops/UserTops.redux/redu
 import adminPanelReducer from '../components/AdminPanelPage/AdminPanelPage.redux/reducer';
 import surveyReducer from '../components/UserPage/UserSurveys/UserSurveys.redux/reducer';
 import reviewReducer from '../components/MovieSeriesPage/MovieSeriesReviews/reducer';
+import topListReducer from '../components/TopListPage/TopListPage.redux/reducer';
 
 const reducers = {};
 
@@ -21,5 +22,6 @@ export default combineReducers({
 	userTops: userTopsReducer,
 	adminPanel: adminPanelReducer,
 	survey: surveyReducer,
-	review: reviewReducer
+	review: reviewReducer,
+	topList: topListReducer
 });
