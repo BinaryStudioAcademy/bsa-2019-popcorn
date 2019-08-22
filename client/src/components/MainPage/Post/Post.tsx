@@ -13,18 +13,10 @@ import config from '../../../config';
 import Reactions from '../Reactions/Reactions';
 import PostReaction from './PostReaction/PostReaction';
 import { NavLink } from 'react-router-dom';
-import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-
 import IPost from './IPost';
 import IComment from './IComment';
-import {
-	addNewReaction,
-	createReaction
-} from '../FeedBlock/FeedBlock.redux/actions';
-import { bindActionCreators } from 'redux';
 import IReaction from './IReaction';
-import { deletePost } from '../FeedBlock/FeedBlock.redux/actions';
 
 type IPostProps = {
 	post: IPost;
@@ -34,9 +26,8 @@ type IPostProps = {
 	addNewComment?: (comment: IComment) => any;
 	createReaction?: (type: string, userId: string, postId: string) => any;
 	addNewReaction?: (reaction: IReaction) => any;
-  deletePost: (id: string, userId: string) => any;deletePost: (id: string, userId: string) => any;
-}
-
+	deletePost: (id: string, userId: string) => any;
+};
 
 interface IReactItem {
 	name: string;
@@ -123,6 +114,8 @@ class Post extends Component<IPostProps, IPostState> {
 			user,
 			created_At,
 			image_url,
+			extraLink,
+			extraTitle,
 			description,
 			content,
 			comments,
@@ -131,7 +124,6 @@ class Post extends Component<IPostProps, IPostState> {
 		const createComment = this.props.createComment;
 
 		const linkType = extraLink ? extraLink.split('/')[1] : extraLink;
-
 
 		const reactionsShow = this.state.hover ? (
 			<Reactions

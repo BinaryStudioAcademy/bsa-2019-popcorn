@@ -6,7 +6,8 @@ import IComment from '../Post/IComment';
 import IPost from '../Post/IPost';
 import {
 	addNewReaction,
-	createReaction
+	createReaction,
+	deletePost
 } from '../FeedBlock/FeedBlock.redux/actions';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
@@ -22,6 +23,7 @@ interface IProps {
 	userRole: string;
 	createReaction?: (type: string, userId: string, postId: string) => any;
 	addNewReaction?: (reaction: IReaction) => any;
+	deletePost: (id: string, userId: string) => any;
 }
 
 const PostList = (props: IProps) => {
@@ -44,6 +46,7 @@ const PostList = (props: IProps) => {
 						addNewReaction={props.addNewReaction}
 						userId={props.userId}
 						userRole={props.userRole}
+						deletePost={props.deletePost}
 					/>
 				);
 			})}
@@ -58,7 +61,8 @@ const mapStateToProps = (rootState, props) => ({
 
 const actions = {
 	createReaction,
-	addNewReaction
+	addNewReaction,
+	deletePost
 };
 
 const mapDispatchToProps = dispatch => bindActionCreators(actions, dispatch);
