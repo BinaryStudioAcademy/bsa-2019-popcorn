@@ -4,6 +4,7 @@ import StoryVoting from '../../../StoryVoting/StoryVoting';
 import config from '../../../../config';
 
 interface IStoryListItem {
+	id: string;
 	caption: string;
 	image_url: string;
 	user: {
@@ -48,6 +49,7 @@ class StoryListContent extends Component<IStoryListItemsProps> {
 				const avatar = item.user.avatar;
 				return (
 					<div
+						key={item.id}
 						className={'story-list-item-wrapper voting-wrp'}
 						onClick={() => {
 							this.props.openViewer(i);

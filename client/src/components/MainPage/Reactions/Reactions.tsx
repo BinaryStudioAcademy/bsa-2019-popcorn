@@ -32,7 +32,7 @@ class Reactions extends Component<IReactionsProps> {
 				>
 					{this.reactions.map((item, index) => (
 						<ReactionItem
-							key={index}
+							key={item.name}
 							onClick={() => onReactionClick(item)}
 							name={item.name}
 						/>

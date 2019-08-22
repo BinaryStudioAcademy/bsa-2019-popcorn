@@ -13,6 +13,7 @@ import IVoting from '../IVoting';
 import TMovie from '../../../MovieSeriesPage/TMovie';
 
 interface IStoryListItem {
+	id: string;
 	caption: string;
 	image_url: string;
 	user: {

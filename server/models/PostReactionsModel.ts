@@ -3,7 +3,7 @@ import { User } from "./UserModel";
 
 export class PostReactions {
   id: string;
-  smile: boolean;
+  type: string;
   post: Post;
   user: User;
 }
