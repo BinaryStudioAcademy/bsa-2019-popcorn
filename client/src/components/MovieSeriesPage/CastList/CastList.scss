@@ -18,11 +18,17 @@
 }
 
 .cast-items-container {
+	width: 100%;
 	padding: 1em;
 	display: flex;
 	flex-direction: row;
 	overflow-x: scroll;
+	cursor: grab;
+	&.active {
+		cursor: grabbing;
+	}
 }
+
 .cast-items-container::before,
 .cast-items-container::after {
 	content: '';
@@ -30,7 +36,7 @@
 }
 
 .cast-items-container::-webkit-scrollbar {
-	height: 4px;
+	height: 0;
 }
 
 /* Handle */

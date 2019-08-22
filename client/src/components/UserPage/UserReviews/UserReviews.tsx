@@ -1,16 +1,34 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import './UserReviews.scss';
-import { fetchUserReviews } from './actions';
+import { fetchUserReviews, deleteReviewById } from './actions';
+import {
+	setReview,
+	removeReviewSet
+} from '../../MovieSeriesPage/Movie.redux/actions';
 import { bindActionCreators } from 'redux';
 import Spinner from '../../shared/Spinner';
-import ReviewItem from '../../MovieSeriesPage/MovieSeriesReviews/ReviewItem/ReviewItem';
+import ReviewItem from './ReviewItem/ReviewItem';
+import './UserReviews.scss';
+import TMovie from '../../MovieSeriesPage/TMovie';
 
 interface IProps {
-	reviewUserList: any;
+	reviewUserList: IReview[];
 	fetchUserReviews: (userId: string) => object;
+	deleteReviewById: (reviewId: string) => object;
 	currentUserId: string;
 	loading: boolean;
+	setReview: any;
+	removeReviewSet: any;
+}
+
+export interface IReview {
+	id: string;
+	text: string;
+	created_at: Date;
+	movie: TMovie;
+	analysis: string;
+	user: any;
 }
 
 class UserReviews extends React.Component<IProps> {
@@ -19,10 +37,16 @@ class UserReviews extends React.Component<IProps> {
 	}
 
 	render() {
-		const { reviewUserList, currentUserId, loading } = this.props;
-
+		const {
+			reviewUserList,
+			currentUserId,
+			loading,
+			deleteReviewById,
+			setReview,
+			removeReviewSet
+		} = this.props;
 		return (
-			<div className="MovieSeriesReviews">
+			<div className="UserReviews">
 				{loading ? (
 					<Spinner />
 				) : (
@@ -35,7 +59,9 @@ class UserReviews extends React.Component<IProps> {
 									<ReviewItem
 										review={item}
 										key={item.id}
-										currentUserId={currentUserId}
+										deleteReview={deleteReviewById}
+										setReview={setReview}
+										removeReviewSet={removeReviewSet}
 									/>
 								);
 							})
@@ -55,7 +81,10 @@ const mapStateToProps = (rootState, props) => ({
 });
 
 const actions = {
-	fetchUserReviews
+	fetchUserReviews,
+	deleteReviewById,
+	setReview,
+	removeReviewSet
 };
 
 const mapDispatchToProps = dispatch => bindActionCreators(actions, dispatch);

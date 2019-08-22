@@ -1,4 +1,4 @@
-import React, { PureComponent } from 'react';
+import React, { Component } from 'react';
 import AddComment from '../../shared/AddComment/AddComment';
 import './Post.scss';
 import { ReactComponent as SettingIcon } from '../../../assets/icons/general/settings.svg';
@@ -13,65 +13,40 @@ import config from '../../../config';
 import Reactions from '../Reactions/Reactions';
 import PostReaction from './PostReaction/PostReaction';
 import { NavLink } from 'react-router-dom';
-import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { deletePost } from '../FeedBlock/FeedBlock.redux/actions';
-import { bindActionCreators } from 'redux';
+import IPost from './IPost';
+import IComment from './IComment';
+import IReaction from './IReaction';
 
 type IPostProps = {
-	post: {
-		id: string;
-		user: {
-			name: string;
-			avatar: string;
-			id: string;
-			any;
-		};
-		created_At?: string;
-		image_url: string;
-		description?: string;
-		extraTitle?: string;
-		extraLink?: string;
-		content?: {
-			image: string;
-			link: string;
-			description: string;
-		};
-		comments?: {
-			id: string;
-			author: string;
-			commentDate: string;
-			commentBody: string;
-			parentId?: string;
-		}[];
-		tags?: {
-			id: string;
-			tagName: string;
-		}[];
-	};
+	post: IPost;
 	userId: string;
 	userRole: string;
-	deletePost: (id: string) => any;
+	createComment?: (userId: string, text: string, postId: string) => any;
+	addNewComment?: (comment: IComment) => any;
+	createReaction?: (type: string, userId: string, postId: string) => any;
+	addNewReaction?: (reaction: IReaction) => any;
+	deletePost: (id: string, userId: string) => any;
 };
+
 interface IReactItem {
-	id: number;
 	name: string;
 }
+
 interface IPostState {
 	isModalShown: boolean;
 	hover: boolean;
-	reactionList: Array<IReactItem>;
 }
 
-class Post extends PureComponent<IPostProps, IPostState> {
+class Post extends Component<IPostProps, IPostState> {
 	constructor(props: IPostProps) {
 		super(props);
 		this.state = {
 			isModalShown: false,
-			hover: false,
-			reactionList: []
+			hover: false
 		};
 	}
+
 	MouseEnterLikeButton = () => {
 		this.setState({ hover: true });
 	};
@@ -81,18 +56,16 @@ class Post extends PureComponent<IPostProps, IPostState> {
 	};
 
 	onReactionClick = (reaction: IReactItem) => {
-		const reactionList = this.state.reactionList;
-
-		if (reactionList.findIndex(item => item.id === reaction.id) != -1) {
-			return;
-		}
-
-		reactionList.push(reaction);
-		this.setState({ reactionList });
+		if (this.props.createReaction)
+			this.props.createReaction(
+				reaction.name,
+				this.props.userId,
+				this.props.post.id
+			);
 	};
 
 	deletePost = () => {
-		this.props.deletePost(this.props.post.id);
+		this.props.deletePost(this.props.post.id, this.props.userId);
 	};
 
 	isOwnPost() {
@@ -103,14 +76,17 @@ class Post extends PureComponent<IPostProps, IPostState> {
 		} = this.props;
 		return userRole === 'admin' || userId === postOwner.id;
 	}
+
 	toggleModal = () => {
 		this.setState({ isModalShown: !this.state.isModalShown });
 	};
+
 	isModalShown() {
 		return this.state.isModalShown ? (
 			<PostEditModal isOwn={this.isOwnPost()} deletePost={this.deletePost} />
 		) : null;
 	}
+
 	nestComments(commentList) {
 		const commentMap = {};
 		commentList.forEach(comment => (commentMap[comment.id] = comment));
@@ -127,23 +103,25 @@ class Post extends PureComponent<IPostProps, IPostState> {
 			return comment.parentId == null;
 		});
 	}
+
 	nestedComments = this.props.post.comments
 		? this.nestComments(this.props.post.comments)
 		: this.props.post.comments;
+
 	render() {
 		const {
-			post: {
-				user,
-				created_At,
-				image_url,
-				description,
-				extraTitle,
-				extraLink,
-				content,
-				comments,
-				tags
-			}
-		} = this.props;
+			id,
+			user,
+			created_At,
+			image_url,
+			extraLink,
+			extraTitle,
+			description,
+			content,
+			comments,
+			tags
+		} = this.props.post;
+		const createComment = this.props.createComment;
 
 		const linkType = extraLink ? extraLink.split('/')[1] : extraLink;
 
@@ -213,13 +191,26 @@ class Post extends PureComponent<IPostProps, IPostState> {
 					</button>
 				</div>
 				<div className="reaction-list">
-					{this.state.reactionList.map((item, index) => (
-						<PostReaction key={index} quantity={1} name={item.name} />
-					))}
+					{this.props.post.reactions &&
+						this.props.post.reactions.map((item, index) => (
+							<PostReaction
+								key={item.type}
+								quantity={item.count}
+								name={item.type}
+								onReactionClick={this.onReactionClick}
+							/>
+						))}
 				</div>
+				{comments ? (
+					<div>
+						{comments.map(comment => (
+							<Comment key={comment.id} commentItem={comment} />
+						))}
+					</div>
+				) : null}
 				{tags && (
 					<div>
-						<div className="horizontal-stroke"></div>
+						<div className="horizontal-stroke" />
 						<div className="tag-items">
 							{tags.map(item => (
 								<Tag tagItem={item} key={item.id} />
@@ -227,34 +218,24 @@ class Post extends PureComponent<IPostProps, IPostState> {
 						</div>
 					</div>
 				)}
-				{this.nestedComments && (
-					<div>
-						{this.nestedComments.map(item => (
-							<div style={{ width: '100%' }}>
-								<div className="horizontal-stroke"></div>
-								<Comment commentItem={item} key={item.id} />
-							</div>
-						))}
-					</div>
-				)}
-				<AddComment></AddComment>
+				{/*{this.nestedComments && (*/}
+				{/*	<div>*/}
+				{/*		{this.nestedComments.map(item => (*/}
+				{/*			<div style={{ width: '100%' }}>*/}
+				{/*				<div className={'horizontal-stroke'} />*/}
+				{/*				<Comment commentItem={item} key={item.id} />*/}
+				{/*			</div>*/}
+				{/*		))}*/}
+				{/*	</div>*/}
+				{/*)}*/}
+				<AddComment
+					createComment={text => {
+						createComment && createComment(this.props.userId, text, id);
+					}}
+				/>
 			</div>
 		);
 	}
 }
 
-const mapStateToProps = (rootState, props) => ({
-	...props,
-	userId: rootState.profile.profileInfo.id,
-	userRole: rootState.profile.profileInfo.role
-});
-
-const actions = {
-	deletePost
-};
-const mapDispatchToProps = dispatch => bindActionCreators(actions, dispatch);
-
-export default connect(
-	mapStateToProps,
-	mapDispatchToProps
-)(Post);
+export default Post;

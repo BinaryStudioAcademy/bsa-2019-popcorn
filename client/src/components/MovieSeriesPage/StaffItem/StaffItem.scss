@@ -1,20 +1,34 @@
 @import '../../../styles/variables.scss';
 
 .staff-item {
-	display: flex;
-	flex-direction: row;
 	font-family: $base-font-family;
 	font-style: normal;
 	font-weight: normal;
-	font-size: $post-font-size;
+	font-size: $base-font-size;
 	line-height: 14px;
 	letter-spacing: $base-letter-spacing;
-	margin-top: 1em;
+	padding: 0.5em;
+	border-radius: 10px;
+	width: 80px;
+	text-align: center;
 }
+
 .staff-item-name {
-	margin-left: 0.5em;
+	text-align: center;
 	color: $text-base-color;
+	border-bottom: 1px solid $border-color;
 }
 .staff-item-role {
 	color: $text-secondary-color;
+}
+.staff-item-image {
+	width: 100%;
+}
+.staff-item-image-wrp {
+	width: calc(110px / 4 * 3);
+	height: 110px;
+	border-radius: 10px;
+	overflow: hidden;
+	display: flex;
+	align-items: center;
 }

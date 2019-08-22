@@ -3,14 +3,12 @@ import { Route, Switch } from 'react-router-dom';
 import UserPosts from './UserPosts/UserPosts';
 import UserReviews from './UserReviews/UserReviews';
 import UserEvents from './UserEvents/UserEvents';
-import UserSurveys from './UserSurveys/UserSurveys';
 import UserTops from './UserTops/UserTops';
 import UserLists from './UserLists/UserLists';
 import UserWatched from './UserWatched/UserWatched';
 import ProfileComponent from './ProfileComponent/ProfileComponent';
 import UserSurveysNav from './UserSurveys/UserSurveysNav';
 import ISelectedProfileInfo from './SelectedProfileInterface';
-import mock from './Survey/mock';
 import {
 	cancelAvatar,
 	getUsersPosts,
@@ -20,8 +18,6 @@ import {
 } from './actions';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-
-const surveys = mock;
 
 interface IProps {
 	mainPath: string;
