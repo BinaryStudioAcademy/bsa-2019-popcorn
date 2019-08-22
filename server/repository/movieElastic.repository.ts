@@ -35,7 +35,6 @@ export const getById = async (id: string) => {
 };
 
 export const getByTitle = async (title: string) => {
-  console.log("tit", title);
   const response = await fetch(
     process.env.ELASTIC_API_URL + "/popcorn/_search",
     {
@@ -44,6 +43,23 @@ export const getByTitle = async (title: string) => {
         query: {
           match: {
             original_title: `"${title}"`
+          }
+        }
+      })
+    }
+  );
+  return response.json();
+};
+
+export const getByIdValues = async idValues => {
+  const response = await fetch(
+    process.env.ELASTIC_API_URL + `/popcorn/_search`,
+    {
+      method: "POST",
+      body: JSON.stringify({
+        query: {
+          ids: {
+            values: idValues
           }
         }
       })

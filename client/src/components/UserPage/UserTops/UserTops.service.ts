@@ -1,10 +1,10 @@
 export interface ITopItem {
-    id: string;
-    title: string;
+	id: string;
+	title: string;
 	topImageUrl: string;
 	moviesList: IMovie[];
-    isOwnTop: boolean;
-    isNewTop?: boolean;
+	isOwnTop: boolean;
+	isNewTop?: boolean;
 }
 
 export interface IMovie {
@@ -13,24 +13,26 @@ export interface IMovie {
 	comment: string;
 }
 
-export function convertServerDataFormatToClient(serverData: any[]): ITopItem[] | null {
-    if (!serverData) {
-        return null;
-    }
+export function convertServerDataFormatToClient(
+	serverData: any[]
+): ITopItem[] | null {
+	if (!serverData) {
+		return null;
+	}
 
-    const clientDataFormat: ITopItem[] = serverData.map((top) => {
-        return {
-            id: top.id,
-            title: top.title,
-            topImageUrl: top.topImageUrl,
-            moviesList: top.movieInTop.map(movieInTop => ({
-                id: movieInTop.movie.id,
-                title: movieInTop.movie.title,
-                comment: movieInTop.comment
-            })),
-            isOwnTop: true
-        };
-    });
+	const clientDataFormat: ITopItem[] = serverData.map(top => {
+		return {
+			id: top.id,
+			title: top.title,
+			topImageUrl: top.topImageUrl,
+			moviesList: top.movieInTop.map(movieInTop => ({
+				id: movieInTop.movie.id,
+				title: movieInTop.movie.title,
+				comment: movieInTop.comment
+			})),
+			isOwnTop: true
+		};
+	});
 
-    return clientDataFormat;
+	return clientDataFormat;
 }

@@ -6,9 +6,11 @@ import { IReview } from '../MovieSeriesReviews';
 import Moment from 'react-moment';
 import Image from '../../../shared/Image/Image';
 import config from '../../../../config';
+import { analysisToGRBA } from '../../../../helpers/analysisToGRBA';
 
 interface IProps {
 	review: IReview;
+	currentUserId: string;
 }
 
 interface IState {
@@ -56,17 +58,20 @@ class ReviewItem extends React.Component<IProps, IState> {
 	};
 
 	public render() {
-		const { user, text, created_at } = this.props.review;
-
+		const {
+			review: { user, text, created_at, analysis },
+			currentUserId
+		} = this.props;
 		const { showFullReview, textBlockHeight, isBigBlock } = this.state;
 
+		const analysisRBGA = analysisToGRBA(analysis);
+
 		return (
-			<div className="review-wrapper">
+			<div className="review-wrapper" style={{ backgroundColor: analysisRBGA }}>
 				<div className="review-item">
 					<div className="review-item-header">
 						<div className="review-item-header-profile">
 							<div className="profile-avatar">
-								{/* <img src={user.avatar} alt={`${user.name} photo`} /> */}
 								<Image
 									src={user.avatar}
 									alt={user.name}
@@ -74,7 +79,9 @@ class ReviewItem extends React.Component<IProps, IState> {
 								/>
 							</div>
 							<div className="profile-name-wrapper">
-								<div className="profile-name">{user.name}</div>
+								<div className="profile-name">
+									{user.id === currentUserId ? 'You' : user.name}
+								</div>
 							</div>
 						</div>
 						<div className="profile-review-date">

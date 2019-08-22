@@ -28,6 +28,7 @@ import {
 	SET_CAST_CREW
 } from './actionTypes';
 import config from '../../../config';
+import { FETCH_MOVIE_REVIEWS } from '../MovieSeriesReviews/actionTypes';
 
 export function* fetchFilms(action) {
 	try {
@@ -261,6 +262,11 @@ export function* setReview(action) {
 
 		yield put({
 			type: SET_REVIEW_SUCCESS
+		});
+
+		yield put({
+			type: FETCH_MOVIE_REVIEWS,
+			payload: movieId
 		});
 	} catch (error) {
 		console.log(error);

@@ -13,10 +13,7 @@ import {
 	updateTop,
 	deleteTop
 } from './UserTops.redux/actions';
-import {
-	ITopItem,
-	convertServerDataFormatToClient
-} from './UserTops.service';
+import { ITopItem, convertServerDataFormatToClient } from './UserTops.service';
 export interface IUserTopsState {
 	topList: any;
 	isCreated: boolean;
@@ -26,7 +23,7 @@ interface IUserTopProps {
 	topList: ITopItem[];
 	fetchTops: (userId: string) => any[];
 	addTop: (newTop: any) => any;
- 	updateTop: (updatedTop: any) => any;
+	updateTop: (updatedTop: any) => any;
 	deleteTop: (topId: string) => any;
 	uploadImage: (data: FormData, titleId: string) => void;
 	userId: string;
@@ -117,10 +114,7 @@ class UserTops extends React.Component<IUserTopProps, IUserTopsState> {
 	}
 
 	static getDerivedStateFromProps(props, state) {
-		if (
-			state.isAction &&
-			!isEqual(props.topList, state.topList)
-			) {
+		if (state.isAction && !isEqual(props.topList, state.topList)) {
 			return {
 				...state,
 				topList: convertServerDataFormatToClient(props.topList)
@@ -131,10 +125,11 @@ class UserTops extends React.Component<IUserTopProps, IUserTopsState> {
 
 	deleteTop = (top: ITopItem) => {
 		// console.log(top.id);
-		
+
 		if (top.isNewTop) {
-			const topList = this.state.topList
-				.filter((topItem: ITopItem) => topItem.id !== top.id);	
+			const topList = this.state.topList.filter(
+				(topItem: ITopItem) => topItem.id !== top.id
+			);
 			this.setState({ topList, isCreated: false, isAction: false });
 		} else {
 			this.props.deleteTop(top.id);
@@ -145,10 +140,10 @@ class UserTops extends React.Component<IUserTopProps, IUserTopsState> {
 	createTop = () => {
 		const { isCreated } = this.state;
 		// console.log(isCreated);
-		
+
 		if (!isCreated) {
 			const { topList } = this.state;
-			
+
 			this.setState({
 				topList: [...topList, newTop()],
 				isCreated: true,
@@ -212,8 +207,8 @@ class UserTops extends React.Component<IUserTopProps, IUserTopsState> {
 
 		const topList = this.state.topList;
 		console.log(topList);
-		
-		if (!topList) {	
+
+		if (!topList) {
 			return <Spinner />;
 		}
 

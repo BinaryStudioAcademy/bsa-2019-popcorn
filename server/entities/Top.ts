@@ -1,6 +1,12 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, OneToMany } from "typeorm";
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  ManyToOne,
+  OneToMany
+} from "typeorm";
 import { User } from "./User";
-import { MovieInTop } from './MovieInTop';
+import { MovieInTop } from "./MovieInTop";
 
 @Entity()
 export class Top {
@@ -22,7 +28,7 @@ export class Top {
   @Column({ nullable: true })
   userId: string;
 
-  @OneToMany((type) => MovieInTop, (movieInTop) => movieInTop.top)
+  @OneToMany(type => MovieInTop, movieInTop => movieInTop.top)
   movieInTop: MovieInTop[];
 
   @ManyToOne(type => User, user => user.tops)

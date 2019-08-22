@@ -24,6 +24,7 @@ const initialState = {
 	registerError: null,
 	resetMessage: '',
 	restoreMessage: '',
+	loading: true,
 	selectedProfileInfo: null
 };
 
@@ -70,7 +71,8 @@ export default function(state = initialState, action) {
 		case SET_USER_POSTS:
 			return {
 				...state,
-				userPosts: action.payload.userPosts
+				userPosts: action.payload.userPosts,
+				loading: action.payload.loading
 			};
 		case SET_LOGIN_ERROR:
 			return {
