@@ -12,6 +12,7 @@ import {
 import EventItem from './EventItem/EventItem';
 import './UserEvents.scss';
 import UserEventsEditor from './UserEventsEditor/UserEventsEditor';
+import { NavLink } from 'react-router-dom';
 
 interface IProps {
 	userEvents: IEventFormatDataBase[];
@@ -72,13 +73,18 @@ class UserEvents extends React.Component<IProps, IState> {
 
 	renderEventList = (eventList: IEventFormatClient[], deleteEventAction: any) =>
 		eventList.map(event => (
-			<EventItem
-				event={event}
-				key={event.id}
-				deleteEvent={deleteEventAction}
-				editEvent={this.editEvent}
-				isOwnEvent={this.isOwnEvent(event)}
-			/>
+			<NavLink
+				to={`/event-page/${event.id}`}
+				style={{ textDecoration: 'none', color: 'inherit' }}
+			>
+				<EventItem
+					event={event}
+					key={event.id}
+					deleteEvent={deleteEventAction}
+					editEvent={this.editEvent}
+					isOwnEvent={this.isOwnEvent(event)}
+				/>
+			</NavLink>
 		));
 
 	render() {
