@@ -1,5 +1,6 @@
 const MIN_OPACITY = 0.1;
 const MAX_OPACITY = 0.3;
+
 const green = {
 	MIN_RATE: 0.7,
 	MAX_RATE: 3,
@@ -15,6 +16,7 @@ const red = {
 	MAX_RATE: -0.5,
 	setResult: opacity => `rgba(255, 0, 0, ${opacity})`
 };
+
 const DEFAULT_RGBA = 'rgba(255, 255, 255, 1)';
 
 export const analysisToGRBA = (analysis: string): string => {

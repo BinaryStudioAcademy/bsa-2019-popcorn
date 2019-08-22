@@ -23,7 +23,7 @@ interface IProps {
 	reviews: IReview[];
 	movieId: string;
 	fetchMovieReviews: any;
-	loading: boolean;
+	isLoaded: boolean;
 	currentUserId: string;
 }
 
@@ -32,11 +32,13 @@ class MovieSeriesReviews extends React.Component<IProps> {
 		this.props.fetchMovieReviews(this.props.movieId);
 	}
 
+	componentWillUnmount() {}
+
 	render() {
-		const { reviews, currentUserId } = this.props;
+		const { reviews, currentUserId, isLoaded } = this.props;
 		return (
 			<div className="MovieSeriesReviews">
-				{this.props.loading ? (
+				{!isLoaded && !reviews ? (
 					<Spinner />
 				) : (
 					<div>
@@ -63,7 +65,7 @@ class MovieSeriesReviews extends React.Component<IProps> {
 const mapStateToProps = (rootState, props) => ({
 	...props,
 	reviews: rootState.review.reviewList,
-	loading: rootState.review.loading,
+	isLoaded: rootState.review.isLoaded,
 	movieId: rootState.movie.fetchedMovie.id,
 	currentUserId: rootState.profile.profileInfo.id
 });
