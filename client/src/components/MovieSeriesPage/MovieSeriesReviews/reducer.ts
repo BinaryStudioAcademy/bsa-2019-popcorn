@@ -8,10 +8,10 @@ import {
 } from '../../UserPage/UserReviews/actionTypes';
 
 const initialState: {
-	reviewList: null | any;
-	isLoaded: undefined | boolean;
-	reviewUserList: null | any;
-	loading: undefined | boolean;
+	reviewList?: any;
+	isLoaded?: boolean;
+	reviewUserList?: any;
+	loading?: boolean;
 } = {
 	isLoaded: undefined,
 	loading: true,

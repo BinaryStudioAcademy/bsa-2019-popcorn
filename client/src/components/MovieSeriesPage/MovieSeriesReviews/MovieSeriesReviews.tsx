@@ -32,8 +32,6 @@ class MovieSeriesReviews extends React.Component<IProps> {
 		this.props.fetchMovieReviews(this.props.movieId);
 	}
 
-	componentWillUnmount() {}
-
 	render() {
 		const { reviews, currentUserId, isLoaded } = this.props;
 		return (

@@ -24,7 +24,7 @@ export class Review {
   @Column({ nullable: false })
   movieId: string;
 
-  @Column()
+  @Column({ nullable: false })
   analysis: string;
 
   @ManyToOne(type => User)

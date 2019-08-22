@@ -35,7 +35,6 @@ export function* fetchUserReviews(action) {
 			endpoint: `${config.API_URL}/api/review/user/${userId}`,
 			method: 'GET'
 		});
-		console.log(response);
 
 		yield put({
 			type: FETCH_USER_REVIEWS_SUCCESS,

@@ -101,7 +101,6 @@ class ReviewItem extends React.Component<IProps, IState> {
 						{textBlockHeight !== 'auto' && !showFullReview ? (
 							<div
 								className="read-more-gradient"
-								// style={{ backgroundImage: `linear-gradient(to bottom, transparent, ${analysisRBGA})` }}
 								onClick={() => this.handleClickShowMore()}
 							></div>
 						) : null}
