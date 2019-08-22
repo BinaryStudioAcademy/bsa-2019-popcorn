@@ -54,13 +54,16 @@ interface IProps {
 }
 
 interface IState {
-	answers: Array<{
-		questionId: string;
-		options: Array<{
-			id: string;
-		}>;
-		value?: string;
-	}>;
+	answers: Array<
+		| {
+				questionId: string;
+				options: Array<{
+					id: string;
+				}>;
+				value?: string;
+		  }
+		| any
+	>;
 	isDisabled: boolean;
 }
 
@@ -74,7 +77,7 @@ class Survey extends PureComponent<IProps, IState> {
 	}
 
 	static getDerivedStateFromProps(props, state) {
-		if (props.surveyInfo) {
+		if (props.surveyInfo.questions) {
 			return {
 				answers: props.surveyInfo.questions.map(question => ({
 					questionId: question.id,
@@ -108,57 +111,36 @@ class Survey extends PureComponent<IProps, IState> {
 
 	setSingleAnswer = answerInfo => {
 		const { questionId, optionId } = answerInfo;
-		const newAnswers = this.state.answers.map(answer => {
-			if (answer.questionId === questionId) {
-				answer.options = [{ id: optionId }];
-			}
-			return answer;
-		});
-
-		this.setState({
-			answers: newAnswers
+		const index = this.state.answers.findIndex(
+			answer => answer.questionId === questionId
+		);
+		this.state.answers.splice(index, 1);
+		this.state.answers.push({
+			questionId,
+			value: '',
+			options: [{ id: optionId }]
 		});
 	};
 
 	setShortAnswer = answerInfo => {
 		const { questionId, value } = answerInfo;
-		const newAnswers = this.state.answers.map(answer => {
-			if (answer.questionId === questionId) {
-				return { questionId, value, options: [] };
-			}
-			return answer;
-		});
-		this.setState({
-			answers: newAnswers
-		});
+		const index = this.state.answers.findIndex(
+			answer => answer.questionId === questionId
+		);
+		this.state.answers.splice(index, 1);
+		this.state.answers.push({ questionId, value, options: [] });
 	};
 
 	setMultipleAnswer = answerInfo => {
 		const { questionId, optionId, value } = answerInfo;
-		let answers = this.state.answers;
+		const index = this.state.answers.findIndex(
+			answer => answer.questionId === questionId
+		);
 		if (value === true) {
-			answers = answers.map(answer => {
-				if (answer.questionId === questionId) {
-					answer.options.push({ id: optionId });
-				}
-				return answer;
-			});
+			this.state.answers[index].options.push({ id: optionId });
 		} else {
-			answers = answers.map((answer, i) => {
-				if (answer.questionId === questionId) {
-					answer.options.forEach((option, i) => {
-						if (optionId === option.id) {
-							answer.options.splice(i, 1);
-						}
-					});
-				}
-				return answer;
-			});
+			this.state.answers[index].options.splice(index, 1);
 		}
-
-		this.setState({
-			answers
-		});
 	};
 
 	sendAnswer = () => {
