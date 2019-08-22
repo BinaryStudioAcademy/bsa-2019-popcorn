@@ -18,7 +18,7 @@ export default (movie: any): TMovie => {
 		overview: movie.overview,
 		budget: movie.budget,
 		vote_average: movie.rate,
-		video: 'https://www.youtube.com/embed/KnrRy6kSFF0',
+		video: `https://www.youtube.com/embed/${movie.video_link}`,
 		cast: 'Matt Damon, Jessica Chastain, Kristen Wiig',
 		messages: movie.messages
 	};

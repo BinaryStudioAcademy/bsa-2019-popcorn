@@ -11,6 +11,7 @@ import MovieSeriesPage from '../../components/MovieSeriesPage/MovieSeriesPage';
 import EventPage from '../../components/EventPage/EventPage';
 import EventList from '../../components/EventPage/EventList';
 import AdminPanelPage from '../../components/AdminPanelPage/AdminPanelPage';
+import SurveyPage from '../../components/SurveyPage/SurveyPage';
 
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
@@ -148,6 +149,7 @@ const Main = ({
 							}
 						/>
 
+						<Route path={`/survey-page/:id`} component={SurveyPage} />
 						<Route path={`/admin-panel-page`} component={AdminPanelPage} />
 						<Route
 							path={`/movie-series/:id`}

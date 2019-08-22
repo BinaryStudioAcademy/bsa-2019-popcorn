@@ -1,12 +1,16 @@
 import React, { ReactElement } from 'react';
 import './ReviewItem.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faStar } from '@fortawesome/free-solid-svg-icons';
 import { faChevronDown, faChevronUp } from '@fortawesome/free-solid-svg-icons';
 import { IReview } from '../MovieSeriesReviews';
+import Moment from 'react-moment';
+import Image from '../../../shared/Image/Image';
+import config from '../../../../config';
+import { analysisToGRBA } from '../../../../helpers/analysisToGRBA';
 
 interface IProps {
 	review: IReview;
+	currentUserId: string;
 }
 
 interface IState {
@@ -14,25 +18,6 @@ interface IState {
 	textBlockHeight: string;
 	isBigBlock: boolean;
 }
-
-const solidStar = (key: number, type: boolean): any => (
-	<FontAwesomeIcon
-		icon={faStar}
-		className={type ? 'yellowStar' : 'greyStar'}
-		key={key}
-	/>
-);
-
-const rateBlock = (rate: number): ReactElement[] => {
-	const count = [...(Array(5).keys() as any)];
-	const result = count.map(element => {
-		return element < rate
-			? solidStar(element, true)
-			: solidStar(element, false);
-	});
-
-	return result;
-};
 
 class ReviewItem extends React.Component<IProps, IState> {
 	state: IState = {
@@ -73,24 +58,37 @@ class ReviewItem extends React.Component<IProps, IState> {
 	};
 
 	public render() {
-		const { author, reviewText, rating, created_at } = this.props.review;
-
+		const {
+			review: { user, text, created_at, analysis },
+			currentUserId
+		} = this.props;
 		const { showFullReview, textBlockHeight, isBigBlock } = this.state;
 
+		const analysisRBGA = analysisToGRBA(analysis);
+
 		return (
-			<div className="review-wrapper">
+			<div className="review-wrapper" style={{ backgroundColor: analysisRBGA }}>
 				<div className="review-item">
 					<div className="review-item-header">
 						<div className="review-item-header-profile">
 							<div className="profile-avatar">
-								<img src={author.avatar} alt={`${author.name} photo`} />
+								<Image
+									src={user.avatar}
+									alt={user.name}
+									defaultSrc={config.DEFAULT_AVATAR}
+								/>
 							</div>
-							<div className="profile-name-rating">
-								<div className="profile-name">{author.name}</div>
-								<div className="profile-review-rating">{rateBlock(rating)}</div>
+							<div className="profile-name-wrapper">
+								<div className="profile-name">
+									{user.id === currentUserId ? 'You' : user.name}
+								</div>
 							</div>
 						</div>
-						<div className="profile-review-date">{created_at}</div>
+						<div className="profile-review-date">
+							<Moment format=" D MMM HH:mm " local>
+								{String(created_at)}
+							</Moment>
+						</div>
 					</div>
 					<div
 						ref={this.divRef as any}
@@ -99,7 +97,7 @@ class ReviewItem extends React.Component<IProps, IState> {
 						} 
               ${showFullReview ? 'review-item-text-big-show-full' : null}`}
 					>
-						{reviewText}
+						{text}
 						{textBlockHeight !== 'auto' && !showFullReview ? (
 							<div
 								className="read-more-gradient"

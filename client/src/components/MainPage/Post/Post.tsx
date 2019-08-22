@@ -3,8 +3,8 @@ import AddComment from '../../shared/AddComment/AddComment';
 import './Post.scss';
 import { ReactComponent as SettingIcon } from '../../../assets/icons/general/settings.svg';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faHeart } from '@fortawesome/free-regular-svg-icons';
-import { faShare } from '@fortawesome/free-solid-svg-icons';
+import { faHeart, faCalendarAlt } from '@fortawesome/free-regular-svg-icons';
+import { faShare, faTasks, faTrophy } from '@fortawesome/free-solid-svg-icons';
 import Comment from '../Comment/Comment';
 import Tag from '../Tag/Tag';
 import PostEditModal from '../PostEditModal/PostEditModal';
@@ -12,11 +12,15 @@ import PostContent from '../PostContent/PostContent';
 import config from '../../../config';
 import Reactions from '../Reactions/Reactions';
 import PostReaction from './PostReaction/PostReaction';
+import { NavLink } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { deletePost } from '../FeedBlock/FeedBlock.redux/actions';
+import { bindActionCreators } from 'redux';
 
 type IPostProps = {
 	post: {
+		id: string;
 		user: {
 			name: string;
 			avatar: string;
@@ -26,6 +30,8 @@ type IPostProps = {
 		created_At?: string;
 		image_url: string;
 		description?: string;
+		extraTitle?: string;
+		extraLink?: string;
 		content?: {
 			image: string;
 			link: string;
@@ -45,6 +51,7 @@ type IPostProps = {
 	};
 	userId: string;
 	userRole: string;
+	deletePost: (id: string, userId: string) => any;
 };
 interface IReactItem {
 	id: number;
@@ -84,6 +91,10 @@ class Post extends PureComponent<IPostProps, IPostState> {
 		this.setState({ reactionList });
 	};
 
+	deletePost = () => {
+		this.props.deletePost(this.props.post.id, this.props.userId);
+	};
+
 	isOwnPost() {
 		const {
 			userId,
@@ -97,7 +108,7 @@ class Post extends PureComponent<IPostProps, IPostState> {
 	};
 	isModalShown() {
 		return this.state.isModalShown ? (
-			<PostEditModal isOwn={this.isOwnPost()} />
+			<PostEditModal isOwn={this.isOwnPost()} deletePost={this.deletePost} />
 		) : null;
 	}
 	nestComments(commentList) {
@@ -126,11 +137,16 @@ class Post extends PureComponent<IPostProps, IPostState> {
 				created_At,
 				image_url,
 				description,
+				extraTitle,
+				extraLink,
 				content,
 				comments,
 				tags
 			}
 		} = this.props;
+
+		const linkType = extraLink ? extraLink.split('/')[1] : extraLink;
+
 		const reactionsShow = this.state.hover ? (
 			<Reactions
 				onReactionClick={this.onReactionClick}
@@ -138,6 +154,7 @@ class Post extends PureComponent<IPostProps, IPostState> {
 				MouseEnterLikeButton={this.MouseEnterLikeButton}
 			/>
 		) : null;
+
 		return (
 			<div className="post-item">
 				<div className="post-item-header">
@@ -164,6 +181,18 @@ class Post extends PureComponent<IPostProps, IPostState> {
 				)}
 				{description && <div className="post-body">{description}</div>}
 				{content && <PostContent content={content} />}
+				{extraTitle && (
+					<div className="extra">
+						{linkType === 'event-page' && (
+							<FontAwesomeIcon icon={faCalendarAlt} />
+						)}
+						{linkType === 'survey-page' && <FontAwesomeIcon icon={faTasks} />}
+						{linkType === 'top-page' && <FontAwesomeIcon icon={faTrophy} />}
+						<span className="extra-link">
+							{<NavLink to={`${extraLink}`}>{extraTitle}</NavLink>}
+						</span>
+					</div>
+				)}
 				{reactionsShow}
 				<div className="post-item-action-buttons">
 					<div className="post-item-last-reaction">
@@ -220,4 +249,12 @@ const mapStateToProps = (rootState, props) => ({
 	userRole: rootState.profile.profileInfo.role
 });
 
-export default connect(mapStateToProps)(Post);
+const actions = {
+	deletePost
+};
+const mapDispatchToProps = dispatch => bindActionCreators(actions, dispatch);
+
+export default connect(
+	mapStateToProps,
+	mapDispatchToProps
+)(Post);

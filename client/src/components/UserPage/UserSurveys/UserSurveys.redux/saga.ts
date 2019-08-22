@@ -6,11 +6,15 @@ import {
 	ADD_SURVEY,
 	UPDATE_SURVEY,
 	DELETE_SURVEY,
-	RECREATE_SURVEY
+	RECREATE_SURVEY,
+	SET_SURVEY_BYID,
+	GET_SURVEY_BYID,
+	POST_ANSWERS
 } from './actionTypes';
 import webApi from '../../../../services/webApi.service';
 import config from '../../../../config';
 import { setArrangementInSurveys } from '../UserSurveys.service';
+import { transformDataToProps } from '../UserSurveys.service';
 
 export function* fetchUserSurveys(action) {
 	try {
@@ -24,7 +28,8 @@ export function* fetchUserSurveys(action) {
 		yield put({
 			type: SET_SURVEYS,
 			payload: {
-				surveys: data
+				surveys: data,
+				loading: false
 			}
 		});
 	} catch (e) {
@@ -114,6 +119,35 @@ function* watchDelete() {
 	yield takeEvery(DELETE_SURVEY, deleteSurvey);
 }
 
+function* getSurveyById(action) {
+	try {
+		const data = yield call(webApi, {
+			method: 'GET',
+			endpoint: config.API_URL + '/api/surveys/' + action.payload.id
+		});
+
+		const surveys = [data];
+
+		if (data) {
+			setArrangementInSurveys(surveys);
+		}
+
+		const formattedData = transformDataToProps(surveys);
+
+		if (data)
+			yield put({
+				type: SET_SURVEY_BYID,
+				payload: { survey: formattedData[0], loading: false }
+			});
+	} catch (e) {
+		console.log('survey saga get by id: ', e.message);
+	}
+}
+
+function* watchgetSurveyById() {
+	yield takeEvery(GET_SURVEY_BYID, getSurveyById);
+}
+
 function* recreateSurvey(action) {
 	try {
 		const deletedData = yield call(webApi, {
@@ -138,6 +172,29 @@ function* recreateSurvey(action) {
 function* watchRecreate() {
 	yield takeEvery(RECREATE_SURVEY, recreateSurvey);
 }
+function* postAnswers(action) {
+	try {
+		yield all(
+			action.payload.data.map(answer =>
+				call(webApi, {
+					method: 'POST',
+					endpoint: config.API_URL + '/api/surveys/answer',
+					body: {
+						...answer
+					}
+				})
+			)
+		);
+
+		yield put({ type: FETCH_SURVEYS });
+	} catch (e) {
+		console.log('survey saga post answers: ', e.message);
+	}
+}
+
+function* watchPostAnswers() {
+	yield takeEvery(POST_ANSWERS, postAnswers);
+}
 
 export default function* survey() {
 	yield all([
@@ -146,6 +203,8 @@ export default function* survey() {
 		watchAdd(),
 		watchUpdate(),
 		watchDelete(),
-		watchRecreate()
+		watchRecreate(),
+		watchgetSurveyById(),
+		watchPostAnswers()
 	]);
 }
