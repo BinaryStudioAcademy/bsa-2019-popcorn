@@ -52,7 +52,7 @@ class UserReviews extends React.Component<IProps> {
 				) : (
 					<div>
 						{!reviewUserList.length ? (
-							<div className="warning">No one Review</div>
+							<div className="warning">No reviews yet</div>
 						) : (
 							reviewUserList.map(item => {
 								return (

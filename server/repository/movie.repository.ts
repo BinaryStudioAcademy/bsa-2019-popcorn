@@ -12,7 +12,7 @@ export const getMovieVideoLinkById = async (movieId: number) =>
     `http://api.themoviedb.org/3/movie/${movieId}/videos?api_key=${process.env.MOCK_API_KEY}`
   )
     .then(res => res.json())
-    .then(data => data.results[0].key);
+    .then(data => (data.results[0] ? data.results[0].key : ""));
 
 @EntityRepository(Movie)
 class MovieRepository extends Repository<Movie> {}
