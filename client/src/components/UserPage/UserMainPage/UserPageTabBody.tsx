@@ -42,7 +42,13 @@ const UserPageTabs: React.SFC<IProps> = ({ mainPath }) => {
 				<Route
 					exact
 					path={`${mainPath}`}
-					render={() => <ProfileComponent profileInfo={profileInfo} />}
+					render={() => (
+						<ProfileComponent
+							profileInfo={profileInfo}
+							croppedSaved={false}
+							saveCropped={() => {}}
+						/>
+					)}
 				/>
 				<Route path={`${mainPath}/posts`} component={UserPosts} />
 				<Route path={`${mainPath}/reviews`} component={UserReviews} />

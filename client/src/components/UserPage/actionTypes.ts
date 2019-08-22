@@ -9,3 +9,4 @@ export const SET_USER_POSTS = 'SET_USER_POSTS';
 export const SEND_POST = 'SEND_POST';
 export const GET_SELECTED_USER_INFO = 'GET_SELECTED_USER_INFO';
 export const SET_SELECTED_USER = 'SET_SELECTED_USER';
+export const SAVE_CROPPED = 'SAVE_CROPPED';

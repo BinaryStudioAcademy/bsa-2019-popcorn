@@ -9,13 +9,21 @@ interface IProps {
 	posts?: any;
 	getUsersPosts: () => any;
 	userId: string;
+	croppedSaved: boolean;
+	saveCropped: () => void;
 }
 const userPostStyle = {
 	marginRight: '0px',
 	paddingRight: '0px',
 	marginTop: '40px'
 };
-const UserPosts: React.FC<IProps> = ({ posts, getUsersPosts, userId }) => {
+const UserPosts: React.FC<IProps> = ({
+	posts,
+	getUsersPosts,
+	userId,
+	croppedSaved,
+	saveCropped
+}) => {
 	if (!posts) {
 		getUsersPosts();
 		return <Spinner />;
@@ -23,7 +31,11 @@ const UserPosts: React.FC<IProps> = ({ posts, getUsersPosts, userId }) => {
 
 	return (
 		<div className="UserPosts">
-			<PostConstructor userId={userId} />
+			<PostConstructor
+				userId={userId}
+				saveCropped={saveCropped}
+				croppedSaved={croppedSaved}
+			/>
 			{posts.length === 0 ? (
 				<div className="no-info-yet">No posts yet</div>
 			) : (

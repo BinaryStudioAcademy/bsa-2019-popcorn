@@ -4,7 +4,8 @@ import {
 	START_UPLOAD_AVATAR,
 	USER_POSTS,
 	SEND_POST,
-	GET_SELECTED_USER_INFO
+	GET_SELECTED_USER_INFO,
+	SAVE_CROPPED
 } from './actionTypes';
 
 export const uploadAvatar = (file: FormData, id: string): any => {
@@ -30,6 +31,12 @@ export const setAvatar = (url, id): any => {
 			url,
 			id
 		}
+	};
+};
+
+export const saveCropped = () => {
+	return {
+		type: SAVE_CROPPED
 	};
 };
 
