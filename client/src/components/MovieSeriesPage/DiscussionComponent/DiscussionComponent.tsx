@@ -2,6 +2,7 @@ import React, { Component, createRef } from 'react';
 import { ReactComponent as SendLogo } from '../../../assets/icons/general/messager/paper-plane.svg';
 import SocketService from '../../../services/socket.service';
 import './DiscussionComponent.scss';
+import Moment from 'react-moment';
 import config from '../../../config';
 import { IDiscussionUser } from '../../UserPage/UserEvents/UserEvents.service';
 export interface IDiscussionMessage {
@@ -167,10 +168,15 @@ class DiscussionComponent extends Component<
 								<div className="messageInfo">
 									<div className="name">
 										{message.user.id === this.props.currentUser.id
-											? 'Me'
+											? 'Me '
 											: message.user.name}
 									</div>
-									<div className="date">{message.createdAt}</div>
+									<div className="date">
+										&nbsp;
+										<Moment format=" D MMM HH:mm " local>
+											{String(message.createdAt)}
+										</Moment>
+									</div>
 								</div>
 								<div className="body">{message.text}</div>
 							</div>
