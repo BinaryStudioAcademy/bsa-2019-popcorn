@@ -34,12 +34,14 @@ const EventPageTabBody: React.FC<IProps> = ({
 				<Route
 					path={`${mainPath}/discussion`}
 					render={() => (
-						<DiscussionComponent
-							messages={event.eventComments}
-							currentUser={currentUser}
-							entityId={event.id}
-							entityIdName="eventId"
-						/>
+						<div className="event-discussion">
+							<DiscussionComponent
+								messages={event.eventComments}
+								currentUser={currentUser}
+								entityId={event.id}
+								entityIdName="eventId"
+							/>
+						</div>
 					)}
 				/>
 				<Route

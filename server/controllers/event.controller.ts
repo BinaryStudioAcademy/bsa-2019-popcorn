@@ -72,7 +72,7 @@ router
   .post("/visitor", (req: any, res: Response, next: NextFunction) =>
     eventService
       .createVisitor(req.body)
-      .then((response: EventVisitor[]) => res.send(response))
+      .then((response: EventVisitor) => res.send(response))
       .catch(next)
   )
   .get("/:id/visitor", (req: any, res: Response, next: NextFunction) =>
