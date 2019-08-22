@@ -58,7 +58,6 @@ interface IProps {
 	history?: {
 		push: (path: string) => any;
 	};
-	type: string;
 	selectedProfileId: string;
 }
 
@@ -195,7 +194,7 @@ class UserSurveys extends React.Component<IProps, IState> {
 				)}
 				<div className="userSurveys">
 					{this.props.selectedProfileId === this.props.userId ||
-					this.props.type === 'all' ? (
+					window.location.pathname === '/surveys-list/' ? (
 						<NavLink to={`${mainPath}/create`} className="create-button">
 							<button>Create survey</button>
 						</NavLink>

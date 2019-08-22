@@ -94,7 +94,6 @@ const allSurveysRender = props => {
 			id={props.id}
 			userInfo={props}
 			mainPath={'/surveys-list/'}
-			type="all"
 		/>
 	);
 };
