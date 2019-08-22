@@ -38,11 +38,8 @@ $orange: #fb8700;
 				display: flex;
 				justify-content: left;
 				align-items: center;
-
-				.meta-info-item {
-					&:last-child {
-						border-left: none;
-					}
+				a {
+					width: 100%;
 				}
 			}
 
@@ -50,8 +47,11 @@ $orange: #fb8700;
 				padding: 5px 10px;
 				display: flex;
 				align-items: center;
-				border: 1px solid silver;
-				cursor: pointer;
+				outline: 1px solid silver;
+				border: none;
+				font-size: 16px;
+				background: white;
+				height: 32px;
 
 				&:last-child {
 					margin-right: 0;
@@ -87,7 +87,7 @@ $orange: #fb8700;
 .event-image {
 	text-align: center;
 	img {
-		width: 50%;
+		height: 250px;
 	}
 }
 .event-page-tabs {
@@ -142,4 +142,8 @@ $orange: #fb8700;
 	img {
 		width: 50px;
 	}
+}
+
+.disabled:hover {
+	cursor: default !important;
 }

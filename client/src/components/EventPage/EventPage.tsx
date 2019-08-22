@@ -77,6 +77,7 @@ const EventPage: React.FC<IProps> = ({
 				event={event}
 				subscibeToEvent={subscibe}
 				currentUser={currentUser}
+				mainPath={mainPath}
 			/>
 			<div className="event-page-main">
 				<EventPageTabs mainPath={mainPath} />
