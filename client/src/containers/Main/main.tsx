@@ -9,6 +9,7 @@ import MainPage from '../../components/MainPage/MainPage';
 import UserPage from '../../components/UserPage/UserPage';
 import MovieSeriesPage from '../../components/MovieSeriesPage/MovieSeriesPage';
 import EventPage from '../../components/EventPage/EventPage';
+import EventList from '../../components/EventPage/EventList';
 import AdminPanelPage from '../../components/AdminPanelPage/AdminPanelPage';
 import SurveyPage from '../../components/SurveyPage/SurveyPage';
 
@@ -20,11 +21,20 @@ import {
 	loadMoreMovie,
 	setMovieSeries
 } from '../../components/MovieSeriesPage/Movie.redux/actions';
+import {
+	getAllEvents,
+	getEventById,
+	subscibeToEvent
+} from '../../components/UserPage/UserEvents/actions';
 import Header from '../../components/shared/Header/Header';
 import UserTops from '../../components/UserPage/UserTops/UserTops';
 import UserSurveysNav from '../../components/UserPage/UserSurveys/UserSurveysNav';
 import SocketService from '../../services/socket.service';
 import TMovie from '../../components/MovieSeriesPage/TMovie';
+import {
+	IEventFormatClient,
+	IEventFormatDataBase
+} from '../../components/UserPage/UserEvents/UserEvents.service';
 
 const { notifications } = {
 	notifications: {
@@ -47,6 +57,11 @@ interface IProps {
 	setMovieSeries: (movie: any) => any;
 	movieSeries: null | TMovie;
 	loadMoreMovie: (size: number, from: number) => any;
+	getAllEvents: () => void;
+	allEvents: IEventFormatDataBase[];
+	searchedEvent: IEventFormatDataBase;
+	getEventById: (eventId: string) => void;
+	subscibeToEvent: ({ eventId, userId, status }) => void;
 }
 
 const MovieListRender = (
@@ -84,6 +99,9 @@ const allSurveysRender = props => {
 	);
 };
 
+const EventPageRender = props => <EventPage {...props} />;
+const EventListRender = props => <EventList {...props} />;
+
 const Main = ({
 	isAuthorized,
 	userInfo,
@@ -91,7 +109,12 @@ const Main = ({
 	fetchMovieList,
 	setMovieSeries,
 	movieSeries,
-	loadMoreMovie
+	loadMoreMovie,
+	allEvents,
+	getAllEvents,
+	searchedEvent,
+	getEventById,
+	subscibeToEvent
 }: IProps) => {
 	if (!isAuthorized || !localStorage.getItem('token'))
 		return <Redirect to="/login" />;
@@ -107,7 +130,24 @@ const Main = ({
 					<Switch>
 						<Route exact path={[`/`, '/create*']} component={MainPage} />
 						<Route path={`/user-page/:id`} component={UserPage} />
-						<Route path={`/event-page`} component={EventPage} />
+						<Route
+							path={`/event-page/:id`}
+							render={props =>
+								EventPageRender({
+									...props,
+									searchedEvent,
+									getEventById,
+									currentUser: userInfo,
+									subscibeToEvent
+								})
+							}
+						/>
+						<Route
+							path={`/event-page`}
+							render={props =>
+								EventListRender({ ...props, allEvents, getAllEvents })
+							}
+						/>
 
 						<Route path={`/survey-page/:id`} component={SurveyPage} />
 						<Route path={`/admin-panel-page`} component={AdminPanelPage} />
@@ -144,13 +184,18 @@ const mapStateToProps = (rootState, props) => ({
 	isAuthorized: !!rootState.profile.profileInfo,
 	userInfo: rootState.profile.profileInfo,
 	movieList: rootState.movie.movieList,
-	movieSeries: rootState.movie.movieSeries
+	movieSeries: rootState.movie.movieSeries,
+	allEvents: rootState.events.allEvents,
+	searchedEvent: rootState.events.searchedEvent
 });
 
 const actions = {
 	fetchMovieList,
 	setMovieSeries,
-	loadMoreMovie
+	loadMoreMovie,
+	getAllEvents,
+	getEventById,
+	subscibeToEvent
 };
 
 const mapDispatchToProps = dispatch => bindActionCreators(actions, dispatch);

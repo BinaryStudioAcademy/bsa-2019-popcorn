@@ -1,8 +1,6 @@
 import React from 'react';
 import { Switch, Route } from 'react-router-dom';
-import DiscussionComponent, {
-	IDiscussionUser
-} from './DiscussionComponent/DiscussionComponent';
+import DiscussionComponent from './DiscussionComponent/DiscussionComponent';
 import FilmBasicTabComponent from './FilmBasicTabComponent/FilmBasicTabComponent';
 import MovieSeriesCastCrew from './MovieSeriesCastCrew/MovieSeriesCastCrew';
 import MovieSeriesReviews from './MovieSeriesReviews/MovieSeriesReviews';
@@ -11,6 +9,7 @@ import MovieSeriesAwards from './MovieSeriesAwards/MovieSeriesAwards';
 import MovieSeriesStatistics from './MovieSeriesStatistics/MovieSeriesStatistics';
 import StaffCast from './StaffCast/StaffCast';
 import TMovie from './TMovie';
+import { IDiscussionUser } from '../UserPage/UserEvents/UserEvents.service';
 
 const messages = [
 	{
@@ -103,9 +102,10 @@ const MovieSeriesPageTabBody: React.SFC<IProps> = ({
 				/>
 			</Switch>
 			<DiscussionComponent
-				movieId={movie.id}
+				entityId={movie.id}
 				messages={movie.messages}
 				currentUser={currentUser}
+				entityIdName="movieId"
 			/>
 		</div>
 	);

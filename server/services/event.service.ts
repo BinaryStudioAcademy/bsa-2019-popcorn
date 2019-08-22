@@ -86,10 +86,13 @@ export const getEventsByVisitorId = async (userId: string): Promise<any[]> => {
   return result;
 };
 
-export const createVisitor = async (
-  visitor: EventVisitor
-): Promise<EventVisitor[]> =>
-  await getRepository(VisitorEntity).save([visitor]);
+export const createVisitor = async (visitor: EventVisitor): Promise<any> => {
+  const oldVisitor = await getRepository(VisitorEntity).findOne({
+    userId: visitor.userId
+  });
+  oldVisitor && oldVisitor.id ? (visitor.id = oldVisitor.id) : null;
+  return await getRepository(VisitorEntity).save(visitor);
+};
 
 export const updateVisitor = async (
   updatedVisitor: EventVisitor
