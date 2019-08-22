@@ -2,15 +2,16 @@ import tokenHelper from "./../helpers/token.helper";
 import userRepository from "./../repository/user.repository";
 import { getCustomRepository } from "typeorm";
 import { sendToken } from "./email.service";
+import { User } from "../models/UserModel";
 
 const crypto = require("crypto");
 
-export const login = async ({ user }: { user?: any }) => ({
+export const login = async (user: User) => ({
   token: tokenHelper.createToken({ id: user.id }),
   user: await getCustomRepository(userRepository).find({ id: user.id })
 });
 
-export const register = async (userData: any) => {
+export const register = async (userData: User) => {
   const newUser = await getCustomRepository(userRepository).save(userData);
   return login(newUser);
 };
