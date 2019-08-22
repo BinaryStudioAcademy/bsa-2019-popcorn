@@ -35,7 +35,6 @@ interface IProps {
 		name: string;
 		image_link: string;
 	};
-	type: 'all' | 'specific';
 }
 
 interface IState {
@@ -51,15 +50,27 @@ class UserSurveysNav extends React.Component<IProps, IState> {
 	}
 
 	componentDidMount() {
-		if (this.props.type == 'all') this.props.fetchSurveys();
-		else if (this.props.type === 'specific')
+		if (window.location.pathname === '/surveys-list/')
+			this.props.fetchSurveys();
+		else if (
+			window.location.pathname ===
+			`/user-page/${this.props.userInfo.id}/surveys`
+		)
 			this.props.fetchUserSurveys(this.props.userInfo.id);
 	}
 
 	static getDerivedStateFromProps(props, state) {
-		if (!isEqual(props.surveys, state.surveys)) {
+		let newSurveys = [];
+		if (
+			window.location.pathname === `/user-page/${props.userInfo.id}/surveys`
+		) {
+			newSurveys = props.surveys.filter(el => el.user.id === props.userInfo.id);
+		} else {
+			newSurveys = props.surveys;
+		}
+		if (!isEqual(newSurveys, state.surveys)) {
 			return {
-				surveys: transformDataToProps(props.surveys)
+				surveys: transformDataToProps(newSurveys)
 			};
 		}
 		return null;
@@ -88,7 +99,7 @@ class UserSurveysNav extends React.Component<IProps, IState> {
 	};
 
 	render() {
-		const { mainPath, userInfo, type } = this.props;
+		const { mainPath, userInfo } = this.props;
 		if (!this.state.surveys) return <Spinner />;
 		return (
 			<Switch>
@@ -101,7 +112,6 @@ class UserSurveysNav extends React.Component<IProps, IState> {
 							updateInfo={this.updateInfo}
 							surveys={this.state.surveys}
 							mainPath={mainPath}
-							type={type}
 							deleteSurvey={this.deleteSurvey}
 						/>
 					)}
