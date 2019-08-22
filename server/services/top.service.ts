@@ -1,5 +1,4 @@
 import { Top } from "../models/TopModel";
-import { MovieInTop } from "../models/MovieInTopModel";
 import TopRepository from "../repository/top.repository";
 import MovieInTopRepository from "../repository/movieInTop.repository";
 import { getCustomRepository } from "typeorm";
@@ -31,11 +30,20 @@ export const getExtendedTops = async (): Promise<Top[]> => {
   return await getTopWithMovies(tops);
 };
 
-export const getTopById = async (topId: string): Promise<Top> =>
-  await getCustomRepository(TopRepository).findOne({
-    relations: ["movieInTop"],
+export const getTopById = async (topId: string): Promise<Top> => {
+  const top: Top = await getCustomRepository(TopRepository).findOne({
+    relations: ["user", "movieInTop"],
     where: { id: topId }
   });
+
+  for (let j = 0; j < top.movieInTop.length; j++) {
+    const movieInTop: any = top.movieInTop[j];
+
+    movieInTop.movie = await movieService.getMovieById(movieInTop.movieId);
+  }
+
+  return top;
+};
 
 export const getTopsByUserId = async (userId: string): Promise<any[]> => {
   const tops: Top[] = await getCustomRepository(TopRepository).find({
@@ -73,15 +81,7 @@ export const createUserTop = async (top: any): Promise<any> => {
     })
   );
 
-  const receivedTop: Top = await getTopById(createdTop.id);
-
-  for (let j = 0; j < receivedTop.movieInTop.length; j++) {
-    const movieInTop: any = receivedTop.movieInTop[j];
-
-    movieInTop.movie = await movieService.getMovieById(movieInTop.movieId);
-  }
-
-  return receivedTop;
+  return await getTopById(createdTop.id);
 };
 
 export const updateTop = async (updatedTop: Top): Promise<Top> => {
@@ -123,15 +123,7 @@ export const updateUserTop = async (updatedTop: any): Promise<any> => {
     await getCustomRepository(MovieInTopRepository).save(movieInTop);
   }
 
-  const receivedTop: Top = await getTopById(top.id);
-
-  for (let j = 0; j < receivedTop.movieInTop.length; j++) {
-    const movieInTop: any = receivedTop.movieInTop[j];
-
-    movieInTop.movie = await movieService.getMovieById(movieInTop.movieId);
-  }
-
-  return receivedTop;
+  return await getTopById(top.id);
 };
 
 export const deleteTopById = async (topId: string): Promise<Top> => {

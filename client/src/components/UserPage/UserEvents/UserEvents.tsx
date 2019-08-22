@@ -126,7 +126,7 @@ class UserEvents extends React.Component<IProps, IState> {
 						<div className="event-list-container">
 							{ownEvents.length === 0 ? (
 								<div className="event-show-warning">
-									No events yet. You can craete
+									No events yet. You can create
 								</div>
 							) : (
 								this.renderEventList(ownEvents, deleteEvent)

@@ -13,7 +13,8 @@ import {
 	cancelAvatar,
 	getUsersPosts,
 	setAvatar,
-	uploadAvatar
+	uploadAvatar,
+	saveCropped
 } from './actions';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -36,6 +37,8 @@ interface IProps {
 	userPosts?: any; //todo
 	getUsersPosts: (id: string) => any;
 	selectedProfileInfo: ISelectedProfileInfo;
+	croppedSaved: boolean;
+	saveCropped: () => void;
 }
 
 const UserPageTabs: React.SFC<IProps> = ({
@@ -47,7 +50,9 @@ const UserPageTabs: React.SFC<IProps> = ({
 	setAvatar,
 	userPosts,
 	getUsersPosts,
-	selectedProfileInfo
+	selectedProfileInfo,
+	croppedSaved,
+	saveCropped
 }) => {
 	return selectedProfileInfo ? (
 		<div className={'user-tab-body'}>
@@ -62,6 +67,8 @@ const UserPageTabs: React.SFC<IProps> = ({
 							uploadUrl={uploadUrl}
 							cancelAvatar={cancelAvatar}
 							setAvatar={setAvatar}
+							croppedSaved={croppedSaved}
+							saveCropped={saveCropped}
 						/>
 					)}
 				/>
@@ -71,6 +78,8 @@ const UserPageTabs: React.SFC<IProps> = ({
 						<UserPosts
 							userId={selectedProfileInfo.id}
 							posts={userPosts}
+							saveCropped={saveCropped}
+							croppedSaved={croppedSaved}
 							getUsersPosts={() => getUsersPosts(selectedProfileInfo.id)}
 						/>
 					)}
@@ -87,7 +96,6 @@ const UserPageTabs: React.SFC<IProps> = ({
 								name: selectedProfileInfo.name,
 								image_link: selectedProfileInfo.avatar
 							}}
-							type={'specific'}
 							mainPath={`${mainPath}/surveys`}
 						/>
 					)}
@@ -105,14 +113,16 @@ const mapStateToProps = (rootState, props) => ({
 	profileInfo: rootState.profile.profileInfo,
 	uploadUrl: rootState.profile.uploadUrl,
 	userPosts: rootState.profile.userPosts,
-	selectedProfileInfo: rootState.profile.selectedProfileInfo
+	selectedProfileInfo: rootState.profile.selectedProfileInfo,
+	croppedSaved: rootState.profile.croppedSaved
 });
 
 const actions = {
 	uploadAvatar,
 	cancelAvatar,
 	setAvatar,
-	getUsersPosts
+	getUsersPosts,
+	saveCropped
 };
 
 const mapDispatchToProps = dispatch => bindActionCreators(actions, dispatch);

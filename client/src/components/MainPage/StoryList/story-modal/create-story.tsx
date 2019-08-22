@@ -32,6 +32,8 @@ interface IProps {
 	resetSearch: () => any;
 	saveMovie: (movie: TMovie) => any;
 	isLoading: boolean;
+	photoSaved: boolean;
+	saveAfterCrop: () => void;
 }
 
 class getAddStoryPopupContent extends React.Component<IProps> {
@@ -73,6 +75,8 @@ class getAddStoryPopupContent extends React.Component<IProps> {
 							title={this.props.title}
 							resetSearch={this.props.resetSearch}
 							saveMovie={this.props.saveMovie}
+							photoSaved={this.props.photoSaved}
+							saveAfterCrop={this.props.saveAfterCrop}
 						>
 							{newStory.activity && newStory.activity.name}
 						</PostStoryEditor>

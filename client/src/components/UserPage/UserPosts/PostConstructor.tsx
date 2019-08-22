@@ -8,13 +8,18 @@ import ImageUploader from '../../MainPage/ImageUploader/ImageUploader';
 
 import ChooseExtra from './PostExtra/choose-extra';
 import Extra from '././PostExtra/extra';
-import { faPaperclip } from '@fortawesome/free-solid-svg-icons';
+import {
+	faPaperclip,
+	faCheckCircle,
+	faTimesCircle
+} from '@fortawesome/free-solid-svg-icons';
 
 import { setPost } from '../actions';
 import { fetchPosts } from '../../MainPage/FeedBlock/FeedBlock.redux/actions';
 import { getUsersPosts } from '../../UserPage/actions';
-
+import Cropper from 'react-cropper';
 import { uploadFile } from '../../../services/file.service';
+import config from '../../../config';
 
 interface IPostConstructorProps {
 	userId: string;
@@ -23,6 +28,8 @@ interface IPostConstructorProps {
 	fetchPosts: () => any;
 	userName: string;
 	userAvatar: string;
+	croppedSaved: boolean;
+	saveCropped: () => void;
 }
 
 interface IPostConstructorState {
@@ -33,6 +40,7 @@ interface IPostConstructorState {
 	extraLink: string;
 	extraTitle: string;
 	modalExtra: boolean;
+	croppedSaved: boolean;
 	reactions: Array<any>;
 	comments: Array<any>;
 }
@@ -51,14 +59,19 @@ class PostConstructor extends React.Component<
 			extraLink: '',
 			extraTitle: '',
 			modalExtra: false,
+			croppedSaved: false,
 			reactions: [],
 			comments: []
 		};
 		this.imageStateHandler = this.imageStateHandler.bind(this);
 		this.onSave = this.onSave.bind(this);
+		this.onCancel = this.onCancel.bind(this);
+		this.onSaveCropped = this.onSaveCropped.bind(this);
 		this.setExtraData = this.setExtraData.bind(this);
 		this.toggleModal = this.toggleModal.bind(this);
 	}
+
+	private cropper = React.createRef<Cropper>();
 
 	setExtraData(data) {
 		data
@@ -78,9 +91,10 @@ class PostConstructor extends React.Component<
 		});
 	}
 
-	imageStateHandler(data) {
+	imageStateHandler(data, croppedSaved?: boolean) {
 		this.setState({
-			image_url: data
+			image_url: data,
+			croppedSaved: croppedSaved ? croppedSaved : this.state.croppedSaved
 		});
 	}
 
@@ -99,8 +113,44 @@ class PostConstructor extends React.Component<
 			image_url: '',
 			description: '',
 			extraLink: '',
-			extraTitle: ''
+			extraTitle: '',
+			croppedSaved: false
 		});
+	}
+
+	onCancel() {
+		this.setState({
+			image_url: ''
+		});
+	}
+	onSaveCropped() {
+		if (this.cropper.current) {
+			const dataUrl = this.cropper.current.getCroppedCanvas().toBlob(blob => {
+				const data = new FormData();
+				data.append('file', blob);
+				uploadFile(data)
+					.then(({ imageUrl }) => {
+						if (imageUrl.indexOf('\\') !== -1) {
+							let url = imageUrl.split(`\\`);
+							url.shift();
+							url = url.join('/');
+
+							url = config.API_URL + '/' + url;
+
+							this.imageStateHandler(url, true);
+						} else {
+							let url = imageUrl.split(`/`);
+							url.shift();
+							url = url.join('/');
+
+							url = config.API_URL + '/' + url;
+
+							this.imageStateHandler(url, true);
+						}
+					})
+					.catch(error => {});
+			});
+		}
 	}
 
 	render() {
@@ -147,11 +197,29 @@ class PostConstructor extends React.Component<
 					/>
 				) : null}
 				{this.state.image_url ? (
-					<img
-						className="postconstr-img"
-						src={this.state.image_url}
-						alt="post content"
-					/>
+					!this.state.croppedSaved ? (
+						<div>
+							<Cropper
+								ref={this.cropper}
+								className="postconstr-img"
+								src={this.state.image_url}
+							/>
+							<span onClick={this.onSaveCropped}>
+								<FontAwesomeIcon
+									icon={faCheckCircle}
+									className="fontAwesomeIcon"
+								/>
+							</span>
+							<span onClick={this.onCancel}>
+								<FontAwesomeIcon
+									icon={faTimesCircle}
+									className={'fontAwesomeIcon'}
+								/>
+							</span>
+						</div>
+					) : (
+						<img className="postconstr-img" src={this.state.image_url} />
+					)
 				) : null}
 				<div className="save-wrp">
 					<button className="save-btn" onClick={this.onSave}>

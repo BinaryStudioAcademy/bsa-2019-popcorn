@@ -6,6 +6,7 @@ export class Top {
   title: string;
   description: string;
   topImageUrl: string;
+  created_at: Date;
   userId: string;
   user: User;
   genreId: string;

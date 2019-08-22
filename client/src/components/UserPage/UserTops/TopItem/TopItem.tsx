@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { NavLink } from 'react-router-dom';
 import './TopItem.scss';
 import { ReactComponent as CloseIcon } from '../../../../assets/icons/general/closeIcon.svg';
 import TopConstructor from './TopConstructor/TopConstructor';
@@ -14,6 +15,9 @@ interface ITopItemProps {
 	uploadImage: (data: any, titleId: string) => void;
 	uploadUrl: string;
 	urlForTop: string;
+	history?: {
+		push: (path: string) => any;
+	};
 }
 
 const TopItem: React.FC<ITopItemProps> = ({
@@ -23,7 +27,8 @@ const TopItem: React.FC<ITopItemProps> = ({
 	deleteTop,
 	uploadImage,
 	uploadUrl,
-	urlForTop
+	urlForTop,
+	history
 }) => {
 	const [editTop, canEditTop] = useState(topItem.isNewTop || false);
 	const [title, setTitle] = useState(topItem.title);
@@ -56,8 +61,23 @@ const TopItem: React.FC<ITopItemProps> = ({
 		else console.log('no uploadImage method');
 	}
 
+	function goToTop(e) {
+		if (
+			editTop ||
+			(e.target.classList.contains('edit-top') ||
+				e.target.classList.contains('delete-top') ||
+				e.target.classList.contains('close-icon'))
+		) {
+			e.preventDefault();
+		}
+	}
+
 	return (
-		<div>
+		<NavLink
+			to={`/top-page/${topItem.id}`}
+			onClick={goToTop}
+			className="link-reset"
+		>
 			<div className="top-item">
 				{editTop || topItem.moviesList.length === 0 ? (
 					<input
@@ -93,7 +113,7 @@ const TopItem: React.FC<ITopItemProps> = ({
 				)}
 				{isOwnTop && (
 					<div className="delete-top hover" onClick={() => deleteTop(topItem)}>
-						<CloseIcon />
+						<CloseIcon className="close-icon" />
 					</div>
 				)}
 				<img className="image-top" src={topImageUrl} alt="" />
@@ -101,7 +121,7 @@ const TopItem: React.FC<ITopItemProps> = ({
 			{(editTop || topItem.moviesList.length === 0) && (
 				<TopConstructor moviesList={topItem.moviesList} saveTop={saveTop} />
 			)}
-		</div>
+		</NavLink>
 	);
 };
 

@@ -4,9 +4,8 @@ import {
 	CREATE_REACTION,
 	FETCH_POSTS,
 	SET_POSTS,
-  DELETE_POST
+	DELETE_POST
 } from './actionTypes';
-
 
 import webApi from '../../../../services/webApi.service';
 import config from '../../../../config';
@@ -29,7 +28,6 @@ export function* fetchPosts(action) {
 		console.log('feed saga fetch posts: ', e.message);
 	}
 }
-
 
 export function* createComment(action) {
 	const { userId, text, postId } = action.payload;
@@ -100,5 +98,10 @@ function* watchDeletePost() {
 	yield takeEvery(DELETE_POST, deletePost);
 }
 export default function* feed() {
-	yield all([watchFetch(), watchCreateComment(), watchCreateReaction(), watchDeletePost()]);
+	yield all([
+		watchFetch(),
+		watchCreateComment(),
+		watchCreateReaction(),
+		watchDeletePost()
+	]);
 }

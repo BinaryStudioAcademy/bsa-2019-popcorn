@@ -12,6 +12,7 @@ import EventPage from '../../components/EventPage/EventPage';
 import EventList from '../../components/EventPage/EventList';
 import AdminPanelPage from '../../components/AdminPanelPage/AdminPanelPage';
 import SurveyPage from '../../components/SurveyPage/SurveyPage';
+import TopPage from '../../components/TopPage/TopPage';
 
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
@@ -95,7 +96,6 @@ const allSurveysRender = props => {
 			id={props.id}
 			userInfo={props}
 			mainPath={'/surveys-list/'}
-			type="all"
 		/>
 	);
 };
@@ -172,6 +172,7 @@ const Main = ({
 							render={() => allSurveysRender(userInfo)}
 						></Route>
 						<Route path={`/movie-tops`} render={() => <TopList />} />
+						<Route path={`/top-page/:id`} component={TopPage} />
 						<Route path={`/*`} exact component={NotFound} />
 					</Switch>
 				</div>
