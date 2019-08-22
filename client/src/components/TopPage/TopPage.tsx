@@ -4,8 +4,10 @@ import { bindActionCreators } from 'redux';
 import { fetchTop } from './TopPage.redux/actions';
 import Spinner from '../shared/Spinner';
 import { convertServerDataFormatToClient } from './TopPage.service';
-import TopPageTop from './TopPageTop';
-import TopPageMovie from './TopPageMovie';
+import TopPageTop from './TopPageTop/TopPageTop';
+import TopPageMovie from './TopPageMovie/TopPageMovie';
+
+import './TopPage.scss';
 
 interface ITopProps {
 	match: {
@@ -21,14 +23,11 @@ const TopPage: React.SFC<ITopProps> = ({
     top,
     fetchTop
 }) => {
-
     if (!top) {
         fetchTop(match.params.id);
         return <Spinner />
     }
-    
     top = convertServerDataFormatToClient(top);
-    console.log(top);
 
     return (
         <div className="top-page">
@@ -51,7 +50,6 @@ const TopPage: React.SFC<ITopProps> = ({
 
 const mapStateToProps = (rootState, props) => ({
 	...props,
-    // top: rootState.userTops.topList
     top: rootState.top.top
 });
 
