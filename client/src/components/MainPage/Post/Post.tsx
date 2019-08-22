@@ -40,7 +40,6 @@ interface IReactItem {
 interface IPostState {
 	isModalShown: boolean;
 	hover: boolean;
-	post: IPost;
 }
 
 class Post extends Component<IPostProps, IPostState> {
@@ -48,18 +47,8 @@ class Post extends Component<IPostProps, IPostState> {
 		super(props);
 		this.state = {
 			isModalShown: false,
-			hover: false,
-			post: props.post
+			hover: false
 		};
-	}
-
-	componentDidUpdate(
-		prevProps: Readonly<IPostProps>,
-		prevState: Readonly<IPostState>,
-		snapshot?: any
-	): void {
-		if (JSON.stringify(prevProps.post) !== JSON.stringify(this.props.post))
-			this.setState({ post: this.props.post });
 	}
 
 	MouseEnterLikeButton = () => {
@@ -120,8 +109,6 @@ class Post extends Component<IPostProps, IPostState> {
 		: this.props.post.comments;
 
 	render() {
-		// if(JSON.stringify(this.state.post) !== JSON.stringify(this.props.post))
-
 		const {
 			id,
 			user,
@@ -131,7 +118,7 @@ class Post extends Component<IPostProps, IPostState> {
 			content,
 			comments,
 			tags
-		} = this.state.post;
+		} = this.props.post;
 		const createComment = this.props.createComment;
 
 		const reactionsShow = this.state.hover ? (
@@ -233,20 +220,4 @@ class Post extends Component<IPostProps, IPostState> {
 	}
 }
 
-const mapStateToProps = (rootState, props) => ({
-	...props,
-	userId: rootState.profile.profileInfo.id,
-	userRole: rootState.profile.profileInfo.role
-});
-
-const actions = {
-	createReaction,
-	addNewReaction
-};
-
-const mapDispatchToProps = dispatch => bindActionCreators(actions, dispatch);
-
-export default connect(
-	mapStateToProps,
-	mapDispatchToProps
-)(Post);
+export default Post;

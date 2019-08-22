@@ -50,7 +50,6 @@ export const createReaction = (
 };
 
 export const addNewReaction = (reactions: Array<IReaction>, postId: string) => {
-	console.log(reactions, postId);
 	return {
 		type: ADD_NEW_REACTION,
 		payload: {

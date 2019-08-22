@@ -54,7 +54,8 @@ export function* createReaction(action) {
 				userId,
 				type,
 				postId
-			}
+			},
+			parse: false
 		});
 	} catch (e) {
 		console.log('createReaction: ', e.message);

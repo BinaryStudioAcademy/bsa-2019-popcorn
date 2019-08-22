@@ -4,6 +4,13 @@ import { ReactComponent as FeedIcon } from '../../../assets/icons/general/newsFe
 import './PostList.scss';
 import IComment from '../Post/IComment';
 import IPost from '../Post/IPost';
+import {
+	addNewReaction,
+	createReaction
+} from '../FeedBlock/FeedBlock.redux/actions';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import IReaction from '../Post/IReaction';
 
 interface IProps {
 	posts: Array<IPost>;
@@ -11,6 +18,10 @@ interface IProps {
 	styleCustom?: any;
 	createComment?: (userId: string, text: string, postId: string) => any;
 	addNewComment?: (comment: IComment) => any;
+	userId: string;
+	userRole: string;
+	createReaction?: (type: string, userId: string, postId: string) => any;
+	addNewReaction?: (reaction: IReaction) => any;
 }
 
 const PostList = (props: IProps) => {
@@ -28,12 +39,31 @@ const PostList = (props: IProps) => {
 						key={post.id}
 						post={post}
 						createComment={props.createComment}
+						createReaction={props.createReaction}
 						addNewComment={props.addNewComment}
+						addNewReaction={props.addNewReaction}
+						userId={props.userId}
+						userRole={props.userRole}
 					/>
 				);
 			})}
 		</div>
 	);
 };
+const mapStateToProps = (rootState, props) => ({
+	...props,
+	userId: rootState.profile.profileInfo.id,
+	userRole: rootState.profile.profileInfo.role
+});
 
-export default PostList;
+const actions = {
+	createReaction,
+	addNewReaction
+};
+
+const mapDispatchToProps = dispatch => bindActionCreators(actions, dispatch);
+
+export default connect(
+	mapStateToProps,
+	mapDispatchToProps
+)(PostList);

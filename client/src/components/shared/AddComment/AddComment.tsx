@@ -8,13 +8,15 @@ interface IAddCommentProps {
 	createComment?: (text: string) => any;
 }
 
-class AddComment extends React.Component<IAddCommentProps> {
+class AddComment extends React.Component<IAddCommentProps, { body: string }> {
 	constructor(props: IAddCommentProps) {
 		super(props);
 	}
+
 	state = {
 		body: ''
 	};
+
 	render() {
 		/*  UI: Change this.props.replyId to userName */
 		return (
@@ -32,14 +34,16 @@ class AddComment extends React.Component<IAddCommentProps> {
 							? `Reply to ${this.props.replyId}`
 							: 'Write something...'
 					}
+					value={this.state.body}
 					onChange={e => this.setState({ body: e.target.value })}
 				/>
 				<button
 					className="publish-button"
-					onClick={() =>
-						this.props.createComment &&
-						this.props.createComment(this.state.body)
-					}
+					onClick={() => {
+						if (!this.props.createComment) return;
+						this.props.createComment(this.state.body);
+						this.setState({ body: '' });
+					}}
 				>
 					<FontAwesomeIcon icon={faCommentAlt} />
 				</button>
