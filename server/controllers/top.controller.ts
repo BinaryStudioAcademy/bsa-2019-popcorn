@@ -15,7 +15,7 @@ router
 
   .get("/extended", (req: Request, res: Response, next: NextFunction) =>
     topService
-      .getTopsWithMovies()
+      .getExtendedTops()
       .then((tops: Top[]) => res.send(tops))
       .catch(next)
   )

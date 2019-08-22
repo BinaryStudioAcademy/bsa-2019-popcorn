@@ -24,10 +24,12 @@ const getTopWithMovies = async (tops: any) => {
 export const getTops = async (): Promise<Top[]> =>
   await getCustomRepository(TopRepository).find();
 
-export const getTopsWithMovies = async (): Promise<Top[]> =>
-  await getCustomRepository(TopRepository).find({
-    relations: ["movieInTop"]
+export const getExtendedTops = async (): Promise<Top[]> => {
+  const tops = await getCustomRepository(TopRepository).find({
+    relations: ["movieInTop", "user"]
   });
+  return await getTopWithMovies(tops);
+};
 
 export const getTopById = async (topId: string): Promise<Top> =>
   await getCustomRepository(TopRepository).findOne({
