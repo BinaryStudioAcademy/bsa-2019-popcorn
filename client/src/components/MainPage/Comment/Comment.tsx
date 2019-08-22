@@ -49,8 +49,8 @@ class Comment extends Component<ICommentProps, ICommentState> {
 						{comment.parentId && <i> {comment.parentId}, </i>} {comment.text}
 					</p>
 					<p className="comment-date">{comment.commentDate} </p>
-					<button onClick={this.toggleCommentModal}>Reply</button>
-					{this.isCommentModalShown(comment.id)}
+					{/*<button onClick={this.toggleCommentModal}>Reply</button>*/}
+					{/*{this.isCommentModalShown(comment.id)}*/}
 				</div>
 				{/*{nestedComments}*/}
 			</div>

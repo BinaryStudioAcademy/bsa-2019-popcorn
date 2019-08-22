@@ -28,6 +28,7 @@ import {
 import CreateStoryFilm from './story-modal/create-story-film';
 
 interface IStoryListItem {
+	id: string;
 	caption: string;
 	image_url: string;
 	user: {

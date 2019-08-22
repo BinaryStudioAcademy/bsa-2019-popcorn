@@ -23,11 +23,10 @@ const PostList = (props: IProps) => {
 				</div>
 			)}
 			{props.posts.map(post => {
-				console.log(post);
 				return (
 					<Post
 						key={post.id}
-						post={{ ...post }}
+						post={post}
 						createComment={props.createComment}
 						addNewComment={props.addNewComment}
 					/>

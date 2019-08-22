@@ -36,7 +36,8 @@ export function* createComment(action) {
 				userId,
 				text,
 				postId
-			}
+			},
+			parse: false
 		});
 	} catch (e) {
 		console.log('createComment: ', e.message);

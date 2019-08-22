@@ -1,4 +1,4 @@
-import React, { PureComponent } from 'react';
+import React, { Component } from 'react';
 import AddComment from '../../shared/AddComment/AddComment';
 import './Post.scss';
 import { ReactComponent as SettingIcon } from '../../../assets/icons/general/settings.svg';
@@ -40,15 +40,26 @@ interface IReactItem {
 interface IPostState {
 	isModalShown: boolean;
 	hover: boolean;
+	post: IPost;
 }
 
-class Post extends PureComponent<IPostProps, IPostState> {
+class Post extends Component<IPostProps, IPostState> {
 	constructor(props: IPostProps) {
 		super(props);
 		this.state = {
 			isModalShown: false,
-			hover: false
+			hover: false,
+			post: props.post
 		};
+	}
+
+	componentDidUpdate(
+		prevProps: Readonly<IPostProps>,
+		prevState: Readonly<IPostState>,
+		snapshot?: any
+	): void {
+		if (JSON.stringify(prevProps.post) !== JSON.stringify(this.props.post))
+			this.setState({ post: this.props.post });
 	}
 
 	MouseEnterLikeButton = () => {
@@ -109,7 +120,8 @@ class Post extends PureComponent<IPostProps, IPostState> {
 		: this.props.post.comments;
 
 	render() {
-		console.log(this.props.post);
+		// if(JSON.stringify(this.state.post) !== JSON.stringify(this.props.post))
+
 		const {
 			id,
 			user,
@@ -119,7 +131,7 @@ class Post extends PureComponent<IPostProps, IPostState> {
 			content,
 			comments,
 			tags
-		} = this.props.post;
+		} = this.state.post;
 		const createComment = this.props.createComment;
 
 		const reactionsShow = this.state.hover ? (
@@ -184,6 +196,13 @@ class Post extends PureComponent<IPostProps, IPostState> {
 						/>
 					))}
 				</div>
+				{comments ? (
+					<div>
+						{comments.map(comment => (
+							<Comment key={comment.id} commentItem={comment} />
+						))}
+					</div>
+				) : null}
 				{tags && (
 					<div>
 						<div className="horizontal-stroke" />
@@ -204,13 +223,6 @@ class Post extends PureComponent<IPostProps, IPostState> {
 				{/*		))}*/}
 				{/*	</div>*/}
 				{/*)}*/}
-				{comments ? (
-					<div>
-						{comments.map(comment => (
-							<Comment key={comment.id} commentItem={comment} />
-						))}
-					</div>
-				) : null}
 				<AddComment
 					createComment={text => {
 						createComment && createComment(this.props.userId, text, id);
