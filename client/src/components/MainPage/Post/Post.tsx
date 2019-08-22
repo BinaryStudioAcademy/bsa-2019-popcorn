@@ -34,8 +34,9 @@ type IPostProps = {
 	addNewComment?: (comment: IComment) => any;
 	createReaction?: (type: string, userId: string, postId: string) => any;
 	addNewReaction?: (reaction: IReaction) => any;
-  deletePost: (id: string) => any;
+  deletePost: (id: string, userId: string) => any;deletePost: (id: string, userId: string) => any;
 }
+
 
 interface IReactItem {
 	name: string;
@@ -73,7 +74,7 @@ class Post extends Component<IPostProps, IPostState> {
 	};
 
 	deletePost = () => {
-		this.props.deletePost(this.props.post.id);
+		this.props.deletePost(this.props.post.id, this.props.userId);
 	};
 
 	isOwnPost() {

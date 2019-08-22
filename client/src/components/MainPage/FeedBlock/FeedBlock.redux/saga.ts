@@ -10,6 +10,7 @@ import {
 
 import webApi from '../../../../services/webApi.service';
 import config from '../../../../config';
+import { USER_POSTS } from '../../../UserPage/actionTypes';
 
 export function* fetchPosts(action) {
 	try {
@@ -71,6 +72,11 @@ export function* deletePost(action) {
 		yield call(webApi, {
 			method: 'DELETE',
 			endpoint: config.API_URL + '/api/post/' + action.payload.id
+		});
+
+		yield put({
+			type: USER_POSTS,
+			payload: { id: action.payload.userId }
 		});
 
 		yield put({ type: FETCH_POSTS });
