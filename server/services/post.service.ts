@@ -67,12 +67,17 @@ export const createReaction = async ({ userId, postId, type }) => {
     id: postId
   });
   if (!user || !post) throw new Error("Not Found");
-  await getCustomRepository(PostReactionsRepository).save({
-    id: uuid(),
-    user,
-    post,
-    type
-  });
+  const postReactionRepository = await getCustomRepository(
+    PostReactionsRepository
+  );
+  if (!(await postReactionRepository.findOne({ user, post, type })))
+    await getCustomRepository(PostReactionsRepository).save({
+      id: uuid(),
+      user,
+      post,
+      type
+    });
+  else await postReactionRepository.delete({ user, post, type });
   return { postId, reactions: await getReactions(post) };
 };
 

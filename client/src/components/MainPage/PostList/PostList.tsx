@@ -22,13 +22,17 @@ const PostList = (props: IProps) => {
 					<span>News feed</span>
 				</div>
 			)}
-			{props.posts.map(post => (
-				<Post
-					post={post}
-					createComment={props.createComment}
-					addNewComment={props.addNewComment}
-				/>
-			))}
+			{props.posts.map(post => {
+				console.log(post);
+				return (
+					<Post
+						key={post.id}
+						post={{ ...post }}
+						createComment={props.createComment}
+						addNewComment={props.addNewComment}
+					/>
+				);
+			})}
 		</div>
 	);
 };

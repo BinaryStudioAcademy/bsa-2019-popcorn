@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import './Comment.scss';
 import AddComment from '../../shared/AddComment/AddComment';
 import IComment from '../Post/IComment';
+import config from '../../../config';
 
 type ICommentProps = {
 	commentItem: IComment;
@@ -38,6 +39,11 @@ class Comment extends Component<ICommentProps, ICommentState> {
 							: 'comment-item'
 					}
 				>
+					<img
+						className="post-item-avatar"
+						src={(comment.user && comment.user.avatar) || config.DEFAULT_AVATAR}
+						alt="author"
+					/>
 					<p className="comment-text">
 						<strong>{comment.user.name}</strong>
 						{comment.parentId && <i> {comment.parentId}, </i>} {comment.text}

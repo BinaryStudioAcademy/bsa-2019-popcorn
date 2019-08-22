@@ -7,7 +7,6 @@ export default interface IPost {
 		name: string;
 		avatar: string;
 		id: string;
-		any;
 	};
 	created_At?: string;
 	image_url: string;

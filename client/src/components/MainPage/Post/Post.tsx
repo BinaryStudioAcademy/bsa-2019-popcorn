@@ -60,7 +60,6 @@ class Post extends PureComponent<IPostProps, IPostState> {
 	};
 
 	onReactionClick = (reaction: IReactItem) => {
-		console.log(reaction);
 		if (this.props.createReaction)
 			this.props.createReaction(
 				reaction.name,
@@ -110,6 +109,7 @@ class Post extends PureComponent<IPostProps, IPostState> {
 		: this.props.post.comments;
 
 	render() {
+		console.log(this.props.post);
 		const {
 			id,
 			user,
@@ -204,13 +204,13 @@ class Post extends PureComponent<IPostProps, IPostState> {
 				{/*		))}*/}
 				{/*	</div>*/}
 				{/*)}*/}
-				{comments && (
+				{comments ? (
 					<div>
 						{comments.map(comment => (
-							<Comment commentItem={comment} />
+							<Comment key={comment.id} commentItem={comment} />
 						))}
 					</div>
-				)}
+				) : null}
 				<AddComment
 					createComment={text => {
 						createComment && createComment(this.props.userId, text, id);
