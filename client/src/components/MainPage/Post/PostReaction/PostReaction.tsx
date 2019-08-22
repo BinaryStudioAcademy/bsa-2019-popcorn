@@ -7,10 +7,12 @@ import { ReactComponent as AngryIcon } from '../../../../assets/icons/reactions/
 import { ReactComponent as HahaIcon } from '../../../../assets/icons/reactions/haha.svg';
 import { ReactComponent as WowIcon } from '../../../../assets/icons/reactions/wow.svg';
 import { ReactComponent as SadIcon } from '../../../../assets/icons/reactions/sad.svg';
+import IReaction from '../IReaction';
 
 interface IReactItemProps {
 	name: string;
 	quantity: number;
+	onReactionClick: (reaction: { name: string }) => any;
 }
 
 class PostReaction extends Component<IReactItemProps> {
@@ -33,10 +35,13 @@ class PostReaction extends Component<IReactItemProps> {
 		}
 	};
 	render() {
-		const { name, quantity } = this.props;
+		const { name, quantity, onReactionClick } = this.props;
 		const icon = this.getIcon(name);
 		return (
-			<div className="post-reaction-wrapper">
+			<div
+				className="post-reaction-wrapper"
+				onClick={() => onReactionClick({ name })}
+			>
 				{icon}
 				<div>{quantity}</div>
 			</div>

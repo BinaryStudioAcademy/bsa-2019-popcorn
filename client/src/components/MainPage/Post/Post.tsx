@@ -16,7 +16,6 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import IPost from './IPost';
 import IComment from './IComment';
-import SocketService from '../../../services/socket.service';
 import {
 	addNewReaction,
 	createReaction
@@ -35,7 +34,6 @@ type IPostProps = {
 };
 
 interface IReactItem {
-	id: number;
 	name: string;
 }
 
@@ -68,15 +66,6 @@ class Post extends PureComponent<IPostProps, IPostState> {
 				this.props.userId,
 				this.props.post.id
 			);
-		// тут же в конструкторе написать обработчик на новую реакцию
-		// const reactionList = this.state.reactionList;
-		//
-		// if (reactionList.findIndex(item => item.id === reaction.id) != -1) {
-		//     return;
-		// }
-		//
-		// reactionList.push(reaction);
-		// this.setState({reactionList});
 	};
 
 	isOwnPost() {
@@ -188,7 +177,12 @@ class Post extends PureComponent<IPostProps, IPostState> {
 				</div>
 				<div className="reaction-list">
 					{this.props.post.reactions.map((item, index) => (
-						<PostReaction key={index} quantity={1} name={item.type} />
+						<PostReaction
+							key={index}
+							quantity={1}
+							name={item.type}
+							onReactionClick={this.onReactionClick}
+						/>
 					))}
 				</div>
 				{tags && (
