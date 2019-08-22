@@ -4,6 +4,8 @@ import UserRepository from "../repository/user.repository";
 import { getCustomRepository } from "typeorm";
 import PostCommentsRepository from "../repository/postComments.repository";
 import { PostCommentsModel } from "../models/PostCommentsModel";
+import { PostReactions } from "../models/PostReactionsModel";
+import PostReactionsRepository from "../repository/postReactions.repository";
 const uuid = require("uuid/v4");
 
 export const createPost = async (post: any): Promise<Post> => {
@@ -18,8 +20,10 @@ export const getPosts = async (): Promise<any[]> => {
   });
   return Promise.all(
     posts.map(async post => {
-      post.comments = await getComments(post);
-      return post;
+      const Post: any = { ...post };
+      Post.comments = await getComments(post);
+      Post.reactions = await getReactions(post);
+      return Post;
     })
   );
 };
@@ -55,8 +59,29 @@ export const createComment = async ({ userId, postId, text }) => {
   });
 };
 
+export const createReaction = async ({ userId, postId, type }) => {
+  const user = await getCustomRepository(UserRepository).findOne({
+    id: userId
+  });
+  const post = await getCustomRepository(PostRepository).findOne({
+    id: postId
+  });
+  if (!user || !post) throw new Error("Not Found");
+  return getCustomRepository(PostReactionsRepository).save({
+    id: uuid(),
+    user,
+    post,
+    type
+  });
+};
+
 export const getComments = async (post: Post): Promise<PostCommentsModel[]> =>
   await getCustomRepository(PostCommentsRepository).find({
     where: { post },
     relations: ["user"]
+  });
+
+export const getReactions = async (post: Post): Promise<PostReactions[]> =>
+  await getCustomRepository(PostReactionsRepository).find({
+    where: { post }
   });

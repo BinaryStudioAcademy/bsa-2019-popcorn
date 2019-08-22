@@ -43,6 +43,15 @@ router
         res.send();
       })
       .catch(next);
+  })
+  .post("/reaction", (req: Request & { io: any }, res, next) => {
+    postService
+      .createReaction(req.body)
+      .then(reaction => {
+        req.io.emit("new-reaction", { reaction });
+        res.send();
+      })
+      .catch(next);
   });
 
 export default router;
