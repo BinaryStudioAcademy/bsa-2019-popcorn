@@ -5,6 +5,14 @@ import EventVisitorRepository from "./eventVisitor.repository";
 
 @EntityRepository(Event)
 class EventRepository extends Repository<Event> {
+  async getAllEvents(): Promise<Event[]> {
+    return await getRepository(Event)
+      .createQueryBuilder("event")
+      .leftJoinAndSelect("event.eventComments", "comments")
+      .leftJoinAndSelect("event.eventVisitors", "visitors")
+      .getMany();
+  }
+
   async getEvent(eventId: string): Promise<Event> {
     return await getRepository(Event)
       .createQueryBuilder("event")

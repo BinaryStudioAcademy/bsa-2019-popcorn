@@ -61,10 +61,21 @@ class SurveysRepository extends Repository<Surveys> {
 
   async getSurveysById(id: string, next?) {
     try {
-      const surveys = await this.findOne(id);
-      if (!surveys)
-        return next({ status: 404, message: "Surveys is not found" }, null);
-      return await this.findOne(id);
+      const surveys = await this.findOne(
+        { id },
+        {
+          relations: [
+            "surveysQuestion",
+            "surveysQuestion.surveysQuestionOption",
+            "surveysQuestion.surveysQuestionAnswer",
+            "surveysQuestion.surveysQuestionAnswer.user",
+            "surveysQuestion.surveysQuestionAnswer.surveysQuestionOption",
+            "user"
+          ]
+        }
+      );
+      if (!surveys) return { status: 404, message: "Surveys is not found" };
+      return surveys;
     } catch (err) {
       return next({ status: err.status, message: err.message }, null);
     }

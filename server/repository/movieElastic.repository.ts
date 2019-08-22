@@ -35,7 +35,6 @@ export const getById = async (id: string) => {
 };
 
 export const getByTitle = async (title: string) => {
-  console.log("tit", title);
   const response = await fetch(
     process.env.ELASTIC_API_URL + "/popcorn/_search",
     {
