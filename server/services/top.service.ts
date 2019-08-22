@@ -127,7 +127,7 @@ export const updateUserTop = async (updatedTop: any): Promise<any> => {
   return receivedTop;
 };
 
-export const deleteTopById = async (topId: number): Promise<Top> => {
+export const deleteTopById = async (topId: string): Promise<Top> => {
   const top = await getCustomRepository(TopRepository).findOne(topId);
   return await getCustomRepository(TopRepository).remove(top);
 };
