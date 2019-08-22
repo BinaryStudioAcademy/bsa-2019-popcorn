@@ -20,7 +20,7 @@ class UserReviews extends React.Component<IProps> {
 
 	render() {
 		const { reviewUserList, currentUserId, loading } = this.props;
-		console.log(this.props);
+
 		return (
 			<div className="MovieSeriesReviews">
 				{loading ? (
