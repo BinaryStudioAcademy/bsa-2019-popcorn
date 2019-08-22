@@ -55,11 +55,6 @@ export function* deleteRevievById(action) {
 			endpoint: `${config.API_URL}/api/review/${reviewId}`,
 			method: 'DELETE'
 		});
-
-		// yield put({
-		// 	type: DELETE_REVIEW_BY_ID,
-		// 	payload: { reviewId }
-		//  });
 	} catch (e) {
 		console.log(e);
 	}

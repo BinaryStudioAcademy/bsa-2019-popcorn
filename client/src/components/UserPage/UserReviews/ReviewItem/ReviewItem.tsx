@@ -4,6 +4,7 @@ import Image from '../../../shared/Image/Image';
 import { ReactComponent as CloseIcon } from '../../../../assets/icons/general/closeIcon.svg';
 import { IReview } from '../UserReviews';
 import config from '../../../../config';
+import ReviewAddModal from '../../../MovieSeriesPage/MovieSeriesReviews/ReviewAddModal/ReviewAddModal';
 import Moment from 'react-moment';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronUp, faChevronDown } from '@fortawesome/free-solid-svg-icons';
@@ -12,19 +13,23 @@ import { NavLink } from 'react-router-dom';
 interface IProps {
 	review: IReview;
 	deleteReview: (reviewId: string) => object;
+	setReview: any;
+	removeReviewSet: any;
 }
 
 interface IState {
 	showFullReview: boolean;
 	textBlockHeight: string;
 	isBigBlock: boolean;
+	showModal: boolean;
 }
 
 class ReviewItem extends React.Component<IProps> {
 	state: IState = {
 		showFullReview: false,
 		textBlockHeight: 'auto',
-		isBigBlock: false
+		isBigBlock: false,
+		showModal: false
 	};
 
 	public divRef = React.createRef();
@@ -58,18 +63,41 @@ class ReviewItem extends React.Component<IProps> {
 		);
 	};
 
+	setModal = (isSetModal: boolean) => {
+		this.setState({ ...this.state, showModal: !this.state.showModal });
+	};
+
 	render() {
 		const {
 			movie: { poster_path, title, release_date, id: movieId },
 			created_at,
 			text,
-			id: reviewId
+			id: reviewId,
+			movie,
+			user: { id: userId }
 		} = this.props.review;
+		const { review, setReview, removeReviewSet } = this.props;
 		const { deleteReview } = this.props;
-		const { isBigBlock, showFullReview, textBlockHeight } = this.state;
+		const {
+			isBigBlock,
+			showFullReview,
+			textBlockHeight,
+			showModal
+		} = this.state;
 
 		return (
 			<div className="review-user-item-wrapper">
+				{showModal && (
+					<ReviewAddModal
+						ownReview={review!}
+						movie={movie}
+						userId={userId}
+						movieId={movieId}
+						setModal={show => this.setModal(show)}
+						setReview={setReview}
+						removeReviewSet={removeReviewSet}
+					/>
+				)}
 				<div className="review-user-item">
 					<NavLink to={'/movie-series/' + movieId}>
 						<div className="image-wrapper">
@@ -96,7 +124,14 @@ class ReviewItem extends React.Component<IProps> {
 								</div>
 							</NavLink>
 							<div className="review-buttons">
-								<button className="edit-button">Edit</button>
+								<button
+									className="edit-button"
+									onClick={() =>
+										this.setState({ ...this.state, showModal: true })
+									}
+								>
+									Edit
+								</button>
 								<button
 									className="delete-button"
 									onClick={() => deleteReview(reviewId)}

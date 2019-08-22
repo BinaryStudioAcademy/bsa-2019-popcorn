@@ -2,6 +2,10 @@ import React from 'react';
 import { connect } from 'react-redux';
 import './UserReviews.scss';
 import { fetchUserReviews, deleteReviewById } from './actions';
+import {
+	setReview,
+	removeReviewSet
+} from '../../MovieSeriesPage/Movie.redux/actions';
 import { bindActionCreators } from 'redux';
 import Spinner from '../../shared/Spinner';
 import ReviewItem from './ReviewItem/ReviewItem';
@@ -14,6 +18,8 @@ interface IProps {
 	deleteReviewById: (reviewId: string) => object;
 	currentUserId: string;
 	loading: boolean;
+	setReview: any;
+	removeReviewSet: any;
 }
 
 export interface IReview {
@@ -35,9 +41,10 @@ class UserReviews extends React.Component<IProps> {
 			reviewUserList,
 			currentUserId,
 			loading,
-			deleteReviewById
+			deleteReviewById,
+			setReview,
+			removeReviewSet
 		} = this.props;
-
 		return (
 			<div className="UserReviews">
 				{loading ? (
@@ -53,6 +60,8 @@ class UserReviews extends React.Component<IProps> {
 										review={item}
 										key={item.id}
 										deleteReview={deleteReviewById}
+										setReview={setReview}
+										removeReviewSet={removeReviewSet}
 									/>
 								);
 							})
@@ -73,7 +82,9 @@ const mapStateToProps = (rootState, props) => ({
 
 const actions = {
 	fetchUserReviews,
-	deleteReviewById
+	deleteReviewById,
+	setReview,
+	removeReviewSet
 };
 
 const mapDispatchToProps = dispatch => bindActionCreators(actions, dispatch);
