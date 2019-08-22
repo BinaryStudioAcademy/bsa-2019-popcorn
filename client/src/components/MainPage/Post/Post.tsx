@@ -51,7 +51,7 @@ type IPostProps = {
 	};
 	userId: string;
 	userRole: string;
-	deletePost: (id: string) => any;
+	deletePost: (id: string, userId: string) => any;
 };
 interface IReactItem {
 	id: number;
@@ -92,7 +92,7 @@ class Post extends PureComponent<IPostProps, IPostState> {
 	};
 
 	deletePost = () => {
-		this.props.deletePost(this.props.post.id);
+		this.props.deletePost(this.props.post.id, this.props.userId);
 	};
 
 	isOwnPost() {

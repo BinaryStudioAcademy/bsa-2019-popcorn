@@ -6,11 +6,12 @@ export const fetchPosts = () => {
 	};
 };
 
-export const deletePost = id => {
+export const deletePost = (id, userId) => {
 	return {
 		type: DELETE_POST,
 		payload: {
-			id
+			id,
+			userId
 		}
 	};
 };
