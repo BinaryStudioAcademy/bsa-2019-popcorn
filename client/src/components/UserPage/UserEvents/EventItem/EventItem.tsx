@@ -14,12 +14,17 @@ import config from '../../../../config';
 
 interface IProps {
 	event: IEventFormatClient;
-	deleteEvent: null | ((id: string, currentUserId: string) => any);
-	editEvent: null | ((event: IEventFormatClient) => any);
+	deleteEvent?: null | ((id: string, currentUserId: string) => any);
+	editEvent?: null | ((event: IEventFormatClient) => any);
 	isOwnEvent: boolean;
 }
 
-const EventItem: React.FC<IProps> = ({ event, deleteEvent, editEvent, isOwnEvent }) => {
+const EventItem: React.FC<IProps> = ({
+	event,
+	deleteEvent,
+	editEvent,
+	isOwnEvent
+}) => {
 	const {
 		id,
 		userId: currentUserId,
@@ -33,7 +38,7 @@ const EventItem: React.FC<IProps> = ({ event, deleteEvent, editEvent, isOwnEvent
 	} = event;
 
 	return (
-		<div className="event-item">
+		<div className="event-item hover">
 			<div className="event-wrapper">
 				<div className="event-left">
 					<div className="event-image-wrapper">
@@ -69,27 +74,33 @@ const EventItem: React.FC<IProps> = ({ event, deleteEvent, editEvent, isOwnEvent
 							<Moment format=" D MMM HH:mm " local>
 								{String(dateRange.startDate)}
 							</Moment>
-							-
-							<Moment format=" D MMM HH:mm " local>
-								{String(dateRange.endDate)}
-							</Moment>
+							{dateRange.endDate && (
+								<span>
+									{' '}
+									-
+									<Moment format=" D MMM HH:mm " local>
+										{String(dateRange.endDate)}
+									</Moment>
+								</span>
+							)}
 						</div>
-						{isOwnEvent && (deleteEvent && editEvent !== null ? (
-							<div className="event-buttons">
-								<button
-									className="edit-button"
-									onClick={() => editEvent(event)}
-								>
-									Edit
-								</button>
-								<button
-									className="delete-button"
-									onClick={() => deleteEvent(id, currentUserId)}
-								>
-									<CloseIcon className="delete-button-svg" />
-								</button>
-							</div>
-						) : null)}
+						{isOwnEvent &&
+							(deleteEvent && editEvent && (
+								<div className="event-buttons">
+									<button
+										className="edit-button"
+										onClick={() => editEvent(event)}
+									>
+										Edit
+									</button>
+									<button
+										className="delete-button"
+										onClick={() => deleteEvent(id, currentUserId)}
+									>
+										<CloseIcon className="delete-button-svg" />
+									</button>
+								</div>
+							))}
 					</div>
 				</div>
 			</div>

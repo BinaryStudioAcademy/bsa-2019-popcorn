@@ -4,6 +4,7 @@ import StoryVoting from '../../../StoryVoting/StoryVoting';
 import config from '../../../../config';
 
 interface IStoryListItem {
+	id: string;
 	caption: string;
 	image_url: string;
 	user: {
@@ -45,8 +46,10 @@ class StoryListContent extends Component<IStoryListItemsProps> {
 		const storyList = storyListItems.map((item, i) => {
 			if (item.type === 'voting' && item.voting) {
 				const voting = item.voting;
+				const avatar = item.user.avatar;
 				return (
 					<div
+						key={item.id}
 						className={'story-list-item-wrapper voting-wrp'}
 						onClick={() => {
 							this.props.openViewer(i);
@@ -55,7 +58,7 @@ class StoryListContent extends Component<IStoryListItemsProps> {
 						<img
 							alt="avatar"
 							className="avatar avatar-story avatar-voting"
-							src={config.DEFAULT_AVATAR}
+							src={avatar || config.DEFAULT_AVATAR}
 						/>
 						<StoryVoting
 							header={voting.header}

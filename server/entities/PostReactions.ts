@@ -8,7 +8,7 @@ export class PostReactions {
   id: string;
 
   @Column()
-  smile: boolean;
+  type: string;
 
   @ManyToOne(type => Post, post => post.id, {
     onDelete: "CASCADE"

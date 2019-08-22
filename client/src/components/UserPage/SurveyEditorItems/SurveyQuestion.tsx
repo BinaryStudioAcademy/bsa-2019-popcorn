@@ -24,7 +24,7 @@ const QUESTION_TYPES = [
 ];
 
 interface IQuestion {
-	index: number; 
+	index: number;
 	id: string;
 	survey_id: string;
 	title: string;
@@ -257,18 +257,20 @@ class SurveyQuestion extends Component<IProps, IState> {
 						>
 							<FontAwesomeIcon title="Delete question" icon={faTrashAlt} />
 						</p>
-						<ImageUploader
-							imageHandler={uploadFile}
-							imageStateHandler={image_link => {
-								const question = { ...this.state.questionInfo };
+						<div style={{ display: 'none' }}>
+							<ImageUploader
+								imageHandler={uploadFile}
+								imageStateHandler={image_link => {
+									const question = { ...this.state.questionInfo };
 
-								let newQuestion = {
-									...question,
-									image_link
-								};
-								this.props.changeQuestion(newQuestion);
-							}}
-						/>
+									let newQuestion = {
+										...question,
+										image_link
+									};
+									this.props.changeQuestion(newQuestion);
+								}}
+							/>
+						</div>
 
 						<label htmlFor="image">
 							<p>

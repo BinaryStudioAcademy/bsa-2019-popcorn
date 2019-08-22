@@ -9,60 +9,70 @@ import MovieSeriesAwards from './MovieSeriesAwards/MovieSeriesAwards';
 import MovieSeriesStatistics from './MovieSeriesStatistics/MovieSeriesStatistics';
 import StaffCast from './StaffCast/StaffCast';
 import TMovie from './TMovie';
+import { IDiscussionUser } from '../UserPage/UserEvents/UserEvents.service';
 
 const messages = [
 	{
 		id: '1',
 		name: 'Ammaar Montees',
-		body:
+		text:
 			'A poor yet passionate young man falls in love with a rich young woman, giving her a sense of freedom, but they are soon separated because of their social differences.',
-		photo: 'https://i.pravatar.cc/300?img=14',
-		date: '10 days ago'
+		avatar: 'https://i.pravatar.cc/300?img=14',
+		createdAt: '10 days ago'
 	},
 	{
 		id: '2',
 		name: 'Wil Pope',
-		body:
+		text:
 			'Titanic was massive on every level, including the casting process. From Matthew McConaughey to Angelina Jolie, dozens of A-listers were considered. Who almost played Jack and Rose?',
-		photo: 'https://i.pravatar.cc/300?img=24',
-		date: '1 day ago'
+		avatar: 'https://i.pravatar.cc/300?img=24',
+		createdAt: '1 day ago'
 	},
 	{
 		id: '3',
 		name: 'Forrest Meadows',
-		body: 'I am going to watch it',
-		photo: 'https://i.pravatar.cc/300?img=10',
-		date: '2 hours ago'
+		text: 'I am going to watch it',
+		avatar: 'https://i.pravatar.cc/300?img=10',
+		createdAt: '2 hours ago'
 	},
 	{
 		id: '4',
 		name: 'Forrest Meadows',
-		body: 'I am going to watch it',
-		photo: 'https://i.pravatar.cc/300?img=10',
-		date: '2 hours ago'
+		text: 'I am going to watch it',
+		avatar: 'https://i.pravatar.cc/300?img=10',
+		createdAt: '2 hours ago'
 	},
 	{
 		id: '5',
 		name: 'Forrest Meadows',
-		body: 'I am going to watch it',
-		photo: 'https://i.pravatar.cc/300?img=10',
-		date: '2 hours ago'
+		text: 'I am going to watch it',
+		avatar: 'https://i.pravatar.cc/300?img=10',
+		createdAt: '2 hours ago'
 	},
 	{
 		id: '6',
 		name: 'Forrest Meadows',
-		body: 'I am going to watch it',
-		photo: 'https://i.pravatar.cc/300?img=10',
-		date: '2 hours ago'
+		text: 'I am going to watch it',
+		avatar: 'https://i.pravatar.cc/300?img=10',
+		createdAt: '2 hours ago'
 	}
 ];
 
 interface IProps {
 	mainPath: string;
 	movie: TMovie;
+	currentUser: IDiscussionUser;
+	fetchCastCrew: (id: any) => any;
+	crewCast: any;
 }
 
-const MovieSeriesPageTabBody: React.SFC<IProps> = ({ mainPath, movie }) => {
+const MovieSeriesPageTabBody: React.SFC<IProps> = ({
+	mainPath,
+	movie,
+	currentUser,
+	fetchCastCrew,
+	crewCast
+}) => {
 	return (
 		<div className={'movie-series-page-tab-body'}>
 			<Switch>
@@ -71,7 +81,18 @@ const MovieSeriesPageTabBody: React.SFC<IProps> = ({ mainPath, movie }) => {
 					path={`${mainPath}`}
 					render={() => <FilmBasicTabComponent movie={movie} />}
 				/>
-				<Route path={`${mainPath}/cast-crew`} component={StaffCast} />
+				<Route
+					path={`${mainPath}/cast-crew`}
+					render={() => {
+						return (
+							<StaffCast
+								crewCast={crewCast}
+								fetchCastCrew={fetchCastCrew}
+								movieId={movie.id}
+							></StaffCast>
+						);
+					}}
+				/>
 				<Route path={`${mainPath}/reviews`} component={MovieSeriesReviews} />
 				<Route path={`${mainPath}/posts`} component={MovieSeriesPosts} />
 				<Route path={`${mainPath}/awards`} component={MovieSeriesAwards} />
@@ -80,7 +101,12 @@ const MovieSeriesPageTabBody: React.SFC<IProps> = ({ mainPath, movie }) => {
 					component={MovieSeriesStatistics}
 				/>
 			</Switch>
-			<DiscussionComponent messages={messages} />
+			<DiscussionComponent
+				entityId={movie.id}
+				messages={movie.messages}
+				currentUser={currentUser}
+				entityIdName="movieId"
+			/>
 		</div>
 	);
 };

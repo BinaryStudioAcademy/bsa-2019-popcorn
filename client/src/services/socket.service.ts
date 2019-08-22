@@ -27,6 +27,14 @@ class SocketService {
 	static emit(name: string, data: any) {
 		SocketService._socket.emit(name, data);
 	}
+
+	static join(room: string) {
+		SocketService._socket.emit('createRoom', room);
+	}
+
+	static leave(room: string) {
+		SocketService._socket.emit('leaveRoom', room);
+	}
 }
 
 export default SocketService;

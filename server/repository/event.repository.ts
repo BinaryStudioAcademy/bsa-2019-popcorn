@@ -5,11 +5,27 @@ import EventVisitorRepository from "./eventVisitor.repository";
 
 @EntityRepository(Event)
 class EventRepository extends Repository<Event> {
+  async getAllEvents(): Promise<Event[]> {
+    return await getRepository(Event)
+      .createQueryBuilder("event")
+      .leftJoinAndSelect("event.eventComments", "comments")
+      .leftJoinAndSelect("event.eventVisitors", "visitors")
+      .leftJoin("comments.user", "cuser")
+      .addSelect(["cuser.name", "cuser.avatar", "cuser.id"])
+      .leftJoin("visitors.user", "user")
+      .addSelect(["user.name", "user.avatar", "user.id"])
+      .getMany();
+  }
+
   async getEvent(eventId: string): Promise<Event> {
     return await getRepository(Event)
       .createQueryBuilder("event")
       .leftJoinAndSelect("event.eventComments", "comments")
       .leftJoinAndSelect("event.eventVisitors", "visitors")
+      .leftJoin("comments.user", "cuser")
+      .addSelect(["cuser.name", "cuser.avatar", "cuser.id"])
+      .leftJoin("visitors.user", "user")
+      .addSelect(["user.name", "user.avatar", "user.id"])
       .where("event.id = :id", { id: eventId })
       .getOne();
   }

@@ -4,25 +4,12 @@ import { ReactComponent as CloseIcon } from '../../../../assets/icons/general/cl
 import TopConstructor from './TopConstructor/TopConstructor';
 import { faImage } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-export interface ITopItem {
-	title: string;
-	id: string;
-	moviesList: IMovie[];
-	topImageUrl: string;
-	isOwnTop: boolean;
-}
-
-export interface IMovie {
-	//if needed could be changed
-	id: string;
-	title: string;
-	comment: string;
-}
+import { ITopItem } from '../UserTops.service';
 
 interface ITopItemProps {
 	topItem: ITopItem;
 	isOwnTop: boolean;
-	deleteTop: (topId: string) => void;
+	deleteTop: (topItem: ITopItem) => void;
 	saveUserTop: (topItem: ITopItem) => void;
 	uploadImage: (data: any, titleId: string) => void;
 	uploadUrl: string;
@@ -38,10 +25,12 @@ const TopItem: React.FC<ITopItemProps> = ({
 	uploadUrl,
 	urlForTop
 }) => {
-	const [editTop, canEditTop] = useState(false);
+	const [editTop, canEditTop] = useState(topItem.isNewTop || false);
 	const [title, setTitle] = useState(topItem.title);
 	// const [isOwnTop] = useState(topItem.isOwnTop);
-	const [topImageUrl, setTopImageUrl] = useState('');
+	// const [topImageUrl, setTopImageUrl] = useState(topItem.topImageUrl);
+	// const [isOwnTop] = useState(topItem.isOwnTop);
+	const [topImageUrl, setTopImageUrl] = useState(topItem.topImageUrl);
 	useEffect(() => {
 		if (urlForTop == topItem.id) {
 			setTopImageUrl(uploadUrl);
@@ -103,10 +92,7 @@ const TopItem: React.FC<ITopItemProps> = ({
 					</div>
 				)}
 				{isOwnTop && (
-					<div
-						className="delete-top hover"
-						onClick={() => deleteTop(topItem.id)}
-					>
+					<div className="delete-top hover" onClick={() => deleteTop(topItem)}>
 						<CloseIcon />
 					</div>
 				)}

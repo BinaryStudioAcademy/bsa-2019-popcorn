@@ -19,9 +19,15 @@
 }
 
 .staff-items-container {
-	padding: 2em;
-	display: flex;
-	flex-direction: column;
+	padding: 1em;
+	display: grid;
+	grid-template-columns: repeat(auto-fit, 120px);
+	justify-content: center;
+}
+
+.break {
+	flex-basis: 100%;
+	height: 0;
 }
 
 .cross-line {

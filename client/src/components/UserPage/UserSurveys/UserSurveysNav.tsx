@@ -5,6 +5,7 @@ import UserSurveys from './UserSurveys';
 import newSurvey from './newSurveyConfig';
 import { connect } from 'react-redux';
 import {
+	fetchUserSurveys,
 	fetchSurveys,
 	addSurvey,
 	updateSurvey,
@@ -23,6 +24,7 @@ import Spinner from '../../shared/Spinner';
 interface IProps {
 	mainPath: string;
 	surveys: any;
+	fetchUserSurveys: (id: string) => any;
 	fetchSurveys: () => any;
 	addSurvey: (any) => any;
 	updateSurvey: (string, any) => any;
@@ -48,13 +50,27 @@ class UserSurveysNav extends React.Component<IProps, IState> {
 	}
 
 	componentDidMount() {
-		this.props.fetchSurveys();
+		if (window.location.pathname === '/surveys-list/')
+			this.props.fetchSurveys();
+		else if (
+			window.location.pathname ===
+			`/user-page/${this.props.userInfo.id}/surveys`
+		)
+			this.props.fetchUserSurveys(this.props.userInfo.id);
 	}
 
 	static getDerivedStateFromProps(props, state) {
-		if (!isEqual(props.surveys, state.surveys)) {
+		let newSurveys = [];
+		if (
+			window.location.pathname === `/user-page/${props.userInfo.id}/surveys`
+		) {
+			newSurveys = props.surveys.filter(el => el.user.id === props.userInfo.id);
+		} else {
+			newSurveys = props.surveys;
+		}
+		if (!isEqual(newSurveys, state.surveys)) {
 			return {
-				surveys: transformDataToProps(props.surveys)
+				surveys: transformDataToProps(newSurveys)
 			};
 		}
 		return null;
@@ -105,6 +121,7 @@ class UserSurveysNav extends React.Component<IProps, IState> {
 					render={() => (
 						<SurveyEditorNav
 							mainPath={`${mainPath}/create`}
+							redirPath={mainPath}
 							surveyInfo={{
 								...newSurvey(),
 								user_id: userInfo.id,
@@ -121,6 +138,7 @@ class UserSurveysNav extends React.Component<IProps, IState> {
 						render={() => (
 							<SurveyEditorNav
 								updateInfo={this.updateInfo}
+								redirPath={mainPath}
 								mainPath={`${mainPath}/${survey.id}`}
 								surveyInfo={survey}
 							/>
@@ -134,10 +152,14 @@ class UserSurveysNav extends React.Component<IProps, IState> {
 
 const mapStateToProps = (rootState, props) => ({
 	...props,
-	surveys: rootState.survey.surveys
+	surveys: rootState.survey.surveys,
+	userId: rootState.profile.selectedProfileInfo
+		? rootState.profile.selectedProfileInfo.id
+		: null
 });
 
 const actions = {
+	fetchUserSurveys,
 	fetchSurveys,
 	addSurvey,
 	updateSurvey,

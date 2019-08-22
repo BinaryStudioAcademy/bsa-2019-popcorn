@@ -8,7 +8,7 @@ export class SurveysQuestionAnswer {
   @PrimaryGeneratedColumn("uuid")
   id: string;
 
-  @Column({ nullable: true })
+  @Column()
   value: string;
 
   @ManyToOne(type => SurveysQuestion, { onDelete: "CASCADE" })

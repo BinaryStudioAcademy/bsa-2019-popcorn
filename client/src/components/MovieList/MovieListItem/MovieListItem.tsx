@@ -10,17 +10,24 @@ import getFilmDuration from '../../../helpers/getFilmDuration';
 interface IMovieListItemProps {
 	movie: TMovie;
 	key: string;
-	setMovieSeries: (movie: any) => any;
+	setMovieSeries?: (movie: any) => any;
+	saveMovie?: (movie: TMovie) => any;
 }
 
 const MovieListItem: React.FC<IMovieListItemProps> = ({
 	movie,
-	setMovieSeries
+	setMovieSeries,
+	saveMovie
 }) => {
 	const duration = getFilmDuration(movie.runtime);
 
 	return (
-		<div className="movie-item">
+		<div
+			className="movie-item"
+			onClick={() => {
+				if (saveMovie) saveMovie(movie);
+			}}
+		>
 			<div className="movie-poster-wrp">
 				<Image
 					src={movie.poster_path}
@@ -30,18 +37,30 @@ const MovieListItem: React.FC<IMovieListItemProps> = ({
 				/>
 			</div>
 			<div className="movie-info">
-				<NavLink
-					to={'/movie-series'}
-					className="movie-link"
-					onClick={() => setMovieSeries(movie)}
-				>
-					<div className="movie-title">
-						{movie.title}{' '}
-						{movie.release_date
-							? '(' + movie.release_date.slice(0, 4) + ')'
-							: null}
+				{!saveMovie && (
+					<NavLink
+						to={`/movie-series/${movie.id}`}
+						className="movie-link"
+						onClick={() => setMovieSeries && setMovieSeries(movie)}
+					>
+						<div className="movie-title">
+							{movie.title}{' '}
+							{movie.release_date
+								? '(' + movie.release_date.slice(0, 4) + ')'
+								: null}
+						</div>
+					</NavLink>
+				)}
+				{saveMovie && (
+					<div className={'movie-link'}>
+						<div className="movie-title">
+							{movie.title}{' '}
+							{movie.release_date
+								? '(' + movie.release_date.slice(0, 4) + ')'
+								: null}
+						</div>
 					</div>
-				</NavLink>
+				)}
 				<div>
 					<span className="movie-genre">{movie.genres}</span>
 					{duration && (

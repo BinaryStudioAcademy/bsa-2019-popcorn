@@ -10,22 +10,21 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import config from '../../../config';
+import ISelectedProfileInfo from '../SelectedProfileInterface';
+import Cropper from 'react-cropper';
 
 type ProfileProps = {
-	profileInfo: {
-		id: string;
-		name: string;
-		male: boolean;
-		female: boolean;
-		location: string;
-		aboutMe: string;
-		avatar: string;
-	};
+	profileInfo: ISelectedProfileInfo;
 	uploadAvatar?: (FormData, string) => any;
 	uploadUrl?: string;
 	cancelAvatar?: () => any;
 	setAvatar?: (url: string, id: string) => any;
+	croppedSaved: boolean;
+	saveCropped: () => void;
 };
+interface IProfileComponentState {
+	errorMsg?: string;
+}
 const favMovies: Array<{ id: string; movie: string }> = [
 	{
 		id: Math.random() * (9000 - 1) + 1 + '',
@@ -70,19 +69,54 @@ const favShows: Array<{ id: string; movie: string }> = [
 //     </svg>
 // );
 
-class ProfileComponent extends Component<ProfileProps> {
+class ProfileComponent extends Component<ProfileProps, IProfileComponentState> {
 	constructor(props: ProfileProps) {
 		super(props);
+		this.state = {
+			errorMsg: ''
+		};
 	}
+	private cropper = React.createRef<Cropper>();
 
 	handleUploadFile(e) {
+		this.setState({ errorMsg: '' });
+
+		if (
+			e.target.files[0].type !== 'image/jpeg' &&
+			e.target.files[0].type !== 'image/jpg' &&
+			e.target.files[0].type !== 'image/png'
+		) {
+			e.target.value = '';
+			this.setState({
+				errorMsg: 'Wrong file format! (only jpeg, png, jpg are allowed)'
+			});
+			return;
+		} else if (e.target.files[0] && e.target.files[0].size > 1048576 * 3) {
+			e.target.value = '';
+			this.setState({
+				errorMsg: 'File is too big! (max 3MB)'
+			});
+			return;
+		}
+
 		const data = new FormData();
 		data.append('file', e.target.files[0]);
 		if (this.props.uploadAvatar)
 			this.props.uploadAvatar(data, this.props.profileInfo.id);
 		else console.log('no uploadAvatar method');
 	}
-
+	handleSaveCropped() {
+		if (this.cropper.current) {
+			const dataUrl = this.cropper.current.getCroppedCanvas().toBlob(blob => {
+				const data = new FormData();
+				data.append('file', blob);
+				if (this.props.uploadAvatar)
+					this.props.uploadAvatar(data, this.props.profileInfo.id);
+				else console.log('no uploadAvatar method');
+			});
+		}
+		this.props.saveCropped();
+	}
 	render() {
 		let {
 			name,
@@ -93,7 +127,7 @@ class ProfileComponent extends Component<ProfileProps> {
 			avatar,
 			id
 		} = this.props.profileInfo;
-
+		console.log(avatar);
 		if (!male && !female) {
 			female = true;
 		}
@@ -101,21 +135,30 @@ class ProfileComponent extends Component<ProfileProps> {
 		if (!location) {
 			location = 'Kyiv';
 		}
-
-		const { uploadUrl, cancelAvatar, setAvatar } = this.props;
+		const { uploadUrl, cancelAvatar, setAvatar, croppedSaved } = this.props;
 		return (
 			<div className={'UserProfileComponent'}>
+				{this.state.errorMsg && (
+					<span className="upload-error">{this.state.errorMsg}</span>
+				)}
 				<div className={'ProfileWrap'}>
 					{uploadUrl ? (
 						<div className={'profilePhotoWrap'}>
-							<img
-								src={uploadUrl}
-								style={{ width: '100%', height: '100%' }}
-								alt=""
-							/>
+							{this.props.croppedSaved ? (
+								<img className="avatar-preview" src={uploadUrl} />
+							) : (
+								<Cropper
+									ref={this.cropper}
+									src={uploadUrl}
+									style={{ width: '100%', height: '100%' }}
+									aspectRatio={3 / 3}
+								/>
+							)}
 							<span
 								onClick={() => {
-									if (setAvatar) setAvatar(uploadUrl, id);
+									this.props.croppedSaved && setAvatar
+										? setAvatar(uploadUrl, id)
+										: this.handleSaveCropped();
 								}}
 							>
 								<FontAwesomeIcon

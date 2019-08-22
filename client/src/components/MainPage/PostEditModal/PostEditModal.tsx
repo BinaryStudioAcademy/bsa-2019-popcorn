@@ -3,6 +3,7 @@ import './PostEditModal.scss';
 
 interface IPostEditProps {
 	isOwn: boolean;
+	deletePost: (any) => void;
 }
 
 const PostEditModal = (props: IPostEditProps) => {
@@ -11,7 +12,11 @@ const PostEditModal = (props: IPostEditProps) => {
 			<div className="post-modal">
 				<button>Copy link</button>
 				{props.isOwn && <button>Edit</button>}
-				{props.isOwn && <button className="delete">Delete</button>}
+				{props.isOwn && (
+					<button className="delete" onClick={props.deletePost}>
+						Delete
+					</button>
+				)}
 			</div>
 		</div>
 	);

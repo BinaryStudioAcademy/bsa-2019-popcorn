@@ -8,6 +8,9 @@ import {
 import EventRepository from "../repository/event.repository";
 import { getRepository, getCustomRepository } from "typeorm";
 
+export const getAllEvents = async (): Promise<any[]> =>
+  await getCustomRepository(EventRepository).getAllEvents();
+
 export const getEventsByUserId = async (userId: string): Promise<any[]> => {
   const myEvents = await getCustomRepository(EventRepository).getEvents(userId);
   const interestedEvents = await getEventsByVisitorId(userId);
@@ -83,10 +86,13 @@ export const getEventsByVisitorId = async (userId: string): Promise<any[]> => {
   return result;
 };
 
-export const createVisitor = async (
-  visitor: EventVisitor
-): Promise<EventVisitor[]> =>
-  await getRepository(VisitorEntity).save([visitor]);
+export const createVisitor = async (visitor: EventVisitor): Promise<any> => {
+  const oldVisitor = await getRepository(VisitorEntity).findOne({
+    userId: visitor.userId
+  });
+  oldVisitor && oldVisitor.id ? (visitor.id = oldVisitor.id) : null;
+  return await getRepository(VisitorEntity).save(visitor);
+};
 
 export const updateVisitor = async (
   updatedVisitor: EventVisitor

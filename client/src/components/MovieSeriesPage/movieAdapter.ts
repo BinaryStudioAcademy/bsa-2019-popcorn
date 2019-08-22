@@ -17,8 +17,9 @@ export default (movie: any): TMovie => {
 		genres: 'Action, Drama, Horror', //getGenre(movie.genres),
 		overview: movie.overview,
 		budget: movie.budget,
-		vote_average: 3.5,
-		video: 'https://www.youtube.com/embed/KnrRy6kSFF0',
-		cast: 'Matt Damon, Jessica Chastain, Kristen Wiig'
+		vote_average: movie.rate,
+		video: `https://www.youtube.com/embed/${movie.video_link}`,
+		cast: 'Matt Damon, Jessica Chastain, Kristen Wiig',
+		messages: movie.messages
 	};
 };

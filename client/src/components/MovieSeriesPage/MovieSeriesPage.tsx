@@ -3,25 +3,129 @@ import MovieSeriesPageHeader from './MovieSeriesPageHeader';
 import MovieSeriesPageTabs from './MovieSeriesPageTabs';
 import MovieSeriesPageTabBody from './MovieSeriesPageTabBody';
 import './MovieSeriesPage.scss';
-import { Redirect } from 'react-router';
-import TMovie from './TMovie';
+import { connect } from 'react-redux';
+import Spinner from '../shared/Spinner';
+import { bindActionCreators } from 'redux';
+import {
+	fetchUserRate,
+	fetchMovie,
+	setUserRate,
+	fetchReviewByMovieUserId as fetchReview,
+	setReview,
+	removeReviewSet,
+	fetchCastCrew
+} from './Movie.redux/actions';
 
 interface IProps {
-	movie: TMovie;
+	fetchedMovie: any;
+	userRate: IUserRate;
+	setUserRate: (userRate: any) => object;
+	fetchUserRate: (userId: string, movieId: string) => object;
+	fetchMovie: (movieId: string) => object;
+	fetchReview: (userId: string, movieId: string) => object;
+	setReview: (
+		userId: string,
+		movieId: string,
+		text: string,
+		prevId?: string
+	) => object;
+	removeReviewSet: () => object;
+	ownReview: any;
+	match: any;
+	avatar?: string;
+	userId: string;
+	username: string;
+	fetchCastCrew: (id: any) => any;
+	crewCast: any;
 }
 
-const MovieSeriesPage: React.SFC<IProps> = ({ movie }) => {
-	const mainPath = '/movie-series';
+export interface IUserRate {
+	id?: string;
+	movieId: string;
+	userId: string;
+	rate: string;
+}
 
-	return movie ? (
+const MovieSeriesPage: React.SFC<IProps> = props => {
+	const {
+		fetchedMovie,
+		userRate,
+		setUserRate,
+		fetchUserRate,
+		fetchMovie,
+		avatar,
+		userId,
+		username,
+		fetchReview,
+		ownReview,
+		setReview,
+		removeReviewSet,
+		fetchCastCrew,
+		crewCast
+	} = props;
+	const mainPath = `/movie-series/${props.match.params.id}`;
+
+	if (!fetchedMovie || fetchedMovie.id != props.match.params.id) {
+		fetchMovie(props.match.params.id);
+		return <Spinner />;
+	}
+	if (!userRate || userRate.movieId != props.match.params.id) {
+		fetchUserRate(userId, props.match.params.id);
+		return <Spinner />;
+	}
+
+	const movie = fetchedMovie;
+
+	return (
 		<div className="movie-series-page">
-			<MovieSeriesPageHeader movieSeriesData={movie} />
+			<MovieSeriesPageHeader
+				movieSeriesData={movie}
+				userRate={userRate}
+				setUserRate={rateObj => setUserRate(rateObj)}
+				ownReview={ownReview}
+				fetchReview={fetchReview}
+				userId={userId}
+				movieId={movie.id}
+				setReview={setReview}
+				removeReviewSet={removeReviewSet}
+			/>
 			<MovieSeriesPageTabs mainPath={mainPath} />
-			<MovieSeriesPageTabBody mainPath={mainPath} movie={movie} />
+			<MovieSeriesPageTabBody
+				mainPath={mainPath}
+				movie={movie}
+				fetchCastCrew={fetchCastCrew}
+				crewCast={crewCast}
+				currentUser={{ avatar, id: userId, name: username }}
+			/>
 		</div>
-	) : (
-		<Redirect to={'/movie-list'} />
 	);
 };
 
-export default MovieSeriesPage;
+const mapStateToProps = (rootState, props) => ({
+	...props,
+	userRate: rootState.movie.userRate,
+	fetchedMovie: rootState.movie.fetchedMovie,
+	avatar: rootState.profile.profileInfo && rootState.profile.profileInfo.avatar,
+	userId: rootState.profile.profileInfo && rootState.profile.profileInfo.id,
+	username: rootState.profile.profileInfo && rootState.profile.profileInfo.name,
+	ownReview: rootState.movie.ownReview,
+	crewCast: rootState.movie.crewCast
+});
+
+const mapDispatchToProps = dispatch => {
+	const actions = {
+		fetchUserRate,
+		fetchMovie,
+		setUserRate,
+		fetchReview,
+		setReview,
+		removeReviewSet,
+		fetchCastCrew
+	};
+	return bindActionCreators(actions, dispatch);
+};
+
+export default connect(
+	mapStateToProps,
+	mapDispatchToProps
+)(MovieSeriesPage);

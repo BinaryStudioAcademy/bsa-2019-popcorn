@@ -5,10 +5,13 @@ import {
 	CREATE_STORY,
 	CREATE_VOTING,
 	FETCH_STORIES,
-	SET_CAPTION_NEWSTORY
+	SAVE_MOVIE,
+	SET_CAPTION_NEWSTORY,
+	SAVE_CROPPED_IMAGE
 } from './actionTypes';
 import INewStory from '../INewStory';
 import IVoting from '../IVoting';
+import TMovie from '../../../MovieSeriesPage/TMovie';
 
 export const fetchStories = () => {
 	return {
@@ -16,14 +19,22 @@ export const fetchStories = () => {
 	};
 };
 
-export const setCaption = (caption, start, end) => {
+export const setCaption = (caption, start, end, title) => {
 	return {
 		type: SET_CAPTION_NEWSTORY,
 		payload: {
 			caption,
 			start,
-			end
+			end,
+			title
 		}
+	};
+};
+
+export const saveCroppedImage = status => {
+	return {
+		type: SAVE_CROPPED_IMAGE,
+		payload: status
 	};
 };
 
@@ -71,6 +82,16 @@ export const addStory = story => {
 		type: ADD_STORY,
 		payload: {
 			story
+		}
+	};
+};
+
+export const saveMovie = (movie: TMovie, movieOption = '') => {
+	return {
+		type: SAVE_MOVIE,
+		payload: {
+			movie,
+			movieOption
 		}
 	};
 };
