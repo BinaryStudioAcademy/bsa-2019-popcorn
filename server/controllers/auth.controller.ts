@@ -50,13 +50,13 @@ router
   // )
   .post("/login", authenticationMiddleware, (req, res, next) =>
     authService
-      .login(req)
+      .login(req.user)
       .then(data => res.send(data))
       .catch(next)
   )
   .get("/user", jwtMiddleware, (req, res, next) => {
     userService
-      .getUserById(req)
+      .getUserById(req.user.id)
       .then(data => res.send(data))
       .catch(next);
   });
