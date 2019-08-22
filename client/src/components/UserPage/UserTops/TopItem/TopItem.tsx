@@ -62,30 +62,22 @@ const TopItem: React.FC<ITopItemProps> = ({
 	}
 
 	function goToTop(e) {
-		if (
-			(e.target.classList.contains('top-item') ||
-			e.target.classList.contains('top-item-title') ||
-			e.target.classList.contains('image-top')) &&
-			!editTop
-			) {
-				// history.push(`/top-page${topItem.id}`);
-				// console.log(1)
-				// console.log(history)
-		} else {
+		if (editTop || (
+			e.target.classList.contains('edit-top') ||
+			e.target.classList.contains('delete-top') ||
+			e.target.classList.contains('close-icon')
+		)) {
 			e.preventDefault();
 		}
 	}
 
 	return (
-		// <div>
-			<NavLink
-					to={`/top-page/${topItem.id}`}
-					onClick={goToTop}
-					className="link-reset"
-				>
-			
-			
-			<div className="top-item" onClick={goToTop}>
+		<NavLink
+			to={`/top-page/${topItem.id}`}
+			onClick={goToTop}
+			className="link-reset"
+		>
+			<div className="top-item">
 				{editTop || topItem.moviesList.length === 0 ? (
 					<input
 						maxLength={140}
@@ -95,8 +87,8 @@ const TopItem: React.FC<ITopItemProps> = ({
 						value={title}
 					/>
 				) : (
-					<div className="top-item-title">{title}</div>
-				)}
+						<div className="top-item-title">{title}</div>
+					)}
 				<input
 					name="image"
 					type="file"
@@ -120,7 +112,7 @@ const TopItem: React.FC<ITopItemProps> = ({
 				)}
 				{isOwnTop && (
 					<div className="delete-top hover" onClick={() => deleteTop(topItem)}>
-						<CloseIcon />
+						<CloseIcon className="close-icon" />
 					</div>
 				)}
 				<img className="image-top" src={topImageUrl} alt="" />
@@ -129,7 +121,6 @@ const TopItem: React.FC<ITopItemProps> = ({
 				<TopConstructor moviesList={topItem.moviesList} saveTop={saveTop} />
 			)}
 		</NavLink>
-		// {/* </div> */}
 	);
 };
 

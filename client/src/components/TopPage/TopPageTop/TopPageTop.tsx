@@ -1,5 +1,7 @@
 import React from 'react';
 import Moment from 'react-moment';
+import Image from '../../shared/Image/Image';
+import config from '../../../config';
 import { ITop } from '../TopPage.service';
 
 import './TopPageTop.scss';
@@ -14,14 +16,22 @@ const TopPageTop: React.SFC<ITopProps> = ({
     return (
         <div className="top">
             <div className="top-poster-wrp">
-                <img src={top.topImageUrl} alt="top-image" className="top-poster" />
+                <Image
+                    src={top.topImageUrl}
+                    defaultSrc={config.DEFAULT_MOVIE_IMAGE}
+                    alt="top-image"
+                    className="top-poster"
+                />
             </div>
             <div className="top-info">
                 <span className="top-title">{top.title}</span>
                 <div className="top-author">
-                    {/* <div className="top-poster-wrp"> */}
-                        <img src={top.user.avatar} alt="author-image" className="top-user-avatar" />
-                    {/* </div> */}
+                    <Image
+                        src={top.user.avatar}
+                        defaultSrc={config.DEFAULT_AVATAR}
+                        alt="user-avatar"
+                        className="top-user-avatar"
+                    />
                     <span className="top-author-name">{top.user.name}</span>
                 </div>
                 <span className="top-created-at">

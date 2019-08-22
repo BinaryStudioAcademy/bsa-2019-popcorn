@@ -31,22 +31,22 @@ const TopPage: React.SFC<ITopProps> = ({
 
         return <Spinner />
     }
-
+    console.log(top.movieList.length);
     return (
         <div className="top-page">
             <TopPageTop
                 top={top}
             />
-            <ol className="top-movie-list">
+            <div className="top-movie-list">
                 {
                     top.movieList.map((movie, index) =>
                         <TopPageMovie
-                            key={index}
+                            index={index + 1}
                             movie={movie}
                         />
                     )
                 }
-            </ol>
+            </div>
         </div>
     )
 }
