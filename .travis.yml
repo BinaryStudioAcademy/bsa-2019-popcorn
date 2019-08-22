@@ -40,11 +40,11 @@ deploy:
   on: *2
 
 script:
-  - aws s3 cp s3://popcorn-bucket/envs/.env .env
-  - ls
+  - export SKIP_PREFLIGHT_CHECK=true
   - cd client/
   - CI=false npm run build
   - cd ..
+  - aws s3 cp s3://popcorn-bucket/envs/.env server/env.txt
   - zip -r latest * >/dev/null
   - mkdir -p dpl_cd_upload
   - mv latest.zip dpl_cd_upload/latest.zip
