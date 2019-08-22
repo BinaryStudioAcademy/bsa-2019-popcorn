@@ -5,9 +5,9 @@ import { sendToken } from "./email.service";
 
 const crypto = require("crypto");
 
-export const login = async ({ id }: { id: string }) => ({
-  token: tokenHelper.createToken({ id }),
-  user: await getCustomRepository(userRepository).find({ id })
+export const login = async ({ user }: { user?: any }) => ({
+  token: tokenHelper.createToken({ id: user.id }),
+  user: await getCustomRepository(userRepository).find({ id: user.id })
 });
 
 export const register = async (userData: any) => {
