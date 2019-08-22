@@ -12,6 +12,7 @@ import EventPage from '../../components/EventPage/EventPage';
 import EventList from '../../components/EventPage/EventList';
 import AdminPanelPage from '../../components/AdminPanelPage/AdminPanelPage';
 import SurveyPage from '../../components/SurveyPage/SurveyPage';
+import TopPage from '../../components/TopPage/TopPage';
 
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
@@ -119,7 +120,7 @@ const Main = ({
 		return <Redirect to="/login" />;
 
 	new SocketService(userInfo.id);
-
+	
 	return (
 		<div className={'main-wrap'}>
 			{isAuthorized ? <Header userInfo={userInfo} /> : null}
@@ -170,6 +171,7 @@ const Main = ({
 							render={() => allSurveysRender(userInfo)}
 						></Route>
 						<Route path={`/movie-tops`} render={() => <UserTops />} />
+						<Route path={`/top-page/:id`} component={TopPage} />
 						<Route path={`/*`} exact component={NotFound} />
 					</Switch>
 				</div>
