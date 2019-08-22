@@ -40,7 +40,8 @@ deploy:
   on: *2
 
 script:
-  - aws s3 cp s3://popcorn-bucket/envs/.env /server/.env
+  - aws s3 cp s3://popcorn-bucket/envs/.env .env
+  - ls
   - cd client/
   - CI=false npm run build
   - cd ..
