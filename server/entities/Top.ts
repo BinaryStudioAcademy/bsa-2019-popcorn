@@ -2,6 +2,7 @@ import {
   Entity,
   PrimaryGeneratedColumn,
   Column,
+  CreateDateColumn,
   ManyToOne,
   OneToMany
 } from "typeorm";
@@ -21,6 +22,9 @@ export class Top {
 
   @Column({ default: "" })
   topImageUrl: string;
+
+  @CreateDateColumn({ type: "timestamp" })
+  created_at: Date;
 
   @Column({ nullable: true })
   genreId: string;

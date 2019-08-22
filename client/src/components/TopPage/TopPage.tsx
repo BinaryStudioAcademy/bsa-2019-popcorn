@@ -1,48 +1,67 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { fetchTop } from './TopPage.redux/actions';
+import Spinner from '../shared/Spinner';
+import { convertServerDataFormatToClient } from './TopPage.service';
+import TopPageTop from './TopPageTop';
+import TopPageMovie from './TopPageMovie';
 
-interface ITopPageProps {
+interface ITopProps {
 	match: {
 		path: string;
 		params: any;
     };
+    top: any;
+    fetchTop: (topId: string) => any[];
 }
 
-const TopPage: React.SFC<ITopPageProps> = ({
-	match
+const TopPage: React.SFC<ITopProps> = ({
+    match,
+    top,
+    fetchTop
 }) => {
+
+    if (!top) {
+        fetchTop(match.params.id);
+        return <Spinner />
+    }
+    
+    top = convertServerDataFormatToClient(top);
+    console.log(top);
+
     return (
         <div className="top-page">
-            {`top-page/${match.params.id}`}
-            <div className="top">
-                <img src="" alt="top-image" />
-                <div className="top-description">
-                    <span className="top-title"></span>
-                    <div className="top-author">
-                        <img src="" alt="author-image" />
-                        <span className="top-author-name"></span>
-                    </div>
-                    <span className="top-created-at"></span>
-                </div>
-            </div>
+            <TopPageTop
+                top={top}
+            />
             <div className="top-movie-list">
-                <ol>
-                    <li className="top-movie-list-item">
-                        <img src="" alt="movie-image" />
-                        <div className="movie-description">
-                            <div>
-                                <span className="movie-title"></span>
-                                <span className="movie-year"></span>
-                            </div>
-                            <div className="movie-genres">
-
-                            </div>
-                            <span className="author-comment"></span>
-                        </div>
-                    </li>
-                </ol>
+                {
+                    top.movieList.map((movie, index) =>
+                        <TopPageMovie
+                            key={index}
+                            movie={movie}
+                        />
+                    )
+                }
             </div>
         </div>
     )
 }
 
-export default TopPage;
+const mapStateToProps = (rootState, props) => ({
+	...props,
+    // top: rootState.userTops.topList
+    top: rootState.top.top
+});
+
+const actions = {
+	fetchTop
+};
+
+const mapDispatchToProps = dispatch => bindActionCreators(actions, dispatch);
+
+export default connect(
+	mapStateToProps,
+	mapDispatchToProps
+)(TopPage);
