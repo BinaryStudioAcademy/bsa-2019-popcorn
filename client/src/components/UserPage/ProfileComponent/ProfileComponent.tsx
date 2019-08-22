@@ -150,7 +150,7 @@ class ProfileComponent extends Component<ProfileProps, IProfileComponentState> {
 									ref={this.cropper}
 									src={uploadUrl}
 									style={{ width: '100%', height: '100%' }}
-									aspectRatio={3 / 4}
+									aspectRatio={3 / 3}
 								/>
 							)}
 							<span

@@ -134,9 +134,7 @@ const Header = ({
 				</NavLink>
 			</div>
 			<div className="user-info header-buttons hover">
-				<div className="user-header-image-wrp">
-					<Image src={avatar} defaultSrc={config.DEFAULT_AVATAR} alt="avatar" />
-				</div>
+				<Image src={avatar} defaultSrc={config.DEFAULT_AVATAR} alt="avatar" />
 				<span className="user-name">{userInfo.name}</span>
 				<div className="modal">
 					<Link
