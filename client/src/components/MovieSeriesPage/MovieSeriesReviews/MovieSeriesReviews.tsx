@@ -13,6 +13,8 @@ export interface IReview {
 		avatar: string;
 		id: string;
 	};
+	analysis: string;
+	movieId: string;
 	text: string;
 	created_at: string;
 }
@@ -21,37 +23,49 @@ interface IProps {
 	reviews: IReview[];
 	movieId: string;
 	fetchMovieReviews: any;
+	isLoaded: boolean;
+	currentUserId: string;
 }
 
-const MovieSeriesReviews: React.FC<IProps> = props => {
-	const { reviews } = props;
-	if (!reviews) {
-		props.fetchMovieReviews(props.movieId);
-		return <Spinner />;
+class MovieSeriesReviews extends React.Component<IProps> {
+	componentDidMount() {
+		this.props.fetchMovieReviews(this.props.movieId);
 	}
-	return (
-		<div className="MovieSeriesReviews">
-			{!reviews ? (
-				<Spinner />
-			) : (
-				<div>
-					{!reviews.length ? (
-						<div className="warning">No one Review</div>
-					) : (
-						reviews.map((item: IReview) => {
-							return <ReviewItem review={item} key={item.id} />;
-						})
-					)}
-				</div>
-			)}
-		</div>
-	);
-};
+
+	render() {
+		const { reviews, currentUserId, isLoaded } = this.props;
+		return (
+			<div className="MovieSeriesReviews">
+				{!isLoaded && !reviews ? (
+					<Spinner />
+				) : (
+					<div>
+						{!reviews.length ? (
+							<div className="warning">No one Review</div>
+						) : (
+							reviews.map((item: IReview) => {
+								return (
+									<ReviewItem
+										review={item}
+										key={item.id}
+										currentUserId={currentUserId}
+									/>
+								);
+							})
+						)}
+					</div>
+				)}
+			</div>
+		);
+	}
+}
 
 const mapStateToProps = (rootState, props) => ({
 	...props,
 	reviews: rootState.review.reviewList,
-	movieId: rootState.movie.fetchedMovie.id
+	isLoaded: rootState.review.isLoaded,
+	movieId: rootState.movie.fetchedMovie.id,
+	currentUserId: rootState.profile.profileInfo.id
 });
 
 const mapDispatchToProps = dispatch => {

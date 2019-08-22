@@ -4,6 +4,8 @@ import './ReviewAddModal.scss';
 import MovieItem from '../../../MovieList/MovieListItem/MovieListItem';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
+import { Redirect } from 'react-router';
+import { thisExpression } from '@babel/types';
 
 interface IProps {
 	ownReview: any;
@@ -24,6 +26,7 @@ interface IState {
 	textArea: string;
 	showError: boolean;
 	usePut: boolean;
+	redirect: boolean;
 }
 
 class ReviewAddModal extends React.Component<IProps, IState> {
@@ -35,7 +38,8 @@ class ReviewAddModal extends React.Component<IProps, IState> {
 		this.state = {
 			textArea: text || '',
 			showError: false,
-			usePut: !!text
+			usePut: !!text,
+			redirect: false
 		};
 	}
 
@@ -49,6 +53,7 @@ class ReviewAddModal extends React.Component<IProps, IState> {
 
 	componentWillUnmount = () => {
 		document.removeEventListener('keydown', this.keydownHandler);
+		this.props.setModal(false);
 	};
 
 	onSubmitModal = () => {
@@ -63,14 +68,15 @@ class ReviewAddModal extends React.Component<IProps, IState> {
 		} else {
 			setReview(userId, movieId, textArea);
 		}
-		setModal(false);
+		this.setState({ ...this.state, redirect: true });
 	};
 
 	render() {
-		const { ownReview, movie, setModal, removeReviewSet } = this.props;
-		const { usePut, showError } = this.state;
+		const { ownReview, movie, setModal, removeReviewSet, movieId } = this.props;
+		const { usePut, showError, redirect } = this.state;
 		return (
 			<div className={'modal-wrp'}>
+				{redirect && <Redirect to={`/movie-series/${movieId}/reviews`} />}
 				<div className={'modal modal-story'}>
 					{ownReview ? (
 						<div className="modal-review">

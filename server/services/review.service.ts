@@ -1,7 +1,11 @@
 import { getCustomRepository } from "typeorm";
 import { Review } from "../models/ReviewModel";
 import ReviewRepository from "../repository/review.repository";
-import { getById as getMovieElasticById } from "../repository/movieElastic.repository";
+import {
+  getById as getMovieElasticById,
+  getByIdValues as getMovieElasticByIdValues
+} from "../repository/movieElastic.repository";
+import UserRepository from "../repository/user.repository";
 
 interface IRequestBody {
   userId: string;
@@ -69,4 +73,32 @@ export const getReviewById = async (id: string, next) => {
 
 export const deleteReviewById = async (id: string, next) => {
   return await getCustomRepository(ReviewRepository).deleteReviewById(id, next);
+};
+
+export const getReviewsByUserId = async (id: string, next) => {
+  const user = await getCustomRepository(UserRepository).findOne({ id });
+  if (!user) {
+    return next(
+      { status: 404, message: `User with id ${id} does not exist` },
+      null
+    );
+  }
+  const reviews = await getCustomRepository(
+    ReviewRepository
+  ).getReviewsByUserId(id, next);
+  const objectWithMovieId = {};
+  for (const review of reviews) {
+    objectWithMovieId[review.movieId] = true;
+  }
+  const idValues = [...Object.keys(objectWithMovieId)];
+  const elasticMovies = await Promise.all(
+    idValues.map(id => getMovieElasticById(id))
+  );
+  const result = reviews.map(review => {
+    const index = idValues.findIndex(item => item === review.movieId);
+    review.movie = elasticMovies[index].hits.hits[0]._source;
+    return review;
+  });
+
+  return result;
 };
