@@ -1,16 +1,10 @@
 import React, { Component } from 'react';
 import './Comment.scss';
 import AddComment from '../../shared/AddComment/AddComment';
+import IComment from '../Post/IComment';
 
 type ICommentProps = {
-	commentItem: {
-		id: string;
-		author: string;
-		commentDate: string;
-		commentBody: string;
-		parentId?: string;
-		children: [];
-	};
+	commentItem: IComment;
 };
 
 interface ICommentState {
@@ -32,9 +26,9 @@ class Comment extends Component<ICommentProps, ICommentState> {
 	}
 	render() {
 		const comment = this.props.commentItem;
-		const nestedComments = (comment.children || []).map(comment => {
-			return <Comment commentItem={comment} />;
-		});
+		// const nestedComments = (comment.children || []).map(comment => {
+		// 	return <Comment commentItem={comment} />;
+		// });
 		return (
 			<div key={comment.id}>
 				<div
@@ -45,15 +39,14 @@ class Comment extends Component<ICommentProps, ICommentState> {
 					}
 				>
 					<p className="comment-text">
-						<strong>{comment.author}</strong>
-						{comment.parentId && <i> {comment.parentId}, </i>}{' '}
-						{comment.commentBody}
+						<strong>{comment.user.name}</strong>
+						{comment.parentId && <i> {comment.parentId}, </i>} {comment.text}
 					</p>
 					<p className="comment-date">{comment.commentDate} </p>
 					<button onClick={this.toggleCommentModal}>Reply</button>
 					{this.isCommentModalShown(comment.id)}
 				</div>
-				{nestedComments}
+				{/*{nestedComments}*/}
 			</div>
 		);
 	}

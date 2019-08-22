@@ -16,20 +16,19 @@ export default function(state = initialState, action) {
 			};
 		case ADD_NEW_COMMENT:
 			if (!state.posts) return state;
-			const posts = state.posts;
+			const posts = [...state.posts];
 			const comment = action.payload.comment.comment;
 
 			const index = findIndexInArray(posts, 'id', comment.post.id);
 			if (index === -1) return state;
-			if (!posts[index].comments) posts[index].comments = [];
+			const post = posts[index];
+			if (!post.comments) post.comments = [comment];
+			else post.comments.push(comment);
 
-			// @ts-ignore
-			posts[index].comments.push(comment);
-
-			console.log(state.posts);
+			console.log(posts);
 			return {
 				...state,
-				posts: [...state.posts]
+				posts: [...posts]
 			};
 		default:
 			return state;

@@ -116,6 +116,7 @@ class Post extends PureComponent<IPostProps, IPostState> {
 			},
 			createComment
 		} = this.props;
+
 		const reactionsShow = this.state.hover ? (
 			<Reactions
 				onReactionClick={this.onReactionClick}
@@ -175,7 +176,7 @@ class Post extends PureComponent<IPostProps, IPostState> {
 				</div>
 				{tags && (
 					<div>
-						<div className="horizontal-stroke"></div>
+						<div className="horizontal-stroke" />
 						<div className="tag-items">
 							{tags.map(item => (
 								<Tag tagItem={item} key={item.id} />
@@ -183,13 +184,20 @@ class Post extends PureComponent<IPostProps, IPostState> {
 						</div>
 					</div>
 				)}
-				{this.nestedComments && (
+				{/*{this.nestedComments && (*/}
+				{/*	<div>*/}
+				{/*		{this.nestedComments.map(item => (*/}
+				{/*			<div style={{ width: '100%' }}>*/}
+				{/*				<div className={'horizontal-stroke'} />*/}
+				{/*				<Comment commentItem={item} key={item.id} />*/}
+				{/*			</div>*/}
+				{/*		))}*/}
+				{/*	</div>*/}
+				{/*)}*/}
+				{comments && (
 					<div>
-						{this.nestedComments.map(item => (
-							<div style={{ width: '100%' }}>
-								<div className={'horizontal-stroke'} />
-								<Comment commentItem={item} key={item.id} />
-							</div>
+						{comments.map(comment => (
+							<Comment commentItem={comment} />
 						))}
 					</div>
 				)}

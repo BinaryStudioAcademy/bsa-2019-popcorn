@@ -3,6 +3,7 @@ import PostRepository from "../repository/post.repository";
 import UserRepository from "../repository/user.repository";
 import { getCustomRepository } from "typeorm";
 import PostCommentsRepository from "../repository/postComments.repository";
+import { PostCommentsModel } from "../models/PostCommentsModel";
 const uuid = require("uuid/v4");
 
 export const createPost = async (post: any): Promise<Post> => {
@@ -11,8 +12,17 @@ export const createPost = async (post: any): Promise<Post> => {
   return await getCustomRepository(PostRepository).save(post);
 };
 
-export const getPosts = async (): Promise<Post[]> =>
-  await getCustomRepository(PostRepository).find({ relations: ["user"] });
+export const getPosts = async (): Promise<any[]> => {
+  const posts = await getCustomRepository(PostRepository).find({
+    relations: ["user"]
+  });
+  return Promise.all(
+    posts.map(async post => {
+      post.comments = await getComments(post);
+      return post;
+    })
+  );
+};
 
 export const deletePostById = async (postId: string): Promise<Post> => {
   const post = await getCustomRepository(PostRepository).findOne({
@@ -44,3 +54,9 @@ export const createComment = async ({ userId, postId, text }) => {
     text
   });
 };
+
+export const getComments = async (post: Post): Promise<PostCommentsModel[]> =>
+  await getCustomRepository(PostCommentsRepository).find({
+    where: { post },
+    relations: ["user"]
+  });
