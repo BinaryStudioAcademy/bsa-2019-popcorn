@@ -78,13 +78,17 @@ $orange: #fb8700;
 	a {
 		text-decoration: none;
 	}
-	a:visited {
+	a:visited,
+	a:link {
 		color: $text-base-color;
 	}
 }
 
 .event-image {
 	text-align: center;
+	img {
+		width: 100%;
+	}
 }
 .event-page-tabs {
 	margin-bottom: 20px;
@@ -116,6 +120,7 @@ $orange: #fb8700;
 	display: flex;
 	justify-content: space-evenly;
 	justify-items: normal;
+	text-align: center;
 	img {
 		width: 50px;
 	}

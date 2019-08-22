@@ -3,12 +3,14 @@ import {
   PrimaryGeneratedColumn,
   Column,
   ManyToOne,
-  JoinColumn
+  JoinColumn,
+  Unique
 } from "typeorm";
 import { User } from "../User";
 import { Event } from "./Event";
 
 @Entity()
+@Unique(["userId", "eventId"])
 export class EventVisitor {
   @PrimaryGeneratedColumn("uuid")
   id: string;

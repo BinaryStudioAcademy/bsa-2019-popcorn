@@ -44,12 +44,12 @@ const EventPage: React.FC<IProps> = ({
 	const [event, setEvent] = useState();
 	console.log(match);
 	useEffect(() => {
-		if (!event) {
-			getEventById(match.params.id);
-			searchedEvent && setEvent(formatToClient(searchedEvent));
+		// if (!event) {
+		getEventById(match.params.id);
+		searchedEvent && setEvent(formatToClient(searchedEvent));
 
-			console.log('hello', searchedEvent);
-		}
+		// 	console.log('hello', searchedEvent);
+		// }
 	});
 
 	if (!event) return <Spinner />;
