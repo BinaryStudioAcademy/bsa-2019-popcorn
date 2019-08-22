@@ -59,7 +59,7 @@ class PostConstructor extends React.Component<
 			extraLink: '',
 			extraTitle: '',
 			modalExtra: false,
-			croppedSaved: false
+			croppedSaved: false,
 			reactions: [],
 			comments: []
 		};
