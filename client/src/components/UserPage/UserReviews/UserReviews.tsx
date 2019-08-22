@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import './UserReviews.scss';
-import { fetchUserReviews } from './actions';
+import { fetchUserReviews, deleteReviewById } from './actions';
 import { bindActionCreators } from 'redux';
 import Spinner from '../../shared/Spinner';
 import ReviewItem from './ReviewItem/ReviewItem';
@@ -11,6 +11,7 @@ import TMovie from '../../MovieSeriesPage/TMovie';
 interface IProps {
 	reviewUserList: IReview[];
 	fetchUserReviews: (userId: string) => object;
+	deleteReviewById: (reviewId: string) => object;
 	currentUserId: string;
 	loading: boolean;
 }
@@ -30,8 +31,13 @@ class UserReviews extends React.Component<IProps> {
 	}
 
 	render() {
-		const { reviewUserList, currentUserId, loading } = this.props;
-		console.log(reviewUserList);
+		const {
+			reviewUserList,
+			currentUserId,
+			loading,
+			deleteReviewById
+		} = this.props;
+
 		return (
 			<div className="UserReviews">
 				{loading ? (
@@ -42,7 +48,13 @@ class UserReviews extends React.Component<IProps> {
 							<div className="warning">No one Review</div>
 						) : (
 							reviewUserList.map(item => {
-								return <ReviewItem review={item} key={item.id} />;
+								return (
+									<ReviewItem
+										review={item}
+										key={item.id}
+										deleteReview={deleteReviewById}
+									/>
+								);
 							})
 						)}
 					</div>
@@ -60,7 +72,8 @@ const mapStateToProps = (rootState, props) => ({
 });
 
 const actions = {
-	fetchUserReviews
+	fetchUserReviews,
+	deleteReviewById
 };
 
 const mapDispatchToProps = dispatch => bindActionCreators(actions, dispatch);

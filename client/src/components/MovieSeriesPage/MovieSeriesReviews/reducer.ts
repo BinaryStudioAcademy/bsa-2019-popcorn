@@ -4,7 +4,8 @@ import {
 } from './actionTypes';
 import {
 	FETCH_USER_REVIEWS,
-	FETCH_USER_REVIEWS_SUCCESS
+	FETCH_USER_REVIEWS_SUCCESS,
+	DELETE_REVIEW_BY_ID
 } from '../../UserPage/UserReviews/actionTypes';
 import movieAdapter from '../../MovieSeriesPage/movieAdapter';
 const initialState: {
@@ -37,6 +38,12 @@ export default (state = initialState, action) => {
 				reviewUserList: resultReviewUserList,
 				loading: false
 			};
+		case DELETE_REVIEW_BY_ID:
+			const { reviewId } = action.payload;
+			const reviewUserList = state.reviewUserList.filter(
+				review => review.id !== reviewId
+			);
+			return { ...state, reviewUserList };
 		default:
 			return state;
 	}

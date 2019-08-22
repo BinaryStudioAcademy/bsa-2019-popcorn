@@ -7,9 +7,11 @@ import config from '../../../../config';
 import Moment from 'react-moment';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronUp, faChevronDown } from '@fortawesome/free-solid-svg-icons';
+import { NavLink } from 'react-router-dom';
 
 interface IProps {
 	review: IReview;
+	deleteReview: (reviewId: string) => object;
 }
 
 interface IState {
@@ -58,33 +60,47 @@ class ReviewItem extends React.Component<IProps> {
 
 	render() {
 		const {
-			movie: { poster_path, title, release_date },
+			movie: { poster_path, title, release_date, id: movieId },
 			created_at,
-			text
+			text,
+			id: reviewId
 		} = this.props.review;
+		const { deleteReview } = this.props;
 		const { isBigBlock, showFullReview, textBlockHeight } = this.state;
-		console.log(this.props.review.movie);
+
 		return (
 			<div className="review-user-item-wrapper">
 				<div className="review-user-item">
-					<div className="image-wrapper">
-						<Image
-							src={poster_path}
-							defaultSrc={config.DEFAULT_MOVIE_IMAGE}
-							alt="poster"
-						/>
-					</div>
+					<NavLink to={'/movie-series/' + movieId}>
+						<div className="image-wrapper">
+							<Image
+								src={poster_path}
+								defaultSrc={config.DEFAULT_MOVIE_IMAGE}
+								alt="poster"
+							/>
+						</div>
+					</NavLink>
 					<div className="review-main">
 						<div className="movie-title">
-							<div className="movie-title-name">
-								{title}
-								<span className="movie-title-date">
-									{release_date ? ' (' + release_date.slice(0, 4) + ')' : null}
-								</span>
-							</div>
+							<NavLink
+								className="movie-title-nav-link"
+								to={'/movie-series/' + movieId}
+							>
+								<div className="movie-title-name">
+									{title}
+									<span className="movie-title-date">
+										{release_date
+											? ' (' + release_date.slice(0, 4) + ')'
+											: null}
+									</span>
+								</div>
+							</NavLink>
 							<div className="review-buttons">
 								<button className="edit-button">Edit</button>
-								<button className="delete-button">
+								<button
+									className="delete-button"
+									onClick={() => deleteReview(reviewId)}
+								>
 									<CloseIcon className="delete-button-svg" />
 								</button>
 							</div>

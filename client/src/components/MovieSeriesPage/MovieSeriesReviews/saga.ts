@@ -7,7 +7,8 @@ import {
 } from './actionTypes';
 import {
 	FETCH_USER_REVIEWS,
-	FETCH_USER_REVIEWS_SUCCESS
+	FETCH_USER_REVIEWS_SUCCESS,
+	DELETE_REVIEW_BY_ID
 } from '../../UserPage/UserReviews/actionTypes';
 
 export function* fetchMovieReviews(action) {
@@ -47,6 +48,23 @@ export function* fetchUserReviews(action) {
 	}
 }
 
+export function* deleteRevievById(action) {
+	const { reviewId } = action.payload;
+	try {
+		const response = yield call(webApi, {
+			endpoint: `${config.API_URL}/api/review/${reviewId}`,
+			method: 'DELETE'
+		});
+
+		// yield put({
+		// 	type: DELETE_REVIEW_BY_ID,
+		// 	payload: { reviewId }
+		//  });
+	} catch (e) {
+		console.log(e);
+	}
+}
+
 function* watchLoadMoreReviews() {
 	yield takeEvery(FETCH_MOVIE_REVIEWS, fetchMovieReviews);
 }
@@ -55,6 +73,14 @@ function* watchfetchUserReviews() {
 	yield takeEvery(FETCH_USER_REVIEWS, fetchUserReviews);
 }
 
+function* watchDeleteRevievById() {
+	yield takeEvery(DELETE_REVIEW_BY_ID, deleteRevievById);
+}
+
 export default function* review() {
-	yield all([watchLoadMoreReviews(), watchfetchUserReviews()]);
+	yield all([
+		watchLoadMoreReviews(),
+		watchfetchUserReviews(),
+		watchDeleteRevievById()
+	]);
 }

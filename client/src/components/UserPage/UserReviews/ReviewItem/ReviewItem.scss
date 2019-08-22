@@ -25,6 +25,11 @@
 			display: flex;
 			justify-content: space-between;
 
+			.movie-title-nav-link {
+				text-decoration: none;
+				color: inherit;
+			}
+
 			.movie-title-date {
 				font-weight: 400;
 				font-size: 0.9em;
