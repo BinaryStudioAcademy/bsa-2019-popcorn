@@ -12,7 +12,7 @@ router
   )
   .get("/:id", (req, res, next) =>
     userService
-      .getUserById({ user: req.params.id })
+      .getUserById(req.params.id)
       .then(result => {
         result.success ? res.send(result) : res.status(400).send(result);
       })
