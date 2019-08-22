@@ -7,16 +7,13 @@ import SurveyShortAnswer from '../SurveyItems/SurveyShortAnswer/SurveyShortAnswe
 import SurveyLinearScale from '../SurveyItems/SurveyLinearScale/SurveyLinearScale';
 import { faUsers } from '@fortawesome/free-solid-svg-icons';
 import ReactTimeAgo from 'react-time-ago';
-import JavascriptTimeAgo from 'javascript-time-ago';
-import en from 'javascript-time-ago/locale/en';
+
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { postAnswers } from '../UserSurveys/UserSurveys.redux/actions';
 import { transformAnswers } from './Survey.service';
 import Spinner from '../../shared/Spinner';
 import { NavLink } from 'react-router-dom';
-
-// JavascriptTimeAgo.locale(en);
 
 interface IProps {
 	surveyInfo: {
