@@ -11,6 +11,7 @@ import {
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import config from '../../../config';
 import ISelectedProfileInfo from '../SelectedProfileInterface';
+import Cropper from 'react-cropper';
 
 type ProfileProps = {
 	profileInfo: ISelectedProfileInfo;
@@ -18,6 +19,8 @@ type ProfileProps = {
 	uploadUrl?: string;
 	cancelAvatar?: () => any;
 	setAvatar?: (url: string, id: string) => any;
+	croppedSaved: boolean;
+	saveCropped: () => void;
 };
 interface IProfileComponentState {
 	errorMsg?: string;
@@ -73,6 +76,7 @@ class ProfileComponent extends Component<ProfileProps, IProfileComponentState> {
 			errorMsg: ''
 		};
 	}
+	private cropper = React.createRef<Cropper>();
 
 	handleUploadFile(e) {
 		this.setState({ errorMsg: '' });
@@ -101,7 +105,18 @@ class ProfileComponent extends Component<ProfileProps, IProfileComponentState> {
 			this.props.uploadAvatar(data, this.props.profileInfo.id);
 		else console.log('no uploadAvatar method');
 	}
-
+	handleSaveCropped() {
+		if (this.cropper.current) {
+			const dataUrl = this.cropper.current.getCroppedCanvas().toBlob(blob => {
+				const data = new FormData();
+				data.append('file', blob);
+				if (this.props.uploadAvatar)
+					this.props.uploadAvatar(data, this.props.profileInfo.id);
+				else console.log('no uploadAvatar method');
+			});
+		}
+		this.props.saveCropped();
+	}
 	render() {
 		let {
 			name,
@@ -119,8 +134,7 @@ class ProfileComponent extends Component<ProfileProps, IProfileComponentState> {
 		if (!location) {
 			location = 'Kyiv';
 		}
-
-		const { uploadUrl, cancelAvatar, setAvatar } = this.props;
+		const { uploadUrl, cancelAvatar, setAvatar, croppedSaved } = this.props;
 		return (
 			<div className={'UserProfileComponent'}>
 				{this.state.errorMsg && (
@@ -129,14 +143,21 @@ class ProfileComponent extends Component<ProfileProps, IProfileComponentState> {
 				<div className={'ProfileWrap'}>
 					{uploadUrl ? (
 						<div className={'profilePhotoWrap'}>
-							<img
-								src={uploadUrl}
-								style={{ width: '100%', height: '100%' }}
-								alt=""
-							/>
+							{this.props.croppedSaved ? (
+								<img src={uploadUrl} />
+							) : (
+								<Cropper
+									ref={this.cropper}
+									src={uploadUrl}
+									style={{ width: '100%', height: '100%' }}
+									aspectRatio={3 / 4}
+								/>
+							)}
 							<span
 								onClick={() => {
-									if (setAvatar) setAvatar(uploadUrl, id);
+									this.props.croppedSaved && setAvatar
+										? setAvatar(uploadUrl, id)
+										: this.handleSaveCropped();
 								}}
 							>
 								<FontAwesomeIcon
