@@ -14,8 +14,8 @@ import config from '../../../../config';
 
 interface IProps {
 	event: IEventFormatClient;
-	deleteEvent: null | ((id: string, currentUserId: string) => any);
-	editEvent: null | ((event: IEventFormatClient) => any);
+	deleteEvent?: null | ((id: string, currentUserId: string) => any);
+	editEvent?: null | ((event: IEventFormatClient) => any);
 	isOwnEvent: boolean;
 }
 
@@ -38,7 +38,7 @@ const EventItem: React.FC<IProps> = ({
 	} = event;
 
 	return (
-		<div className="event-item">
+		<div className="event-item hover">
 			<div className="event-wrapper">
 				<div className="event-left">
 					<div className="event-image-wrapper">
@@ -85,7 +85,7 @@ const EventItem: React.FC<IProps> = ({
 							)}
 						</div>
 						{isOwnEvent &&
-							(deleteEvent && editEvent !== null ? (
+							(deleteEvent && editEvent && (
 								<div className="event-buttons">
 									<button
 										className="edit-button"
@@ -100,7 +100,7 @@ const EventItem: React.FC<IProps> = ({
 										<CloseIcon className="delete-button-svg" />
 									</button>
 								</div>
-							) : null)}
+							))}
 					</div>
 				</div>
 			</div>

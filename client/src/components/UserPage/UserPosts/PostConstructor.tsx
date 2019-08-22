@@ -33,6 +33,8 @@ interface IPostConstructorState {
 	extraLink: string;
 	extraTitle: string;
 	modalExtra: boolean;
+	reactions: Array<any>;
+	comments: Array<any>;
 }
 
 class PostConstructor extends React.Component<
@@ -48,7 +50,9 @@ class PostConstructor extends React.Component<
 			userId: this.props.userId,
 			extraLink: '',
 			extraTitle: '',
-			modalExtra: false
+			modalExtra: false,
+			reactions: [],
+			comments: []
 		};
 		this.imageStateHandler = this.imageStateHandler.bind(this);
 		this.onSave = this.onSave.bind(this);

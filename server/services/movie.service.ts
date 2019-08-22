@@ -1,8 +1,7 @@
 import { Movie } from "../models/MovieModel";
 import { MovieRate } from "../models/MovieRateModel/movieRateModel";
-import MovieRepository, {
-  getMovieVideoLinkById
-} from "../repository/movie.repository";
+import MovieRepository, { getMovieVideoLinkById, getCredits } from "../repository/movie.repository";
+
 import MovieRateRepository from "../repository/movieRate.repository";
 import { getCustomRepository, Like, getRepository } from "typeorm";
 import * as elasticRepository from "../repository/movieElastic.repository";
@@ -15,6 +14,12 @@ export const getMovies = async ({ size, from }): Promise<any[]> => {
   data = data.hits.hits;
 
   return data.map(movie => movie._source);
+};
+
+export const getCastCrewById = async (movieId: number): Promise<any> => {
+  const credits = await getCredits(movieId);
+  console.log(credits.credits);
+  return credits.credits;
 };
 
 export const getMovieById = async (movieId: string): Promise<any> => {

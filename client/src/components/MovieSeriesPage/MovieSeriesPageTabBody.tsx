@@ -1,8 +1,6 @@
 import React from 'react';
 import { Switch, Route } from 'react-router-dom';
-import DiscussionComponent, {
-	IDiscussionUser
-} from './DiscussionComponent/DiscussionComponent';
+import DiscussionComponent from './DiscussionComponent/DiscussionComponent';
 import FilmBasicTabComponent from './FilmBasicTabComponent/FilmBasicTabComponent';
 import MovieSeriesCastCrew from './MovieSeriesCastCrew/MovieSeriesCastCrew';
 import MovieSeriesReviews from './MovieSeriesReviews/MovieSeriesReviews';
@@ -11,6 +9,7 @@ import MovieSeriesAwards from './MovieSeriesAwards/MovieSeriesAwards';
 import MovieSeriesStatistics from './MovieSeriesStatistics/MovieSeriesStatistics';
 import StaffCast from './StaffCast/StaffCast';
 import TMovie from './TMovie';
+import { IDiscussionUser } from '../UserPage/UserEvents/UserEvents.service';
 
 const messages = [
 	{
@@ -63,12 +62,16 @@ interface IProps {
 	mainPath: string;
 	movie: TMovie;
 	currentUser: IDiscussionUser;
+	fetchCastCrew: (id: any) => any;
+	crewCast: any;
 }
 
 const MovieSeriesPageTabBody: React.SFC<IProps> = ({
 	mainPath,
 	movie,
-	currentUser
+	currentUser,
+	fetchCastCrew,
+	crewCast
 }) => {
 	return (
 		<div className={'movie-series-page-tab-body'}>
@@ -78,7 +81,18 @@ const MovieSeriesPageTabBody: React.SFC<IProps> = ({
 					path={`${mainPath}`}
 					render={() => <FilmBasicTabComponent movie={movie} />}
 				/>
-				<Route path={`${mainPath}/cast-crew`} component={StaffCast} />
+				<Route
+					path={`${mainPath}/cast-crew`}
+					render={() => {
+						return (
+							<StaffCast
+								crewCast={crewCast}
+								fetchCastCrew={fetchCastCrew}
+								movieId={movie.id}
+							></StaffCast>
+						);
+					}}
+				/>
 				<Route path={`${mainPath}/reviews`} component={MovieSeriesReviews} />
 				<Route path={`${mainPath}/posts`} component={MovieSeriesPosts} />
 				<Route path={`${mainPath}/awards`} component={MovieSeriesAwards} />
@@ -88,9 +102,10 @@ const MovieSeriesPageTabBody: React.SFC<IProps> = ({
 				/>
 			</Switch>
 			<DiscussionComponent
-				movieId={movie.id}
+				entityId={movie.id}
 				messages={movie.messages}
 				currentUser={currentUser}
+				entityIdName="movieId"
 			/>
 		</div>
 	);

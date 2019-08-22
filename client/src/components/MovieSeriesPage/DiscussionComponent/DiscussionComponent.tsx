@@ -2,14 +2,9 @@ import React, { Component, createRef } from 'react';
 import { ReactComponent as SendLogo } from '../../../assets/icons/general/messager/paper-plane.svg';
 import SocketService from '../../../services/socket.service';
 import './DiscussionComponent.scss';
+import Moment from 'react-moment';
 import config from '../../../config';
-
-export interface IDiscussionUser {
-	avatar?: string;
-	id: string;
-	name: string;
-}
-
+import { IDiscussionUser } from '../../UserPage/UserEvents/UserEvents.service';
 export interface IDiscussionMessage {
 	id: string;
 	text: string;
@@ -19,12 +14,14 @@ export interface IDiscussionMessage {
 interface IDiscussionProps {
 	messages: IDiscussionMessage[];
 	currentUser: IDiscussionUser;
-	movieId: string;
+	entityId: string;
+	entityIdName: string;
 }
 
 interface IDiscussionState {
 	messagesState: IDiscussionMessage[];
 	inputIsEmpty: boolean;
+	roomId: string;
 }
 
 class DiscussionComponent extends Component<
@@ -35,16 +32,17 @@ class DiscussionComponent extends Component<
 		super(props);
 		this.state = {
 			messagesState: this.props.messages,
-			inputIsEmpty: true
+			inputIsEmpty: true,
+			roomId: String(props.entityIdName).concat(props.entityId)
 		};
-		this.addSocketEvents(this.addMessage, props.movieId);
+		this.addSocketEvents(this.addMessage, this.state.roomId);
 	}
 	private newMessage = createRef<HTMLTextAreaElement>();
 	private userPhoto = createRef<HTMLImageElement>();
 	private discussionComponent = createRef<HTMLDivElement>();
 
-	addSocketEvents = (addMessage, movieId) => {
-		SocketService.join(`${movieId}`);
+	addSocketEvents = (addMessage, roomId) => {
+		SocketService.join(`${roomId}`);
 		SocketService.on('add-message-to-discussion', addMessage);
 	};
 
@@ -80,7 +78,7 @@ class DiscussionComponent extends Component<
 
 	sendMessage = () => {
 		if (!this.newMessage.current) return;
-		const { currentUser, movieId } = this.props;
+		const { currentUser, entityId, entityIdName } = this.props;
 		const id = currentUser.id;
 		const name = currentUser.name;
 		const avatar = currentUser.avatar;
@@ -91,7 +89,8 @@ class DiscussionComponent extends Component<
 			user: { id, name, avatar },
 			text,
 			createdAt,
-			movieId
+			[entityIdName]: entityId,
+			entityIdName
 		};
 		this.newMessage.current.value = '';
 		this.newMessage.current.focus();
@@ -132,40 +131,19 @@ class DiscussionComponent extends Component<
 	};
 
 	componentWillUnmount() {
-		SocketService.leave(this.props.movieId);
+		SocketService.leave(this.state.roomId);
 	}
 
 	render() {
 		const messages = this.state.messagesState;
 		return (
 			<div className="UserDiscussionComponent" id="scroller">
-				<div className="MessageContainer" ref={this.discussionComponent}>
-					{messages.map(message => (
-						<div className="messageItem" key={message.id}>
-							<img
-								src={message.user.avatar || config.DEFAULT_AVATAR}
-								alt="userPhoto"
-							/>
-							<div className="messageBody">
-								<div className="messageInfo">
-									<div className="name">
-										{message.user.id === this.props.currentUser.id
-											? 'Me'
-											: message.user.name}
-									</div>
-									<div className="date">{message.createdAt}</div>
-								</div>
-								<div className="body">{message.text}</div>
-							</div>
-						</div>
-					))}
-				</div>
 				<div className="messageItem newMessageItem" tabIndex={0} id="anchor">
 					<div className="messageBody">
 						<div className="newMessage">
 							<textarea
 								className="newMessageInput"
-								wrap="off"
+								wrap="soft"
 								ref={this.newMessage}
 								placeholder="Type a message"
 								onChange={this.inputChange}
@@ -178,6 +156,32 @@ class DiscussionComponent extends Component<
 							</button>
 						</div>
 					</div>
+				</div>
+				<div className="MessageContainer" ref={this.discussionComponent}>
+					{messages.map(message => (
+						<div className="messageItem" key={message.id}>
+							<img
+								src={message.user.avatar || config.DEFAULT_AVATAR}
+								alt="userPhoto"
+							/>
+							<div className="messageBody">
+								<div className="messageInfo">
+									<div className="name">
+										{message.user.id === this.props.currentUser.id
+											? 'Me '
+											: message.user.name}
+									</div>
+									<div className="date">
+										&nbsp;
+										<Moment format=" D MMM HH:mm " local>
+											{String(message.createdAt)}
+										</Moment>
+									</div>
+								</div>
+								<div className="body">{message.text}</div>
+							</div>
+						</div>
+					))}
 				</div>
 			</div>
 		);

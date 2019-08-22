@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import Modal from 'react-responsive-modal';
-import { IEvent } from '../EventPage';
 import EventMap from '../EventMap';
+import Moment from 'react-moment';
 import './About.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
@@ -9,9 +9,10 @@ import {
 	faMapMarker,
 	faInfoCircle
 } from '@fortawesome/free-solid-svg-icons';
+import { IEventFormatClient } from '../../UserPage/UserEvents/UserEvents.service';
 
 interface IProps {
-	event: IEvent;
+	event: IEventFormatClient;
 }
 
 const MAP_API_KEY = 'AIzaSyD29w9W3OSEnII5bBNqhSxSSIWjrdgBdto';
@@ -23,15 +24,26 @@ const About: React.SFC<IProps> = ({ event }) => {
 		<div className="about-event">
 			<div className="date">
 				<FontAwesomeIcon className="icon" icon={faClock} />
-				<span>Субота, 24 серпня 2019 р. з 13:00 по 19:00</span>
+				<span>
+					{
+						<Moment format=" D MMM HH:mm " local>
+							{String(event.dateRange.startDate)}
+						</Moment>
+					}{' '}
+					-
+					{
+						<Moment format=" D MMM HH:mm " local>
+							{String(event.dateRange.endDate)}
+						</Moment>
+					}
+				</span>
 			</div>
 			<div className="location">
 				<div className="location-info">
 					<div>
 						<FontAwesomeIcon className="icon" icon={faMapMarker} />
 						<span>
-							Парк культури та відпочинку ім. Б. Хмельницького Парк культури та
-							відпочинку ім. Б. Хмельницького
+							{event.location.lat} {event.location.lng}
 						</span>
 					</div>
 					<span
@@ -67,12 +79,7 @@ const About: React.SFC<IProps> = ({ event }) => {
 			</div>
 			<div className="details">
 				<FontAwesomeIcon className="icon" icon={faInfoCircle} />
-				<span>
-					Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel culpa
-					doloribus est provident dolorem expedita voluptatum. Explicabo, et
-					nobis fuga soluta nulla laborum repellat accusamus quidem animi iure
-					nostrum. Dicta?
-				</span>
+				<span>{event.description}</span>
 			</div>
 		</div>
 	);
