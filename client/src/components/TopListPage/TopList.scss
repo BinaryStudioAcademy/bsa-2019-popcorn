@@ -1,0 +1,43 @@
+@import '../../styles/variables.scss';
+
+.top-list-wrapper {
+	border: 1px solid $border-color;
+	margin: 30px;
+	.top-page-item {
+		height: 150px;
+		border: 1px solid $border-color;
+		margin: 20px 0;
+		display: flex;
+		justify-content: space-between;
+
+		.top-image-section {
+			width: 25%;
+			text-align: center;
+
+			.top-page-item-img {
+				max-height: 100%;
+				max-width: 100%;
+			}
+		}
+
+		.top-main-section {
+			width: 50%;
+			border: 1px solid green;
+			ol {
+				li {
+					list-style-position: inside;
+				}
+			}
+		}
+
+		.top-secondary-section {
+			width: 25%;
+			border: 1px solid green;
+
+			img {
+				width: 40px;
+				border-radius: 20px;
+			}
+		}
+	}
+}

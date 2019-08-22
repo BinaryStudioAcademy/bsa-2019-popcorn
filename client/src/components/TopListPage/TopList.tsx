@@ -2,17 +2,24 @@ import React from 'react';
 import { fetchTops } from './TopListPage.redux/actions';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import Spinner from '../shared/Spinner';
+import TopListItem from './TopListItem';
+import './TopList.scss';
 
 interface ITopLIstProps {
-	tops: [];
+	tops: Array<any>;
 	fetchTops: () => any;
 }
 
 const TopList: React.FC<ITopLIstProps> = props => {
 	if (!props.tops) {
 		props.fetchTops();
+		return <Spinner />;
 	}
-	return <div>Hello</div>;
+
+	const topListItems = props.tops.map(top => <TopListItem top={top} />);
+
+	return <div className="top-list-wrapper">{topListItems}</div>;
 };
 
 const mapStateToProps = (rootState, props) => ({
