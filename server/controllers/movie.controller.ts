@@ -59,6 +59,12 @@ router
         .then((response: any) => res.send(response))
         .catch(next);
     }
-  );
+  )
+  .get("/cast-crew/:movieId", (req: any, res: Response, next: NextFunction) => {
+    return movieService
+      .getCastCrewById(req.params.movieId) // get movie by userId and movieId
+      .then((response: any) => res.send(response))
+      .catch(next);
+  });
 
 export default router;

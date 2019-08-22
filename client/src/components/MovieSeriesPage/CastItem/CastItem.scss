@@ -9,14 +9,8 @@
 	letter-spacing: $base-letter-spacing;
 	padding: 0.5em;
 	border-radius: 10px;
-	width: 100px;
+	width: calc(130px / 4 * 3 + 0.5em);
 	text-align: center;
-}
-
-.cast-item-image {
-	width: 60px;
-	height: 60px;
-	border-radius: 10px;
 }
 
 .cast-item-name {
@@ -24,7 +18,17 @@
 	color: $text-base-color;
 	border-bottom: 1px solid $border-color;
 }
-
 .cast-item-role {
 	color: $text-secondary-color;
+}
+.cast-item-image {
+	width: 100%;
+}
+.cast-item-image-wrp {
+	width: calc(130px / 4 * 3);
+	height: 130px;
+	border-radius: 10px;
+	overflow: hidden;
+	display: flex;
+	align-items: center;
 }
