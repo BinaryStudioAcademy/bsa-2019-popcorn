@@ -64,7 +64,7 @@ class ReviewItem extends React.Component<IProps> {
 	};
 
 	setModal = (isSetModal: boolean) => {
-		this.setState({ ...this.state, showModal: !this.state.showModal });
+		this.setState({ ...this.state, showModal: isSetModal });
 	};
 
 	render() {

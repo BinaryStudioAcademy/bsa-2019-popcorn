@@ -41,7 +41,7 @@ class MovieSeriesReviews extends React.Component<IProps> {
 				) : (
 					<div>
 						{!reviews.length ? (
-							<div className="warning">No one Review</div>
+							<div className="warning">No reviews yet</div>
 						) : (
 							reviews.map((item: IReview) => {
 								return (
