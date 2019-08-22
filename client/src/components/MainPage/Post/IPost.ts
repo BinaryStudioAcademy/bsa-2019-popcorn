@@ -1,4 +1,5 @@
 import IComment from './IComment';
+import IReaction from './IReaction';
 
 export default interface IPost {
 	id: string;
@@ -21,4 +22,5 @@ export default interface IPost {
 		id: string;
 		tagName: string;
 	}[];
+	reactions: Array<IReaction>;
 }

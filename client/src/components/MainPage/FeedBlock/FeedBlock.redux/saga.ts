@@ -1,5 +1,10 @@
 import { all, call, put, takeEvery } from '@redux-saga/core/effects';
-import { CREATE_COMMENT, FETCH_POSTS, SET_POSTS } from './actionTypes';
+import {
+	CREATE_COMMENT,
+	CREATE_REACTION,
+	FETCH_POSTS,
+	SET_POSTS
+} from './actionTypes';
 import webApi from '../../../../services/webApi.service';
 import config from '../../../../config';
 
@@ -38,6 +43,22 @@ export function* createComment(action) {
 	}
 }
 
+export function* createReaction(action) {
+	const { userId, type, postId } = action.payload;
+	try {
+		yield call(webApi, {
+			method: 'POST',
+			endpoint: config.API_URL + '/api/post/reaction',
+			body: {
+				userId,
+				type,
+				postId
+			}
+		});
+	} catch (e) {
+		console.log('createReaction: ', e.message);
+	}
+}
 function* watchFetch() {
 	yield takeEvery(FETCH_POSTS, fetchPosts);
 }
@@ -46,6 +67,9 @@ function* watchCreateComment() {
 	yield takeEvery(CREATE_COMMENT, createComment);
 }
 
+function* watchCreateReaction() {
+	yield takeEvery(CREATE_REACTION, createReaction);
+}
 export default function* feed() {
-	yield all([watchFetch(), watchCreateComment()]);
+	yield all([watchFetch(), watchCreateComment(), watchCreateReaction()]);
 }

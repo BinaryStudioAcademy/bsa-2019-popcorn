@@ -1,5 +1,12 @@
-import { FETCH_POSTS, CREATE_COMMENT, ADD_NEW_COMMENT } from './actionTypes';
+import {
+	ADD_NEW_COMMENT,
+	ADD_NEW_REACTION,
+	CREATE_COMMENT,
+	CREATE_REACTION,
+	FETCH_POSTS
+} from './actionTypes';
 import IComment from '../../Post/IComment';
+import IReaction from '../../Post/IReaction';
 
 export const fetchPosts = () => {
 	return {
@@ -23,6 +30,30 @@ export const addNewComment = (comment: IComment) => {
 		type: ADD_NEW_COMMENT,
 		payload: {
 			comment
+		}
+	};
+};
+
+export const createReaction = (
+	type: string,
+	userId: string,
+	postId: string
+) => {
+	return {
+		type: CREATE_REACTION,
+		payload: {
+			type,
+			userId,
+			postId
+		}
+	};
+};
+
+export const addNewReaction = (reaction: IReaction) => {
+	return {
+		type: ADD_NEW_REACTION,
+		payload: {
+			reaction
 		}
 	};
 };

@@ -17,6 +17,12 @@ import { Link } from 'react-router-dom';
 import IPost from './IPost';
 import IComment from './IComment';
 import SocketService from '../../../services/socket.service';
+import {
+	addNewReaction,
+	createReaction
+} from '../FeedBlock/FeedBlock.redux/actions';
+import { bindActionCreators } from 'redux';
+import IReaction from './IReaction';
 
 type IPostProps = {
 	post: IPost;
@@ -24,15 +30,18 @@ type IPostProps = {
 	userRole: string;
 	createComment?: (userId: string, text: string, postId: string) => any;
 	addNewComment?: (comment: IComment) => any;
+	createReaction?: (type: string, userId: string, postId: string) => any;
+	addNewReaction?: (reaction: IReaction) => any;
 };
+
 interface IReactItem {
 	id: number;
 	name: string;
 }
+
 interface IPostState {
 	isModalShown: boolean;
 	hover: boolean;
-	reactionList: Array<IReactItem>;
 }
 
 class Post extends PureComponent<IPostProps, IPostState> {
@@ -40,14 +49,10 @@ class Post extends PureComponent<IPostProps, IPostState> {
 		super(props);
 		this.state = {
 			isModalShown: false,
-			hover: false,
-			reactionList: []
+			hover: false
 		};
-		SocketService.on(
-			'new-comment',
-			comment => props.addNewComment && props.addNewComment(comment)
-		);
 	}
+
 	MouseEnterLikeButton = () => {
 		this.setState({ hover: true });
 	};
@@ -57,14 +62,21 @@ class Post extends PureComponent<IPostProps, IPostState> {
 	};
 
 	onReactionClick = (reaction: IReactItem) => {
-		const reactionList = this.state.reactionList;
-
-		if (reactionList.findIndex(item => item.id === reaction.id) != -1) {
-			return;
-		}
-
-		reactionList.push(reaction);
-		this.setState({ reactionList });
+		if (this.props.createReaction)
+			this.props.createReaction(
+				reaction.name,
+				this.props.userId,
+				this.props.post.id
+			);
+		// тут же в конструкторе написать обработчик на новую реакцию
+		// const reactionList = this.state.reactionList;
+		//
+		// if (reactionList.findIndex(item => item.id === reaction.id) != -1) {
+		//     return;
+		// }
+		//
+		// reactionList.push(reaction);
+		// this.setState({reactionList});
 	};
 
 	isOwnPost() {
@@ -75,14 +87,17 @@ class Post extends PureComponent<IPostProps, IPostState> {
 		} = this.props;
 		return userRole === 'admin' || userId === postOwner.id;
 	}
+
 	toggleModal = () => {
 		this.setState({ isModalShown: !this.state.isModalShown });
 	};
+
 	isModalShown() {
 		return this.state.isModalShown ? (
 			<PostEditModal isOwn={this.isOwnPost()} />
 		) : null;
 	}
+
 	nestComments(commentList) {
 		const commentMap = {};
 		commentList.forEach(comment => (commentMap[comment.id] = comment));
@@ -99,9 +114,11 @@ class Post extends PureComponent<IPostProps, IPostState> {
 			return comment.parentId == null;
 		});
 	}
+
 	nestedComments = this.props.post.comments
 		? this.nestComments(this.props.post.comments)
 		: this.props.post.comments;
+
 	render() {
 		const {
 			post: {
@@ -170,8 +187,8 @@ class Post extends PureComponent<IPostProps, IPostState> {
 					</button>
 				</div>
 				<div className="reaction-list">
-					{this.state.reactionList.map((item, index) => (
-						<PostReaction key={index} quantity={1} name={item.name} />
+					{this.props.post.reactions.map((item, index) => (
+						<PostReaction key={index} quantity={1} name={item.type} />
 					))}
 				</div>
 				{tags && (
@@ -217,4 +234,14 @@ const mapStateToProps = (rootState, props) => ({
 	userRole: rootState.profile.profileInfo.role
 });
 
-export default connect(mapStateToProps)(Post);
+const actions = {
+	createReaction,
+	addNewReaction
+};
+
+const mapDispatchToProps = dispatch => bindActionCreators(actions, dispatch);
+
+export default connect(
+	mapStateToProps,
+	mapDispatchToProps
+)(Post);

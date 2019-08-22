@@ -1,4 +1,4 @@
-import { ADD_NEW_COMMENT, SET_POSTS } from './actionTypes';
+import { ADD_NEW_COMMENT, ADD_NEW_REACTION, SET_POSTS } from './actionTypes';
 import IComment from '../../Post/IComment';
 import findIndexInArray from '../../../../helpers/findIndexInArray';
 import IPost from '../../Post/IPost';
@@ -25,10 +25,24 @@ export default function(state = initialState, action) {
 			if (!post.comments) post.comments = [comment];
 			else post.comments.push(comment);
 
-			console.log(posts);
 			return {
 				...state,
 				posts: [...posts]
+			};
+		case ADD_NEW_REACTION:
+			if (!state.posts) return state;
+			const postsForNewReact = [...state.posts];
+			const reaction = action.payload.reaction.reaction;
+
+			const i = findIndexInArray(postsForNewReact, 'id', reaction.post.id);
+			if (i === -1) return state;
+			const postForNewReact = postsForNewReact[i];
+			if (!postForNewReact.reactions) postForNewReact.reactions = [reaction];
+			else postForNewReact.reactions.push(reaction);
+
+			return {
+				...state,
+				posts: [...postsForNewReact]
 			};
 		default:
 			return state;

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import PostList from '../PostList/PostList';
 import RecommendList from '../RecommendList/RecommendList';
 import './FeedBlock.scss';
@@ -8,12 +8,15 @@ import { connect } from 'react-redux';
 import Spinner from '../../shared/Spinner';
 import {
 	addNewComment,
+	addNewReaction,
 	createComment,
 	fetchPosts
 } from './FeedBlock.redux/actions';
 import StoryList from '../StoryList';
 import { fetchStories } from '../StoryList/story.redux/actions';
 import IComment from '../Post/IComment';
+import SocketService from '../../../services/socket.service';
+import IReaction from '../Post/IReaction';
 
 interface IProps {
 	posts: any;
@@ -22,9 +25,24 @@ interface IProps {
 	fetchStories: () => any;
 	createComment: (userId: string, text: string, postId: string) => any;
 	addNewComment: (comment: IComment) => any;
+	addNewReaction?: (reaction: IReaction) => any;
 }
+const addSocket = (addNewComment, addNewReaction) => {
+	if (wasAddedSockets) return;
+	SocketService.on(
+		'new-comment',
+		comment => addNewComment && addNewComment(comment)
+	);
+	SocketService.on('new-reaction', reaction => {
+		addNewReaction && addNewReaction(reaction);
+	});
+	wasAddedSockets = true;
+};
+let wasAddedSockets = false;
 
 const FeedBlock = (props: IProps) => {
+	addSocket(props.addNewComment, props.addNewReaction);
+
 	if (!props.posts) {
 		props.fetchPosts();
 	}
@@ -63,7 +81,8 @@ const actions = {
 	fetchPosts,
 	fetchStories,
 	createComment,
-	addNewComment
+	addNewComment,
+	addNewReaction
 };
 const mapDispatchToProps = dispatch => bindActionCreators(actions, dispatch);
 

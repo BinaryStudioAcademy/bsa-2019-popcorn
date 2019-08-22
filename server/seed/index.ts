@@ -13,7 +13,7 @@ export default [
   SeedPosts1565202279038,
   SeedStory1565606634607,
   SeedPostComments1565823065222,
-  SeedPostReaction1565847243749,
+  // SeedPostReaction1565847243749,
   SeedVoting1565848454004,
   SeedSurveyAnswers1565963322768,
   SeedSurvey1566123343520,
