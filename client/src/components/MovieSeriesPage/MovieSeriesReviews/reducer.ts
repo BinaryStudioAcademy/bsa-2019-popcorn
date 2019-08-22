@@ -6,7 +6,7 @@ import {
 	FETCH_USER_REVIEWS,
 	FETCH_USER_REVIEWS_SUCCESS
 } from '../../UserPage/UserReviews/actionTypes';
-
+import movieAdapter from '../../MovieSeriesPage/movieAdapter';
 const initialState: {
 	reviewList?: any;
 	isLoaded?: boolean;
@@ -22,15 +22,19 @@ const initialState: {
 export default (state = initialState, action) => {
 	switch (action.type) {
 		case FETCH_MOVIE_REVIEWS:
-			return { ...state, isLoaded: false };
+			return { ...state, reviewList: null, isLoaded: false };
 		case FETCH_MOVIE_REVIEWS_SUCCESS:
 			return { ...state, reviewList: action.payload.reviews, isLoaded: true };
 		case FETCH_USER_REVIEWS:
-			return { ...state, loading: true };
+			return { ...state, reviewUserList: null, loading: true };
 		case FETCH_USER_REVIEWS_SUCCESS:
+			const resultReviewUserList = action.payload.reviewUserList.map(review => {
+				review.movie = movieAdapter(review.movie);
+				return review;
+			});
 			return {
 				...state,
-				reviewUserList: action.payload.reviewUserList,
+				reviewUserList: resultReviewUserList,
 				loading: false
 			};
 		default:

@@ -4,13 +4,24 @@ import './UserReviews.scss';
 import { fetchUserReviews } from './actions';
 import { bindActionCreators } from 'redux';
 import Spinner from '../../shared/Spinner';
-import ReviewItem from '../../MovieSeriesPage/MovieSeriesReviews/ReviewItem/ReviewItem';
+import ReviewItem from './ReviewItem/ReviewItem';
+import './UserReviews.scss';
+import TMovie from '../../MovieSeriesPage/TMovie';
 
 interface IProps {
-	reviewUserList: any;
+	reviewUserList: IReview[];
 	fetchUserReviews: (userId: string) => object;
 	currentUserId: string;
 	loading: boolean;
+}
+
+export interface IReview {
+	id: string;
+	text: string;
+	created_at: Date;
+	movie: TMovie;
+	analysis: string;
+	user: any;
 }
 
 class UserReviews extends React.Component<IProps> {
@@ -20,9 +31,9 @@ class UserReviews extends React.Component<IProps> {
 
 	render() {
 		const { reviewUserList, currentUserId, loading } = this.props;
-
+		console.log(reviewUserList);
 		return (
-			<div className="MovieSeriesReviews">
+			<div className="UserReviews">
 				{loading ? (
 					<Spinner />
 				) : (
@@ -31,13 +42,7 @@ class UserReviews extends React.Component<IProps> {
 							<div className="warning">No one Review</div>
 						) : (
 							reviewUserList.map(item => {
-								return (
-									<ReviewItem
-										review={item}
-										key={item.id}
-										currentUserId={currentUserId}
-									/>
-								);
+								return <ReviewItem review={item} key={item.id} />;
 							})
 						)}
 					</div>

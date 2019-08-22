@@ -1,0 +1,128 @@
+@import '../../../../styles/variables.scss';
+
+.review-user-item-wrapper {
+	width: 100%;
+	box-sizing: border-box;
+	margin-bottom: 15px;
+	border: 1px solid $border-color;
+	box-shadow: 0px 0px 2px 3px $input-shadow-color;
+	border-radius: 20px;
+
+	.review-user-item {
+		padding: 20px;
+		display: grid;
+		grid-template-columns: 150px 1fr;
+		grid-gap: 20px;
+	}
+
+	.review-main {
+		.movie-title {
+			color: $text-base-color;
+			font-size: $header-medium;
+			text-transform: uppercase;
+			font-weight: 600;
+			letter-spacing: $base-letter-spacing;
+			display: flex;
+			justify-content: space-between;
+
+			.movie-title-date {
+				font-weight: 400;
+				font-size: 0.9em;
+			}
+			.review-buttons {
+				display: flex;
+				justify-content: flex-end;
+				margin-top: -5px;
+
+				button {
+					display: block;
+					outline: none;
+					border: 1px solid rgba(0, 0, 0, 0.11);
+					background-color: white;
+					cursor: pointer;
+					border-radius: 3px;
+					box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.2);
+					transition: box-shadow 0.3s ease, border-color 0.4s ease;
+
+					&:hover {
+						box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.12);
+						border-color: rgba(0, 0, 0, 0.05);
+					}
+				}
+				.edit-button {
+					padding: 0 10px;
+					margin-right: 10px;
+					color: #00000099;
+					font-size: 15px;
+				}
+
+				.delete-button {
+					font-size: 0;
+					.delete-button-svg {
+						opacity: 0.6;
+					}
+				}
+			}
+		}
+
+		.review-date {
+			color: $text-secondary-color;
+		}
+
+		.review-item-text {
+			margin-top: 25px;
+			letter-spacing: $input-letter-spacing;
+			overflow: hidden;
+			position: relative;
+			text-align: justify;
+
+			.read-more-gradient {
+				width: 100%;
+				height: 40px;
+				position: absolute;
+				bottom: 0;
+				background-image: linear-gradient(to bottom, transparent, white);
+				border-radius: 1px;
+				cursor: pointer;
+				transition: opacity 0.4s ease;
+
+				&:hover {
+					opacity: 0.7;
+				}
+			}
+		}
+
+		.review-item-text-big {
+			height: 141px;
+		}
+		.review-item-text-big-show-full {
+			height: auto;
+		}
+
+		.read-more-btn {
+			color: $text-secondary-color;
+			font-style: italic;
+			cursor: pointer;
+			transition: opacity 0.3s ease;
+			text-align: right;
+
+			&:hover {
+				opacity: 0.7;
+			}
+		}
+		.fa-chevron-down,
+		.fa-chevron-up {
+			margin-left: 4px;
+			width: 12px;
+		}
+	}
+
+	.image-wrapper {
+		font-size: 0;
+		width: 150px;
+		img {
+			width: 100%;
+			box-shadow: 0 1px 6px black;
+		}
+	}
+}
