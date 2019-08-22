@@ -7,7 +7,11 @@ import {
 	SET_USER_RATE,
 	FETCH_SEARCH,
 	RESET_SEARCH_MOVIE,
-	FETCH_SEARCH_TO_ADD_MOVIE
+	FETCH_SEARCH_TO_ADD_MOVIE,
+	LOAD_MORE_MOVIE,
+	FETCH_REVIEW_BY_USER_MOVIE_ID,
+	SET_REVIEW,
+	REMOVE_REVIEW_SET
 } from './actionTypes';
 
 export const fetchMovieList = (): any => {
@@ -83,5 +87,51 @@ export const fetchSearchToAddMovieInStory = (title: string): any => {
 		payload: {
 			title
 		}
+	};
+};
+
+export const loadMoreMovie = (size: number, from: number): any => {
+	return {
+		type: LOAD_MORE_MOVIE,
+		payload: {
+			size,
+			from
+		}
+	};
+};
+
+export const fetchReviewByMovieUserId = (
+	userId: string,
+	movieId: string
+): any => {
+	return {
+		type: FETCH_REVIEW_BY_USER_MOVIE_ID,
+		payload: {
+			userId,
+			movieId
+		}
+	};
+};
+
+export const setReview = (
+	userId: string,
+	movieId: string,
+	text: string,
+	prevId = null
+) => {
+	return {
+		type: SET_REVIEW,
+		payload: {
+			userId,
+			movieId,
+			text,
+			prevId
+		}
+	};
+};
+
+export const removeReviewSet = () => {
+	return {
+		type: REMOVE_REVIEW_SET
 	};
 };

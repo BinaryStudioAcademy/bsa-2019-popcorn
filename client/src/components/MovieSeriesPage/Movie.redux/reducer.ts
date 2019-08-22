@@ -7,7 +7,11 @@ import {
 	SET_SEARCH_MOVIE,
 	SET_SEARCH_MOVIE_TO_ADD,
 	FETCH_MOVIE_USER_RATE_SUCCESS,
-	FETCH_MOVIE_BY_ID_SUCCESS
+	FETCH_MOVIE_BY_ID_SUCCESS,
+	SET_LOAD_MORE_MOVIE,
+	FETCH_REVIEW_BY_USER_MOVIE_ID_SUCCESS,
+	SET_REVIEW_SUCCESS,
+	REMOVE_REVIEW_SET
 } from './actionTypes';
 import TMovie from '../TMovie';
 import movieAdapter from '../movieAdapter';
@@ -23,6 +27,7 @@ const initialState: {
 	moviesSearchAddMovieToStory: null | Array<TMovie>;
 	searchTitle: string;
 	isLoading: boolean;
+	ownReview: any;
 } = {
 	moviesSearch: [],
 	alreadySearch: false,
@@ -33,7 +38,8 @@ const initialState: {
 	isLoading: false,
 	searchTitle: '',
 	userRate: null,
-	fetchedMovie: null
+	fetchedMovie: null,
+	ownReview: null
 };
 
 export default function(state = initialState, action) {
@@ -88,6 +94,29 @@ export default function(state = initialState, action) {
 			return {
 				...state,
 				isLoading: action.payload.loading
+			};
+		case SET_LOAD_MORE_MOVIE:
+			return {
+				...state,
+				movieList: [
+					...state.movieList,
+					...(action.payload.movies || []).map(movieAdapter)
+				]
+			};
+		case FETCH_REVIEW_BY_USER_MOVIE_ID_SUCCESS:
+			return {
+				...state,
+				ownReview: action.payload.review || { text: '' }
+			};
+		case SET_REVIEW_SUCCESS:
+			return {
+				...state,
+				ownReview: null
+			};
+		case REMOVE_REVIEW_SET:
+			return {
+				...state,
+				ownReview: null
 			};
 		default:
 			return state;

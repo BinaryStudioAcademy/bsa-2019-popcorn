@@ -3,8 +3,8 @@ import AddComment from '../../shared/AddComment/AddComment';
 import './Post.scss';
 import { ReactComponent as SettingIcon } from '../../../assets/icons/general/settings.svg';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faHeart } from '@fortawesome/free-regular-svg-icons';
-import { faShare } from '@fortawesome/free-solid-svg-icons';
+import { faHeart, faCalendarAlt } from '@fortawesome/free-regular-svg-icons';
+import { faShare, faTasks, faTrophy } from '@fortawesome/free-solid-svg-icons';
 import Comment from '../Comment/Comment';
 import Tag from '../Tag/Tag';
 import PostEditModal from '../PostEditModal/PostEditModal';
@@ -12,8 +12,10 @@ import PostContent from '../PostContent/PostContent';
 import config from '../../../config';
 import Reactions from '../Reactions/Reactions';
 import PostReaction from './PostReaction/PostReaction';
+import { NavLink } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+
 import IPost from './IPost';
 import IComment from './IComment';
 import {
@@ -22,6 +24,7 @@ import {
 } from '../FeedBlock/FeedBlock.redux/actions';
 import { bindActionCreators } from 'redux';
 import IReaction from './IReaction';
+import { deletePost } from '../FeedBlock/FeedBlock.redux/actions';
 
 type IPostProps = {
 	post: IPost;
@@ -31,7 +34,8 @@ type IPostProps = {
 	addNewComment?: (comment: IComment) => any;
 	createReaction?: (type: string, userId: string, postId: string) => any;
 	addNewReaction?: (reaction: IReaction) => any;
-};
+  deletePost: (id: string) => any;
+}
 
 interface IReactItem {
 	name: string;
@@ -68,6 +72,10 @@ class Post extends Component<IPostProps, IPostState> {
 			);
 	};
 
+	deletePost = () => {
+		this.props.deletePost(this.props.post.id);
+	};
+
 	isOwnPost() {
 		const {
 			userId,
@@ -83,7 +91,7 @@ class Post extends Component<IPostProps, IPostState> {
 
 	isModalShown() {
 		return this.state.isModalShown ? (
-			<PostEditModal isOwn={this.isOwnPost()} />
+			<PostEditModal isOwn={this.isOwnPost()} deletePost={this.deletePost} />
 		) : null;
 	}
 
@@ -121,6 +129,9 @@ class Post extends Component<IPostProps, IPostState> {
 		} = this.props.post;
 		const createComment = this.props.createComment;
 
+		const linkType = extraLink ? extraLink.split('/')[1] : extraLink;
+
+
 		const reactionsShow = this.state.hover ? (
 			<Reactions
 				onReactionClick={this.onReactionClick}
@@ -128,6 +139,7 @@ class Post extends Component<IPostProps, IPostState> {
 				MouseEnterLikeButton={this.MouseEnterLikeButton}
 			/>
 		) : null;
+
 		return (
 			<div className="post-item">
 				<div className="post-item-header">
@@ -154,6 +166,18 @@ class Post extends Component<IPostProps, IPostState> {
 				)}
 				{description && <div className="post-body">{description}</div>}
 				{content && <PostContent content={content} />}
+				{extraTitle && (
+					<div className="extra">
+						{linkType === 'event-page' && (
+							<FontAwesomeIcon icon={faCalendarAlt} />
+						)}
+						{linkType === 'survey-page' && <FontAwesomeIcon icon={faTasks} />}
+						{linkType === 'top-page' && <FontAwesomeIcon icon={faTrophy} />}
+						<span className="extra-link">
+							{<NavLink to={`${extraLink}`}>{extraTitle}</NavLink>}
+						</span>
+					</div>
+				)}
 				{reactionsShow}
 				<div className="post-item-action-buttons">
 					<div className="post-item-last-reaction">

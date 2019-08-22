@@ -3,10 +3,12 @@ import {
 	ADD_NEW_REACTION,
 	CREATE_COMMENT,
 	CREATE_REACTION,
-	FETCH_POSTS
+	FETCH_POSTS,
+  DELETE_POST
 } from './actionTypes';
 import IComment from '../../Post/IComment';
 import IReaction from '../../Post/IReaction';
+
 
 export const fetchPosts = () => {
 	return {
@@ -55,6 +57,14 @@ export const addNewReaction = (reactions: Array<IReaction>, postId: string) => {
 		payload: {
 			reactions,
 			postId
+    }
+  };
+};  
+export const deletePost = id => {
+	return {
+		type: DELETE_POST,
+		payload: {
+			id
 		}
 	};
 };

@@ -6,6 +6,7 @@ import {
 	SET_USER_POSTS,
 	START_UPLOAD_AVATAR,
 	USER_POSTS,
+	SEND_POST,
 	GET_SELECTED_USER_INFO,
 	SET_SELECTED_USER
 } from './actionTypes';
@@ -173,14 +174,34 @@ export function* fetchRegistration(action) {
 export function* fetchPosts(action) {
 	try {
 		const data = yield call(webApi, {
-			endpoint: config.API_URL + '/api/post/user/' + action.payload.id,
-			method: 'GET'
+			method: 'GET',
+			endpoint: config.API_URL + '/api/post/user/' + action.payload.id
 		});
 
 		yield put({
 			type: SET_USER_POSTS,
 			payload: {
-				userPosts: data
+				userPosts: data,
+				loading: false
+			}
+		});
+	} catch (e) {
+		console.log('profile saga fetch posts:', e.message);
+	}
+}
+
+export function* sendPost(post) {
+	try {
+		yield call(webApi, {
+			method: 'POST',
+			endpoint: config.API_URL + '/api/post/',
+			body: { ...post.payload.data }
+		});
+
+		yield put({
+			type: SET_USER_POSTS,
+			payload: {
+				loading: true
 			}
 		});
 	} catch (e) {
@@ -231,6 +252,10 @@ export function* fetchRestorePassword(action) {
 		console.log('profile saga fetch restore password: ', e.message);
 		yield put({ type: RESTORE_ERROR, payload: { message: e.message } });
 	}
+}
+
+function* watchSendPost() {
+	yield takeEvery(SEND_POST, sendPost);
 }
 
 function* watchGetSelectedUser() {
@@ -284,6 +309,7 @@ export default function* profile() {
 		watchFetchPosts(),
 		watchFetchResetPassword(),
 		watchFetchRestorePassword(),
+		watchSendPost(),
 		watchFetchLogout()
 	]);
 }

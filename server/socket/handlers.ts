@@ -1,3 +1,4 @@
+import * as movieService from "../services/movie.service";
 export default socket => {
   socket.on("createRoom", roomId => {
     socket.join(roomId);
@@ -6,7 +7,8 @@ export default socket => {
     socket.leave(roomId);
   });
 
-  socket.on("send-message-to-discussion", messageInfo => {
+  socket.on("send-message-to-discussion", async messageInfo => {
+    await movieService.saveDiscussionMessage(messageInfo);
     socket
       .to(messageInfo.movieId)
       .emit("add-message-to-discussion", messageInfo);

@@ -3,26 +3,30 @@ import {
 	FINISH_FETCH_SEARCH_FILMS,
 	START_FETCH_SEARCH_FILMS
 } from '../../shared/Header/actionTypes';
-import {
-	START_SEARCH_ELASTIC_FILMS,
-	FINISH_SEARCH_ELASTIC_FILMS
-} from '../../UserPage/UserTops/actionTypes';
+import { START_SEARCH_ELASTIC_FILMS } from '../../UserPage/UserTops/UserTops.redux/actionTypes';
 import webApi from '../../../services/webApi.service';
 import {
-	FETCH_MOVIE_LIST,
-	SET_MOVIE_LIST,
-	FETCH_MOVIE_USER_RATE,
-	FETCH_MOVIE_USER_RATE_SUCCESS,
 	FETCH_MOVIE_BY_ID,
 	FETCH_MOVIE_BY_ID_SUCCESS,
-	SET_USER_RATE,
+	FETCH_MOVIE_LIST,
+	FETCH_MOVIE_USER_RATE,
+	FETCH_MOVIE_USER_RATE_SUCCESS,
 	FETCH_SEARCH,
-	SET_SEARCH_MOVIE,
 	FETCH_SEARCH_TO_ADD_MOVIE,
+	LOAD_MORE_MOVIE,
+	LOADING,
+	SET_LOAD_MORE_MOVIE,
+	SET_MOVIE_LIST,
+	SET_SEARCH_MOVIE,
 	SET_SEARCH_MOVIE_TO_ADD,
-	LOADING
+	SET_USER_RATE,
+	FETCH_REVIEW_BY_USER_MOVIE_ID,
+	FETCH_REVIEW_BY_USER_MOVIE_ID_SUCCESS,
+	SET_REVIEW,
+	SET_REVIEW_SUCCESS
 } from './actionTypes';
 import config from '../../../config';
+import { FETCH_MOVIE_REVIEWS } from '../MovieSeriesReviews/actionTypes';
 
 export function* fetchFilms(action) {
 	try {
@@ -179,6 +183,80 @@ export function* fetchSearchMovie(action) {
 		console.log('movie saga fetchSearchMovie: ', e.message);
 	}
 }
+
+export function* loadMoreMovie(action) {
+	const { size, from } = action.payload;
+	try {
+		const data = yield call(webApi, {
+			endpoint: `${config.API_URL}/api/movie?from=${from}&size=${size}`,
+			method: 'GET'
+		});
+		yield put({
+			type: SET_LOAD_MORE_MOVIE,
+			payload: {
+				movies: data
+			}
+		});
+	} catch (e) {
+		console.log('movie saga loadMoreMovie: ', e.message);
+	}
+}
+
+export function* fetchReviewByUserMovieId(action) {
+	const { userId, movieId } = action.payload;
+	try {
+		const data = yield call(webApi, {
+			endpoint: config.API_URL + `/api/review/${userId}/${movieId}`,
+			method: 'GET'
+		});
+
+		yield put({
+			type: FETCH_REVIEW_BY_USER_MOVIE_ID_SUCCESS,
+			payload: {
+				review: data
+			}
+		});
+	} catch (error) {
+		console.log(error);
+	}
+}
+
+export function* setReview(action) {
+	const { userId, movieId, text, prevId } = action.payload;
+	try {
+		if (prevId) {
+			yield call(webApi, {
+				endpoint: config.API_URL + `/api/review/${prevId}`,
+				method: 'PUT',
+				body: {
+					text
+				}
+			});
+		} else {
+			yield call(webApi, {
+				endpoint: config.API_URL + `/api/review`,
+				method: 'POST',
+				body: {
+					userId,
+					movieId,
+					text
+				}
+			});
+		}
+
+		yield put({
+			type: SET_REVIEW_SUCCESS
+		});
+
+		yield put({
+			type: FETCH_MOVIE_REVIEWS,
+			payload: movieId
+		});
+	} catch (error) {
+		console.log(error);
+	}
+}
+
 function* watchFetchFilms() {
 	yield takeEvery(START_FETCH_SEARCH_FILMS, fetchFilms);
 }
@@ -194,6 +272,7 @@ function* watchFetchSearch() {
 function* watchFetchSearchMovie() {
 	yield takeEvery(FETCH_SEARCH_TO_ADD_MOVIE, fetchSearchMovie);
 }
+
 function* watchFetchUserRate() {
 	yield takeEvery(FETCH_MOVIE_USER_RATE, fetchUserRate);
 }
@@ -206,6 +285,18 @@ function* watchSetUserRate() {
 	yield takeEvery(SET_USER_RATE, setUserRate);
 }
 
+function* watchLoadMoreMovie() {
+	yield takeEvery(LOAD_MORE_MOVIE, loadMoreMovie);
+}
+
+function* watchFetchReviewByUserMovieId() {
+	yield takeEvery(FETCH_REVIEW_BY_USER_MOVIE_ID, fetchReviewByUserMovieId);
+}
+
+function* watchSetReview() {
+	yield takeEvery(SET_REVIEW, setReview);
+}
+
 export default function* header() {
 	yield all([
 		watchFetchFilms(),
@@ -214,6 +305,9 @@ export default function* header() {
 		watchFetchMovie(),
 		watchSetUserRate(),
 		watchFetchSearch(),
-		watchFetchSearchMovie()
+		watchFetchSearchMovie(),
+		watchLoadMoreMovie(),
+		watchFetchReviewByUserMovieId(),
+		watchSetReview()
 	]);
 }

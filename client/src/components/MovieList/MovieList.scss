@@ -4,3 +4,11 @@
 	margin: 0 auto;
 	border: 1px $border-color solid;
 }
+
+.loading-wrp {
+	.spinner-wrp {
+		.lds-css {
+			position: relative;
+		}
+	}
+}
