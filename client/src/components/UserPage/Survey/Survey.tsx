@@ -7,10 +7,13 @@ import SurveyShortAnswer from '../SurveyItems/SurveyShortAnswer/SurveyShortAnswe
 import SurveyLinearScale from '../SurveyItems/SurveyLinearScale/SurveyLinearScale';
 import { faUsers } from '@fortawesome/free-solid-svg-icons';
 import ReactTimeAgo from 'react-time-ago';
-import JavascriptTimeAgo from 'javascript-time-ago';
-import en from 'javascript-time-ago/locale/en';
 
-JavascriptTimeAgo.locale(en);
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { postAnswers } from '../UserSurveys/UserSurveys.redux/actions';
+import { transformAnswers } from './Survey.service';
+import Spinner from '../../shared/Spinner';
+import { NavLink } from 'react-router-dom';
 
 interface IProps {
 	surveyInfo: {
@@ -35,6 +38,7 @@ interface IProps {
 			image_link?: string;
 			required: boolean;
 			options?: Array<{
+				index: number;
 				id: string;
 				question_id: string;
 				value: string;
@@ -42,16 +46,21 @@ interface IProps {
 		}>;
 	};
 	isPreview?: boolean;
+	currentUserId: string;
+	postAnswers: (any) => any;
 }
 
 interface IState {
-	answers: Array<{
-		questionId: string;
-		options: Array<{
-			id: string;
-		}>;
-		value?: string;
-	}>;
+	answers: Array<
+		| {
+				questionId: string;
+				options: Array<{
+					id: string;
+				}>;
+				value?: string;
+		  }
+		| any
+	>;
 	isDisabled: boolean;
 }
 
@@ -59,13 +68,22 @@ class Survey extends PureComponent<IProps, IState> {
 	constructor(props: IProps) {
 		super(props);
 		this.state = {
-			answers: props.surveyInfo.questions.map(question => ({
-				questionId: question.id,
-				options: [],
-				value: ''
-			})),
+			answers: [],
 			isDisabled: false
 		};
+	}
+
+	static getDerivedStateFromProps(props, state) {
+		if (props.surveyInfo.questions) {
+			return {
+				answers: props.surveyInfo.questions.map(question => ({
+					questionId: question.id,
+					options: [],
+					value: ''
+				}))
+			};
+		}
+		return null;
 	}
 
 	validate = () => {
@@ -90,57 +108,36 @@ class Survey extends PureComponent<IProps, IState> {
 
 	setSingleAnswer = answerInfo => {
 		const { questionId, optionId } = answerInfo;
-		const newAnswers = this.state.answers.map(answer => {
-			if (answer.questionId === questionId) {
-				answer.options = [{ id: optionId }];
-			}
-			return answer;
-		});
-
-		this.setState({
-			answers: newAnswers
+		const index = this.state.answers.findIndex(
+			answer => answer.questionId === questionId
+		);
+		this.state.answers.splice(index, 1);
+		this.state.answers.push({
+			questionId,
+			value: '',
+			options: [{ id: optionId }]
 		});
 	};
 
 	setShortAnswer = answerInfo => {
 		const { questionId, value } = answerInfo;
-		const newAnswers = this.state.answers.map(answer => {
-			if (answer.questionId === questionId) {
-				return { questionId, value, options: [] };
-			}
-			return answer;
-		});
-		this.setState({
-			answers: newAnswers
-		});
+		const index = this.state.answers.findIndex(
+			answer => answer.questionId === questionId
+		);
+		this.state.answers.splice(index, 1);
+		this.state.answers.push({ questionId, value, options: [] });
 	};
 
 	setMultipleAnswer = answerInfo => {
 		const { questionId, optionId, value } = answerInfo;
-		let answers = this.state.answers;
+		const index = this.state.answers.findIndex(
+			answer => answer.questionId === questionId
+		);
 		if (value === true) {
-			answers = answers.map(answer => {
-				if (answer.questionId === questionId) {
-					answer.options.push({ id: optionId });
-				}
-				return answer;
-			});
+			this.state.answers[index].options.push({ id: optionId });
 		} else {
-			answers = answers.map((answer, i) => {
-				if (answer.questionId === questionId) {
-					answer.options.forEach((option, i) => {
-						if (optionId === option.id) {
-							answer.options.splice(i, 1);
-						}
-					});
-				}
-				return answer;
-			});
+			this.state.answers[index].options.splice(index, 1);
 		}
-
-		this.setState({
-			answers
-		});
 	};
 
 	sendAnswer = () => {
@@ -151,10 +148,21 @@ class Survey extends PureComponent<IProps, IState> {
 			this.setState({ isDisabled: true });
 			return;
 		}
-		console.log(this.state.answers);
+		const formattedAnswers = transformAnswers(
+			this.state.answers,
+			this.props.currentUserId
+		);
+		this.props.postAnswers(formattedAnswers);
 	};
 
 	render() {
+		if (
+			!this.state.answers ||
+			!this.props.surveyInfo ||
+			!this.props.surveyInfo.questions
+		)
+			return <Spinner />;
+
 		const { surveyInfo } = this.props;
 		const {
 			user,
@@ -164,6 +172,7 @@ class Survey extends PureComponent<IProps, IState> {
 			description,
 			questions
 		} = surveyInfo;
+
 		return (
 			<div className="survey">
 				<div className="survey-background" />
@@ -172,7 +181,7 @@ class Survey extends PureComponent<IProps, IState> {
 					<div className="info">
 						<img src={user.image_link} alt="" />
 						<span>{user.name}</span>
-						<ReactTimeAgo date={created_at} timeStyle="twitter" locale="ru" />
+						{/* <ReactTimeAgo date={created_at} timeStyle="twitter" locale="ru" /> */}
 						<span className="participants">
 							{participants} <FontAwesomeIcon icon={faUsers} />
 						</span>
@@ -223,9 +232,11 @@ class Survey extends PureComponent<IProps, IState> {
 							</div>
 						)}
 						{!this.props.isPreview && (
-							<button type="button" onClick={this.sendAnswer}>
-								Send
-							</button>
+							<NavLink to="/">
+								<button type="button" onClick={this.sendAnswer}>
+									Send
+								</button>
+							</NavLink>
 						)}
 					</div>
 				</form>
@@ -234,4 +245,19 @@ class Survey extends PureComponent<IProps, IState> {
 	}
 }
 
-export default Survey;
+const mapStateToProps = (rootState, props) => ({
+	...props,
+	surveys: rootState.survey.surveys,
+	userId: rootState.profile.selectedProfileInfo
+		? rootState.profile.selectedProfileInfo.id
+		: null,
+	currentUserId: rootState.profile.profileInfo.id
+});
+const actions = {
+	postAnswers
+};
+const mapDispatchToProps = dispatch => bindActionCreators(actions, dispatch);
+export default connect(
+	mapStateToProps,
+	mapDispatchToProps
+)(Survey);

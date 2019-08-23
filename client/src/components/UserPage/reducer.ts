@@ -2,7 +2,9 @@ import {
 	CANCEL_TEMP_AVATAR,
 	FINISH_UPLOAD_AVATAR,
 	SET_TEMP_AVATAR,
-	SET_USER_POSTS
+	SET_USER_POSTS,
+	SET_SELECTED_USER,
+	SAVE_CROPPED
 } from './actionTypes';
 import {
 	LOGIN,
@@ -22,7 +24,10 @@ const initialState = {
 	loginError: null,
 	registerError: null,
 	resetMessage: '',
-	restoreMessage: ''
+	restoreMessage: '',
+	loading: true,
+	selectedProfileInfo: null,
+	croppedSaved: false
 };
 
 const ok_message = 'Check your email';
@@ -30,11 +35,19 @@ const restore_ok_message = 'Your password has been changed';
 
 export default function(state = initialState, action) {
 	switch (action.type) {
+		case SET_SELECTED_USER:
+			return {
+				...state,
+				userPosts: null,
+				selectedProfileInfo: action.payload.user.user
+			};
 		case FINISH_UPLOAD_AVATAR:
 			return {
 				...state,
 				profileInfo: action.payload.user,
-				uploadUrl: ''
+				selectedProfileInfo: action.payload.user,
+				uploadUrl: '',
+				croppedSaved: false
 			};
 		case SET_TEMP_AVATAR: {
 			return {
@@ -42,10 +55,16 @@ export default function(state = initialState, action) {
 				uploadUrl: action.payload.uploadUrl
 			};
 		}
+		case SAVE_CROPPED:
+			return {
+				...state,
+				croppedSaved: true
+			};
 		case CANCEL_TEMP_AVATAR: {
 			return {
 				...state,
-				uploadUrl: ''
+				uploadUrl: '',
+				croppedSaved: false
 			};
 		}
 		case LOGIN:
@@ -56,12 +75,14 @@ export default function(state = initialState, action) {
 		case LOGOUT:
 			return {
 				...state,
-				profileInfo: null
+				profileInfo: null,
+				userPosts: null
 			};
 		case SET_USER_POSTS:
 			return {
 				...state,
-				userPosts: action.payload.userPosts
+				userPosts: action.payload.userPosts,
+				loading: action.payload.loading
 			};
 		case SET_LOGIN_ERROR:
 			return {

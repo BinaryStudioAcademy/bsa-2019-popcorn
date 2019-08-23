@@ -77,7 +77,7 @@ passport.use(
     try {
       const user = await userService.getUserById(id);
       return user
-        ? done(null, user)
+        ? done(null, user.data.user)
         : done({ status: 401, message: "Token is invalid." }, null);
     } catch (err) {
       return done(err);

@@ -5,7 +5,13 @@ import {
 	START_UPLOAD_USER_EVENTS,
 	FINISH_UPLOAD_USER_EVENTS,
 	DELETE_OWN_USER_EVENT,
-	UPDATE_USER_EVENT
+	UPDATE_USER_EVENT,
+	GET_All_EVENTS,
+	GET_ALL_EVENTS_SUCCESS,
+	GET_EVENT_BY_ID_SUCCESS,
+	GET_EVENT_BY_ID,
+	SUBSCRIBE_TO_EVENT_SUCCESS,
+	SUBSCRIBE_TO_EVENT
 } from './actionsTypes';
 import config from '../../../config';
 import webApi from '../../../services/webApi.service';
@@ -30,7 +36,6 @@ export function* fetchEvents(action) {
 
 export function* saveEvent(action) {
 	try {
-		console.log('hee', action.payload.event);
 		const data = yield call(webApi, {
 			endpoint: config.API_URL + '/api/event',
 			method: 'Post',
@@ -86,6 +91,63 @@ export function* deleteEvent(action) {
 	}
 }
 
+export function* fetchAllEvents() {
+	try {
+		const allEvents = yield call(webApi, {
+			endpoint: config.API_URL + '/api/event',
+			method: 'GET'
+		});
+		yield put({
+			type: GET_ALL_EVENTS_SUCCESS,
+			payload: {
+				allEvents: allEvents
+			}
+		});
+	} catch (e) {
+		console.log('Error fetch all events :', e.message);
+	}
+}
+
+export function* subscribeToEvent(action) {
+	const { status, userId, eventId } = action.payload;
+	try {
+		const response = yield call(webApi, {
+			endpoint: config.API_URL + `/api/event/visitor`,
+			method: 'POST',
+			body: {
+				status,
+				userId,
+				eventId
+			}
+		});
+		yield put({
+			type: GET_EVENT_BY_ID,
+			payload: {
+				eventId
+			}
+		});
+	} catch (e) {
+		console.log('Error fetch all events :', e.message);
+	}
+}
+
+export function* fetchEventById(action) {
+	try {
+		const event = yield call(webApi, {
+			endpoint: config.API_URL + `/api/event/${action.payload.eventId}`,
+			method: 'GET'
+		});
+		yield put({
+			type: GET_EVENT_BY_ID_SUCCESS,
+			payload: {
+				searchedEvent: event
+			}
+		});
+	} catch (e) {
+		console.log('Error fetch all events :', e.message);
+	}
+}
+
 function* watchFetchEvents() {
 	yield takeEvery(GET_USER_EVENTS, fetchEvents);
 }
@@ -101,11 +163,26 @@ function* watchDeleteEvent() {
 	yield takeEvery(DELETE_OWN_USER_EVENT, deleteEvent);
 }
 
+function* watchFetchAllEvents() {
+	yield takeEvery(GET_All_EVENTS, fetchAllEvents);
+}
+
+function* watchFetchEventById() {
+	yield takeEvery(GET_EVENT_BY_ID, fetchEventById);
+}
+
+function* watchSubscribeToEvent() {
+	yield takeEvery(SUBSCRIBE_TO_EVENT, subscribeToEvent);
+}
+
 export default function* events() {
 	yield all([
 		watchFetchEvents(),
 		watchSaveEvent(),
 		watchupdateEvent(),
-		watchDeleteEvent()
+		watchDeleteEvent(),
+		watchFetchAllEvents(),
+		watchFetchEventById(),
+		watchSubscribeToEvent()
 	]);
 }

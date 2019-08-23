@@ -2,20 +2,34 @@ import {
 	ADD_STORY,
 	CHANGE_ACTIVITY,
 	CHANGE_IMAGE,
-	DELETE_NEW_STORY,
+	RESET_NEW_STORY,
+	SAVE_MOVIE,
 	SET_CAPTION_NEWSTORY,
-	SET_STORIES
+	SET_STORIES,
+	SAVE_CROPPED_IMAGE
 } from './actionTypes';
 import INewStory from '../INewStory';
+import replaceFilmSearch from '../../../../helpers/replaceFilmSearch';
 
-const initialState: { stories: any; newStory: INewStory } = {
+const initialState: {
+	stories: any;
+	newStory: INewStory;
+	cursorPosition: { start: number; end: number };
+	title: string;
+	photoSaved: boolean;
+} = {
 	stories: null,
 	newStory: {
 		image_url: null,
 		caption: '',
 		activity: null,
-		type: ''
-	}
+		type: '',
+		movieId: null,
+		movieOption: ''
+	},
+	cursorPosition: { start: 0, end: 0 },
+	title: '',
+	photoSaved: false
 };
 
 export default function(state = initialState, action) {
@@ -31,7 +45,17 @@ export default function(state = initialState, action) {
 				newStory: {
 					...state.newStory,
 					caption: action.payload.caption
-				}
+				},
+				cursorPosition: {
+					start: action.payload.start,
+					end: action.payload.end
+				},
+				title: action.payload.title
+			};
+		case SAVE_CROPPED_IMAGE:
+			return {
+				...state,
+				photoSaved: true
 			};
 		case CHANGE_IMAGE:
 			return {
@@ -48,7 +72,8 @@ export default function(state = initialState, action) {
 					...state.newStory,
 					type: action.payload.type,
 					activity: action.payload.activity
-				}
+				},
+				photoSaved: false
 			};
 		case ADD_STORY:
 			const stories = state.stories
@@ -58,14 +83,29 @@ export default function(state = initialState, action) {
 				...state,
 				stories
 			};
-		case DELETE_NEW_STORY:
+		case RESET_NEW_STORY:
 			return {
 				...state,
 				newStory: {
+					...state.newStory,
 					image_url: null,
 					caption: '',
 					activity: null,
 					type: ''
+				}
+			};
+		case SAVE_MOVIE:
+			return {
+				...state,
+				newStory: {
+					...state.newStory,
+					image_url: action.payload.movie.poster_path,
+					movieId: action.payload.movie.id,
+					caption: replaceFilmSearch(
+						state.newStory.caption || '',
+						action.payload.movie.title
+					),
+					movieOption: action.payload.movieOption || ''
 				}
 			};
 		default:

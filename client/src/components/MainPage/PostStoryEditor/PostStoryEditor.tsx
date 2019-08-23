@@ -8,6 +8,11 @@ import {
 import { faCamera } from '@fortawesome/free-solid-svg-icons/faCamera';
 import ImageUploader from '../ImageUploader/ImageUploader';
 import { uploadFile } from '../../../services/file.service';
+import TMovie from '../../MovieSeriesPage/TMovie';
+import MovieList from '../../MovieList/MovieList';
+import Cropper from 'react-cropper';
+import 'cropperjs/dist/cropper.css';
+import config from '../../../config';
 
 interface IPostStoryEditorProps {
 	id?: string;
@@ -15,11 +20,19 @@ interface IPostStoryEditorProps {
 	saveImage: (url: string) => void;
 	body: string;
 	imageUrl: string;
-	changeBody: (text: string) => any;
+	changeBody: (text: string, start: number, end: number, title: string) => any;
 	changeActivity?: (
 		type: string,
 		activity: null | { id: string; name: string }
 	) => any;
+	cursorPosition: { start: number; end: number };
+	movies: null | Array<TMovie>;
+	fetchSearch?: (title: string) => any;
+	title?: string;
+	resetSearch?: () => any;
+	saveMovie?: (movie: TMovie) => any;
+	photoSaved: boolean;
+	saveAfterCrop: () => void;
 }
 
 interface IPostStoryEditorState {
@@ -27,6 +40,8 @@ interface IPostStoryEditorState {
 	errorMsg: string;
 	isUploading: boolean;
 	savePhoto: boolean;
+	selectionStart: number;
+	selectionEnd: number;
 }
 
 class PostStoryEditor extends React.Component<
@@ -39,7 +54,9 @@ class PostStoryEditor extends React.Component<
 			checkboxValue: false,
 			errorMsg: '',
 			isUploading: false,
-			savePhoto: false
+			savePhoto: false,
+			selectionStart: 0,
+			selectionEnd: 0
 		};
 
 		this.onCancel = this.onCancel.bind(this);
@@ -48,11 +65,21 @@ class PostStoryEditor extends React.Component<
 		this.imageStateHandler = this.imageStateHandler.bind(this);
 	}
 
+	private textarea = React.createRef<HTMLTextAreaElement>();
+	private cropper = React.createRef<Cropper>();
+
 	onToggleCheckbox() {
 		// this.setState({
 		// 	...this.state,
 		// 	checkboxValue: !this.state.checkboxValue
 		// });
+	}
+
+	componentDidMount() {
+		if (this.textarea.current) {
+			this.textarea.current.selectionStart = this.props.cursorPosition.start;
+			this.textarea.current.selectionEnd = this.props.cursorPosition.end;
+		}
 	}
 
 	onCancel() {
@@ -65,14 +92,62 @@ class PostStoryEditor extends React.Component<
 	}
 
 	onSave() {
-		this.setState({ savePhoto: true });
+		this.props.saveAfterCrop();
+		if (this.cropper.current) {
+			const dataUrl = this.cropper.current.getCroppedCanvas().toBlob(blob => {
+				const data = new FormData();
+				data.append('file', blob);
+				uploadFile(data)
+					.then(({ imageUrl }) => {
+						if (imageUrl.indexOf('\\') !== -1) {
+							let url = imageUrl.split(`\\`);
+							url.shift();
+							url = url.join('/');
+
+							url = config.API_URL + '/' + url;
+
+							this.imageStateHandler(url);
+						} else {
+							let url = imageUrl.split(`/`);
+							url.shift();
+							url = url.join('/');
+
+							url = config.API_URL + '/' + url;
+
+							this.imageStateHandler(url);
+						}
+					})
+					.catch(error => {
+						this.setState({ isUploading: false, errorMsg: error.message });
+					});
+			});
+		}
 	}
 
 	imageStateHandler(data) {
 		this.props.saveImage(data);
 	}
 
+	static findMovie(str: string) {
+		let find = str.match(/\$(.+)(.*?)(\s*?)/g);
+		if (find && find[0]) {
+			find = find[0].split(' ');
+			if (find) return find[0].slice(1);
+		}
+		return '';
+	}
+
 	render() {
+		const changeBody = (e, title) => {
+			this.props.changeBody(
+				e.target.value,
+				this.textarea.current !== null
+					? this.textarea.current.selectionStart
+					: 2,
+				this.textarea.current ? this.textarea.current.selectionEnd : 0,
+				title
+			);
+		};
 		return (
 			<div className={'edit-form'}>
 				{this.state.errorMsg && (
@@ -80,8 +155,16 @@ class PostStoryEditor extends React.Component<
 				)}
 				{this.props.imageUrl ? (
 					<div className={'photo-wrp'}>
-						<img src={this.props.imageUrl} alt="" />
-						{!this.state.savePhoto && (
+						{this.props.photoSaved ? (
+							<img src={this.props.imageUrl} />
+						) : (
+							<Cropper
+								ref={this.cropper}
+								src={this.props.imageUrl}
+								aspectRatio={9 / 16}
+							/>
+						)}
+						{!this.props.photoSaved && (
 							<span onClick={this.onSave}>
 								<FontAwesomeIcon
 									icon={faCheckCircle}
@@ -89,7 +172,7 @@ class PostStoryEditor extends React.Component<
 								/>
 							</span>
 						)}
-						{!this.state.savePhoto && (
+						{!this.props.photoSaved && (
 							<span onClick={this.onCancel}>
 								<FontAwesomeIcon
 									icon={faTimesCircle}
@@ -111,9 +194,23 @@ class PostStoryEditor extends React.Component<
 					</div>
 				)}
 				<textarea
+					ref={this.textarea}
 					placeholder="Type a text here..."
-					value={this.props.body}
-					onChange={e => this.props.changeBody(e.target.value)}
+					defaultValue={this.props.body}
+					onChange={e => {
+						const title = PostStoryEditor.findMovie(e.target.value);
+						if (title.trim() && title.trim() !== this.props.title) {
+							if (this.props.fetchSearch) {
+								this.props.fetchSearch(title);
+
+								return changeBody(e, title.trim());
+							}
+						}
+						changeBody(e, this.props.title);
+
+						if (!title.trim() && this.props.title && this.props.resetSearch)
+							this.props.resetSearch();
+					}}
 					autoFocus
 					onFocus={function(e) {
 						const val = e.target.value;
@@ -135,6 +232,23 @@ class PostStoryEditor extends React.Component<
 								className={'fontAwesomeIcon'}
 							/>
 						</span>
+					</div>
+				)}
+				{this.props.movies && (
+					<div className={'movie-list-wrp'}>
+						{this.props.movies.length > 0 ? (
+							<MovieList
+								movies={this.props.movies}
+								saveMovie={movie => {
+									if (this.props.saveMovie && this.props.resetSearch) {
+										this.props.saveMovie(movie);
+										this.props.resetSearch();
+									}
+								}}
+							/>
+						) : (
+							<div>Not found</div>
+						)}
 					</div>
 				)}
 				{/*<div className="footer">*/}

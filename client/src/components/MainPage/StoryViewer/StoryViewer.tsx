@@ -13,6 +13,8 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import config from '../../../config';
 import StoryVoting from '../../StoryVoting/StoryVoting';
+import { connect } from 'react-redux';
+import { NavLink } from 'react-router-dom';
 
 interface IProps {
 	stories: Array<{
@@ -41,11 +43,19 @@ interface IProps {
 			}>;
 		};
 		activity?: string;
+		movieId?: string;
+		movie?: {
+			title: string;
+			id: string;
+		};
+		movieOption?: string;
 	}>;
 	currentUser: {
 		userId: string;
 	};
 	currentStory: number;
+	userId: string;
+	userRole: string;
 	closeViewer: () => void;
 }
 
@@ -68,7 +78,8 @@ class StoryViewer extends PureComponent<IProps, IState> {
 	}
 
 	isOwnStory(story) {
-		return this.props.currentUser.userId === story.userInfo.userId;
+		const { userId, userRole } = this.props;
+		return userRole === 'admin' || userId === story.userInfo.userId;
 	}
 
 	toogleModal = () => {
@@ -138,6 +149,11 @@ class StoryViewer extends PureComponent<IProps, IState> {
 									/>
 									<span className="username">{story.userInfo.name}</span>
 									<TimeAgo date={story.created_at} timeStyle="twitter" />
+									{story.movieOption && (
+										<span style={{ marginLeft: '5px' }}>
+											{story.movieOption}
+										</span>
+									)}
 									<p className="ellipsis" onClick={this.toogleModal}>
 										<FontAwesomeIcon icon={faEllipsisH} />
 									</p>
@@ -191,6 +207,11 @@ class StoryViewer extends PureComponent<IProps, IState> {
 														</span>
 													)}
 													{story.type && story.activity}
+													{story.movieId && story.movie && (
+														<NavLink to={'/movie-series/' + story.movie.id}>
+															{story.movie.title}
+														</NavLink>
+													)}
 												</span>
 											</p>
 										</div>
@@ -215,4 +236,10 @@ class StoryViewer extends PureComponent<IProps, IState> {
 	}
 }
 
-export default StoryViewer;
+const mapStateToProps = (rootState, props) => ({
+	...props,
+	userId: rootState.profile.profileInfo.id,
+	userRole: rootState.profile.profileInfo.role
+});
+
+export default connect(mapStateToProps)(StoryViewer);

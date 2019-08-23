@@ -11,18 +11,19 @@ import SurveysOptionRepository from "./surveysQuestion.repository";
 class SurveysQuestionAnswerRepository extends Repository<
   SurveysQuestionAnswer
 > {
-  async setQuestionAnswer(userId, optionId, questionId, value, next?) {
+  async setQuestionAnswer(userId, questionId, optionId, value, next?) {
     try {
       const user = await getCustomRepository(UserRepository).findOne({
         id: userId
       });
-      const surveysQuestionOption = await getCustomRepository(
-        SurveyQuestionOption
-      ).findOne({ id: optionId });
+      const surveysQuestionOption = optionId
+        ? await getCustomRepository(SurveyQuestionOption).findOne({
+            id: optionId
+          })
+        : null;
       const surveysQuestion = await getCustomRepository(SurveyQuestion).findOne(
         { id: questionId }
       );
-
       const prevAnswer = await this.findOne({
         user,
         surveysQuestionOption,
@@ -30,7 +31,12 @@ class SurveysQuestionAnswerRepository extends Repository<
       });
       return prevAnswer
         ? await this.update(prevAnswer.id, { value })
-        : await this.save({ value, surveysQuestionOption, user });
+        : await this.save({
+            value,
+            surveysQuestion,
+            surveysQuestionOption,
+            user
+          });
     } catch (err) {
       return next({ status: err.status, message: err.message }, null);
     }

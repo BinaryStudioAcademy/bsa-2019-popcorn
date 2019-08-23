@@ -5,6 +5,7 @@ export const CHANGE_IMAGE = 'CHANGE_IMAGE';
 export const CHANGE_ACTIVITY = 'CHANGE_ACTIVITY';
 export const CREATE_STORY = 'CREATE_STORY';
 export const ADD_STORY = 'ADD_STORY';
-export const DELETE_NEW_STORY = 'DELETE_NEW_STORY';
-
+export const RESET_NEW_STORY = 'RESET_NEW_STORY';
+export const SAVE_CROPPED_IMAGE = 'SAVE_CROPPED_IMAGE';
 export const CREATE_VOTING = 'CREATE_VOTING';
+export const SAVE_MOVIE = 'SAVE_MOVIE';

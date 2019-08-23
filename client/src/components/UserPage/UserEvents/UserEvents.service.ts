@@ -1,4 +1,11 @@
 // formater for event data
+export interface IEventComment {
+	id: string;
+	text: string;
+	createdAt: string;
+	user: IDiscussionUser;
+}
+
 export interface IEventFormatFromEditor {
 	id?: string;
 	title: string;
@@ -20,6 +27,7 @@ export interface IEventFormatFromEditor {
 export interface IEventFormatClient extends IEventFormatFromEditor {
 	id: string;
 	eventVisitors: IVisitor[];
+	eventComments: IEventComment[];
 	location: {
 		lat: number | undefined;
 		lng: number | undefined;
@@ -42,13 +50,21 @@ export interface IventFormatToSave {
 export interface IEventFormatDataBase extends IventFormatToSave {
 	id: string;
 	eventVisitors: IVisitor[];
+	eventComments: IEventComment[];
 }
 
-interface IVisitor {
+export interface IVisitor {
 	id: string;
 	status: string;
 	userId: string;
 	eventId: string;
+	user: IDiscussionUser;
+}
+
+export interface IDiscussionUser {
+	avatar?: string;
+	name: string;
+	id: string;
 }
 
 export const formatToClient = (
@@ -66,7 +82,8 @@ export const formatToClient = (
 		isPrivate,
 		userId,
 		movieId,
-		eventVisitors
+		eventVisitors,
+		eventComments
 	} = event;
 	const formatEvent = {
 		id,
@@ -84,7 +101,8 @@ export const formatToClient = (
 		image,
 		isPrivate,
 		movieId,
-		eventVisitors
+		eventVisitors,
+		eventComments
 	};
 	return formatEvent;
 };

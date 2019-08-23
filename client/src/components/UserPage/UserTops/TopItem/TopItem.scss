@@ -1,5 +1,10 @@
 @import '../../../../styles/variables.scss';
 
+.link-reset {
+	color: inherit;
+	text-decoration: inherit;
+}
+
 .top-item,
 .edit-top,
 .delete-top,

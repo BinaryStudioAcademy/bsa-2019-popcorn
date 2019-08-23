@@ -1,8 +1,14 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import EventPageHeader from './EventPageHeader';
 import EventPageTabs from './EventPageTabs';
 import EventPageTabBody from './EventPageTabBody';
 import './EventPage.scss';
+import {
+	formatToClient,
+	IEventFormatDataBase,
+	IDiscussionUser
+} from '../UserPage/UserEvents/UserEvents.service';
+import Spinner from '../shared/Spinner';
 
 export interface IEvent {
 	title: string;
@@ -15,29 +21,71 @@ export interface IEvent {
 
 interface IProps {
 	match: {
-		path: string;
+		url: string;
+		params: {
+			id: string;
+		};
 	};
+	getEventById: (eventId: string) => void;
+	searchedEvent: IEventFormatDataBase;
+	currentUser: IDiscussionUser;
+	subscibeToEvent: ({ eventId, userId, status }) => void;
 }
 
-const event: IEvent = {
-	title: 'Best event in your life!',
-	description:
-		'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Eos iste ipsa commodi nihil eveniet. Eos, rerum modi? Ratione non perspiciatis dicta vel, reprehenderit suscipit cum illo? Placeat unde sint deleniti!',
-	location: 'location',
-	date: 'Субота, 24 серпня 2019 р. з 13:00 по 19:00',
-	photo: 'https://99px.ru/sstorage/53/2017/05/tmb_200648_1245.jpg',
-	isPrivate: false
-};
+const EventPage: React.FC<IProps> = ({
+	match,
+	getEventById,
+	searchedEvent,
+	currentUser,
+	subscibeToEvent
+}) => {
+	const { url: mainPath } = match;
+	const [event, setEvent] = useState();
 
-const EventPage: React.SFC<IProps> = ({ match }) => {
-	const { path: mainPath } = match;
+	function subscibe({ eventId, userId, status }) {
+		let isVisitor = false;
+		let eventVisitors = event.eventVisitors.map(visitor => {
+			if (visitor.userId === userId) {
+				isVisitor = true;
+				return { ...visitor, status };
+			} else return visitor;
+		});
+		if (!isVisitor) {
+			eventVisitors.push({
+				eventId,
+				userId,
+				status,
+				id: new Date(),
+				user: currentUser
+			});
+		}
+		const updatedEvent = { ...event, eventVisitors };
+		setEvent(updatedEvent);
+		subscibeToEvent({ eventId, userId, status });
+	}
+	useEffect(() => {
+		if (!event || match.params.id !== event.id) {
+			getEventById(match.params.id);
+			searchedEvent && setEvent(formatToClient(searchedEvent));
+		}
+	});
 
+	if (!event || match.params.id !== event.id) return <Spinner />;
 	return (
 		<div className="event-page">
-			<EventPageHeader event={event} />
+			<EventPageHeader
+				event={event}
+				subscibeToEvent={subscibe}
+				currentUser={currentUser}
+				mainPath={mainPath}
+			/>
 			<div className="event-page-main">
 				<EventPageTabs mainPath={mainPath} />
-				<EventPageTabBody mainPath={mainPath} event={event} />
+				<EventPageTabBody
+					mainPath={mainPath}
+					event={event}
+					currentUser={currentUser}
+				/>
 			</div>
 		</div>
 	);

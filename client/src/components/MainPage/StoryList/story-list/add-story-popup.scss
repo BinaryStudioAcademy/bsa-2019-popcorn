@@ -2,7 +2,7 @@
 @import '../../../AdvancedSearch/AdvancedMovieSearch/CustomCheckbox.scss';
 
 $height: 75vh;
-$width: 30vw;
+$width: 50vw;
 $btn-height: 36px;
 $border: 1px solid $orange-light;
 $border-radius: 5px;
@@ -195,6 +195,32 @@ $border-radius: 5px;
 
 			span:hover {
 				left: 20px;
+			}
+		}
+	}
+	.question-type {
+		width: 30%;
+		background: $background-gray;
+		height: 30px;
+		font-family: $base-font-family;
+		font-weight: 500;
+		font-size: $menu-font-size;
+		border: none;
+		box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.37);
+		cursor: pointer;
+
+		&:focus {
+			outline: none;
+		}
+	}
+	.movie-add-wrp {
+		padding: 10px;
+		.edit-form {
+			padding: 0;
+			textarea {
+				width: 100%;
+				height: 50px;
+				margin-bottom: 5px;
 			}
 		}
 	}

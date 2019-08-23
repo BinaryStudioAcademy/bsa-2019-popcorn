@@ -12,14 +12,17 @@ import {
 import EventItem from './EventItem/EventItem';
 import './UserEvents.scss';
 import UserEventsEditor from './UserEventsEditor/UserEventsEditor';
+import { NavLink } from 'react-router-dom';
 
 interface IProps {
 	userEvents: IEventFormatDataBase[];
 	getUserEvents: (id: string) => any;
 	deleteEvent: (id: string, currentUserId: string) => any;
 	currentUserId: string;
+	currentUserRole: string;
 	saveEvent: (event: any) => void;
 	updateEvent: (event: any) => void;
+	currentProfileUserId: string;
 }
 
 interface IState {
@@ -60,18 +63,37 @@ class UserEvents extends React.Component<IProps, IState> {
 		}
 	};
 
+	isOwnEvent = event => {
+		const { userId } = event;
+		return (
+			this.props.currentUserId === userId ||
+			this.props.currentUserRole === 'admin'
+		);
+	};
+
 	renderEventList = (eventList: IEventFormatClient[], deleteEventAction: any) =>
 		eventList.map(event => (
-			<EventItem
-				event={event}
-				key={event.id}
-				deleteEvent={deleteEventAction}
-				editEvent={this.editEvent}
-			/>
+			<NavLink
+				to={`/event-page/${event.id}`}
+				style={{ textDecoration: 'none', color: 'inherit' }}
+			>
+				<EventItem
+					event={event}
+					key={event.id}
+					deleteEvent={deleteEventAction}
+					editEvent={this.editEvent}
+					isOwnEvent={this.isOwnEvent(event)}
+				/>
+			</NavLink>
 		));
 
 	render() {
-		const { userEvents, currentUserId, deleteEvent } = this.props;
+		const {
+			userEvents,
+			currentUserId,
+			deleteEvent,
+			currentProfileUserId
+		} = this.props;
 		const { openEventEditor, editableEvent } = this.state;
 		if (!userEvents) {
 			return <Spinner />;
@@ -87,12 +109,14 @@ class UserEvents extends React.Component<IProps, IState> {
 		});
 		return (
 			<div className="user-events">
+				{/* {currentProfileUserId === currentUserId ? ( */}
 				<div
 					className="create-event-button hover"
 					onClick={() => this.editEvent()}
 				>
 					{openEventEditor ? BACK_TO_EVENTS_TEXT : CREATE_EVENT_TEXT}{' '}
 				</div>
+				{/* // ) : null} */}
 				{openEventEditor ? (
 					<UserEventsEditor
 						closeEditor={this.editEvent}
@@ -108,7 +132,7 @@ class UserEvents extends React.Component<IProps, IState> {
 						<div className="event-list-container">
 							{ownEvents.length === 0 ? (
 								<div className="event-show-warning">
-									No one event. You can craete
+									No events yet. You can create
 								</div>
 							) : (
 								this.renderEventList(ownEvents, deleteEvent)
@@ -119,7 +143,7 @@ class UserEvents extends React.Component<IProps, IState> {
 						</div>
 						<div className="event-list-container">
 							{subscribeEvents.length === 0 ? (
-								<div className="event-show-warning">No one event</div>
+								<div className="event-show-warning">No events yet</div>
 							) : (
 								this.renderEventList(subscribeEvents, null)
 							)}
@@ -135,6 +159,9 @@ const mapStateToProps = (state, props) => {
 	return {
 		...props,
 		currentUserId: state.profile.profileInfo.id,
+		currentProfileUserId:
+			state.profile.selectedProfileInfo && state.profile.selectedProfileInfo.id,
+		currentUserRole: state.profile.profileInfo.role,
 		userEvents: state.events.userEvents
 	};
 };

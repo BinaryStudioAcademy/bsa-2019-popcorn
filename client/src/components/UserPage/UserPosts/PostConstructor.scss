@@ -1,0 +1,115 @@
+@import '../../../styles/variables.scss';
+.postconstr-wrp {
+	border: 1px solid $border-color;
+	margin-top: 30px;
+	box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.37);
+	border-radius: 2px;
+	.postconstr {
+		border: 1px solid $border-color;
+		margin: 30px 25px;
+		margin-bottom: 0;
+		box-sizing: border-box;
+		.extra-buttons {
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			justify-content: center;
+		}
+		display: flex;
+		& textarea {
+			resize: none;
+			display: block;
+			width: 100%;
+			height: 80px;
+			border: none;
+			padding: 10px;
+			font-family: $base-font-family;
+			font-style: normal;
+			font-weight: normal;
+			font-size: $post-font-size;
+			line-height: 19px;
+			letter-spacing: $base-letter-spacing;
+			color: $text-base-color;
+		}
+		& button,
+		.upload-image-button {
+			display: inline-flex;
+			align-items: center;
+			padding: 5px;
+			border: none;
+			outline: none;
+			font-size: 18px;
+			font-weight: bold;
+			background-color: transparent;
+			color: $text-secondary-color;
+			box-shadow: none;
+			cursor: pointer;
+			svg {
+				width: 25px;
+				height: 25px;
+			}
+			&:focus,
+			&:hover {
+				background-color: transparent;
+				color: $text-base-color;
+			}
+			&:disabled + .upload-image-button {
+				pointer-events: none;
+				background-color: rgba(0, 0, 0, 0.11);
+			}
+		}
+		&-btn-group {
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			margin-top: 30px;
+		}
+		&-btn-sm {
+			display: flex;
+			& button {
+				margin-right: 15px;
+			}
+		}
+		&-img {
+			height: 300px;
+			display: block;
+			margin: 25px auto 0 auto;
+		}
+	}
+	.extra {
+		margin: 10px 25px 15px 25px;
+		border-left: 5px solid $border-color;
+		padding: 15px;
+		display: flex;
+		margin-bottom: 15px;
+		justify-content: flex-start;
+		align-items: flex-end;
+		& .fontAwesomeIcon {
+			cursor: pointer;
+		}
+		svg {
+			margin-left: 10px;
+		}
+	}
+	.save-wrp {
+		text-align: end;
+		.save-btn {
+			height: 43px;
+			border-radius: 55px;
+			width: 100px;
+			border: none;
+			outline: none;
+			font-size: $header-medium;
+			font-weight: bold;
+			background-color: $button-background;
+			color: $white;
+			box-shadow: 0px 5px 12px $button-shadow-color;
+			margin-bottom: 20px;
+			margin-top: 20px;
+			margin-right: 20px;
+			&:hover {
+				background-color: rgb(216, 86, 0);
+			}
+		}
+	}
+}

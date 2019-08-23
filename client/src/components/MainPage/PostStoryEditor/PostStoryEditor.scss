@@ -7,13 +7,13 @@
 	align-items: center;
 	justify-content: space-around;
 	margin: 0 auto;
-	padding: 50px;
+	padding: 50px 50px 0;
 	box-sizing: border-box;
 	flex: 1;
 
 	img {
-		width: 270px;
-		height: 270px;
+		max-width: 270px;
+		max-height: 270px;
 	}
 
 	textarea {
@@ -57,6 +57,7 @@
 			cursor: pointer;
 			float: left;
 			color: $text-secondary-color;
+
 			input {
 				cursor: pointer;
 			}
@@ -70,6 +71,7 @@
 			background-color: $button-background;
 			color: $white;
 			box-shadow: 0px 5px 12px $button-shadow-color;
+
 			&:hover {
 				background-color: rgb(216, 86, 0);
 			}
@@ -77,24 +79,39 @@
 
 		.cancel-btn {
 			color: $text-secondary-color;
+
 			&:hover {
 				background-color: $background-gray;
 			}
 		}
 	}
+
 	.activity {
 		border: 2px solid $orange-light;
 		padding: 5px;
 		margin-top: 15px;
+
 		span {
 			margin-left: 10px;
 		}
+
 		.fontAwesomeIcon {
 			cursor: pointer;
 		}
 
 		.fontAwesomeIcon:hover {
 			color: $orange-light;
+		}
+	}
+
+	.movie-list-wrp {
+		width: 100%;
+		height: 200px;
+		overflow-y: scroll;
+
+		.movie-poster {
+			width: 80px !important;
+			height: 60px !important;
 		}
 	}
 }

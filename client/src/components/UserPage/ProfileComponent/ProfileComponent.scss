@@ -21,7 +21,12 @@ h2 {
 	.profilePhotoWrap {
 		padding-top: 16px;
 		margin-right: 2%;
-		width: 35%;
+		width: 400px;
+		height: 400px;
+
+		.avatar-preview {
+			width: 100%;
+		}
 		.upload-wrp {
 			width: 100%;
 			text-align: center;
@@ -119,6 +124,10 @@ h2 {
 			color: $text-base-color;
 		}
 	}
+}
+.upload-error {
+	color: rgba(255, 0, 0, 0.6);
+	padding: 0 15px;
 }
 
 // the :export directive is the magic sauce for webpack

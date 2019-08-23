@@ -35,7 +35,7 @@ export class Event {
   @Column()
   start_date: Date;
 
-  @Column()
+  @Column({ nullable: true })
   end_date: Date;
 
   @Column()

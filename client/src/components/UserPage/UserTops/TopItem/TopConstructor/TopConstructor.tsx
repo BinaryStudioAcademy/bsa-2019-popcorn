@@ -1,7 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import './TopConstructor.scss';
 import DragDrop from './DragDrop';
-import { IMovie } from '../TopItem';
+import { IMovie } from '../../UserTops.service';
+import { uniqueId } from 'lodash';
+const emptyInput = () => {
+	return { title: '', id: uniqueId('movie'), comment: '' };
+};
 
 const reorder = (list, startIndex, endIndex): any => {
 	const result = Array.from(list);
@@ -19,8 +23,7 @@ const TopConstructor: React.FC<ITopConstructorProps> = ({
 	saveTop,
 	moviesList
 }) => {
-	const emptyInput = { title: '', id: Date.now().toString(), comment: '' };
-	const [movies, setMovies] = useState([...moviesList, emptyInput]);
+	const [movies, setMovies] = useState([...moviesList, emptyInput()]);
 
 	function onDragEnd(result) {
 		if (!result.destination) {
@@ -34,20 +37,24 @@ const TopConstructor: React.FC<ITopConstructorProps> = ({
 		setMovies(updatedItems);
 	}
 
-	function deleteFilmInput(movieId: string) {
+	function deleteFilmInput(movieId: number) {
 		const updatedMovies = movies.filter(movie => movie.id !== movieId);
 		setMovies(updatedMovies);
 	}
 
-	function saveMovie(updatedMovie: IMovie) {
+	function saveMovie(updatedMovie: IMovie, newId: number = updatedMovie.id) {
 		let updatedMovies = movies.map(movie =>
-			movie.id === updatedMovie.id ? updatedMovie : movie
+			movie.id === updatedMovie.id ? { ...updatedMovie, id: newId } : movie
 		);
-		if (updatedMovie.id === movies[movies.length - 1].id) {
-			updatedMovies.push(emptyInput);
+		if (
+			updatedMovie.id === movies[movies.length - 1].id &&
+			newId !== updatedMovie.id
+		) {
+			updatedMovies.push(emptyInput());
 		}
-		setMovies(updatedMovies);
+		setMovies([...updatedMovies]);
 	}
+
 	function save() {
 		saveTop(movies);
 	}

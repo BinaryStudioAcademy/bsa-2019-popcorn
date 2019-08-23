@@ -2,48 +2,72 @@ import React from 'react';
 import Post from '../Post/Post';
 import { ReactComponent as FeedIcon } from '../../../assets/icons/general/newsFeed.svg';
 import './PostList.scss';
+import IComment from '../Post/IComment';
+import IPost from '../Post/IPost';
+import {
+	addNewReaction,
+	createReaction,
+	deletePost
+} from '../FeedBlock/FeedBlock.redux/actions';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import IReaction from '../Post/IReaction';
 
-type post = {
-	user: {
-		name: string;
-		avatar: string;
-		any;
-	};
-	created_At?: string;
-	image_url: string;
-	description?: string;
-	content?: {
-		image: string;
-		link: string;
-		description: string;
-	};
-	comments?: {
-		id: string;
-		author: string;
-		commentDate: string;
-		commentBody: string;
-	}[];
-	tags?: {
-		id: string;
-		tagName: string;
-	}[];
-};
 interface IProps {
-	posts: Array<post>;
+	posts: Array<IPost>;
+	type?: string;
+	styleCustom?: any;
+	createComment?: (userId: string, text: string, postId: string) => any;
+	addNewComment?: (comment: IComment) => any;
+	userId: string;
+	userRole: string;
+	createReaction?: (type: string, userId: string, postId: string) => any;
+	addNewReaction?: (reaction: IReaction) => any;
+	deletePost: (id: string, userId: string) => any;
 }
 
 const PostList = (props: IProps) => {
 	return (
-		<div className="feed-list">
-			<div className="feed-heading">
-				<FeedIcon />
-				<span>News feed</span>
-			</div>
-			{props.posts.map(post => (
-				<Post post={post} />
-			))}
+		<div className="feed-list" style={props.styleCustom}>
+			{props.type === 'userPosts' ? null : (
+				<div className="feed-heading">
+					<FeedIcon />
+					<span>News feed</span>
+				</div>
+			)}
+			{props.posts.map(post => {
+				return (
+					<Post
+						key={post.id}
+						post={post}
+						createComment={props.createComment}
+						createReaction={props.createReaction}
+						addNewComment={props.addNewComment}
+						addNewReaction={props.addNewReaction}
+						userId={props.userId}
+						userRole={props.userRole}
+						deletePost={props.deletePost}
+					/>
+				);
+			})}
 		</div>
 	);
 };
+const mapStateToProps = (rootState, props) => ({
+	...props,
+	userId: rootState.profile.profileInfo.id,
+	userRole: rootState.profile.profileInfo.role
+});
 
-export default PostList;
+const actions = {
+	createReaction,
+	addNewReaction,
+	deletePost
+};
+
+const mapDispatchToProps = dispatch => bindActionCreators(actions, dispatch);
+
+export default connect(
+	mapStateToProps,
+	mapDispatchToProps
+)(PostList);
