@@ -13,6 +13,7 @@ type TMovie = {
 	video: string;
 	cast: string;
 	messages: IDiscussionMessage[];
+	hasVideo: boolean;
 };
 
 export default TMovie;
