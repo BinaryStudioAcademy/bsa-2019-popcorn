@@ -10,6 +10,7 @@ interface ITop {
 	created_at: Date;
 	movieInTop: Array<any>;
 	user: {
+		id: string;
 		avatar: string;
 		name: string;
 	};
@@ -20,6 +21,14 @@ interface ITopLIstItemProps {
 }
 
 const TopListItem: React.FC<ITopLIstItemProps> = ({ top }) => {
+	const getReleaseYear = movie => movie.movie.release_date.split('-')[0];
+
+	const getAdditionalInfo = () => {
+		return top.movieInTop.length > 3
+			? `And ${top.movieInTop.length - 3} others`
+			: 'View details';
+	};
+
 	return (
 		<div className="top-page-item">
 			<div className="top-image-section">
@@ -30,29 +39,33 @@ const TopListItem: React.FC<ITopLIstItemProps> = ({ top }) => {
 				/>
 			</div>
 			<div className="top-main-section">
-				<div>{top.title}</div>
+				<NavLink to={`/top-page/${top.id}`}>
+					<div className="top-title">{top.title}</div>
+				</NavLink>
+
 				<div>
 					<ol>
 						{top.movieInTop.slice(0, 3).map(movie => (
-							<li>{movie.movie.original_title}</li>
+							<li>
+								{movie.movie.original_title} ({getReleaseYear(movie)})
+							</li>
 						))}
 					</ol>
+					<NavLink to={`/top-page/${top.id}`}>
+						<div className="add-info">{getAdditionalInfo()}</div>
+					</NavLink>
 				</div>
 			</div>
 			<div className="top-secondary-section">
-				<div>
-					<div>
+				<NavLink to={`/user-page/${top.user.id}`}>
+					<div className="user-info">
+						<span className="user-name">{top.user.name}</span>
 						<img src={top.user.avatar} alt="user" />
-						{top.user.name}
 					</div>
-
-					<Moment format="ll" local>
-						{String(top.created_at)}
-					</Moment>
-				</div>
-				<NavLink to={`/top-page/${top.id}`}>
-					<button type="button">View all</button>
 				</NavLink>
+				<Moment format="ll" local className="created-at">
+					{String(top.created_at)}
+				</Moment>
 			</div>
 		</div>
 	);
