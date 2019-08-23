@@ -72,11 +72,7 @@ const TopItem: React.FC<ITopItemProps> = ({
 	}
 
 	return (
-		<NavLink
-			to={`/top-page/${topItem.id}`}
-			onClick={goToTop}
-			className="link-reset"
-		>
+		<div>
 			<div className="top-item">
 				{editTop || topItem.moviesList.length === 0 ? (
 					<input
@@ -87,7 +83,15 @@ const TopItem: React.FC<ITopItemProps> = ({
 						value={title}
 					/>
 				) : (
-						<div className="top-item-title">{title}</div>
+						<div className="top-item-title">
+							<NavLink
+								to={`/top-page/${topItem.id}`}
+								// onClick={goToTop}
+								className="link-reset"
+							>
+								{title}
+							</NavLink>
+						</div>
 					)}
 				<input
 					name="image"
@@ -120,7 +124,7 @@ const TopItem: React.FC<ITopItemProps> = ({
 			{(editTop || topItem.moviesList.length === 0) && (
 				<TopConstructor moviesList={topItem.moviesList} saveTop={saveTop} />
 			)}
-		</NavLink>
+		</div>
 	);
 };
 
