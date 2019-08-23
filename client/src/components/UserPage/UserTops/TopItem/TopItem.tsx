@@ -61,16 +61,6 @@ const TopItem: React.FC<ITopItemProps> = ({
 		else console.log('no uploadImage method');
 	}
 
-	function goToTop(e) {
-		if (editTop || (
-			e.target.classList.contains('edit-top') ||
-			e.target.classList.contains('delete-top') ||
-			e.target.classList.contains('close-icon')
-		)) {
-			e.preventDefault();
-		}
-	}
-
 	return (
 		<div>
 			<div className="top-item">
@@ -86,7 +76,6 @@ const TopItem: React.FC<ITopItemProps> = ({
 						<div className="top-item-title">
 							<NavLink
 								to={`/top-page/${topItem.id}`}
-								// onClick={goToTop}
 								className="link-reset"
 							>
 								{title}
