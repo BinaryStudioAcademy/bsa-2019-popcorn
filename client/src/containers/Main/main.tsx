@@ -127,7 +127,9 @@ const Main = ({
 			{isAuthorized ? <Header userInfo={userInfo} /> : null}
 			<div className="main-page">
 				<MainPageSidebar notifications={notifications} />
-				<div style={{ width: 'calc(100vw - 205px)' }}>
+				<div
+				// style={{ width: 'calc(100vw - 205px)' }}
+				>
 					<Switch>
 						<Route exact path={[`/`, '/create*']} component={MainPage} />
 						<Route path={`/user-page/:id`} component={UserPage} />
