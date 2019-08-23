@@ -38,7 +38,7 @@ export const getMovieById = async (movieId: string): Promise<any> => {
     .where("movieRate.movieId = :id", { id: movie.id })
     .getRawOne();
   movie.rate = rate ? parseFloat(rate.average).toFixed(2) : null;
-  // movie.video_link = await getMovieVideoLinkById(movie.id);
+  movie.video_link = await getMovieVideoLinkById(movie.id);
   return movie;
 };
 
