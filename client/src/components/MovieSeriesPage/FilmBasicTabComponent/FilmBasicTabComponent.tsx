@@ -95,11 +95,18 @@ const FilmBasicTab = (props: IProps) => {
 					{movieData.map(({ label, value }) => descriptionItem(label, value))}
 				</div>
 			</section>
-			<section>
-				<div className={'videoWrapper'}>
-					<iframe className="video" src={video} title={video} frameBorder={0} />
-				</div>
-			</section>
+			{video && (
+				<section>
+					<div className={'videoWrapper'}>
+						<iframe
+							className="video"
+							src={video}
+							title={video}
+							frameBorder={0}
+						/>
+					</div>
+				</section>
+			)}
 		</div>
 	);
 };
