@@ -112,22 +112,18 @@ class DiscussionComponent extends Component<
 			user: { id, name, avatar }
 		};
 		let arr = this.state.messagesState;
-		arr.push(newMessageItem);
+		arr.unshift(newMessageItem);
 		this.setState(
 			{
 				messagesState: arr
 			},
-			isMyMessage ? () => this.scrollToBottom() : undefined
+			isMyMessage ? () => this.scrollToTop() : undefined
 		);
 	};
 
-	scrollToBottom = () => {
+	scrollToTop = () => {
 		if (!this.discussionComponent.current) return;
-		const scrollHeight = this.discussionComponent.current.scrollHeight;
-		const height = this.discussionComponent.current.clientHeight;
-		const maxScrollTop = scrollHeight - height;
-		this.discussionComponent.current.scrollTop =
-			maxScrollTop > 0 ? maxScrollTop : 0;
+		this.discussionComponent.current.scrollTop = 0;
 	};
 
 	componentWillUnmount() {
