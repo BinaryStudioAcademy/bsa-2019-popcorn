@@ -1,5 +1,9 @@
 @import '../../../../styles/variables.scss';
 
+.mapboxgl-canvas-container {
+	text-align: center;
+}
+
 .mapboxgl-canvas {
 	position: static !important;
 	left: 0;
