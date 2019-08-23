@@ -128,7 +128,6 @@ class ProfileComponent extends Component<ProfileProps, IProfileComponentState> {
 			avatar,
 			id
 		} = this.props.profileInfo;
-		console.log(avatar);
 		if (!male && !female) {
 			female = true;
 		}

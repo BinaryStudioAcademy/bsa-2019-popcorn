@@ -1,4 +1,4 @@
-import { SET_TOPLIST } from './actionTypes';
+import { SET_TOP_LIST } from './actionTypes';
 
 const initialState = {
 	tops: null
@@ -6,7 +6,7 @@ const initialState = {
 
 export default function(state = initialState, action) {
 	switch (action.type) {
-		case SET_TOPLIST:
+		case SET_TOP_LIST:
 			return {
 				...state,
 				tops: action.payload.tops

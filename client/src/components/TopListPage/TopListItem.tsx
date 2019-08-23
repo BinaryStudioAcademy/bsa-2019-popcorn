@@ -2,6 +2,7 @@ import React from 'react';
 import config from '../../config';
 import { NavLink } from 'react-router-dom';
 import Moment from 'react-moment';
+import Image from '../shared/Image/Image';
 
 interface ITop {
 	id: string;
@@ -32,10 +33,11 @@ const TopListItem: React.FC<ITopLIstItemProps> = ({ top }) => {
 	return (
 		<div className="top-page-item">
 			<div className="top-image-section">
-				<img
-					className="top-page-item-img"
-					src={top.topImageUrl || config.DEFAULT_TOP_IMAGE}
+				<Image
+					src={top.topImageUrl}
+					defaultSrc={config.DEFAULT_TOP_IMAGE}
 					alt="top-image"
+					className="top-page-item-img"
 				/>
 			</div>
 			<div className="top-main-section">

@@ -7,7 +7,18 @@ import TopListItem from './TopListItem';
 import './TopList.scss';
 
 interface ITopLIstProps {
-	tops: Array<any>;
+	tops: Array<{
+		id: string;
+		title: string;
+		topImageUrl: string;
+		created_at: Date;
+		movieInTop: Array<any>;
+		user: {
+			id: string;
+			avatar: string;
+			name: string;
+		};
+	}>;
 	fetchTops: () => any;
 }
 

@@ -29,7 +29,6 @@ const TopPage: React.SFC<ITopProps> = ({ match }) => {
 
 		return <Spinner />;
 	}
-	console.log(top.movieList.length);
 	return (
 		<div className="top-page">
 			<TopPageTop top={top} />

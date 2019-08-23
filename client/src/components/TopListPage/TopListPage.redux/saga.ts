@@ -1,5 +1,5 @@
 import { all, call, put, takeEvery } from '@redux-saga/core/effects';
-import { FETCH_TOPS, SET_TOPLIST } from './actionTypes';
+import { FETCH_TOPS, SET_TOP_LIST } from './actionTypes';
 
 import webApi from '../../../services/webApi.service';
 import config from '../../../config';
@@ -12,7 +12,7 @@ export function* fetchTops(action) {
 		});
 
 		yield put({
-			type: SET_TOPLIST,
+			type: SET_TOP_LIST,
 			payload: {
 				tops: data
 			}
