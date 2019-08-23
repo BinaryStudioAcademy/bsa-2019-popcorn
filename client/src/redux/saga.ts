@@ -8,6 +8,7 @@ import userTopsSaga from '../components/UserPage/UserTops/UserTops.redux/saga';
 import adminPanelSaga from '../components/AdminPanelPage/AdminPanelPage.redux/saga';
 import surveySaga from '../components/UserPage/UserSurveys/UserSurveys.redux/saga';
 import reviewSaga from '../components/MovieSeriesPage/MovieSeriesReviews/saga';
+import topListSaga from '../components/TopListPage/TopListPage.redux/saga';
 
 export default function* rootSaga() {
 	yield all([
@@ -19,6 +20,7 @@ export default function* rootSaga() {
 		userTopsSaga(),
 		adminPanelSaga(),
 		surveySaga(),
-		reviewSaga()
+		reviewSaga(),
+		topListSaga()
 	]);
 }

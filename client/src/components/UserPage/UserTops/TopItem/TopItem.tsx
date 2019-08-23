@@ -73,15 +73,12 @@ const TopItem: React.FC<ITopItemProps> = ({
 						value={title}
 					/>
 				) : (
-						<div className="top-item-title">
-							<NavLink
-								to={`/top-page/${topItem.id}`}
-								className="link-reset"
-							>
-								{title}
-							</NavLink>
-						</div>
-					)}
+					<div className="top-item-title">
+						<NavLink to={`/top-page/${topItem.id}`} className="link-reset">
+							{title}
+						</NavLink>
+					</div>
+				)}
 				<input
 					name="image"
 					type="file"

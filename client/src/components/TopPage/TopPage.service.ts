@@ -31,7 +31,7 @@ export function convertServerDataFormatToClient(top: any): ITop | null {
 		movieInTop.movie = movieAdapter(movieInTop.movie);
 		return movieInTop;
 	});
-	
+
 	return {
 		id: top.id,
 		title: top.title,
@@ -50,5 +50,5 @@ export function convertServerDataFormatToClient(top: any): ITop | null {
 			name: top.user.name,
 			avatar: top.user.avatar
 		}
-	};	
+	};
 }

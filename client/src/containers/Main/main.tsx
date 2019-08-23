@@ -36,6 +36,7 @@ import {
 	IEventFormatClient,
 	IEventFormatDataBase
 } from '../../components/UserPage/UserEvents/UserEvents.service';
+import TopList from '../../components/TopListPage/TopList';
 
 const { notifications } = {
 	notifications: {
@@ -120,7 +121,7 @@ const Main = ({
 		return <Redirect to="/login" />;
 
 	new SocketService(userInfo.id);
-	
+
 	return (
 		<div className={'main-wrap'}>
 			{isAuthorized ? <Header userInfo={userInfo} /> : null}
@@ -170,7 +171,7 @@ const Main = ({
 							path={`/surveys-list`}
 							render={() => allSurveysRender(userInfo)}
 						></Route>
-						<Route path={`/movie-tops`} render={() => <UserTops />} />
+						<Route path={`/movie-tops`} render={() => <TopList />} />
 						<Route path={`/top-page/:id`} component={TopPage} />
 						<Route path={`/*`} exact component={NotFound} />
 					</Switch>
