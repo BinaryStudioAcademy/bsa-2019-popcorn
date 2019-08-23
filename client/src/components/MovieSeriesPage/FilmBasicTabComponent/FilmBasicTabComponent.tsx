@@ -53,7 +53,8 @@ const FilmBasicTab = (props: IProps) => {
 		vote_average,
 		budget,
 		poster_path,
-		video
+		video,
+		hasVideo
 	} = props.movie;
 
 	const movieData = [
@@ -95,7 +96,7 @@ const FilmBasicTab = (props: IProps) => {
 					{movieData.map(({ label, value }) => descriptionItem(label, value))}
 				</div>
 			</section>
-			{video && (
+			{hasVideo && (
 				<section>
 					<div className={'videoWrapper'}>
 						<iframe
