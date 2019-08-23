@@ -121,8 +121,11 @@ $orange: #fb8700;
 	justify-content: space-evenly;
 	justify-items: normal;
 	text-align: center;
+
 	img {
 		width: 50px;
+		height: auto;
+		border-radius: 50%;
 	}
 }
 
