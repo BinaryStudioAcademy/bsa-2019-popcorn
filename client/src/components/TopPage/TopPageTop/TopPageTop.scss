@@ -2,8 +2,8 @@
 
 .top {
 	margin-bottom: 60px;
-    display: flex;
-    align-items: center;
+	display: flex;
+	align-items: center;
 
 	.top-poster-wrp {
 		width: 25%;
@@ -15,30 +15,30 @@
 		.top-poster {
 			max-height: 100%;
 			max-width: 100%;
-        }
+		}
 	}
 
 	.top-info {
-        margin-left: 20px;
+		margin-left: 20px;
 
-        .top-title {
-            font-size: $header-large;
-        }
+		.top-title {
+			font-size: $header-large;
+		}
 
-        .top-author {
-            display: flex;
-            align-items: center;
-            margin: 30px 0;
+		.top-author {
+			display: flex;
+			align-items: center;
+			margin: 30px 0;
 
-            .top-user-avatar {
-                width: 60px;
-                height: auto;
-                margin-right: 10px;
-            }
+			.top-user-avatar {
+				width: 60px;
+				height: auto;
+				margin-right: 10px;
+			}
 
-            .top-author-name {
-                text-transform: capitalize;
-            }
-        }
+			.top-author-name {
+				text-transform: capitalize;
+			}
+		}
 	}
 }
