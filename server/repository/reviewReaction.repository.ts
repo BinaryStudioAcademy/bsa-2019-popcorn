@@ -59,6 +59,18 @@ class ReviewReactionRepository extends Repository<ReviewReaction> {
       );
     }
   }
+
+  async getReactionByReviewId(reviewId, userId) {
+    const reactions = await this.getCountLikesDislikes(reviewId);
+    const userReaction = await this.findOne({
+      where: {
+        user: { id: userId },
+        review: { id: reviewId }
+      }
+    });
+    const userLike = userReaction ? userReaction.isLike : null;
+    return { ...reactions, userLike };
+  }
 }
 
 export default ReviewReactionRepository;

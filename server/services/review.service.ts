@@ -29,6 +29,7 @@ export const createReview = async (
 
 export const getReviewsByMovieId = async (
   movieId: string,
+  userId: string,
   next
 ): Promise<any> => {
   let movie = await getMovieElasticById(movieId);
@@ -39,11 +40,25 @@ export const getReviewsByMovieId = async (
     );
   }
   movie = movie.hits.hits[0]._source;
-  const reviews = await getCustomRepository(
-    ReviewRepository
-  ).getReviewsByMovieId(movieId, next);
+  let reviews = await getCustomRepository(ReviewRepository).getReviewsByMovieId(
+    movieId,
+    next
+  );
+
+  reviews = await addReactionsToReviews(userId, reviews);
   return { reviews, movie };
 };
+
+const addReactionsToReviews = async (userId: string, reviews: any) =>
+  Promise.all(
+    reviews.map(async review => {
+      const reaction = await getCustomRepository(
+        ReviewReactionRepository
+      ).getReactionByReviewId(review.id, userId);
+      review.reaction = reaction;
+      return review;
+    })
+  );
 
 export const getReviewByMovieIdUserId = async (
   userId: string,
