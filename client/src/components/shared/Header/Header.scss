@@ -161,7 +161,8 @@
 			transform: scaleY(1);
 		}
 	}
-	.search-area:hover {
+	
+	.search-area {
 		.modal {
 			transform: scale(1);
 			width: 150%;

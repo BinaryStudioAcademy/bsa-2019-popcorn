@@ -32,7 +32,7 @@ interface IProps {
 		genres: Array<string>;
 		cast: Array<string>;
 	}>;
-	fetchFilms: () => void;
+	fetchFilms: (data: string) => void;
 	alreadySearch: boolean;
 	setMovieSeries: (movie: any) => any;
 	unauthorize: () => void;
