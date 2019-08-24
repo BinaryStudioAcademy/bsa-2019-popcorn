@@ -4,7 +4,7 @@ import './MovieSeriesReviews.scss';
 import ReviewItem from './ReviewItem/ReviewItem';
 import Spinner from '../../shared/Spinner';
 import { bindActionCreators } from 'redux';
-import { fetchMovieReviews } from './actions';
+import { fetchMovieReviews, setReaction } from './actions';
 
 export interface IReview {
 	id: string;
@@ -17,6 +17,13 @@ export interface IReview {
 	movieId: string;
 	text: string;
 	created_at: string;
+	reaction: IReviewReaction;
+}
+
+interface IReviewReaction {
+	countLikes: number;
+	countDilsikes: number;
+	userLike?: boolean;
 }
 
 interface IProps {
@@ -25,6 +32,7 @@ interface IProps {
 	fetchMovieReviews: any;
 	isLoaded: boolean;
 	currentUserId: string;
+	setReaction: (reviewId: string, isLike: boolean) => object;
 }
 
 class MovieSeriesReviews extends React.Component<IProps> {
@@ -33,7 +41,7 @@ class MovieSeriesReviews extends React.Component<IProps> {
 	}
 
 	render() {
-		const { reviews, currentUserId, isLoaded } = this.props;
+		const { reviews, currentUserId, isLoaded, setReaction } = this.props;
 		return (
 			<div className="MovieSeriesReviews">
 				{!isLoaded && !reviews ? (
@@ -49,6 +57,7 @@ class MovieSeriesReviews extends React.Component<IProps> {
 										review={item}
 										key={item.id}
 										currentUserId={currentUserId}
+										setReaction={setReaction}
 									/>
 								);
 							})
@@ -70,7 +79,8 @@ const mapStateToProps = (rootState, props) => ({
 
 const mapDispatchToProps = dispatch => {
 	const actions = {
-		fetchMovieReviews
+		fetchMovieReviews,
+		setReaction
 	};
 	return bindActionCreators(actions, dispatch);
 };

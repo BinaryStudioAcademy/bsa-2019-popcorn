@@ -11,6 +11,7 @@ import { analysisToGRBA } from '../../../../helpers/analysisToGRBA';
 interface IProps {
 	review: IReview;
 	currentUserId: string;
+	setReaction: (reviewId: string, isLike: boolean) => object;
 }
 
 interface IState {
@@ -59,7 +60,7 @@ class ReviewItem extends React.Component<IProps, IState> {
 
 	public render() {
 		const {
-			review: { user, text, created_at, analysis },
+			review: { user, text, created_at, analysis, reaction },
 			currentUserId
 		} = this.props;
 		const { showFullReview, textBlockHeight, isBigBlock } = this.state;
