@@ -130,7 +130,6 @@ export const setNewReaction = async (
       );
       isLike = null;
     } else {
-      console.log(reaction.id);
       await getCustomRepository(ReviewReactionRepository).updateReactionById(
         reaction.id,
         isLike,

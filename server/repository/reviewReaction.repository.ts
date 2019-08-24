@@ -8,12 +8,12 @@ class ReviewReactionRepository extends Repository<ReviewReaction> {
       const likes = await this.createQueryBuilder("reaction")
         .select("COUNT(reaction.isLike)", "count")
         .where("reaction.review.id = :id", { id: reviewId })
-        .where("reaction.isLike = :isLike", { isLike: true })
+        .andWhere("reaction.isLike = :isLike", { isLike: true })
         .getRawOne();
       const dislikes = await this.createQueryBuilder("reaction")
         .select("COUNT(reaction.isLike)", "count")
         .where("reaction.review.id = :id", { id: reviewId })
-        .where("reaction.isLike = :isLike", { isLike: false })
+        .andWhere("reaction.isLike = :isLike", { isLike: false })
         .getRawOne();
       return {
         countLikes: likes.count,
