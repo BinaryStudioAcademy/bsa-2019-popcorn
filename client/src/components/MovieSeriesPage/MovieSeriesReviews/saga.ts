@@ -4,7 +4,8 @@ import config from '../../../config';
 import {
 	FETCH_MOVIE_REVIEWS,
 	FETCH_MOVIE_REVIEWS_SUCCESS,
-	SET_REACTION
+	SET_REACTION,
+	SET_REACTION_SUCCESS
 } from './actionTypes';
 import {
 	FETCH_USER_REVIEWS,
@@ -68,6 +69,14 @@ export function* setReaction(action) {
 			endpoint: `${config.API_URL}/api/review/reaction`,
 			method: 'POST',
 			body: { reviewId, isLike }
+		});
+
+		yield put({
+			type: SET_REACTION_SUCCESS,
+			payload: {
+				updatedReaction: response,
+				reviewId
+			}
 		});
 	} catch (e) {
 		console.log(e);
