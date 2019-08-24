@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import './EventPage.scss';
 import { formatToClient } from '../UserPage/UserEvents/UserEvents.service';
 import EventItem from '../UserPage/UserEvents/EventItem/EventItem';
-import { NavLink } from 'react-router-dom';
 export interface IEvent {
 	title: string;
 	description: string;
@@ -34,11 +33,7 @@ const EventList: React.FC<IProps> = props => {
 			<div className="event-list-container">
 				{events.map(unformattedEvent => {
 					const event = formatToClient(unformattedEvent);
-					return (
-						<NavLink key={event.id} to={event.id}>
-							<EventItem event={event} key={event.id} isOwnEvent={false} />
-						</NavLink>
-					);
+					return <EventItem event={event} key={event.id} isOwnEvent={false} />;
 				})}
 			</div>
 		</div>
