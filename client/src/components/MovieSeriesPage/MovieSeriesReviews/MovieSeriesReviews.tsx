@@ -22,7 +22,7 @@ export interface IReview {
 
 interface IReviewReaction {
 	countLikes: number;
-	countDilsikes: number;
+	countDislikes: number;
 	userLike?: boolean;
 }
 

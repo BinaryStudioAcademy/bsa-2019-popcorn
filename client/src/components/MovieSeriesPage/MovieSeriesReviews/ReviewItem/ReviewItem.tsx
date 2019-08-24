@@ -58,9 +58,24 @@ class ReviewItem extends React.Component<IProps, IState> {
 		);
 	};
 
+	sendReactionToAction = (isLike: boolean) => {
+		const {
+			setReaction,
+			review: { id: reviewId }
+		} = this.props;
+		setReaction(reviewId, isLike);
+		return;
+	};
+
 	public render() {
 		const {
-			review: { user, text, created_at, analysis, reaction },
+			review: {
+				user,
+				text,
+				created_at,
+				analysis,
+				reaction: { countDislikes, countLikes, userLike }
+			},
 			currentUserId
 		} = this.props;
 		const { showFullReview, textBlockHeight, isBigBlock } = this.state;
@@ -106,7 +121,33 @@ class ReviewItem extends React.Component<IProps, IState> {
 							></div>
 						) : null}
 					</div>
-					{isBigBlock && this.renderReadMoreBtn(showFullReview)}
+					<div className="review-footer">
+						<div className="review-reaction">
+							<div className="review-likes">
+								<span
+									onClick={() => this.sendReactionToAction(true)}
+									className="likes-icon"
+								>
+									{' '}
+									likes:
+								</span>
+								<span className="likes-count">{countLikes}</span>
+							</div>
+							<div className="review-dislikes">
+								<span
+									onClick={() => this.sendReactionToAction(false)}
+									className="likes-icon"
+								>
+									{' '}
+									dislikes:{' '}
+								</span>
+								<span className="dislikes-count">{countDislikes}</span>
+							</div>
+						</div>
+						<div className="review-read-more">
+							{isBigBlock && this.renderReadMoreBtn(showFullReview)}
+						</div>
+					</div>
 				</div>
 			</div>
 		);

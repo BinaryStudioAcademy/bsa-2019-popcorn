@@ -73,23 +73,41 @@
 		.review-item-text-big-show-full {
 			height: auto;
 		}
+		.review-footer {
+			display: flex;
+			justify-content: space-between;
+			// TODO - GRID
 
-		.read-more-btn {
-			color: $text-secondary-color;
-			font-style: italic;
-			cursor: pointer;
-			transition: opacity 0.3s ease;
-			text-align: right;
+			.review-reaction {
+				width: 40%;
+				background-color: red;
+				display: flex;
 
-			&:hover {
-				opacity: 0.7;
+				.review-likes {
+					margin-right: 10px;
+				}
 			}
-		}
 
-		.fa-chevron-down,
-		.fa-chevron-up {
-			margin-left: 4px;
-			width: 12px;
+			.review-read-more {
+				width: 60%;
+				.read-more-btn {
+					color: $text-secondary-color;
+					font-style: italic;
+					cursor: pointer;
+					transition: opacity 0.3s ease;
+					text-align: right;
+
+					&:hover {
+						opacity: 0.7;
+					}
+				}
+
+				.fa-chevron-down,
+				.fa-chevron-up {
+					margin-left: 4px;
+					width: 12px;
+				}
+			}
 		}
 	}
 
