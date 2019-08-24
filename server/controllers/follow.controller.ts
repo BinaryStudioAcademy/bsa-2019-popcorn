@@ -22,6 +22,15 @@ router
         .getFollowingsByUserId(req.params.userId, next)
         .then(result => res.send(result))
         .catch(next)
+  )
+  .post(
+    "/",
+    errorHandlerMiddleware,
+    (req: Request, res: Response, next: NextFunction) =>
+      followService
+        .changeFollowStatus(req.body, next)
+        .then(result => res.send(result))
+        .catch(next)
   );
 
 export default router;

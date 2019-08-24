@@ -14,3 +14,11 @@ export const getFollowingsByUserId = async (userId: string, next) => {
     next
   );
 };
+
+export const changeFollowStatus = async ({ userId, followerId }, next) => {
+  return await getCustomRepository(FollowerRepository).changeFollowStatus(
+    userId,
+    followerId,
+    next
+  );
+};
