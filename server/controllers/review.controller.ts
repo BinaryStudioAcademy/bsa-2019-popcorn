@@ -19,7 +19,7 @@ router
   )
   .get("/movie/:id", errorHandlerMiddleware, (req, res, next) =>
     reviewService
-      .getReviewsByMovieId(req.params.id, next)
+      .getReviewsByMovieId(req.params.id, req.user.id, next)
       .then(result => res.send(result))
       .catch(next)
   )
