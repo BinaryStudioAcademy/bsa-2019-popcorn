@@ -1,5 +1,5 @@
 import { EntityRepository, Repository, getCustomRepository } from "typeorm";
-import { Review } from "../entities/Review";
+import { Review } from "../entities/Review/Review";
 import UserRepository from "../repository/user.repository";
 import { getRatingByReview } from "../services/reviewAnalysis.service";
 

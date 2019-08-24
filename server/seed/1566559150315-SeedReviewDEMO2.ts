@@ -1,7 +1,7 @@
 import { MigrationInterface, QueryRunner, getCustomRepository } from "typeorm";
 import UserRepository from "../repository/user.repository";
 import ReviewRepository from "../repository/review.repository";
-import { Review } from "../models/ReviewModel";
+import { Review } from "../models/Review/ReviewModel";
 import { getRatingByReview } from "../services/reviewAnalysis.service";
 
 export class SeedReviewDEMO21566559150315 implements MigrationInterface {

@@ -1,5 +1,5 @@
 import { getCustomRepository } from "typeorm";
-import { Review } from "../models/ReviewModel";
+import { Review } from "../models/Review/ReviewModel";
 import ReviewRepository from "../repository/review.repository";
 import {
   getById as getMovieElasticById,
