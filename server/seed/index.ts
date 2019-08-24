@@ -13,6 +13,7 @@ import { SeedMovieInTop1566326020135 } from "./1566326020135-SeedMovieInTop";
 import { SeedReviews1566319951202 } from "./1566319951202-SeedReviews";
 import { SeedTops1566549724762 } from "./1566549724762-SeedTops";
 import { SeedReviewDEMO21566559150315 } from "./1566559150315-SeedReviewDEMO2";
+import { SeedFollowers1566665184861 } from "./1566665184861-SeedFollowers";
 
 export default [
   SeedUsers1565158741121,
@@ -29,7 +30,8 @@ export default [
   // SeedMovieInTop1566326020135,
   // SeedReviews1566319951202,
   SeedTops1566549724762,
-  SeedReviewDEMO21566559150315
+  SeedReviewDEMO21566559150315,
+  SeedFollowers1566665184861
 ];
 //to create new migration run in this folder: typeorm migration:create -n <name>
 // then import this migration hear and export in array below
