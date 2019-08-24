@@ -17,6 +17,7 @@ import { Link } from 'react-router-dom';
 import IPost from './IPost';
 import IComment from './IComment';
 import IReaction from './IReaction';
+import Image from '../../shared/Image/Image';
 
 type IPostProps = {
 	post: IPost;
@@ -137,11 +138,14 @@ class Post extends Component<IPostProps, IPostState> {
 			<div className="post-item">
 				<div className="post-item-header">
 					<Link className="user-link" to={`/user-page/${user.id}`}>
-						<img
-							className="post-item-avatar"
-							src={(user && user.avatar) || config.DEFAULT_AVATAR}
-							alt="author"
-						/>
+						{user && (
+							<Image
+								className="post-item-avatar"
+								src={user.avatar}
+								defaultSrc={config.DEFAULT_AVATAR}
+								alt="author"
+							/>
+						)}
 						<div className="post-item-info">
 							<div className="post-item-author-name">{user.name}</div>
 							{created_At && (
