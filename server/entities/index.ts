@@ -17,6 +17,7 @@ import { SurveysQuestionOption } from "./SurveysQuestionOption";
 import { MovieRate } from "./MovieRate/MovieRate";
 import { Review } from "./Review";
 import { Discussion } from "./Discussion";
+import { Follower } from "./Follower";
 
 export default [
   User,
@@ -39,5 +40,6 @@ export default [
   SurveysQuestionOption,
   MovieRate,
   Review,
-  Discussion
+  Discussion,
+  Follower
 ];
