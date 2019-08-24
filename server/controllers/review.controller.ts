@@ -46,6 +46,12 @@ router
       .deleteReviewById(req.params.id, next)
       .then(result => res.send(result))
       .catch(next)
+  )
+  .post("/reaction", errorHandlerMiddleware, (req, res, next) =>
+    reviewService
+      .setNewReaction(req.user.id, req.body, next)
+      .then(result => res.send(result))
+      .catch(next)
   );
 
 export default router;

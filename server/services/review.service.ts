@@ -1,4 +1,4 @@
-import { getCustomRepository } from "typeorm";
+import { getCustomRepository, getRepository } from "typeorm";
 import { Review } from "../models/Review/ReviewModel";
 import ReviewRepository from "../repository/review.repository";
 import {
@@ -6,6 +6,7 @@ import {
   getByIdValues as getMovieElasticByIdValues
 } from "../repository/movieElastic.repository";
 import UserRepository from "../repository/user.repository";
+import ReviewReactionRepository from "../repository/reviewReaction.repository";
 
 interface IRequestBody {
   userId: string;
@@ -101,4 +102,44 @@ export const getReviewsByUserId = async (id: string, next) => {
   });
 
   return result;
+};
+
+export const setNewReaction = async (
+  userId: string,
+  { reviewId, isLike },
+  next
+) => {
+  const reaction = await getCustomRepository(ReviewReactionRepository).findOne({
+    where: {
+      user: { id: userId },
+      review: { id: reviewId }
+    }
+  });
+  if (reaction === undefined) {
+    await getCustomRepository(ReviewReactionRepository).save({
+      user: { id: userId },
+      review: { id: reviewId },
+      isLike
+    });
+  }
+  if (reaction) {
+    if (reaction.isLike === isLike) {
+      await getCustomRepository(ReviewReactionRepository).deleteReactionById(
+        reaction.id,
+        next
+      );
+      isLike = null;
+    } else {
+      console.log(reaction.id);
+      await getCustomRepository(ReviewReactionRepository).updateReactionById(
+        reaction.id,
+        isLike,
+        next
+      );
+    }
+  }
+  const result = await getCustomRepository(
+    ReviewReactionRepository
+  ).getCountLikesDislikes(reviewId);
+  return { ...result, userLike: isLike };
 };
