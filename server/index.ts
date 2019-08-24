@@ -28,7 +28,6 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(passport.initialize());
 
 const SERVER_PORT = process.env.PORT || 5000;
-app.use(errorHandlerMiddleware);
 createConnection(db_config)
   .then(connection => connection.runMigrations())
   .then(() => {
@@ -47,6 +46,7 @@ createConnection(db_config)
     app.use("/api/", authorizationMiddleware(routesWhiteList));
 
     routes(app);
+    app.use(errorHandlerMiddleware);
 
     if (process.env.NODE_ENV === "production") {
       const staticPath = path.resolve(`${__dirname}/../client/build`);

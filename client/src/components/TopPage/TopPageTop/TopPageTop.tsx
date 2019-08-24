@@ -16,7 +16,7 @@ const TopPageTop: React.SFC<ITopProps> = ({ top }) => {
 			<div className="top-poster-wrp">
 				<Image
 					src={top.topImageUrl}
-					defaultSrc={config.DEFAULT_MOVIE_IMAGE}
+					defaultSrc={config.DEFAULT_TOP_IMAGE}
 					alt="top-image"
 					className="top-poster"
 				/>
