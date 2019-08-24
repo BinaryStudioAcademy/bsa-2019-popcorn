@@ -4,6 +4,7 @@ import { Top } from "./TopModel";
 import { Story } from "./StoryModel";
 import { Surveys } from "./SurveysModel";
 import { SurveysQuestionAnswer } from "./SurveysQuestionAnswer";
+import { Follower } from "./FollowerModel";
 
 export class User {
   id: string;
@@ -23,4 +24,5 @@ export class User {
   reset_token: string;
   surveys: Surveys[];
   surveysQuestionAnswer: SurveysQuestionAnswer[];
+  followers: Follower[];
 }
