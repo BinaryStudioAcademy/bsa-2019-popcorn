@@ -110,11 +110,13 @@ export const getReviewsByUserId = async (id: string, next) => {
   const elasticMovies = await Promise.all(
     idValues.map(id => getMovieElasticById(id))
   );
-  const result = reviews.map(review => {
+  let result = reviews.map(review => {
     const index = idValues.findIndex(item => item === review.movieId);
     review.movie = elasticMovies[index].hits.hits[0]._source;
     return review;
   });
+
+  result = addReactionsToReviews(id, result);
 
   return result;
 };
