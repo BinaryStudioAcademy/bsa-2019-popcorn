@@ -53,6 +53,7 @@ class ReviewRepository extends Repository<Review> {
     try {
       const ratingValue = getRatingByReview(bodyRequest.text, next);
       bodyRequest.analysis = ratingValue.result.toFixed(2);
+      bodyRequest.created_at = new Date(); // default update
       const data = await this.update({ id }, bodyRequest);
       const updatedReview = await this.getReviewById(id, next);
       return updatedReview
