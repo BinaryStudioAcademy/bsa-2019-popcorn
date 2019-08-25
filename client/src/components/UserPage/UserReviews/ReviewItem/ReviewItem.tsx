@@ -7,8 +7,12 @@ import config from '../../../../config';
 import ReviewAddModal from '../../../MovieSeriesPage/MovieSeriesReviews/ReviewAddModal/ReviewAddModal';
 import Moment from 'react-moment';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faChevronUp, faChevronDown } from '@fortawesome/free-solid-svg-icons';
 import { NavLink } from 'react-router-dom';
+import { faChevronDown, faChevronUp } from '@fortawesome/free-solid-svg-icons';
+import {
+	faThumbsDown as dislikeNoFill,
+	faThumbsUp as likeNoFill
+} from '@fortawesome/free-regular-svg-icons';
 
 interface IProps {
 	review: IReview;
@@ -74,7 +78,8 @@ class ReviewItem extends React.Component<IProps> {
 			text,
 			id: reviewId,
 			movie,
-			user: { id: userId }
+			user: { id: userId },
+			reaction: { userLike, countDislikes, countLikes }
 		} = this.props.review;
 		const { review, setReview, removeReviewSet } = this.props;
 		const { deleteReview } = this.props;
@@ -160,7 +165,35 @@ class ReviewItem extends React.Component<IProps> {
 								></div>
 							) : null}
 						</div>
-						{isBigBlock && this.renderReadMoreBtn(showFullReview)}
+						<div className="review-footer">
+							<div className="review-reaction">
+								<div className="review-likes">
+									<span className="likes-icon">
+										<FontAwesomeIcon
+											className="like-no-fill"
+											icon={likeNoFill}
+										/>
+									</span>
+									<span className="likes-count">
+										{countLikes == 0 ? null : countLikes}
+									</span>
+								</div>
+								<div className="review-dislikes">
+									<span className="dislikes-icon">
+										<FontAwesomeIcon
+											className="dislike-no-fill"
+											icon={dislikeNoFill}
+										/>
+									</span>
+									<span className="dislikes-count">
+										{countDislikes == 0 ? null : countDislikes}
+									</span>
+								</div>
+							</div>
+							<div className="review-read-more">
+								{isBigBlock && this.renderReadMoreBtn(showFullReview)}
+							</div>
+						</div>
 					</div>
 				</div>
 			</div>
