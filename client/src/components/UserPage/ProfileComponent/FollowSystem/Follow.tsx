@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { connect } from 'react-redux';
+import Modal from 'react-responsive-modal';
 
 interface IFollowProps {
 	userId: string;
@@ -9,11 +10,35 @@ interface IFollowProps {
 }
 
 const Follow: React.FC<IFollowProps> = props => {
+	const [isModalShown, setModalShown] = useState(false);
+	const [isFollowerModal, setFollowerModal] = useState(false);
 	const { followersCount, followingsCount } = props;
+
+	const openModal = isFollowerModal => {
+		setFollowerModal(isFollowerModal);
+		setModalShown(true);
+	};
+
+	const closeModal = () => {
+		setModalShown(false);
+	};
+
 	return (
 		<div>
-			followers: {followersCount}
-			followings: {followingsCount}
+			<div onClick={() => openModal(true)}>followers: {followersCount}</div>
+			<div onClick={() => openModal(false)}>followings: {followingsCount}</div>
+			<Modal
+				open={isModalShown}
+				onClose={closeModal}
+				showCloseIcon={false}
+				focusTrapped={false}
+				center
+				classNames={{
+					modal: '' //todo
+				}}
+			>
+				{isFollowerModal ? 'Followers' : 'Followings'}
+			</Modal>
 		</div>
 	);
 };
