@@ -22,6 +22,7 @@ interface IProps {
 	review: IReview;
 	currentUserId: string;
 	setReaction: (reviewId: string, isLike: boolean) => object;
+	errorWithReview?: string;
 }
 
 interface IState {
@@ -84,6 +85,7 @@ class ReviewItem extends React.Component<IProps, IState> {
 	public render() {
 		const {
 			review: {
+				id: reviewId,
 				user,
 				text,
 				created_at,
@@ -91,7 +93,8 @@ class ReviewItem extends React.Component<IProps, IState> {
 				reaction: { countDislikes, countLikes, userLike },
 				user: { id: userId }
 			},
-			currentUserId
+			currentUserId,
+			errorWithReview
 		} = this.props;
 		const { showFullReview, textBlockHeight, isBigBlock } = this.state;
 
@@ -181,6 +184,9 @@ class ReviewItem extends React.Component<IProps, IState> {
 									{countDislikes == 0 ? null : countDislikes}
 								</span>
 							</div>
+							<span className="error-block">
+								{errorWithReview === reviewId ? 'error... try again' : null}
+							</span>
 						</div>
 						<div className="review-read-more">
 							{isBigBlock && this.renderReadMoreBtn(showFullReview)}

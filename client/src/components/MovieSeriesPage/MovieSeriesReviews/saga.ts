@@ -5,7 +5,8 @@ import {
 	FETCH_MOVIE_REVIEWS,
 	FETCH_MOVIE_REVIEWS_SUCCESS,
 	SET_REACTION,
-	SET_REACTION_SUCCESS
+	SET_REACTION_SUCCESS,
+	SET_REACTION_FAILURE
 } from './actionTypes';
 import {
 	FETCH_USER_REVIEWS,
@@ -79,6 +80,11 @@ export function* setReaction(action) {
 			}
 		});
 	} catch (e) {
+		yield put({
+			type: SET_REACTION_FAILURE,
+			payload: { errorWithReview: reviewId }
+		});
+
 		console.log(e);
 	}
 }

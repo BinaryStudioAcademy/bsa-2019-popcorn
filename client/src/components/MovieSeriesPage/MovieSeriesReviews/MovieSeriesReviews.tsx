@@ -33,6 +33,7 @@ interface IProps {
 	isLoaded: boolean;
 	currentUserId: string;
 	setReaction: (reviewId: string, isLike: boolean) => object;
+	errorWithReview?: string;
 }
 
 class MovieSeriesReviews extends React.Component<IProps> {
@@ -41,7 +42,13 @@ class MovieSeriesReviews extends React.Component<IProps> {
 	}
 
 	render() {
-		const { reviews, currentUserId, isLoaded, setReaction } = this.props;
+		const {
+			reviews,
+			currentUserId,
+			isLoaded,
+			setReaction,
+			errorWithReview
+		} = this.props;
 		return (
 			<div className="MovieSeriesReviews">
 				{!isLoaded && !reviews ? (
@@ -58,6 +65,7 @@ class MovieSeriesReviews extends React.Component<IProps> {
 										key={item.id}
 										currentUserId={currentUserId}
 										setReaction={setReaction}
+										errorWithReview={errorWithReview}
 									/>
 								);
 							})
@@ -72,6 +80,7 @@ class MovieSeriesReviews extends React.Component<IProps> {
 const mapStateToProps = (rootState, props) => ({
 	...props,
 	reviews: rootState.review.reviewList,
+	errorWithReview: rootState.review.errorWithReview,
 	isLoaded: rootState.review.isLoaded,
 	movieId: rootState.movie.fetchedMovie.id,
 	currentUserId: rootState.profile.profileInfo.id

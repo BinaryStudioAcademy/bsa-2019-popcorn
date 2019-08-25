@@ -79,10 +79,16 @@
 
 			.review-reaction {
 				display: grid;
-				grid-template-columns: 54px 54px;
+				grid-template-columns: 54px 54px 200px;
 				margin-top: 9px;
 				margin-left: 5px;
 				color: #122737ec;
+
+				.error-block {
+					width: 100%;
+					color: rgba(255, 0, 0, 0.534);
+					font-style: italic;
+				}
 
 				.review-likes,
 				.review-dislikes {
