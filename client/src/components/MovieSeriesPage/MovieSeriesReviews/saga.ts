@@ -67,7 +67,7 @@ export function* setReaction(action) {
 	const { reviewId, isLike } = action.payload;
 	try {
 		const response = yield call(webApi, {
-			endpoint: `${config.API_URL}/api/review/reaction`,
+			endpoint: `/api/review/reaction`,
 			method: 'POST',
 			body: { reviewId, isLike }
 		});
