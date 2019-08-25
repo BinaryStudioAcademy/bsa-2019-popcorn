@@ -79,7 +79,7 @@ class ReviewItem extends React.Component<IProps> {
 			id: reviewId,
 			movie,
 			user: { id: userId },
-			reaction: { userLike, countDislikes, countLikes }
+			reaction: { countDislikes, countLikes }
 		} = this.props.review;
 		const { review, setReview, removeReviewSet } = this.props;
 		const { deleteReview } = this.props;
@@ -174,9 +174,7 @@ class ReviewItem extends React.Component<IProps> {
 											icon={likeNoFill}
 										/>
 									</span>
-									<span className="likes-count">
-										{countLikes == 0 ? null : countLikes}
-									</span>
+									<span className="likes-count">{countLikes}</span>
 								</div>
 								<div className="review-dislikes">
 									<span className="dislikes-icon">
@@ -185,9 +183,7 @@ class ReviewItem extends React.Component<IProps> {
 											icon={dislikeNoFill}
 										/>
 									</span>
-									<span className="dislikes-count">
-										{countDislikes == 0 ? null : countDislikes}
-									</span>
+									<span className="dislikes-count">{countDislikes}</span>
 								</div>
 							</div>
 							<div className="review-read-more">
