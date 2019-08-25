@@ -15,7 +15,7 @@ export function* fetchPosts(action) {
 	try {
 		const data = yield call(webApi, {
 			method: 'GET',
-			endpoint: config.API_URL + '/api/post'
+			endpoint: '/api/post'
 		});
 
 		yield put({
@@ -34,7 +34,7 @@ export function* createComment(action) {
 	try {
 		yield call(webApi, {
 			method: 'POST',
-			endpoint: config.API_URL + '/api/post/comment',
+			endpoint: '/api/post/comment',
 			body: {
 				userId,
 				text,
@@ -52,7 +52,7 @@ export function* createReaction(action) {
 	try {
 		yield call(webApi, {
 			method: 'POST',
-			endpoint: config.API_URL + '/api/post/reaction',
+			endpoint: '/api/post/reaction',
 			body: {
 				userId,
 				type,
@@ -69,7 +69,7 @@ export function* deletePost(action) {
 	try {
 		yield call(webApi, {
 			method: 'DELETE',
-			endpoint: config.API_URL + '/api/post/' + action.payload.id
+			endpoint: '/api/post/' + action.payload.id
 		});
 
 		yield put({

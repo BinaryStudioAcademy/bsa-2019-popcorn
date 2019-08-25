@@ -16,7 +16,7 @@ export function* uploadImage(action) {
 		yield put({
 			type: ActionTypes.SET_TOP_IMAGE,
 			payload: {
-				uploadUrl: config.API_URL + '/' + url.join('/'),
+				uploadUrl: '/' + url.join('/'),
 				topId: action.payload.topId
 			}
 		});
@@ -32,7 +32,7 @@ function* watchUploadImage() {
 export function* fetchElasticSearchFilms(action) {
 	try {
 		const data = yield call(webApi, {
-			endpoint: `${config.API_URL}/api/movie/find?title=${action.payload.title}`,
+			endpoint: `/api/movie/find?title=${action.payload.title}`,
 			method: 'GET'
 		});
 
@@ -60,7 +60,7 @@ export function* fetchTops(action) {
 
 		const data = yield call(webApi, {
 			method: 'GET',
-			endpoint: config.API_URL + `/api/top/user/${userId}`
+			endpoint: `/api/top/user/${userId}`
 		});
 
 		yield put({
@@ -84,7 +84,7 @@ export function* addTop(action) {
 
 		const data = yield call(webApi, {
 			method: 'POST',
-			endpoint: config.API_URL + `/api/top/user`,
+			endpoint: `/api/top/user`,
 			body: {
 				...newTop
 			}
@@ -113,7 +113,7 @@ export function* updateTop(action) {
 
 		const data = yield call(webApi, {
 			method: 'PUT',
-			endpoint: config.API_URL + `/api/top/user`,
+			endpoint: `/api/top/user`,
 			body: {
 				...updatedTop
 			}
@@ -142,7 +142,7 @@ export function* deleteTop(action) {
 
 		const data = yield call(webApi, {
 			method: 'DELETE',
-			endpoint: config.API_URL + `/api/top/${topId}`
+			endpoint: `/api/top/${topId}`
 		});
 
 		yield put({
