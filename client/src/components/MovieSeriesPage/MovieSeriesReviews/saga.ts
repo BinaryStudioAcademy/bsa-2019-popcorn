@@ -17,7 +17,7 @@ import {
 export function* fetchMovieReviews(action) {
 	try {
 		const response = yield call(webApi, {
-			endpoint: `${config.API_URL}/api/review/movie/${action.payload}`,
+			endpoint: `/api/review/movie/${action.payload}`,
 			method: 'GET'
 		});
 
@@ -36,7 +36,7 @@ export function* fetchUserReviews(action) {
 	const { userId } = action.payload;
 	try {
 		const response = yield call(webApi, {
-			endpoint: `${config.API_URL}/api/review/user/${userId}`,
+			endpoint: `/api/review/user/${userId}`,
 			method: 'GET'
 		});
 
@@ -55,7 +55,7 @@ export function* deleteRevievById(action) {
 	const { reviewId } = action.payload;
 	try {
 		const response = yield call(webApi, {
-			endpoint: `${config.API_URL}/api/review/${reviewId}`,
+			endpoint: `/api/review/${reviewId}`,
 			method: 'DELETE'
 		});
 	} catch (e) {

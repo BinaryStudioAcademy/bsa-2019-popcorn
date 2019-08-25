@@ -11,7 +11,14 @@ class SocketService {
 
 	private _initSocket(userId: string) {
 		if (!SocketService._socket) {
-			SocketService._socket = io(config.API_URL, { withCredentials: false });
+			const currentLocation = new URL(window.location.href);
+			SocketService._socket =
+				process.env.NODE_ENV === 'production'
+					? io({ withCredentials: false })
+					: io(
+							`${currentLocation.protocol}//${currentLocation.hostname}:3000`,
+							{ withCredentials: false }
+					  );
 			if (SocketService._socket) {
 				SocketService._socket.on('connect', () => {
 					SocketService._socket.emit('joinRoom', userId);

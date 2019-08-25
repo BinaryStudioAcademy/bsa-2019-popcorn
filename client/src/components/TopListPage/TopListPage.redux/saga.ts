@@ -8,7 +8,7 @@ export function* fetchTops(action) {
 	try {
 		const data = yield call(webApi, {
 			method: 'GET',
-			endpoint: config.API_URL + '/api/top/extended'
+			endpoint: '/api/top/extended'
 		});
 
 		yield put({
