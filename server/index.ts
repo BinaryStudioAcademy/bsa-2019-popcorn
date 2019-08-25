@@ -43,7 +43,7 @@ createConnection(db_config)
 
     app.use(socketInjector(io));
 
-    // app.use("/api/", authorizationMiddleware(routesWhiteList));
+    app.use("/api/", authorizationMiddleware(routesWhiteList));
 
     routes(app);
     app.use(errorHandlerMiddleware);
