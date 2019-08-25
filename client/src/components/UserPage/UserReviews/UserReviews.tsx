@@ -29,6 +29,13 @@ export interface IReview {
 	movie: TMovie;
 	analysis: string;
 	user: any;
+	reaction: IReviewReaction;
+}
+
+interface IReviewReaction {
+	userLike?: boolean;
+	countLikes: number;
+	countDislikes: number;
 }
 
 class UserReviews extends React.Component<IProps> {
@@ -45,6 +52,7 @@ class UserReviews extends React.Component<IProps> {
 			setReview,
 			removeReviewSet
 		} = this.props;
+
 		return (
 			<div className="UserReviews">
 				{loading ? (
