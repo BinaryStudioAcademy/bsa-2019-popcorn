@@ -30,11 +30,17 @@ export default (state = initialState, action) => {
 			return { ...state, reviewList: action.payload.reviews, isLoaded: true };
 
 		case SET_REACTION_SUCCESS:
-			const updatedElement = state.reviewList.find(
-				review => review.id === action.payload.reviewId
-			);
-			updatedElement.reaction = action.payload.updatedReaction;
-			return { ...state, reviewList: [...state.reviewList, updatedElement] };
+			const { updatedReaction, reviewId: newReviewId } = action.payload;
+			const newReviewList = [...state.reviewList];
+			state.reviewList.forEach((element, index) => {
+				if (element.id === newReviewId) {
+					const review = { ...element };
+					review.reaction = { ...updatedReaction };
+					newReviewList.splice(index, 1, review);
+				}
+			});
+			return { ...state, reviewList: [...newReviewList] };
+
 		case FETCH_USER_REVIEWS:
 			return { ...state, reviewUserList: null, loading: true };
 
