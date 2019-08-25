@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { NavLink } from 'react-router-dom';
 import './TopItem.scss';
 import { ReactComponent as CloseIcon } from '../../../../assets/icons/general/closeIcon.svg';
 import TopConstructor from './TopConstructor/TopConstructor';
@@ -14,6 +15,9 @@ interface ITopItemProps {
 	uploadImage: (data: any, titleId: string) => void;
 	uploadUrl: string;
 	urlForTop: string;
+	history?: {
+		push: (path: string) => any;
+	};
 }
 
 const TopItem: React.FC<ITopItemProps> = ({
@@ -23,7 +27,8 @@ const TopItem: React.FC<ITopItemProps> = ({
 	deleteTop,
 	uploadImage,
 	uploadUrl,
-	urlForTop
+	urlForTop,
+	history
 }) => {
 	const [editTop, canEditTop] = useState(topItem.isNewTop || false);
 	const [title, setTitle] = useState(topItem.title);
@@ -68,7 +73,11 @@ const TopItem: React.FC<ITopItemProps> = ({
 						value={title}
 					/>
 				) : (
-					<div className="top-item-title">{title}</div>
+					<div className="top-item-title">
+						<NavLink to={`/top-page/${topItem.id}`} className="link-reset">
+							{title}
+						</NavLink>
+					</div>
 				)}
 				<input
 					name="image"
@@ -93,7 +102,7 @@ const TopItem: React.FC<ITopItemProps> = ({
 				)}
 				{isOwnTop && (
 					<div className="delete-top hover" onClick={() => deleteTop(topItem)}>
-						<CloseIcon />
+						<CloseIcon className="close-icon" />
 					</div>
 				)}
 				<img className="image-top" src={topImageUrl} alt="" />

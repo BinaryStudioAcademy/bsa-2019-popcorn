@@ -12,6 +12,7 @@ import EventPage from '../../components/EventPage/EventPage';
 import EventList from '../../components/EventPage/EventList';
 import AdminPanelPage from '../../components/AdminPanelPage/AdminPanelPage';
 import SurveyPage from '../../components/SurveyPage/SurveyPage';
+import TopPage from '../../components/TopPage/TopPage';
 
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
@@ -35,6 +36,7 @@ import {
 	IEventFormatClient,
 	IEventFormatDataBase
 } from '../../components/UserPage/UserEvents/UserEvents.service';
+import TopList from '../../components/TopListPage/TopList';
 
 const { notifications } = {
 	notifications: {
@@ -125,7 +127,9 @@ const Main = ({
 			{isAuthorized ? <Header userInfo={userInfo} /> : null}
 			<div className="main-page">
 				<MainPageSidebar notifications={notifications} />
-				<div style={{ width: 'calc(100vw - 205px)' }}>
+				<div
+				// style={{ width: 'calc(100vw - 205px)' }}
+				>
 					<Switch>
 						<Route exact path={[`/`, '/create*']} component={MainPage} />
 						<Route path={`/user-page/:id`} component={UserPage} />
@@ -169,7 +173,8 @@ const Main = ({
 							path={`/surveys-list`}
 							render={() => allSurveysRender(userInfo)}
 						></Route>
-						<Route path={`/movie-tops`} render={() => <UserTops />} />
+						<Route path={`/movie-tops`} render={() => <TopList />} />
+						<Route path={`/top-page/:id`} component={TopPage} />
 						<Route path={`/*`} exact component={NotFound} />
 					</Switch>
 				</div>
