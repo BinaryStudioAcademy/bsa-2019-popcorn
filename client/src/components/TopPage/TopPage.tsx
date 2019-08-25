@@ -22,7 +22,7 @@ const TopPage: React.SFC<ITopProps> = ({ match }) => {
 	if (!top) {
 		webApi({
 			method: 'GET',
-			endpoint: config.API_URL + `/api/top/${match.params.id}`
+			endpoint: `/api/top/${match.params.id}`
 		}).then(top => {
 			setTop(convertServerDataFormatToClient(top));
 		});
