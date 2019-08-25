@@ -71,10 +71,14 @@ class ReviewItem extends React.Component<IProps, IState> {
 	sendReactionToAction = (isLike: boolean) => {
 		const {
 			setReaction,
-			review: { id: reviewId }
+			review: {
+				id: reviewId,
+				user: { id: userId }
+			},
+			currentUserId
 		} = this.props;
+		if (userId === currentUserId) return;
 		setReaction(reviewId, isLike);
-		return;
 	};
 
 	public render() {
@@ -84,7 +88,8 @@ class ReviewItem extends React.Component<IProps, IState> {
 				text,
 				created_at,
 				analysis,
-				reaction: { countDislikes, countLikes, userLike }
+				reaction: { countDislikes, countLikes, userLike },
+				user: { id: userId }
 			},
 			currentUserId
 		} = this.props;
@@ -136,7 +141,9 @@ class ReviewItem extends React.Component<IProps, IState> {
 							<div className="review-likes">
 								<span
 									onClick={() => this.sendReactionToAction(true)}
-									className="likes-icon"
+									className={`likes-icon ${
+										currentUserId === userId ? 'block-button' : null
+									}`}
 								>
 									{userLike === true ? (
 										<FontAwesomeIcon className="like-fill" icon={likeFill} />
@@ -154,7 +161,9 @@ class ReviewItem extends React.Component<IProps, IState> {
 							<div className="review-dislikes">
 								<span
 									onClick={() => this.sendReactionToAction(false)}
-									className="dislikes-icon"
+									className={`dislikes-icon ${
+										currentUserId === userId ? 'block-button' : null
+									}`}
 								>
 									{userLike === false ? (
 										<FontAwesomeIcon
