@@ -132,7 +132,7 @@ export const setNewReaction = async (
       review: { id: reviewId }
     }
   });
-  if (reaction === undefined) {
+  if (!reaction) {
     await getCustomRepository(ReviewReactionRepository).save({
       user: { id: userId },
       review: { id: reviewId },

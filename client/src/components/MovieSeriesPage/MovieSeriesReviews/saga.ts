@@ -1,6 +1,5 @@
 import { all, call, put, takeEvery } from 'redux-saga/effects';
 import webApi from '../../../services/webApi.service';
-import config from '../../../config';
 import {
 	FETCH_MOVIE_REVIEWS,
 	FETCH_MOVIE_REVIEWS_SUCCESS,
@@ -84,7 +83,6 @@ export function* setReaction(action) {
 			type: SET_REACTION_FAILURE,
 			payload: { errorWithReview: reviewId }
 		});
-
 		console.log(e);
 	}
 }

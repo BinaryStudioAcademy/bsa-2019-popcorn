@@ -1,5 +1,6 @@
 import { EntityRepository, Repository, getCustomRepository } from "typeorm";
 import { ReviewReaction } from "../entities/Review/ReviewReaction";
+import { PlainObjectToNewEntityTransformer } from "typeorm/query-builder/transformer/PlainObjectToNewEntityTransformer";
 
 @EntityRepository(ReviewReaction)
 class ReviewReactionRepository extends Repository<ReviewReaction> {
@@ -19,7 +20,9 @@ class ReviewReactionRepository extends Repository<ReviewReaction> {
         countLikes: likes.count,
         countDislikes: dislikes.count
       };
-    } catch (error) {}
+    } catch (error) {
+      throw new Error("Can't connect to Review Reaction repository");
+    }
   }
 
   async deleteReactionById(reactionId, next) {
