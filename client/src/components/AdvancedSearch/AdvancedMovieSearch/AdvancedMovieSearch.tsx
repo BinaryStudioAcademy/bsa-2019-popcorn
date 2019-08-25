@@ -2,6 +2,7 @@ import React from 'react';
 import AdvancedSearchSliderBlock from '../AdvancedSearchSliderBlock/AdvancedSearchSliderBlock';
 import AdvancedSearchCheckboxBlock from '../AdvancedSearchCheckboxBlock/AdvancedSearchCheckboxBlock';
 import AdvancedSearchInputBlock from '../AdvancedSearchInputBlock/AdvancedSearchInputBlock';
+import AdvancedSearchDatePicker from '../AdvancedSearchDatePicker/AdvancedSearchDatePicker';
 import './AdvancedMovieSearch.scss';
 
 const mockedGenres = [
@@ -25,11 +26,15 @@ const mockedCast = [
 	'Robert Downey Jr.'
 ];
 
+interface IAdvancedMovieSearchProps {
+	fetchFiltredMovies: (filters: any) => any;
+}
+
 type AdvancedMovieSearchState = {
 	nameValue: string;
 	genresValues: Array<string>;
 	ratingValues: Array<number>;
-	yearValues: Array<number>;
+	yearValues: { startDate: string; endDate: string };
 	crewValues: Array<string>;
 	castValues: Array<string>;
 	durationValues: Array<number>;
@@ -37,7 +42,7 @@ type AdvancedMovieSearchState = {
 };
 
 class AdvancedMovieSearch extends React.Component<
-	{},
+	IAdvancedMovieSearchProps,
 	AdvancedMovieSearchState
 > {
 	constructor(props) {
@@ -46,7 +51,10 @@ class AdvancedMovieSearch extends React.Component<
 			nameValue: '',
 			genresValues: [],
 			ratingValues: [],
-			yearValues: [],
+			yearValues: {
+				startDate: '1900-01-01',
+				endDate: this.convert(new Date())
+			},
 			descriptionValue: '',
 			castValues: [],
 			crewValues: [],
@@ -54,7 +62,6 @@ class AdvancedMovieSearch extends React.Component<
 		};
 		this.handleGenreChange = this.handleGenreChange.bind(this);
 		this.handleRatingChange = this.handleRatingChange.bind(this);
-		this.handleSearch = this.handleSearch.bind(this);
 		this.handleYearChange = this.handleYearChange.bind(this);
 		this.handleDescriptionChange = this.handleDescriptionChange.bind(this);
 		this.handleCrewChange = this.handleCrewChange.bind(this);
@@ -78,31 +85,66 @@ class AdvancedMovieSearch extends React.Component<
 	};
 
 	handleRatingChange = val => {
-		this.setState({
-			...this.state,
-			ratingValues: val
-		});
+		this.setState(
+			{
+				...this.state,
+				ratingValues: [val[0] * 2, val[1] * 2]
+			},
+			() => {
+				this.props.fetchFiltredMovies(this.state);
+			}
+		);
 	};
 
+	convert(newDate) {
+		let year = newDate.getFullYear();
+		let mnth = ('0' + (newDate.getMonth() + 1)).slice(-2);
+		let day = ('0' + newDate.getDate()).slice(-2);
+		return [year, mnth, day].join('-');
+	}
+
 	handleYearChange = val => {
-		this.setState({
-			...this.state,
-			yearValues: val
-		});
+		let convertedVal = {
+			startDate: val.startDate
+				? this.convert(val.startDate)
+				: this.state.yearValues.startDate,
+			endDate: val.endDate
+				? this.convert(val.endDate)
+				: this.state.yearValues.endDate
+		};
+		this.setState(
+			{
+				...this.state,
+				yearValues: convertedVal
+			},
+			() => {
+				this.props.fetchFiltredMovies(this.state);
+			}
+		);
 	};
 
 	handleDescriptionChange = val => {
-		this.setState({
-			...this.state,
-			descriptionValue: val
-		});
+		this.setState(
+			{
+				...this.state,
+				descriptionValue: val
+			},
+			() => {
+				this.props.fetchFiltredMovies(this.state);
+			}
+		);
 	};
 
 	handleNameChange = val => {
-		this.setState({
-			...this.state,
-			nameValue: val
-		});
+		this.setState(
+			{
+				...this.state,
+				nameValue: val
+			},
+			() => {
+				this.props.fetchFiltredMovies(this.state);
+			}
+		);
 	};
 
 	handleCrewChange = crew => {
@@ -134,19 +176,21 @@ class AdvancedMovieSearch extends React.Component<
 	};
 
 	handleDurationChange = val => {
-		this.setState({
-			...this.state,
-			durationValues: val
-		});
-	};
-	handleSearch = () => {
-		console.log(this.state);
+		this.setState(
+			{
+				...this.state,
+				durationValues: val
+			},
+			() => {
+				this.props.fetchFiltredMovies(this.state);
+			}
+		);
 	};
 	render() {
 		return (
 			<div className="advanced-movie-search">
 				<AdvancedSearchInputBlock
-					handleSearchChange={this.handleDescriptionChange}
+					handleSearchChange={this.handleNameChange}
 					header="Name"
 				/>
 				<AdvancedSearchCheckboxBlock
@@ -154,12 +198,16 @@ class AdvancedMovieSearch extends React.Component<
 					values={mockedGenres}
 					header="Genres"
 				/>
-				<AdvancedSearchSliderBlock
+				{/*<AdvancedSearchSliderBlock
 					rangeHandler={this.handleYearChange}
 					min={0}
 					max={5}
 					step={0.1}
 					header="Year"
+				/>*/}
+				<AdvancedSearchDatePicker
+					onDateChange={this.handleYearChange}
+					header="Release date"
 				/>
 				<AdvancedSearchCheckboxBlock
 					checkboxHandler={this.handleCrewChange}
@@ -185,13 +233,10 @@ class AdvancedMovieSearch extends React.Component<
 				<AdvancedSearchSliderBlock
 					rangeHandler={this.handleDurationChange}
 					min={0}
-					max={240}
+					max={600}
 					step={1}
 					header="Duration"
 				/>
-				<button className="search-button" onClick={this.handleSearch}>
-					Search
-				</button>
 			</div>
 		);
 	}

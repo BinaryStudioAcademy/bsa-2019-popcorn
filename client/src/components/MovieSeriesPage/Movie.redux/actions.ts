@@ -12,7 +12,8 @@ import {
 	FETCH_REVIEW_BY_USER_MOVIE_ID,
 	SET_REVIEW,
 	REMOVE_REVIEW_SET,
-	GET_CAST_CREW
+	GET_CAST_CREW,
+	FETCH_FILTRED_MOVIES
 } from './actionTypes';
 
 export const fetchMovieList = (): any => {
@@ -21,6 +22,12 @@ export const fetchMovieList = (): any => {
 	};
 };
 
+export const fetchFiltredMovies = (filters): any => {
+	return {
+		type: FETCH_FILTRED_MOVIES,
+		payload: filters
+	};
+};
 export const setMovieSeries = (movie): any => {
 	return {
 		type: SET_MOVIE_SERIES,

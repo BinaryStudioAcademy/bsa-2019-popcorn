@@ -12,7 +12,9 @@ import {
 	FETCH_REVIEW_BY_USER_MOVIE_ID_SUCCESS,
 	SET_REVIEW_SUCCESS,
 	REMOVE_REVIEW_SET,
-	SET_CAST_CREW
+	SET_CAST_CREW,
+	SET_EMPTY_MOVIE,
+	SET_FILTRED_MOVIE_LIST
 } from './actionTypes';
 import TMovie from '../TMovie';
 import movieAdapter from '../movieAdapter';
@@ -30,6 +32,7 @@ const initialState: {
 	isLoading: boolean;
 	ownReview: any;
 	crewCast: any;
+	movieSearchInAdvancedSearch: null | Array<TMovie>;
 } = {
 	moviesSearch: [],
 	alreadySearch: false,
@@ -42,7 +45,8 @@ const initialState: {
 	userRate: null,
 	fetchedMovie: null,
 	ownReview: null,
-	crewCast: null
+	crewCast: null,
+	movieSearchInAdvancedSearch: null
 };
 
 export default function(state = initialState, action) {
@@ -59,6 +63,13 @@ export default function(state = initialState, action) {
 				movieList: (action.payload.movies || []).map(movieAdapter),
 				alreadySearch: true
 			};
+		case SET_FILTRED_MOVIE_LIST:
+			return {
+				...state,
+				movieSearchInAdvancedSearch: (action.payload.movies || []).map(
+					movieAdapter
+				)
+			};
 		case SET_MOVIE_SERIES:
 			return {
 				...state,
@@ -70,6 +81,10 @@ export default function(state = initialState, action) {
 			return {
 				...state,
 				crewCast: action.payload.credits
+			};
+		case SET_EMPTY_MOVIE:
+			return {
+				...state
 			};
 		case FETCH_MOVIE_USER_RATE_SUCCESS:
 			return {

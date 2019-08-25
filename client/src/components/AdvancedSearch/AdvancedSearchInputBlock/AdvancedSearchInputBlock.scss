@@ -2,7 +2,7 @@
 
 .search-input {
 	font-family: $base-font-family;
-	font-size: 16px;
+	font-size: $base-font-size;
 	line-height: 19px;
 	box-shadow: rgba($black, 0.04);
 	border-radius: 3px;
@@ -14,6 +14,6 @@
 }
 
 .input-header {
-	font-size: $header-large;
+	font-size: $header-medium;
 	align-self: center;
 }

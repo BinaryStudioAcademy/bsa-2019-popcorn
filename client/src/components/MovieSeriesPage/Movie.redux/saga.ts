@@ -25,7 +25,9 @@ import {
 	SET_REVIEW,
 	SET_REVIEW_SUCCESS,
 	GET_CAST_CREW,
-	SET_CAST_CREW
+	SET_CAST_CREW,
+	FETCH_FILTRED_MOVIES,
+	SET_FILTRED_MOVIE_LIST
 } from './actionTypes';
 import config from '../../../config';
 import { FETCH_MOVIE_REVIEWS } from '../MovieSeriesReviews/actionTypes';
@@ -46,6 +48,24 @@ export function* fetchFilms(action) {
 	} catch (e) {
 		console.log(e);
 		// TODO show error
+	}
+}
+
+export function* fetchFiltredMovieList(action) {
+	try {
+		const data = yield call(webApi, {
+			endpoint: config.API_URL + '/api/movie/advanced',
+			method: 'POST',
+			body: action.payload
+		});
+		yield put({
+			type: SET_FILTRED_MOVIE_LIST,
+			payload: {
+				movies: data
+			}
+		});
+	} catch (e) {
+		console.log('movie saga fetchMovieList:', e.message);
 	}
 }
 
@@ -202,6 +222,7 @@ export function* fetchSearchMovie(action) {
 
 export function* loadMoreMovie(action) {
 	const { size, from } = action.payload;
+	console.log('hidden1');
 	try {
 		const data = yield call(webApi, {
 			endpoint: `${config.API_URL}/api/movie?from=${from}&size=${size}`,
@@ -273,6 +294,10 @@ export function* setReview(action) {
 	}
 }
 
+function* watchFetchFiltredMovieList() {
+	yield takeEvery(FETCH_FILTRED_MOVIES, fetchFiltredMovieList);
+}
+
 function* watchFetchFilms() {
 	yield takeEvery(START_FETCH_SEARCH_FILMS, fetchFilms);
 }
@@ -329,6 +354,7 @@ export default function* header() {
 		watchLoadMoreMovie(),
 		watchFetchReviewByUserMovieId(),
 		watchSetReview(),
-		watchFetchCastCrew()
+		watchFetchCastCrew(),
+		watchFetchFiltredMovieList()
 	]);
 }

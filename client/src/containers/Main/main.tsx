@@ -13,7 +13,7 @@ import EventList from '../../components/EventPage/EventList';
 import AdminPanelPage from '../../components/AdminPanelPage/AdminPanelPage';
 import SurveyPage from '../../components/SurveyPage/SurveyPage';
 import TopPage from '../../components/TopPage/TopPage';
-
+import AdvancedSearchPage from '../../components/AdvancedSearch/AdvancedSearchPage';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import Spinner from '../../components/shared/Spinner';
@@ -151,7 +151,7 @@ const Main = ({
 								EventListRender({ ...props, allEvents, getAllEvents })
 							}
 						/>
-
+						<Route path={`/advanced-search`} component={AdvancedSearchPage} />
 						<Route path={`/survey-page/:id`} component={SurveyPage} />
 						<Route path={`/admin-panel-page`} component={AdminPanelPage} />
 						<Route

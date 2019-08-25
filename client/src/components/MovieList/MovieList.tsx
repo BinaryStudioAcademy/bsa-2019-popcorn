@@ -44,6 +44,7 @@ const MovieList: React.FC<IMovieListProps> = ({
 		: {};
 	return loadMoreMovie ? (
 		<InfiniteScroll
+			style={{ width: '100%' }}
 			pageStart={1}
 			loadMore={next}
 			loader={

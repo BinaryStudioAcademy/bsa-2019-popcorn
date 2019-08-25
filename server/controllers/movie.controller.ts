@@ -12,6 +12,12 @@ router
       .then((movies: Movie[]) => res.send(movies))
       .catch(next)
   )
+  .post("/advanced", (req: Request, res: Response, next: NextFunction) => {
+    movieService
+      .getFiltredMovies(req.body)
+      .then((movies: Movie[]) => res.send(movies))
+      .catch(next);
+  })
   .get("/find", (req, res, next) =>
     movieService
       .getByTitle(req.query.title)

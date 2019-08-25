@@ -1,0 +1,13 @@
+@import '../../styles/variables.scss';
+
+.advanced-search-page {
+	display: flex;
+	width: 100%;
+	position: relative;
+
+	.movie-list-wrp {
+		width: 100%;
+		max-height: 90vh;
+		overflow-y: scroll;
+	}
+}

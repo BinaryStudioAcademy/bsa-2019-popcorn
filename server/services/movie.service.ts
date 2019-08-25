@@ -19,9 +19,14 @@ export const getMovies = async ({ size, from }): Promise<any[]> => {
   return data.map(movie => movie._source);
 };
 
+export const getFiltredMovies = async (filters): Promise<any[]> => {
+  let data = await elasticRepository.getFiltred(filters);
+  data = data.hits.hits;
+  return data.map(movie => movie._source);
+};
+
 export const getCastCrewById = async (movieId: number): Promise<any> => {
   const credits = await getCredits(movieId);
-  console.log(credits.credits);
   return credits.credits;
 };
 

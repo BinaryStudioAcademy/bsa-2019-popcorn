@@ -5,7 +5,8 @@
 	flex-direction: column;
 	box-shadow: 2px 1px 8px $border-focus-color;
 	max-width: 300px;
-	min-height: 100vh;
+	position: sticky;
+	top: 0;
 }
 
 .advanced-movie-search-block {

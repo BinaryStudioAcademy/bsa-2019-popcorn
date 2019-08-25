@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronDown } from '@fortawesome/free-solid-svg-icons';
 import React, { useState } from 'react';
 import MovieList from '../MovieList';
+import { NavLink } from 'react-router-dom';
 
 const MovieSearch = ({ movies, fetchFilms, alreadySearch, setMovieSeries }) => {
 	const [value, setValue] = useState('');
@@ -34,8 +35,10 @@ const MovieSearch = ({ movies, fetchFilms, alreadySearch, setMovieSeries }) => {
 				/>
 			</span>
 			<span className="filter hover">
-				Filter
-				<FontAwesomeIcon icon={faChevronDown} />
+				<NavLink to={'/advanced-search'}>
+					Filter
+					<FontAwesomeIcon icon={faChevronDown} />
+				</NavLink>
 				{alreadySearch ? (
 					<div className="modal">
 						{movies && movies.length > 0 ? (
