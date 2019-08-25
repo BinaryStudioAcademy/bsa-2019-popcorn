@@ -13,6 +13,7 @@ import config from '../../../config';
 import ISelectedProfileInfo from '../SelectedProfileInterface';
 import Cropper from 'react-cropper';
 import { connect } from 'react-redux';
+import Follow from './FollowSystem/Follow';
 
 type ProfileProps = {
 	profileInfo: ISelectedProfileInfo;
@@ -206,6 +207,7 @@ class ProfileComponent extends Component<ProfileProps, IProfileComponentState> {
 									</div>
 								</div>
 							)}
+							<Follow userId={id} />
 						</div>
 					)}
 
