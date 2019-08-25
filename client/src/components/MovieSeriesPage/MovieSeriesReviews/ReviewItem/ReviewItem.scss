@@ -56,7 +56,6 @@
 				height: 40px;
 				position: absolute;
 				bottom: 0;
-				border-bottom: 2px solid rgba(0, 0, 0, 0.157);
 				border-radius: 1px;
 				cursor: pointer;
 				transition: opacity 0.4s ease;
@@ -79,12 +78,42 @@
 			// TODO - GRID
 
 			.review-reaction {
-				width: 40%;
-				background-color: red;
-				display: flex;
+				display: grid;
+				grid-template-columns: 54px 54px;
+				margin-top: 9px;
+				margin-left: 5px;
+				color: #122737ec;
 
-				.review-likes {
-					margin-right: 10px;
+				.review-likes,
+				.review-dislikes {
+					display: grid;
+					grid-template-columns: 27px 27px;
+					grid-template-rows: 20px;
+					grid-gap: 2px;
+
+					.likes-icon,
+					.dislikes-icon {
+						cursor: pointer;
+
+						&:active {
+							opacity: 0.8;
+						}
+
+						.like-fill {
+							font-size: 21px;
+						}
+						.like-no-fill {
+							font-size: 22px;
+						}
+
+						.dislike-fill {
+							font-size: 21px;
+						}
+
+						.dislike-no-fill {
+							font-size: 22px;
+						}
+					}
 				}
 			}
 

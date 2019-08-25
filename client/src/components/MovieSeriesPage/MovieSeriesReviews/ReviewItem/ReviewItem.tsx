@@ -1,12 +1,22 @@
 import React, { ReactElement } from 'react';
 import './ReviewItem.scss';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faChevronDown, faChevronUp } from '@fortawesome/free-solid-svg-icons';
 import { IReview } from '../MovieSeriesReviews';
 import Moment from 'react-moment';
 import Image from '../../../shared/Image/Image';
 import config from '../../../../config';
 import { analysisToGRBA } from '../../../../helpers/analysisToGRBA';
+
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import {
+	faChevronDown,
+	faChevronUp,
+	faThumbsDown as dislikeFill,
+	faThumbsUp as likeFill
+} from '@fortawesome/free-solid-svg-icons';
+import {
+	faThumbsDown as dislikeNoFill,
+	faThumbsUp as likeNoFill
+} from '@fortawesome/free-regular-svg-icons';
 
 interface IProps {
 	review: IReview;
@@ -128,20 +138,39 @@ class ReviewItem extends React.Component<IProps, IState> {
 									onClick={() => this.sendReactionToAction(true)}
 									className="likes-icon"
 								>
-									{' '}
-									likes:
+									{userLike === true ? (
+										<FontAwesomeIcon className="like-fill" icon={likeFill} />
+									) : (
+										<FontAwesomeIcon
+											className="like-no-fill"
+											icon={likeNoFill}
+										/>
+									)}
 								</span>
-								<span className="likes-count">{countLikes}</span>
+								<span className="likes-count">
+									{countLikes == 0 ? null : countLikes}
+								</span>
 							</div>
 							<div className="review-dislikes">
 								<span
 									onClick={() => this.sendReactionToAction(false)}
-									className="likes-icon"
+									className="dislikes-icon"
 								>
-									{' '}
-									dislikes:{' '}
+									{userLike === false ? (
+										<FontAwesomeIcon
+											className="dislike-fill"
+											icon={dislikeFill}
+										/>
+									) : (
+										<FontAwesomeIcon
+											className="dislike-no-fill"
+											icon={dislikeNoFill}
+										/>
+									)}
 								</span>
-								<span className="dislikes-count">{countDislikes}</span>
+								<span className="dislikes-count">
+									{countDislikes == 0 ? null : countDislikes}
+								</span>
 							</div>
 						</div>
 						<div className="review-read-more">
