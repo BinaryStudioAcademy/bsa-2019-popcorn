@@ -1,14 +1,39 @@
-import { EntityRepository, Repository, getCustomRepository } from "typeorm";
+import {
+  EntityRepository,
+  Repository,
+  getCustomRepository,
+  createQueryBuilder
+} from "typeorm";
 import { Follower } from "../entities/Follower";
 
 @EntityRepository(Follower)
 class FollowerRepository extends Repository<Follower> {
+  async getFollowersCountByUserId(userId, next?): Promise<number> {
+    try {
+      return await this.createQueryBuilder("follower")
+        .where(`follower.user.id = :id`, { id: userId })
+        .getCount();
+    } catch (err) {
+      return next({ status: err.status, message: err.message }, null);
+    }
+  }
+
   async getFollowersByUserId(userId, next?): Promise<Follower[]> {
     try {
       return await this.find({
         where: { user: { id: userId } },
         relations: ["follower"]
       });
+    } catch (err) {
+      return next({ status: err.status, message: err.message }, null);
+    }
+  }
+
+  async getFollowingsCountByUserId(userId, next?): Promise<number> {
+    try {
+      return await this.createQueryBuilder("follower")
+        .where(`follower.follower.id = :id`, { id: userId })
+        .getCount();
     } catch (err) {
       return next({ status: err.status, message: err.message }, null);
     }

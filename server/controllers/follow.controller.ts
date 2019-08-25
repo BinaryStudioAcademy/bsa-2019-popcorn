@@ -6,12 +6,30 @@ const router = Router();
 
 router
   .get(
+    "/:userId/followers/count",
+    errorHandlerMiddleware,
+    (req: Request, res: Response, next: NextFunction) =>
+      followService
+        .getFollowersCountByUserId(req.params.userId, next)
+        .then(result => res.send({ count: result }))
+        .catch(next)
+  )
+  .get(
     "/:userId/followers",
     errorHandlerMiddleware,
     (req: Request, res: Response, next: NextFunction) =>
       followService
         .getFollowersByUserId(req.params.userId, next)
         .then(result => res.send(result))
+        .catch(next)
+  )
+  .get(
+    "/:userId/followings/count",
+    errorHandlerMiddleware,
+    (req: Request, res: Response, next: NextFunction) =>
+      followService
+        .getFollowingsCountByUserId(req.params.userId, next)
+        .then(result => res.send({ count: result }))
         .catch(next)
   )
   .get(
