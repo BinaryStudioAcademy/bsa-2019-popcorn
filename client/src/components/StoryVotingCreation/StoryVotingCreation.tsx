@@ -183,7 +183,7 @@ class StoryVotingCreation extends React.Component<
 				url.shift();
 				url = url.join('/');
 
-				url = config.API_URL + '/' + url;
+				url = '/' + url;
 
 				this.setState({ imageUrl: url, isUploading: false, errorMsg: '' });
 			})
