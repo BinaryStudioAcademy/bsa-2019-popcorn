@@ -43,17 +43,21 @@ export class SeedReviews1566319951202 implements MigrationInterface {
       `Quentin Tarantino's 'Django Unchained' is Stylish & Bold! Tarantino presents a terrifyingly arresting spaghetti-western, that comes in-tact with a strong screenplay, neat direction & great performances, particularly by Leonardo DiCaprio, who takes an unforgettable turn by turning super-bad. 'Django Unchained' Synopsis: With the help of his mentor, a slave-turned-bounty hunter sets out to rescue his wife from a brutal Mississippi plantation owner. 'Django Unchained' is a tale of getting hit & hitting back. The protagonist is out for revenge & his journey to get back his wife from the loathsome villain, is superbly engaging. Tarantino is in top form, once again. His Screenplay is strong & bold. Its brutal & uninhibited, while he Directs the film with a lot of style & conviction. Cinematography by Robert Richardson is perfect. Editing, Art & Costume Design are excellent. Performance-Wise: DiCaprio is unforgettable in his most villainous role to date. He delivers an Oscar-Worthy turn, which left me spell-bound! Jamie Foxx is highly efficient as the protagonist. Christoph Waltz is pure awesome. Amongst his best works to date. Kerry Washington is flawless. Samuel L. Jackson & Dennis Christopher do their bits well. Don Johnson & Jonah Hill are hilarious in cameos. On the whole, 'Django Unchained' is a Winner All The Way. Take a bow, Tarantino!`
     ];
     const seedFilmsId = ["24918", "955"];
-
     const users = await getCustomRepository(UserRepository).find();
-    reviewTextsSeed.map(async reviewItem => {
-      const review = new Review();
-      review.text = reviewItem;
-      review.movieId =
-        seedFilmsId[Math.floor(Math.random() * seedFilmsId.length)];
-      review.user = users[Math.floor(Math.random() * users.length)];
-      review.analysis = getRatingByReview(reviewItem, null).result.toFixed(2);
-      await getCustomRepository(ReviewRepository).save(review);
-    });
+
+    for (let i = 0; i < seedFilmsId.length; i++) {
+      for (let j = 0; j < users.length; j++) {
+        const review = new Review();
+        review.text =
+          reviewTextsSeed[Math.floor(Math.random() * reviewTextsSeed.length)];
+        review.movieId = seedFilmsId[i];
+        review.user = users[j];
+        review.analysis = getRatingByReview(review.text, null).result.toFixed(
+          2
+        );
+        await getCustomRepository(ReviewRepository).save(review);
+      }
+    }
   }
 
   public async down(queryRunner: QueryRunner): Promise<any> {}
