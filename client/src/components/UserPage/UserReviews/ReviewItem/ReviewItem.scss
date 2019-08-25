@@ -108,7 +108,6 @@
 		.review-footer {
 			display: flex;
 			justify-content: space-between;
-			// TODO - GRID
 
 			.review-reaction {
 				display: grid;
@@ -131,6 +130,8 @@
 
 					.likes-icon,
 					.dislikes-icon {
+						color: #122737af;
+
 						.like-no-fill {
 							font-size: 22px;
 						}
