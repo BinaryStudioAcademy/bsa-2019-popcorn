@@ -114,6 +114,14 @@
 							font-size: 22px;
 						}
 					}
+					.block-button.likes-icon,
+					.block-button.dislikes-icon {
+						cursor: default;
+						color: #122737af;
+						&:active {
+							opacity: 1;
+						}
+					}
 				}
 			}
 
