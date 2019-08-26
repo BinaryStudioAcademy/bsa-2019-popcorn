@@ -1,4 +1,4 @@
-import { Router } from "express";
+import { Request, Router } from "express";
 import * as authService from "../services/auth.service";
 import * as userService from "../services/user.service";
 import authenticationMiddleware from "../middlewares/authentication.middleware";
@@ -12,22 +12,29 @@ import {
   facebookMiddleware,
   facebookCallbackMiddleware
 } from "./../middlewares/facebook.middleware";
+import { User } from "../models/UserModel";
 
 const router = Router();
 
 router
-  .post("/register", registrationMiddleware, (req, res, next) =>
-    authService
-      .register(req.user)
-      .then(data => res.send(data))
-      .catch(next)
+  .post(
+    "/register",
+    registrationMiddleware,
+    (req: Request & { user: User }, res, next) =>
+      authService
+        .register(req.user)
+        .then(data => res.send(data))
+        .catch(next)
   )
   .get("/google", googleMiddleware)
-  .get("/google/redirect", googleCallbackMiddleware, (req, res, next) =>
-    authService
-      .login(req.user)
-      .then(data => res.send(data))
-      .catch(next)
+  .get(
+    "/google/redirect",
+    googleCallbackMiddleware,
+    (req: Request & { user: User }, res, next) =>
+      authService
+        .login(req.user)
+        .then(data => res.send(data))
+        .catch(next)
   )
   .post("/reset", (req, res, next) =>
     authService
@@ -41,21 +48,27 @@ router
       .then(() => res.sendStatus(200))
   )
   .get("/facebook", facebookMiddleware)
-  .get("/facebook/redirect", facebookCallbackMiddleware, (req, res, next) =>
-    authService
-      .login(req.user)
-      .then(data => res.send(data))
-      .catch(next)
+  .get(
+    "/facebook/redirect",
+    facebookCallbackMiddleware,
+    (req: Request & { user: User }, res, next) =>
+      authService
+        .login(req.user)
+        .then(data => res.send(data))
+        .catch(next)
   )
-  .post("/login", authenticationMiddleware, (req, res, next) =>
-    authService
-      .login(req.user)
-      .then(data => res.send(data))
-      .catch(next)
+  .post(
+    "/login",
+    authenticationMiddleware,
+    (req: Request & { user: User }, res, next) =>
+      authService
+        .login(req.user)
+        .then(data => res.send(data))
+        .catch(next)
   )
-  .get("/user", jwtMiddleware, (req, res, next) => {
+  .get("/user", jwtMiddleware, (req: Request & { user: User }, res, next) => {
     userService
-      .getUserById(req.user.data.user.id)
+      .getUserById(req.user.id)
       .then(data => res.send(data))
       .catch(next);
   });

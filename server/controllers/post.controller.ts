@@ -1,4 +1,4 @@
-import { Router, response } from "express";
+import { Request, Router } from "express";
 import * as postService from "../services/post.service";
 import { Post } from "../models/PostModel";
 
@@ -8,7 +8,7 @@ router
   .get("/", (req, res, next) =>
     postService
       .getPosts()
-      .then((posts: Post[]) => res.send(posts))
+      .then((posts: Post[]) => res.send(posts.reverse()))
       .catch(next)
   )
   .get("/:id", (req, res, next) =>
@@ -20,7 +20,7 @@ router
   .get("/user/:id", (req, res, next) =>
     postService
       .getPostsByUserId(req.params.id)
-      .then((posts: Post[]) => res.send(posts))
+      .then((posts: Post[]) => res.send(posts.reverse()))
       .catch(next)
   )
   .post("/", (req, res, next) =>
@@ -34,6 +34,24 @@ router
       .deletePostById(req.params.id)
       .then((response: Post) => res.send(response))
       .catch(next)
-  );
+  )
+  .post("/comment", (req: Request & { io: any }, res, next) => {
+    postService
+      .createComment(req.body)
+      .then(comment => {
+        req.io.emit("new-comment", { comment });
+        res.send();
+      })
+      .catch(next);
+  })
+  .post("/reaction", (req: Request & { io: any }, res, next) => {
+    postService
+      .createReaction(req.body)
+      .then(reaction => {
+        req.io.emit("new-reaction", reaction);
+        res.send();
+      })
+      .catch(next);
+  });
 
 export default router;

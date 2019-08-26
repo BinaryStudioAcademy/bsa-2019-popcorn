@@ -81,9 +81,10 @@
 			color: $text-base-color;
 			margin-left: 10px;
 		}
+
 		img {
-			width: 35px;
-			overflow: hidden;
+			width: 50px;
+			height: 50px;
 			border-radius: 50%;
 		}
 	}
@@ -160,7 +161,8 @@
 			transform: scaleY(1);
 		}
 	}
-	.search-area:hover {
+
+	.search-area {
 		.modal {
 			transform: scale(1);
 			width: 150%;

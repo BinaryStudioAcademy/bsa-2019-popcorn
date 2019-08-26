@@ -3,24 +3,21 @@ import { Route, Switch } from 'react-router-dom';
 import UserPosts from './UserPosts/UserPosts';
 import UserReviews from './UserReviews/UserReviews';
 import UserEvents from './UserEvents/UserEvents';
-import UserSurveys from './UserSurveys/UserSurveys';
 import UserTops from './UserTops/UserTops';
 import UserLists from './UserLists/UserLists';
 import UserWatched from './UserWatched/UserWatched';
 import ProfileComponent from './ProfileComponent/ProfileComponent';
 import UserSurveysNav from './UserSurveys/UserSurveysNav';
 import ISelectedProfileInfo from './SelectedProfileInterface';
-import mock from './Survey/mock';
 import {
 	cancelAvatar,
 	getUsersPosts,
 	setAvatar,
-	uploadAvatar
+	uploadAvatar,
+	saveCropped
 } from './actions';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-
-const surveys = mock;
 
 interface IProps {
 	mainPath: string;
@@ -40,6 +37,8 @@ interface IProps {
 	userPosts?: any; //todo
 	getUsersPosts: (id: string) => any;
 	selectedProfileInfo: ISelectedProfileInfo;
+	croppedSaved: boolean;
+	saveCropped: () => void;
 }
 
 const UserPageTabs: React.SFC<IProps> = ({
@@ -51,7 +50,9 @@ const UserPageTabs: React.SFC<IProps> = ({
 	setAvatar,
 	userPosts,
 	getUsersPosts,
-	selectedProfileInfo
+	selectedProfileInfo,
+	croppedSaved,
+	saveCropped
 }) => {
 	return selectedProfileInfo ? (
 		<div className={'user-tab-body'}>
@@ -66,6 +67,8 @@ const UserPageTabs: React.SFC<IProps> = ({
 							uploadUrl={uploadUrl}
 							cancelAvatar={cancelAvatar}
 							setAvatar={setAvatar}
+							croppedSaved={croppedSaved}
+							saveCropped={saveCropped}
 						/>
 					)}
 				/>
@@ -73,8 +76,11 @@ const UserPageTabs: React.SFC<IProps> = ({
 					path={`${mainPath}/posts`}
 					component={() => (
 						<UserPosts
+							currentUserId={profileInfo.id}
 							userId={selectedProfileInfo.id}
 							posts={userPosts}
+							saveCropped={saveCropped}
+							croppedSaved={croppedSaved}
 							getUsersPosts={() => getUsersPosts(selectedProfileInfo.id)}
 						/>
 					)}
@@ -108,14 +114,16 @@ const mapStateToProps = (rootState, props) => ({
 	profileInfo: rootState.profile.profileInfo,
 	uploadUrl: rootState.profile.uploadUrl,
 	userPosts: rootState.profile.userPosts,
-	selectedProfileInfo: rootState.profile.selectedProfileInfo
+	selectedProfileInfo: rootState.profile.selectedProfileInfo,
+	croppedSaved: rootState.profile.croppedSaved
 });
 
 const actions = {
 	uploadAvatar,
 	cancelAvatar,
 	setAvatar,
-	getUsersPosts
+	getUsersPosts,
+	saveCropped
 };
 
 const mapDispatchToProps = dispatch => bindActionCreators(actions, dispatch);

@@ -6,18 +6,25 @@ import { Event as EventEntity } from "../entities/Events";
 const router = Router();
 
 router
+  .get("/:id", (req: any, res: Response, next: NextFunction) =>
+    eventService
+      .getEventById(req.params.id)
+      .then((event: Event) => res.send(event))
+      .catch(next)
+  )
+  .get("/", (req: any, res: Response, next: NextFunction) =>
+    eventService
+      .getAllEvents()
+      .then((events: Event[]) => res.send(events))
+      .catch(next)
+  )
   .get("/user/:id", (req: any, res: Response, next: NextFunction) =>
     eventService
       .getEventsByUserId(req.params.id)
       .then((events: Event[]) => res.send(events))
       .catch(next)
   )
-  .get("/:id", (req: any, res: Response, next: NextFunction) =>
-    eventService
-      .getEventById(req.params.id)
-      .then((movie: Event) => res.send(movie))
-      .catch(next)
-  )
+
   .post("/", (req: any, res: Response, next: NextFunction) =>
     eventService
       .createEvent(req.body)
@@ -65,7 +72,7 @@ router
   .post("/visitor", (req: any, res: Response, next: NextFunction) =>
     eventService
       .createVisitor(req.body)
-      .then((response: EventVisitor[]) => res.send(response))
+      .then((response: EventVisitor) => res.send(response))
       .catch(next)
   )
   .get("/:id/visitor", (req: any, res: Response, next: NextFunction) =>

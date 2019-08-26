@@ -7,7 +7,8 @@ import {
 	fetchStories,
 	saveImage,
 	saveMovie,
-	setCaption
+	setCaption,
+	saveCroppedImage
 } from './story.redux/actions';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
@@ -28,6 +29,7 @@ import {
 import CreateStoryFilm from './story-modal/create-story-film';
 
 interface IStoryListItem {
+	id: string;
 	caption: string;
 	image_url: string;
 	user: {
@@ -81,6 +83,8 @@ interface IProps {
 	searchTitle: string;
 	moviesSearchAddMovieToStory: null | Array<TMovie>;
 	isLoading: boolean;
+	photoSaved: boolean;
+	saveCroppedImage: () => void;
 }
 
 const mock = {
@@ -120,6 +124,8 @@ const ListBlock = ({ ...props }: IProps) => {
 							resetSearch={props.resetSearch}
 							saveMovie={props.saveMovie}
 							isLoading={props.isLoading}
+							photoSaved={props.photoSaved}
+							saveAfterCrop={props.saveCroppedImage}
 						/>
 					)}
 				/>
@@ -177,7 +183,8 @@ const mapStateToProps = (rootState, props) => ({
 	movies: rootState.movie.moviesSearchInCreating,
 	moviesSearchAddMovieToStory: rootState.movie.moviesSearchAddMovieToStory,
 	searchTitle: rootState.movie.searchTitle,
-	isLoading: rootState.movie.isLoading
+	isLoading: rootState.movie.isLoading,
+	photoSaved: rootState.story.photoSaved
 });
 
 const actions = {
@@ -191,7 +198,8 @@ const actions = {
 	fetchSearch,
 	resetSearch,
 	saveMovie,
-	fetchSearchToAddMovieInStory
+	fetchSearchToAddMovieInStory,
+	saveCroppedImage
 };
 const mapDispatchToProps = dispatch => bindActionCreators(actions, dispatch);
 

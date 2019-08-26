@@ -20,6 +20,22 @@ $header-letter-spacing: 0.9px;
 	color: $text-base-color;
 }
 
+.review-button {
+	display: block;
+	padding: 2px 7px;
+	border-radius: 25px;
+	margin-left: 10px;
+	border: 2px solid $orange;
+	background-color: white;
+	cursor: pointer;
+	font-style: italic;
+	letter-spacing: $base-letter-spacing;
+
+	&:hover {
+		opacity: 0.8;
+	}
+}
+
 .movie-series-page-header {
 	margin-bottom: 15px;
 	text-align: left;
@@ -96,6 +112,6 @@ $header-letter-spacing: 0.9px;
 .movie-series-page-tab-body {
 	position: relative;
 	display: grid;
-	grid-template-columns: 0.7fr 0.3fr;
+	grid-template-columns: 70% 30%;
 	grid-gap: 10px;
 }

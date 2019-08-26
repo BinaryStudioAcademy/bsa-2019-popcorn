@@ -6,7 +6,8 @@ import {
 	CREATE_VOTING,
 	FETCH_STORIES,
 	SAVE_MOVIE,
-	SET_CAPTION_NEWSTORY
+	SET_CAPTION_NEWSTORY,
+	SAVE_CROPPED_IMAGE
 } from './actionTypes';
 import INewStory from '../INewStory';
 import IVoting from '../IVoting';
@@ -27,6 +28,13 @@ export const setCaption = (caption, start, end, title) => {
 			end,
 			title
 		}
+	};
+};
+
+export const saveCroppedImage = status => {
+	return {
+		type: SAVE_CROPPED_IMAGE,
+		payload: status
 	};
 };
 

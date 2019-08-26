@@ -167,7 +167,7 @@ class UserSurveys extends React.Component<IProps, IState> {
 	};
 
 	isOwnSurvey(survey) {
-		const { userId, userRole, selectedProfileId } = this.props;
+		const { userId, userRole } = this.props;
 		const { user_id } = survey;
 		return userRole === 'admin' || userId === user_id;
 	}
@@ -193,7 +193,8 @@ class UserSurveys extends React.Component<IProps, IState> {
 					</button>
 				)}
 				<div className="userSurveys">
-					{this.props.selectedProfileId === this.props.userId ? (
+					{this.props.selectedProfileId === this.props.userId ||
+					window.location.pathname === '/surveys' ? (
 						<NavLink to={`${mainPath}/create`} className="create-button">
 							<button>Create survey</button>
 						</NavLink>
@@ -234,7 +235,9 @@ const mapStateToProps = (rootState, props) => ({
 	...props,
 	userId: rootState.profile.profileInfo.id,
 	userRole: rootState.profile.profileInfo.role,
-	selectedProfileId: rootState.profile.selectedProfileInfo.id
+	selectedProfileId: rootState.profile.selectedProfileInfo
+		? rootState.profile.selectedProfileInfo.id
+		: null
 });
 
 export default connect(mapStateToProps)(UserSurveys);

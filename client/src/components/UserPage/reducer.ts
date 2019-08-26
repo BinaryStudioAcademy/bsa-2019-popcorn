@@ -3,7 +3,8 @@ import {
 	FINISH_UPLOAD_AVATAR,
 	SET_TEMP_AVATAR,
 	SET_USER_POSTS,
-	SET_SELECTED_USER
+	SET_SELECTED_USER,
+	SAVE_CROPPED
 } from './actionTypes';
 import {
 	LOGIN,
@@ -24,7 +25,9 @@ const initialState = {
 	registerError: null,
 	resetMessage: '',
 	restoreMessage: '',
-	selectedProfileInfo: null
+	loading: true,
+	selectedProfileInfo: null,
+	croppedSaved: false
 };
 
 const ok_message = 'Check your email';
@@ -42,7 +45,9 @@ export default function(state = initialState, action) {
 			return {
 				...state,
 				profileInfo: action.payload.user,
-				uploadUrl: ''
+				selectedProfileInfo: action.payload.user,
+				uploadUrl: '',
+				croppedSaved: false
 			};
 		case SET_TEMP_AVATAR: {
 			return {
@@ -50,10 +55,16 @@ export default function(state = initialState, action) {
 				uploadUrl: action.payload.uploadUrl
 			};
 		}
+		case SAVE_CROPPED:
+			return {
+				...state,
+				croppedSaved: true
+			};
 		case CANCEL_TEMP_AVATAR: {
 			return {
 				...state,
-				uploadUrl: ''
+				uploadUrl: '',
+				croppedSaved: false
 			};
 		}
 		case LOGIN:
@@ -70,7 +81,8 @@ export default function(state = initialState, action) {
 		case SET_USER_POSTS:
 			return {
 				...state,
-				userPosts: action.payload.userPosts
+				userPosts: action.payload.userPosts,
+				loading: action.payload.loading
 			};
 		case SET_LOGIN_ERROR:
 			return {

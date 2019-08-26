@@ -73,10 +73,10 @@ a:focus {
 
 		img {
 			align-self: flex-start;
-			width: 15%;
+			width: 35px;
 			height: auto;
 			margin-right: 10px;
-			border-radius: 5px;
+			border-radius: 50%;
 		}
 
 		.messageBody {
@@ -97,14 +97,14 @@ a:focus {
 				display: flex;
 				align-items: center;
 				padding: 2% 2%;
-
+				justify-content: space-around;
 				textarea {
 					background-color: #fff;
 					resize: none;
 					margin-right: 10px;
 					border: none;
 					height: 20px;
-					overflow-y: scroll;
+					overflow-y: auto;
 					background-color: transparent;
 				}
 

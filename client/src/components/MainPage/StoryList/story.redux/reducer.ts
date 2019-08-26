@@ -5,7 +5,8 @@ import {
 	RESET_NEW_STORY,
 	SAVE_MOVIE,
 	SET_CAPTION_NEWSTORY,
-	SET_STORIES
+	SET_STORIES,
+	SAVE_CROPPED_IMAGE
 } from './actionTypes';
 import INewStory from '../INewStory';
 import replaceFilmSearch from '../../../../helpers/replaceFilmSearch';
@@ -15,6 +16,7 @@ const initialState: {
 	newStory: INewStory;
 	cursorPosition: { start: number; end: number };
 	title: string;
+	photoSaved: boolean;
 } = {
 	stories: null,
 	newStory: {
@@ -26,7 +28,8 @@ const initialState: {
 		movieOption: ''
 	},
 	cursorPosition: { start: 0, end: 0 },
-	title: ''
+	title: '',
+	photoSaved: false
 };
 
 export default function(state = initialState, action) {
@@ -49,6 +52,11 @@ export default function(state = initialState, action) {
 				},
 				title: action.payload.title
 			};
+		case SAVE_CROPPED_IMAGE:
+			return {
+				...state,
+				photoSaved: true
+			};
 		case CHANGE_IMAGE:
 			return {
 				...state,
@@ -64,7 +72,8 @@ export default function(state = initialState, action) {
 					...state.newStory,
 					type: action.payload.type,
 					activity: action.payload.activity
-				}
+				},
+				photoSaved: false
 			};
 		case ADD_STORY:
 			const stories = state.stories

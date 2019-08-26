@@ -1,27 +1,44 @@
 import { Movie } from "../models/MovieModel";
-import { MovieRate } from "../models/MovieRateModel/movieRateModel";
-import MovieRepository from "../repository/movie.repository";
+import { MovieRate } from "../models/movieRateModel";
+import MovieRepository, {
+  getMovieVideoLinkById,
+  getCredits
+} from "../repository/movie.repository";
+
 import MovieRateRepository from "../repository/movieRate.repository";
 import { getCustomRepository, Like, getRepository } from "typeorm";
 import * as elasticRepository from "../repository/movieElastic.repository";
+import DiscussionRepository from "../repository/discussion.repository";
+import { ExtendedDiscussion } from "models/DiscussionModel";
 
-export const getMovies = async (): Promise<any[]> => {
-  let data = await elasticRepository.get();
+export const getMovies = async ({ size, from }): Promise<any[]> => {
+  let data = await elasticRepository.get(size, from);
 
   data = data.hits.hits;
 
   return data.map(movie => movie._source);
 };
 
+export const getCastCrewById = async (movieId: number): Promise<any> => {
+  const credits = await getCredits(movieId);
+  console.log(credits.credits);
+  return credits.credits;
+};
+
 export const getMovieById = async (movieId: string): Promise<any> => {
   const data = await elasticRepository.getById(movieId);
-  const movie = data.hits.hits[0]._source;
+  let movie = data.hits.hits[0]._source;
+  const messages = await getCustomRepository(DiscussionRepository).getMessages(
+    movieId
+  );
+  movie.messages = messages;
   const rate = await getCustomRepository(MovieRateRepository)
     .createQueryBuilder("movieRate")
     .select("AVG(movieRate.rate)", "average")
     .where("movieRate.movieId = :id", { id: movie.id })
     .getRawOne();
   movie.rate = rate ? parseFloat(rate.average).toFixed(2) : null;
+  movie.video_link = await getMovieVideoLinkById(movie.id);
   return movie;
 };
 
@@ -45,8 +62,14 @@ export const getByTitle = async (title: string): Promise<Movie[]> => {
   let data = await elasticRepository.getByTitle(title);
 
   data = data.hits.hits;
-
-  return data.map(movie => movie._source);
+  const movies = data.map(movie => movie._source);
+  let moviesSet = new Map();
+  movies.forEach(movie => {
+    moviesSet.set(movie.id, movie);
+  });
+  let response = [];
+  for (let movie of moviesSet.values()) response.push(movie);
+  return response;
 };
 
 export const saveMovieRate = async (newRate: any) => {
@@ -75,4 +98,14 @@ export const getMovieRate = async (
   });
   if (data) return data;
   return { userId, movieId, rate: 0 };
+};
+
+export const saveDiscussionMessage = async (
+  discussion: ExtendedDiscussion
+): Promise<any> => {
+  const result = await getCustomRepository(DiscussionRepository).save(
+    discussion
+  );
+  console.log("saved discussion", result);
+  return result;
 };

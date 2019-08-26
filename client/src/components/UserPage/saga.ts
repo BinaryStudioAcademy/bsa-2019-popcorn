@@ -6,6 +6,7 @@ import {
 	SET_USER_POSTS,
 	START_UPLOAD_AVATAR,
 	USER_POSTS,
+	SEND_POST,
 	GET_SELECTED_USER_INFO,
 	SET_SELECTED_USER,
 	UPDATE_PROFILE
@@ -34,7 +35,7 @@ export function* getSelectedUser(action) {
 	try {
 		const data = yield call(webApi, {
 			method: 'GET',
-			endpoint: config.API_URL + '/api/user/' + action.payload.id
+			endpoint: '/api/user/' + action.payload.id
 		});
 
 		yield put({
@@ -67,7 +68,7 @@ export function* uploadAvatar(action) {
 
 		yield put({
 			type: SET_TEMP_AVATAR,
-			payload: { uploadUrl: config.API_URL + '/' + url.join('/') }
+			payload: { uploadUrl: '/' + url.join('/') }
 		});
 	} catch (e) {
 		console.log('user page saga catch: uploadAvatar', e.message);
@@ -78,12 +79,12 @@ export function* setAvatar(action) {
 	try {
 		const res = yield call(webApi, {
 			method: 'PUT',
-			endpoint: config.API_URL + '/api/user/' + action.payload.id,
+			endpoint: '/api/user/' + action.payload.id,
 			body: {
 				avatar: action.payload.url
 			}
 		});
-
+		console.log(res.data.user);
 		yield put({
 			type: FINISH_UPLOAD_AVATAR,
 			payload: { user: res.data.user }
@@ -95,11 +96,9 @@ export function* setAvatar(action) {
 
 export function* fetchLogin(action) {
 	try {
-		const { data: data } = yield call(
-			axios.post,
-			config.API_URL + '/api/auth/login',
-			{ ...action.payload }
-		);
+		const { data: data } = yield call(axios.post, '/api/auth/login', {
+			...action.payload
+		});
 
 		localStorage.setItem('token', data.token);
 
@@ -124,7 +123,7 @@ export function* fetchUser(action) {
 	};
 
 	try {
-		let user = yield call(fetch, config.API_URL + '/api/auth/user', init);
+		let user = yield call(fetch, '/api/auth/user', init);
 
 		if (!user.ok) {
 			localStorage.setItem('token', '');
@@ -158,7 +157,7 @@ export function* unathorizeUser(action) {
 
 export function* fetchRegistration(action) {
 	try {
-		const data = yield call(axios.post, config.API_URL + '/api/auth/register', {
+		const data = yield call(axios.post, '/api/auth/register', {
 			...action.payload
 		});
 		localStorage.setItem('token', data.data.token);
@@ -181,14 +180,34 @@ export function* fetchRegistration(action) {
 export function* fetchPosts(action) {
 	try {
 		const data = yield call(webApi, {
-			endpoint: config.API_URL + '/api/post/user/' + action.payload.id,
-			method: 'GET'
+			method: 'GET',
+			endpoint: '/api/post/user/' + action.payload.id
 		});
 
 		yield put({
 			type: SET_USER_POSTS,
 			payload: {
-				userPosts: data
+				userPosts: data,
+				loading: false
+			}
+		});
+	} catch (e) {
+		console.log('profile saga fetch posts:', e.message);
+	}
+}
+
+export function* sendPost(post) {
+	try {
+		yield call(webApi, {
+			method: 'POST',
+			endpoint: '/api/post/',
+			body: { ...post.payload.data }
+		});
+
+		yield put({
+			type: SET_USER_POSTS,
+			payload: {
+				loading: true
 			}
 		});
 	} catch (e) {
@@ -199,7 +218,7 @@ export function* fetchPosts(action) {
 export function* resetPassword(action) {
 	try {
 		const data = yield call(webApi, {
-			endpoint: config.API_URL + '/api/auth/reset',
+			endpoint: '/api/auth/reset',
 			method: 'POST',
 			parse: false,
 			body: {
@@ -221,7 +240,7 @@ export function* resetPassword(action) {
 export function* fetchRestorePassword(action) {
 	try {
 		const data = yield call(webApi, {
-			endpoint: config.API_URL + '/api/auth/restore',
+			endpoint: '/api/auth/restore',
 			method: 'POST',
 			parse: false,
 			body: {
@@ -239,6 +258,10 @@ export function* fetchRestorePassword(action) {
 		console.log('profile saga fetch restore password: ', e.message);
 		yield put({ type: RESTORE_ERROR, payload: { message: e.message } });
 	}
+}
+
+function* watchSendPost() {
+	yield takeEvery(SEND_POST, sendPost);
 }
 
 function* watchGetSelectedUser() {
@@ -297,6 +320,8 @@ export default function* profile() {
 		watchFetchResetPassword(),
 		watchFetchRestorePassword(),
 		watchFetchLogout(),
-		watchUpdateProfile()
+		watchUpdateProfile(),
+		watchSendPost(),
+		watchFetchLogout()
 	]);
 }

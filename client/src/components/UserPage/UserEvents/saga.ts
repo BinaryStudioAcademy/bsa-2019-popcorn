@@ -5,7 +5,13 @@ import {
 	START_UPLOAD_USER_EVENTS,
 	FINISH_UPLOAD_USER_EVENTS,
 	DELETE_OWN_USER_EVENT,
-	UPDATE_USER_EVENT
+	UPDATE_USER_EVENT,
+	GET_All_EVENTS,
+	GET_ALL_EVENTS_SUCCESS,
+	GET_EVENT_BY_ID_SUCCESS,
+	GET_EVENT_BY_ID,
+	SUBSCRIBE_TO_EVENT_SUCCESS,
+	SUBSCRIBE_TO_EVENT
 } from './actionsTypes';
 import config from '../../../config';
 import webApi from '../../../services/webApi.service';
@@ -13,7 +19,7 @@ import webApi from '../../../services/webApi.service';
 export function* fetchEvents(action) {
 	try {
 		const data = yield call(webApi, {
-			endpoint: config.API_URL + '/api/event/visitor/' + action.payload.id,
+			endpoint: '/api/event/visitor/' + action.payload.id,
 			method: 'GET'
 		});
 
@@ -31,7 +37,7 @@ export function* fetchEvents(action) {
 export function* saveEvent(action) {
 	try {
 		const data = yield call(webApi, {
-			endpoint: config.API_URL + '/api/event',
+			endpoint: '/api/event',
 			method: 'Post',
 			body: action.payload.event
 		});
@@ -51,7 +57,7 @@ export function* saveEvent(action) {
 export function* updateEvent(action) {
 	try {
 		const data = yield call(webApi, {
-			endpoint: config.API_URL + '/api/event',
+			endpoint: '/api/event',
 			method: 'PUT',
 			body: action.payload.event
 		});
@@ -72,7 +78,7 @@ export function* deleteEvent(action) {
 	const { id, currentUserId } = action.payload;
 	try {
 		const data = yield call(webApi, {
-			endpoint: config.API_URL + '/api/event/' + id,
+			endpoint: '/api/event/' + id,
 			method: 'DELETE'
 		});
 
@@ -82,6 +88,63 @@ export function* deleteEvent(action) {
 		});
 	} catch (e) {
 		console.log('Error delete event by ID:', e.message);
+	}
+}
+
+export function* fetchAllEvents() {
+	try {
+		const allEvents = yield call(webApi, {
+			endpoint: '/api/event',
+			method: 'GET'
+		});
+		yield put({
+			type: GET_ALL_EVENTS_SUCCESS,
+			payload: {
+				allEvents: allEvents
+			}
+		});
+	} catch (e) {
+		console.log('Error fetch all events :', e.message);
+	}
+}
+
+export function* subscribeToEvent(action) {
+	const { status, userId, eventId } = action.payload;
+	try {
+		const response = yield call(webApi, {
+			endpoint: `/api/event/visitor`,
+			method: 'POST',
+			body: {
+				status,
+				userId,
+				eventId
+			}
+		});
+		yield put({
+			type: GET_EVENT_BY_ID,
+			payload: {
+				eventId
+			}
+		});
+	} catch (e) {
+		console.log('Error fetch all events :', e.message);
+	}
+}
+
+export function* fetchEventById(action) {
+	try {
+		const event = yield call(webApi, {
+			endpoint: `/api/event/${action.payload.eventId}`,
+			method: 'GET'
+		});
+		yield put({
+			type: GET_EVENT_BY_ID_SUCCESS,
+			payload: {
+				searchedEvent: event
+			}
+		});
+	} catch (e) {
+		console.log('Error fetch all events :', e.message);
 	}
 }
 
@@ -100,11 +163,26 @@ function* watchDeleteEvent() {
 	yield takeEvery(DELETE_OWN_USER_EVENT, deleteEvent);
 }
 
+function* watchFetchAllEvents() {
+	yield takeEvery(GET_All_EVENTS, fetchAllEvents);
+}
+
+function* watchFetchEventById() {
+	yield takeEvery(GET_EVENT_BY_ID, fetchEventById);
+}
+
+function* watchSubscribeToEvent() {
+	yield takeEvery(SUBSCRIBE_TO_EVENT, subscribeToEvent);
+}
+
 export default function* events() {
 	yield all([
 		watchFetchEvents(),
 		watchSaveEvent(),
 		watchupdateEvent(),
-		watchDeleteEvent()
+		watchDeleteEvent(),
+		watchFetchAllEvents(),
+		watchFetchEventById(),
+		watchSubscribeToEvent()
 	]);
 }

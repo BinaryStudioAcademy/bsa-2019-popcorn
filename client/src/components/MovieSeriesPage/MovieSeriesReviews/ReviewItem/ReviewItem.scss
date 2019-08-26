@@ -4,7 +4,8 @@
 	width: 100%;
 	box-sizing: border-box;
 	margin-bottom: 15px;
-	background-color: #e7e7e7;
+	border: 1px solid $border-color;
+	box-shadow: 0px 0px 2px 3px $input-shadow-color;
 	border-radius: 20px;
 
 	.review-item {
@@ -26,7 +27,7 @@
 					}
 				}
 
-				.profile-name-rating {
+				.profile-name-wrapper {
 					margin-left: 10px;
 					display: flex;
 					flex-direction: column;
@@ -55,8 +56,7 @@
 				height: 40px;
 				position: absolute;
 				bottom: 0;
-				opacity: 1;
-				background-image: linear-gradient(to bottom, transparent, #e7e7e7);
+				border-radius: 1px;
 				cursor: pointer;
 				transition: opacity 0.4s ease;
 
@@ -67,28 +67,89 @@
 		}
 
 		.review-item-text-big {
-			height: 90px;
+			height: 60px;
 		}
 		.review-item-text-big-show-full {
 			height: auto;
 		}
+		.review-footer {
+			display: flex;
+			justify-content: space-between;
 
-		.read-more-btn {
-			color: $text-secondary-color;
-			font-style: italic;
-			cursor: pointer;
-			transition: opacity 0.3s ease;
-			text-align: right;
+			.review-reaction {
+				display: grid;
+				grid-template-columns: 54px 54px 200px;
+				margin-top: 9px;
+				margin-left: 5px;
+				color: #122737ec;
 
-			&:hover {
-				opacity: 0.7;
+				.error-block {
+					width: 100%;
+					color: rgba(255, 0, 0, 0.534);
+					font-style: italic;
+				}
+
+				.review-likes,
+				.review-dislikes {
+					display: grid;
+					grid-template-columns: 24px 24px;
+					grid-template-rows: 20px;
+					grid-gap: 2px;
+
+					.likes-icon,
+					.dislikes-icon {
+						cursor: pointer;
+
+						&:active {
+							opacity: 0.8;
+						}
+
+						.like-fill {
+							font-size: 21px;
+						}
+						.like-no-fill {
+							font-size: 22px;
+						}
+
+						.dislike-fill {
+							font-size: 21px;
+						}
+
+						.dislike-no-fill {
+							font-size: 22px;
+						}
+					}
+					.block-button.likes-icon,
+					.block-button.dislikes-icon {
+						cursor: default;
+						color: #122737af;
+						&:active {
+							opacity: 1;
+						}
+					}
+				}
 			}
-		}
 
-		.fa-chevron-down,
-		.fa-chevron-up {
-			margin-left: 4px;
-			width: 12px;
+			.review-read-more {
+				width: 60%;
+				.read-more-btn {
+					color: $text-secondary-color;
+					font-style: italic;
+					cursor: pointer;
+					transition: opacity 0.3s ease;
+					text-align: right;
+
+					&:hover {
+						opacity: 0.7;
+					}
+				}
+
+				.fa-chevron-down,
+				.fa-chevron-up {
+					margin-left: 4px;
+					width: 12px;
+				}
+			}
 		}
 	}
 

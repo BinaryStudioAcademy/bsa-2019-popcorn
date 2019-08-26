@@ -3,8 +3,10 @@ import {
 	SET_AVATAR,
 	START_UPLOAD_AVATAR,
 	USER_POSTS,
+	UPDATE_PROFILE,
+	SEND_POST,
 	GET_SELECTED_USER_INFO,
-	UPDATE_PROFILE
+	SAVE_CROPPED
 } from './actionTypes';
 
 export const uploadAvatar = (file: FormData, id: string): any => {
@@ -29,6 +31,21 @@ export const setAvatar = (url, id): any => {
 		payload: {
 			url,
 			id
+		}
+	};
+};
+
+export const saveCropped = () => {
+	return {
+		type: SAVE_CROPPED
+	};
+};
+
+export const setPost = (data): any => {
+	return {
+		type: SEND_POST,
+		payload: {
+			data
 		}
 	};
 };

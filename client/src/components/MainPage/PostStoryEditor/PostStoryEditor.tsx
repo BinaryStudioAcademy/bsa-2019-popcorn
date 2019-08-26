@@ -10,6 +10,9 @@ import ImageUploader from '../ImageUploader/ImageUploader';
 import { uploadFile } from '../../../services/file.service';
 import TMovie from '../../MovieSeriesPage/TMovie';
 import MovieList from '../../MovieList/MovieList';
+import Cropper from 'react-cropper';
+import 'cropperjs/dist/cropper.css';
+import config from '../../../config';
 
 interface IPostStoryEditorProps {
 	id?: string;
@@ -28,6 +31,8 @@ interface IPostStoryEditorProps {
 	title?: string;
 	resetSearch?: () => any;
 	saveMovie?: (movie: TMovie) => any;
+	photoSaved: boolean;
+	saveAfterCrop: () => void;
 }
 
 interface IPostStoryEditorState {
@@ -61,6 +66,7 @@ class PostStoryEditor extends React.Component<
 	}
 
 	private textarea = React.createRef<HTMLTextAreaElement>();
+	private cropper = React.createRef<Cropper>();
 
 	onToggleCheckbox() {
 		// this.setState({
@@ -86,7 +92,36 @@ class PostStoryEditor extends React.Component<
 	}
 
 	onSave() {
-		this.setState({ savePhoto: true });
+		this.props.saveAfterCrop();
+		if (this.cropper.current) {
+			const dataUrl = this.cropper.current.getCroppedCanvas().toBlob(blob => {
+				const data = new FormData();
+				data.append('file', blob);
+				uploadFile(data)
+					.then(({ imageUrl }) => {
+						if (imageUrl.indexOf('\\') !== -1) {
+							let url = imageUrl.split(`\\`);
+							url.shift();
+							url = url.join('/');
+
+							url = '/' + url;
+
+							this.imageStateHandler(url);
+						} else {
+							let url = imageUrl.split(`/`);
+							url.shift();
+							url = url.join('/');
+
+							url = '/' + url;
+
+							this.imageStateHandler(url);
+						}
+					})
+					.catch(error => {
+						this.setState({ isUploading: false, errorMsg: error.message });
+					});
+			});
+		}
 	}
 
 	imageStateHandler(data) {
@@ -120,8 +155,16 @@ class PostStoryEditor extends React.Component<
 				)}
 				{this.props.imageUrl ? (
 					<div className={'photo-wrp'}>
-						<img src={this.props.imageUrl} alt="" />
-						{!this.state.savePhoto && (
+						{this.props.photoSaved ? (
+							<img src={this.props.imageUrl} />
+						) : (
+							<Cropper
+								ref={this.cropper}
+								src={this.props.imageUrl}
+								aspectRatio={9 / 16}
+							/>
+						)}
+						{!this.props.photoSaved && (
 							<span onClick={this.onSave}>
 								<FontAwesomeIcon
 									icon={faCheckCircle}
@@ -129,7 +172,7 @@ class PostStoryEditor extends React.Component<
 								/>
 							</span>
 						)}
-						{!this.state.savePhoto && (
+						{!this.props.photoSaved && (
 							<span onClick={this.onCancel}>
 								<FontAwesomeIcon
 									icon={faTimesCircle}

@@ -12,8 +12,9 @@ import {
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import config from '../../../config';
 import ISelectedProfileInfo from '../SelectedProfileInterface';
-import { connect } from 'react-redux';
 import ProfileEditor from './ProfileEditor/ProfileEditor';
+import Cropper from 'react-cropper';
+import { connect } from 'react-redux';
 
 type ProfileProps = {
 	profileInfo: ISelectedProfileInfo;
@@ -21,6 +22,8 @@ type ProfileProps = {
 	uploadUrl?: string;
 	cancelAvatar?: () => any;
 	setAvatar?: (url: string, id: string) => any;
+	croppedSaved: boolean;
+	saveCropped: () => void;
 	userId: string;
 	userRole: string;
 };
@@ -69,15 +72,7 @@ class ProfileComponent extends Component<ProfileProps, IProfileComponentState> {
 			isEditing: false
 		};
 	}
-
-	isOwnProfile() {
-		const {
-			userId,
-			userRole,
-			profileInfo: { id: ownerId }
-		} = this.props;
-		return userRole === 'admin' || userId === ownerId;
-	}
+	private cropper = React.createRef<Cropper>();
 
 	onEdit = () => {
 		this.setState({
@@ -124,6 +119,27 @@ class ProfileComponent extends Component<ProfileProps, IProfileComponentState> {
 			this.props.uploadAvatar(data, this.props.profileInfo.id);
 		else console.log('no uploadAvatar method');
 	}
+	handleSaveCropped() {
+		if (this.cropper.current) {
+			const dataUrl = this.cropper.current.getCroppedCanvas().toBlob(blob => {
+				const data = new FormData();
+				data.append('file', blob);
+				if (this.props.uploadAvatar)
+					this.props.uploadAvatar(data, this.props.profileInfo.id);
+				else console.log('no uploadAvatar method');
+			});
+		}
+		this.props.saveCropped();
+	}
+
+	isOwnProfile() {
+		const {
+			userId,
+			userRole,
+			profileInfo: { id: ownerId }
+		} = this.props;
+		return userRole === 'admin' || userId === ownerId;
+	}
 
 	render() {
 		let {
@@ -143,10 +159,9 @@ class ProfileComponent extends Component<ProfileProps, IProfileComponentState> {
 			location = 'Kyiv';
 		}
 
-		const { uploadUrl, cancelAvatar, setAvatar } = this.props;
 		const { isEditing } = this.state;
-
 		const isOwnProfile = this.isOwnProfile();
+		const { uploadUrl, cancelAvatar, setAvatar, croppedSaved } = this.props;
 		return (
 			<div className={'UserProfileComponent'}>
 				{this.state.errorMsg && (
@@ -155,14 +170,21 @@ class ProfileComponent extends Component<ProfileProps, IProfileComponentState> {
 				<div className={'ProfileWrap'}>
 					{uploadUrl ? (
 						<div className={'profilePhotoWrap'}>
-							<img
-								src={uploadUrl}
-								style={{ width: '100%', height: '100%' }}
-								alt=""
-							/>
+							{this.props.croppedSaved ? (
+								<img className="avatar-preview" src={uploadUrl} />
+							) : (
+								<Cropper
+									ref={this.cropper}
+									src={uploadUrl}
+									style={{ width: '100%', height: '100%' }}
+									aspectRatio={3 / 3}
+								/>
+							)}
 							<span
 								onClick={() => {
-									if (setAvatar) setAvatar(uploadUrl, id);
+									this.props.croppedSaved && setAvatar
+										? setAvatar(uploadUrl, id)
+										: this.handleSaveCropped();
 								}}
 							>
 								<FontAwesomeIcon
@@ -189,7 +211,7 @@ class ProfileComponent extends Component<ProfileProps, IProfileComponentState> {
 								alt=""
 							/>
 							{isOwnProfile && (
-								<span>
+								<div>
 									<input
 										name="image"
 										type="file"
@@ -208,7 +230,7 @@ class ProfileComponent extends Component<ProfileProps, IProfileComponentState> {
 											/>
 										</label>
 									</div>
-								</span>
+								</div>
 							)}
 						</div>
 					)}

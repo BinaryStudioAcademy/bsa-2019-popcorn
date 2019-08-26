@@ -46,15 +46,16 @@ interface IProps {
 	saveInfo?: (ISurvey) => void;
 	mainPath: string;
 	surveyInfo: ISurvey;
+	redirPath: string;
 }
 
 const SurveyEditorBody: React.FC<IProps> = (props: IProps) => {
-	const { mainPath, surveyInfo, updateInfo } = props;
+	const { mainPath, surveyInfo, updateInfo, redirPath } = props;
 
 	return (
 		<div>
 			<header className="nav-header">
-				<NavLink to="/user-page/surveys" className="user-tab">
+				<NavLink to={redirPath} className="user-tab">
 					Go back
 				</NavLink>
 				<NavLink
@@ -83,6 +84,7 @@ const SurveyEditorBody: React.FC<IProps> = (props: IProps) => {
 									<SurveyEditor
 										updateInfo={updateInfo}
 										mainPath={mainPath}
+										redirPath={redirPath}
 										surveyInfo={surveyInfo}
 										saveInfo={props.saveInfo}
 									/>

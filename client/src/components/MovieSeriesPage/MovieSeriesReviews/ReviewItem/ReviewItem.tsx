@@ -1,12 +1,28 @@
 import React, { ReactElement } from 'react';
 import './ReviewItem.scss';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faStar } from '@fortawesome/free-solid-svg-icons';
-import { faChevronDown, faChevronUp } from '@fortawesome/free-solid-svg-icons';
 import { IReview } from '../MovieSeriesReviews';
+import Moment from 'react-moment';
+import Image from '../../../shared/Image/Image';
+import config from '../../../../config';
+import { analysisToGRBA } from '../../../../helpers/analysisToGRBA';
+
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import {
+	faChevronDown,
+	faChevronUp,
+	faThumbsDown as dislikeFill,
+	faThumbsUp as likeFill
+} from '@fortawesome/free-solid-svg-icons';
+import {
+	faThumbsDown as dislikeNoFill,
+	faThumbsUp as likeNoFill
+} from '@fortawesome/free-regular-svg-icons';
 
 interface IProps {
 	review: IReview;
+	currentUserId: string;
+	setReaction: (reviewId: string, isLike: boolean) => object;
+	errorWithReview?: string;
 }
 
 interface IState {
@@ -14,25 +30,6 @@ interface IState {
 	textBlockHeight: string;
 	isBigBlock: boolean;
 }
-
-const solidStar = (key: number, type: boolean): any => (
-	<FontAwesomeIcon
-		icon={faStar}
-		className={type ? 'yellowStar' : 'greyStar'}
-		key={key}
-	/>
-);
-
-const rateBlock = (rate: number): ReactElement[] => {
-	const count = [...(Array(5).keys() as any)];
-	const result = count.map(element => {
-		return element < rate
-			? solidStar(element, true)
-			: solidStar(element, false);
-	});
-
-	return result;
-};
 
 class ReviewItem extends React.Component<IProps, IState> {
 	state: IState = {
@@ -72,25 +69,60 @@ class ReviewItem extends React.Component<IProps, IState> {
 		);
 	};
 
-	public render() {
-		const { author, reviewText, rating, created_at } = this.props.review;
+	sendReactionToAction = (isLike: boolean) => {
+		const {
+			setReaction,
+			review: {
+				id: reviewId,
+				user: { id: userId }
+			},
+			currentUserId
+		} = this.props;
+		if (userId === currentUserId) return;
+		setReaction(reviewId, isLike);
+	};
 
+	public render() {
+		const {
+			review: {
+				id: reviewId,
+				user,
+				text,
+				created_at,
+				analysis,
+				reaction: { countDislikes, countLikes, userLike },
+				user: { id: userId }
+			},
+			currentUserId,
+			errorWithReview
+		} = this.props;
 		const { showFullReview, textBlockHeight, isBigBlock } = this.state;
 
+		const analysisRBGA = analysisToGRBA(analysis);
+
 		return (
-			<div className="review-wrapper">
+			<div className="review-wrapper" style={{ backgroundColor: analysisRBGA }}>
 				<div className="review-item">
 					<div className="review-item-header">
 						<div className="review-item-header-profile">
 							<div className="profile-avatar">
-								<img src={author.avatar} alt={`${author.name} photo`} />
+								<Image
+									src={user.avatar}
+									alt={user.name}
+									defaultSrc={config.DEFAULT_AVATAR}
+								/>
 							</div>
-							<div className="profile-name-rating">
-								<div className="profile-name">{author.name}</div>
-								<div className="profile-review-rating">{rateBlock(rating)}</div>
+							<div className="profile-name-wrapper">
+								<div className="profile-name">
+									{user.id === currentUserId ? 'You' : user.name}
+								</div>
 							</div>
 						</div>
-						<div className="profile-review-date">{created_at}</div>
+						<div className="profile-review-date">
+							<Moment format=" D MMM HH:mm " local>
+								{String(created_at)}
+							</Moment>
+						</div>
 					</div>
 					<div
 						ref={this.divRef as any}
@@ -99,7 +131,7 @@ class ReviewItem extends React.Component<IProps, IState> {
 						} 
               ${showFullReview ? 'review-item-text-big-show-full' : null}`}
 					>
-						{reviewText}
+						{text}
 						{textBlockHeight !== 'auto' && !showFullReview ? (
 							<div
 								className="read-more-gradient"
@@ -107,7 +139,59 @@ class ReviewItem extends React.Component<IProps, IState> {
 							></div>
 						) : null}
 					</div>
-					{isBigBlock && this.renderReadMoreBtn(showFullReview)}
+					<div className="review-footer">
+						<div className="review-reaction">
+							<div className="review-likes">
+								<span
+									onClick={() => this.sendReactionToAction(true)}
+									className={`likes-icon ${
+										currentUserId === userId ? 'block-button' : null
+									}`}
+								>
+									{userLike === true ? (
+										<FontAwesomeIcon className="like-fill" icon={likeFill} />
+									) : (
+										<FontAwesomeIcon
+											className="like-no-fill"
+											icon={likeNoFill}
+										/>
+									)}
+								</span>
+								<span className="likes-count">
+									{countLikes == 0 ? null : countLikes}
+								</span>
+							</div>
+							<div className="review-dislikes">
+								<span
+									onClick={() => this.sendReactionToAction(false)}
+									className={`dislikes-icon ${
+										currentUserId === userId ? 'block-button' : null
+									}`}
+								>
+									{userLike === false ? (
+										<FontAwesomeIcon
+											className="dislike-fill"
+											icon={dislikeFill}
+										/>
+									) : (
+										<FontAwesomeIcon
+											className="dislike-no-fill"
+											icon={dislikeNoFill}
+										/>
+									)}
+								</span>
+								<span className="dislikes-count">
+									{countDislikes == 0 ? null : countDislikes}
+								</span>
+							</div>
+							<span className="error-block">
+								{errorWithReview === reviewId ? 'error... try again' : null}
+							</span>
+						</div>
+						<div className="review-read-more">
+							{isBigBlock && this.renderReadMoreBtn(showFullReview)}
+						</div>
+					</div>
 				</div>
 			</div>
 		);

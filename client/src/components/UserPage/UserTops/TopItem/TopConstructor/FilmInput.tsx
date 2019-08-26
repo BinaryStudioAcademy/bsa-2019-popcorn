@@ -1,19 +1,18 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import closeIcon from '../../../../../assets/icons/general/closeIcon.svg';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { clearSearch } from '../../../../MovieSeriesPage/Movie.redux/actions';
-import { fetchFilms } from '../../actions';
-import { IMovie } from '../TopItem';
+import { fetchFilms, clearSearch } from '../../UserTops.redux/actions';
+import { IMovie } from '../../UserTops.service';
 
 interface IInputProps {
 	movie: IMovie;
-	deleteFilmInput: (movieId: string) => void;
+	deleteFilmInput: (movieId: number) => void;
 	alreadySearch: boolean;
 	fetchFilms: (title: string) => void;
 	movieList: Array<any>; //movies from elastic search
 	clearSearch: () => void;
-	saveMovie: (movie: IMovie) => void;
+	saveMovie: (movie: IMovie, newId?: string) => void;
 	last?: boolean;
 }
 const FilmInput: React.FC<IInputProps> = ({
@@ -28,6 +27,10 @@ const FilmInput: React.FC<IInputProps> = ({
 }) => {
 	const [title, setTitle] = useState(movie.title);
 	const [comment, setComment] = useState(movie.comment);
+	useEffect(() => {
+		if (movie.title === '') setTitle('');
+		if (movie.comment === '') setComment('');
+	});
 	const [isChosenTitle, setIsChoosenTitle] = useState(false);
 	const [isFocused, setFocused] = useState(false);
 	function searchFilms(title: string) {
@@ -36,10 +39,11 @@ const FilmInput: React.FC<IInputProps> = ({
 		setIsChoosenTitle(false);
 	}
 
-	function changeTitle({ movieId, title }) {
+	function changeTitle({ newId, title }) {
 		setTitle(title);
 		setIsChoosenTitle(true);
-		saveMovie({ ...movie, id: movieId, title, comment });
+		saveMovie({ ...movie, title, comment }, newId);
+		clearSearch();
 	}
 
 	return (
@@ -57,28 +61,30 @@ const FilmInput: React.FC<IInputProps> = ({
 				value={title}
 				onFocus={() => setFocused(true)}
 				onBlur={() => {
-					clearSearch();
 					if (title.trim() === '' && comment.trim() === '' && !last)
 						deleteFilmInput(movie.id);
+					if (!last) clearSearch();
 				}}
 			/>
 			{!isChosenTitle && alreadySearch && isFocused ? (
 				<div className="modal modal-top">
 					{movieList && movieList.length > 0 ? (
-						movieList.map((searchedMovie, index) => (
-							<div
-								className="hover"
-								key={index}
-								onClick={() =>
-									changeTitle({
-										movieId: movie.id,
-										title: searchedMovie._source.title
-									})
-								}
-							>
-								{searchedMovie._source.title}
-							</div>
-						))
+						movieList.map((searchedMovie, index) => {
+							return (
+								<div
+									className="hover"
+									key={index}
+									onClick={() => {
+										changeTitle({
+											newId: searchedMovie.id,
+											title: searchedMovie.title
+										});
+									}}
+								>
+									{searchedMovie.title}
+								</div>
+							);
+						})
 					) : (
 						<span>Nothing was found</span>
 					)}
@@ -111,8 +117,8 @@ const FilmInput: React.FC<IInputProps> = ({
 };
 
 const mapStateToProps = (rootState, props) => ({
-	movieList: rootState.movie.elasticSearchMovies,
-	alreadySearch: rootState.movie.alreadyElasticSearch,
+	movieList: rootState.userTops.elasticSearchMovies,
+	alreadySearch: rootState.userTops.alreadySearch,
 	...props
 });
 const actions = {

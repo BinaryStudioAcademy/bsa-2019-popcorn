@@ -1,10 +1,13 @@
 import React from 'react';
 import './ImageUploader.scss';
 import config from '../../../config';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCamera } from '@fortawesome/free-solid-svg-icons';
 
 interface IPostImageUploaderProps {
 	imageHandler: (s: any) => any;
 	imageStateHandler: (s: any) => any;
+	isIcon?: boolean;
 }
 
 interface IPostImageUploaderState {
@@ -55,7 +58,7 @@ class ImageUploader extends React.Component<
 					url.shift();
 					url = url.join('/');
 
-					url = config.API_URL + '/' + url;
+					url = '/' + url;
 					const splittedUrl = imageUrl.split('.');
 					if (
 						!(
@@ -77,7 +80,7 @@ class ImageUploader extends React.Component<
 
 	render() {
 		return (
-			<div className="edit-form">
+			<div>
 				{this.state.errorMsg && (
 					<span className="upload-error">{this.state.errorMsg}</span>
 				)}
@@ -92,6 +95,10 @@ class ImageUploader extends React.Component<
 				/>
 				{this.props.children ? (
 					this.props.children
+				) : this.props.isIcon ? (
+					<label htmlFor="image" className="upload-image-button">
+						<FontAwesomeIcon icon={faCamera} />
+					</label>
 				) : (
 					<label htmlFor="image" className="upload-image-button">
 						Upload image

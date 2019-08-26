@@ -5,6 +5,10 @@ import { BrowserRouter as Router } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import store from './redux/store';
 import ErrorBoundary from './components/shared/ErrorBoundary/ErrorBoundary';
+import JavascriptTimeAgo from 'javascript-time-ago';
+import en from 'javascript-time-ago/locale/en';
+
+JavascriptTimeAgo.locale(en);
 
 const App: React.FC = () => {
 	return (

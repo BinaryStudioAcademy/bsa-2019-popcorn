@@ -50,3 +50,20 @@ export const getByTitle = async (title: string) => {
   );
   return response.json();
 };
+
+export const getByIdValues = async idValues => {
+  const response = await fetch(
+    process.env.ELASTIC_API_URL + `/popcorn/_search`,
+    {
+      method: "POST",
+      body: JSON.stringify({
+        query: {
+          ids: {
+            values: idValues
+          }
+        }
+      })
+    }
+  );
+  return response.json();
+};
