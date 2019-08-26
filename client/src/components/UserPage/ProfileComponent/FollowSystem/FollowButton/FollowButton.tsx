@@ -11,22 +11,31 @@ interface IProps {
 }
 
 const FollowButton: React.FC<IProps> = props => {
-	const chooseTitle = () => {
+	const setButton = () => {
 		const { isFollower, isFollowing } = props.followStatus;
-		if (isFollowing) return 'Unfollow';
-		if (isFollower) return 'Follow Back';
-		return 'Follow';
+		let newTitle;
+		if (isFollowing) newTitle = 'Unfollow';
+		else if (isFollower) newTitle = 'Follow Back';
+		else newTitle = 'Follow';
+		if (newTitle !== title) {
+			setTitle(newTitle);
+			setClassName('follow-btn');
+		}
 	};
 
 	const onFollowClick = () => {
+		setClassName('follow-btn disable');
 		props.changeStatus(props.userId, props.selectedUserId);
 	};
 
-	const [className, setClassName] = useState('hidden');
+	const [className, setClassName] = useState('follow-btn');
+	const [title, setTitle] = useState('Follow');
+	setButton();
+
 	if (!props.followStatus) return <div />;
 	return (
-		<button className="follow-btn" onClick={onFollowClick}>
-			{chooseTitle()}
+		<button className={className} onClick={onFollowClick}>
+			{title}
 		</button>
 	);
 };
