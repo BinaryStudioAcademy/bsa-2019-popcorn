@@ -74,17 +74,18 @@ export class SeedEvents1566428038388 implements MigrationInterface {
       function getUserId() {
         return users[Math.floor(Math.random() * users.length)].id;
       }
+
+      const randomInteger = (min: number, max: number) => {
+        return Math.floor(Math.random() * (max - min + 1) + min);
+      };
+
       event.userId = getUserId();
-      console.log(event.userId);
       const newEvent = await getCustomRepository(EventRepository).save(event);
 
-      const visitors = [
+      const visitors = new Set([
         event.userId,
-        getUserId(),
-        getUserId(),
-        getUserId(),
-        getUserId()
-      ];
+        ...users.map(user => user.id).slice(0, randomInteger(3, 9))
+      ]);
 
       visitors.forEach(async userId => {
         const visitor = new EventVisitor();
