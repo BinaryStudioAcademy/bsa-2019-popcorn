@@ -12,7 +12,6 @@ import {
 	SET_STATUS,
 	CHANGE_STATUS
 } from './actionTypes';
-import config from '../../../../../config';
 import webApi from '../../../../../services/webApi.service';
 
 export function* fetchFollowersCount(action) {
@@ -74,7 +73,7 @@ export function* fetchFollowingsCount(action) {
 			}
 		});
 	} catch (e) {
-		console.log('follow saga fetch followings count:', e.message);
+		console.log('follow saga fetch followings:', e.message);
 	}
 }
 
@@ -97,7 +96,7 @@ export function* fetchFollowings(action) {
 			}
 		});
 	} catch (e) {
-		console.log('follow saga fetch followings count:', e.message);
+		console.log('follow saga fetch followers:', e.message);
 	}
 }
 
@@ -119,7 +118,7 @@ export function* checkStatus(action) {
 			}
 		});
 	} catch (e) {
-		console.log('follow saga fetch followings count:', e.message);
+		console.log('follow saga check status:', e.message);
 	}
 }
 
@@ -153,7 +152,7 @@ export function* changeStatus(action) {
 			}
 		});
 	} catch (e) {
-		console.log('follow saga fetch followings count:', e.message);
+		console.log('follow saga change status:', e.message);
 	}
 }
 
