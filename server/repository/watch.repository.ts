@@ -30,7 +30,7 @@ class WatchRepository extends Repository<Watch> {
 
   async deleteById(watchId, next) {
     try {
-      const deletedWatch = await this.remove(watchId);
+      const deletedWatch = await this.delete({ id: watchId });
 
       return deletedWatch;
     } catch (err) {
