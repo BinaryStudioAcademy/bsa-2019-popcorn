@@ -18,7 +18,7 @@ const db_config: ConnectionOptions = {
   type: "postgres",
   url,
   synchronize: true,
-  logging: true,
+  logging: false,
   entities,
   migrations
 };
