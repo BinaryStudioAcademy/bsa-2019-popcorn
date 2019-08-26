@@ -105,6 +105,8 @@ passport.use(
           user.email = email;
           user.reset_token = "";
           user.avatar = avatar;
+          user.aboutMe = "";
+          user.location = "";
           const newUser = await userService.createUser(user);
           return done(null, newUser);
         }
@@ -134,6 +136,8 @@ passport.use(
           user.name = name;
           user.email = email || name;
           user.reset_token = "";
+          user.aboutMe = "";
+          user.location = "";
           const newUser = await userService.createUser(user);
           return done(null, newUser);
         }
