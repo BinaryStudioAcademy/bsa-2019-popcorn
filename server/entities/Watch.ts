@@ -1,7 +1,14 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from "typeorm";
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  ManyToOne,
+  Index
+} from "typeorm";
 import { User } from "./User";
 
 @Entity()
+@Index(["user", "movieId"], { unique: true })
 export class Watch {
   @PrimaryGeneratedColumn("uuid")
   id: string;
