@@ -55,6 +55,8 @@
 		font-weight: 500;
 	}
 	.follow-list {
+		height: calc(100% - 42px);
+		overflow: auto;
 		list-style-type: none;
 		li {
 			border-bottom: 1px $border-color solid;
@@ -64,6 +66,9 @@
 				text-decoration: none;
 				display: flex;
 				align-items: center;
+				&:link {
+					color: $text-base-color;
+				}
 				&:visited {
 					color: $text-base-color;
 				}
