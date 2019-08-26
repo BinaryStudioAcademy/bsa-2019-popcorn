@@ -1,5 +1,6 @@
 import { Router } from "express";
 import * as userService from "../services/user.service";
+import jwtMiddleware from "../middlewares/jwt.middleware";
 
 const router = Router();
 
@@ -24,6 +25,18 @@ router
       .then(result => {
         result.success ? res.send(result) : res.status(400).send(result);
       })
+      .catch(next)
+  )
+  .post("/password", jwtMiddleware, (req, res, next) =>
+    userService
+      .updatePassword(req.user, req.body.password, next)
+      .then(data => res.send(data))
+      .catch(next)
+  )
+  .post("/email", jwtMiddleware, (req, res, next) =>
+    userService
+      .updateEmail(req.user, req.body.email, next)
+      .then(data => res.send(data))
       .catch(next)
   )
   .delete("/:id", (req, res, next) =>
