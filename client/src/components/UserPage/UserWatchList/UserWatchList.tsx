@@ -25,7 +25,7 @@ const UserWatchList: React.FC<IProps> = props => {
 		return <Spinner />;
 	}
 
-	return <div className="UserWatchList">UserWatchList</div>;
+	return <div className="UserWatchList"></div>;
 };
 
 const mapStateToProps = (state, props) => ({
