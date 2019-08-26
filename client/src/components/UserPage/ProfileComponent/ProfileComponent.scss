@@ -22,7 +22,7 @@ h2 {
 		padding-top: 16px;
 		margin-right: 2%;
 		width: 400px;
-		height: 400px;
+		height: auto;
 
 		.avatar-preview {
 			width: 100%;
@@ -65,9 +65,9 @@ h2 {
 	}
 
 	.edit-icon {
-		position: relative;
-		bottom: 20px;
-		left: 70%;
+		position: absolute;
+		left: 85%;
+		top: 175px;
 		width: 20px;
 	}
 	.profileRow {

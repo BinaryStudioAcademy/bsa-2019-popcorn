@@ -17,6 +17,8 @@ import Cropper from 'react-cropper';
 import { connect } from 'react-redux';
 import Follow from './FollowSystem/Follow';
 import FollowButton from './FollowSystem/FollowButton/FollowButton';
+import { bindActionCreators } from 'redux';
+import { updateProfile } from '../actions';
 
 type ProfileProps = {
 	profileInfo: ISelectedProfileInfo;
@@ -28,6 +30,16 @@ type ProfileProps = {
 	saveCropped: () => void;
 	userId: string;
 	userRole: string;
+	updateProfile: (
+		id: string,
+		data: {
+			name: string;
+			male: boolean;
+			female: boolean;
+			aboutMe: string;
+			location: string;
+		}
+	) => any;
 };
 interface IProfileComponentState {
 	errorMsg?: string;
@@ -89,6 +101,10 @@ class ProfileComponent extends Component<ProfileProps, IProfileComponentState> {
 	};
 
 	onEditSave = data => {
+		const newData = { ...data, gender: undefined };
+		newData.male = data.gender;
+		newData.female = !data.gender;
+		this.props.updateProfile(this.props.userId, newData);
 		this.setState({
 			isEditing: false
 		});
@@ -242,17 +258,15 @@ class ProfileComponent extends Component<ProfileProps, IProfileComponentState> {
 
 					{!isEditing ? (
 						<div className="ProfileInfo">
-							<div className="profileRow-username">
-								{name}
-								{isOwnProfile && (
-									<span onClick={this.onEdit}>
-										<FontAwesomeIcon
-											icon={faEdit}
-											className="fontAwesomeIcon edit-icon"
-										/>
-									</span>
-								)}
-							</div>
+							{isOwnProfile && (
+								<span onClick={this.onEdit}>
+									<FontAwesomeIcon
+										icon={faEdit}
+										className="fontAwesomeIcon edit-icon"
+									/>
+								</span>
+							)}
+							<div className="profileRow-username">{name}</div>
 							<div className="profileRow-info">
 								{male && (
 									<div className="user-gender">
@@ -325,4 +339,13 @@ const mapStateToProps = (rootState, props) => ({
 	userRole: rootState.profile.profileInfo.role
 });
 
-export default connect(mapStateToProps)(ProfileComponent);
+const actions = {
+	updateProfile
+};
+
+const mapDispatchToProps = dispatch => bindActionCreators(actions, dispatch);
+
+export default connect(
+	mapStateToProps,
+	mapDispatchToProps
+)(ProfileComponent);

@@ -49,6 +49,18 @@ export function* getSelectedUser(action) {
 
 export function* updateProfile(action) {
 	try {
+		const data = yield call(webApi, {
+			method: 'PUT',
+			endpoint: '/api/user/' + action.payload.id,
+			body: {
+				...action.payload.data
+			}
+		});
+
+		yield put({
+			type: GET_SELECTED_USER_INFO,
+			payload: { id: action.payload.id }
+		});
 	} catch (e) {
 		console.log('user saga update user:', e.message);
 	}

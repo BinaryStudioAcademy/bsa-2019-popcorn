@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import './ProfileEditor.scss';
 
 interface IProfileEditorProps {
 	user: {
@@ -60,7 +61,7 @@ class ProfileEditor extends Component<
 		const { onEditCancel } = this.props;
 
 		return (
-			<div>
+			<div className="profile-editor">
 				<div>
 					Name:
 					<input
