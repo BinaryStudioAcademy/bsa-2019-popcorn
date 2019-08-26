@@ -1,7 +1,6 @@
-import { EntityRepository, Repository, getCustomRepository } from "typeorm";
-import { Event, EventComment, EventVisitor } from "../entities/Events";
-import { getRepository, createQueryBuilder } from "typeorm";
-import EventVisitorRepository from "./eventVisitor.repository";
+import { EntityRepository, Repository } from "typeorm";
+import { Event, EventVisitor } from "../entities/Events";
+import { getRepository } from "typeorm";
 
 @EntityRepository(Event)
 class EventRepository extends Repository<Event> {
@@ -46,14 +45,6 @@ class EventRepository extends Repository<Event> {
       .leftJoinAndSelect("event.eventVisitors", "visitors")
       .where("event.userId = :id", { id: userId })
       .getMany();
-  }
-  async getUserByEventId(eventId: string): Promise<any> {
-    return await getRepository(Event)
-      .createQueryBuilder("event")
-      .leftJoin("event.user", "user")
-      .addSelect(["user.name", "user.avatar", "user.id"])
-      .where("event.id = :id", { id: eventId })
-      .getOne();
   }
 }
 

@@ -109,6 +109,3 @@ export const deleteVisitorById = async (
   const visitor = await getRepository(VisitorEntity).findOne(visitorId);
   return await getRepository(VisitorEntity).remove(visitor);
 };
-
-export const getUserByEventId = async (eventId: string): Promise<any> =>
-  await getCustomRepository(EventRepository).getUserByEventId(eventId);

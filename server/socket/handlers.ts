@@ -17,7 +17,7 @@ export default socket => {
     }
     if (entityIdName === "eventId") {
       const discussion = await eventService.createComment(messageInfo);
-      const event = await eventService.getUserByEventId(discussion.eventId);
+      const event = await eventService.getEventById(discussion.eventId);
       socket.to(event.userId).emit("new-notification", {
         img: messageInfo.user.avatar,
         type: "comment",
