@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import Modal from 'react-responsive-modal';
+import { NavLink } from 'react-router-dom';
 import {
 	fetchFollowers,
 	clearFollows,
@@ -8,6 +9,8 @@ import {
 } from './FollowSystem.redux/actions';
 import { bindActionCreators } from 'redux';
 import './Follow.scss';
+import Image from '../../../shared/Image/Image';
+import config from '../../../../config';
 
 interface IFollowProps {
 	userId: string;
@@ -59,14 +62,15 @@ const Follow: React.FC<IFollowProps> = props => {
 				<Modal
 					open={isModalShown}
 					onClose={closeModal}
-					showCloseIcon={false}
+					showCloseIcon={true}
 					focusTrapped={false}
 					center
 					classNames={{
-						modal: '' //todo
+						modal: 'follow-modal',
+						closeButton: 'follow-modal-close'
 					}}
 				>
-					<div>{modalType}</div>
+					<div className="modal-title">{modalType}</div>
 					{!(
 						props.followSystem &&
 						props.followSystem[props.userId] &&
@@ -74,15 +78,37 @@ const Follow: React.FC<IFollowProps> = props => {
 					) ? (
 						<div>Loading ...</div>
 					) : (
-						<div>
+						<ul className="follow-list">
 							{props.followSystem[props.userId][modalType].map(follower => {
 								return modalType === 'followers' ? (
-									<div key={follower.follower.id}>{follower.follower.name}</div>
+									<li key={follower.follower.id}>
+										<NavLink to={`/user-page/${follower.follower.id}`}>
+											<Image
+												src={follower.follower.avatar}
+												className="follower-avatar"
+												defaultSrc={config.DEFAULT_AVATAR}
+												alt="follower"
+											/>
+											<div className="follower-name">
+												{follower.follower.name}
+											</div>
+										</NavLink>
+									</li>
 								) : (
-									<div key={follower.user.id}>{follower.user.name}</div>
+									<li key={follower.user.id}>
+										<NavLink to={`/user-page/${follower.user.id}`}>
+											<Image
+												src={follower.user.avatar}
+												className="follower-avatar"
+												defaultSrc={config.DEFAULT_AVATAR}
+												alt="follower"
+											/>
+											<div className="follower-name">{follower.user.name}</div>
+										</NavLink>
+									</li>
 								);
 							})}
-						</div>
+						</ul>
 					)}
 				</Modal>
 			)}

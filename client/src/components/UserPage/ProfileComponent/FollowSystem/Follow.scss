@@ -23,3 +23,52 @@
 	border: 2px $orange solid;
 	box-sizing: border-box;
 }
+
+.follow-modal {
+	width: 400px;
+	height: 500px;
+	border-radius: 20px;
+	padding: 0;
+	&-close {
+		top: 6px;
+	}
+	.modal-title {
+		text-transform: capitalize;
+		text-align: center;
+		font-size: 1.1em;
+		padding: 10px 0;
+		border-bottom: 1px $border-color solid;
+		color: $text-base-color;
+		font-weight: 500;
+	}
+	.follow-list {
+		list-style-type: none;
+		li {
+			border-bottom: 1px $border-color solid;
+			padding: 5px 20px;
+			color: $text-base-color;
+			a {
+				text-decoration: none;
+				display: flex;
+				align-items: center;
+				&:visited {
+					color: $text-base-color;
+				}
+			}
+			&:hover {
+				.follower-name {
+					color: lighten($text-base-color, 10%);
+				}
+			}
+			.follower-avatar {
+				height: 40px;
+				border-radius: 20px;
+			}
+			.follower-name {
+				display: inline-block;
+				margin-left: 10px;
+				font-weight: 500;
+			}
+		}
+	}
+}
