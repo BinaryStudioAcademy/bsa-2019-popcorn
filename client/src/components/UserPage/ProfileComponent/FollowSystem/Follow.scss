@@ -12,6 +12,11 @@
 	border-radius: 10px;
 }
 
+.disable {
+	pointer-events: none;
+	opacity: 0.5;
+}
+
 .reverse {
 	color: $orange;
 	background-color: white;
