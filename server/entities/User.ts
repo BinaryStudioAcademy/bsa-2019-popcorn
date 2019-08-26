@@ -6,6 +6,7 @@ import { SurveysQuestionAnswer } from "./SurveysQuestionAnswer";
 import { Voting } from "../entities/Voting";
 import { VotingOptionReaction } from "../entities/VotingOptionReaction";
 import { Follower } from "./Follower";
+import { FavoriteList } from "./FavoriteList";
 
 @Entity()
 export class User {
@@ -68,4 +69,7 @@ export class User {
 
   @OneToMany(type => Follower, follower => follower.user)
   followers: Follower[];
+
+  @OneToMany(type => FavoriteList, favoriteList => favoriteList.user)
+  favoriteLists: FavoriteList[];
 }

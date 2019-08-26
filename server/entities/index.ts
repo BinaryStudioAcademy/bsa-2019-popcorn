@@ -19,6 +19,7 @@ import { Review } from "./Review/Review";
 import { ReviewReaction } from "./Review/ReviewReaction";
 import { Discussion } from "./Discussion";
 import { Follower } from "./Follower";
+import { FavoriteList } from "./FavoriteList";
 
 export default [
   User,
@@ -43,5 +44,6 @@ export default [
   ReviewReaction,
   Review,
   Discussion,
-  Follower
+  Follower,
+  FavoriteList
 ];
