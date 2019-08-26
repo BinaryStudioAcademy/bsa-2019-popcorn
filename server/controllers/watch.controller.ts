@@ -1,5 +1,14 @@
 import { Router } from "express";
+import errorHandlerMiddleware from "../middlewares/error-handler.middleware";
+import * as watchService from "../services/watch.service";
 
 const router = Router();
+
+router.get("/", errorHandlerMiddleware, (req, res, next) =>
+  watchService
+    .getAllUserWatch(req.user.id, next)
+    .then(result => res.send(result))
+    .catch(next)
+);
 
 export default router;
