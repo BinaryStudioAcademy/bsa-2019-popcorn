@@ -5,6 +5,7 @@ import { Surveys } from "./Surveys";
 import { SurveysQuestionAnswer } from "./SurveysQuestionAnswer";
 import { Voting } from "../entities/Voting";
 import { VotingOptionReaction } from "../entities/VotingOptionReaction";
+import { Follower } from "./Follower";
 
 @Entity()
 export class User {
@@ -64,4 +65,7 @@ export class User {
 
   @Column({ default: "", nullable: true })
   reset_token: string;
+
+  @OneToMany(type => Follower, follower => follower.user)
+  followers: Follower[];
 }
