@@ -58,11 +58,10 @@ class ProfileEditor extends Component<
 
 	render() {
 		const { gender, name, location, aboutMe } = this.state;
-		const { onEditCancel } = this.props;
 
 		return (
 			<div className="profile-editor">
-				<div>
+				<div className="profileRow">
 					Name:
 					<input
 						type="text"
@@ -70,31 +69,34 @@ class ProfileEditor extends Component<
 						onChange={e => this.onChangeData(e, 'name')}
 					/>
 				</div>
-
-				<div className="radio">
-					<label>
-						<input
-							type="radio"
-							value="male"
-							checked={gender}
-							onChange={this.onGenderChange}
-						/>
-						Male
-					</label>
+				<div className="profileRow">
+					Gender:
+					<div>
+						{/* <div className="radio"> */}
+						<label>
+							<input
+								type="radio"
+								value="male"
+								checked={gender}
+								onChange={this.onGenderChange}
+							/>
+							Male
+						</label>
+						{/* </div> */}
+						{/* <div className="radio"> */}
+						<label>
+							<input
+								type="radio"
+								value="female"
+								checked={!gender}
+								onChange={this.onGenderChange}
+							/>
+							Female
+						</label>
+						{/* </div> */}
+					</div>
 				</div>
-				<div className="radio">
-					<label>
-						<input
-							type="radio"
-							value="female"
-							checked={!gender}
-							onChange={this.onGenderChange}
-						/>
-						Female
-					</label>
-				</div>
-
-				<div>
+				<div className="profileRow">
 					Location:
 					<input
 						type="text"
@@ -103,7 +105,7 @@ class ProfileEditor extends Component<
 					/>
 				</div>
 
-				<div>
+				<div className="profileRow">
 					About:
 					<input
 						type="text"
