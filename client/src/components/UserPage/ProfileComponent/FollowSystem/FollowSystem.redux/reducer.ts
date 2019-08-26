@@ -3,13 +3,15 @@ import {
 	SET_FOLLOWINGS_COUNT,
 	SET_FOLLOWERS,
 	SET_FOLLOWINGS,
-	CLEAR_FOLLOWS
+	CLEAR_FOLLOWS,
+	SET_STATUS
 } from './actionTypes';
 
 const initialState = {
 	followersCount: undefined,
 	followingsCount: undefined,
-	followSystem: {}
+	followSystem: {},
+	followStatus: {}
 };
 
 export default function(state = initialState, action) {
@@ -52,6 +54,11 @@ export default function(state = initialState, action) {
 			delete newState.followSystem[action.payload.userId];
 			return {
 				...newState
+			};
+		case SET_STATUS:
+			return {
+				...state,
+				followStatus: { ...action.payload.data }
 			};
 		default:
 			return state;

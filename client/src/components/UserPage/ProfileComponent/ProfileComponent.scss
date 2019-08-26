@@ -38,7 +38,7 @@ h2 {
 			overflow: hidden;
 			margin-top: 40px;
 		}
-		&:hover .upload-wrp {
+		.profile-avatar:hover + div .upload-wrp {
 			margin-top: 0;
 			height: 40px;
 		}

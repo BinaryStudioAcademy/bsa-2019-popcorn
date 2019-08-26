@@ -7,6 +7,7 @@ import {
 	fetchFollowings
 } from './FollowSystem.redux/actions';
 import { bindActionCreators } from 'redux';
+import './Follow.scss';
 
 interface IFollowProps {
 	userId: string;

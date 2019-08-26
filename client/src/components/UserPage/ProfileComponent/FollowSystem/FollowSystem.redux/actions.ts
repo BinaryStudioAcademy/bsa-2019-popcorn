@@ -3,7 +3,8 @@ import {
 	FETCH_FOLLOWINGS_COUNT,
 	FETCH_FOLLOWERS,
 	FETCH_FOLLOWINGS,
-	CLEAR_FOLLOWS
+	CLEAR_FOLLOWS,
+	CHECK_STATUS
 } from './actionTypes';
 
 export const fetchFollowersCount = userId => {
@@ -47,6 +48,16 @@ export const clearFollows = userId => {
 		type: CLEAR_FOLLOWS,
 		payload: {
 			userId
+		}
+	};
+};
+
+export const checkStatus = (userId, followerId) => {
+	return {
+		type: CHECK_STATUS,
+		payload: {
+			userId,
+			followerId
 		}
 	};
 };
