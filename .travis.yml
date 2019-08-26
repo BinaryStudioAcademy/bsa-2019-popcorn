@@ -25,7 +25,7 @@ deploy:
   skip_cleanup: true
   on: &2
     repo: BinaryStudioAcademy/bsa-2019-popcorn
-    branch: deploy-aws
+    branch: dev
   bucket: popcorn-bucket
   region: eu-central-1
 - provider: codedeploy
