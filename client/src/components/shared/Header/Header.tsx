@@ -71,7 +71,7 @@ const Header = ({
 			</NavLink>
 			<button className="header-buttons hover">
 				<NavLink
-					to={'/movie-list'}
+					to={'/movies'}
 					style={{ textDecoration: 'none' }}
 					className="header-buttons"
 				>
@@ -82,7 +82,7 @@ const Header = ({
 					<Link aria-current="page" className="hover" to="#">
 						{MOVIES_IN_CINEMA}
 					</Link>
-					<Link aria-current="page" className="hover" to="/movie-tops">
+					<Link aria-current="page" className="hover" to="/tops">
 						{MOVIE_TOPS}
 					</Link>
 					<Link aria-current="page" className="hover" to="/user-page/lists">

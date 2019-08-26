@@ -11,6 +11,7 @@ interface IProps {
 	userId: string;
 	croppedSaved: boolean;
 	saveCropped: () => void;
+	currentUserId: string;
 }
 const userPostStyle = {
 	marginRight: '0px',
@@ -22,7 +23,8 @@ const UserPosts: React.FC<IProps> = ({
 	getUsersPosts,
 	userId,
 	croppedSaved,
-	saveCropped
+	saveCropped,
+	currentUserId
 }) => {
 	if (!posts) {
 		getUsersPosts();
@@ -31,11 +33,14 @@ const UserPosts: React.FC<IProps> = ({
 
 	return (
 		<div className="UserPosts">
-			<PostConstructor
-				userId={userId}
-				saveCropped={saveCropped}
-				croppedSaved={croppedSaved}
-			/>
+			{currentUserId === userId && (
+				<PostConstructor
+					userId={userId}
+					saveCropped={saveCropped}
+					croppedSaved={croppedSaved}
+				/>
+			)}
+
 			{posts.length === 0 ? (
 				<div className="no-info-yet">No posts yet</div>
 			) : (

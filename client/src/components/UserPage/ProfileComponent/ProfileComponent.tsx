@@ -13,6 +13,8 @@ import config from '../../../config';
 import ISelectedProfileInfo from '../SelectedProfileInterface';
 import Cropper from 'react-cropper';
 import { connect } from 'react-redux';
+import Follow from './FollowSystem/Follow';
+import FollowButton from './FollowSystem/FollowButton/FollowButton';
 
 type ProfileProps = {
 	profileInfo: ISelectedProfileInfo;
@@ -180,6 +182,7 @@ class ProfileComponent extends Component<ProfileProps, IProfileComponentState> {
 					) : (
 						<div className={'profilePhotoWrap'}>
 							<img
+								className="profile-avatar"
 								src={avatar || config.DEFAULT_AVATAR}
 								style={{ width: '100%', height: '100%' }}
 								alt=""
@@ -206,6 +209,8 @@ class ProfileComponent extends Component<ProfileProps, IProfileComponentState> {
 									</div>
 								</div>
 							)}
+							{this.props.userId !== id && <FollowButton />}
+							<Follow userId={id} />
 						</div>
 					)}
 

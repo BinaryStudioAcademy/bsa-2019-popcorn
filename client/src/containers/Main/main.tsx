@@ -92,11 +92,7 @@ const MovieSeriesRender = props => {
 
 const allSurveysRender = props => {
 	return (
-		<UserSurveysNav
-			id={props.id}
-			userInfo={props}
-			mainPath={'/surveys-list/'}
-		/>
+		<UserSurveysNav id={props.id} userInfo={props} mainPath={'/surveys'} />
 	);
 };
 
@@ -134,7 +130,7 @@ const Main = ({
 						<Route exact path={[`/`, '/create*']} component={MainPage} />
 						<Route path={`/user-page/:id`} component={UserPage} />
 						<Route
-							path={`/event-page/:id`}
+							path={`/events/:id`}
 							render={props =>
 								EventPageRender({
 									...props,
@@ -146,7 +142,7 @@ const Main = ({
 							}
 						/>
 						<Route
-							path={`/event-page`}
+							path={`/events`}
 							render={props =>
 								EventListRender({ ...props, allEvents, getAllEvents })
 							}
@@ -155,11 +151,11 @@ const Main = ({
 						<Route path={`/survey-page/:id`} component={SurveyPage} />
 						<Route path={`/admin-panel-page`} component={AdminPanelPage} />
 						<Route
-							path={`/movie-series/:id`}
+							path={`/movies/:id`}
 							render={props => MovieSeriesRender(props)}
 						/>
 						<Route
-							path={`/movie-list`}
+							path={`/movies`}
 							render={() =>
 								MovieListRender(
 									movieList,
@@ -170,11 +166,11 @@ const Main = ({
 							}
 						/>
 						<Route
-							path={`/surveys-list`}
+							path={`/surveys`}
 							render={() => allSurveysRender(userInfo)}
 						></Route>
-						<Route path={`/movie-tops`} render={() => <TopList />} />
-						<Route path={`/top-page/:id`} component={TopPage} />
+						<Route exact path={`/tops`} render={() => <TopList />} />
+						<Route path={`/tops/:id`} component={TopPage} />
 						<Route path={`/*`} exact component={NotFound} />
 					</Switch>
 				</div>

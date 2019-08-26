@@ -194,7 +194,7 @@ class UserSurveys extends React.Component<IProps, IState> {
 				)}
 				<div className="userSurveys">
 					{this.props.selectedProfileId === this.props.userId ||
-					window.location.pathname === '/surveys-list/' ? (
+					window.location.pathname === '/surveys' ? (
 						<NavLink to={`${mainPath}/create`} className="create-button">
 							<button>Create survey</button>
 						</NavLink>

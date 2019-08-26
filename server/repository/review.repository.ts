@@ -1,5 +1,5 @@
 import { EntityRepository, Repository, getCustomRepository } from "typeorm";
-import { Review } from "../entities/Review";
+import { Review } from "../entities/Review/Review";
 import UserRepository from "../repository/user.repository";
 import { getRatingByReview } from "../services/reviewAnalysis.service";
 
@@ -53,6 +53,7 @@ class ReviewRepository extends Repository<Review> {
     try {
       const ratingValue = getRatingByReview(bodyRequest.text, next);
       bodyRequest.analysis = ratingValue.result.toFixed(2);
+      bodyRequest.created_at = new Date(); // default update
       const data = await this.update({ id }, bodyRequest);
       const updatedReview = await this.getReviewById(id, next);
       return updatedReview
