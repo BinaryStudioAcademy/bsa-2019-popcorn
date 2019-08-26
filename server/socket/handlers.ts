@@ -1,5 +1,7 @@
 import * as movieService from "../services/movie.service";
 import * as eventService from "../services/event.service";
+import * as postService from "../services/post.service";
+
 export default socket => {
   socket.on("createRoom", roomId => {
     socket.join(roomId);
@@ -10,11 +12,19 @@ export default socket => {
 
   socket.on("send-message-to-discussion", async messageInfo => {
     const entityIdName = messageInfo.entityIdName;
-    console.log("message info", messageInfo);
-    if (entityIdName === "movieId")
-      await movieService.saveDiscussionMessage(messageInfo);
-    if (entityIdName === "eventId")
-      await eventService.createComment(messageInfo);
+    if (entityIdName === "movieId") {
+      const discussion = await movieService.saveDiscussionMessage(messageInfo);
+    }
+    if (entityIdName === "eventId") {
+      const discussion = await eventService.createComment(messageInfo);
+      const event = await eventService.getUserByEventId(discussion.eventId);
+      socket.to(event.userId).emit("new-notification", {
+        img: messageInfo.user.avatar,
+        type: "comment",
+        text: `${messageInfo.user.name} left message in your event`,
+        date: new Date()
+      });
+    }
     socket
       .to(entityIdName.concat(messageInfo[entityIdName]))
       .emit("add-message-to-discussion", messageInfo);

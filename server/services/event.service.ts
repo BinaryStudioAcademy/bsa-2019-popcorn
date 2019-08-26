@@ -7,6 +7,7 @@ import {
 
 import EventRepository from "../repository/event.repository";
 import { getRepository, getCustomRepository } from "typeorm";
+import { User } from "models/UserModel";
 
 export const getAllEvents = async (): Promise<any[]> =>
   await getCustomRepository(EventRepository).getAllEvents();
@@ -53,8 +54,7 @@ export const getCommentsByEventId = async (
 
 export const createComment = async (
   comment: EventComment
-): Promise<EventComment[]> =>
-  await getRepository(CommentEntity).save([comment]);
+): Promise<EventComment> => await getRepository(CommentEntity).save(comment);
 
 export const updateComment = async (
   updatedComment: Event
@@ -109,3 +109,6 @@ export const deleteVisitorById = async (
   const visitor = await getRepository(VisitorEntity).findOne(visitorId);
   return await getRepository(VisitorEntity).remove(visitor);
 };
+
+export const getUserByEventId = async (eventId: string): Promise<any> =>
+  await getCustomRepository(EventRepository).getUserByEventId(eventId);

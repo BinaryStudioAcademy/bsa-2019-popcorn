@@ -47,6 +47,14 @@ class EventRepository extends Repository<Event> {
       .where("event.userId = :id", { id: userId })
       .getMany();
   }
+  async getUserByEventId(eventId: string): Promise<any> {
+    return await getRepository(Event)
+      .createQueryBuilder("event")
+      .leftJoin("event.user", "user")
+      .addSelect(["user.name", "user.avatar", "user.id"])
+      .where("event.id = :id", { id: eventId })
+      .getOne();
+  }
 }
 
 export default EventRepository;

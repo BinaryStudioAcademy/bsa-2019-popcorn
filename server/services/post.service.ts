@@ -95,3 +95,6 @@ export const getReactions = async (post: Post): Promise<PostReactions[]> =>
     .groupBy("post_reactions.type")
     .where({ post })
     .getRawMany();
+
+export const getUserByPost = async (postId: string): Promise<Post> =>
+  await getCustomRepository(PostRepository).getUserByPost(postId);
