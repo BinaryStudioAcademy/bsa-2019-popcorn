@@ -1,16 +1,28 @@
 import React, { ReactElement } from 'react';
 import './ReviewItem.scss';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faChevronDown, faChevronUp } from '@fortawesome/free-solid-svg-icons';
 import { IReview } from '../MovieSeriesReviews';
 import Moment from 'react-moment';
 import Image from '../../../shared/Image/Image';
 import config from '../../../../config';
 import { analysisToGRBA } from '../../../../helpers/analysisToGRBA';
 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import {
+	faChevronDown,
+	faChevronUp,
+	faThumbsDown as dislikeFill,
+	faThumbsUp as likeFill
+} from '@fortawesome/free-solid-svg-icons';
+import {
+	faThumbsDown as dislikeNoFill,
+	faThumbsUp as likeNoFill
+} from '@fortawesome/free-regular-svg-icons';
+
 interface IProps {
 	review: IReview;
 	currentUserId: string;
+	setReaction: (reviewId: string, isLike: boolean) => object;
+	errorWithReview?: string;
 }
 
 interface IState {
@@ -57,10 +69,32 @@ class ReviewItem extends React.Component<IProps, IState> {
 		);
 	};
 
+	sendReactionToAction = (isLike: boolean) => {
+		const {
+			setReaction,
+			review: {
+				id: reviewId,
+				user: { id: userId }
+			},
+			currentUserId
+		} = this.props;
+		if (userId === currentUserId) return;
+		setReaction(reviewId, isLike);
+	};
+
 	public render() {
 		const {
-			review: { user, text, created_at, analysis },
-			currentUserId
+			review: {
+				id: reviewId,
+				user,
+				text,
+				created_at,
+				analysis,
+				reaction: { countDislikes, countLikes, userLike },
+				user: { id: userId }
+			},
+			currentUserId,
+			errorWithReview
 		} = this.props;
 		const { showFullReview, textBlockHeight, isBigBlock } = this.state;
 
@@ -105,7 +139,59 @@ class ReviewItem extends React.Component<IProps, IState> {
 							></div>
 						) : null}
 					</div>
-					{isBigBlock && this.renderReadMoreBtn(showFullReview)}
+					<div className="review-footer">
+						<div className="review-reaction">
+							<div className="review-likes">
+								<span
+									onClick={() => this.sendReactionToAction(true)}
+									className={`likes-icon ${
+										currentUserId === userId ? 'block-button' : null
+									}`}
+								>
+									{userLike === true ? (
+										<FontAwesomeIcon className="like-fill" icon={likeFill} />
+									) : (
+										<FontAwesomeIcon
+											className="like-no-fill"
+											icon={likeNoFill}
+										/>
+									)}
+								</span>
+								<span className="likes-count">
+									{countLikes == 0 ? null : countLikes}
+								</span>
+							</div>
+							<div className="review-dislikes">
+								<span
+									onClick={() => this.sendReactionToAction(false)}
+									className={`dislikes-icon ${
+										currentUserId === userId ? 'block-button' : null
+									}`}
+								>
+									{userLike === false ? (
+										<FontAwesomeIcon
+											className="dislike-fill"
+											icon={dislikeFill}
+										/>
+									) : (
+										<FontAwesomeIcon
+											className="dislike-no-fill"
+											icon={dislikeNoFill}
+										/>
+									)}
+								</span>
+								<span className="dislikes-count">
+									{countDislikes == 0 ? null : countDislikes}
+								</span>
+							</div>
+							<span className="error-block">
+								{errorWithReview === reviewId ? 'error... try again' : null}
+							</span>
+						</div>
+						<div className="review-read-more">
+							{isBigBlock && this.renderReadMoreBtn(showFullReview)}
+						</div>
+					</div>
 				</div>
 			</div>
 		);

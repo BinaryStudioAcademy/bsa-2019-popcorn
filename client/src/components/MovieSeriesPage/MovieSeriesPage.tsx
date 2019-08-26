@@ -63,7 +63,7 @@ const MovieSeriesPage: React.SFC<IProps> = props => {
 		fetchCastCrew,
 		crewCast
 	} = props;
-	const mainPath = `/movie-series/${props.match.params.id}`;
+	const mainPath = `/movies/${props.match.params.id}`;
 
 	if (!fetchedMovie || fetchedMovie.id != props.match.params.id) {
 		fetchMovie(props.match.params.id);

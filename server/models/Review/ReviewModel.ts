@@ -1,4 +1,4 @@
-import { User } from "./UserModel";
+import { User } from "../UserModel";
 
 export class Review {
   id: string;

@@ -7,7 +7,7 @@ export function* fetchUsers(action) {
 	try {
 		const data = yield call(webApi, {
 			method: 'GET',
-			endpoint: config.API_URL + '/api/user'
+			endpoint: '/api/user'
 		});
 
 		const users = data.data.users;
@@ -33,7 +33,7 @@ export function* deleteUser(action) {
 
 		const data = yield call(webApi, {
 			method: 'DELETE',
-			endpoint: config.API_URL + `/api/user/${userId}`
+			endpoint: `/api/user/${userId}`
 		});
 
 		yield put({
@@ -55,7 +55,7 @@ export function* fetchMovies(action) {
 	try {
 		const data = yield call(webApi, {
 			method: 'GET',
-			endpoint: config.API_URL + '/api/movie'
+			endpoint: '/api/movie'
 		});
 
 		yield put({
@@ -79,7 +79,7 @@ export function* deleteMovie(action) {
 
 		const data = yield call(webApi, {
 			method: 'DELETE',
-			endpoint: config.API_URL + `/api/movie/${movieId}`
+			endpoint: `/api/movie/${movieId}`
 		});
 
 		yield put({
@@ -101,7 +101,7 @@ export function* fetchPosts(action) {
 	try {
 		const data = yield call(webApi, {
 			method: 'GET',
-			endpoint: config.API_URL + '/api/post'
+			endpoint: '/api/post'
 		});
 
 		yield put({
@@ -125,7 +125,7 @@ export function* deletePost(action) {
 
 		const data = yield call(webApi, {
 			method: 'DELETE',
-			endpoint: config.API_URL + `/api/post/${postId}`
+			endpoint: `/api/post/${postId}`
 		});
 
 		yield put({
@@ -147,7 +147,7 @@ export function* fetchTops(action) {
 	try {
 		const data = yield call(webApi, {
 			method: 'GET',
-			endpoint: config.API_URL + '/api/top'
+			endpoint: '/api/top'
 		});
 
 		yield put({
@@ -171,7 +171,7 @@ export function* deleteTop(action) {
 
 		const data = yield call(webApi, {
 			method: 'DELETE',
-			endpoint: config.API_URL + `/api/top/${topId}`
+			endpoint: `/api/top/${topId}`
 		});
 
 		yield put({
@@ -193,7 +193,7 @@ export function* fetchStories(action) {
 	try {
 		const data = yield call(webApi, {
 			method: 'GET',
-			endpoint: config.API_URL + '/api/story'
+			endpoint: '/api/story'
 		});
 
 		yield put({
@@ -217,7 +217,7 @@ export function* deleteStory(action) {
 
 		const data = yield call(webApi, {
 			method: 'DELETE',
-			endpoint: config.API_URL + `/api/story/${storyId}`
+			endpoint: `/api/story/${storyId}`
 		});
 
 		yield put({
@@ -239,7 +239,7 @@ export function* fetchEvents(action) {
 	try {
 		const data = yield call(webApi, {
 			method: 'GET',
-			endpoint: config.API_URL + '/api/event'
+			endpoint: '/api/event'
 		});
 
 		yield put({
@@ -263,7 +263,7 @@ export function* deleteEvent(action) {
 
 		const data = yield call(webApi, {
 			method: 'DELETE',
-			endpoint: config.API_URL + `/api/event/${eventId}`
+			endpoint: `/api/event/${eventId}`
 		});
 
 		yield put({
@@ -285,7 +285,7 @@ export function* fetchVoting(action) {
 	try {
 		const data = yield call(webApi, {
 			method: 'GET',
-			endpoint: config.API_URL + '/api/voting'
+			endpoint: '/api/voting'
 		});
 
 		yield put({
@@ -309,7 +309,7 @@ export function* deleteVoting(action) {
 
 		const data = yield call(webApi, {
 			method: 'DELETE',
-			endpoint: config.API_URL + `/api/voting/${votingId}`
+			endpoint: `/api/voting/${votingId}`
 		});
 
 		yield put({

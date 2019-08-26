@@ -76,6 +76,7 @@ const UserPageTabs: React.SFC<IProps> = ({
 					path={`${mainPath}/posts`}
 					component={() => (
 						<UserPosts
+							currentUserId={profileInfo.id}
 							userId={selectedProfileInfo.id}
 							posts={userPosts}
 							saveCropped={saveCropped}
