@@ -18,6 +18,7 @@ import { MovieRate } from "./MovieRate";
 import { Review } from "./Review/Review";
 import { ReviewReaction } from "./Review/ReviewReaction";
 import { Discussion } from "./Discussion";
+import { Follower } from "./Follower";
 
 export default [
   User,
@@ -41,5 +42,6 @@ export default [
   MovieRate,
   ReviewReaction,
   Review,
-  Discussion
+  Discussion,
+  Follower
 ];
