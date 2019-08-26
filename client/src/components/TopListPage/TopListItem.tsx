@@ -41,7 +41,7 @@ const TopListItem: React.FC<ITopLIstItemProps> = ({ top }) => {
 				/>
 			</div>
 			<div className="top-main-section">
-				<NavLink to={`/top-page/${top.id}`}>
+				<NavLink to={`/tops/${top.id}`}>
 					<div className="top-title">{top.title}</div>
 				</NavLink>
 
@@ -53,7 +53,7 @@ const TopListItem: React.FC<ITopLIstItemProps> = ({ top }) => {
 							</li>
 						))}
 					</ol>
-					<NavLink to={`/top-page/${top.id}`}>
+					<NavLink to={`/tops/${top.id}`}>
 						<div className="add-info">{getAdditionalInfo()}</div>
 					</NavLink>
 				</div>
