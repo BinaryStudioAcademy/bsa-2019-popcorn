@@ -26,13 +26,13 @@ router
         .then(data => res.send(data))
         .catch(next)
   )
-  // .get("/google", googleMiddleware)
-  // .get("/google/redirect", googleCallbackMiddleware, (req, res, next) =>
-  //   authService
-  //     .login(req.user.id)
-  //     .then(data => res.send(data))
-  //     .catch(next)
-  // )
+  .get("/google", googleMiddleware)
+  .get("/google/redirect", googleCallbackMiddleware, (req, res, next) =>
+    authService
+      .login(req.user)
+      .then(data => res.send(data))
+      .catch(next)
+  )
   .post("/reset", (req, res, next) =>
     authService
       .reset(req.body.email)
@@ -44,13 +44,13 @@ router
       .restore(req.body.password, req.body.token)
       .then(() => res.sendStatus(200))
   )
-  // .get("/facebook", facebookMiddleware)
-  // .get("/facebook/redirect", facebookCallbackMiddleware, (req, res, next) =>
-  //   authService
-  //     .login(req.user)
-  //     .then(data => res.send(data))
-  //     .catch(next)
-  // )
+  .get("/facebook", facebookMiddleware)
+  .get("/facebook/redirect", facebookCallbackMiddleware, (req, res, next) =>
+    authService
+      .login(req.user)
+      .then(data => res.send(data))
+      .catch(next)
+  )
   .post(
     "/login",
     authenticationMiddleware,
