@@ -27,11 +27,14 @@ router
         .catch(next)
   )
   .get("/google", googleMiddleware)
-  .get("/google/redirect", googleCallbackMiddleware, (req, res, next) =>
-    authService
-      .login(req.user)
-      .then(data => res.send(data))
-      .catch(next)
+  .get(
+    "/google/redirect",
+    googleCallbackMiddleware,
+    (req: Request & { user: User }, res, next) =>
+      authService
+        .login(req.user)
+        .then(data => res.send(data))
+        .catch(next)
   )
   .post("/reset", (req, res, next) =>
     authService
@@ -45,11 +48,14 @@ router
       .then(() => res.sendStatus(200))
   )
   .get("/facebook", facebookMiddleware)
-  .get("/facebook/redirect", facebookCallbackMiddleware, (req, res, next) =>
-    authService
-      .login(req.user)
-      .then(data => res.send(data))
-      .catch(next)
+  .get(
+    "/facebook/redirect",
+    facebookCallbackMiddleware,
+    (req: Request & { user: User }, res, next) =>
+      authService
+        .login(req.user)
+        .then(data => res.send(data))
+        .catch(next)
   )
   .post(
     "/login",
