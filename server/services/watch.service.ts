@@ -16,3 +16,6 @@ export const getAllUserWatch = (userId: string, next) =>
 
 export const saveNewUserWatch = (userId: string, watch: IWatch, next) =>
   getCustomRepository(WatchRepository).saveByUserId(userId, watch, next);
+
+export const deleteWatch = (watchId: string, next) =>
+  getCustomRepository(WatchRepository).deleteById(watchId, next);

@@ -17,6 +17,12 @@ router
       .saveNewUserWatch(req.user.id, req.body, next)
       .then(result => res.send(result))
       .catch(next)
+  )
+  .delete("/:id", errorHandlerMiddleware, (req, res, next) =>
+    watchService
+      .deleteWatch(req.params.id, next)
+      .then(result => res.send(result))
+      .catch(next)
   );
 
 export default router;
