@@ -19,7 +19,7 @@ export function* fetchFollowersCount(action) {
 	try {
 		const { count } = yield call(webApi, {
 			method: 'GET',
-			endpoint: `${config.API_URL}/api/follow/${action.payload.userId}/followers/count`
+			endpoint: `/api/follow/${action.payload.userId}/followers/count`
 		});
 
 		yield put({
@@ -41,7 +41,7 @@ export function* fetchFollowers(action) {
 	try {
 		const data = yield call(webApi, {
 			method: 'GET',
-			endpoint: `${config.API_URL}/api/follow/${action.payload.userId}/followers`
+			endpoint: `/api/follow/${action.payload.userId}/followers`
 		});
 
 		yield put({
@@ -64,7 +64,7 @@ export function* fetchFollowingsCount(action) {
 	try {
 		const { count } = yield call(webApi, {
 			method: 'GET',
-			endpoint: `${config.API_URL}/api/follow/${action.payload.userId}/followings/count`
+			endpoint: `/api/follow/${action.payload.userId}/followings/count`
 		});
 
 		yield put({
@@ -86,7 +86,7 @@ export function* fetchFollowings(action) {
 	try {
 		const data = yield call(webApi, {
 			method: 'GET',
-			endpoint: `${config.API_URL}/api/follow/${action.payload.userId}/followings`
+			endpoint: `/api/follow/${action.payload.userId}/followings`
 		});
 
 		yield put({
@@ -109,7 +109,7 @@ export function* checkStatus(action) {
 	try {
 		const data = yield call(webApi, {
 			method: 'GET',
-			endpoint: `${config.API_URL}/api/follow/${action.payload.userId}/${action.payload.followerId}`
+			endpoint: `/api/follow/${action.payload.userId}/${action.payload.followerId}`
 		});
 
 		yield put({
@@ -131,7 +131,7 @@ export function* changeStatus(action) {
 	try {
 		yield call(webApi, {
 			method: 'POST',
-			endpoint: `${config.API_URL}/api/follow`,
+			endpoint: `/api/follow`,
 			body: {
 				userId: action.payload.userId,
 				followerId: action.payload.followerId
