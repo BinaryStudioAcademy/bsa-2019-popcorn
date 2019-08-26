@@ -30,7 +30,10 @@ export default function(state = initialState, action) {
 				...state,
 				followSystem: {
 					...state.followSystem,
-					[action.payload.userId]: { followers: action.payload.data }
+					[action.payload.userId]: {
+						...state.followSystem[action.payload.userId],
+						followers: action.payload.data
+					}
 				}
 			};
 		case SET_FOLLOWINGS:
@@ -38,7 +41,10 @@ export default function(state = initialState, action) {
 				...state,
 				followSystem: {
 					...state.followSystem,
-					[action.payload.userId]: { followings: action.payload.data }
+					[action.payload.userId]: {
+						...state.followSystem[action.payload.userId],
+						followings: action.payload.data
+					}
 				}
 			};
 		case CLEAR_FOLLOWS:

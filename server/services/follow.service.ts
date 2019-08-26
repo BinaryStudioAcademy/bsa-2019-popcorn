@@ -34,3 +34,12 @@ export const changeFollowStatus = async ({ userId, followerId }, next) => {
     next
   );
 };
+
+export const checkFollowStatus = async (userId, followerId, next) => {
+  console.log("hello");
+  return await getCustomRepository(FollowerRepository).checkFollowStatus(
+    userId,
+    followerId,
+    next
+  );
+};

@@ -41,6 +41,15 @@ router
         .then(result => res.send(result))
         .catch(next)
   )
+  .get(
+    "/:userId/:followerId",
+    errorHandlerMiddleware,
+    (req: Request, res: Response, next: NextFunction) =>
+      followService
+        .checkFollowStatus(req.params.userId, req.params.followerId, next)
+        .then(result => res.send(result))
+        .catch(next)
+  )
   .post(
     "/",
     errorHandlerMiddleware,

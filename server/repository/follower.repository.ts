@@ -50,6 +50,28 @@ class FollowerRepository extends Repository<Follower> {
     }
   }
 
+  async checkFollowStatus(
+    userId,
+    followerId,
+    next?
+  ): Promise<{ isFollower: boolean; isFollowing: boolean }> {
+    try {
+      const isFollower =
+        (await this.find({
+          where: { follower: { id: followerId }, user: { id: userId } }
+        })).length > 0;
+
+      const isFollowing =
+        (await this.find({
+          where: { follower: { id: userId }, user: { id: followerId } }
+        })).length > 0;
+
+      return { isFollower, isFollowing };
+    } catch (err) {
+      return next({ status: err.status, message: err.message }, null);
+    }
+  }
+
   async changeFollowStatus(
     userId,
     followerId,
