@@ -104,7 +104,7 @@ class ReviewItem extends React.Component<IProps> {
 					/>
 				)}
 				<div className="review-user-item">
-					<NavLink to={'/movie-series/' + movieId}>
+					<NavLink to={'/movies/' + movieId}>
 						<div className="image-wrapper">
 							<Image
 								src={poster_path}
@@ -117,7 +117,7 @@ class ReviewItem extends React.Component<IProps> {
 						<div className="movie-title">
 							<NavLink
 								className="movie-title-nav-link"
-								to={'/movie-series/' + movieId}
+								to={'/movies/' + movieId}
 							>
 								<div className="movie-title-name">
 									{title}
