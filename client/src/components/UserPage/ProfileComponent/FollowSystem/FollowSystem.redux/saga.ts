@@ -9,7 +9,8 @@ import {
 	SET_FOLLOWERS,
 	SET_FOLLOWINGS,
 	CHECK_STATUS,
-	SET_STATUS
+	SET_STATUS,
+	CHANGE_STATUS
 } from './actionTypes';
 import config from '../../../../../config';
 import webApi from '../../../../../services/webApi.service';
@@ -126,12 +127,47 @@ function* watchCheckStatus() {
 	yield takeEvery(CHECK_STATUS, checkStatus);
 }
 
+export function* changeStatus(action) {
+	try {
+		yield call(webApi, {
+			method: 'POST',
+			endpoint: `${config.API_URL}/api/follow`,
+			body: {
+				userId: action.payload.userId,
+				followerId: action.payload.followerId
+			}
+		});
+
+		yield put({
+			type: CHECK_STATUS,
+			payload: {
+				userId: action.payload.userId,
+				followerId: action.payload.followerId
+			}
+		});
+
+		yield put({
+			type: FETCH_FOLLOWERS_COUNT,
+			payload: {
+				userId: action.payload.followerId
+			}
+		});
+	} catch (e) {
+		console.log('follow saga fetch followings count:', e.message);
+	}
+}
+
+function* watchChangeStatus() {
+	yield takeEvery(CHANGE_STATUS, changeStatus);
+}
+
 export default function* follow() {
 	yield all([
 		watchFetchFollowersCount(),
 		watchFetchFollowingsCount(),
 		watchFetchFollowers(),
 		watchFetchFollowings(),
-		watchCheckStatus()
+		watchCheckStatus(),
+		watchChangeStatus()
 	]);
 }

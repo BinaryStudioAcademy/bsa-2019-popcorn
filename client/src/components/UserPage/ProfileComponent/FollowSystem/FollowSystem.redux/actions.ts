@@ -4,7 +4,8 @@ import {
 	FETCH_FOLLOWERS,
 	FETCH_FOLLOWINGS,
 	CLEAR_FOLLOWS,
-	CHECK_STATUS
+	CHECK_STATUS,
+	CHANGE_STATUS
 } from './actionTypes';
 
 export const fetchFollowersCount = userId => {
@@ -55,6 +56,16 @@ export const clearFollows = userId => {
 export const checkStatus = (userId, followerId) => {
 	return {
 		type: CHECK_STATUS,
+		payload: {
+			userId,
+			followerId
+		}
+	};
+};
+
+export const changeStatus = (userId, followerId) => {
+	return {
+		type: CHANGE_STATUS,
 		payload: {
 			userId,
 			followerId

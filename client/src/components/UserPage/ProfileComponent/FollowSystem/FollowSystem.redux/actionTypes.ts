@@ -11,4 +11,5 @@ export const SET_FOLLOWINGS_COUNT = 'SET_FOLLOWINGS_COUNT';
 export const CLEAR_FOLLOWS = 'CLEAR_FOLLOWS';
 
 export const CHECK_STATUS = 'CHECK_STATUS';
+export const CHANGE_STATUS = 'CHANGE_STATUS';
 export const SET_STATUS = 'SET_STATUS';
