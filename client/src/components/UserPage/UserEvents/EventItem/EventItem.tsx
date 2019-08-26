@@ -40,7 +40,7 @@ const EventItem: React.FC<IProps> = ({
 
 	return (
 		<NavLink
-			to={`/event-page/${event.id}`}
+			to={`/events/${event.id}`}
 			style={{ textDecoration: 'none', color: 'inherit' }}
 		>
 			<div className="event-item hover">

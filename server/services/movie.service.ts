@@ -1,5 +1,5 @@
 import { Movie } from "../models/MovieModel";
-import { MovieRate } from "../models/MovieRateModel/movieRateModel";
+import { MovieRate } from "../models/movieRateModel";
 import MovieRepository, {
   getMovieVideoLinkById,
   getCredits

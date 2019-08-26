@@ -7,6 +7,7 @@ import { secret } from "./jwt.config";
 import * as userService from "../services/user.service";
 import * as googleConfig from "./google.config";
 import * as facebookConfig from "./facebook.config";
+import { User } from "../models/UserModel";
 
 const options = {
   jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
@@ -85,60 +86,65 @@ passport.use(
   })
 );
 
-// passport.use(
-//   "google",
-//   new GoogleStrategy(
-//     {
-//       clientID: googleConfig.clientID,
-//       clientSecret: googleConfig.clientSecret,
-//       callbackURL: googleConfig.callbackURL,
-//       passReqToCallback: true
-//     },
-//     async (req, accessToken, refreshToken, data, done) => {
-//       try {
-//         const { email, displayName: name } = data;
-//         const user = await userService.getByEmail(email);
-//         if (!user) {
-//           const user = await userService.createUser({
-//             name,
-//             email,
-//             reset_token: ""
-//           });
-//           return done(null, user);
-//         }
-//         return done(null, user);
-//       } catch (err) {
-//         return done(err);
-//       }
-//     }
-//   )
-// );
-//
-// passport.use(
-//   "facebook",
-//   new FacebookStrategy(
-//     {
-//       clientID: facebookConfig.clientID,
-//       clientSecret: facebookConfig.clientSecret,
-//       callbackURL: facebookConfig.callbackURL,
-//       passReqToCallback: true
-//     },
-//     async (req, accessToken, refreshToken, data, done) => {
-//       try {
-//         const { email, displayName: name } = data;
-//         const user = await userService.getByEmail(email || name);
-//         if (!user) {
-//           const user = await userService.createUser({
-//             name,
-//             email: email || name,
-//             reset_token: ""
-//           });
-//           return done(null, user);
-//         }
-//         return done(null, user);
-//       } catch (err) {
-//         return done(err);
-//       }
-//     }
-//   )
-// );
+passport.use(
+  "google",
+  new GoogleStrategy(
+    {
+      clientID: googleConfig.clientID,
+      clientSecret: googleConfig.clientSecret,
+      callbackURL: googleConfig.callbackURL,
+      passReqToCallback: true
+    },
+    async (req, accessToken, refreshToken, data, done) => {
+      try {
+        const { email, displayName: name, picture: avatar } = data;
+        const user = await userService.getByEmail(email);
+        if (!user) {
+          const user = new User();
+          user.name = name;
+          user.email = email;
+          user.reset_token = "";
+          user.avatar = avatar;
+          user.aboutMe = "";
+          user.location = "";
+          const newUser = await userService.createUser(user);
+          return done(null, newUser);
+        }
+        return done(null, user);
+      } catch (err) {
+        return done(err);
+      }
+    }
+  )
+);
+
+passport.use(
+  "facebook",
+  new FacebookStrategy(
+    {
+      clientID: facebookConfig.clientID,
+      clientSecret: facebookConfig.clientSecret,
+      callbackURL: facebookConfig.callbackURL,
+      passReqToCallback: true
+    },
+    async (req, accessToken, refreshToken, data, done) => {
+      try {
+        const { email, displayName: name } = data;
+        const user = await userService.getByEmail(email || name);
+        if (!user) {
+          const user = new User();
+          user.name = name;
+          user.email = email || name;
+          user.reset_token = "";
+          user.aboutMe = "";
+          user.location = "";
+          const newUser = await userService.createUser(user);
+          return done(null, newUser);
+        }
+        return done(null, user);
+      } catch (err) {
+        return done(err);
+      }
+    }
+  )
+);

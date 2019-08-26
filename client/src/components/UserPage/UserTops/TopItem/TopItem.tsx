@@ -74,7 +74,7 @@ const TopItem: React.FC<ITopItemProps> = ({
 					/>
 				) : (
 					<div className="top-item-title">
-						<NavLink to={`/top-page/${topItem.id}`} className="link-reset">
+						<NavLink to={`/tops/${topItem.id}`} className="link-reset">
 							{title}
 						</NavLink>
 					</div>

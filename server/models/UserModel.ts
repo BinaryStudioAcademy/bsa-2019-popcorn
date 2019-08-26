@@ -10,7 +10,7 @@ export class User {
   name: string;
   email: string;
   role: string;
-  password: string;
+  password: string | null;
   location: string;
   aboutMe: string;
   male: boolean;
