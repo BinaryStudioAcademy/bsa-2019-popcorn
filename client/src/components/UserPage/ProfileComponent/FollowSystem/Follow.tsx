@@ -52,11 +52,19 @@ const Follow: React.FC<IFollowProps> = props => {
 
 	return (
 		<div>
-			<div onClick={() => openModal('followers')}>
-				followers: {followersCount}
+			<div
+				className="follow-counter-wrp"
+				onClick={() => openModal('followers')}
+			>
+				<div className="follow-counter">{followersCount}</div>
+				followers
 			</div>
-			<div onClick={() => openModal('followings')}>
-				followings: {followingsCount}
+			<div
+				className="follow-counter-wrp"
+				onClick={() => openModal('followings')}
+			>
+				<div className="follow-counter">{followingsCount}</div>
+				followings
 			</div>
 			{isModalShown && (
 				<Modal

@@ -14,8 +14,14 @@ const FollowButton: React.FC<IProps> = props => {
 	const setButton = () => {
 		const { isFollower, isFollowing } = props.followStatus;
 		let newTitle;
-		if (isFollowing) newTitle = 'Unfollow';
-		else if (isFollower) newTitle = 'Follow Back';
+		if (isFollowing) {
+			newTitle = 'Unfollow';
+			if (newTitle !== title) {
+				setTitle(newTitle);
+				setClassName('follow-btn reverse');
+				return;
+			}
+		} else if (isFollower) newTitle = 'Follow Back';
 		else newTitle = 'Follow';
 		if (newTitle !== title) {
 			setTitle(newTitle);
