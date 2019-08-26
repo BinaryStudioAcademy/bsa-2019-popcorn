@@ -22,16 +22,11 @@ export class Watch {
   @Column({ nullable: false })
   movieId: string;
 
-  @Column("text", { nullable: false })
-  status: Status;
+  @Column({ nullable: false })
+  status: string;
 
   @ManyToOne(type => User, user => user.id, {
     onDelete: "CASCADE"
   })
   user: User;
-}
-
-enum Status {
-  ToWatch = "to_watch",
-  Watched = "watched"
 }

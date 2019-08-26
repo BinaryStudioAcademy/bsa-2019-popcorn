@@ -23,6 +23,12 @@ router
       .deleteWatch(req.params.id, next)
       .then(result => res.send(result))
       .catch(next)
+  )
+  .put("/:id", errorHandlerMiddleware, (req, res, next) =>
+    watchService
+      .changeWatchStatus(req.params.id, next)
+      .then(result => res.send(result))
+      .catch(next)
   );
 
 export default router;
