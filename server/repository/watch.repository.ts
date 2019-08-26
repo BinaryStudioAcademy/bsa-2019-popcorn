@@ -3,13 +3,26 @@ import { Watch } from "../entities/Watch";
 
 @EntityRepository(Watch)
 class WatchRepository extends Repository<Watch> {
-  getByUserId(userId: string, next) {
+  getByUserId(userId, next) {
     try {
-      const watches = this.find({
+      const watches = await this.find({
         where: { user: { id: userId } }
       });
 
       return watches;
+    } catch (err) {
+      return next({ status: err.status, message: err.message });
+    }
+  }
+
+  saveByUserId(userId, watch, next) {
+    try {
+      const newWatch = await this.save({
+        user: { id: userId },
+        ...watch
+      });
+
+      return newWatch;
     } catch (err) {
       return next({ status: err.status, message: err.message });
     }
