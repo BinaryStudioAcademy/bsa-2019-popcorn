@@ -1,13 +1,31 @@
 import WatchRepository from "../repository/watch.repository";
 import { getCustomRepository } from "typeorm";
+import { getByIdValues as elasticGetByIdArray } from "../repository/movieElastic.repository";
 
 interface IWatch {
   movieId: string;
   status: string;
 }
 
-export const getAllUserWatch = (userId: string, next) =>
-  getCustomRepository(WatchRepository).getByUserId(userId, next);
+export const getAllUserWatch = async (userId: string, next) => {
+  const watches = await getCustomRepository(WatchRepository).getByUserId(
+    userId,
+    next
+  );
+  if (watches && watches.length === 0) return [];
+  const movieIdArray = watches.map(watch => watch.movieId);
+  const elasticResponse = await elasticGetByIdArray(movieIdArray);
+  const movieArray = elasticResponse.hits.hits.map(movie => movie._source);
+  const result = watches.map(watch => {
+    const movie = movieArray.find(
+      movieItem => String(movieItem.id) === watch.movieId
+    );
+    watch.movie = movie;
+    watch.movieId = undefined;
+    return watch;
+  });
+  return result;
+};
 
 export const saveNewUserWatch = (userId: string, watch: IWatch, next) => {
   const { status } = watch;
