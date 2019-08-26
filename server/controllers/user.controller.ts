@@ -27,24 +27,36 @@ router
       })
       .catch(next)
   )
-  .post("/password", jwtMiddleware, (req, res, next) =>
+  .put("/password/:id", jwtMiddleware, (req, res, next) =>
     userService
-      .updatePassword(req.user, req.body.password, next)
+      .updatePassword(req.params.id, req.user, req.body.password, next)
       .then(data => res.send(data))
       .catch(next)
   )
-  .post("/email", jwtMiddleware, (req, res, next) =>
+  .put("/email/:id", jwtMiddleware, (req, res, next) =>
     userService
-      .updateEmail(req.user, req.body.email, next)
+      .updateEmail(req.params.id, req.user, req.body.email, next)
       .then(data => res.send(data))
       .catch(next)
   )
-  .delete("/:id", (req, res, next) =>
+  .delete("/:id", jwtMiddleware, (req, res, next) =>
     userService
-      .deleteById(req.params.id)
+      .deleteById(req.params.id, req.user, next)
       .then(result => {
         result.success ? res.send(result) : res.status(400).send(result);
       })
+      .catch(next)
+  )
+  .put("/notifications/:id", jwtMiddleware, (req, res, next) =>
+    userService
+      .updateNotificationSettings(req.params.id, req.user, req.body, next)
+      .then(data => res.send(data))
+      .catch(next)
+  )
+  .put("/privacy/:id", jwtMiddleware, (req, res, next) =>
+    userService
+      .updatePrivacySettings(req.params.id, req.user, req.body, next)
+      .then(data => res.send(data))
       .catch(next)
   );
 
