@@ -75,7 +75,7 @@ class ReviewAddModal extends React.Component<IProps, IState> {
 		const { usePut, showError, redirect } = this.state;
 		return (
 			<div className={'modal-wrp'}>
-				{redirect && <Redirect to={`/movie-series/${movieId}/reviews`} />}
+				{redirect && <Redirect to={`/movies/${movieId}/reviews`} />}
 				<div className={'modal modal-story'}>
 					{ownReview ? (
 						<div className="modal-review">

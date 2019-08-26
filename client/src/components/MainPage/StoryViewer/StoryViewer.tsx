@@ -208,7 +208,7 @@ class StoryViewer extends PureComponent<IProps, IState> {
 													)}
 													{story.type && story.activity}
 													{story.movieId && story.movie && (
-														<NavLink to={'/movie-series/' + story.movie.id}>
+														<NavLink to={'/movies/' + story.movie.id}>
 															{story.movie.title}
 														</NavLink>
 													)}

@@ -227,7 +227,7 @@ class UserTops extends React.Component<IUserTopProps, IUserTopsState> {
 						((this.isOwnTop(topItem) &&
 							window.location.pathname ==
 								'/user-page/' + this.props.userId + '/tops') ||
-							window.location.pathname == '/movie-tops/') && (
+							window.location.pathname == '/tops/') && (
 							<TopItem
 								key={topItem.id}
 								saveUserTop={this.saveUserTop}
