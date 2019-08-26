@@ -7,6 +7,7 @@ import { secret } from "./jwt.config";
 import * as userService from "../services/user.service";
 import * as googleConfig from "./google.config";
 import * as facebookConfig from "./facebook.config";
+import { User } from "../models/UserModel";
 
 const options = {
   jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
@@ -98,15 +99,14 @@ passport.use(
       try {
         const { email, displayName: name, picture: avatar } = data;
         const user = await userService.getByEmail(email);
-        console.log(user);
         if (!user) {
-          const user = await userService.createUser({
-            name,
-            email,
-            reset_token: "",
-            avatar: avatar
-          });
-          return done(null, user);
+          const user = new User();
+          user.name = name;
+          user.email = email;
+          user.reset_token = "";
+          user.avatar = avatar;
+          const newUser = await userService.createUser(user);
+          return done(null, newUser);
         }
         return done(null, user);
       } catch (err) {
@@ -130,12 +130,12 @@ passport.use(
         const { email, displayName: name } = data;
         const user = await userService.getByEmail(email || name);
         if (!user) {
-          const user = await userService.createUser({
-            name,
-            email: email || name,
-            reset_token: ""
-          });
-          return done(null, user);
+          const user = new User();
+          user.name = name;
+          user.email = email || name;
+          user.reset_token = "";
+          const newUser = await userService.createUser(user);
+          return done(null, newUser);
         }
         return done(null, user);
       } catch (err) {
