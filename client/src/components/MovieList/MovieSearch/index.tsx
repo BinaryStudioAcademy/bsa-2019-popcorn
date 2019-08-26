@@ -10,25 +10,30 @@ interface IMovieSearch {
 	fetchFilms: (data: string) => void;
 	alreadySearch: boolean;
 	setMovieSeries: (movie: any) => any;
-};
+}
 
-const MovieSearch: React.FC<IMovieSearch> = ({ movies, fetchFilms, alreadySearch, setMovieSeries }) => {
+const MovieSearch: React.FC<IMovieSearch> = ({
+	movies,
+	fetchFilms,
+	alreadySearch,
+	setMovieSeries
+}) => {
 	const [value, setValue] = useState('');
 	const [focusInput, setFocusInput] = useState(false);
 	const inputSearch: any = useRef(null);
 
-	const startFetchFilms = () => {	
+	const startFetchFilms = () => {
 		if (value.trim() !== '') {
 			fetchFilms(value.trim());
 		}
 	};
 
-	function handleChangeInput (data) {
+	function handleChangeInput(data) {
 		setValue(data);
 		startFetchFilms();
 	}
 
-	function setFocus (focus: boolean): void {
+	function setFocus(focus: boolean): void {
 		if (focus) {
 			inputSearch.current.focus();
 		} else {
@@ -43,7 +48,7 @@ const MovieSearch: React.FC<IMovieSearch> = ({ movies, fetchFilms, alreadySearch
 					className="search-icon hover"
 					src={searchIcon}
 					alt="search"
-					onClick={(e) => setFocus(true)}
+					onClick={e => setFocus(true)}
 				/>
 				<input
 					type="text"
@@ -51,9 +56,9 @@ const MovieSearch: React.FC<IMovieSearch> = ({ movies, fetchFilms, alreadySearch
 					value={value}
 					className="search-input"
 					ref={inputSearch}
-					onChange={(e) => handleChangeInput(e.target.value)}
-					onFocus={(e) => setFocusInput(true)}
-					onBlur={(e) => setFocusInput(false)}
+					onChange={e => handleChangeInput(e.target.value)}
+					onFocus={e => setFocusInput(true)}
+					onBlur={e => setFocusInput(false)}
 				/>
 			</span>
 			<span className="filter hover">
