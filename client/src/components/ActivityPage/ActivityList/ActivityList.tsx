@@ -45,18 +45,31 @@ export type Activity = {
 	text: string;
 	date: string;
 	img: string;
+	isRead?: boolean;
 };
 
-const generateActivity = (activities: Array<Activity>) => {
+const generateActivity = (
+	activities: Array<Activity>,
+	readNotification = undefined
+) => {
+	if (activities.length && activities.length === 0) return [];
 	const generatedActivity = activities.map(el => {
-		return <ActivityItem activity={el} />;
+		return (
+			<ActivityItem
+				key={el.date}
+				activity={el}
+				readNotification={readNotification}
+			/>
+		);
 	});
 	return generatedActivity;
 };
 
-const ActivityList = () => {
+const ActivityList = ({ activities, readNotification }) => {
 	return (
-		<div className="activity-list">{generateActivity(mockedActivity)}</div>
+		<div className="activity-list">
+			{generateActivity(activities, readNotification)}
+		</div>
 	);
 };
 
