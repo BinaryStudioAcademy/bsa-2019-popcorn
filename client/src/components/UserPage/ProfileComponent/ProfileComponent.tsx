@@ -19,6 +19,7 @@ import Follow from './FollowSystem/Follow';
 import FollowButton from './FollowSystem/FollowButton/FollowButton';
 import { bindActionCreators } from 'redux';
 import { updateProfile } from '../actions';
+import { NavLink } from 'react-router-dom';
 
 type ProfileProps = {
 	profileInfo: ISelectedProfileInfo;
@@ -160,6 +161,7 @@ class ProfileComponent extends Component<ProfileProps, IProfileComponentState> {
 	}
 
 	render() {
+		console.log(this.props.profileInfo);
 		let {
 			name,
 			location,
@@ -167,7 +169,8 @@ class ProfileComponent extends Component<ProfileProps, IProfileComponentState> {
 			male,
 			female,
 			avatar,
-			id
+			id,
+			favoriteLists
 		} = this.props.profileInfo;
 		if (!male && !female) {
 			female = true;
@@ -304,18 +307,12 @@ class ProfileComponent extends Component<ProfileProps, IProfileComponentState> {
 							<div className="profileRow">
 								<p className="field">Favorite movies: </p>
 								<div className="content">
-									{favMovies.length > 0
-										? favMovies.map(movie => (
-												<p key={movie.id}>{movie.movie}</p>
+									{favoriteLists.length > 0
+										? favoriteLists.map(item => (
+												<NavLink to={'/movies/' + item.movie.id}>
+													<p key={item.movie.id}>{item.movie.name}</p>
+												</NavLink>
 										  ))
-										: '-'}
-								</div>
-							</div>
-							<div className="profileRow">
-								<p className="field">Favorite TV-shows: </p>
-								<div className="content">
-									{favShows.length > 0
-										? favShows.map(movie => <p key={movie.id}>{movie.movie}</p>)
 										: '-'}
 								</div>
 							</div>
