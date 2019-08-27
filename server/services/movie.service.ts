@@ -128,3 +128,13 @@ export const searchMovieTitles = async (title: string, next): Promise<any> => {
 
   return result;
 };
+
+export const getMovieProperties = async (settings: string, next) => {
+  const [id, propString] = settings.split("|");
+  const properties = propString.split(";");
+  const elasticResponse = await elasticRepository.getPropertiesByMovieId(
+    id,
+    properties
+  );
+  return elasticResponse.hits.hits[0]._source;
+};

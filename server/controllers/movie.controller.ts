@@ -67,9 +67,15 @@ router
       .then((response: any) => res.send(response))
       .catch(next);
   })
-  .get("/search/title", errorHandlerMiddleware, (req, res, next) =>
+  .get("/elastic/search", errorHandlerMiddleware, (req, res, next) =>
     movieService
       .searchMovieTitles(req.query.title, next)
+      .then(result => res.send(result))
+      .catch(next)
+  )
+  .get("/elastic/properties/id", errorHandlerMiddleware, (req, res, next) =>
+    movieService
+      .getMovieProperties(req.query.settings, next)
       .then(result => res.send(result))
       .catch(next)
   );
