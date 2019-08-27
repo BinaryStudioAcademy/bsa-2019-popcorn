@@ -43,11 +43,21 @@ const UserWatchList: React.FC<IProps> = props => {
 				<div className="to-watch-block">
 					<div className="watch-block-name">To watch</div>
 					{/* FieldInput */}
+					<div className="field-input">
+						<input type="text" />
+						<button>Add</button>
+					</div>
+					{/* FieldInput */}
 					{renderWatchList(toWatchList)}
 				</div>
 
 				<div className="watched-block">
-					<div className="watch-block-name">To watch</div>
+					<div className="watch-block-name">Watched</div>
+					{/* FieldInput */}
+					<div className="field-input">
+						<input type="text" />
+						<button>Add</button>
+					</div>
 					{/* FieldInput */}
 					{renderWatchList(watchedList)}
 				</div>

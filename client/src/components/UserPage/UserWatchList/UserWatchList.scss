@@ -1,6 +1,7 @@
 @import '../../../styles/variables.scss';
 
 .UserWatchList {
+	padding-top: 20px;
 	width: 100%;
 	.user-watch-list-container {
 		display: grid;
@@ -11,9 +12,16 @@
 		.to-watch-block,
 		.watched-block {
 			width: 100%;
+			text-align: center;
 
 			.watch-block-name {
-				text-align: center;
+				font-size: 1.2em;
+				font-weight: 600;
+			}
+
+			.field-input {
+				margin-top: 5px;
+				margin-bottom: 20px;
 			}
 		}
 	}
