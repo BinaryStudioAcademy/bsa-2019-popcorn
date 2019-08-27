@@ -25,7 +25,20 @@ const UserWatchList: React.FC<IProps> = props => {
 		return <Spinner />;
 	}
 
-	return <div className="UserWatchList"></div>;
+	const watchedList: Array<IWatchItem> = [];
+	const toWatchList: Array<IWatchItem> = [];
+
+	for(const item of watchList) {
+		(item.status === "watched")
+			? watchedList.push(item)
+			: toWatchList.push(item)
+	}
+
+	return (
+		<div className="UserWatchList">
+			
+		</div>
+	);
 };
 
 const mapStateToProps = (state, props) => ({
