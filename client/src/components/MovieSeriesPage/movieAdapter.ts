@@ -7,7 +7,8 @@ const getGenre = (genres): string =>
 		.map(genre => (genre ? genre.name : ''))
 		.toString();
 
-export default (movie: any): TMovie => {
+export default (movie: any): TMovie | any => {
+	if (!movie) return;
 	return {
 		id: movie.id,
 		poster_path: config.POSTER_PATH + movie.poster_path,
