@@ -109,3 +109,22 @@ export const saveDiscussionMessage = async (
   console.log("saved discussion", result);
   return result;
 };
+
+export const searchMovieTitles = async (title: string, next): Promise<any> => {
+  const elasticData = await elasticRepository.getPropertiesByMovieTitle(title, [
+    "id",
+    "title"
+  ]);
+  if (!elasticData) {
+    return next({ status: 404, message: "No connect to elastic" }, null);
+  }
+  const movieData = elasticData.hits.hits.map(movie => movie._source);
+  const result = [];
+  movieData.forEach(movie => {
+    title.toLowerCase() === movie.title.substr(0, title.length).toLowerCase()
+      ? result.unshift(movie)
+      : result.push(movie);
+  });
+
+  return result;
+};
