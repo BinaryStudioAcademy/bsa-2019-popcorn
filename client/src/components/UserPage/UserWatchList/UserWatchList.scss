@@ -1,0 +1,20 @@
+@import '../../../styles/variables.scss';
+
+.UserWatchList {
+	width: 100%;
+	.user-watch-list-container {
+		display: grid;
+		grid-template-columns: repeat(auto-fill, minmax(49%, 1fr));
+		column-count: 2;
+		column-gap: 20px;
+
+		.to-watch-block,
+		.watched-block {
+			width: 100%;
+
+			.watch-block-name {
+				text-align: center;
+			}
+		}
+	}
+}
