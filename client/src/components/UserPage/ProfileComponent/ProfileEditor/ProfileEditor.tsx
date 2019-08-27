@@ -71,8 +71,7 @@ class ProfileEditor extends Component<
 				</div>
 				<div className="profileRow">
 					Gender:
-					<div>
-						{/* <div className="radio"> */}
+					<div className="editor-gender">
 						<label>
 							<input
 								type="radio"
@@ -82,8 +81,6 @@ class ProfileEditor extends Component<
 							/>
 							Male
 						</label>
-						{/* </div> */}
-						{/* <div className="radio"> */}
 						<label>
 							<input
 								type="radio"
@@ -93,7 +90,6 @@ class ProfileEditor extends Component<
 							/>
 							Female
 						</label>
-						{/* </div> */}
 					</div>
 				</div>
 				<div className="profileRow">
@@ -114,8 +110,12 @@ class ProfileEditor extends Component<
 					/>
 				</div>
 
-				<button onClick={this.onEditCancel}>Cancel</button>
-				<button onClick={this.onEditSave}>Save</button>
+				<button className="save-btn" onClick={this.onEditSave}>
+					Save
+				</button>
+				<button className="cancel-btn" onClick={this.onEditCancel}>
+					Cancel
+				</button>
 			</div>
 		);
 	}
