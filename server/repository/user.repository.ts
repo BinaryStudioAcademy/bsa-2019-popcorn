@@ -21,7 +21,7 @@ class UserRepository extends Repository<User> {
         const movie = movieArray.find(
           movieItem => movieItem.id === item.movieId
         );
-        item.movie = { id: movie.id, name: movie.original_title };
+        item.movie = { id: movie.id, name: movie.title };
       });
       if (!data.user) throw new Error(`User with ${id} id is not found`);
     } catch (err) {

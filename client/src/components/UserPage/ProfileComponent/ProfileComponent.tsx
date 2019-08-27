@@ -161,7 +161,6 @@ class ProfileComponent extends Component<ProfileProps, IProfileComponentState> {
 	}
 
 	render() {
-		console.log(this.props.profileInfo);
 		let {
 			name,
 			location,

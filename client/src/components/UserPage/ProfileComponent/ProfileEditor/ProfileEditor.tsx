@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
 import './ProfileEditor.scss';
+import { NavLink } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTimesCircle } from '@fortawesome/free-solid-svg-icons';
 
 interface IProfileEditorProps {
 	user: {
@@ -8,6 +11,7 @@ interface IProfileEditorProps {
 		name: string;
 		location: string;
 		aboutMe: string;
+		favoriteLists: Array<{ movie: { id: number; name: string } }>;
 	};
 	onEditCancel: () => void;
 	onEditSave: (any) => void;
@@ -18,6 +22,7 @@ interface IProfileEditorState {
 	name: string;
 	location: string;
 	aboutMe: string;
+	favoriteMovies: Array<{ id: number; name: string }>;
 }
 
 class ProfileEditor extends Component<
@@ -30,7 +35,8 @@ class ProfileEditor extends Component<
 			name: props.user.name,
 			gender: props.user.male,
 			aboutMe: props.user.aboutMe,
-			location: props.user.location
+			location: props.user.location,
+			favoriteMovies: props.user.favoriteLists.map(item => item.movie)
 		};
 	}
 
@@ -57,12 +63,12 @@ class ProfileEditor extends Component<
 	};
 
 	render() {
-		const { gender, name, location, aboutMe } = this.state;
+		const { gender, name, location, aboutMe, favoriteMovies } = this.state;
 
 		return (
 			<div className="profile-editor">
 				<div className="profileRow">
-					Name:
+					<p className="field">Name:</p>
 					<input
 						type="text"
 						value={name}
@@ -70,7 +76,7 @@ class ProfileEditor extends Component<
 					/>
 				</div>
 				<div className="profileRow">
-					Gender:
+					<p className="field">Gender:</p>
 					<div className="editor-gender">
 						<label>
 							<input
@@ -93,21 +99,36 @@ class ProfileEditor extends Component<
 					</div>
 				</div>
 				<div className="profileRow">
-					Location:
+					<p className="field">Location:</p>
 					<input
 						type="text"
 						value={location}
 						onChange={e => this.onChangeData(e, 'location')}
 					/>
 				</div>
-
 				<div className="profileRow">
-					About:
+					<p className="field">About:</p>
 					<input
 						type="text"
 						value={aboutMe}
 						onChange={e => this.onChangeData(e, 'aboutMe')}
 					/>
+				</div>
+				<div className="profileRow">
+					<p className="field">Favorite movies:</p>
+					<div className="content">
+						{favoriteMovies.map(item => (
+							<NavLink to={'/movies/' + item.id}>
+								<p key={item.id}>
+									{item.name}
+									<FontAwesomeIcon
+										className="icon delete-movie"
+										icon={faTimesCircle}
+									/>
+								</p>
+							</NavLink>
+						))}
+					</div>
 				</div>
 
 				<button className="save-btn" onClick={this.onEditSave}>
