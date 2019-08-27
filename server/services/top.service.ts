@@ -32,23 +32,26 @@ export const getExtendedTops = async (): Promise<Top[]> => {
     }
   });
 
-  return await getMoviesInTops(tops);
+  return await getMoviesInTops(tops, ["id", "title", "release_date"], 3);
 };
 
-const getMoviesInTops = async (tops: any) => {
+const getMoviesInTops = async (
+  tops: any,
+  fields: Array<string>,
+  limit: number
+) => {
   const TopsWithMovies = [...tops];
   for (const top of TopsWithMovies) {
-    const movieIds = top.movieInTop.map(top => top.movieId).splice(0, 3);
+    const movieIds = top.movieInTop.map(top => top.movieId).splice(0, limit);
     const elasticResponse = await getByIdValues(movieIds);
     const movieArray = elasticResponse.hits.hits.map(movie => movie._source);
-    top.movieInTop.slice(0, 3).forEach(item => {
+    top.movieInTop.slice(0, limit).forEach(item => {
       const movie = movieArray.find(movieItem => movieItem.id === item.movieId);
       if (!movie) return;
-      item.movie = {
-        id: movie.id,
-        name: movie.title,
-        release_date: movie.release_date
-      };
+      item.movie = {};
+      fields.forEach(field => {
+        item.movie[field] = movie[field];
+      });
     });
   }
   return TopsWithMovies;
@@ -60,13 +63,12 @@ export const getTopById = async (topId: string): Promise<Top> => {
     where: { id: topId }
   });
 
-  for (let j = 0; j < top.movieInTop.length; j++) {
-    const movieInTop: any = top.movieInTop[j];
-
-    movieInTop.movie = await movieService.getMovieById(movieInTop.movieId);
-  }
-
-  return top;
+  const topsWithMovies = await getMoviesInTops(
+    [top],
+    ["id", "title", "release_date", "poster_path"],
+    top.movieInTop.length
+  );
+  return topsWithMovies[0];
 };
 
 export const getTopsByUserId = async (userId: string): Promise<any[]> => {
