@@ -11,6 +11,7 @@ import reviewReducer from '../components/MovieSeriesPage/MovieSeriesReviews/redu
 import topListReducer from '../components/TopListPage/TopListPage.redux/reducer';
 import followReducer from '../components/UserPage/ProfileComponent/FollowSystem/FollowSystem.redux/reducer';
 import watchListReducer from '../components/UserPage/UserWatchList/reducer';
+import searchMovieReducer from '../components/shared/MovieSearch/MovieSearch';
 
 const reducers = {};
 
@@ -27,5 +28,6 @@ export default combineReducers({
 	review: reviewReducer,
 	topList: topListReducer,
 	follow: followReducer,
-	watchList: watchListReducer
+	watchList: watchListReducer,
+	searchMovie: searchMovieReducer
 });
