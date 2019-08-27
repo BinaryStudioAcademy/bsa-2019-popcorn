@@ -18,6 +18,7 @@ import { MovieRate } from "./MovieRate";
 import { Review } from "./Review/Review";
 import { ReviewReaction } from "./Review/ReviewReaction";
 import { Discussion } from "./Discussion";
+import { Watch } from "./Watch";
 import { Follower } from "./Follower";
 import { FavoriteList } from "./FavoriteList";
 
@@ -45,5 +46,6 @@ export default [
   Review,
   Discussion,
   Follower,
-  FavoriteList
+  FavoriteList,
+  Watch
 ];

@@ -28,7 +28,7 @@
 		"label": "Lists"
 	},
 	{
-		"link": "/watched",
-		"label": "Watched"
+		"link": "/watch-list",
+		"label": "Watch List"
 	}
 ]
