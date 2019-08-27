@@ -1,8 +1,14 @@
 import React, { useState, useRef } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { searchTitle, deleteSearchData, fetchMovieProperties } from './actions';
+import {
+	searchTitle,
+	deleteSearchData,
+	fetchMovieProperties,
+	deleteSelectedData
+} from './actions';
 import './MovieSearch.scss';
+import Spinner from '../Spinner';
 
 interface IProps {
 	searchData?: Array<IMovieTitle>;
@@ -12,6 +18,8 @@ interface IProps {
 	onSelectMovie: (movie: any) => any;
 	elasticProperties: Array<string>;
 	fetchMovieProperties: (movieId: string, properties: Array<string>) => object;
+	selectMovie: any;
+	deleteSelectedData: () => object;
 }
 interface IMovieTitle {
 	id: string;
@@ -27,16 +35,28 @@ const MovieSearch: React.FC<IProps> = ({
 	deleteSearchData: actionDeleteSearchData,
 	elasticProperties,
 	onSelectMovie,
-	fetchMovieProperties: actionFetchMovieProperties
+	fetchMovieProperties: actionFetchMovieProperties,
+	selectMovie,
+	deleteSelectedData: actionDeleteSelectedData
 }) => {
 	const [inputData, setInputData] = useState('');
 	const [focus, setFocus] = useState(false);
+	const [isTimerOn, setTimerOn] = useState(false);
+
+	if (selectMovie) {
+		onSelectMovie(selectMovie);
+		actionDeleteSelectedData();
+	}
 
 	const onInputChange = e => {
 		if (timerId) clearTimeout(timerId);
 		const inputData = e.target.value;
 		if (inputData.trim().length !== 0) {
-			timerId = setTimeout(() => actionSearchTitle(inputData), 1000);
+			setTimerOn(true);
+			timerId = setTimeout(() => {
+				actionSearchTitle(inputData);
+				setTimerOn(false);
+			}, 550);
 		}
 		setInputData(inputData);
 	};
@@ -49,7 +69,7 @@ const MovieSearch: React.FC<IProps> = ({
 				<div
 					key={item.id}
 					className="movie-search-label"
-					onClick={() => onClickMovieItem(item.id)}
+					onClick={() => onClickMovieItem(item.id, item.title)}
 				>
 					{' '}
 					{item.title}
@@ -58,10 +78,11 @@ const MovieSearch: React.FC<IProps> = ({
 		);
 	};
 
-	const onClickMovieItem = movieId => {
-		// onSelectMovie(movieId);
-		actionFetchMovieProperties(movieId, elasticProperties);
-		console.log(movieId, elasticProperties);
+	const onClickMovieItem = (movieId, title) => {
+		elasticProperties.join(',') === 'id,title'
+			? onSelectMovie({ id: movieId, title })
+			: actionFetchMovieProperties(movieId, elasticProperties);
+		setInputData('');
 		setFocus(false);
 	};
 
@@ -69,18 +90,27 @@ const MovieSearch: React.FC<IProps> = ({
 		actionDeleteSearchData();
 	}
 
+	if (isTimerOn && inputData.length === 0) {
+		setTimerOn(false);
+	}
+
 	const isRenderList = inputData.length !== 0 && searchData && focus;
 
 	return (
 		<div className="MovieSearch">
-			<input
-				className="input-serch-movie"
-				onChange={e => onInputChange(e)}
-				value={inputData}
-				onFocus={() => setFocus(true)}
-				// onBlur={() => setFocus(false)}
-			/>
-			{/* <span className="loading">loading..</span> */}
+			<div className="search-input-container">
+				<input
+					className="input-serch-movie"
+					onChange={e => onInputChange(e)}
+					value={inputData}
+					onFocus={() => setFocus(true)}
+					placeholder="Search"
+					// onBlur={() => setFocus(false)}
+				/>
+				{(isLoading || isTimerOn) && (
+					<span className="loader-container">loading...</span>
+				)}
+			</div>
 			<div className="results-container">
 				{isRenderList && (
 					<div className="movie-search-results">
@@ -95,14 +125,16 @@ const MovieSearch: React.FC<IProps> = ({
 const mapStateToProps = (state, props) => ({
 	...props,
 	searchData: state.searchMovie.searchData,
-	isLoading: state.searchMovie.isLoading
+	isLoading: state.searchMovie.isLoading,
+	selectMovie: state.searchMovie.selectMovie
 });
 
 const mapDispatchToProps = dispatch => {
 	const actions = {
 		searchTitle,
 		deleteSearchData,
-		fetchMovieProperties
+		fetchMovieProperties,
+		deleteSelectedData
 	};
 	return bindActionCreators(actions, dispatch);
 };

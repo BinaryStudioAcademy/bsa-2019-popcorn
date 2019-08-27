@@ -1,11 +1,24 @@
 .MovieSearch {
 	border: 2px solid black;
 	color: inherit;
-	width: 500px;
+	width: 100%;
 	position: relative;
-	input {
-		width: 100%;
-		height: 20px;
+
+	.search-input-container {
+		display: flex;
+		.loader-container {
+			width: 60px;
+			font-size: 0.7em;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			font-style: italic;
+		}
+
+		input {
+			width: 100%;
+			height: 20px;
+		}
 	}
 
 	.results-container {

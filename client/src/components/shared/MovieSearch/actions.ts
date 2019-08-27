@@ -1,7 +1,8 @@
 import {
 	SEARCH_MOVIE_TITLE,
 	DELETE_SEARCH_DATA,
-	FETCH_MOVIE_PROPERTIES
+	FETCH_MOVIE_PROPERTIES,
+	DELETE_SELECTED_MOVIE
 } from './actionTypes';
 
 export const searchTitle = (inputData: string) => ({
@@ -19,4 +20,8 @@ export const fetchMovieProperties = (
 ) => ({
 	type: FETCH_MOVIE_PROPERTIES,
 	payload: { movieId, properties }
+});
+
+export const deleteSelectedData = () => ({
+	type: DELETE_SELECTED_MOVIE
 });

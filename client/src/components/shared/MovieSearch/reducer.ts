@@ -1,12 +1,16 @@
 import {
 	SEARCH_MOVIE_TITLE_SUCCESS,
 	SEARCH_MOVIE_TITLE,
-	DELETE_SEARCH_DATA
+	DELETE_SEARCH_DATA,
+	FETCH_MOVIE_PROPERTIES_SUCCESS,
+	DELETE_SELECTED_MOVIE
 } from './actionTypes';
+import movieAdapter from '../../MovieSeriesPage/movieAdapter';
 
 interface IState {
 	searchData?: Array<IMovieTitles>;
 	isLoading?: boolean;
+	selectMovie?: any;
 }
 interface IMovieTitles {
 	id: string;
@@ -15,7 +19,8 @@ interface IMovieTitles {
 
 const initialState = {
 	searchData: undefined,
-	isLoading: false
+	isLoading: false,
+	selectMovie: null
 };
 
 export default (state = initialState, action) => {
@@ -30,6 +35,10 @@ export default (state = initialState, action) => {
 			return { ...state, isLoading: true };
 		case DELETE_SEARCH_DATA:
 			return { ...state, searchData: undefined };
+		case FETCH_MOVIE_PROPERTIES_SUCCESS:
+			return { ...state, selectMovie: action.payload.movie };
+		case DELETE_SELECTED_MOVIE:
+			return { ...state, selectMovie: undefined };
 		default:
 			return state;
 	}

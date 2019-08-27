@@ -3,14 +3,15 @@ import webApi from '../../../services/webApi.service';
 import {
 	SEARCH_MOVIE_TITLE,
 	SEARCH_MOVIE_TITLE_SUCCESS,
-	FETCH_MOVIE_PROPERTIES
+	FETCH_MOVIE_PROPERTIES,
+	FETCH_MOVIE_PROPERTIES_SUCCESS
 } from './actionTypes';
 
 export function* serchMovieTitle(action) {
 	const { inputData } = action.payload;
 	try {
 		const searchData = yield call(webApi, {
-			endpoint: `/api/movie/search/title?title=${inputData}`,
+			endpoint: `/api/movie/elastic/search?title=${inputData}`,
 			method: 'GET'
 		});
 
@@ -26,12 +27,17 @@ export function* serchMovieTitle(action) {
 export function* fetchMovieProperties(action) {
 	const { movieId, properties } = action.payload;
 	const stringProp = properties.join(';');
+	const request = `${movieId}|${stringProp}`;
 	try {
 		const movie = yield call(webApi, {
-			endpoint: `/api/movie/properties?id=${movieId}?property=${stringProp}`,
+			endpoint: `/api/movie/elastic/properties/id?settings=${request}`,
 			method: 'GET'
 		});
-		console.log(movie);
+
+		yield put({
+			type: FETCH_MOVIE_PROPERTIES_SUCCESS,
+			payload: { movie }
+		});
 	} catch (e) {
 		console.log(e);
 	}
