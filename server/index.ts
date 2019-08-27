@@ -8,6 +8,7 @@ import * as bodyParser from "body-parser";
 import routes from "./controllers/root.controller";
 import authorizationMiddleware from "./middlewares/authorization.middleware";
 import errorHandlerMiddleware from "./middlewares/error-handler.middleware";
+import notificationMiddleware from "./middlewares/notification.middleware";
 import routesWhiteList from "./config/routes-white-list.config";
 import { createConnection } from "typeorm";
 import db_config from "./config/orm.config";
@@ -44,7 +45,7 @@ createConnection(db_config)
     app.use(socketInjector(io));
 
     app.use("/api/", authorizationMiddleware(routesWhiteList));
-
+    app.use(notificationMiddleware);
     routes(app);
     app.use(errorHandlerMiddleware);
 

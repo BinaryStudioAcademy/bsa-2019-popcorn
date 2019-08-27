@@ -33,6 +33,9 @@ export class Post {
   @ManyToOne(type => User, user => user.id)
   user: User;
 
+  @Column()
+  userId: string;
+
   @ManyToMany(type => PostComments, post_comments => post_comments.post.id)
   @JoinTable()
   comments!: PostComments[];

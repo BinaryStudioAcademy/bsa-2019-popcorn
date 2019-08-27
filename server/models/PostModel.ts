@@ -8,5 +8,6 @@ export class Post {
   extraTitle?: string;
   extraLink?: string;
   user: User;
+  userId: string;
   comments: PostComment[];
 }
