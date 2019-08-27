@@ -7,7 +7,7 @@
 	position: relative;
 	padding: 5px 10px;
 	outline: 1px solid $border-color;
-	box-shadow: 1px 2px 4px 3px $input-shadow-color;
+	box-shadow: -2px 1px 4px 3px $input-shadow-color;
 
 	.search-input-container {
 		display: flex;
@@ -38,7 +38,7 @@
 	.results-container {
 		width: 100%;
 		position: absolute;
-		top: 36px;
+		top: 35px;
 		left: 0px;
 		outline: 1px solid $border-color;
 
