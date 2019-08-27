@@ -21,7 +21,6 @@ export const getMovies = async ({ size, from }): Promise<any[]> => {
 
 export const getCastCrewById = async (movieId: number): Promise<any> => {
   const credits = await getCredits(movieId);
-  console.log(credits.credits);
   return credits.credits;
 };
 
