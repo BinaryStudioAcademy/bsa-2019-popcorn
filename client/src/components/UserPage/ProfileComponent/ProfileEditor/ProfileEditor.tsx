@@ -70,6 +70,12 @@ class ProfileEditor extends Component<
 		this.setState({ favoriteMovies: newMovies });
 	};
 
+	onAddFavoriteMovie = (e, newMovie) => {
+		e.preventDefault();
+		const newMovies = [...this.state.favoriteMovies, newMovie];
+		this.setState({ favoriteMovies: newMovies });
+	};
+
 	render() {
 		const { gender, name, location, aboutMe, favoriteMovies } = this.state;
 
