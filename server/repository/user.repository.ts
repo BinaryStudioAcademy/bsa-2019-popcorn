@@ -1,6 +1,7 @@
 import { EntityRepository, Repository, getCustomRepository } from "typeorm";
 import { User } from "../entities/User";
 import { getByIdValues } from "../repository/movieElastic.repository";
+import FavoriteListRepository from "./favoriteList.repository";
 
 @EntityRepository(User)
 class UserRepository extends Repository<User> {
@@ -49,7 +50,11 @@ class UserRepository extends Repository<User> {
     let error = "";
     let success = true;
     try {
-      await this.update({ id }, newData);
+      const { name, aboutMe, location, male, female } = newData;
+      await this.update({ id }, { name, aboutMe, location, male, female });
+      await getCustomRepository(
+        FavoriteListRepository
+      ).updateFavoriteMoviesByUserId(id, newData.favoriteMovieIds);
       data.user = await this.findOne({ where: { id } });
       if (!data.user) throw new Error(`User with ${id} id is not found`);
     } catch (err) {

@@ -103,6 +103,8 @@ class ProfileComponent extends Component<ProfileProps, IProfileComponentState> {
 
 	onEditSave = data => {
 		const newData = { ...data, gender: undefined };
+		newData.favoriteMovieIds = newData.favoriteMovies.map(item => item.id);
+		newData.favoriteMovies = undefined;
 		newData.male = data.gender;
 		newData.female = !data.gender;
 		this.props.updateProfile(this.props.userId, newData);
@@ -308,8 +310,11 @@ class ProfileComponent extends Component<ProfileProps, IProfileComponentState> {
 								<div className="content">
 									{favoriteLists.length > 0
 										? favoriteLists.map(item => (
-												<NavLink to={'/movies/' + item.movie.id}>
-													<p key={item.movie.id}>{item.movie.name}</p>
+												<NavLink
+													to={'/movies/' + item.movie.id}
+													key={item.movie.id}
+												>
+													<p>{item.movie.name}</p>
 												</NavLink>
 										  ))
 										: '-'}

@@ -62,6 +62,10 @@ class ProfileEditor extends Component<
 		this.props.onEditSave(this.state);
 	};
 
+	onDeleteFavoriteMovie = id => {
+		console.log('delete', id);
+	};
+
 	render() {
 		const { gender, name, location, aboutMe, favoriteMovies } = this.state;
 
@@ -118,23 +122,25 @@ class ProfileEditor extends Component<
 					<p className="field">Favorite movies:</p>
 					<div className="content">
 						{favoriteMovies.map(item => (
-							<NavLink to={'/movies/' + item.id}>
-								<p key={item.id}>
+							<NavLink to={'/movies/' + item.id} key={item.id}>
+								<p>
 									{item.name}
-									<FontAwesomeIcon
-										className="icon delete-movie"
-										icon={faTimesCircle}
-									/>
+									<button
+										onClick={() => this.onDeleteFavoriteMovie(item.id)}
+										className="delete-movie"
+									>
+										<FontAwesomeIcon className="icon" icon={faTimesCircle} />
+									</button>
 								</p>
 							</NavLink>
 						))}
 					</div>
 				</div>
 
-				<button className="save-btn" onClick={this.onEditSave}>
+				<button className="btn save-btn" onClick={this.onEditSave}>
 					Save
 				</button>
-				<button className="cancel-btn" onClick={this.onEditCancel}>
+				<button className="btn cancel-btn" onClick={this.onEditCancel}>
 					Cancel
 				</button>
 			</div>

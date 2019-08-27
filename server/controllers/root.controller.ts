@@ -11,7 +11,6 @@ import surveysRoutes from "./surveys.controller";
 import reviewAnalysisRoutes from "./reviewAnalysis.controller";
 import reviewRouter from "./review.controller";
 import followRouter from "./follow.controller";
-import favoriteListRouter from "./favoriteList.controller";
 
 // register all routes
 export default app => {
@@ -28,5 +27,4 @@ export default app => {
   app.use("/api/analysis", reviewAnalysisRoutes);
   app.use("/api/review", reviewRouter);
   app.use("/api/follow", followRouter);
-  app.use("/api/favoriteList", favoriteListRouter);
 };
