@@ -47,7 +47,7 @@ router
   .post("/comment", (req: any, res: Response, next: NextFunction) =>
     eventService
       .createComment(req.body)
-      .then((response: EventComment[]) => res.send(response))
+      .then((response: EventComment) => res.send(response))
       .catch(next)
   )
   .get("/:id/comment", (req: any, res: Response, next: NextFunction) =>
