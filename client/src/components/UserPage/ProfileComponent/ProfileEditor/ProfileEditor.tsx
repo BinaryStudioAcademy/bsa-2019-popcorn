@@ -3,6 +3,7 @@ import './ProfileEditor.scss';
 import { NavLink } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimesCircle } from '@fortawesome/free-solid-svg-icons';
+import MovieSearch from '../../../shared/MovieSearch/MovieSearch';
 
 interface IProfileEditorProps {
 	user: {
@@ -70,8 +71,9 @@ class ProfileEditor extends Component<
 		this.setState({ favoriteMovies: newMovies });
 	};
 
-	onAddFavoriteMovie = (e, newMovie) => {
-		e.preventDefault();
+	onAddFavoriteMovie = movie => {
+		const newMovie = { id: movie.id, name: movie.title };
+
 		const newMovies = [...this.state.favoriteMovies, newMovie];
 		this.setState({ favoriteMovies: newMovies });
 	};
@@ -151,6 +153,12 @@ class ProfileEditor extends Component<
 								)
 							);
 						})}
+						<div style={{ width: '100%' }}>
+							<MovieSearch
+								onSelectMovie={movie => this.onAddFavoriteMovie(movie)}
+								elasticProperties={['id', 'title']}
+							/>
+						</div>
 					</div>
 				</div>
 
