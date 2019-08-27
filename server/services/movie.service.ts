@@ -9,7 +9,7 @@ import MovieRateRepository from "../repository/movieRate.repository";
 import { getCustomRepository, Like, getRepository } from "typeorm";
 import * as elasticRepository from "../repository/movieElastic.repository";
 import DiscussionRepository from "../repository/discussion.repository";
-import { ExtendedDiscussion } from "models/DiscussionModel";
+import { ExtendedDiscussion, Discussion } from "models/DiscussionModel";
 
 export const getMovies = async ({ size, from }): Promise<any[]> => {
   let data = await elasticRepository.get(size, from);
@@ -101,7 +101,7 @@ export const getMovieRate = async (
 
 export const saveDiscussionMessage = async (
   discussion: ExtendedDiscussion
-): Promise<any> => {
+): Promise<Discussion> => {
   const result = await getCustomRepository(DiscussionRepository).save(
     discussion
   );

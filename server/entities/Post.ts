@@ -15,10 +15,10 @@ export class Post {
   @PrimaryGeneratedColumn("uuid")
   id: string;
 
-  @Column()
+  @Column({ default: "" })
   title: string;
 
-  @Column()
+  @Column({ default: "" })
   description: string;
 
   @Column()
@@ -32,6 +32,9 @@ export class Post {
 
   @ManyToOne(type => User, user => user.id)
   user: User;
+
+  @Column()
+  userId: string;
 
   @ManyToMany(type => PostComments, post_comments => post_comments.post.id)
   @JoinTable()

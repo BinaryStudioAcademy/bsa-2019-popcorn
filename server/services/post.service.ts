@@ -43,6 +43,7 @@ export const getPostsByUserId = async (userId: string): Promise<Post[]> =>
     relations: ["user"],
     where: { user: { id: userId } }
   });
+
 export const createComment = async ({ userId, postId, text }) => {
   const user = await getCustomRepository(UserRepository).findOne({
     id: userId
