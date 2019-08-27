@@ -6,6 +6,7 @@ import TMovie from '../../MovieSeriesPage/TMovie';
 import Spinner from '../../shared/Spinner';
 import './UserWatchList.scss';
 import WatchItem from './WatchItem/WatchItem';
+import MovieSearch from '../../shared/MovieSearch/MovieSearch';
 
 interface IProps {
 	watchList: Array<IWatchItem>;
@@ -34,6 +35,12 @@ const UserWatchList: React.FC<IProps> = props => {
 		item.status === 'watched' ? watchedList.push(item) : toWatchList.push(item);
 	}
 
+	const onClickToMovieItem = movie => {
+		console.log(movie);
+	};
+
+	const elasticProperties = ['id', 'title'];
+
 	const renderWatchList = (list: Array<IWatchItem>) =>
 		list.map(item => <WatchItem watchItem={item} key={item.id} />);
 
@@ -41,24 +48,30 @@ const UserWatchList: React.FC<IProps> = props => {
 		<div className="UserWatchList">
 			<div className="user-watch-list-container">
 				<div className="to-watch-block">
+					<div style={{ width: '500px' }}>
+						<MovieSearch
+							onSelectMovie={movie => onClickToMovieItem(movie)}
+							elasticProperties={elasticProperties}
+						/>
+					</div>
 					<div className="watch-block-name">To watch</div>
-					{/* FieldInput */}
+
 					<div className="field-input">
 						<input type="text" />
 						<button>Add</button>
 					</div>
-					{/* FieldInput */}
+
 					{renderWatchList(toWatchList)}
 				</div>
 
 				<div className="watched-block">
 					<div className="watch-block-name">Watched</div>
-					{/* FieldInput */}
+
 					<div className="field-input">
 						<input type="text" />
 						<button>Add</button>
 					</div>
-					{/* FieldInput */}
+
 					{renderWatchList(watchedList)}
 				</div>
 			</div>
