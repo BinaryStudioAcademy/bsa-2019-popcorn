@@ -1,4 +1,8 @@
-import { SEARCH_MOVIE_TITLE_SUCCESS, SEARCH_MOVIE_TITLE } from './actionTypes';
+import {
+	SEARCH_MOVIE_TITLE_SUCCESS,
+	SEARCH_MOVIE_TITLE,
+	DELETE_SEARCH_DATA
+} from './actionTypes';
 
 interface IState {
 	searchData?: Array<IMovieTitles>;
@@ -24,6 +28,8 @@ export default (state = initialState, action) => {
 			};
 		case SEARCH_MOVIE_TITLE:
 			return { ...state, isLoading: true };
+		case DELETE_SEARCH_DATA:
+			return { ...state, searchData: undefined };
 		default:
 			return state;
 	}
