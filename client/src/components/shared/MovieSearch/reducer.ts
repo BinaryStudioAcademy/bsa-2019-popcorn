@@ -1,7 +1,8 @@
-import { SEARCH_MOVIE_TITLE_SUCCESS } from './actionTypes';
+import { SEARCH_MOVIE_TITLE_SUCCESS, SEARCH_MOVIE_TITLE } from './actionTypes';
 
 interface IState {
 	searchData?: Array<IMovieTitles>;
+	isLoading?: boolean;
 }
 interface IMovieTitles {
 	id: string;
@@ -9,13 +10,20 @@ interface IMovieTitles {
 }
 
 const initialState = {
-	searchData: undefined
+	searchData: undefined,
+	isLoading: false
 };
 
 export default (state = initialState, action) => {
 	switch (action.type) {
 		case SEARCH_MOVIE_TITLE_SUCCESS:
-			return { ...state, searchData: action.payload.searchData };
+			return {
+				...state,
+				searchData: action.payload.searchData,
+				isLoading: false
+			};
+		case SEARCH_MOVIE_TITLE:
+			return { ...state, isLoading: true };
 		default:
 			return state;
 	}

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useRef } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { searchTitle } from './actions';
@@ -6,28 +6,63 @@ import { searchTitle } from './actions';
 interface IProps {
 	searchData?: Array<IMovieTitle>;
 	searchTitle: (inputData: string) => object;
+	isLoading?: boolean;
 }
 interface IMovieTitle {
 	id: string;
 	title: string;
 }
 
+let timerId;
+
 const MovieSearch: React.FC<IProps> = ({
 	searchData,
-	searchTitle: actionSearchTitle
+	searchTitle: actionSearchTitle,
+	isLoading
 }) => {
-	if (!searchData) {
-		actionSearchTitle('2');
-	}
+	const [inputData, setInputData] = useState('');
+	const [focus, setFocus] = useState(false);
 
-	console.log(searchData);
+	const onInputChange = e => {
+		if (timerId) clearTimeout(timerId);
+		const inputData = e.target.value;
+		if (inputData.trim().length !== 0) {
+			timerId = setTimeout(() => actionSearchTitle(inputData), 1000);
+		}
+		setInputData(inputData);
+	};
 
-	return <div className="MovieSearch">Best Search in your life</div>;
+	const renderMovieTitles = searchData => {
+		return searchData.length === 0 ? (
+			<div className="not-found-message">Not found</div>
+		) : (
+			searchData.map(item => (
+				<div key={searchData.id} className="movie-search-label">
+					{' '}
+					{item.title}
+				</div>
+			))
+		);
+	};
+
+	return (
+		<div className="MovieSearch">
+			<input
+				className="input-serch-movie"
+				onChange={e => onInputChange(e)}
+				value={inputData}
+				onFocus={() => setFocus(true)}
+				onBlur={() => setFocus(false)}
+			/>
+			{searchData && focus && renderMovieTitles(searchData)}
+		</div>
+	);
 };
 
 const mapStateToProps = (state, props) => ({
 	...props,
-	searchData: state.searchMovie.searchData
+	searchData: state.searchMovie.searchData,
+	isLoading: state.searchMovie.isLoading
 });
 
 const mapDispatchToProps = dispatch => {
