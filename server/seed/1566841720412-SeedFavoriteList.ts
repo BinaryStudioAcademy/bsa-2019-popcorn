@@ -16,18 +16,12 @@ export class SeedFavoriteList1566841720412 implements MigrationInterface {
       345,
       468,
       501,
-      270,
-      397,
-      294,
       280,
-      506,
       350,
-      310,
       339,
       346,
       471,
-      508,
-      380
+      508
     ];
 
     for (const user of users) {

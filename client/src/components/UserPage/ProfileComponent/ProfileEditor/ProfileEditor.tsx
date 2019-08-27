@@ -62,8 +62,12 @@ class ProfileEditor extends Component<
 		this.props.onEditSave(this.state);
 	};
 
-	onDeleteFavoriteMovie = id => {
-		console.log('delete', id);
+	onDeleteFavoriteMovie = (e, id) => {
+		e.preventDefault();
+		const newMovies = this.state.favoriteMovies.filter(
+			movie => movie.id !== id
+		);
+		this.setState({ favoriteMovies: newMovies });
 	};
 
 	render() {
@@ -121,19 +125,26 @@ class ProfileEditor extends Component<
 				<div className="profileRow">
 					<p className="field">Favorite movies:</p>
 					<div className="content">
-						{favoriteMovies.map(item => (
-							<NavLink to={'/movies/' + item.id} key={item.id}>
-								<p>
-									{item.name}
-									<button
-										onClick={() => this.onDeleteFavoriteMovie(item.id)}
-										className="delete-movie"
-									>
-										<FontAwesomeIcon className="icon" icon={faTimesCircle} />
-									</button>
-								</p>
-							</NavLink>
-						))}
+						{favoriteMovies.map(item => {
+							return (
+								item && (
+									<NavLink key={item.id} to={'/movies/' + item.id}>
+										<p>
+											{item.name}
+											<button
+												className="delete-movie"
+												onClick={e => this.onDeleteFavoriteMovie(e, item.id)}
+											>
+												<FontAwesomeIcon
+													className="icon"
+													icon={faTimesCircle}
+												/>
+											</button>
+										</p>
+									</NavLink>
+								)
+							);
+						})}
 					</div>
 				</div>
 

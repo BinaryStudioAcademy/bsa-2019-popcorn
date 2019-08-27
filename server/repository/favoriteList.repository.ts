@@ -12,10 +12,12 @@ class FavoriteListRepository extends Repository<FavoriteList> {
       .delete()
       .where("user.id = :id", { id })
       .execute();
-    await this.createQueryBuilder("favoriteList")
-      .insert()
-      .values(favoriteMoviesIds.map(movieId => ({ user: { id }, movieId })))
-      .execute();
+
+    if (favoriteMoviesIds.length > 0)
+      await this.createQueryBuilder("favoriteList")
+        .insert()
+        .values(favoriteMoviesIds.map(movieId => ({ user: { id }, movieId })))
+        .execute();
   }
 }
 

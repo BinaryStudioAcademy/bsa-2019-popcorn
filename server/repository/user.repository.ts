@@ -14,7 +14,6 @@ class UserRepository extends Repository<User> {
         where: { id },
         relations: ["favoriteLists"]
       });
-
       const movieIds = data.user.favoriteLists.map(movie => movie.movieId);
       const elasticResponse = await getByIdValues(movieIds);
       const movieArray = elasticResponse.hits.hits.map(movie => movie._source);

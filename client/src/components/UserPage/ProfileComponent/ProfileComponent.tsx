@@ -46,38 +46,6 @@ interface IProfileComponentState {
 	errorMsg?: string;
 	isEditing: boolean;
 }
-const favMovies: Array<{ id: string; movie: string }> = [
-	{
-		id: Math.random() * (9000 - 1) + 1 + '',
-		movie: 'Cloud Atlas'
-	},
-	{
-		id: Math.random() * (9000 - 1) + 1 + '',
-		movie: 'V for Vendetta '
-	},
-	{
-		id: Math.random() * (9000 - 1) + 1 + '',
-		movie: 'Donnie Darko '
-	},
-	{
-		id: Math.random() * (9000 - 1) + 1 + '',
-		movie: 'The Talented Mr. Ripley '
-	}
-];
-const favShows: Array<{ id: string; movie: string }> = [
-	{
-		id: Math.random() * (9000 - 1) + 1 + '',
-		movie: 'Stranger Things '
-	},
-	{
-		id: Math.random() * (9000 - 1) + 1 + '',
-		movie: 'Breaking Bad'
-	},
-	{
-		id: Math.random() * (9000 - 1) + 1 + '',
-		movie: 'Black Mirror'
-	}
-];
 
 class ProfileComponent extends Component<ProfileProps, IProfileComponentState> {
 	constructor(props: ProfileProps) {
@@ -309,14 +277,18 @@ class ProfileComponent extends Component<ProfileProps, IProfileComponentState> {
 								<p className="field">Favorite movies: </p>
 								<div className="content">
 									{favoriteLists.length > 0
-										? favoriteLists.map(item => (
-												<NavLink
-													to={'/movies/' + item.movie.id}
-													key={item.movie.id}
-												>
-													<p>{item.movie.name}</p>
-												</NavLink>
-										  ))
+										? favoriteLists.map(item => {
+												return (
+													item.movie && (
+														<NavLink
+															to={'/movies/' + item.movie.id}
+															key={item.movie.id}
+														>
+															<p>{item.movie.name}</p>
+														</NavLink>
+													)
+												);
+										  })
 										: '-'}
 								</div>
 							</div>
