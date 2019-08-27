@@ -58,8 +58,8 @@ export const getByIdValues = async idValues => {
       method: "POST",
       body: JSON.stringify({
         query: {
-          ids: {
-            values: idValues
+          terms: {
+            id: [...idValues]
           }
         }
       })

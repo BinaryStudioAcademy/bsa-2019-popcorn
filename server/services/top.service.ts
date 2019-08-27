@@ -3,6 +3,7 @@ import TopRepository from "../repository/top.repository";
 import MovieInTopRepository from "../repository/movieInTop.repository";
 import { getCustomRepository } from "typeorm";
 import * as movieService from "./movie.service";
+import { getByIdValues } from "../repository/movieElastic.repository";
 
 const getTopWithMovies = async (tops: any) => {
   const topWithMovies: any[] = Object.assign([], tops);
@@ -30,7 +31,27 @@ export const getExtendedTops = async (): Promise<Top[]> => {
       created_at: "DESC"
     }
   });
-  return await getTopWithMovies(tops);
+
+  return await getMoviesInTops(tops);
+};
+
+const getMoviesInTops = async (tops: any) => {
+  const TopsWithMovies = [...tops];
+  for (const top of TopsWithMovies) {
+    const movieIds = top.movieInTop.map(top => top.movieId).splice(0, 3);
+    const elasticResponse = await getByIdValues(movieIds);
+    const movieArray = elasticResponse.hits.hits.map(movie => movie._source);
+    top.movieInTop.slice(0, 3).forEach(item => {
+      const movie = movieArray.find(movieItem => movieItem.id === item.movieId);
+      if (!movie) return;
+      item.movie = {
+        id: movie.id,
+        name: movie.title,
+        release_date: movie.release_date
+      };
+    });
+  }
+  return TopsWithMovies;
 };
 
 export const getTopById = async (topId: string): Promise<Top> => {
