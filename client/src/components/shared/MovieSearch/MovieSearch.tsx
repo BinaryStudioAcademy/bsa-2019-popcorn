@@ -1,7 +1,7 @@
 import React, { useState, useRef } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { searchTitle, deleteSearchData } from './actions';
+import { searchTitle, deleteSearchData, fetchMovieProperties } from './actions';
 import './MovieSearch.scss';
 
 interface IProps {
@@ -9,6 +9,9 @@ interface IProps {
 	searchTitle: (inputData: string) => object;
 	isLoading?: boolean;
 	deleteSearchData: () => object;
+	onSelectMovie: (movie: any) => any;
+	elasticProperties: Array<string>;
+	fetchMovieProperties: (movieId: string, properties: Array<string>) => object;
 }
 interface IMovieTitle {
 	id: string;
@@ -21,7 +24,10 @@ const MovieSearch: React.FC<IProps> = ({
 	searchData,
 	searchTitle: actionSearchTitle,
 	isLoading,
-	deleteSearchData: actionDeleteSearchData
+	deleteSearchData: actionDeleteSearchData,
+	elasticProperties,
+	onSelectMovie,
+	fetchMovieProperties: actionFetchMovieProperties
 }) => {
 	const [inputData, setInputData] = useState('');
 	const [focus, setFocus] = useState(false);
@@ -40,12 +46,23 @@ const MovieSearch: React.FC<IProps> = ({
 			<div className="not-found-message">Not found</div>
 		) : (
 			searchData.map(item => (
-				<div key={item.id} className="movie-search-label">
+				<div
+					key={item.id}
+					className="movie-search-label"
+					onClick={() => onClickMovieItem(item.id)}
+				>
 					{' '}
 					{item.title}
 				</div>
 			))
 		);
+	};
+
+	const onClickMovieItem = movieId => {
+		// onSelectMovie(movieId);
+		actionFetchMovieProperties(movieId, elasticProperties);
+		console.log(movieId, elasticProperties);
+		setFocus(false);
 	};
 
 	if (inputData.length === 0 && searchData) {
@@ -61,8 +78,9 @@ const MovieSearch: React.FC<IProps> = ({
 				onChange={e => onInputChange(e)}
 				value={inputData}
 				onFocus={() => setFocus(true)}
-				onBlur={() => setFocus(false)}
+				// onBlur={() => setFocus(false)}
 			/>
+			{/* <span className="loading">loading..</span> */}
 			<div className="results-container">
 				{isRenderList && (
 					<div className="movie-search-results">
@@ -83,7 +101,8 @@ const mapStateToProps = (state, props) => ({
 const mapDispatchToProps = dispatch => {
 	const actions = {
 		searchTitle,
-		deleteSearchData
+		deleteSearchData,
+		fetchMovieProperties
 	};
 	return bindActionCreators(actions, dispatch);
 };

@@ -1,4 +1,5 @@
 .MovieSearch {
+	border: 2px solid black;
 	color: inherit;
 	width: 500px;
 	position: relative;
@@ -25,17 +26,4 @@
 			}
 		}
 	}
-
-	// .results-container {
-	// 	position: absolute;
-	// 	top: 0;
-	// 	left: 0;
-	// 	border: 1px solid red !important;
-	// 	opacity: 0;
-
-	// 	.movie-search-label {
-	// 		height: 30px;
-	// 		border: 1px solid black;
-	// 	}
-	// }
 }
