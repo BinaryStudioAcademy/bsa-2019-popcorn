@@ -67,3 +67,26 @@ export const getByIdValues = async idValues => {
   );
   return response.json();
 };
+
+export const getPropertiesByMovieTitle = async (
+  title: string,
+  properties: Array<string>
+) => {
+  const response = await fetch(
+    process.env.ELASTIC_API_URL + "/popcorn/_search",
+    {
+      method: "POST",
+      body: JSON.stringify({
+        _source: {
+          includes: [...properties]
+        },
+        query: {
+          match_phrase_prefix: {
+            title
+          }
+        }
+      })
+    }
+  );
+  return response.json();
+};
