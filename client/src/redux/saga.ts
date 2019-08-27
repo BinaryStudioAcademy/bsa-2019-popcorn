@@ -10,6 +10,7 @@ import surveySaga from '../components/UserPage/UserSurveys/UserSurveys.redux/sag
 import reviewSaga from '../components/MovieSeriesPage/MovieSeriesReviews/saga';
 import topListSaga from '../components/TopListPage/TopListPage.redux/saga';
 import followSaga from '../components/UserPage/ProfileComponent/FollowSystem/FollowSystem.redux/saga';
+import settingsSaga from '../components/UserSettings/saga';
 
 export default function* rootSaga() {
 	yield all([
@@ -23,6 +24,7 @@ export default function* rootSaga() {
 		surveySaga(),
 		reviewSaga(),
 		topListSaga(),
-		followSaga()
+		followSaga(),
+		settingsSaga()
 	]);
 }
