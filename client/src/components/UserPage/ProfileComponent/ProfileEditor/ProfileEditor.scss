@@ -3,6 +3,13 @@
 .profile-editor {
 	width: 60%;
 
+	.field {
+		display: flex;
+		align-items: center;
+	}
+	.fav-movies {
+		align-self: flex-start;
+	}
 	input[type='text'] {
 		outline: none;
 		height: 43px;
@@ -14,15 +21,23 @@
 		border: 1px solid $border-color;
 		border-radius: 3px;
 		padding: 12px 15px;
+		width: 100%;
+	}
+
+	input[type='radio'] {
+		margin-right: 5px;
 	}
 
 	.editor-gender {
+		width: 100%;
 		label:first-of-type {
 			margin-right: 20px;
 		}
 	}
 
 	.content {
+		padding: 0 !important;
+		width: 100% !important;
 		.delete-movie {
 			svg {
 				color: white;

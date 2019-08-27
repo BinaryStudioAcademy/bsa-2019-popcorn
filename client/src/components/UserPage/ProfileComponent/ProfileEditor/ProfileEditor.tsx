@@ -129,7 +129,7 @@ class ProfileEditor extends Component<
 					/>
 				</div>
 				<div className="profileRow">
-					<p className="field">Favorite movies:</p>
+					<p className="field fav-movies">Favorite movies:</p>
 					<div className="content">
 						{favoriteMovies.map(item => {
 							return (
