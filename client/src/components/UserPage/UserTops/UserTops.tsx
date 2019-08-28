@@ -25,7 +25,7 @@ interface IUserTopProps {
 	addTop: (newTop: any) => any;
 	updateTop: (updatedTop: any) => any;
 	deleteTop: (topId: string) => any;
-	uploadImage: (data: FormData, titleId: string) => void;
+	uploadImage: (data: FormData, topId: string) => void;
 	userId: string;
 	userRole: string;
 	uploadUrl: string;
