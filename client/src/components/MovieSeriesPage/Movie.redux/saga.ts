@@ -24,8 +24,6 @@ import {
 	FETCH_REVIEW_BY_USER_MOVIE_ID_SUCCESS,
 	SET_REVIEW,
 	SET_REVIEW_SUCCESS,
-	GET_CAST_CREW,
-	SET_CAST_CREW,
 	FETCH_FILTRED_MOVIES,
 	SET_FILTRED_MOVIE_LIST,
 	SET_LOAD_MORE_FILTRED_MOVIE,
@@ -81,20 +79,6 @@ export function* fetchFiltredMovieList(action) {
 	} catch (e) {
 		console.log('movie saga fetchMovieList:', e.message);
 	}
-}
-
-export function* fetchCrewCast(action) {
-	const credits = yield call(webApi, {
-		method: 'GET',
-		endpoint: '/api/movie/cast-crew/' + action.payload.id
-	});
-
-	yield put({
-		type: SET_CAST_CREW,
-		payload: {
-			credits: credits
-		}
-	});
 }
 
 export function* getGenres() {
@@ -374,10 +358,6 @@ function* watchFetchMovie() {
 	yield takeEvery(FETCH_MOVIE_BY_ID, fetchMovie);
 }
 
-function* watchFetchCastCrew() {
-	yield takeEvery(GET_CAST_CREW, fetchCrewCast);
-}
-
 function* watchSetUserRate() {
 	yield takeEvery(SET_USER_RATE, setUserRate);
 }
@@ -414,7 +394,6 @@ export default function* header() {
 		watchLoadMoreMovie(),
 		watchFetchReviewByUserMovieId(),
 		watchSetReview(),
-		watchFetchCastCrew(),
 		watchFetchFiltredMovieList(),
 		watchLoadMoreFiltredMovie(),
 		watchFetchGenres()

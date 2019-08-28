@@ -35,6 +35,6 @@ export class Top {
   @OneToMany(type => MovieInTop, movieInTop => movieInTop.top)
   movieInTop: MovieInTop[];
 
-  @ManyToOne(type => User, user => user.tops)
+  @ManyToOne(type => User, user => user.tops, { onDelete: "CASCADE" })
   user: User;
 }

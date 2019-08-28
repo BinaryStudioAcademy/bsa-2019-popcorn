@@ -13,6 +13,10 @@
 		display: flex;
 		.loader-container {
 			width: 60px;
+			height: 35px;
+			position: absolute;
+			top: 0;
+			right: 0;
 			font-size: 0.7em;
 			display: flex;
 			justify-content: center;
@@ -41,6 +45,7 @@
 		top: 35px;
 		left: 0px;
 		outline: 1px solid $border-color;
+		z-index: 3;
 
 		.movie-search-label {
 			padding: 10px 5px;
