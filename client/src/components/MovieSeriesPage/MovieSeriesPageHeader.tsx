@@ -3,7 +3,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar } from '@fortawesome/free-solid-svg-icons';
 import StarRating from '../shared/StarRating/StarRating';
 import { IUserRate } from './MovieSeriesPage';
-import Spinner from '../shared/Spinner';
 import ReviewAddModal from '../MovieSeriesPage/MovieSeriesReviews/ReviewAddModal/ReviewAddModal';
 
 interface IProps {
@@ -60,14 +59,28 @@ const MovieSeriesPageHeader: React.FC<IProps> = ({
 					removeReviewSet={removeReviewSet}
 				/>
 			)}
-			<div className="movie-title-rating">
-				<div className="title">
-					{movieSeriesData.title}
-					{movieSeriesData.release_date
-						? '(' + movieSeriesData.release_date.slice(0, 4) + ')'
-						: null}
+			<div className="header-movie-title-rating">
+				<div className="header-movie-watch-list">
+					<div className="watch-list-icon add-to-watch-list" />
 				</div>
-				<div className="review-button" onClick={() => onModalClick()}>
+				<div className="header-main-info">
+					<span className="movie-title">{movieSeriesData.title}</span>
+					<span className="movie-year">
+						{movieSeriesData.release_date
+							? ' (' + movieSeriesData.release_date.slice(0, 4) + ')'
+							: null}
+					</span>
+					<div className="header-genres">
+						<span className="info-item">Action | Drama | Horror</span>
+					</div>
+				</div>
+				<div className="totaly-movie-rating">
+					<FontAwesomeIcon className="icon-star" icon={faStar} />
+					{Number(movieSeriesData.vote_average) || 0}
+					<span className="max-rating">/5</span>
+				</div>
+
+				{/* <div className="review-button" onClick={() => onModalClick()}>
 					review
 				</div>
 				<StarRating
@@ -75,15 +88,7 @@ const MovieSeriesPageHeader: React.FC<IProps> = ({
 					default={rate}
 					setUserRate={setUserRate}
 					userRate={userRate}
-				/>
-				<span className="rating">
-					<FontAwesomeIcon className="icon-star" icon={faStar} />
-					{Number(movieSeriesData.vote_average) || 0}
-					<span className="max-rating">/5</span>
-				</span>
-			</div>
-			<div className="info">
-				<span className="info-item">Action, Drama, Horror</span>
+				/> */}
 			</div>
 		</header>
 	);
