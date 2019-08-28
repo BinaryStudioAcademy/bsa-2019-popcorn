@@ -64,7 +64,7 @@ export function* fetchFiltredMovieList(action) {
 		});
 
 		const data = yield call(webApi, {
-			endpoint: config.API_URL + '/api/movie/advanced',
+			endpoint: '/api/movie/advanced',
 			method: 'POST',
 			body: action.payload
 		});
@@ -100,7 +100,7 @@ export function* fetchCrewCast(action) {
 export function* getGenres() {
 	const genres = yield call(webApi, {
 		method: 'GET',
-		endpoint: config.API_URL + '/api/movie/advanced/get-genres'
+		endpoint: '/api/movie/advanced/get-genres'
 	});
 	yield put({
 		type: SET_GENRES,
@@ -273,7 +273,7 @@ export function* loadMoreFiltredMovie(action) {
 			type: SET_SHOW_SPINNER
 		});
 		const data = yield call(webApi, {
-			endpoint: `${config.API_URL}/api/movie/advanced?from=${from}&size=${size}`,
+			endpoint: `/api/movie/advanced?from=${from}&size=${size}`,
 			method: 'POST',
 			body: filters
 		});
