@@ -1,6 +1,7 @@
 import { Router, NextFunction, Request, Response } from "express";
 import * as movieService from "../services/movie.service";
 import { Movie } from "../models/MovieModel";
+import errorHandlerMiddleware from "../middlewares/error-handler.middleware";
 
 const router = Router();
 
@@ -80,6 +81,18 @@ router
         .then((response: any) => res.send(response))
         .catch(next);
     }
+  )
+  .get("/elastic/search", errorHandlerMiddleware, (req, res, next) =>
+    movieService
+      .searchMovieTitles(req.query.title, next)
+      .then(result => res.send(result))
+      .catch(next)
+  )
+  .get("/elastic/properties/id", errorHandlerMiddleware, (req, res, next) =>
+    movieService
+      .getMovieProperties(req.query.settings, next)
+      .then(result => res.send(result))
+      .catch(next)
   );
 
 export default router;

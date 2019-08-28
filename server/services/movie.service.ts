@@ -1,5 +1,5 @@
 import { Movie } from "../models/MovieModel";
-import { MovieRate } from "../models/MovieRateModel/movieRateModel";
+import { MovieRate } from "../models/movieRateModel";
 import MovieRepository, {
   getMovieVideoLinkById,
   getCredits,
@@ -10,7 +10,7 @@ import MovieRateRepository from "../repository/movieRate.repository";
 import { getCustomRepository, Like, getRepository } from "typeorm";
 import * as elasticRepository from "../repository/movieElastic.repository";
 import DiscussionRepository from "../repository/discussion.repository";
-import { ExtendedDiscussion } from "models/DiscussionModel";
+import { ExtendedDiscussion, Discussion } from "models/DiscussionModel";
 
 export const getMovies = async ({ size, from }): Promise<any[]> => {
   let data = await elasticRepository.get(size, from);
@@ -116,10 +116,39 @@ export const getMovieRate = async (
 
 export const saveDiscussionMessage = async (
   discussion: ExtendedDiscussion
-): Promise<any> => {
+): Promise<Discussion> => {
   const result = await getCustomRepository(DiscussionRepository).save(
     discussion
   );
   console.log("saved discussion", result);
   return result;
+};
+
+export const searchMovieTitles = async (title: string, next): Promise<any> => {
+  const elasticData = await elasticRepository.getPropertiesByMovieTitle(title, [
+    "id",
+    "title"
+  ]);
+  if (!elasticData) {
+    return next({ status: 404, message: "No connect to elastic" }, null);
+  }
+  const movieData = elasticData.hits.hits.map(movie => movie._source);
+  const result = [];
+  movieData.forEach(movie => {
+    title.toLowerCase() === movie.title.substr(0, title.length).toLowerCase()
+      ? result.unshift(movie)
+      : result.push(movie);
+  });
+
+  return result;
+};
+
+export const getMovieProperties = async (settings: string, next) => {
+  const [id, propString] = settings.split("|");
+  const properties = propString.split(";");
+  const elasticResponse = await elasticRepository.getPropertiesByMovieId(
+    id,
+    properties
+  );
+  return elasticResponse.hits.hits[0]._source;
 };

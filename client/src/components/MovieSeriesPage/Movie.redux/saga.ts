@@ -41,7 +41,7 @@ import { FETCH_MOVIE_REVIEWS } from '../MovieSeriesReviews/actionTypes';
 export function* fetchFilms(action) {
 	try {
 		let films = yield call(webApi, {
-			endpoint: `${config.API_URL}/api/movie/find?title=${action.payload.text}`,
+			endpoint: `/api/movie/find?title=${action.payload.text}`,
 			method: 'GET'
 		});
 		console.log('da1', films);
@@ -86,7 +86,7 @@ export function* fetchFiltredMovieList(action) {
 export function* fetchCrewCast(action) {
 	const credits = yield call(webApi, {
 		method: 'GET',
-		endpoint: config.API_URL + '/api/movie/cast-crew/' + action.payload.id
+		endpoint: '/api/movie/cast-crew/' + action.payload.id
 	});
 
 	yield put({
@@ -113,7 +113,7 @@ export function* getGenres() {
 export function* fetchMovieList() {
 	try {
 		const data = yield call(webApi, {
-			endpoint: config.API_URL + '/api/movie',
+			endpoint: '/api/movie',
 			method: 'GET'
 		});
 		yield put({
@@ -131,7 +131,7 @@ export function* fetchUserRate(action) {
 	const { userId, movieId } = action.payload;
 	try {
 		const data = yield call(webApi, {
-			endpoint: config.API_URL + `/api/movie/rate/user/${userId}/${movieId}`,
+			endpoint: `/api/movie/rate/user/${userId}/${movieId}`,
 			method: 'GET'
 		});
 
@@ -150,7 +150,7 @@ export function* fetchMovie(action) {
 	const { movieId } = action.payload;
 	try {
 		const data = yield call(webApi, {
-			endpoint: config.API_URL + `/api/movie/${movieId}`,
+			endpoint: `/api/movie/${movieId}`,
 			method: 'GET'
 		});
 
@@ -169,7 +169,7 @@ export function* setUserRate(action) {
 	const { movieId, userId, rate } = action.payload;
 	try {
 		const data = yield call(webApi, {
-			endpoint: config.API_URL + `/api/movie/rate`,
+			endpoint: `/api/movie/rate`,
 			method: 'POST',
 			body: {
 				userId,
@@ -203,7 +203,7 @@ export function* fetchSearch(action) {
 			payload: { loading: true }
 		});
 		let movies = yield call(webApi, {
-			endpoint: `${config.API_URL}/api/movie/find?title=${action.payload.title}`,
+			endpoint: `/api/movie/find?title=${action.payload.title}`,
 			method: 'GET'
 		});
 		yield put({
@@ -228,7 +228,7 @@ export function* fetchSearchMovie(action) {
 			payload: { loading: true }
 		});
 		let movies = yield call(webApi, {
-			endpoint: `${config.API_URL}/api/movie/find?title=${action.payload.title}`,
+			endpoint: `/api/movie/find?title=${action.payload.title}`,
 			method: 'GET'
 		});
 		yield put({
@@ -252,7 +252,7 @@ export function* loadMoreMovie(action) {
 	console.log('hidden1');
 	try {
 		const data = yield call(webApi, {
-			endpoint: `${config.API_URL}/api/movie?from=${from}&size=${size}`,
+			endpoint: `/api/movie?from=${from}&size=${size}`,
 			method: 'GET'
 		});
 		yield put({
@@ -295,7 +295,7 @@ export function* fetchReviewByUserMovieId(action) {
 	const { userId, movieId } = action.payload;
 	try {
 		const data = yield call(webApi, {
-			endpoint: config.API_URL + `/api/review/${userId}/${movieId}`,
+			endpoint: `/api/review/${userId}/${movieId}`,
 			method: 'GET'
 		});
 
@@ -315,7 +315,7 @@ export function* setReview(action) {
 	try {
 		if (prevId) {
 			yield call(webApi, {
-				endpoint: config.API_URL + `/api/review/${prevId}`,
+				endpoint: `/api/review/${prevId}`,
 				method: 'PUT',
 				body: {
 					text
@@ -323,7 +323,7 @@ export function* setReview(action) {
 			});
 		} else {
 			yield call(webApi, {
-				endpoint: config.API_URL + `/api/review`,
+				endpoint: `/api/review`,
 				method: 'POST',
 				body: {
 					userId,

@@ -65,7 +65,7 @@ const req = (url: string, body?: any, method = 'GET') =>
 
 export interface IProps {
 	// tslint:disable-next-line:no-any
-	onLocationChanged: (newCord: { lat: number; lng: number }) => void;
+	onLocationChanged?: (newCord: { lat: number; lng: number }) => void;
 	currentLocation?: { lat: number | undefined; lng: number | undefined } | null;
 }
 
@@ -94,7 +94,8 @@ class MapComponent extends React.Component<IProps, IState> {
 	private onSelectItem = (index: number) => {
 		const selected = this.state.options[index];
 		const [lng, lat] = selected.center;
-		this.props.onLocationChanged({ lng, lat });
+		if (this.props.onLocationChanged)
+			this.props.onLocationChanged({ lng, lat });
 		this.setState({
 			selected,
 			center: selected.center
@@ -107,12 +108,14 @@ class MapComponent extends React.Component<IProps, IState> {
 	};
 
 	private onDragEnd = (event: any) => {
-		this.props.onLocationChanged(event.lngLat);
+		if (this.props.onLocationChanged)
+			this.props.onLocationChanged(event.lngLat);
 	};
 
 	private onMapClick = (map: any, event: any) => {
 		if (event) {
-			this.props.onLocationChanged(event.lngLat);
+			if (this.props.onLocationChanged)
+				this.props.onLocationChanged(event.lngLat);
 			this.setState({
 				selected: {
 					id: '1',
@@ -137,11 +140,13 @@ class MapComponent extends React.Component<IProps, IState> {
 
 		return (
 			<Container>
-				<Dropdown
-					onSearch={this.onSearch}
-					onSelectItem={this.onSelectItem}
-					options={options}
-				/>
+				{this.props.onLocationChanged && (
+					<Dropdown
+						onSearch={this.onSearch}
+						onSelectItem={this.onSelectItem}
+						options={options}
+					/>
+				)}
 				<Map
 					style={styles.outdoor}
 					containerStyle={mapStyle}

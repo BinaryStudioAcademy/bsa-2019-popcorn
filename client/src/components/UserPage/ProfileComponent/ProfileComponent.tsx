@@ -6,13 +6,20 @@ import {
 	faTimesCircle,
 	faVenus,
 	faMars,
-	faMapMarkerAlt
+	faMapMarkerAlt,
+	faEdit
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import config from '../../../config';
 import ISelectedProfileInfo from '../SelectedProfileInterface';
+import ProfileEditor from './ProfileEditor/ProfileEditor';
 import Cropper from 'react-cropper';
 import { connect } from 'react-redux';
+import Follow from './FollowSystem/Follow';
+import FollowButton from './FollowSystem/FollowButton/FollowButton';
+import { bindActionCreators } from 'redux';
+import { updateProfile } from '../actions';
+import { NavLink } from 'react-router-dom';
 
 type ProfileProps = {
 	profileInfo: ISelectedProfileInfo;
@@ -24,51 +31,55 @@ type ProfileProps = {
 	saveCropped: () => void;
 	userId: string;
 	userRole: string;
+	updateProfile: (
+		id: string,
+		data: {
+			name: string;
+			male: boolean;
+			female: boolean;
+			aboutMe: string;
+			location: string;
+		}
+	) => any;
 };
 interface IProfileComponentState {
 	errorMsg?: string;
+	isEditing: boolean;
 }
-const favMovies: Array<{ id: string; movie: string }> = [
-	{
-		id: Math.random() * (9000 - 1) + 1 + '',
-		movie: 'Cloud Atlas'
-	},
-	{
-		id: Math.random() * (9000 - 1) + 1 + '',
-		movie: 'V for Vendetta '
-	},
-	{
-		id: Math.random() * (9000 - 1) + 1 + '',
-		movie: 'Donnie Darko '
-	},
-	{
-		id: Math.random() * (9000 - 1) + 1 + '',
-		movie: 'The Talented Mr. Ripley '
-	}
-];
-const favShows: Array<{ id: string; movie: string }> = [
-	{
-		id: Math.random() * (9000 - 1) + 1 + '',
-		movie: 'Stranger Things '
-	},
-	{
-		id: Math.random() * (9000 - 1) + 1 + '',
-		movie: 'Breaking Bad'
-	},
-	{
-		id: Math.random() * (9000 - 1) + 1 + '',
-		movie: 'Black Mirror'
-	}
-];
 
 class ProfileComponent extends Component<ProfileProps, IProfileComponentState> {
 	constructor(props: ProfileProps) {
 		super(props);
 		this.state = {
-			errorMsg: ''
+			errorMsg: '',
+			isEditing: false
 		};
 	}
 	private cropper = React.createRef<Cropper>();
+
+	onEdit = () => {
+		this.setState({
+			isEditing: true
+		});
+	};
+
+	onEditCancel = () => {
+		this.setState({
+			isEditing: false
+		});
+	};
+
+	onEditSave = data => {
+		const newData = { ...data, gender: undefined };
+		newData.favoriteMovieIds = newData.favoriteMovies.map(item => item.id);
+		newData.favoriteMovies = undefined;
+		newData.male = data.gender;
+		newData.female = !data.gender;
+		this.props.updateProfile(this.props.userId, newData);
+		this.setState({
+			isEditing: false
+		});
+	};
 
 	handleUploadFile(e) {
 		this.setState({ errorMsg: '' });
@@ -118,6 +129,7 @@ class ProfileComponent extends Component<ProfileProps, IProfileComponentState> {
 		} = this.props;
 		return userRole === 'admin' || userId === ownerId;
 	}
+
 	render() {
 		let {
 			name,
@@ -126,7 +138,8 @@ class ProfileComponent extends Component<ProfileProps, IProfileComponentState> {
 			male,
 			female,
 			avatar,
-			id
+			id,
+			favoriteLists
 		} = this.props.profileInfo;
 		if (!male && !female) {
 			female = true;
@@ -135,6 +148,9 @@ class ProfileComponent extends Component<ProfileProps, IProfileComponentState> {
 		if (!location) {
 			location = 'Kyiv';
 		}
+
+		const { isEditing } = this.state;
+		const isOwnProfile = this.isOwnProfile();
 		const { uploadUrl, cancelAvatar, setAvatar, croppedSaved } = this.props;
 		return (
 			<div className={'UserProfileComponent'}>
@@ -180,11 +196,12 @@ class ProfileComponent extends Component<ProfileProps, IProfileComponentState> {
 					) : (
 						<div className={'profilePhotoWrap'}>
 							<img
+								className="profile-avatar"
 								src={avatar || config.DEFAULT_AVATAR}
 								style={{ width: '100%', height: '100%' }}
 								alt=""
 							/>
-							{this.isOwnProfile() && (
+							{isOwnProfile && (
 								<div>
 									<input
 										name="image"
@@ -206,56 +223,83 @@ class ProfileComponent extends Component<ProfileProps, IProfileComponentState> {
 									</div>
 								</div>
 							)}
+							{this.props.userId !== id && <FollowButton />}
+							<Follow userId={id} />
 						</div>
 					)}
 
-					<div className="ProfileInfo">
-						<div className="profileRow-username">{name}</div>
-						<div className="profileRow-info">
-							{male && (
-								<div className="user-gender">
-									<FontAwesomeIcon icon={faMars} className="fontAwesomeIcon" />
-									Male
-								</div>
-							)}
-							{female && (
-								<div className="user-gender">
-									<FontAwesomeIcon icon={faVenus} className="fontAwesomeIcon" />
-									Female
-								</div>
-							)}
-
-							{location && (
-								<div className="user-location">
+					{!isEditing ? (
+						<div className="ProfileInfo">
+							{isOwnProfile && (
+								<span onClick={this.onEdit}>
 									<FontAwesomeIcon
-										icon={faMapMarkerAlt}
-										className="fontAwesomeIcon"
+										icon={faEdit}
+										className="fontAwesomeIcon edit-icon"
 									/>
-									{location}
-								</div>
+								</span>
 							)}
-						</div>
-						<div className="profileRow">
-							<p className="field">About: </p>
-							<div className="content">{aboutMe || '-'}</div>
-						</div>
-						<div className="profileRow">
-							<p className="field">Favorite movies: </p>
-							<div className="content">
-								{favMovies.length > 0
-									? favMovies.map(movie => <p key={movie.id}>{movie.movie}</p>)
-									: '-'}
+							<div className="profileRow-username">{name}</div>
+							<div className="profileRow-info">
+								{male && (
+									<div className="user-gender">
+										<FontAwesomeIcon
+											icon={faMars}
+											className="fontAwesomeIcon"
+										/>
+										Male
+									</div>
+								)}
+								{female && (
+									<div className="user-gender">
+										<FontAwesomeIcon
+											icon={faVenus}
+											className="fontAwesomeIcon"
+										/>
+										Female
+									</div>
+								)}
+
+								{location && (
+									<div className="user-location">
+										<FontAwesomeIcon
+											icon={faMapMarkerAlt}
+											className="fontAwesomeIcon"
+										/>
+										{location}
+									</div>
+								)}
+							</div>
+							<div className="profileRow">
+								<p className="field">About: </p>
+								<div className="content">{aboutMe || '-'}</div>
+							</div>
+							<div className="profileRow">
+								<p className="field">Favorite movies: </p>
+								<div className="content">
+									{favoriteLists.length > 0
+										? favoriteLists.map(item => {
+												return (
+													item.movie && (
+														<NavLink
+															to={'/movies/' + item.movie.id}
+															key={item.movie.id}
+														>
+															<p>{item.movie.name}</p>
+														</NavLink>
+													)
+												);
+										  })
+										: '-'}
+								</div>
 							</div>
 						</div>
-						<div className="profileRow">
-							<p className="field">Favorite TV-shows: </p>
-							<div className="content">
-								{favShows.length > 0
-									? favShows.map(movie => <p key={movie.id}>{movie.movie}</p>)
-									: '-'}
-							</div>
-						</div>
-					</div>
+					) : (
+						<ProfileEditor
+							user={this.props.profileInfo}
+							onEditCancel={this.onEditCancel}
+							onEditSave={this.onEditSave}
+						/>
+					)}
 				</div>
 			</div>
 		);
@@ -267,4 +311,14 @@ const mapStateToProps = (rootState, props) => ({
 	userId: rootState.profile.profileInfo.id,
 	userRole: rootState.profile.profileInfo.role
 });
-export default connect(mapStateToProps)(ProfileComponent);
+
+const actions = {
+	updateProfile
+};
+
+const mapDispatchToProps = dispatch => bindActionCreators(actions, dispatch);
+
+export default connect(
+	mapStateToProps,
+	mapDispatchToProps
+)(ProfileComponent);

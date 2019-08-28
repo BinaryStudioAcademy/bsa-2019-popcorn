@@ -10,6 +10,7 @@ import {
 	faInfoCircle
 } from '@fortawesome/free-solid-svg-icons';
 import { IEventFormatClient } from '../../UserPage/UserEvents/UserEvents.service';
+import MapComponent from '../../UserPage/UserEvents/EventMap/Map';
 
 interface IProps {
 	event: IEventFormatClient;
@@ -63,12 +64,13 @@ const About: React.SFC<IProps> = ({ event }) => {
 						modal: 'modal-window'
 					}}
 				>
-					<EventMap
+					<MapComponent currentLocation={event.location} />
+					{/* <EventMap
 						googleMapURL={`https://maps.googleapis.com/maps/api/js?key=${MAP_API_KEY}`}
 						loadingElement={<div className="map-loading-elem" />}
 						containerElement={<div className="map-container" />}
 						mapElement={<div className="map-elem" />}
-					/>
+					/> */}
 					<button
 						className="modal-btn-close"
 						onClick={() => setLocationMap(prevLocationMap => !prevLocationMap)}

@@ -8,6 +8,7 @@ import * as bodyParser from "body-parser";
 import routes from "./controllers/root.controller";
 import authorizationMiddleware from "./middlewares/authorization.middleware";
 import errorHandlerMiddleware from "./middlewares/error-handler.middleware";
+import notificationMiddleware from "./middlewares/notification.middleware";
 import routesWhiteList from "./config/routes-white-list.config";
 import { createConnection } from "typeorm";
 import db_config from "./config/orm.config";
@@ -28,7 +29,6 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(passport.initialize());
 
 const SERVER_PORT = process.env.PORT || 5000;
-app.use(errorHandlerMiddleware);
 createConnection(db_config)
   .then(connection => connection.runMigrations())
   .then(() => {
@@ -45,8 +45,9 @@ createConnection(db_config)
     app.use(socketInjector(io));
 
     app.use("/api/", authorizationMiddleware(routesWhiteList));
-
+    app.use(notificationMiddleware);
     routes(app);
+    app.use(errorHandlerMiddleware);
 
     if (process.env.NODE_ENV === "production") {
       const staticPath = path.resolve(`${__dirname}/../client/build`);

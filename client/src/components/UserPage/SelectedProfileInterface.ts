@@ -6,4 +6,5 @@ export default interface ISelectedProfileInfo {
 	location: string;
 	aboutMe: string;
 	avatar: string;
+	favoriteLists: Array<{ movie: { id: number; name: string } }>;
 }

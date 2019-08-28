@@ -10,6 +10,8 @@ import storyRouter from "./story.controller";
 import surveysRoutes from "./surveys.controller";
 import reviewAnalysisRoutes from "./reviewAnalysis.controller";
 import reviewRouter from "./review.controller";
+import watchRouter from "./watch.controller";
+import followRouter from "./follow.controller";
 
 // register all routes
 export default app => {
@@ -25,4 +27,6 @@ export default app => {
   app.use("/api/surveys", surveysRoutes);
   app.use("/api/analysis", reviewAnalysisRoutes);
   app.use("/api/review", reviewRouter);
+  app.use("/api/watch", watchRouter);
+  app.use("/api/follow", followRouter);
 };

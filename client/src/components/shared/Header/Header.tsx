@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronDown } from '@fortawesome/free-solid-svg-icons';
 import './Header.scss';
@@ -14,6 +14,7 @@ import { NavLink, Link } from 'react-router-dom';
 import { setMovieSeries } from '../../MovieSeriesPage/Movie.redux/actions';
 import config from '../../../config';
 import Image from '../Image/Image';
+import Notification from './Notification';
 
 interface IProps {
 	userInfo: {
@@ -32,7 +33,7 @@ interface IProps {
 		genres: Array<string>;
 		cast: Array<string>;
 	}>;
-	fetchFilms: () => void;
+	fetchFilms: (data: string) => void;
 	alreadySearch: boolean;
 	setMovieSeries: (movie: any) => any;
 	unauthorize: () => void;
@@ -71,7 +72,7 @@ const Header = ({
 			</NavLink>
 			<button className="header-buttons hover">
 				<NavLink
-					to={'/movie-list'}
+					to={'/movies'}
 					style={{ textDecoration: 'none' }}
 					className="header-buttons"
 				>
@@ -82,7 +83,7 @@ const Header = ({
 					<Link aria-current="page" className="hover" to="#">
 						{MOVIES_IN_CINEMA}
 					</Link>
-					<Link aria-current="page" className="hover" to="/movie-tops">
+					<Link aria-current="page" className="hover" to="/tops">
 						{MOVIE_TOPS}
 					</Link>
 					<Link aria-current="page" className="hover" to="/user-page/lists">
@@ -128,10 +129,10 @@ const Header = ({
 				setMovieSeries={setMovieSeries}
 			/>
 			<div className="notifications">
-				<img className="message-icon hover" src={messageIcon} alt="message" />
-				<NavLink to={'/user-activity'}>
-					<img className="notify-icon hover" src={notifyIcon} alt="bell" />
-				</NavLink>
+				<div>
+					<img className="message-icon hover" src={messageIcon} alt="message" />
+				</div>
+				<Notification userInfo={userInfo} />
 			</div>
 			<div className="user-info header-buttons hover">
 				<Image src={avatar} defaultSrc={config.DEFAULT_AVATAR} alt="avatar" />

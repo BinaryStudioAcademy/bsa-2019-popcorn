@@ -11,6 +11,10 @@ import { SeedEvents1566428038388 } from "./1566428038388-SeedEvents";
 import { SeedTops1566326006466 } from "./1566326006466-SeedTops";
 import { SeedMovieInTop1566326020135 } from "./1566326020135-SeedMovieInTop";
 import { SeedReviews1566319951202 } from "./1566319951202-SeedReviews";
+import { SeedTops1566549724762 } from "./1566549724762-SeedTops";
+import { SeedFollowers1566665184861 } from "./1566665184861-SeedFollowers";
+import { SeedReviewReaction1566744047867 } from "./1566744047867-SeedReviewReaction";
+import { SeedFavoriteList1566841720412 } from "./1566841720412-SeedFavoriteList";
 
 export default [
   SeedUsers1565158741121,
@@ -23,9 +27,13 @@ export default [
   SeedSurvey1566123343520,
   SeedAdmin1566138938621,
   SeedEvents1566428038388,
-  SeedTops1566326006466,
-  SeedMovieInTop1566326020135,
-  SeedReviews1566319951202
+  // SeedTops1566326006466,
+  // SeedMovieInTop1566326020135,
+  SeedReviews1566319951202,
+  SeedTops1566549724762,
+  SeedFollowers1566665184861,
+  SeedReviewReaction1566744047867,
+  SeedFavoriteList1566841720412
 ];
 //to create new migration run in this folder: typeorm migration:create -n <name>
 // then import this migration hear and export in array below

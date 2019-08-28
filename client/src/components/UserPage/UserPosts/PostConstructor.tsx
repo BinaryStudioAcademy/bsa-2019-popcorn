@@ -20,6 +20,7 @@ import { getUsersPosts } from '../../UserPage/actions';
 import Cropper from 'react-cropper';
 import { uploadFile } from '../../../services/file.service';
 import config from '../../../config';
+import Image from '../../shared/Image/Image';
 
 interface IPostConstructorProps {
 	userId: string;
@@ -135,7 +136,7 @@ class PostConstructor extends React.Component<
 							url.shift();
 							url = url.join('/');
 
-							url = config.API_URL + '/' + url;
+							url = '/' + url;
 
 							this.imageStateHandler(url, true);
 						} else {
@@ -143,7 +144,7 @@ class PostConstructor extends React.Component<
 							url.shift();
 							url = url.join('/');
 
-							url = config.API_URL + '/' + url;
+							url = '/' + url;
 
 							this.imageStateHandler(url, true);
 						}
@@ -157,10 +158,11 @@ class PostConstructor extends React.Component<
 		return (
 			<div className="postconstr-wrp">
 				<div className="post-item-header">
-					<img
-						className="post-item-avatar"
+					<Image
 						src={this.props.userAvatar}
+						defaultSrc={config.DEFAULT_AVATAR}
 						alt="author"
+						className="post-item-avatar"
 					/>
 					<div className="post-item-info">
 						<div className="post-item-author-name">{this.props.userName}</div>

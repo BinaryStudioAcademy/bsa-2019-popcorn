@@ -9,6 +9,9 @@ import adminPanelSaga from '../components/AdminPanelPage/AdminPanelPage.redux/sa
 import surveySaga from '../components/UserPage/UserSurveys/UserSurveys.redux/saga';
 import reviewSaga from '../components/MovieSeriesPage/MovieSeriesReviews/saga';
 import topListSaga from '../components/TopListPage/TopListPage.redux/saga';
+import followSaga from '../components/UserPage/ProfileComponent/FollowSystem/FollowSystem.redux/saga';
+import watchListSaga from '../components/UserPage/UserWatchList/saga';
+import searchMovieSaga from '../components/shared/MovieSearch/saga';
 
 export default function* rootSaga() {
 	yield all([
@@ -21,6 +24,9 @@ export default function* rootSaga() {
 		adminPanelSaga(),
 		surveySaga(),
 		reviewSaga(),
-		topListSaga()
+		topListSaga(),
+		followSaga(),
+		watchListSaga(),
+		searchMovieSaga()
 	]);
 }

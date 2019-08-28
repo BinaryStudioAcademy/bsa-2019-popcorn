@@ -8,7 +8,8 @@ import {
 	USER_POSTS,
 	SEND_POST,
 	GET_SELECTED_USER_INFO,
-	SET_SELECTED_USER
+	SET_SELECTED_USER,
+	UPDATE_PROFILE
 } from './actionTypes';
 import { uploadFile } from '../../services/file.service';
 import axios from 'axios';
@@ -34,7 +35,7 @@ export function* getSelectedUser(action) {
 	try {
 		const data = yield call(webApi, {
 			method: 'GET',
-			endpoint: config.API_URL + '/api/user/' + action.payload.id
+			endpoint: '/api/user/' + action.payload.id
 		});
 
 		yield put({
@@ -43,6 +44,25 @@ export function* getSelectedUser(action) {
 		});
 	} catch (e) {
 		console.log(e.message);
+	}
+}
+
+export function* updateProfile(action) {
+	try {
+		const data = yield call(webApi, {
+			method: 'PUT',
+			endpoint: '/api/user/' + action.payload.id,
+			body: {
+				...action.payload.data
+			}
+		});
+
+		yield put({
+			type: GET_SELECTED_USER_INFO,
+			payload: { id: action.payload.id }
+		});
+	} catch (e) {
+		console.log('user saga update user:', e.message);
 	}
 }
 
@@ -60,7 +80,7 @@ export function* uploadAvatar(action) {
 
 		yield put({
 			type: SET_TEMP_AVATAR,
-			payload: { uploadUrl: config.API_URL + '/' + url.join('/') }
+			payload: { uploadUrl: '/' + url.join('/') }
 		});
 	} catch (e) {
 		console.log('user page saga catch: uploadAvatar', e.message);
@@ -71,7 +91,7 @@ export function* setAvatar(action) {
 	try {
 		const res = yield call(webApi, {
 			method: 'PUT',
-			endpoint: config.API_URL + '/api/user/' + action.payload.id,
+			endpoint: '/api/user/' + action.payload.id,
 			body: {
 				avatar: action.payload.url
 			}
@@ -88,11 +108,9 @@ export function* setAvatar(action) {
 
 export function* fetchLogin(action) {
 	try {
-		const { data: data } = yield call(
-			axios.post,
-			config.API_URL + '/api/auth/login',
-			{ ...action.payload }
-		);
+		const { data: data } = yield call(axios.post, '/api/auth/login', {
+			...action.payload
+		});
 
 		localStorage.setItem('token', data.token);
 
@@ -117,7 +135,7 @@ export function* fetchUser(action) {
 	};
 
 	try {
-		let user = yield call(fetch, config.API_URL + '/api/auth/user', init);
+		let user = yield call(fetch, '/api/auth/user', init);
 
 		if (!user.ok) {
 			localStorage.setItem('token', '');
@@ -151,7 +169,7 @@ export function* unathorizeUser(action) {
 
 export function* fetchRegistration(action) {
 	try {
-		const data = yield call(axios.post, config.API_URL + '/api/auth/register', {
+		const data = yield call(axios.post, '/api/auth/register', {
 			...action.payload
 		});
 		localStorage.setItem('token', data.data.token);
@@ -175,7 +193,7 @@ export function* fetchPosts(action) {
 	try {
 		const data = yield call(webApi, {
 			method: 'GET',
-			endpoint: config.API_URL + '/api/post/user/' + action.payload.id
+			endpoint: '/api/post/user/' + action.payload.id
 		});
 
 		yield put({
@@ -194,7 +212,7 @@ export function* sendPost(post) {
 	try {
 		yield call(webApi, {
 			method: 'POST',
-			endpoint: config.API_URL + '/api/post/',
+			endpoint: '/api/post/',
 			body: { ...post.payload.data }
 		});
 
@@ -212,7 +230,7 @@ export function* sendPost(post) {
 export function* resetPassword(action) {
 	try {
 		const data = yield call(webApi, {
-			endpoint: config.API_URL + '/api/auth/reset',
+			endpoint: '/api/auth/reset',
 			method: 'POST',
 			parse: false,
 			body: {
@@ -234,7 +252,7 @@ export function* resetPassword(action) {
 export function* fetchRestorePassword(action) {
 	try {
 		const data = yield call(webApi, {
-			endpoint: config.API_URL + '/api/auth/restore',
+			endpoint: '/api/auth/restore',
 			method: 'POST',
 			parse: false,
 			body: {
@@ -260,6 +278,10 @@ function* watchSendPost() {
 
 function* watchGetSelectedUser() {
 	yield takeEvery(GET_SELECTED_USER_INFO, getSelectedUser);
+}
+
+function* watchUpdateProfile() {
+	yield takeEvery(UPDATE_PROFILE, updateProfile);
 }
 
 function* watchFetchFilms() {
@@ -309,6 +331,8 @@ export default function* profile() {
 		watchFetchPosts(),
 		watchFetchResetPassword(),
 		watchFetchRestorePassword(),
+		watchFetchLogout(),
+		watchUpdateProfile(),
 		watchSendPost(),
 		watchFetchLogout()
 	]);

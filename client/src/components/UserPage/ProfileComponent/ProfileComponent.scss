@@ -22,7 +22,7 @@ h2 {
 		padding-top: 16px;
 		margin-right: 2%;
 		width: 400px;
-		height: 400px;
+		height: auto;
 
 		.avatar-preview {
 			width: 100%;
@@ -37,8 +37,12 @@ h2 {
 			transition: all 0.3s linear;
 			overflow: hidden;
 			margin-top: 40px;
+			&:hover {
+				margin-top: 0;
+				height: 40px;
+			}
 		}
-		&:hover .upload-wrp {
+		.profile-avatar:hover + div .upload-wrp {
 			margin-top: 0;
 			height: 40px;
 		}
@@ -58,6 +62,13 @@ h2 {
 		fill: #000;
 		width: 100%;
 		height: auto;
+	}
+
+	.edit-icon {
+		position: absolute;
+		left: 85%;
+		top: 175px;
+		width: 20px;
 	}
 	.profileRow {
 		letter-spacing: $base-letter-spacing;

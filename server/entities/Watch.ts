@@ -3,12 +3,13 @@ import {
   PrimaryGeneratedColumn,
   Column,
   ManyToOne,
-  JoinColumn
+  Index
 } from "typeorm";
 import { User } from "./User";
 
 @Entity()
-export class Review {
+@Index(["user", "movieId"], { unique: true })
+export class Watch {
   @PrimaryGeneratedColumn("uuid")
   id: string;
 
@@ -19,15 +20,13 @@ export class Review {
   created_at: Date;
 
   @Column({ nullable: false })
-  text: string;
-
-  @Column({ nullable: false })
   movieId: string;
 
   @Column({ nullable: false })
-  analysis: string;
+  status: string;
 
-  @ManyToOne(type => User)
-  @JoinColumn()
+  @ManyToOne(type => User, user => user.id, {
+    onDelete: "CASCADE"
+  })
   user: User;
 }

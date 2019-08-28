@@ -21,29 +21,19 @@ const MainPageSidebar = ({ notifications }: IProps) => {
 				</div>
 				<div>
 					<p>Messages</p>
-					{notifications.newMessages !== 0 && (
-						<p className="notifications">
-							<span>{notifications.newMessages}</span>
-						</p>
-					)}
 				</div>
 
 				<div>
-					<NavLink to={'/event-page/'}>Events</NavLink>
-					{notifications.newEvents !== 0 && (
-						<p className="notifications">
-							<span>{notifications.newEvents}</span>
-						</p>
-					)}
+					<NavLink to={'/events/'}>Events</NavLink>
 				</div>
 				<div>
 					<p>Collections</p>
 				</div>
 				<div>
-					<NavLink to={'/surveys-list/'}>Surveys</NavLink>
+					<NavLink to={'/surveys'}>Surveys</NavLink>
 				</div>
 				<div>
-					<NavLink to={'/movie-tops/'}>Tops</NavLink>
+					<NavLink to={'/tops'}>Tops</NavLink>
 				</div>
 			</div>
 		</div>
