@@ -2,17 +2,20 @@ import {
 	FETCH_USER_WATCH_LIST_SUCCESS,
 	SAVE_WATCH_ITEM_SUCCESS,
 	MOVE_WATCH_ITEM_TO_WATCHED,
-	DELETE_WATCH_ITEM
+	DELETE_WATCH_ITEM,
+	FETCH_WATCH_LIST_STATUS_SUCCESS
 } from './actionTypes';
 import movieAdapter from '../../MovieSeriesPage/movieAdapter';
 import config from '../../../config';
 
 interface IReducer {
 	watchList?: Array<any>;
+	watchListStatus?: string;
 }
 
 const initialState: IReducer = {
-	watchList: undefined
+	watchList: undefined,
+	watchListStatus: undefined
 };
 
 export default (state = initialState, action) => {
@@ -50,6 +53,11 @@ export default (state = initialState, action) => {
 				watchList: watchList.filter(
 					watch => watch.id !== action.payload.watchId
 				)
+			};
+		case FETCH_WATCH_LIST_STATUS_SUCCESS:
+			return {
+				...state,
+				watchListStatus: action.payload.watchListStatus
 			};
 		default:
 			return state;

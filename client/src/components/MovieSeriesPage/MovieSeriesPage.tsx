@@ -6,6 +6,7 @@ import './MovieSeriesPage.scss';
 import { connect } from 'react-redux';
 import Spinner from '../shared/Spinner';
 import { bindActionCreators } from 'redux';
+import { fetchWatchListStatus } from '../UserPage/UserWatchList/actions';
 import {
 	fetchUserRate,
 	fetchMovie,
@@ -37,6 +38,8 @@ interface IProps {
 	username: string;
 	fetchCastCrew: (id: any) => any;
 	crewCast: any;
+	fetchWatchListStatus: (movieId: string) => object;
+	watchListStatus?: any;
 }
 
 export interface IUserRate {
@@ -61,7 +64,9 @@ const MovieSeriesPage: React.SFC<IProps> = props => {
 		setReview,
 		removeReviewSet,
 		fetchCastCrew,
-		crewCast
+		crewCast,
+		fetchWatchListStatus,
+		watchListStatus
 	} = props;
 	const mainPath = `/movies/${props.match.params.id}`;
 
@@ -71,6 +76,11 @@ const MovieSeriesPage: React.SFC<IProps> = props => {
 	}
 	if (!userRate || userRate.movieId != props.match.params.id) {
 		fetchUserRate(userId, props.match.params.id);
+		return <Spinner />;
+	}
+
+	if (!watchListStatus) {
+		fetchWatchListStatus(props.match.params.id);
 		return <Spinner />;
 	}
 
@@ -109,7 +119,8 @@ const mapStateToProps = (rootState, props) => ({
 	userId: rootState.profile.profileInfo && rootState.profile.profileInfo.id,
 	username: rootState.profile.profileInfo && rootState.profile.profileInfo.name,
 	ownReview: rootState.movie.ownReview,
-	crewCast: rootState.movie.crewCast
+	crewCast: rootState.movie.crewCast,
+	watchListStatus: rootState.watchList.watchListStatus
 });
 
 const mapDispatchToProps = dispatch => {
@@ -120,7 +131,8 @@ const mapDispatchToProps = dispatch => {
 		fetchReview,
 		setReview,
 		removeReviewSet,
-		fetchCastCrew
+		fetchCastCrew,
+		fetchWatchListStatus
 	};
 	return bindActionCreators(actions, dispatch);
 };

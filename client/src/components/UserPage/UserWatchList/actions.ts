@@ -2,7 +2,8 @@ import {
 	FETCH_USER_WATCH_LIST,
 	SAVE_WATCH_ITEM,
 	MOVE_WATCH_ITEM_TO_WATCHED,
-	DELETE_WATCH_ITEM
+	DELETE_WATCH_ITEM,
+	FETCH_WATCH_LIST_STATUS
 } from './actionTypes';
 
 export const fetchWatchList = () => ({
@@ -22,4 +23,9 @@ export const moveToWatched = (watchId: string) => ({
 export const deleteWatchItem = (watchId: string) => ({
 	type: DELETE_WATCH_ITEM,
 	payload: { watchId }
+});
+
+export const fetchWatchListStatus = (movieId: string) => ({
+	type: FETCH_WATCH_LIST_STATUS,
+	payload: { movieId }
 });
