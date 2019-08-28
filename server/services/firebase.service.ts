@@ -29,7 +29,7 @@ function buildCommonMessage(title, body) {
  * Builds message with platform specific options
  * Link: https://firebase.google.com/docs/reference/fcm/rest/v1/projects.messages
  */
-function buildPlatformMessage(token = registrationToken, title, body): any {
+function buildPlatformMessage({ link, title, body, icon, token }): any {
   const fcmMessage = buildCommonMessage(title, body);
 
   const webpush = {
@@ -37,10 +37,10 @@ function buildPlatformMessage(token = registrationToken, title, body): any {
       TTL: "0"
     },
     notification: {
-      icon: "https://img.icons8.com/color/96/e74c3c/ireland.png"
+      icon
     },
     fcm_options: {
-      link: "https://gnib-visa-app.rharshad.com"
+      link
     }
   };
 
@@ -51,8 +51,14 @@ function buildPlatformMessage(token = registrationToken, title, body): any {
 
 // Send a message to the device corresponding to the provided
 // registration token.
-export function sendMessage() {
-  const message = buildPlatformMessage(registrationToken, "title", "body");
+export function sendPushMessage({ link, title, body, icon }) {
+  const message = buildPlatformMessage({
+    link,
+    title,
+    body,
+    icon,
+    token: registrationToken
+  });
   admin
     .messaging()
     .send(message)
