@@ -46,6 +46,7 @@ interface IProps {
 	watchListStatus?: any;
 	addMovieToWatchList: (movieId: string) => object;
 	deleteMovieFromWatchList: (watchId: string, movieId: string) => object;
+	watchListLoading?: boolean;
 }
 
 export interface IUserRate {
@@ -74,7 +75,8 @@ const MovieSeriesPage: React.SFC<IProps> = props => {
 		fetchWatchListStatus,
 		watchListStatus,
 		addMovieToWatchList,
-		deleteMovieFromWatchList
+		deleteMovieFromWatchList,
+		watchListLoading
 	} = props;
 	const currentMovieId = props.match.params.id;
 	const mainPath = `/movies/${currentMovieId}`;
@@ -110,6 +112,7 @@ const MovieSeriesPage: React.SFC<IProps> = props => {
 				watchListStatus={watchListStatus}
 				addMovieToWatchList={addMovieToWatchList}
 				deleteMovieFromWatchList={deleteMovieFromWatchList}
+				watchListLoading={watchListLoading}
 			/>
 			<MovieSeriesPageTabs mainPath={mainPath} />
 			<MovieSeriesPageTabBody
@@ -132,7 +135,8 @@ const mapStateToProps = (rootState, props) => ({
 	username: rootState.profile.profileInfo && rootState.profile.profileInfo.name,
 	ownReview: rootState.movie.ownReview,
 	crewCast: rootState.movie.crewCast,
-	watchListStatus: rootState.watchList.watchListStatus
+	watchListStatus: rootState.watchList.watchListStatus,
+	watchListLoading: rootState.watchList.isLoading
 });
 
 const mapDispatchToProps = dispatch => {

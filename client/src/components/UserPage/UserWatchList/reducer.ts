@@ -5,7 +5,9 @@ import {
 	DELETE_WATCH_ITEM,
 	FETCH_WATCH_LIST_STATUS_SUCCESS,
 	ADD_MOVIE_TO_WATCH_LIST_SUCCESS,
-	DELETE_MOVIE_FROM_WATCH_LIST_SUCCESS
+	DELETE_MOVIE_FROM_WATCH_LIST_SUCCESS,
+	DELETE_MOVIE_FROM_WATCH_LIST,
+	ADD_MOVIE_TO_WATCH_LIST
 } from './actionTypes';
 import movieAdapter from '../../MovieSeriesPage/movieAdapter';
 import config from '../../../config';
@@ -13,11 +15,13 @@ import config from '../../../config';
 interface IReducer {
 	watchList?: Array<any>;
 	watchListStatus?: string;
+	isLoading?: boolean;
 }
 
 const initialState: IReducer = {
 	watchList: undefined,
-	watchListStatus: undefined
+	watchListStatus: undefined,
+	isLoading: undefined
 };
 
 export default (state = initialState, action) => {
@@ -64,17 +68,29 @@ export default (state = initialState, action) => {
 				...state,
 				watchListStatus: action.payload.watchListStatus
 			};
+		case ADD_MOVIE_TO_WATCH_LIST:
+			return {
+				...state,
+				isLoading: true
+			};
 		case ADD_MOVIE_TO_WATCH_LIST_SUCCESS:
 			return {
 				...state,
 				watchListStatus: action.payload,
-				watchList: undefined
+				watchList: undefined,
+				isLoading: false
+			};
+		case DELETE_MOVIE_FROM_WATCH_LIST:
+			return {
+				...state,
+				isLoading: true
 			};
 		case DELETE_MOVIE_FROM_WATCH_LIST_SUCCESS:
 			return {
 				...state,
 				watchListStatus: action.payload.watchListStatus,
-				watchList: undefined
+				watchList: undefined,
+				isLoading: false
 			};
 		default:
 			return state;
