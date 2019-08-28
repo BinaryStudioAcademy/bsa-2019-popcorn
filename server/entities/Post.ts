@@ -15,10 +15,10 @@ export class Post {
   @PrimaryGeneratedColumn("uuid")
   id: string;
 
-  @Column()
+  @Column({ default: "" })
   title: string;
 
-  @Column()
+  @Column({ default: "" })
   description: string;
 
   @Column()
