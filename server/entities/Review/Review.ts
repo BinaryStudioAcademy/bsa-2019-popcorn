@@ -27,7 +27,7 @@ export class Review {
   @Column({ nullable: false })
   analysis: string;
 
-  @ManyToOne(type => User)
+  @ManyToOne(type => User, { onDelete: "CASCADE" })
   @JoinColumn()
   user: User;
 }
