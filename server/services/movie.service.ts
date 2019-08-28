@@ -19,25 +19,27 @@ export const getMovies = async ({ size, from }): Promise<any[]> => {
   return data.map(movie => movie._source);
 };
 
-export const getCastCrewById = async (movieId: number): Promise<any> => {
-  const credits = await getCredits(movieId);
-  return credits.credits;
-};
-
 export const getMovieById = async (movieId: string): Promise<any> => {
   const data = await elasticRepository.getById(movieId);
   let movie = data.hits.hits[0]._source;
+
   const messages = await getCustomRepository(DiscussionRepository).getMessages(
     movieId
   );
   movie.messages = messages;
+
   const rate = await getCustomRepository(MovieRateRepository)
     .createQueryBuilder("movieRate")
     .select("AVG(movieRate.rate)", "average")
     .where("movieRate.movieId = :id", { id: movie.id })
     .getRawOne();
   movie.rate = rate ? parseFloat(rate.average).toFixed(2) : null;
+  
   movie.video_link = await getMovieVideoLinkById(movie.id);
+
+  const credits = await getCredits(movieId);
+  movie.crew = credits.credits.crew;
+
   return movie;
 };
 

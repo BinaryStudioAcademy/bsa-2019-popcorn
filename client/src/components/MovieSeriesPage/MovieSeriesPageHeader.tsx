@@ -5,14 +5,10 @@ import StarRating from '../shared/StarRating/StarRating';
 import { IUserRate } from './MovieSeriesPage';
 import Spinner from '../shared/Spinner';
 import ReviewAddModal from '../MovieSeriesPage/MovieSeriesReviews/ReviewAddModal/ReviewAddModal';
+import TMovie from '../MovieSeriesPage/TMovie';
 
 interface IProps {
-	movieSeriesData: {
-		title: string;
-		release_date?: string;
-		genre?: string[];
-		vote_average?: string;
-	};
+	movie: TMovie;
 	userRate?: IUserRate;
 	setUserRate: (userRate: object) => any;
 	ownReview: any;
@@ -29,7 +25,7 @@ interface IProps {
 }
 
 const MovieSeriesPageHeader: React.FC<IProps> = ({
-	movieSeriesData,
+	movie,
 	userRate,
 	setUserRate,
 	ownReview,
@@ -40,7 +36,6 @@ const MovieSeriesPageHeader: React.FC<IProps> = ({
 	removeReviewSet
 }) => {
 	const [modal, setModal] = useState(false);
-	const genre = movieSeriesData.genre && movieSeriesData.genre.join(', ');
 	const rate: number = userRate ? +userRate.rate : 0;
 
 	const onModalClick = () => {
@@ -53,7 +48,7 @@ const MovieSeriesPageHeader: React.FC<IProps> = ({
 				<ReviewAddModal
 					ownReview={ownReview!}
 					setModal={setModal}
-					movie={movieSeriesData}
+					movie={movie}
 					setReview={setReview}
 					userId={userId}
 					movieId={movieId}
@@ -62,9 +57,9 @@ const MovieSeriesPageHeader: React.FC<IProps> = ({
 			)}
 			<div className="movie-title-rating">
 				<div className="title">
-					{movieSeriesData.title}
-					{movieSeriesData.release_date
-						? '(' + movieSeriesData.release_date.slice(0, 4) + ')'
+					{movie.title}
+					{movie.release_date
+						? '(' + movie.release_date.slice(0, 4) + ')'
 						: null}
 				</div>
 				<div className="review-button" onClick={() => onModalClick()}>
@@ -78,12 +73,12 @@ const MovieSeriesPageHeader: React.FC<IProps> = ({
 				/>
 				<span className="rating">
 					<FontAwesomeIcon className="icon-star" icon={faStar} />
-					{Number(movieSeriesData.vote_average) || 0}
+					{Number(movie.vote_average) || 0}
 					<span className="max-rating">/5</span>
 				</span>
 			</div>
 			<div className="info">
-				<span className="info-item">Action, Drama, Horror</span>
+				<span className="info-item">{movie.genres}</span>
 			</div>
 		</header>
 	);

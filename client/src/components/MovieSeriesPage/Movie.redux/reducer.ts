@@ -11,8 +11,7 @@ import {
 	SET_LOAD_MORE_MOVIE,
 	FETCH_REVIEW_BY_USER_MOVIE_ID_SUCCESS,
 	SET_REVIEW_SUCCESS,
-	REMOVE_REVIEW_SET,
-	SET_CAST_CREW
+	REMOVE_REVIEW_SET
 } from './actionTypes';
 import TMovie from '../TMovie';
 import movieAdapter from '../movieAdapter';
@@ -29,7 +28,6 @@ const initialState: {
 	searchTitle: string;
 	isLoading: boolean;
 	ownReview: any;
-	crewCast: any;
 } = {
 	moviesSearch: [],
 	alreadySearch: false,
@@ -41,8 +39,7 @@ const initialState: {
 	searchTitle: '',
 	userRate: null,
 	fetchedMovie: null,
-	ownReview: null,
-	crewCast: null
+	ownReview: null
 };
 
 export default function(state = initialState, action) {
@@ -63,13 +60,7 @@ export default function(state = initialState, action) {
 			return {
 				...state,
 				movieSeries: action.payload.movie,
-				crewCast: null,
 				alreadySearch: true
-			};
-		case SET_CAST_CREW:
-			return {
-				...state,
-				crewCast: action.payload.credits
 			};
 		case FETCH_MOVIE_USER_RATE_SUCCESS:
 			return {

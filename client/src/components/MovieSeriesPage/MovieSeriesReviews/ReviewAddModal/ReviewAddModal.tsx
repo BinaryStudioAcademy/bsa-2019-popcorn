@@ -5,10 +5,11 @@ import MovieItem from '../../../MovieList/MovieListItem/MovieListItem';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import { Redirect } from 'react-router';
+import TMovie from '../../../MovieSeriesPage/TMovie';
 
 interface IProps {
 	ownReview: any;
-	movie: any;
+	movie: TMovie;
 	setModal: (boolean) => any;
 	setReview: (
 		userId: string,
