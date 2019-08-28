@@ -6,6 +6,7 @@ import { faPlusCircle } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import TMovie from '../../../MovieSeriesPage/TMovie';
 import Spinner from '../../../shared/Spinner';
+import { SketchPicker } from 'react-color';
 
 interface IProps {
 	newStory: INewStory;
@@ -39,17 +40,49 @@ interface IProps {
 class getAddStoryPopupContent extends React.Component<IProps> {
 	state = {
 		open: true,
-		extra: true
+		extra: true,
+		displayColorPicker: false,
+		backgroundColor: {
+			r: '0',
+			g: '0',
+			b: '0',
+			a: '1'
+		}
 	};
 
 	static valid({ image_url, caption, type }: INewStory) {
 		return (image_url && caption) || type === 'voting';
 	}
 
+	handleHideColorPicker = () => {
+		this.setState({
+			...this.state,
+			displayColorPicker: false
+		});
+	};
+
+	handleColorChange = color => {
+		this.setState({
+			...this.state,
+			backgroundColor: color.rgb
+		});
+	};
+	handleShowColorPicker = () => {
+		this.setState({
+			...this.state,
+			displayColorPicker: !this.state.displayColorPicker
+		});
+	};
+
 	render() {
 		const newStory = this.props.newStory;
 
 		const disabled = !getAddStoryPopupContent.valid(newStory);
+		const styles = {
+			backStyle: {
+				background: `rgba(${this.state.backgroundColor.r},${this.state.backgroundColor.g},${this.state.backgroundColor.b},${this.state.backgroundColor.a})`
+			}
+		};
 
 		if (!this.state.open) return <Redirect to={'/'} />;
 		if (!this.state.extra) return <Redirect to={'/create/extra'} />;
@@ -80,6 +113,27 @@ class getAddStoryPopupContent extends React.Component<IProps> {
 						>
 							{newStory.activity && newStory.activity.name}
 						</PostStoryEditor>
+						<div
+							onClick={this.handleShowColorPicker}
+							className="color-picker-btn"
+						>
+							<div
+								style={styles.backStyle}
+								className="color-picker-btn-preview"
+							/>
+						</div>
+						{this.state.displayColorPicker ? (
+							<div className="color-picker-popover">
+								<div
+									className="color-picker-cover"
+									onClick={this.handleHideColorPicker}
+								/>
+								<SketchPicker
+									color={this.state.backgroundColor}
+									onChange={this.handleColorChange}
+								/>
+							</div>
+						) : null}
 						<button
 							className={'btn'}
 							onClick={addExtra}
@@ -107,7 +161,13 @@ class getAddStoryPopupContent extends React.Component<IProps> {
 								className={'btn'}
 								disabled={disabled}
 								onClick={() => {
-									this.props.createStory(newStory, this.props.userId);
+									this.props.createStory(
+										{
+											...newStory,
+											backgroundColor: styles.backStyle.background
+										},
+										this.props.userId
+									);
 									this.props.history.push('/');
 								}}
 							>

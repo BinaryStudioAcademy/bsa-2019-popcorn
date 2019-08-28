@@ -25,7 +25,8 @@ const initialState: {
 		activity: null,
 		type: '',
 		movieId: null,
-		movieOption: ''
+		movieOption: '',
+		backgroundColor: ''
 	},
 	cursorPosition: { start: 0, end: 0 },
 	title: '',
