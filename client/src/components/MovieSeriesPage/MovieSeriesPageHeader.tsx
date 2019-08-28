@@ -26,6 +26,7 @@ interface IProps {
 	) => any;
 	removeReviewSet: () => object;
 	watchListStatus: any;
+	addMovieToWatchList: (movieId: string) => object;
 }
 
 const MovieSeriesPageHeader: React.FC<IProps> = ({
@@ -38,7 +39,8 @@ const MovieSeriesPageHeader: React.FC<IProps> = ({
 	movieId,
 	setReview,
 	removeReviewSet,
-	watchListStatus
+	watchListStatus,
+	addMovieToWatchList
 }) => {
 	const [modal, setModal] = useState(false);
 	const genre = movieSeriesData.genre && movieSeriesData.genre.join(', ');
@@ -55,12 +57,12 @@ const MovieSeriesPageHeader: React.FC<IProps> = ({
 		return status ? (
 			<div
 				className={`watch-list-icon movie-in-list`}
-				onClick={() => console.log('сейчас нажму и уберу')}
+				onClick={() => console.log('шляпа')}
 			/>
 		) : (
 			<div
 				className={`watch-list-icon add-to-watch-list`}
-				onClick={() => console.log('добавить в вотчлист')}
+				onClick={() => addMovieToWatchList(movieId)}
 			/>
 		);
 	};

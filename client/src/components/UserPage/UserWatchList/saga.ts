@@ -8,7 +8,9 @@ import {
 	MOVE_WATCH_ITEM_TO_WATCHED,
 	DELETE_WATCH_ITEM,
 	FETCH_WATCH_LIST_STATUS,
-	FETCH_WATCH_LIST_STATUS_SUCCESS
+	FETCH_WATCH_LIST_STATUS_SUCCESS,
+	ADD_MOVIE_TO_WATCH_LIST,
+	ADD_MOVIE_TO_WATCH_LIST_SUCCESS
 } from './actionTypes';
 
 export function* fetchWatchList() {
@@ -89,6 +91,27 @@ export function* fetchWatchListStatus(action) {
 	}
 }
 
+export function* addMovieToWatchList(action) {
+	const { movieId } = action.payload;
+	try {
+		yield call(webApi, {
+			endpoint: `/api/watch`,
+			method: 'POST',
+			body: {
+				movieId: movieId,
+				status: 'to_watch'
+			}
+		});
+
+		yield put({
+			type: ADD_MOVIE_TO_WATCH_LIST_SUCCESS,
+			payload: { status: 'to_watch', movieId }
+		});
+	} catch (error) {
+		console.log(error);
+	}
+}
+
 function* watchFetchWatchList() {
 	yield takeEvery(FETCH_USER_WATCH_LIST, fetchWatchList);
 }
@@ -109,12 +132,17 @@ function* watchFetchWatchListStatus() {
 	yield takeEvery(FETCH_WATCH_LIST_STATUS, fetchWatchListStatus);
 }
 
+function* watchAddMovieToWatchList() {
+	yield takeEvery(ADD_MOVIE_TO_WATCH_LIST, addMovieToWatchList);
+}
+
 export default function* watchList() {
 	yield all([
 		watchFetchWatchList(),
 		watchSaveWatchItem(),
 		watchMoveToWatched(),
 		watchDeleteWatchItem(),
-		watchFetchWatchListStatus()
+		watchFetchWatchListStatus(),
+		watchAddMovieToWatchList()
 	]);
 }

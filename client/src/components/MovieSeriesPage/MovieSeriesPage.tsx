@@ -6,7 +6,10 @@ import './MovieSeriesPage.scss';
 import { connect } from 'react-redux';
 import Spinner from '../shared/Spinner';
 import { bindActionCreators } from 'redux';
-import { fetchWatchListStatus } from '../UserPage/UserWatchList/actions';
+import {
+	fetchWatchListStatus,
+	addMovieToWatchList
+} from '../UserPage/UserWatchList/actions';
 import {
 	fetchUserRate,
 	fetchMovie,
@@ -40,6 +43,7 @@ interface IProps {
 	crewCast: any;
 	fetchWatchListStatus: (movieId: string) => object;
 	watchListStatus?: any;
+	addMovieToWatchList: (movieId: string) => object;
 }
 
 export interface IUserRate {
@@ -66,7 +70,8 @@ const MovieSeriesPage: React.SFC<IProps> = props => {
 		fetchCastCrew,
 		crewCast,
 		fetchWatchListStatus,
-		watchListStatus
+		watchListStatus,
+		addMovieToWatchList
 	} = props;
 	const currentMovieId = props.match.params.id;
 	const mainPath = `/movies/${currentMovieId}`;
@@ -100,6 +105,7 @@ const MovieSeriesPage: React.SFC<IProps> = props => {
 				setReview={setReview}
 				removeReviewSet={removeReviewSet}
 				watchListStatus={watchListStatus}
+				addMovieToWatchList={addMovieToWatchList}
 			/>
 			<MovieSeriesPageTabs mainPath={mainPath} />
 			<MovieSeriesPageTabBody
@@ -134,7 +140,8 @@ const mapDispatchToProps = dispatch => {
 		setReview,
 		removeReviewSet,
 		fetchCastCrew,
-		fetchWatchListStatus
+		fetchWatchListStatus,
+		addMovieToWatchList
 	};
 	return bindActionCreators(actions, dispatch);
 };

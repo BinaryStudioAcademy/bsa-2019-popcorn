@@ -3,7 +3,8 @@ import {
 	SAVE_WATCH_ITEM_SUCCESS,
 	MOVE_WATCH_ITEM_TO_WATCHED,
 	DELETE_WATCH_ITEM,
-	FETCH_WATCH_LIST_STATUS_SUCCESS
+	FETCH_WATCH_LIST_STATUS_SUCCESS,
+	ADD_MOVIE_TO_WATCH_LIST_SUCCESS
 } from './actionTypes';
 import movieAdapter from '../../MovieSeriesPage/movieAdapter';
 import config from '../../../config';
@@ -61,6 +62,12 @@ export default (state = initialState, action) => {
 			return {
 				...state,
 				watchListStatus: action.payload.watchListStatus
+			};
+		case ADD_MOVIE_TO_WATCH_LIST_SUCCESS:
+			return {
+				...state,
+				watchListStatus: action.payload,
+				watchList: undefined
 			};
 		default:
 			return state;
