@@ -50,8 +50,8 @@ class getAddStoryPopupContent extends React.Component<IProps> {
 		}
 	};
 
-	static valid({ image_url, caption, type }: INewStory) {
-		return (image_url && caption) || type === 'voting';
+	static valid({ image_url, backgroundColor, caption, type }: INewStory) {
+		return caption || type === 'voting';
 	}
 
 	handleHideColorPicker = () => {
