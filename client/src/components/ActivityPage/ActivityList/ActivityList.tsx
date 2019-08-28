@@ -1,6 +1,7 @@
 import React from 'react';
 import './ActivityList.scss';
 import ActivityItem from '../ActivityItem/ActivityItem';
+import { NavLink } from 'react-router-dom';
 
 const mockedActivity = [
 	{
@@ -46,6 +47,7 @@ export type Activity = {
 	date: string;
 	img: string;
 	isRead?: boolean;
+	url: string;
 };
 
 const generateActivity = (
@@ -55,11 +57,13 @@ const generateActivity = (
 	if (activities.length && activities.length === 0) return [];
 	const generatedActivity = activities.map(el => {
 		return (
-			<ActivityItem
-				key={el.date}
-				activity={el}
-				readNotification={readNotification}
-			/>
+			<NavLink to={el.url} style={{ textDecoration: 'none', color: 'inherit' }}>
+				<ActivityItem
+					key={el.date}
+					activity={el}
+					readNotification={readNotification}
+				/>
+			</NavLink>
 		);
 	});
 	return generatedActivity;

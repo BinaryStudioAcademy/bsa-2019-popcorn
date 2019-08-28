@@ -22,7 +22,8 @@ export default socket => {
         img: messageInfo.user.avatar,
         type: "comment",
         text: `${messageInfo.user.name} left message in your event`,
-        date: new Date()
+        date: new Date(),
+        url: `/events/${messageInfo.eventId}/discussion`
       });
     }
     socket
