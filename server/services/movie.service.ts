@@ -2,7 +2,8 @@ import { Movie } from "../models/MovieModel";
 import { MovieRate } from "../models/movieRateModel";
 import MovieRepository, {
   getMovieVideoLinkById,
-  getCredits
+  getCredits,
+  getAwards
 } from "../repository/movie.repository";
 
 import MovieRateRepository from "../repository/movieRate.repository";
@@ -10,6 +11,8 @@ import { getCustomRepository, Like, getRepository } from "typeorm";
 import * as elasticRepository from "../repository/movieElastic.repository";
 import DiscussionRepository from "../repository/discussion.repository";
 import { ExtendedDiscussion, Discussion } from "models/DiscussionModel";
+
+const { awardsPage } = require("imdb-scrapper");
 
 export const getMovies = async ({ size, from }): Promise<any[]> => {
   let data = await elasticRepository.get(size, from);
@@ -22,6 +25,12 @@ export const getMovies = async ({ size, from }): Promise<any[]> => {
 export const getCastCrewById = async (movieId: number): Promise<any> => {
   const credits = await getCredits(movieId);
   return credits.credits;
+};
+
+export const getMovieAwards = async (imdbId: any): Promise<any> => {
+  let awardList = await getAwards(imdbId);
+  console.log(awardList.data.movies.awards);
+  return awardList.data.movies[0].awards;
 };
 
 export const getMovieById = async (movieId: string): Promise<any> => {

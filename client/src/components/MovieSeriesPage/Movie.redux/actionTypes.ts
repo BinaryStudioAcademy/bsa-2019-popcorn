@@ -23,3 +23,5 @@ export const SET_REVIEW_SUCCESS = 'SET_REVIEW_SUCCESS';
 export const REMOVE_REVIEW_SET = 'REMOVE_REVIEW_SET';
 export const GET_CAST_CREW = 'GET_CAST_CREW';
 export const SET_CAST_CREW = 'SET_CAST_CREW';
+export const GET_AWARDS = 'GET_AWARDS';
+export const SET_AWARDS = 'SET_AWARDS';

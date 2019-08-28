@@ -1,12 +1,6 @@
 import TMovie from './TMovie';
 import config from '../../config';
 
-const getGenre = (genres): string =>
-	genres
-		.filter(genre => genre)
-		.map(genre => (genre ? genre.name : ''))
-		.toString();
-
 export default (movie: any): TMovie => {
 	return {
 		id: movie.id,
@@ -21,6 +15,7 @@ export default (movie: any): TMovie => {
 		video: `https://www.youtube.com/embed/${movie.video_link}`,
 		hasVideo: !!movie.video_link,
 		cast: 'Matt Damon, Jessica Chastain, Kristen Wiig',
-		messages: movie.messages
+		messages: movie.messages,
+		imdb_id: movie.imdb_id
 	};
 };

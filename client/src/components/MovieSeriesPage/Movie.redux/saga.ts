@@ -25,7 +25,9 @@ import {
 	SET_REVIEW,
 	SET_REVIEW_SUCCESS,
 	GET_CAST_CREW,
-	SET_CAST_CREW
+	SET_CAST_CREW,
+	SET_AWARDS,
+	GET_AWARDS
 } from './actionTypes';
 import config from '../../../config';
 import { FETCH_MOVIE_REVIEWS } from '../MovieSeriesReviews/actionTypes';
@@ -59,6 +61,19 @@ export function* fetchCrewCast(action) {
 		type: SET_CAST_CREW,
 		payload: {
 			credits: credits
+		}
+	});
+}
+
+export function* fetchAwards(action) {
+	const awards = yield call(webApi, {
+		method: 'GET',
+		endpoint: '/api/movie/awards/' + action.payload.id
+	});
+	yield put({
+		type: SET_AWARDS,
+		payload: {
+			awards: awards
 		}
 	});
 }
@@ -301,6 +316,10 @@ function* watchFetchCastCrew() {
 	yield takeEvery(GET_CAST_CREW, fetchCrewCast);
 }
 
+function* watchFetchAwards() {
+	yield takeEvery(GET_AWARDS, fetchAwards);
+}
+
 function* watchSetUserRate() {
 	yield takeEvery(SET_USER_RATE, setUserRate);
 }
@@ -329,6 +348,7 @@ export default function* header() {
 		watchLoadMoreMovie(),
 		watchFetchReviewByUserMovieId(),
 		watchSetReview(),
-		watchFetchCastCrew()
+		watchFetchCastCrew(),
+		watchFetchAwards()
 	]);
 }

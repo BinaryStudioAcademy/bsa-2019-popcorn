@@ -12,7 +12,8 @@ import {
 	FETCH_REVIEW_BY_USER_MOVIE_ID,
 	SET_REVIEW,
 	REMOVE_REVIEW_SET,
-	GET_CAST_CREW
+	GET_CAST_CREW,
+	GET_AWARDS
 } from './actionTypes';
 
 export const fetchMovieList = (): any => {
@@ -33,6 +34,15 @@ export const setMovieSeries = (movie): any => {
 export const fetchCastCrew = (id): any => {
 	return {
 		type: GET_CAST_CREW,
+		payload: {
+			id
+		}
+	};
+};
+
+export const fetchAwards = (id): any => {
+	return {
+		type: GET_AWARDS,
 		payload: {
 			id
 		}
