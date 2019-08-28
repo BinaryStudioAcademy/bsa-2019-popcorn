@@ -3,10 +3,10 @@
 .date-picker-block {
 	display: flex;
 	width: 100%;
-	justify-content: center;
+	justify-content: space-around;
 	input {
 		float: right;
-		width: 100%;
+		width: 95%;
 		outline: none;
 		height: 20px;
 		margin-left: 0px;
@@ -18,5 +18,8 @@
 		border: 1px solid $border-color;
 		border-radius: 3px;
 		padding: 12px 15px;
+	}
+	.react-datepicker__header {
+		height: 30px;
 	}
 }

@@ -125,8 +125,16 @@ const Main = ({
 	return (
 		<div className={'main-wrap'}>
 			{isAuthorized ? <Header userInfo={userInfo} /> : null}
-			<div className="main-page">
-				<MainPageSidebar notifications={notifications} />
+			<div
+				className={
+					window.location.pathname === '/advanced-search'
+						? 'main-page-search'
+						: 'main-page'
+				}
+			>
+				{window.location.pathname !== '/advanced-search' ? (
+					<MainPageSidebar notifications={notifications} />
+				) : null}
 				<div
 				// style={{ width: 'calc(100vw - 205px)' }}
 				>

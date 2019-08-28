@@ -53,7 +53,11 @@ class AdvancedSearchDatePicker extends React.Component<
 						onChange={date => {
 							this.onChangeDate({ startDate: date });
 						}}
-						dateFormat="yyyy/MM/dd"
+						peekNextMonth
+						dropdownMode="select"
+						dateFormat="MM/yyyy"
+						showMonthYearPicker
+						placeholderText="Start year"
 					/>
 
 					<DatePicker
@@ -63,7 +67,10 @@ class AdvancedSearchDatePicker extends React.Component<
 						endDate={this.state.dateRange.endDate}
 						minDate={this.state.dateRange.startDate}
 						onChange={date => this.onChangeDate({ endDate: date })}
-						dateFormat="yyyy/MM/dd"
+						dropdownMode="select"
+						dateFormat="MM/yyyy"
+						showMonthYearPicker
+						placeholderText="End year"
 					/>
 				</div>
 			</div>

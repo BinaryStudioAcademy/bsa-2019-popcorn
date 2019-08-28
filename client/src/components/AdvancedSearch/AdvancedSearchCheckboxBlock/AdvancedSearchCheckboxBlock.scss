@@ -3,13 +3,14 @@
 
 .checkbox-block {
 	font-family: $base-font-family;
-	max-height: 130px;
+	max-height: 190px;
 	overflow-y: scroll;
 }
 
 .checkbox-header {
 	font-size: $header-medium;
 	align-self: center;
+	margin-bottom: 10px;
 }
 
 .checkbox-block::-webkit-scrollbar {

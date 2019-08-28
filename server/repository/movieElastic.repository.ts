@@ -17,7 +17,7 @@ export const get = async (size = 50, from = 0) => {
   return response.json();
 };
 
-export const getFiltred = async filters => {
+export const getFiltred = async (size = 14, from = 0, filters) => {
   const response = await fetch(
     process.env.ELASTIC_API_URL + `/popcorn/_search`,
     {
@@ -63,12 +63,34 @@ export const getFiltred = async filters => {
                     lte: filters.yearValues.endDate
                   }
                 }
-              }
+              },
+              filters.genresValues.length !== 0
+                ? {
+                    match: {
+                      genres: filters.genresValues.join(", ")
+                    }
+                  }
+                : {},
+              filters.castValues !== ""
+                ? {
+                    query_string: {
+                      query: `("${filters.castValues}")`,
+                      fields: ["cast"]
+                    }
+                  }
+                : {}
             ]
           }
         },
-        size: 28,
-        from: 0
+        sort: [
+          {
+            popularity: {
+              order: "desc"
+            }
+          }
+        ],
+        size,
+        from
       })
     }
   );

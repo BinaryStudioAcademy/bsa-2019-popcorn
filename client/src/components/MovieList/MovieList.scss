@@ -1,8 +1,8 @@
 @import '../../styles/variables';
 
 .movie-list {
+	padding-top: 10px;
 	margin: 0 auto;
-	border: 1px $border-color solid;
 	width: 100%;
 }
 
@@ -10,6 +10,38 @@
 	.spinner-wrp {
 		.lds-css {
 			position: relative;
+		}
+	}
+}
+.advanced-search-results-head {
+	font-size: $header-large;
+	text-align: center;
+	margin-bottom: 20px;
+}
+
+.page-switch {
+	display: flex;
+	justify-content: space-around;
+	margin-top: 10px;
+	.previous-icon {
+		margin-right: 5px;
+	}
+	.next-icon {
+		margin-left: 5px;
+	}
+	button {
+		padding: 10px;
+		color: white;
+		background-color: $button-background;
+		border: none;
+		box-shadow: 3px 3px 3px $button-shadow-color;
+		border-radius: 5px;
+		&:hover {
+			cursor: pointer;
+		}
+		&:disabled {
+			cursor: default;
+			background-color: rgba($button-background, 0.7);
 		}
 	}
 }

@@ -4,7 +4,10 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import {
 	fetchFiltredMovies,
-	setMovieSeries
+	setMovieSeries,
+	loadMoreFiltredMovie,
+	setFilters,
+	getGenres
 } from '../MovieSeriesPage/Movie.redux/actions';
 import TMovie from '../MovieSeriesPage/TMovie';
 import MovieList from '../MovieList/MovieList';
@@ -23,9 +26,21 @@ interface IAdvancedSearchPage {
 	movieList: null | Array<TMovie>;
 	fetchFiltredMovies: (filters: any) => any;
 	setMovieSeries: (movie: any) => any;
+	loadMoreFiltredMovie: (size: number, from: number, filters: any) => any;
+	setFilters: (filters: any) => any;
+	filters: any;
+	showSpinner: boolean;
+	genres: any;
+	getGenres: () => any;
 }
 
-const MovieListRender = (movieList, fetchFiltredMovies, setMovieSeries) => {
+const MovieListRender = (
+	movieList,
+	fetchFiltredMovies,
+	setMovieSeries,
+	loadMoreFiltredMovie,
+	filters
+) => {
 	if (!movieList) {
 		fetchFiltredMovies({
 			nameValue: '',
@@ -33,7 +48,7 @@ const MovieListRender = (movieList, fetchFiltredMovies, setMovieSeries) => {
 			ratingValues: [],
 			yearValues: [],
 			descriptionValue: '',
-			castValues: [],
+			castValues: '',
 			crewValues: [],
 			durationValues: []
 		});
@@ -44,6 +59,8 @@ const MovieListRender = (movieList, fetchFiltredMovies, setMovieSeries) => {
 			movies={movieList}
 			setMovieSeries={setMovieSeries}
 			twoColumns={true}
+			loadMoreMovie={loadMoreFiltredMovie}
+			filters={filters}
 		/>
 	);
 };
@@ -51,15 +68,42 @@ const MovieListRender = (movieList, fetchFiltredMovies, setMovieSeries) => {
 const AdvancedSearchPage = ({
 	movieList,
 	fetchFiltredMovies,
-	setMovieSeries
+	setMovieSeries,
+	loadMoreFiltredMovie,
+	setFilters,
+	filters,
+	showSpinner,
+	genres,
+	getGenres
 }: IAdvancedSearchPage) => {
-	return (
+	let convertGenres = null;
+	let convertCast = null;
+	if (!genres) getGenres();
+	if (genres) {
+		convertGenres = genres.map(el => el.name);
+	}
+	return genres ? (
 		<div className="advanced-search-page">
-			<AdvancedMovieSearch fetchFiltredMovies={fetchFiltredMovies} />
-			<div className="movie-list-wrp">
-				{MovieListRender(movieList, fetchFiltredMovies, setMovieSeries)}
-			</div>
+			<AdvancedMovieSearch
+				fetchFiltredMovies={fetchFiltredMovies}
+				setFilters={setFilters}
+				genres={convertGenres}
+				casts={convertCast}
+			/>
+			{showSpinner ? (
+				<Spinner />
+			) : (
+				MovieListRender(
+					movieList,
+					fetchFiltredMovies,
+					setMovieSeries,
+					loadMoreFiltredMovie,
+					filters
+				)
+			)}
 		</div>
+	) : (
+		<Spinner />
 	);
 };
 
@@ -67,11 +111,16 @@ const mapStateToProps = (rootState, props) => ({
 	isAuthorized: !!rootState.profile.profileInfo,
 	userInfo: rootState.profile.profileInfo,
 	movieList: rootState.movie.movieSearchInAdvancedSearch,
-	filters: rootState.movie.filters
+	filters: rootState.movie.filters,
+	showSpinner: rootState.movie.showSpinner,
+	genres: rootState.movie.genres
 });
 const actions = {
 	fetchFiltredMovies,
-	setMovieSeries
+	setMovieSeries,
+	loadMoreFiltredMovie,
+	setFilters,
+	getGenres
 };
 
 const mapDispatchToProps = dispatch => bindActionCreators(actions, dispatch);

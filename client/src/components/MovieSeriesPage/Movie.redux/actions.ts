@@ -13,8 +13,17 @@ import {
 	SET_REVIEW,
 	REMOVE_REVIEW_SET,
 	GET_CAST_CREW,
-	FETCH_FILTRED_MOVIES
+	FETCH_FILTRED_MOVIES,
+	LOAD_MORE_FILTRED_MOVIE,
+	SET_FILTERS,
+	GET_GENRES
 } from './actionTypes';
+
+export const getGenres = (): any => {
+	return {
+		type: GET_GENRES
+	};
+};
 
 export const fetchMovieList = (): any => {
 	return {
@@ -80,6 +89,15 @@ export const fetchMovie = (movieId: string): object => {
 	};
 };
 
+export const setFilters = (filters: any): object => {
+	return {
+		type: SET_FILTERS,
+		payload: {
+			filters
+		}
+	};
+};
+
 export const setUserRate = (userRate: any): object => {
 	const { userId, movieId, rate } = userRate;
 	return {
@@ -113,6 +131,21 @@ export const loadMoreMovie = (size: number, from: number): any => {
 		payload: {
 			size,
 			from
+		}
+	};
+};
+
+export const loadMoreFiltredMovie = (
+	size: number,
+	from: number,
+	filters: any
+): any => {
+	return {
+		type: LOAD_MORE_FILTRED_MOVIE,
+		payload: {
+			size,
+			from,
+			filters
 		}
 	};
 };
