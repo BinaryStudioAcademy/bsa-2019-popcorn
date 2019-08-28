@@ -59,7 +59,7 @@ const privacyPreverences = [
 	}
 ];
 
-const types = ['All', 'Followers', 'OnlyMe'];
+const types = ['All', 'Followers', 'Only me'];
 
 class PrivacyPreferences extends React.Component<IProps, IState> {
 	constructor(props) {
@@ -68,14 +68,14 @@ class PrivacyPreferences extends React.Component<IProps, IState> {
 		this.state = { user: profileInfo };
 	}
 
-	createControlBLock(key, value, userProfile) {
+	createControlBLock(key, value, user) {
 		return (
 			<p key={key}>
 				<label className="privacy-setting-wrapper">
 					{value}
 					<select
 						className="type-select"
-						value={userProfile[key]}
+						value={user[key]}
 						onChange={event => {
 							const { user } = this.state;
 							user[key] = event.target.value;
@@ -103,6 +103,7 @@ class PrivacyPreferences extends React.Component<IProps, IState> {
 
 	render() {
 		const { loading } = this.props;
+		const { user } = this.state;
 		return loading ? (
 			<Spinner />
 		) : (
@@ -115,7 +116,7 @@ class PrivacyPreferences extends React.Component<IProps, IState> {
 							other users.
 						</p>
 						{privacyPreverences.map(({ key, value }) =>
-							this.createControlBLock(key, value, this.props.profileInfo)
+							this.createControlBLock(key, value, user)
 						)}
 						<button
 							className="settings-btn"
