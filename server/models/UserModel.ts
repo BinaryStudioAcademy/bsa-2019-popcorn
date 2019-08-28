@@ -5,6 +5,7 @@ import { Story } from "./StoryModel";
 import { Surveys } from "./SurveysModel";
 import { SurveysQuestionAnswer } from "./SurveysQuestionAnswer";
 import { Follower } from "./FollowerModel";
+import { FavoriteList } from "./FavoriteListModel";
 
 export class User {
   id: string;
@@ -25,6 +26,7 @@ export class User {
   surveys: Surveys[];
   surveysQuestionAnswer: SurveysQuestionAnswer[];
   followers: Follower[];
+  favoriteLists: FavoriteList[];
   emailNotificationNews?: boolean;
   emailNotificationUpdatesFromFollowed?: boolean;
   emailNotificationComments?: boolean;
