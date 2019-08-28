@@ -24,7 +24,7 @@ export class Story {
   @Column({ nullable: true })
   activityId: string;
 
-  @ManyToOne(type => User)
+  @ManyToOne(type => User, { onDelete: "CASCADE" })
   @JoinColumn()
   user: User;
 

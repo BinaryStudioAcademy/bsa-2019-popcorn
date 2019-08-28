@@ -98,13 +98,12 @@ export const updateNotificationSettings = async (
 ) => {
   if (userId !== user.id)
     return next({ status: 401, message: "Permision denied." }, null);
-  return await getCustomRepository(UserRepository).updateById(userId, {
-    ...user,
-    ...newSettings
-  });
+  const newData = { ...user, ...newSettings };
+  if (newData.favoriteLists) delete newData.favoriteLists;
+  return await getCustomRepository(UserRepository).updateById(userId, newData);
 };
 
-type Privacy = "All" | "Followers" | "OnlyMe";
+type Privacy = "All" | "Followers" | "Only me";
 
 interface IUserPrivacySettings {
   privacyProfileInfo?: Privacy;
@@ -127,8 +126,7 @@ export const updatePrivacySettings = async (
 ) => {
   if (userId !== user.id)
     return next({ status: 401, message: "Permision denied." }, null);
-  return await getCustomRepository(UserRepository).updateById(userId, {
-    ...user,
-    ...newSettings
-  });
+  const newData = { ...user, ...newSettings };
+  if (newData.favoriteLists) delete newData.favoriteLists;
+  return await getCustomRepository(UserRepository).updateById(userId, newData);
 };
