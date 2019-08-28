@@ -26,7 +26,9 @@ class StoryListItem extends Component<IStoryListItemProps> {
 						className="avatar avatar-story"
 						src={avatar || config.DEFAULT_AVATAR}
 					/>
-					<img alt="story-pic" className="story-pic" src={imageUrl} />
+					{imageUrl && (
+						<img alt="story-pic" className="story-pic" src={imageUrl} />
+					)}
 				</div>
 				<div className="story-name">{name}</div>
 			</div>
