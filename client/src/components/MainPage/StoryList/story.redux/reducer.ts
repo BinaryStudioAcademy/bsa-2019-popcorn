@@ -6,7 +6,9 @@ import {
 	SAVE_MOVIE,
 	SET_CAPTION_NEWSTORY,
 	SET_STORIES,
-	SAVE_CROPPED_IMAGE
+	SAVE_CROPPED_IMAGE,
+	SET_BACKGROUNG_NEWSTORY,
+	DISPLAY_PICKER
 } from './actionTypes';
 import INewStory from '../INewStory';
 import replaceFilmSearch from '../../../../helpers/replaceFilmSearch';
@@ -17,6 +19,7 @@ const initialState: {
 	cursorPosition: { start: number; end: number };
 	title: string;
 	photoSaved: boolean;
+	isShownPicker: boolean;
 } = {
 	stories: null,
 	newStory: {
@@ -26,11 +29,12 @@ const initialState: {
 		type: '',
 		movieId: null,
 		movieOption: '',
-		backgroundColor: ''
+		backgroundColor: 'rgba(255,255,255,1)'
 	},
 	cursorPosition: { start: 0, end: 0 },
 	title: '',
-	photoSaved: false
+	photoSaved: false,
+	isShownPicker: false
 };
 
 export default function(state = initialState, action) {
@@ -52,6 +56,19 @@ export default function(state = initialState, action) {
 					end: action.payload.end
 				},
 				title: action.payload.title
+			};
+		case SET_BACKGROUNG_NEWSTORY:
+			return {
+				...state,
+				newStory: {
+					...state.newStory,
+					backgroundColor: action.payload.color
+				}
+			};
+		case DISPLAY_PICKER:
+			return {
+				...state,
+				isShownPicker: action.payload.isShown
 			};
 		case SAVE_CROPPED_IMAGE:
 			return {

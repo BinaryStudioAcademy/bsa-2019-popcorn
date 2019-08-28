@@ -7,6 +7,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import TMovie from '../../../MovieSeriesPage/TMovie';
 import Spinner from '../../../shared/Spinner';
 import { SketchPicker } from 'react-color';
+import { setBackground, displayPicker } from '../story.redux/actions';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 
 interface IProps {
 	newStory: INewStory;
@@ -35,19 +38,16 @@ interface IProps {
 	isLoading: boolean;
 	photoSaved: boolean;
 	saveAfterCrop: () => void;
+	setBackground: (color: string) => void;
+	backgroundColor: string;
+	displayPicker: (isShown: boolean) => void;
+	displayColorPicker: boolean;
 }
 
 class getAddStoryPopupContent extends React.Component<IProps> {
 	state = {
 		open: true,
-		extra: true,
-		displayColorPicker: false,
-		backgroundColor: {
-			r: '0',
-			g: '0',
-			b: '0',
-			a: '1'
-		}
+		extra: true
 	};
 
 	static valid({ image_url, backgroundColor, caption, type }: INewStory) {
@@ -55,34 +55,22 @@ class getAddStoryPopupContent extends React.Component<IProps> {
 	}
 
 	handleHideColorPicker = () => {
-		this.setState({
-			...this.state,
-			displayColorPicker: false
-		});
+		this.props.displayPicker(false);
 	};
 
 	handleColorChange = color => {
-		this.setState({
-			...this.state,
-			backgroundColor: color.rgb
-		});
+		this.props.setBackground(
+			`rgba(${color.rgb.r},${color.rgb.g},${color.rgb.b},${color.rgb.a})`
+		);
 	};
 	handleShowColorPicker = () => {
-		this.setState({
-			...this.state,
-			displayColorPicker: !this.state.displayColorPicker
-		});
+		this.props.displayPicker(!this.props.displayColorPicker);
 	};
 
 	render() {
 		const newStory = this.props.newStory;
 
 		const disabled = !getAddStoryPopupContent.valid(newStory);
-		const styles = {
-			backStyle: {
-				background: `rgba(${this.state.backgroundColor.r},${this.state.backgroundColor.g},${this.state.backgroundColor.b},${this.state.backgroundColor.a})`
-			}
-		};
 
 		if (!this.state.open) return <Redirect to={'/'} />;
 		if (!this.state.extra) return <Redirect to={'/create/extra'} />;
@@ -110,6 +98,7 @@ class getAddStoryPopupContent extends React.Component<IProps> {
 							saveMovie={this.props.saveMovie}
 							photoSaved={this.props.photoSaved}
 							saveAfterCrop={this.props.saveAfterCrop}
+							backgroundColor={this.props.backgroundColor}
 						>
 							{newStory.activity && newStory.activity.name}
 						</PostStoryEditor>
@@ -118,19 +107,19 @@ class getAddStoryPopupContent extends React.Component<IProps> {
 							className="color-picker-btn"
 						>
 							<div
-								style={styles.backStyle}
+								style={{ backgroundColor: this.props.backgroundColor }}
 								className="color-picker-btn-preview"
 							/>
 						</div>
-						{this.state.displayColorPicker ? (
+						{this.props.displayColorPicker ? (
 							<div className="color-picker-popover">
 								<div
 									className="color-picker-cover"
 									onClick={this.handleHideColorPicker}
 								/>
 								<SketchPicker
-									color={this.state.backgroundColor}
-									onChange={this.handleColorChange}
+									color={this.props.backgroundColor}
+									onChangeComplete={this.handleColorChange}
 								/>
 							</div>
 						) : null}
@@ -164,7 +153,7 @@ class getAddStoryPopupContent extends React.Component<IProps> {
 									this.props.createStory(
 										{
 											...newStory,
-											backgroundColor: styles.backStyle.background
+											backgroundColor: this.props.backgroundColor
 										},
 										this.props.userId
 									);
@@ -182,4 +171,20 @@ class getAddStoryPopupContent extends React.Component<IProps> {
 	}
 }
 
-export default getAddStoryPopupContent;
+const mapStateToProps = (rootState, props) => ({
+	...props,
+	backgroundColor: rootState.story.newStory.backgroundColor,
+	displayColorPicker: rootState.story.isShownPicker
+});
+
+const actions = {
+	setBackground,
+	displayPicker
+};
+
+const mapDispatchToProps = dispatch => bindActionCreators(actions, dispatch);
+
+export default connect(
+	mapStateToProps,
+	mapDispatchToProps
+)(getAddStoryPopupContent);

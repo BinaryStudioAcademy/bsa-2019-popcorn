@@ -33,6 +33,7 @@ interface IPostStoryEditorProps {
 	saveMovie?: (movie: TMovie) => any;
 	photoSaved: boolean;
 	saveAfterCrop: () => void;
+	backgroundColor: string;
 }
 
 interface IPostStoryEditorState {
@@ -138,6 +139,7 @@ class PostStoryEditor extends React.Component<
 	}
 
 	render() {
+		const backgroundColor = this.props.backgroundColor;
 		const changeBody = (e, title) => {
 			this.props.changeBody(
 				e.target.value,
@@ -182,7 +184,7 @@ class PostStoryEditor extends React.Component<
 						)}
 					</div>
 				) : (
-					<div className={'upload-image-wrp'}>
+					<div className={'upload-image-wrp'} style={{ backgroundColor }}>
 						<ImageUploader
 							imageHandler={uploadFile}
 							imageStateHandler={this.imageStateHandler}

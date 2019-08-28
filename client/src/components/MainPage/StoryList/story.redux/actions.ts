@@ -7,7 +7,9 @@ import {
 	FETCH_STORIES,
 	SAVE_MOVIE,
 	SET_CAPTION_NEWSTORY,
-	SAVE_CROPPED_IMAGE
+	SET_BACKGROUNG_NEWSTORY,
+	SAVE_CROPPED_IMAGE,
+	DISPLAY_PICKER
 } from './actionTypes';
 import INewStory from '../INewStory';
 import IVoting from '../IVoting';
@@ -27,6 +29,24 @@ export const setCaption = (caption, start, end, title) => {
 			start,
 			end,
 			title
+		}
+	};
+};
+
+export const setBackground = color => {
+	return {
+		type: SET_BACKGROUNG_NEWSTORY,
+		payload: {
+			color
+		}
+	};
+};
+
+export const displayPicker = isShown => {
+	return {
+		type: DISPLAY_PICKER,
+		payload: {
+			isShown
 		}
 	};
 };
