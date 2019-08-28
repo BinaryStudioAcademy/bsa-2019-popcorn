@@ -15,7 +15,7 @@ import {
 	FETCH_FILTRED_MOVIES,
 	LOAD_MORE_FILTRED_MOVIE,
 	SET_FILTERS,
-	GET_GENRE
+	GET_GENRES
 } from './actionTypes';
 
 export const getGenres = (): any => {
