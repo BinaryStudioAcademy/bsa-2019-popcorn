@@ -23,7 +23,15 @@ import {
 	FETCH_REVIEW_BY_USER_MOVIE_ID,
 	FETCH_REVIEW_BY_USER_MOVIE_ID_SUCCESS,
 	SET_REVIEW,
-	SET_REVIEW_SUCCESS
+	SET_REVIEW_SUCCESS,
+	FETCH_FILTRED_MOVIES,
+	SET_FILTRED_MOVIE_LIST,
+	SET_LOAD_MORE_FILTRED_MOVIE,
+	LOAD_MORE_FILTRED_MOVIE,
+	SET_SHOW_SPINNER,
+	SET_HIDE_SPINNER,
+	GET_GENRES,
+	SET_GENRES
 } from './actionTypes';
 import config from '../../../config';
 import { FETCH_MOVIE_REVIEWS } from '../MovieSeriesReviews/actionTypes';
@@ -45,6 +53,45 @@ export function* fetchFilms(action) {
 		console.log(e);
 		// TODO show error
 	}
+}
+
+export function* fetchFiltredMovieList(action) {
+	try {
+		yield put({
+			type: SET_SHOW_SPINNER
+		});
+
+		const data = yield call(webApi, {
+			endpoint: '/api/movie/advanced',
+			method: 'POST',
+			body: action.payload
+		});
+		yield put({
+			type: SET_FILTRED_MOVIE_LIST,
+			payload: {
+				movies: data
+			}
+		});
+
+		yield put({
+			type: SET_HIDE_SPINNER
+		});
+	} catch (e) {
+		console.log('movie saga fetchMovieList:', e.message);
+	}
+}
+
+export function* getGenres() {
+	const genres = yield call(webApi, {
+		method: 'GET',
+		endpoint: '/api/movie/advanced/get-genres'
+	});
+	yield put({
+		type: SET_GENRES,
+		payload: {
+			genres: genres
+		}
+	});
 }
 
 export function* fetchMovieList() {
@@ -186,6 +233,7 @@ export function* fetchSearchMovie(action) {
 
 export function* loadMoreMovie(action) {
 	const { size, from } = action.payload;
+	console.log('hidden1');
 	try {
 		const data = yield call(webApi, {
 			endpoint: `/api/movie?from=${from}&size=${size}`,
@@ -199,6 +247,31 @@ export function* loadMoreMovie(action) {
 		});
 	} catch (e) {
 		console.log('movie saga loadMoreMovie: ', e.message);
+	}
+}
+
+export function* loadMoreFiltredMovie(action) {
+	const { size, from, filters } = action.payload;
+	try {
+		yield put({
+			type: SET_SHOW_SPINNER
+		});
+		const data = yield call(webApi, {
+			endpoint: `/api/movie/advanced?from=${from}&size=${size}`,
+			method: 'POST',
+			body: filters
+		});
+		yield put({
+			type: SET_LOAD_MORE_FILTRED_MOVIE,
+			payload: {
+				movies: data
+			}
+		});
+		yield put({
+			type: SET_HIDE_SPINNER
+		});
+	} catch (e) {
+		console.log('movie saga loadMoreFiltredMovie: ', e.message);
 	}
 }
 
@@ -257,6 +330,10 @@ export function* setReview(action) {
 	}
 }
 
+function* watchFetchFiltredMovieList() {
+	yield takeEvery(FETCH_FILTRED_MOVIES, fetchFiltredMovieList);
+}
+
 function* watchFetchFilms() {
 	yield takeEvery(START_FETCH_SEARCH_FILMS, fetchFilms);
 }
@@ -289,12 +366,20 @@ function* watchLoadMoreMovie() {
 	yield takeEvery(LOAD_MORE_MOVIE, loadMoreMovie);
 }
 
+function* watchLoadMoreFiltredMovie() {
+	yield takeEvery(LOAD_MORE_FILTRED_MOVIE, loadMoreFiltredMovie);
+}
+
 function* watchFetchReviewByUserMovieId() {
 	yield takeEvery(FETCH_REVIEW_BY_USER_MOVIE_ID, fetchReviewByUserMovieId);
 }
 
 function* watchSetReview() {
 	yield takeEvery(SET_REVIEW, setReview);
+}
+
+function* watchFetchGenres() {
+	yield takeEvery(GET_GENRES, getGenres);
 }
 
 export default function* header() {
@@ -308,6 +393,9 @@ export default function* header() {
 		watchFetchSearchMovie(),
 		watchLoadMoreMovie(),
 		watchFetchReviewByUserMovieId(),
-		watchSetReview()
+		watchSetReview(),
+		watchFetchFiltredMovieList(),
+		watchLoadMoreFiltredMovie(),
+		watchFetchGenres()
 	]);
 }

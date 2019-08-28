@@ -13,6 +13,12 @@ router
       .then((movies: Movie[]) => res.send(movies))
       .catch(next)
   )
+  .post("/advanced", (req: Request, res: Response, next: NextFunction) => {
+    movieService
+      .getFiltredMovies(req.query, req.body)
+      .then((movies: Movie[]) => res.send(movies))
+      .catch(next);
+  })
   .get("/find", (req, res, next) =>
     movieService
       .getByTitle(req.query.title)
@@ -57,6 +63,15 @@ router
     (req: any, res: Response, next: NextFunction) => {
       return movieService
         .getMovieRate(req.params.userId, req.params.movieId) // get movie by userId and movieId
+        .then((response: any) => res.send(response))
+        .catch(next);
+    }
+  )
+  .get(
+    "/advanced/get-genres",
+    (req: any, res: Response, next: NextFunction) => {
+      return movieService
+        .getMoviesGenres()
         .then((response: any) => res.send(response))
         .catch(next);
     }
