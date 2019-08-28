@@ -3,16 +3,18 @@
 .advanced-movie-search {
 	display: flex;
 	flex-direction: column;
-	box-shadow: 2px 1px 8px $border-focus-color;
+	border-right: 1px solid $border-color;
+	margin-right: 20px;
 	max-width: 300px;
-	min-height: 100vh;
+	position: sticky;
+	top: 0;
 }
 
 .advanced-movie-search-block {
 	display: flex;
 	flex-direction: column;
 	border-bottom: 1px solid $orange-light;
-	padding: 10px;
+	padding: 20px;
 }
 
 .search-button {

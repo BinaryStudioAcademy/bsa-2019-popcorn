@@ -2,7 +2,8 @@ import { Movie } from "../models/MovieModel";
 import { MovieRate } from "../models/movieRateModel";
 import MovieRepository, {
   getMovieVideoLinkById,
-  getCredits
+  getCredits,
+  getGenres
 } from "../repository/movie.repository";
 
 import MovieRateRepository from "../repository/movieRate.repository";
@@ -17,6 +18,20 @@ export const getMovies = async ({ size, from }): Promise<any[]> => {
   data = data.hits.hits;
 
   return data.map(movie => movie._source);
+};
+
+export const getFiltredMovies = async (
+  { from, size },
+  filters
+): Promise<any[]> => {
+  let data = await elasticRepository.getFiltred(size, from, filters);
+  data = data.hits.hits;
+  return data.map(movie => movie._source);
+};
+
+export const getMoviesGenres = async (): Promise<any[]> => {
+  let genres = await getGenres();
+  return genres.genres;
 };
 
 export const getMovieById = async (movieId: string): Promise<any> => {

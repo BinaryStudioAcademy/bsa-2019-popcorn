@@ -13,6 +13,12 @@ router
       .then((movies: Movie[]) => res.send(movies))
       .catch(next)
   )
+  .post("/advanced", (req: Request, res: Response, next: NextFunction) => {
+    movieService
+      .getFiltredMovies(req.query, req.body)
+      .then((movies: Movie[]) => res.send(movies))
+      .catch(next);
+  })
   .get("/find", (req, res, next) =>
     movieService
       .getByTitle(req.query.title)
@@ -67,6 +73,15 @@ router
       .then((response: any) => res.send(response))
       .catch(next);
   })
+  .get(
+    "/advanced/get-genres",
+    (req: any, res: Response, next: NextFunction) => {
+      return movieService
+        .getMoviesGenres()
+        .then((response: any) => res.send(response))
+        .catch(next);
+    }
+  )
   .get("/elastic/search", errorHandlerMiddleware, (req, res, next) =>
     movieService
       .searchMovieTitles(req.query.title, next)
