@@ -38,9 +38,9 @@ a:focus {
 	justify-content: flex-start;
 	color: $text-base-color;
 	font-family: $base-font-family;
-	padding: 10px;
 	justify-self: end;
 	max-height: 500px;
+	width: 100%;
 
 	.MessageContainer {
 		padding-right: 5px;
