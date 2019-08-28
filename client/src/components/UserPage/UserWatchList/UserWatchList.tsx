@@ -1,7 +1,12 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { fetchWatchList } from './actions';
+import {
+	fetchWatchList,
+	saveWatchItem,
+	moveToWatched,
+	deleteWatchItem
+} from './actions';
 import TMovie from '../../MovieSeriesPage/TMovie';
 import Spinner from '../../shared/Spinner';
 import './UserWatchList.scss';
@@ -11,6 +16,9 @@ import MovieSearch from '../../shared/MovieSearch/MovieSearch';
 interface IProps {
 	watchList: Array<IWatchItem>;
 	fetchWatchList: () => object;
+	saveWatchItem: (movie: any) => object;
+	moveToWatched: (watchId: string) => object;
+	deleteWatchItem: (watchId: string) => object;
 }
 
 export interface IWatchItem {
@@ -21,7 +29,13 @@ export interface IWatchItem {
 }
 
 const UserWatchList: React.FC<IProps> = props => {
-	const { watchList, fetchWatchList } = props;
+	const {
+		watchList,
+		fetchWatchList,
+		saveWatchItem,
+		moveToWatched,
+		deleteWatchItem
+	} = props;
 
 	if (!watchList) {
 		fetchWatchList();
@@ -35,45 +49,52 @@ const UserWatchList: React.FC<IProps> = props => {
 		item.status === 'watched' ? watchedList.push(item) : toWatchList.push(item);
 	}
 
-	const onClickToMovieItem = movie => {
-		console.log(movie);
-	};
-
-	const elasticProperties = ['id', 'title'];
-
 	const renderWatchList = (list: Array<IWatchItem>) =>
-		list.map(item => <WatchItem watchItem={item} key={item.id} />);
+		list.map(item => (
+			<WatchItem
+				deleteWatchItem={deleteWatchItem}
+				moveToWatched={moveToWatched}
+				watchItem={item}
+				key={item.id}
+			/>
+		));
+
+	const elasticProperties = [
+		'id',
+		'title',
+		'runtime',
+		'poster_path',
+		'release_date'
+	];
+	const onSelectMovie = movie => {
+		saveWatchItem(movie);
+	};
 
 	return (
 		<div className="UserWatchList">
 			<div className="user-watch-list-container">
-				<div className="to-watch-block">
-					<div style={{ width: '500px' }}>
-						<MovieSearch
-							onSelectMovie={movie => onClickToMovieItem(movie)}
-							elasticProperties={elasticProperties}
-						/>
-					</div>
-					<div className="watch-block-name">To watch</div>
-
-					<div className="field-input">
-						<input type="text" />
-						<button>Add</button>
-					</div>
-
-					{renderWatchList(toWatchList)}
+				<div className="search-input-container">
+					<MovieSearch
+						onSelectMovie={movie => onSelectMovie(movie)}
+						elasticProperties={elasticProperties}
+					/>
 				</div>
-
-				<div className="watched-block">
-					<div className="watch-block-name">Watched</div>
-
-					<div className="field-input">
-						<input type="text" />
-						<button>Add</button>
+				{toWatchList.length !== 0 && (
+					<div className="to-watch-block">
+						<div className="watch-block-name">To watch</div>
+						<div className="watch-items-container">
+							{renderWatchList(toWatchList)}
+						</div>
 					</div>
-
-					{renderWatchList(watchedList)}
-				</div>
+				)}
+				{watchedList.length !== 0 && (
+					<div className="watched-block">
+						<div className="watch-block-name">Watched</div>
+						<div className="watch-items-container">
+							{renderWatchList(watchedList)}
+						</div>
+					</div>
+				)}
 			</div>
 		</div>
 	);
@@ -86,7 +107,10 @@ const mapStateToProps = (state, props) => ({
 
 const mapDispatchToProps = dispatch => {
 	const actions = {
-		fetchWatchList
+		fetchWatchList,
+		saveWatchItem,
+		moveToWatched,
+		deleteWatchItem
 	};
 
 	return bindActionCreators(actions, dispatch);
