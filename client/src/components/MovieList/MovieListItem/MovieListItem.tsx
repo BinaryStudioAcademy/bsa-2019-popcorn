@@ -71,7 +71,7 @@ const MovieListItem: React.FC<IMovieListItemProps> = ({
 					)}
 				</div>
 				<div className="movie-cast">
-					<b>Main cast:</b> {movie.cast}
+					<b>Main cast:</b> {movie.mainCast}
 				</div>
 			</div>
 		</div>

@@ -11,8 +11,7 @@ import {
 	LOAD_MORE_MOVIE,
 	FETCH_REVIEW_BY_USER_MOVIE_ID,
 	SET_REVIEW,
-	REMOVE_REVIEW_SET,
-	GET_CAST_CREW
+	REMOVE_REVIEW_SET
 } from './actionTypes';
 
 export const fetchMovieList = (): any => {
@@ -26,15 +25,6 @@ export const setMovieSeries = (movie): any => {
 		type: SET_MOVIE_SERIES,
 		payload: {
 			movie
-		}
-	};
-};
-
-export const fetchCastCrew = (id): any => {
-	return {
-		type: GET_CAST_CREW,
-		payload: {
-			id
 		}
 	};
 };
