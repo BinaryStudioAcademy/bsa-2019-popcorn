@@ -1,11 +1,11 @@
 language: node_js
 
 node_js:
-- "10.16.0"
+  - "10.16.0"
 
 branches:
   only:
-  - dev
+    - dev
 
 before_install:
   - pip install --user awscli
@@ -18,26 +18,26 @@ install:
   - cd ..
 
 deploy:
-- provider: s3
-  access_key_id: $AWS_ACCESS_KEY
-  secret_access_key: $AWS_SECRET_KEY
-  local_dir: dpl_cd_upload
-  skip_cleanup: true
-  on: &2
-    repo: BinaryStudioAcademy/bsa-2019-popcorn
-    branch: dev
-  bucket: popcorn-bucket
-  region: eu-central-1
-- provider: codedeploy
-  access_key_id: $AWS_ACCESS_KEY
-  secret_access_key: $AWS_SECRET_KEY
-  bucket: popcorn-bucket
-  key: latest.zip
-  bundle_type: zip
-  application: popcorn
-  deployment_group: popcorn
-  region: eu-central-1
-  on: *2
+  - provider: s3
+    access_key_id: $AWS_ACCESS_KEY
+    secret_access_key: $AWS_SECRET_KEY
+    local_dir: dpl_cd_upload
+    skip_cleanup: true
+    on: &2
+      repo: BinaryStudioAcademy/bsa-2019-popcorn
+      branch: dev
+    bucket: popcorn-bucket
+    region: eu-central-1
+  - provider: codedeploy
+    access_key_id: $AWS_ACCESS_KEY
+    secret_access_key: $AWS_SECRET_KEY
+    bucket: popcorn-bucket
+    key: latest.zip
+    bundle_type: zip
+    application: popcorn
+    deployment_group: popcorn
+    region: eu-central-1
+    on: *2
 
 script:
   - export SKIP_PREFLIGHT_CHECK=true
