@@ -10,7 +10,9 @@ import {
 	FETCH_WATCH_LIST_STATUS,
 	FETCH_WATCH_LIST_STATUS_SUCCESS,
 	ADD_MOVIE_TO_WATCH_LIST,
-	ADD_MOVIE_TO_WATCH_LIST_SUCCESS
+	ADD_MOVIE_TO_WATCH_LIST_SUCCESS,
+	DELETE_MOVIE_FROM_WATCH_LIST,
+	DELETE_MOVIE_FROM_WATCH_LIST_SUCCESS
 } from './actionTypes';
 
 export function* fetchWatchList() {
@@ -94,7 +96,7 @@ export function* fetchWatchListStatus(action) {
 export function* addMovieToWatchList(action) {
 	const { movieId } = action.payload;
 	try {
-		yield call(webApi, {
+		const { id } = yield call(webApi, {
 			endpoint: `/api/watch`,
 			method: 'POST',
 			body: {
@@ -105,7 +107,29 @@ export function* addMovieToWatchList(action) {
 
 		yield put({
 			type: ADD_MOVIE_TO_WATCH_LIST_SUCCESS,
-			payload: { status: 'to_watch', movieId }
+			payload: { status: 'to_watch', movieId, id }
+		});
+	} catch (error) {
+		console.log(error);
+	}
+}
+
+export function* deleteMovieFromWatchList(action) {
+	const { watchId, movieId } = action.payload;
+	try {
+		yield call(webApi, {
+			endpoint: `/api/watch/${watchId}`,
+			method: 'DELETE'
+		});
+
+		yield put({
+			type: DELETE_MOVIE_FROM_WATCH_LIST_SUCCESS,
+			payload: {
+				watchListStatus: {
+					status: null,
+					movieId
+				}
+			}
 		});
 	} catch (error) {
 		console.log(error);
@@ -136,6 +160,10 @@ function* watchAddMovieToWatchList() {
 	yield takeEvery(ADD_MOVIE_TO_WATCH_LIST, addMovieToWatchList);
 }
 
+function* watchDeleteMovieFromWatchList() {
+	yield takeEvery(DELETE_MOVIE_FROM_WATCH_LIST, deleteMovieFromWatchList);
+}
+
 export default function* watchList() {
 	yield all([
 		watchFetchWatchList(),
@@ -143,6 +171,7 @@ export default function* watchList() {
 		watchMoveToWatched(),
 		watchDeleteWatchItem(),
 		watchFetchWatchListStatus(),
-		watchAddMovieToWatchList()
+		watchAddMovieToWatchList(),
+		watchDeleteMovieFromWatchList()
 	]);
 }
