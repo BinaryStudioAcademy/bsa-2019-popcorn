@@ -13,6 +13,7 @@ import MovieList from '../../MovieList/MovieList';
 import Cropper from 'react-cropper';
 import 'cropperjs/dist/cropper.css';
 import config from '../../../config';
+import Draggable from 'react-draggable';
 
 interface IPostStoryEditorProps {
 	id?: string;
@@ -185,6 +186,49 @@ class PostStoryEditor extends React.Component<
 					</div>
 				) : (
 					<div className={'upload-image-wrp'} style={{ backgroundColor }}>
+						{/* a */}
+						<Draggable
+							bounds="parent"
+							defaultPosition={{
+								x: 0,
+								y: 0
+							}}
+							onDrag={() => console.log('drag')}
+							enableUserSelectHack={false}
+							// disabled={!this.state.inEditor}
+						>
+							<textarea
+								ref={this.textarea}
+								placeholder="Type a text here..."
+								defaultValue={this.props.body}
+								className="story-text"
+								onChange={e => {
+									const title = PostStoryEditor.findMovie(e.target.value);
+									if (title.trim() && title.trim() !== this.props.title) {
+										if (this.props.fetchSearch) {
+											this.props.fetchSearch(title);
+
+											return changeBody(e, title.trim());
+										}
+									}
+									changeBody(e, this.props.title);
+
+									if (
+										!title.trim() &&
+										this.props.title &&
+										this.props.resetSearch
+									)
+										this.props.resetSearch();
+								}}
+								autoFocus
+								onFocus={function(e) {
+									const val = e.target.value;
+									e.target.value = '';
+									e.target.value = val;
+								}}
+							/>
+						</Draggable>
+						{/* a */}
 						<ImageUploader
 							imageHandler={uploadFile}
 							imageStateHandler={this.imageStateHandler}
@@ -195,31 +239,6 @@ class PostStoryEditor extends React.Component<
 						</ImageUploader>
 					</div>
 				)}
-				<textarea
-					ref={this.textarea}
-					placeholder="Type a text here..."
-					defaultValue={this.props.body}
-					onChange={e => {
-						const title = PostStoryEditor.findMovie(e.target.value);
-						if (title.trim() && title.trim() !== this.props.title) {
-							if (this.props.fetchSearch) {
-								this.props.fetchSearch(title);
-
-								return changeBody(e, title.trim());
-							}
-						}
-						changeBody(e, this.props.title);
-
-						if (!title.trim() && this.props.title && this.props.resetSearch)
-							this.props.resetSearch();
-					}}
-					autoFocus
-					onFocus={function(e) {
-						const val = e.target.value;
-						e.target.value = '';
-						e.target.value = val;
-					}}
-				/>
 				{this.props.children && (
 					<div className={'activity'}>
 						{this.props.children}
