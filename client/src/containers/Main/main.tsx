@@ -37,6 +37,7 @@ import {
 	IEventFormatDataBase
 } from '../../components/UserPage/UserEvents/UserEvents.service';
 import TopList from '../../components/TopListPage/TopList';
+import SettingsPage from '../../components/UserSettings';
 
 const { notifications } = {
 	notifications: {
@@ -129,6 +130,10 @@ const Main = ({
 					<Switch>
 						<Route exact path={[`/`, '/create*']} component={MainPage} />
 						<Route path={`/user-page/:id`} component={UserPage} />
+						<Route
+							path={'/settings'}
+							render={() => <SettingsPage mainPath={'/settings'} />}
+						/>
 						<Route
 							path={`/events/:id`}
 							render={props =>
