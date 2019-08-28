@@ -58,7 +58,7 @@ class WatchRepository extends Repository<Watch> {
         where: { user: { id: userId }, movieId }
       });
       if (!watch) {
-        return { status: null };
+        return { status: null, movieId };
       }
       return { ...watch };
     } catch (err) {

@@ -30,7 +30,8 @@ export default (state = initialState, action) => {
 			if (!newMovie) return { ...state };
 			return {
 				...state,
-				watchList: [newMovie, ...state.watchList]
+				watchList: [newMovie, ...state.watchList],
+				watchListStatus: undefined
 			};
 		case MOVE_WATCH_ITEM_TO_WATCHED:
 			const prevWatchList = [...state.watchList];
@@ -44,7 +45,8 @@ export default (state = initialState, action) => {
 			prevWatchList.splice(index, 1, putItem);
 			return {
 				...state,
-				watchList: [...prevWatchList]
+				watchList: [...prevWatchList],
+				watchListStatus: undefined
 			};
 		case DELETE_WATCH_ITEM:
 			const watchList = [...state.watchList];
@@ -52,7 +54,8 @@ export default (state = initialState, action) => {
 				...state,
 				watchList: watchList.filter(
 					watch => watch.id !== action.payload.watchId
-				)
+				),
+				watchListStatus: undefined
 			};
 		case FETCH_WATCH_LIST_STATUS_SUCCESS:
 			return {

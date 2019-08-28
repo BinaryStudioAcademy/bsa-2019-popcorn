@@ -68,19 +68,20 @@ const MovieSeriesPage: React.SFC<IProps> = props => {
 		fetchWatchListStatus,
 		watchListStatus
 	} = props;
-	const mainPath = `/movies/${props.match.params.id}`;
+	const currentMovieId = props.match.params.id;
+	const mainPath = `/movies/${currentMovieId}`;
 
-	if (!fetchedMovie || fetchedMovie.id != props.match.params.id) {
-		fetchMovie(props.match.params.id);
+	if (!fetchedMovie || fetchedMovie.id != currentMovieId) {
+		fetchMovie(currentMovieId);
 		return <Spinner />;
 	}
-	if (!userRate || userRate.movieId != props.match.params.id) {
-		fetchUserRate(userId, props.match.params.id);
+	if (!userRate || userRate.movieId != currentMovieId) {
+		fetchUserRate(userId, currentMovieId);
 		return <Spinner />;
 	}
 
-	if (!watchListStatus) {
-		fetchWatchListStatus(props.match.params.id);
+	if (!watchListStatus || watchListStatus.movieId != currentMovieId) {
+		fetchWatchListStatus(currentMovieId);
 		return <Spinner />;
 	}
 
@@ -98,6 +99,7 @@ const MovieSeriesPage: React.SFC<IProps> = props => {
 				movieId={movie.id}
 				setReview={setReview}
 				removeReviewSet={removeReviewSet}
+				watchListStatus={watchListStatus}
 			/>
 			<MovieSeriesPageTabs mainPath={mainPath} />
 			<MovieSeriesPageTabBody

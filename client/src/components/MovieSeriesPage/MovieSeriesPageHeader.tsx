@@ -25,6 +25,7 @@ interface IProps {
 		prevId?: string
 	) => any;
 	removeReviewSet: () => object;
+	watchListStatus: any;
 }
 
 const MovieSeriesPageHeader: React.FC<IProps> = ({
@@ -36,7 +37,8 @@ const MovieSeriesPageHeader: React.FC<IProps> = ({
 	userId,
 	movieId,
 	setReview,
-	removeReviewSet
+	removeReviewSet,
+	watchListStatus
 }) => {
 	const [modal, setModal] = useState(false);
 	const genre = movieSeriesData.genre && movieSeriesData.genre.join(', ');
@@ -46,6 +48,23 @@ const MovieSeriesPageHeader: React.FC<IProps> = ({
 		setModal(true);
 		fetchReview(userId, movieId);
 	};
+
+	const renderWatchIcon = () => {
+		const { status } = watchListStatus;
+		// return spinner
+		return status ? (
+			<div
+				className={`watch-list-icon movie-in-list`}
+				onClick={() => console.log('сейчас нажму и уберу')}
+			/>
+		) : (
+			<div
+				className={`watch-list-icon add-to-watch-list`}
+				onClick={() => console.log('добавить в вотчлист')}
+			/>
+		);
+	};
+
 	return (
 		<header className="movie-series-page-header">
 			{modal && ownReview && (
@@ -60,9 +79,7 @@ const MovieSeriesPageHeader: React.FC<IProps> = ({
 				/>
 			)}
 			<div className="header-movie-title-rating">
-				<div className="header-movie-watch-list">
-					<div className="watch-list-icon add-to-watch-list" />
-				</div>
+				<div className="header-movie-watch-list">{renderWatchIcon()}</div>
 				<div className="header-main-info">
 					<span className="movie-title">{movieSeriesData.title}</span>
 					<span className="movie-year">
