@@ -28,15 +28,15 @@ export const getFiltred = async (size = 14, from = 0, filters) => {
             filter: [
               filters.nameValue !== ""
                 ? {
-                    match: {
+                    match_phrase_prefix: {
                       title: `${filters.nameValue}`
                     }
                   }
                 : {},
               filters.descriptionValue !== ""
                 ? {
-                    match: {
-                      overview: `${filters.descriptionValue}`
+                    match_phrase_prefix: {
+                      overview: `${filters.descriptionValue}*`
                     }
                   }
                 : {},
