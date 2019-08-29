@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
 	faArrowCircleLeft,
 	faTimesCircle,
+	faTimes,
 	faPlus
 } from '@fortawesome/free-solid-svg-icons';
 import { Redirect } from 'react-router';
@@ -48,6 +49,7 @@ class ChooseExtraOption extends React.Component<IProps> {
 
 	setOption(data) {
 		this.props.setExtra(data);
+		this.props.toggleModalOption(data);
 	}
 
 	render() {
@@ -91,48 +93,40 @@ class ChooseExtraOption extends React.Component<IProps> {
 		const create = () => this.setState({ create: false });
 
 		return (
-			<div className={'modal modal-story'}>
-				<div className={'nav-block-wrp'}>
-					<span onClick={this.props.toggleModalOption}>
-						<FontAwesomeIcon
-							icon={faArrowCircleLeft}
-							className={'fontAwesomeIcon'}
-						/>
-					</span>
-					<span onClick={this.props.toggleModalOption}>
-						<FontAwesomeIcon
-							icon={faTimesCircle}
-							className={'fontAwesomeIcon'}
-						/>
-					</span>
-				</div>
-				<div className={'choose-extra-option-wrp'}>
-					<div className={'create'} onClick={create}>
-						<span>
-							<FontAwesomeIcon
-								icon={faPlus}
-								style={{ marginRight: '2px', fontSize: '.8em' }}
-							/>
-							Create {option}
-						</span>
-					</div>
+			<div className={'post-constructor-modal'}>
+				<div className="postconstr-wrp postconstr-wrp--option">
+					<p className="close-modal" onClick={this.props.toggleModalOption}>
+						<FontAwesomeIcon icon={faTimes} />
+					</p>
+					<div className={'choose-extra-option-wrp postconstr'}>
+						<div className={'create'} onClick={create}>
+							<span style={{ cursor: 'pointer' }}>
+								<FontAwesomeIcon icon={faPlus} className="extra-icon" />
+								Create {option}
+							</span>
+						</div>
 
-					<div className={'recent-created'}>
-						{data
-							? data.map((item, i) => (
-									<span
-										key={i}
-										onClick={() =>
-											this.setOption({
-												title: item.title,
-												link: `/${option}-page/${item.id}`
-											})
-										}
-									>
-										{item.title}
-									</span>
-							  ))
-							: null}
+						<div className={'recent-created'}>
+							{data
+								? data.map((item, i) => (
+										<p
+											key={item.id}
+											className="option-item-wrapper"
+											onClick={() =>
+												this.setOption({
+													type: this.props.option,
+													data: item,
+													link: `/${option}-page/${item.id}`
+												})
+											}
+										>
+											<span className="option-item" key={i}>
+												{item.title}
+											</span>
+										</p>
+								  ))
+								: null}
+						</div>
 					</div>
 				</div>
 			</div>

@@ -1,19 +1,92 @@
 @import '../../../styles/variables.scss';
 .postconstr-wrp {
+	background-color: $white;
+	left: 50%;
+	max-width: 600px;
+	top: 20%;
+	transform: translateX(-50%);
+	width: 100%;
+	z-index: 999;
+	position: fixed;
 	border: 1px solid $border-color;
-	margin-top: 30px;
 	box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.37);
 	border-radius: 2px;
+	display: flex;
+	flex-direction: column;
+	&--option {
+		top: 0;
+		height: 100%;
+	}
+	.close-modal {
+		text-align: end;
+		font-size: 24px;
+		color: $text-secondary-color;
+		margin-right: 25px;
+		margin-top: 10px;
+	}
+
+	.close-modal:hover {
+		cursor: pointer;
+	}
 	.postconstr {
-		border: 1px solid $border-color;
+		display: flex;
+		flex-direction: column;
 		margin: 30px 25px;
 		margin-bottom: 0;
 		box-sizing: border-box;
 		.extra-buttons {
+			font-size: 24px;
+			letter-spacing: 0.4px;
+			color: $text-base-color;
+			margin-top: 40px;
+			margin-bottom: 20px;
+			display: flex;
+			flex-direction: row;
+			align-items: center;
+			justify-content: center;
+		}
+		.extra-icon {
+			margin-right: 10px;
+			color: $text-secondary-color;
+		}
+		.extra-item {
+			background-color: $background-gray;
+			display: flex;
+			padding: 15px 20px;
+			align-items: center;
+			justify-content: center;
+			margin-left: 20px;
+			margin-right: 20px;
+			cursor: pointer;
+		}
+		.recent-created {
 			display: flex;
 			flex-direction: column;
 			align-items: center;
-			justify-content: center;
+			margin-top: 30px;
+		}
+		.option-item-wrapper {
+			cursor: pointer;
+			width: 100%;
+			margin: 10px 0;
+			padding: 15px 20px;
+			border: 1px solid $border-focus-color;
+		}
+		.option-item {
+			font-size: 18px;
+			letter-spacing: 0.4px;
+			color: $text-base-color;
+		}
+		.create {
+			text-align: center;
+			font-size: 24px;
+			letter-spacing: 0.4px;
+			color: $text-base-color;
+		}
+		.extra-title {
+			font-size: 18px;
+			letter-spacing: 0.4px;
+			color: $text-base-color;
 		}
 		display: flex;
 		& textarea {
@@ -22,6 +95,7 @@
 			width: 100%;
 			height: 80px;
 			border: none;
+			border: 1px solid $border-color;
 			padding: 10px;
 			font-family: $base-font-family;
 			font-style: normal;
@@ -30,6 +104,9 @@
 			line-height: 19px;
 			letter-spacing: $base-letter-spacing;
 			color: $text-base-color;
+			resize: none;
+			-ms-overflow-style: none;
+			scrollbar-width: none;
 		}
 		& button,
 		.upload-image-button {
@@ -75,15 +152,31 @@
 			display: block;
 			margin: 25px auto 0 auto;
 		}
+		.card-wrapper {
+			background-color: $background-gray;
+			display: flex;
+			width: 100px;
+			height: 100px;
+			align-content: center;
+			justify-content: center;
+			cursor: pointer;
+		}
+
+		.button-image {
+			display: flex;
+			align-content: center;
+			justify-content: center;
+			cursor: pointer;
+		}
 	}
 	.extra {
-		margin: 10px 25px 15px 25px;
-		border-left: 5px solid $border-color;
+		margin-bottom: 20px;
+		border-left: 5px solid $button-background;
 		padding: 15px;
 		display: flex;
+		flex-direction: row;
 		margin-bottom: 15px;
 		justify-content: flex-start;
-		align-items: flex-end;
 		& .fontAwesomeIcon {
 			cursor: pointer;
 		}
@@ -91,8 +184,52 @@
 			margin-left: 10px;
 		}
 	}
+	.movie-top-item {
+		margin: 9px 0 9px 20px;
+	}
+	.extra-body {
+		display: flex;
+		max-width: 80%;
+		flex-direction: column;
+	}
+	.remove-extra {
+		margin-left: auto;
+		font-size: 16px;
+		color: $text-secondary-color;
+		cursor: pointer;
+	}
+	.extra-description {
+		margin-left: 10px;
+		margin-top: 10px;
+	}
+	.event-date-range {
+		margin-left: 10px;
+		margin-bottom: 10px;
+		font-size: 14px;
+		color: $text-secondary-color;
+	}
+	.image-list-wrapper {
+		margin-bottom: 20px;
+		height: 100px;
+		display: flex;
+		flex-direction: row;
+		.post-img-wrapper {
+			margin-left: 20px;
+			width: 100px;
+		}
+		.post-img {
+			position: relative;
+			object-fit: contain;
+			height: 100px;
+			transition: 0.5s ease-in-out;
+			&:hover {
+				transform: scale(1.7);
+				cursor: pointer;
+			}
+		}
+	}
 	.save-wrp {
-		text-align: end;
+		text-align: center;
 		.save-btn {
 			height: 43px;
 			border-radius: 55px;
@@ -112,4 +249,14 @@
 			}
 		}
 	}
+}
+
+.overlay {
+	position: fixed;
+	background-color: rgba(0, 0, 0, 0.4);
+	height: 100%;
+	left: 0;
+	top: 0;
+	width: 100%;
+	z-index: 20;
 }
