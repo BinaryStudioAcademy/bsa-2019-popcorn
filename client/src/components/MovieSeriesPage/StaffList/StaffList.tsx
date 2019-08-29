@@ -46,8 +46,8 @@ const StaffList = ({ crew }: StaffListProps) => {
 				<span>Crew</span>
 			</div>
 			<div className={'staff-items-container'}>
-				{groupedStaff.map(el => (
-					<StaffItem staffItemInfo={el} />
+				{groupedStaff.map((el, index) => (
+					<StaffItem staffItemInfo={el} key={index} />
 				))}
 			</div>
 		</div>
