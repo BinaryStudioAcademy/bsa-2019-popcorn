@@ -60,11 +60,19 @@ const MovieSeriesPageHeader: React.FC<IProps> = ({
 		if (watchListLoading) {
 			return <div className={`watch-list-icon loading-now`} />;
 		}
-		return status ? (
+		if (status === 'to_watch') {
+			return (
+				<div
+					className={`watch-list-icon to-watch`}
+					onClick={() => deleteMovieFromWatchList(watchId, movieId)}
+					title="Click to remove from watch list"
+				/>
+			);
+		}
+		return status === 'watched' ? (
 			<div
-				className={`watch-list-icon movie-in-list`}
-				onClick={() => deleteMovieFromWatchList(watchId, movieId)}
-				title="in your watch list"
+				className={`watch-list-icon watched`}
+				title="You have already watched this movie"
 			/>
 		) : (
 			<div
@@ -97,8 +105,19 @@ const MovieSeriesPageHeader: React.FC<IProps> = ({
 							? ' (' + movieSeriesData.release_date.slice(0, 4) + ')'
 							: null}
 					</span>
-					<div className="header-genres">
-						<span className="info-item">Action | Drama | Horror</span>
+					<div className="header-genres-review-own-rating">
+						<span className="header-genres">Action | Drama | Horror</span>
+						<div className="header-review-own-rating-container">
+							<button className="review-button" onClick={() => onModalClick()}>
+								review
+							</button>
+							<StarRating
+								size={5}
+								default={rate}
+								setUserRate={setUserRate}
+								userRate={userRate}
+							/>
+						</div>
 					</div>
 				</div>
 				<div className="totaly-movie-rating">
@@ -106,16 +125,6 @@ const MovieSeriesPageHeader: React.FC<IProps> = ({
 					{Number(movieSeriesData.vote_average) || 0}
 					<span className="max-rating">/5</span>
 				</div>
-
-				{/* <div className="review-button" onClick={() => onModalClick()}>
-					review
-				</div>
-				<StarRating
-					size={5}
-					default={rate}
-					setUserRate={setUserRate}
-					userRate={userRate}
-				/> */}
 			</div>
 		</header>
 	);
