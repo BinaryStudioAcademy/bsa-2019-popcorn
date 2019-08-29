@@ -10,4 +10,7 @@ export class Story {
   movieId: string;
   movieOption: string;
   backgroundColor: string;
+  fontColor: string;
+  testPositionX: number;
+  testPositionY: number;
 }

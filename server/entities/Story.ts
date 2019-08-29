@@ -25,6 +25,15 @@ export class Story {
   backgroundColor: string;
 
   @Column({ nullable: true })
+  fontColor: string;
+
+  @Column({ nullable: true })
+  testPositionX: number;
+
+  @Column({ nullable: true })
+  testPositionY: number;
+
+  @Column({ nullable: true })
   activityId: string;
 
   @ManyToOne(type => User, { onDelete: "CASCADE" })
