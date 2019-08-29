@@ -12,7 +12,8 @@ import {
 	displayPicker,
 	setFontColor,
 	displayFontPicker,
-	displayInput
+	displayInput,
+	setTextPosition
 } from '../story.redux/actions';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -54,6 +55,8 @@ interface IProps {
 	isShownFontPicker: boolean;
 	displayInput: (isShown: boolean) => void;
 	isShownInput: boolean;
+	setTextPosition: (position: { x: number; y: number }) => void;
+	textPosition: { x: number; y: number };
 }
 
 class getAddStoryPopupContent extends React.Component<IProps> {
@@ -99,6 +102,10 @@ class getAddStoryPopupContent extends React.Component<IProps> {
 		if (this.props.isShownInput) this.props.setCaption('', 0, 0, '');
 	};
 
+	changeTextPosition = (position: { x: number; y: number }) => {
+		this.props.setTextPosition(position);
+	};
+
 	render() {
 		const newStory = this.props.newStory;
 
@@ -133,6 +140,8 @@ class getAddStoryPopupContent extends React.Component<IProps> {
 							backgroundColor={this.props.backgroundColor}
 							isShownInput={this.props.isShownInput}
 							fontColor={this.props.fontColor}
+							textPosition={this.props.textPosition}
+							changeTextPosition={this.changeTextPosition}
 						>
 							{newStory.activity && newStory.activity.name}
 						</PostStoryEditor>
@@ -224,7 +233,8 @@ const mapStateToProps = (rootState, props) => ({
 	isShownPicker: rootState.story.isShownPicker,
 	fontColor: rootState.story.newStory.fontColor,
 	isShownFontPicker: rootState.story.isShownFontPicker,
-	isShownInput: rootState.story.isShownInput
+	isShownInput: rootState.story.isShownInput,
+	textPosition: rootState.story.newStory.textPosition
 });
 
 const actions = {
@@ -232,7 +242,8 @@ const actions = {
 	displayPicker,
 	setFontColor,
 	displayFontPicker,
-	displayInput
+	displayInput,
+	setTextPosition
 };
 
 const mapDispatchToProps = dispatch => bindActionCreators(actions, dispatch);

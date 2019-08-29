@@ -12,7 +12,8 @@ import {
 	SAVE_CROPPED_IMAGE,
 	DISPLAY_PICKER,
 	DISPLAY_FONT_PICKER,
-	DISPLAY_INPUT
+	DISPLAY_INPUT,
+	SET_TEXT_POSITION_NEWSTORY
 } from './actionTypes';
 import INewStory from '../INewStory';
 import IVoting from '../IVoting';
@@ -50,6 +51,14 @@ export const setFontColor = color => {
 		type: SET_FONTCOLOR_NEWSTORY,
 		payload: {
 			color
+		}
+	};
+};
+export const setTextPosition = position => {
+	return {
+		type: SET_TEXT_POSITION_NEWSTORY,
+		payload: {
+			position
 		}
 	};
 };

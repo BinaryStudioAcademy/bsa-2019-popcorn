@@ -11,7 +11,8 @@ import {
 	SET_FONTCOLOR_NEWSTORY,
 	DISPLAY_PICKER,
 	DISPLAY_FONT_PICKER,
-	DISPLAY_INPUT
+	DISPLAY_INPUT,
+	SET_TEXT_POSITION_NEWSTORY
 } from './actionTypes';
 import INewStory from '../INewStory';
 import replaceFilmSearch from '../../../../helpers/replaceFilmSearch';
@@ -35,7 +36,8 @@ const initialState: {
 		movieId: null,
 		movieOption: '',
 		backgroundColor: 'rgba(255,255,255,1)',
-		fontColor: 'rgba(200,10,23,1)'
+		fontColor: 'rgba(200,10,23,1)',
+		textPosition: { x: 0, y: 0 }
 	},
 	cursorPosition: { start: 0, end: 0 },
 	title: '',
@@ -90,6 +92,17 @@ export default function(state = initialState, action) {
 			return {
 				...state,
 				isShownFontPicker: action.payload.isShown
+			};
+		case SET_TEXT_POSITION_NEWSTORY:
+			return {
+				...state,
+				newStory: {
+					...state.newStory,
+					textPosition: {
+						x: action.payload.position.x,
+						y: action.payload.position.y
+					}
+				}
 			};
 		case DISPLAY_INPUT:
 			return {

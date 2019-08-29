@@ -12,7 +12,6 @@ import TMovie from '../../MovieSeriesPage/TMovie';
 import MovieList from '../../MovieList/MovieList';
 import Cropper from 'react-cropper';
 import 'cropperjs/dist/cropper.css';
-import config from '../../../config';
 import Draggable from 'react-draggable';
 
 interface IPostStoryEditorProps {
@@ -37,6 +36,8 @@ interface IPostStoryEditorProps {
 	backgroundColor: string;
 	isShownInput: boolean;
 	fontColor: string;
+	textPosition: { x: number; y: number };
+	changeTextPosition: (position: { x: number; y: number }) => void;
 }
 
 interface IPostStoryEditorState {
@@ -46,6 +47,10 @@ interface IPostStoryEditorState {
 	savePhoto: boolean;
 	selectionStart: number;
 	selectionEnd: number;
+	position: {
+		x: number;
+		y: number;
+	};
 }
 
 class PostStoryEditor extends React.Component<
@@ -60,13 +65,18 @@ class PostStoryEditor extends React.Component<
 			isUploading: false,
 			savePhoto: false,
 			selectionStart: 0,
-			selectionEnd: 0
+			selectionEnd: 0,
+			position: {
+				x: 0,
+				y: 0
+			}
 		};
 
 		this.onCancel = this.onCancel.bind(this);
 		this.onSave = this.onSave.bind(this);
 		this.onToggleCheckbox = this.onToggleCheckbox.bind(this);
 		this.imageStateHandler = this.imageStateHandler.bind(this);
+		this.handleDragText = this.handleDragText.bind(this);
 	}
 
 	private textarea = React.createRef<HTMLTextAreaElement>();
@@ -141,6 +151,16 @@ class PostStoryEditor extends React.Component<
 		return '';
 	}
 
+	handleDragText(e, ui) {
+		const { x, y } = this.props.textPosition;
+		const newX = ui.x;
+		const newY = ui.y;
+		this.props.changeTextPosition({
+			x: newX,
+			y: newY
+		});
+	}
+
 	render() {
 		const backgroundColor = this.props.backgroundColor;
 		const isShownInput = this.props.isShownInput;
@@ -200,16 +220,14 @@ class PostStoryEditor extends React.Component<
 						</div>
 					)}
 					<div style={{ width: '100%', height: '100%' }}>
-						{/* a */}
 						<Draggable
 							bounds="parent"
 							defaultPosition={{
-								x: 0,
-								y: 0
+								x: this.props.textPosition.x,
+								y: this.props.textPosition.y
 							}}
-							onDrag={() => console.log('drag')}
+							onStop={this.handleDragText}
 							enableUserSelectHack={false}
-							// disabled={!this.state.inEditor}
 						>
 							{isShownInput ? (
 								<textarea
@@ -248,7 +266,6 @@ class PostStoryEditor extends React.Component<
 								<div />
 							)}
 						</Draggable>
-						{/* a */}
 
 						<ImageUploader
 							imageHandler={uploadFile}
