@@ -21,6 +21,9 @@ export class Story {
   @Column({ nullable: true })
   type: string;
 
+  @Column()
+  backgroundColor: string;
+
   @Column({ nullable: true })
   activityId: string;
 

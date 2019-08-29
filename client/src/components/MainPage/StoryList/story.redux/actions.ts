@@ -7,7 +7,13 @@ import {
 	FETCH_STORIES,
 	SAVE_MOVIE,
 	SET_CAPTION_NEWSTORY,
-	SAVE_CROPPED_IMAGE
+	SET_BACKGROUNG_NEWSTORY,
+	SET_FONTCOLOR_NEWSTORY,
+	SAVE_CROPPED_IMAGE,
+	DISPLAY_PICKER,
+	DISPLAY_FONT_PICKER,
+	DISPLAY_INPUT,
+	SET_TEXT_POSITION_NEWSTORY
 } from './actionTypes';
 import INewStory from '../INewStory';
 import IVoting from '../IVoting';
@@ -27,6 +33,59 @@ export const setCaption = (caption, start, end, title) => {
 			start,
 			end,
 			title
+		}
+	};
+};
+
+export const setBackground = color => {
+	return {
+		type: SET_BACKGROUNG_NEWSTORY,
+		payload: {
+			color
+		}
+	};
+};
+
+export const setFontColor = color => {
+	return {
+		type: SET_FONTCOLOR_NEWSTORY,
+		payload: {
+			color
+		}
+	};
+};
+export const setTextPosition = position => {
+	return {
+		type: SET_TEXT_POSITION_NEWSTORY,
+		payload: {
+			position
+		}
+	};
+};
+
+export const displayPicker = isShown => {
+	return {
+		type: DISPLAY_PICKER,
+		payload: {
+			isShown
+		}
+	};
+};
+
+export const displayFontPicker = isShown => {
+	return {
+		type: DISPLAY_FONT_PICKER,
+		payload: {
+			isShown
+		}
+	};
+};
+
+export const displayInput = isShown => {
+	return {
+		type: DISPLAY_INPUT,
+		payload: {
+			isShown
 		}
 	};
 };

@@ -6,7 +6,13 @@ import {
 	SAVE_MOVIE,
 	SET_CAPTION_NEWSTORY,
 	SET_STORIES,
-	SAVE_CROPPED_IMAGE
+	SAVE_CROPPED_IMAGE,
+	SET_BACKGROUNG_NEWSTORY,
+	SET_FONTCOLOR_NEWSTORY,
+	DISPLAY_PICKER,
+	DISPLAY_FONT_PICKER,
+	DISPLAY_INPUT,
+	SET_TEXT_POSITION_NEWSTORY
 } from './actionTypes';
 import INewStory from '../INewStory';
 import replaceFilmSearch from '../../../../helpers/replaceFilmSearch';
@@ -17,6 +23,9 @@ const initialState: {
 	cursorPosition: { start: number; end: number };
 	title: string;
 	photoSaved: boolean;
+	isShownPicker: boolean;
+	isShownFontPicker: boolean;
+	isShownInput: boolean;
 } = {
 	stories: null,
 	newStory: {
@@ -25,11 +34,17 @@ const initialState: {
 		activity: null,
 		type: '',
 		movieId: null,
-		movieOption: ''
+		movieOption: '',
+		backgroundColor: 'rgba(255,255,255,1)',
+		fontColor: 'rgba(200,10,23,1)',
+		textPosition: { x: 0, y: 0 }
 	},
 	cursorPosition: { start: 0, end: 0 },
 	title: '',
-	photoSaved: false
+	photoSaved: false,
+	isShownPicker: false,
+	isShownFontPicker: false,
+	isShownInput: false
 };
 
 export default function(state = initialState, action) {
@@ -51,6 +66,48 @@ export default function(state = initialState, action) {
 					end: action.payload.end
 				},
 				title: action.payload.title
+			};
+		case SET_BACKGROUNG_NEWSTORY:
+			return {
+				...state,
+				newStory: {
+					...state.newStory,
+					backgroundColor: action.payload.color
+				}
+			};
+		case DISPLAY_PICKER:
+			return {
+				...state,
+				isShownPicker: action.payload.isShown
+			};
+		case SET_FONTCOLOR_NEWSTORY:
+			return {
+				...state,
+				newStory: {
+					...state.newStory,
+					fontColor: action.payload.color
+				}
+			};
+		case DISPLAY_FONT_PICKER:
+			return {
+				...state,
+				isShownFontPicker: action.payload.isShown
+			};
+		case SET_TEXT_POSITION_NEWSTORY:
+			return {
+				...state,
+				newStory: {
+					...state.newStory,
+					textPosition: {
+						x: action.payload.position.x,
+						y: action.payload.position.y
+					}
+				}
+			};
+		case DISPLAY_INPUT:
+			return {
+				...state,
+				isShownInput: action.payload.isShown
 			};
 		case SAVE_CROPPED_IMAGE:
 			return {
