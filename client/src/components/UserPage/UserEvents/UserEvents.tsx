@@ -44,8 +44,8 @@ class UserEvents extends React.Component<IProps, IState> {
 	}
 
 	componentDidMount() {
-		const { currentUserId } = this.props;
-		this.props.getUserEvents(currentUserId);
+		const { currentProfileUserId } = this.props;
+		this.props.getUserEvents(currentProfileUserId);
 	}
 
 	editEvent = (editableEvent: null | IEventFormatClient = null) => {
@@ -92,7 +92,7 @@ class UserEvents extends React.Component<IProps, IState> {
 		if (!userEvents) {
 			return <Spinner />;
 		}
-
+		console.log(currentUserId, currentProfileUserId);
 		const ownEvents: IEventFormatClient[] = [];
 		const subscribeEvents: IEventFormatClient[] = [];
 
@@ -103,14 +103,14 @@ class UserEvents extends React.Component<IProps, IState> {
 		});
 		return (
 			<div className="user-events">
-				{/* {currentProfileUserId === currentUserId ? ( */}
-				<div
-					className="create-event-button hover"
-					onClick={() => this.editEvent()}
-				>
-					{openEventEditor ? BACK_TO_EVENTS_TEXT : CREATE_EVENT_TEXT}{' '}
-				</div>
-				{/* // ) : null} */}
+				{currentUserId === currentProfileUserId && (
+					<div
+						className="create-event-button hover"
+						onClick={() => this.editEvent()}
+					>
+						{openEventEditor ? BACK_TO_EVENTS_TEXT : CREATE_EVENT_TEXT}{' '}
+					</div>
+				)}
 				{openEventEditor ? (
 					<UserEventsEditor
 						closeEditor={this.editEvent}
@@ -120,18 +120,22 @@ class UserEvents extends React.Component<IProps, IState> {
 					/>
 				) : (
 					<div>
-						<div className="events-title">
-							<span>Your Events</span>
-						</div>
-						<div className="event-list-container">
-							{ownEvents.length === 0 ? (
-								<div className="event-show-warning">
-									No events yet. You can create
+						{currentUserId === currentProfileUserId && (
+							<div>
+								<div className="events-title">
+									<span>Your Events</span>
 								</div>
-							) : (
-								this.renderEventList(ownEvents, deleteEvent)
-							)}
-						</div>
+								<div className="event-list-container">
+									{ownEvents.length === 0 ? (
+										<div className="event-show-warning">
+											No events yet. You can create
+							</div>
+									) : (
+											this.renderEventList(ownEvents, deleteEvent)
+										)}
+								</div>
+							</div>
+						)}
 						<div className="events-title">
 							<span>Events interested you</span>
 						</div>
