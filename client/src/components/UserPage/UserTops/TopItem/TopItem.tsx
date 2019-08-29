@@ -39,7 +39,6 @@ const TopItem: React.FC<ITopItemProps> = ({
 	useEffect(() => {
 		if (urlForTop == topItem.id) {
 			setTopImageUrl(uploadUrl);
-			saveUserTop({ ...topItem, title, topImageUrl });
 		}
 	}, [uploadUrl]);
 

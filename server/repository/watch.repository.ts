@@ -6,7 +6,8 @@ class WatchRepository extends Repository<Watch> {
   async getByUserId(userId, next) {
     try {
       const watches = await this.find({
-        where: { user: { id: userId } }
+        where: { user: { id: userId } },
+        order: { created_at: "DESC" }
       });
 
       return watches;
@@ -22,7 +23,7 @@ class WatchRepository extends Repository<Watch> {
         ...watch
       });
 
-      return newWatch;
+      return { id: newWatch.id };
     } catch (err) {
       return next({ status: err.status, message: err.message });
     }

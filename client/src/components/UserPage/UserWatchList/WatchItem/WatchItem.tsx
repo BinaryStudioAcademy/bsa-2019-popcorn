@@ -12,10 +12,12 @@ import { ReactComponent as CloseIcon } from '../../../../assets/icons/general/cl
 
 interface IProps {
 	watchItem: IWatchItem;
+	moveToWatched: (watchId: string) => object;
+	deleteWatchItem: (watchId: string) => object;
 }
 
 const WatchItem: React.FC<IProps> = props => {
-	const { status } = props.watchItem;
+	const { status, id } = props.watchItem;
 	const {
 		poster_path,
 		title,
@@ -24,7 +26,7 @@ const WatchItem: React.FC<IProps> = props => {
 		runtime,
 		genres
 	} = props.watchItem.movie;
-
+	const { moveToWatched, deleteWatchItem } = props;
 	const duration = getFilmDuration(runtime);
 
 	return (
@@ -70,6 +72,7 @@ const WatchItem: React.FC<IProps> = props => {
 								className="move-button"
 								onClick={e => {
 									e.preventDefault();
+									moveToWatched(id);
 								}}
 							>
 								Move to Watched
@@ -79,6 +82,7 @@ const WatchItem: React.FC<IProps> = props => {
 							className="delete-button"
 							onClick={e => {
 								e.preventDefault();
+								deleteWatchItem(id);
 							}}
 						>
 							<CloseIcon className="delete-button-svg" />
