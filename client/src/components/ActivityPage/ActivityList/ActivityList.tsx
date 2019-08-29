@@ -49,6 +49,7 @@ export type Activity = {
 	img: string;
 	isRead?: boolean;
 	url: string;
+	id: string;
 };
 
 const generateActivity = (
@@ -58,9 +59,13 @@ const generateActivity = (
 	if (activities.length && activities.length === 0) return [];
 	const generatedActivity = activities.map(el => {
 		return (
-			<NavLink to={el.url} style={{ textDecoration: 'none', color: 'inherit' }}>
+			<NavLink
+				key={el.id}
+				to={el.url}
+				style={{ textDecoration: 'none', color: 'inherit' }}
+			>
 				<ActivityItem
-					key={el.date}
+					key={el.id}
 					activity={el}
 					readNotification={readNotification}
 				/>

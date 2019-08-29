@@ -2,6 +2,7 @@ import * as eventService from "../services/event.service";
 import * as postService from "../services/post.service";
 import { sendPushMessage } from "../services/firebase.service";
 import { saveNotificitation } from "../services/notification.service";
+const uuid = require("uuid/v4");
 
 async function sendNotification({
   req,
@@ -19,7 +20,8 @@ async function sendNotification({
     title,
     body,
     date: new Date(),
-    url
+    url,
+    id: uuid()
   };
   await saveNotificitation({
     ...notification,
