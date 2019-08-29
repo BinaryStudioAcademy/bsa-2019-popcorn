@@ -8,7 +8,7 @@ router
   .get("/", (req, res, next) =>
     postService
       .getPosts()
-      .then((posts: Post[]) => res.send(posts.reverse()))
+      .then((posts: any[]) => res.send(posts))
       .catch(next)
   )
   .get("/:id", (req, res, next) =>
@@ -20,7 +20,7 @@ router
   .get("/user/:id", (req, res, next) =>
     postService
       .getPostsByUserId(req.params.id)
-      .then((posts: Post[]) => res.send(posts.reverse()))
+      .then((posts: Post[]) => res.send(posts))
       .catch(next)
   )
   .post("/", (req, res, next) =>

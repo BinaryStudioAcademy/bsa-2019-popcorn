@@ -4,11 +4,12 @@ import {
   Column,
   JoinTable,
   ManyToOne,
-  ManyToMany
+  OneToMany
 } from "typeorm";
 
 import { User } from "./User";
 import { PostComments } from "./PostComments";
+import { PostReactions } from "./PostReactions";
 
 @Entity()
 export class Post {
@@ -36,7 +37,14 @@ export class Post {
   @Column()
   userId: string;
 
-  @ManyToMany(type => PostComments, post_comments => post_comments.post.id)
+  @Column({ nullable: true })
+  createdAt: Date;
+
+  @OneToMany(type => PostComments, post_comments => post_comments.post)
   @JoinTable()
-  comments!: PostComments[];
+  comments: PostComments[];
+
+  @OneToMany(type => PostReactions, post_reactions => post_reactions.post)
+  @JoinTable()
+  reactions: PostReactions[];
 }
