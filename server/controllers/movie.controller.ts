@@ -87,6 +87,12 @@ router
       .getMovieProperties(req.query.settings, next)
       .then(result => res.send(result))
       .catch(next)
-  );
+  )
+  .get("/awards/:imdbId", (req: any, res: Response, next: NextFunction) => {
+    return movieService
+      .getMovieAwards(req.params.imdbId) // get movie by userId and movieId
+      .then((response: any) => res.send(response))
+      .catch(next);
+  });
 
 export default router;

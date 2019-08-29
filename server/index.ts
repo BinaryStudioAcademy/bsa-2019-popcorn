@@ -33,11 +33,9 @@ createConnection(db_config)
   .then(connection => connection.runMigrations())
   .then(() => {
     const io = require("socket.io")(
-      http
-        .createServer(app)
-        .listen(SERVER_PORT, () =>
-          console.log(`Server is running on http://localhost:${SERVER_PORT}`)
-        )
+      http.createServer(app).listen(SERVER_PORT, () => {
+        console.log(`Server is running on http://localhost:${SERVER_PORT}`);
+      })
     );
 
     io.on("connection", socketHandlers);

@@ -16,6 +16,7 @@ type TMovie = {
 	crew: any;
 	messages: IDiscussionMessage[];
 	hasVideo: boolean;
+	imdb_id: string;
 };
 
 export default TMovie;

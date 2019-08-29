@@ -1,33 +1,25 @@
 import React from 'react';
 import AwardContent from './AwardContent/AwardContent';
-import AwardStar from './AwardStar/AwardStar';
+import { ReactComponent as AwardIcon } from '../../../../assets/icons/general/movie/awardIcon.svg';
+import { ReactComponent as NomineeIcon } from '../../../../assets/icons/general/movie/nomineeIcon.svg';
 import './AwardItem.scss';
 interface IAwardItem {
-	isWinner: boolean;
 	title: string;
-	year: number;
-	nominationName: string;
-	gender: string;
-	winnerName?: string;
+	nominations: any;
 }
-const AwardItem: React.FC<IAwardItem> = ({
-	isWinner,
-	title,
-	year,
-	nominationName,
-	gender,
-	winnerName
-}) => {
+const AwardItem: React.FC<IAwardItem> = ({ title, nominations }) => {
 	return (
 		<div className="item-wrapper">
-			<AwardStar isWinner={isWinner} />
+			{nominations.titleAwardOutcome.split(' ')[0].toLowerCase() ===
+			'winner' ? (
+				<AwardIcon className="award-icon" />
+			) : (
+				<NomineeIcon className="award-icon" />
+			)}
 			<AwardContent
-				isWinner={isWinner}
 				title={title}
-				year={year}
-				nominationName={nominationName}
-				gender={gender}
-				winnerName={winnerName}
+				subtitle={nominations.titleAwardOutcome}
+				nominations={nominations}
 			/>
 		</div>
 	);
