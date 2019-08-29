@@ -15,18 +15,24 @@
 		border: 1px solid $border-color;
 		padding: 5 10px;
 		background-color: white;
-		height: 30px;
-		color: $text-secondary-color;
+		height: 38px;
 		width: 150px;
+		color: $text-secondary-color;
+	}
+
+	.watch-list-top-title {
+		display: flex;
 	}
 
 	.watch-list-right {
 		display: flex;
 		justify-content: flex-start;
 		align-items: center;
-		margin-bottom: 20px;
 		color: $text-base-color;
 		font-weight: 200;
+		height: 35px;
+		align-self: flex-end;
+		margin-left: 15px;
 
 		.sort-element-name {
 			margin-right: 15px;
@@ -37,10 +43,10 @@
 		width: 100%;
 		.search-input-container {
 			width: 500px;
-			margin-bottom: 20px;
 		}
 
 		.watch-items-container {
+			margin-top: 30px;
 			width: 100%;
 			display: grid;
 			grid-template-columns: repeat(auto-fill, minmax(220px, 230px));
