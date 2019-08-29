@@ -5,66 +5,76 @@
 		display: flex;
 		flex-direction: column;
 		align-items: center;
+		min-height: 360px;
+		width: 200px;
 
 		.watch-image-wrapper {
-			display: relative;
+			position: relative;
 			width: 180px;
-			height: 260px;
+			height: 269px;
 			overflow: hidden;
-			padding: 1px;
 			font-size: 0;
-			border: 1px solid rgba(0, 0, 0, 0.192);
+			box-shadow: rgba(0, 0, 0, 0.8) 2px 2px 8px -2px;
+			border-radius: 15px;
 			img {
-				vertical-align: middle;
 				width: 100%;
 			}
 
-			.absolute-data-in-image {
-				color: red; //// TODO
+			.watch-delete-button {
+				position: absolute;
+				top: 10px;
+				right: 10px;
+				width: 25px;
+				padding: 5px;
+				height: 25px;
+				border-radius: 5px;
+				color: white;
+				background-color: rgba(0, 0, 0, 0.726);
+				cursor: pointer;
+			}
+
+			.watch-status {
+				position: absolute;
+				top: 0;
+				left: 10px;
+				background: url('/images/sprite/sprite-icons.png') no-repeat;
+				height: 50px;
+				width: 40px;
+				background-position-x: -10px;
+				transition: all 0.2s linear;
+				cursor: pointer;
+				background-position-y: -10px;
+				&.watched {
+					transition: filter 0.2s linear;
+				}
+				&.to-watch {
+					filter: grayscale(100%);
+					&:hover {
+						filter: brightness(85%);
+					}
+				}
 			}
 		}
 
 		.watch-main-bottom {
 			display: flex;
 			flex-direction: column;
+			justify-content: space-between;
 			.watch-movie-title {
-				color: $text-base-color;
-				font-weight: 300;
-				margin-top: 5px;
+				color: $text-secondary-color;
+				text-align: center;
+				font-weight: 800;
+				font-size: $header-medium;
+				margin-top: 9px;
+				letter-spacing: $base-letter-spacing;
 				max-width: 220px;
-				white-space: nowrap;
-				overflow: hidden;
-				text-overflow: ellipsis;
-			}
+				max-height: 200px;
+				line-height: 16px;
+				text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.26);
 
-			.watch-secondary {
-				display: flex;
-				justify-content: center;
-				align-items: center;
-				height: 20px;
-				.movie-duration {
-					display: flex;
-					align-items: center;
-					font-size: $base-font-size;
-					margin-right: 4px;
-					svg {
-						width: 15px;
-						height: 15px;
-						margin-right: 5px;
-					}
-				}
-
-				.totaly-movie-rating {
-					padding: 0;
-					font-size: $base-font-size;
-					display: flex;
-					align-items: center;
-					.icon-star {
-						width: 16px;
-						height: 16px;
-						color: #ffcd1e;
-						margin-right: 2px;
-					}
+				.watch-movie-date {
+					font-size: 12px;
+					font-weight: 400;
 				}
 			}
 		}

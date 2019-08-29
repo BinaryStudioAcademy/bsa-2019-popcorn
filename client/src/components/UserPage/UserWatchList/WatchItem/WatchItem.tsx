@@ -30,19 +30,13 @@ const WatchItem: React.FC<IProps> = props => {
 	const duration = getFilmDuration(runtime);
 	const [hover, setHover] = useState(false);
 
-	const hoverImage = () => {
-		setHover(!hover);
-	};
-
-	const vote_average = 3;
-
 	return (
 		<div className="WatchItem">
 			<div className="watch-item-container">
 				<div
 					className="watch-image-wrapper"
-					onMouseEnter={hoverImage}
-					onMouseLeave={hoverImage}
+					onMouseEnter={() => setHover(true)}
+					onMouseLeave={() => setHover(false)}
 				>
 					<NavLink to={'/movies/' + movieId}>
 						<Image
@@ -51,22 +45,38 @@ const WatchItem: React.FC<IProps> = props => {
 							alt="poster"
 						/>
 					</NavLink>
-					{hover && <div className="absolute-data-in-image"></div>}
+
+					{status === 'watched' ? (
+						<div
+							className={`absolute watch-status watched`}
+							title="You have already watched this movie"
+						></div>
+					) : (
+						<div
+							className={`absolute watch-status to-watch`}
+							title='Click to mark as "watched"'
+							onClick={() => {
+								moveToWatched(id);
+							}}
+						></div>
+					)}
+					{hover && (
+						<div onClick={() => deleteWatchItem(id)}>
+							<FontAwesomeIcon
+								className="watch-delete-button absolute"
+								icon={faTimes}
+								title="Click to delete from watch list"
+							/>
+						</div>
+					)}
 				</div>
 				<div className="watch-main">
 					<div className="watch-main-bottom">
-						<div className="watch-movie-title">{title}</div>
-						<div className="watch-secondary">
-							{duration && (
-								<div className="movie-duration">
-									<DurationIcon />
-									{duration}
-								</div>
-							)}
-							<div className="totaly-movie-rating">
-								<FontAwesomeIcon className="icon-star" icon={faStar} />
-								{Number(vote_average) || 0}
-							</div>
+						<div className="watch-movie-title">
+							{title}
+							<span className="watch-movie-date">
+								{release_date ? ' (' + release_date.slice(0, 4) + ')' : null}
+							</span>
 						</div>
 					</div>
 				</div>
