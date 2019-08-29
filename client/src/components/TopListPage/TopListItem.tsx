@@ -49,7 +49,7 @@ const TopListItem: React.FC<ITopLIstItemProps> = ({ top }) => {
 					<ol>
 						{top.movieInTop.slice(0, 3).map(movie => (
 							<li>
-								{movie.movie.original_title} ({getReleaseYear(movie)})
+								{movie.movie.title} ({getReleaseYear(movie)})
 							</li>
 						))}
 					</ol>
