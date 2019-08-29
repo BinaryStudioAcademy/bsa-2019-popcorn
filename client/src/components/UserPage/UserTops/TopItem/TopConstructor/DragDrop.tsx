@@ -29,7 +29,6 @@ const DragDrop: React.FC<IDragDropProps> = ({
 	onDragEnd,
 	deleteFilmInput
 }) => {
-	console.log(moviesList);
 	return (
 		<div>
 			<DragDropContext onDragEnd={onDragEnd}>
