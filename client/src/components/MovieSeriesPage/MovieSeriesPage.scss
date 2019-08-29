@@ -20,22 +20,6 @@ $header-letter-spacing: 0.9px;
 	color: $text-base-color;
 }
 
-.review-button {
-	display: block;
-	padding: 2px 7px;
-	border-radius: 25px;
-	margin-left: 10px;
-	border: 2px solid $orange;
-	background-color: white;
-	cursor: pointer;
-	font-style: italic;
-	letter-spacing: $base-letter-spacing;
-
-	&:hover {
-		opacity: 0.8;
-	}
-}
-
 .movie-series-page-header {
 	.header-movie-title-rating {
 		margin-bottom: 15px;
@@ -47,6 +31,7 @@ $header-letter-spacing: 0.9px;
 		.header-movie-watch-list {
 			.watch-list-icon {
 				background: url('/images/sprite/sprite-icons.png') no-repeat;
+				filter: grayscale(100%);
 				margin-left: 10px;
 				height: 50px;
 				width: 40px;
@@ -56,7 +41,11 @@ $header-letter-spacing: 0.9px;
 				&.add-to-watch-list {
 					background-position-y: -67px;
 				}
-				&.movie-in-list {
+				&.watched {
+					background-position-y: -10px;
+					filter: none;
+				}
+				&.to-watch {
 					background-position-y: -10px;
 				}
 				&.loading-now {
@@ -64,8 +53,8 @@ $header-letter-spacing: 0.9px;
 				}
 
 				&.add-to-watch-list:hover,
-				&.movie-in-list:hover {
-					filter: brightness(85%);
+				&.to-watch:hover {
+					filter: grayscale(100%) brightness(85%);
 				}
 			}
 		}
@@ -81,10 +70,33 @@ $header-letter-spacing: 0.9px;
 				line-height: 19px;
 			}
 
-			.header-genres {
-				color: $text-secondary-color;
-				margin-top: 5px;
-				margin-left: 2px;
+			.header-genres-review-own-rating {
+				display: flex;
+
+				.header-review-own-rating-container {
+					display: flex;
+					.review-button {
+						display: block;
+						padding: 2px 7px;
+						border-radius: 25px;
+						margin-left: 10px;
+						border: 2px solid $orange;
+						background-color: white;
+						cursor: pointer;
+						font-style: italic;
+						letter-spacing: $base-letter-spacing;
+
+						&:hover {
+							opacity: 0.8;
+						}
+					}
+				}
+
+				.header-genres {
+					color: $text-secondary-color;
+					margin-top: 5px;
+					margin-left: 2px;
+				}
 			}
 		}
 		.totaly-movie-rating {
