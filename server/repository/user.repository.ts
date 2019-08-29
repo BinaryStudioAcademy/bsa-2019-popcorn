@@ -1,5 +1,7 @@
-import { EntityRepository, Repository } from "typeorm";
+import { EntityRepository, Repository, getCustomRepository } from "typeorm";
 import { User } from "../entities/User";
+import { getByIdValues } from "../repository/movieElastic.repository";
+import FavoriteListRepository from "./favoriteList.repository";
 
 @EntityRepository(User)
 class UserRepository extends Repository<User> {
@@ -8,7 +10,20 @@ class UserRepository extends Repository<User> {
     let error = "";
     let success = true;
     try {
-      data.user = await this.findOne({ where: { id } });
+      data.user = await this.findOne({
+        where: { id },
+        relations: ["favoriteLists"]
+      });
+      const movieIds = data.user.favoriteLists.map(movie => movie.movieId);
+      const elasticResponse = await getByIdValues(movieIds);
+      const movieArray = elasticResponse.hits.hits.map(movie => movie._source);
+      data.user.favoriteLists.forEach((item: any) => {
+        const movie = movieArray.find(
+          movieItem => movieItem.id === item.movieId
+        );
+        if (!movie) return;
+        item.movie = { id: movie.id, name: movie.title };
+      });
       if (!data.user) throw new Error(`User with ${id} id is not found`);
     } catch (err) {
       error = err.message;
@@ -35,7 +50,14 @@ class UserRepository extends Repository<User> {
     let error = "";
     let success = true;
     try {
+      if (newData.favoriteMovieIds) {
+        await getCustomRepository(
+          FavoriteListRepository
+        ).updateFavoriteMoviesByUserId(id, newData.favoriteMovieIds);
+      }
+      delete newData.favoriteMovieIds;
       await this.update({ id }, newData);
+
       data.user = await this.findOne({ where: { id } });
       if (!data.user) throw new Error(`User with ${id} id is not found`);
     } catch (err) {

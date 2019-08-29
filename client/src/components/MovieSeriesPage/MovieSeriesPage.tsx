@@ -13,7 +13,7 @@ import {
 	fetchReviewByMovieUserId as fetchReview,
 	setReview,
 	removeReviewSet,
-	fetchCastCrew
+	fetchAwards
 } from './Movie.redux/actions';
 
 interface IProps {
@@ -35,8 +35,8 @@ interface IProps {
 	avatar?: string;
 	userId: string;
 	username: string;
-	fetchCastCrew: (id: any) => any;
-	crewCast: any;
+	fetchAwards: (id: any) => any;
+	awards: any;
 }
 
 export interface IUserRate {
@@ -60,8 +60,8 @@ const MovieSeriesPage: React.SFC<IProps> = props => {
 		ownReview,
 		setReview,
 		removeReviewSet,
-		fetchCastCrew,
-		crewCast
+		fetchAwards,
+		awards
 	} = props;
 	const mainPath = `/movies/${props.match.params.id}`;
 
@@ -79,7 +79,7 @@ const MovieSeriesPage: React.SFC<IProps> = props => {
 	return (
 		<div className="movie-series-page">
 			<MovieSeriesPageHeader
-				movieSeriesData={movie}
+				movie={movie}
 				userRate={userRate}
 				setUserRate={rateObj => setUserRate(rateObj)}
 				ownReview={ownReview}
@@ -93,9 +93,9 @@ const MovieSeriesPage: React.SFC<IProps> = props => {
 			<MovieSeriesPageTabBody
 				mainPath={mainPath}
 				movie={movie}
-				fetchCastCrew={fetchCastCrew}
-				crewCast={crewCast}
 				currentUser={{ avatar, id: userId, name: username }}
+				fetchAwards={fetchAwards}
+				awards={awards}
 			/>
 		</div>
 	);
@@ -109,7 +109,7 @@ const mapStateToProps = (rootState, props) => ({
 	userId: rootState.profile.profileInfo && rootState.profile.profileInfo.id,
 	username: rootState.profile.profileInfo && rootState.profile.profileInfo.name,
 	ownReview: rootState.movie.ownReview,
-	crewCast: rootState.movie.crewCast
+	awards: rootState.movie.awards
 });
 
 const mapDispatchToProps = dispatch => {
@@ -120,7 +120,7 @@ const mapDispatchToProps = dispatch => {
 		fetchReview,
 		setReview,
 		removeReviewSet,
-		fetchCastCrew
+		fetchAwards
 	};
 	return bindActionCreators(actions, dispatch);
 };

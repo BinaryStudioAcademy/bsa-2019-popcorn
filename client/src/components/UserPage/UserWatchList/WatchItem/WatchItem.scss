@@ -1,0 +1,90 @@
+.WatchItem {
+	.watch-item-container {
+		border: 1px solid rgba(0, 0, 0, 0.11);
+		box-shadow: 0px 0px 11px rgba(0, 0, 0, 0.11);
+		text-align: left;
+		padding: 20px;
+		width: 100%;
+		margin-bottom: 20px;
+		display: grid;
+		grid-template-columns: 125px 1fr;
+		grid-gap: 20px;
+
+		.watch-image-wrapper {
+			font-size: 0;
+			min-height: 185px;
+
+			img {
+				width: 100%;
+			}
+		}
+
+		.watch-main {
+			display: flex;
+			flex-direction: column;
+			justify-content: space-between;
+			.watch-movie-title {
+				.movie-title-name {
+					font-weight: 600;
+				}
+
+				.movie-title-date {
+					font-weight: 400;
+					font-size: 0.8em;
+				}
+				.watch-movie-title-nav-link {
+					text-decoration: none;
+					color: inherit;
+				}
+			}
+
+			.movie-genre {
+				margin-top: 5px;
+			}
+
+			.movie-duration {
+				margin-top: 5px;
+				display: flex;
+				align-items: center;
+				svg {
+					width: 20px;
+					margin-right: 5px;
+				}
+			}
+			.watch-buttons {
+				display: flex;
+				justify-content: flex-end;
+
+				button {
+					display: block;
+					outline: none;
+					border: 1px solid rgba(0, 0, 0, 0.11);
+					background-color: white;
+					cursor: pointer;
+					border-radius: 3px;
+					box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.2);
+					transition: box-shadow 0.3s ease, border-color 0.4s ease;
+
+					&:hover {
+						box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.12);
+						border-color: rgba(0, 0, 0, 0.05);
+					}
+				}
+
+				.move-button {
+					padding: 0 10px;
+					margin-right: 10px;
+					color: #00000099;
+					font-size: 15px;
+				}
+
+				.delete-button {
+					font-size: 0;
+					.delete-button-svg {
+						opacity: 0.6;
+					}
+				}
+			}
+		}
+	}
+}

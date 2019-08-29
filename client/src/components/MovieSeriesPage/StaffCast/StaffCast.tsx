@@ -3,27 +3,22 @@ import StaffList from '../StaffList/StaffList';
 import CastList from '../CastList/CastList';
 import './StaffCast.scss';
 import Spinner from '../../shared/Spinner';
+import TMovie from '../../MovieSeriesPage/TMovie';
 
 type StaffCastProps = {
-	fetchCastCrew: (id: any) => any;
-	movieId: any;
-	crewCast: any;
+	movie: TMovie;
 };
 
 class StaffCast extends React.Component<StaffCastProps> {
 	constructor(props) {
 		super(props);
 	}
-	componentDidMount() {
-		if (this.props.crewCast === null)
-			this.props.fetchCastCrew(this.props.movieId);
-	}
 
 	render() {
-		return this.props.crewCast ? (
+		return this.props.movie ? (
 			<div className="staff-cast">
-				<CastList cast={this.props.crewCast.cast} />
-				<StaffList crew={this.props.crewCast.crew} />
+				<CastList cast={this.props.movie.cast} />
+				<StaffList crew={this.props.movie.crew} />
 			</div>
 		) : (
 			<Spinner />

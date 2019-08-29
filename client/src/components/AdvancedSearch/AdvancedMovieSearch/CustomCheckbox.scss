@@ -1,10 +1,12 @@
+@import '../../../styles/variables.scss';
+
 .container-checkbox {
 	display: block;
 	position: relative;
 	padding-left: 35px;
 	margin-bottom: 12px;
 	cursor: pointer;
-	font-size: 16px;
+	font-size: $base-font-size;
 	-webkit-user-select: none;
 	-moz-user-select: none;
 	-ms-user-select: none;
@@ -25,8 +27,8 @@
 	position: absolute;
 	top: 0;
 	left: 0;
-	height: 20px;
-	width: 20px;
+	height: 15px;
+	width: 15px;
 	background-color: white;
 	border: 1px solid #eee;
 }
@@ -55,10 +57,10 @@
 
 /* Style the checkmark-checkbox/indicator */
 .container-checkbox .checkmark-checkbox:after {
-	left: 6px;
+	left: 4px;
 	top: 1px;
 	width: 3px;
-	height: 10px;
+	height: 5px;
 	border: solid white;
 	border-width: 0 3px 3px 0;
 	-webkit-transform: rotate(45deg);

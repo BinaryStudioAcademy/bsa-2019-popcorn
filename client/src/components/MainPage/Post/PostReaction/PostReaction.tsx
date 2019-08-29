@@ -15,28 +15,29 @@ interface IReactItemProps {
 	onReactionClick: (reaction: { name: string }) => any;
 }
 
+export function getIcon(name: string) {
+	switch (name) {
+		case 'like':
+			return <LikeIcon />;
+		case 'dislike':
+			return <DislikeIcon />;
+		case 'popcorn':
+			return <PopcornIcon />;
+		case 'haha':
+			return <HahaIcon />;
+		case 'wow':
+			return <WowIcon />;
+		case 'sad':
+			return <SadIcon />;
+		case 'angry':
+			return <AngryIcon />;
+	}
+}
+
 class PostReaction extends Component<IReactItemProps> {
-	getIcon = (name: string) => {
-		switch (name) {
-			case 'like':
-				return <LikeIcon />;
-			case 'dislike':
-				return <DislikeIcon />;
-			case 'popcorn':
-				return <PopcornIcon />;
-			case 'haha':
-				return <HahaIcon />;
-			case 'wow':
-				return <WowIcon />;
-			case 'sad':
-				return <SadIcon />;
-			case 'angry':
-				return <AngryIcon />;
-		}
-	};
 	render() {
 		const { name, quantity, onReactionClick } = this.props;
-		const icon = this.getIcon(name);
+		const icon = getIcon(name);
 		return (
 			<div
 				className="post-reaction-wrapper"
