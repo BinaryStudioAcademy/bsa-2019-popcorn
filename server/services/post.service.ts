@@ -1,5 +1,8 @@
 import { Post } from "../models/PostModel";
 import PostRepository from "../repository/post.repository";
+import SurveyRepository from "../repository/surveys.repository";
+import TopRepository from "../repository/top.repository";
+import EventRepository from "../repository/event.repository";
 import UserRepository from "../repository/user.repository";
 import { getCustomRepository } from "typeorm";
 import PostCommentsRepository from "../repository/postComments.repository";
@@ -8,9 +11,30 @@ import { PostReactions } from "../models/PostReactionsModel";
 import PostReactionsRepository from "../repository/postReactions.repository";
 const uuid = require("uuid/v4");
 
+const getExtra = async (post: any) => {
+  if (post.surveyId) {
+    post.survey = await getCustomRepository(SurveyRepository).findOne(
+      post.surveyId
+    );
+    delete post.surveyId;
+  }
+  if (post.topId) {
+    post.top = await getCustomRepository(TopRepository).findOne(post.topId);
+    delete post.topId;
+  }
+  if (post.eventId) {
+    post.event = await getCustomRepository(EventRepository).findOne(
+      post.eventId
+    );
+    delete post.eventId;
+  }
+  return post;
+};
+
 export const createPost = async (post: any): Promise<Post> => {
   post.user = await getCustomRepository(UserRepository).findOne(post.userId);
   delete post.userId;
+  post = await getExtra(post);
   return await getCustomRepository(PostRepository).save(post);
 };
 
