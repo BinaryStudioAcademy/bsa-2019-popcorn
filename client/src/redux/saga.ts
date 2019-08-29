@@ -12,7 +12,7 @@ import topListSaga from '../components/TopListPage/TopListPage.redux/saga';
 import followSaga from '../components/UserPage/ProfileComponent/FollowSystem/FollowSystem.redux/saga';
 import watchListSaga from '../components/UserPage/UserWatchList/saga';
 import searchMovieSaga from '../components/shared/MovieSearch/saga';
-
+import notificationSaga from '../components/shared/Header/saga';
 export default function* rootSaga() {
 	yield all([
 		headerSaga(),
@@ -27,6 +27,7 @@ export default function* rootSaga() {
 		topListSaga(),
 		followSaga(),
 		watchListSaga(),
-		searchMovieSaga()
+		searchMovieSaga(),
+		notificationSaga()
 	]);
 }

@@ -6,4 +6,15 @@ const config = {
 		'https://www.goldderby.com/wp-content/uploads/2017/12/Oscar-statuette-trophy-atmo.png',
 	POSTER_PATH: 'https://image.tmdb.org/t/p/w500'
 };
+const firebaseConfig = {
+	apiKey: 'AIzaSyDBZq6hgJwMbJEi3u6GSTRi4QFphjnl32Q',
+	authDomain: 'popcorn-64a9a.firebaseapp.com',
+	databaseURL: 'https://popcorn-64a9a.firebaseio.com',
+	projectId: 'popcorn-64a9a',
+	storageBucket: '',
+	messagingSenderId: '1087618889886',
+	appId: '1:1087618889886:web:8e958466df264490'
+};
+console.log('ff', firebaseConfig, process.env);
 export default config;
+export { firebaseConfig };

@@ -43,7 +43,8 @@ const mockedActivity = [
 
 export type Activity = {
 	type: string;
-	text: string;
+	title: string;
+	body: string;
 	date: string;
 	img: string;
 	isRead?: boolean;

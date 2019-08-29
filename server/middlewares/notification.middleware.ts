@@ -3,22 +3,26 @@ import * as postService from "../services/post.service";
 import { sendPushMessage } from "../services/firebase.service";
 import { text } from "body-parser";
 
-function sendNotification({ req, url, type, body, title, entity }) {
+function sendNotification({ req, url, type, body, title, entity, entityType }) {
+  if (req.user && entity.userId === req.user.id) return;
   sendPushMessage({
     link: url,
-    title: title,
+    title,
     body,
-    icon: req.user.avatar
+    icon: req.user.avatar,
+    userId: entity.userId,
+    entityType,
+    entityId: entity.id
   });
-  if (req.user && entity.userId !== req.user.id) {
-    req.io.to(entity.userId).emit("new-notification", {
-      img: req.user.avatar,
-      type: type,
-      text: title,
-      date: new Date(),
-      url
-    });
-  }
+
+  req.io.to(entity.userId).emit("new-notification", {
+    img: req.user.avatar,
+    type,
+    title,
+    body,
+    date: new Date(),
+    url
+  });
 }
 
 export default async (req, res, next) => {
@@ -33,7 +37,8 @@ export default async (req, res, next) => {
         type: "comment",
         title,
         body: req.body.text,
-        entity: post
+        entity: post,
+        entityType: "post"
       });
     }
 
@@ -48,7 +53,8 @@ export default async (req, res, next) => {
         type: "review",
         title,
         body: "",
-        entity: event
+        entity: event,
+        entityType: "event"
       });
     }
     if (req.url === "/api/post/reaction") {
@@ -57,13 +63,13 @@ export default async (req, res, next) => {
       sendNotification({
         req,
         url: `/`,
-        type: "like",
+        type: req.body.type,
         title,
         body: "",
-        entity: post
+        entity: post,
+        entityType: "post"
       });
     }
   }
-  console.log(req.body);
   next();
 };

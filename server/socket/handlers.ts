@@ -20,21 +20,26 @@ export default socket => {
       const discussion = await eventService.createComment(messageInfo);
       const event = await eventService.getEventById(discussion.eventId);
       const url = `/events/${messageInfo.eventId}/discussion`;
-      const text = `${messageInfo.user.name} left message in your event`;
+      const title = `${messageInfo.user.name} left message in your event`;
       sendPushMessage({
         link: url,
-        title: text,
-        body: messageInfo.body,
-        icon: messageInfo.user.avatar
+        title,
+        body: messageInfo.text,
+        icon: messageInfo.user.avatar,
+        userId: messageInfo.user.id,
+        entityType: "event",
+        entityId: event.id
       });
       socket.to(event.userId).emit("new-notification", {
         img: messageInfo.user.avatar,
         type: "comment",
-        text,
+        title,
+        body: messageInfo.text,
         date: new Date(),
         url
       });
     }
+
     socket
       .to(entityIdName.concat(messageInfo[entityIdName]))
       .emit("add-message-to-discussion", messageInfo);
