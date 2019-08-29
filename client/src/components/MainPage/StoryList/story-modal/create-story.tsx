@@ -166,7 +166,7 @@ class getAddStoryPopupContent extends React.Component<IProps> {
 								className="color-picker-btn"
 							>
 								<div
-									style={{ color: this.props.fontColor }} //todo
+									style={{ color: this.props.fontColor }}
 									className="color-picker-btn-preview text-preview"
 								>
 									T

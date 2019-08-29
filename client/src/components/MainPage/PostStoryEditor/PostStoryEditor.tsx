@@ -159,36 +159,46 @@ class PostStoryEditor extends React.Component<
 				{this.state.errorMsg && (
 					<span className="upload-error">{this.state.errorMsg}</span>
 				)}
-				{this.props.imageUrl ? (
-					<div className={'upload-image-wrp'}>
-						{this.props.photoSaved ? (
-							<img src={this.props.imageUrl} />
-						) : (
-							<Cropper
-								ref={this.cropper}
-								src={this.props.imageUrl}
-								aspectRatio={9 / 16}
-							/>
-						)}
-						{!this.props.photoSaved && (
-							<span onClick={this.onSave}>
-								<FontAwesomeIcon
-									icon={faCheckCircle}
-									className="fontAwesomeIcon"
+				<div
+					className={'upload-image-wrp'}
+					style={{
+						backgroundColor,
+						backgroundImage:
+							this.props.imageUrl && this.props.photoSaved
+								? `url(${this.props.imageUrl})`
+								: undefined,
+						backgroundRepeat: 'no-repeat',
+						backgroundSize: 'cover'
+					}}
+				>
+					{this.props.imageUrl && (
+						<div>
+							{!this.props.photoSaved && (
+								<Cropper
+									ref={this.cropper}
+									src={this.props.imageUrl}
+									aspectRatio={9 / 16}
 								/>
-							</span>
-						)}
-						{!this.props.photoSaved && (
-							<span onClick={this.onCancel}>
-								<FontAwesomeIcon
-									icon={faTimesCircle}
-									className={'fontAwesomeIcon'}
-								/>
-							</span>
-						)}
-					</div>
-				) : (
-					<div className={'upload-image-wrp'} style={{ backgroundColor }}>
+							)}
+							{!this.props.photoSaved && (
+								<span onClick={this.onSave}>
+									<FontAwesomeIcon
+										icon={faCheckCircle}
+										className="fontAwesomeIcon"
+									/>
+								</span>
+							)}
+							{!this.props.photoSaved && (
+								<span onClick={this.onCancel}>
+									<FontAwesomeIcon
+										icon={faTimesCircle}
+										className={'fontAwesomeIcon'}
+									/>
+								</span>
+							)}
+						</div>
+					)}
+					<div style={{ width: '100%', height: '100%' }}>
 						{/* a */}
 						<Draggable
 							bounds="parent"
@@ -238,6 +248,7 @@ class PostStoryEditor extends React.Component<
 							)}
 						</Draggable>
 						{/* a */}
+
 						<ImageUploader
 							imageHandler={uploadFile}
 							imageStateHandler={this.imageStateHandler}
@@ -247,7 +258,7 @@ class PostStoryEditor extends React.Component<
 							</label>
 						</ImageUploader>
 					</div>
-				)}
+				</div>
 				{this.props.children && (
 					<div className={'activity'}>
 						{this.props.children}
