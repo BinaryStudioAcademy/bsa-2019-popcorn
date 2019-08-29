@@ -3,12 +3,16 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronDown } from '@fortawesome/free-solid-svg-icons';
 import './Header.scss';
 import messageIcon from '../../../assets/icons/general/header/message-icon.svg';
-import notifyIcon from '../../../assets/icons/general/header/notify-icon.svg';
 import logo from '../../../assets/icons/general/popcorn-logo.svg';
 import MovieSearch from '../../MovieList/MovieSearch/index';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { fetchFilms, sendTokenToServer } from '../Header/actions';
+import {
+	fetchFilms,
+	sendTokenToServer,
+	getUnreadNotifications,
+	setNotificitationIsRead
+} from '../Header/actions';
 import { unauthorize } from '../../authorization/actions';
 import { NavLink, Link } from 'react-router-dom';
 import { setMovieSeries } from '../../MovieSeriesPage/Movie.redux/actions';
@@ -16,6 +20,7 @@ import config from '../../../config';
 import Image from '../Image/Image';
 import Notification from './Notification';
 import { withFirebase } from '../../Firebase';
+import { Activity } from '../../ActivityPage/ActivityList/ActivityList';
 interface IProps {
 	userInfo: {
 		//temporary put ? to use mocks inside component
@@ -38,6 +43,9 @@ interface IProps {
 	setMovieSeries: (movie: any) => any;
 	unauthorize: () => void;
 	sendTokenToServer: (token: string | null) => void;
+	getUnreadNotifications: (userId: string) => void;
+	setNotificitationIsRead: (notificatonId: string) => void;
+	unredNotifications: Activity[];
 }
 
 const Header = ({
@@ -47,7 +55,10 @@ const Header = ({
 	alreadySearch,
 	setMovieSeries,
 	unauthorize,
-	sendTokenToServer
+	sendTokenToServer,
+	getUnreadNotifications,
+	setNotificitationIsRead,
+	unredNotifications
 }: IProps) => {
 	const MOVIES_IN_CINEMA = 'Movies in cinema';
 	const MOVIE_TOPS = 'Movie tops';
@@ -139,6 +150,9 @@ const Header = ({
 					<Notifications
 						sendTokenToServer={sendTokenToServer}
 						userInfo={userInfo}
+						getUnreadNotifications={getUnreadNotifications}
+						setNotificitationIsRead={setNotificitationIsRead}
+						unredNotifications={unredNotifications}
 					/>
 				}
 			</div>
@@ -167,14 +181,17 @@ const mapStateToProps = (rootState, props) => ({
 	...props,
 	userInfo: rootState.profile.profileInfo,
 	moviesSearch: rootState.movie.moviesSearch,
-	alreadySearch: rootState.movie.alreadySearch
+	alreadySearch: rootState.movie.alreadySearch,
+	unredNotifications: rootState.notification.unredNotifications
 });
 
 const actions = {
 	fetchFilms,
 	setMovieSeries,
 	unauthorize,
-	sendTokenToServer
+	sendTokenToServer,
+	getUnreadNotifications,
+	setNotificitationIsRead
 };
 
 const mapDispatchToProps = dispatch => bindActionCreators(actions, dispatch);

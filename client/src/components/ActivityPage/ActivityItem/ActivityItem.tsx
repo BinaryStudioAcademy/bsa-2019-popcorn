@@ -32,7 +32,7 @@ const generateIcon = type => {
 };
 
 const ActivityItem = ({
-	activity: { type, title, body, date, img, isRead },
+	activity: { type, title, body, date, img, isRead, id },
 	readNotification
 }: ActivityItemProps) => {
 	const [markedAsRead, setMarked] = useState(isRead);
@@ -44,7 +44,7 @@ const ActivityItem = ({
 	return (
 		<div
 			className={`activity-item ${markedAsRead ? ' ' : 'unread-activity'}`}
-			onMouseOut={() => setRead && setRead(date)}
+			onMouseOut={() => setRead && setRead(id)}
 		>
 			<div>{generateIcon(type)}</div>
 			<div>
