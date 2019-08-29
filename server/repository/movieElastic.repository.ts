@@ -26,16 +26,20 @@ export const getFiltred = async (size = 14, from = 0, filters) => {
         query: {
           bool: {
             filter: [
-              {
-                wildcard: {
-                  title: `${filters.nameValue}*`
-                }
-              },
-              {
-                wildcard: {
-                  overview: `${filters.descriptionValue}*`
-                }
-              },
+              filters.nameValue !== ""
+                ? {
+                    match: {
+                      title: `${filters.nameValue}`
+                    }
+                  }
+                : {},
+              filters.descriptionValue !== ""
+                ? {
+                    match: {
+                      overview: `${filters.descriptionValue}`
+                    }
+                  }
+                : {},
               {
                 range: {
                   vote_average: {
