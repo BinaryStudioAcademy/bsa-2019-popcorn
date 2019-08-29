@@ -13,7 +13,8 @@ const getMainCast = (cast): string =>
 		.map(actor => (actor ? actor.name : ''))
 		.join(', ');
 
-export default (movie: any): TMovie => {
+export default (movie: any): TMovie | any => {
+	if (!movie) return;
 	return {
 		id: movie.id,
 		poster_path: config.POSTER_PATH + movie.poster_path,

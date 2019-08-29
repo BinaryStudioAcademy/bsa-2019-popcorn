@@ -11,6 +11,7 @@ interface ITopProps {
 }
 
 const TopPageMovie: React.SFC<ITopProps> = ({ index, movie }) => {
+	if (!movie) return <div />;
 	return (
 		<div className="movie-list-container" key={index}>
 			<div className="movie-key">

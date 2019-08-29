@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import {
@@ -28,14 +28,14 @@ export interface IWatchItem {
 	status: string;
 }
 
-const UserWatchList: React.FC<IProps> = props => {
-	const {
-		watchList,
-		fetchWatchList,
-		saveWatchItem,
-		moveToWatched,
-		deleteWatchItem
-	} = props;
+const UserWatchList: React.FC<IProps> = ({
+	watchList,
+	fetchWatchList,
+	saveWatchItem,
+	moveToWatched,
+	deleteWatchItem
+}) => {
+	const [select, setSelect] = useState('TO_WATCH');
 
 	if (!watchList) {
 		fetchWatchList();
@@ -66,35 +66,60 @@ const UserWatchList: React.FC<IProps> = props => {
 		'poster_path',
 		'release_date'
 	];
+
 	const onSelectMovie = movie => {
 		saveWatchItem(movie);
 	};
 
+	const onChangeSelectElement = event => {
+		setSelect(event.target.value);
+	};
+
+	const renderSelectElement = () => (
+		<select
+			id="watch-list-sort-by-options"
+			onChange={onChangeSelectElement}
+			value={select}
+		>
+			<option value="TO_WATCH">Plan to watch movies</option>
+			<option value="WATCHED">Watched movies</option>
+			<option value="ALL">All movies</option>
+		</select>
+	);
+
 	return (
 		<div className="UserWatchList">
 			<div className="user-watch-list-container">
-				<div className="search-input-container">
-					<MovieSearch
-						onSelectMovie={movie => onSelectMovie(movie)}
-						elasticProperties={elasticProperties}
-					/>
+				<div className="watch-list-top-title">
+					<div className="watch-list-left">
+						<div className="watch-list-description">
+							Find a movie and add to watch list
+						</div>
+						<div className="watch-search-and-sort">
+							<div className="search-input-container">
+								<MovieSearch
+									onSelectMovie={movie => onSelectMovie(movie)}
+									elasticProperties={elasticProperties}
+								/>
+							</div>
+						</div>
+					</div>
+					<div className="watch-list-right">
+						<div className="sort-element-name">Sort:</div>
+						<div className="select-element-container">
+							{renderSelectElement()}
+						</div>
+					</div>
 				</div>
-				{toWatchList.length !== 0 && (
-					<div className="to-watch-block">
-						<div className="watch-block-name">To watch</div>
-						<div className="watch-items-container">
-							{renderWatchList(toWatchList)}
-						</div>
+				<div className="to-watch-block">
+					<div className="watch-block-name"></div>
+					<div className="watch-items-container">
+						{(select === 'TO_WATCH' || select === 'ALL') &&
+							renderWatchList(toWatchList)}
+						{(select === 'WATCHED' || select === 'ALL') &&
+							renderWatchList(watchedList)}
 					</div>
-				)}
-				{watchedList.length !== 0 && (
-					<div className="watched-block">
-						<div className="watch-block-name">Watched</div>
-						<div className="watch-items-container">
-							{renderWatchList(watchedList)}
-						</div>
-					</div>
-				)}
+				</div>
 			</div>
 		</div>
 	);

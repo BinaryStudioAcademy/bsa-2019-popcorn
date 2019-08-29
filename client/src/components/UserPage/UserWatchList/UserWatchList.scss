@@ -6,32 +6,52 @@
 	display: flex;
 	justify-content: center;
 
+	.watch-list-description {
+		margin-bottom: 10px;
+		font-weight: 200;
+	}
+
+	#watch-list-sort-by-options {
+		border: 1px solid $border-color;
+		padding: 5 10px;
+		background-color: white;
+		height: 38px;
+		width: 150px;
+		color: $text-secondary-color;
+	}
+
+	.watch-list-top-title {
+		display: flex;
+	}
+
+	.watch-list-right {
+		display: flex;
+		justify-content: flex-start;
+		align-items: center;
+		color: $text-base-color;
+		font-weight: 200;
+		height: 35px;
+		align-self: flex-end;
+		margin-left: 15px;
+
+		.sort-element-name {
+			margin-right: 15px;
+		}
+	}
+
 	.user-watch-list-container {
 		width: 100%;
 		.search-input-container {
-			margin: 0 auto;
 			width: 500px;
 		}
 
-		.to-watch-block,
-		.watched-block {
-			display: flex;
-			flex-direction: column;
+		.watch-items-container {
+			margin-top: 30px;
+			width: 100%;
+			display: grid;
+			grid-template-columns: repeat(auto-fill, minmax(220px, 230px));
+			grid-column-gap: 10px;
 			align-items: center;
-
-			.watch-block-name {
-				margin-top: 15px;
-				margin-bottom: 15px;
-				font-size: 1.3em;
-				font-weight: 600;
-			}
-			.watch-items-container {
-				width: 100%;
-				display: grid;
-				grid-template-columns: repeat(auto-fill, minmax(49%, 1fr));
-				column-count: 2;
-				column-gap: 20px;
-			}
 		}
 	}
 }
