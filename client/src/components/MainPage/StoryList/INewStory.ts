@@ -6,4 +6,5 @@ export default interface INewStory {
 	movieId: null | string;
 	movieOption: string;
 	backgroundColor: string;
+	fontColor: string;
 }

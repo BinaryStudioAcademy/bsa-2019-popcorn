@@ -8,8 +8,10 @@ import {
 	SAVE_MOVIE,
 	SET_CAPTION_NEWSTORY,
 	SET_BACKGROUNG_NEWSTORY,
+	SET_FONTCOLOR_NEWSTORY,
 	SAVE_CROPPED_IMAGE,
 	DISPLAY_PICKER,
+	DISPLAY_FONT_PICKER,
 	DISPLAY_INPUT
 } from './actionTypes';
 import INewStory from '../INewStory';
@@ -43,9 +45,27 @@ export const setBackground = color => {
 	};
 };
 
+export const setFontColor = color => {
+	return {
+		type: SET_FONTCOLOR_NEWSTORY,
+		payload: {
+			color
+		}
+	};
+};
+
 export const displayPicker = isShown => {
 	return {
 		type: DISPLAY_PICKER,
+		payload: {
+			isShown
+		}
+	};
+};
+
+export const displayFontPicker = isShown => {
+	return {
+		type: DISPLAY_FONT_PICKER,
 		payload: {
 			isShown
 		}

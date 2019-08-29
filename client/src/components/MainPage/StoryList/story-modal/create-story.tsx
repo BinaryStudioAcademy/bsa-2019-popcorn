@@ -10,6 +10,8 @@ import { SketchPicker } from 'react-color';
 import {
 	setBackground,
 	displayPicker,
+	setFontColor,
+	displayFontPicker,
 	displayInput
 } from '../story.redux/actions';
 import { connect } from 'react-redux';
@@ -44,8 +46,12 @@ interface IProps {
 	saveAfterCrop: () => void;
 	setBackground: (color: string) => void;
 	backgroundColor: string;
+	setFontColor: (color: string) => void;
+	fontColor: string;
 	displayPicker: (isShown: boolean) => void;
 	isShownPicker: boolean;
+	displayFontPicker: (isShown: boolean) => void;
+	isShownFontPicker: boolean;
 	displayInput: (isShown: boolean) => void;
 	isShownInput: boolean;
 }
@@ -60,6 +66,7 @@ class getAddStoryPopupContent extends React.Component<IProps> {
 		return caption || type === 'voting';
 	}
 
+	//background picker
 	handleHideColorPicker = () => {
 		this.props.displayPicker(false);
 	};
@@ -71,6 +78,20 @@ class getAddStoryPopupContent extends React.Component<IProps> {
 	};
 	handleShowColorPicker = () => {
 		this.props.displayPicker(!this.props.isShownPicker);
+	};
+
+	//font color picker
+	handleHideFontPicker = () => {
+		this.props.displayFontPicker(false);
+	};
+
+	handleFontChange = color => {
+		this.props.setFontColor(
+			`rgba(${color.rgb.r},${color.rgb.g},${color.rgb.b},${color.rgb.a})`
+		);
+	};
+	handleShowFontPicker = () => {
+		this.props.displayFontPicker(!this.props.isShownFontPicker);
 	};
 
 	toggleInput = () => {
@@ -111,6 +132,7 @@ class getAddStoryPopupContent extends React.Component<IProps> {
 							saveAfterCrop={this.props.saveAfterCrop}
 							backgroundColor={this.props.backgroundColor}
 							isShownInput={this.props.isShownInput}
+							fontColor={this.props.fontColor}
 						>
 							{newStory.activity && newStory.activity.name}
 						</PostStoryEditor>
@@ -140,16 +162,29 @@ class getAddStoryPopupContent extends React.Component<IProps> {
 
 							<button onClick={this.toggleInput}>T</button>
 							<div
-								// onClick={this.handleShowColorPicker}
+								onClick={this.handleShowFontPicker}
 								className="color-picker-btn"
 							>
 								<div
-									style={{ color: 'red' }} //todo
-									className="color-picker-btn-preview"
+									style={{ color: this.props.fontColor }} //todo
+									className="color-picker-btn-preview text-preview"
 								>
 									T
 								</div>
 							</div>
+							{this.props.isShownFontPicker ? (
+								<div className="color-picker-popover">
+									<div
+										className="color-picker-cover"
+										onClick={this.handleHideFontPicker}
+									/>
+									<SketchPicker
+										className="font-picker"
+										color={this.props.fontColor}
+										onChangeComplete={this.handleFontChange}
+									/>
+								</div>
+							) : null}
 							<div className="color-picker-btn"></div>
 							<button onClick={addExtra}>
 								<FontAwesomeIcon icon={faPlus} />
@@ -187,12 +222,16 @@ const mapStateToProps = (rootState, props) => ({
 	...props,
 	backgroundColor: rootState.story.newStory.backgroundColor,
 	isShownPicker: rootState.story.isShownPicker,
+	fontColor: rootState.story.newStory.fontColor,
+	isShownFontPicker: rootState.story.isShownFontPicker,
 	isShownInput: rootState.story.isShownInput
 });
 
 const actions = {
 	setBackground,
 	displayPicker,
+	setFontColor,
+	displayFontPicker,
 	displayInput
 };
 

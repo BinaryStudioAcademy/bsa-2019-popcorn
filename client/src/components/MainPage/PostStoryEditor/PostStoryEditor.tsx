@@ -36,6 +36,7 @@ interface IPostStoryEditorProps {
 	saveAfterCrop: () => void;
 	backgroundColor: string;
 	isShownInput: boolean;
+	fontColor: string;
 }
 
 interface IPostStoryEditorState {
@@ -201,6 +202,8 @@ class PostStoryEditor extends React.Component<
 						>
 							{isShownInput ? (
 								<textarea
+									maxLength={30}
+									style={{ color: this.props.fontColor }}
 									ref={this.textarea}
 									placeholder="Type a text here..."
 									defaultValue={this.props.body}

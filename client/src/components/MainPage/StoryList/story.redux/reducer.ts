@@ -8,7 +8,9 @@ import {
 	SET_STORIES,
 	SAVE_CROPPED_IMAGE,
 	SET_BACKGROUNG_NEWSTORY,
+	SET_FONTCOLOR_NEWSTORY,
 	DISPLAY_PICKER,
+	DISPLAY_FONT_PICKER,
 	DISPLAY_INPUT
 } from './actionTypes';
 import INewStory from '../INewStory';
@@ -21,6 +23,7 @@ const initialState: {
 	title: string;
 	photoSaved: boolean;
 	isShownPicker: boolean;
+	isShownFontPicker: boolean;
 	isShownInput: boolean;
 } = {
 	stories: null,
@@ -31,12 +34,14 @@ const initialState: {
 		type: '',
 		movieId: null,
 		movieOption: '',
-		backgroundColor: 'rgba(255,255,255,1)'
+		backgroundColor: 'rgba(255,255,255,1)',
+		fontColor: 'rgba(200,10,23,1)'
 	},
 	cursorPosition: { start: 0, end: 0 },
 	title: '',
 	photoSaved: false,
 	isShownPicker: false,
+	isShownFontPicker: false,
 	isShownInput: false
 };
 
@@ -72,6 +77,19 @@ export default function(state = initialState, action) {
 			return {
 				...state,
 				isShownPicker: action.payload.isShown
+			};
+		case SET_FONTCOLOR_NEWSTORY:
+			return {
+				...state,
+				newStory: {
+					...state.newStory,
+					fontColor: action.payload.color
+				}
+			};
+		case DISPLAY_FONT_PICKER:
+			return {
+				...state,
+				isShownFontPicker: action.payload.isShown
 			};
 		case DISPLAY_INPUT:
 			return {
