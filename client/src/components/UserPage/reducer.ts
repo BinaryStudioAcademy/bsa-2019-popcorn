@@ -14,7 +14,8 @@ import {
 	RESTORE_ERROR,
 	RESTORE_OK,
 	SET_LOGIN_ERROR,
-	SET_REGISTER_ERROR
+	SET_REGISTER_ERROR,
+	AUTH_WITH_GOOGLE
 } from '../authorization/actionTypes';
 
 import { fetchUser } from '../../redux/routines';
@@ -136,6 +137,11 @@ export default function(state = initialState, action) {
 			return {
 				...state,
 				loading: false
+			};
+		case AUTH_WITH_GOOGLE:
+			return {
+				...state,
+				redirectURL: action.payload.redirect_url
 			};
 		default:
 			return state;

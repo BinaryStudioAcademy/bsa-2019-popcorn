@@ -12,7 +12,8 @@ import {
 	fetchByToken,
 	fetchResetPassword,
 	fetchRestorePassword,
-	registration
+	registration,
+	authWithGoogle
 } from '../../components/authorization/actions';
 
 import Spinner from '../../components/shared/Spinner/index';
@@ -42,6 +43,7 @@ interface IProps {
 	resetMessage: string;
 	restoreMessage: string;
 	fetchRestorePassword: (password: string, token: string) => any;
+	authWithGoogle: () => any;
 }
 
 const Routing = ({
@@ -54,7 +56,8 @@ const Routing = ({
 	registerError,
 	fetchResetPassword,
 	restoreMessage,
-	fetchRestorePassword
+	fetchRestorePassword,
+	authWithGoogle
 }: IProps) => {
 	const token = localStorage.getItem('token');
 	if (token && !isAuthorized) {
@@ -72,6 +75,7 @@ const Routing = ({
 							loginError={loginError}
 							isAuthorized={isAuthorized}
 							onSubmit={authorize}
+							onAuthWithGoogle={authWithGoogle}
 						/>
 					)}
 				/>
@@ -130,7 +134,8 @@ const actions = {
 	fetchByToken,
 	registration,
 	fetchResetPassword,
-	fetchRestorePassword
+	fetchRestorePassword,
+	authWithGoogle
 };
 
 const mapDispatchToProps = dispatch => bindActionCreators(actions, dispatch);

@@ -4,6 +4,10 @@ import { NavLink, Redirect } from 'react-router-dom';
 import * as Yup from 'yup';
 import logo from '../../../assets/icons/general/popcorn-logo.svg';
 import './style.scss';
+import {
+	FacebookLoginButton,
+	GoogleLoginButton
+} from 'react-social-login-buttons';
 
 interface IValues {
 	email: string;
@@ -14,6 +18,7 @@ interface IProps {
 	onSubmit: (values: IValues) => any;
 	isAuthorized: boolean;
 	loginError: string | null;
+	onAuthWithGoogle: () => any;
 }
 
 interface IState {
@@ -132,6 +137,8 @@ class Login extends React.Component<IProps, IState, IValues> {
 					<i className="icon icon-arrow-right" />
 				</div>
 				{this.linkToRegistration()}
+				<GoogleLoginButton onClick={() => this.props.onAuthWithGoogle()} />
+				<FacebookLoginButton />
 			</div>
 		) : (
 			<Redirect to="/" />

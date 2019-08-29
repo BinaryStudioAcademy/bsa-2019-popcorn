@@ -12,6 +12,7 @@ import {
 	UPDATE_PROFILE
 } from './actionTypes';
 import { uploadFile } from '../../services/file.service';
+import callWebApi from './../../services/webApi.service';
 import axios from 'axios';
 import {
 	FETCH_LOGIN,
@@ -26,7 +27,8 @@ import {
 	RESTORE_ERROR,
 	RESTORE_OK,
 	SET_LOGIN_ERROR,
-	SET_REGISTER_ERROR
+	SET_REGISTER_ERROR,
+	AUTH_WITH_GOOGLE
 } from '../authorization/actionTypes';
 import config from '../../config';
 import webApi from '../../services/webApi.service';
@@ -188,6 +190,20 @@ export function* fetchRegistration(action) {
 		});
 	}
 }
+export function* fetchGoogleAuth() {
+	try {
+		const res = yield call(callWebApi, {
+			method: 'GET',
+			endpoint: 'http://localhost:5000/api/auth/google'
+		});
+		yield put({
+			type: AUTH_WITH_GOOGLE,
+			payload: { redirect_url: res.redirect_url }
+		});
+	} catch (e) {
+		console.log('Something went wrong with logout');
+	}
+}
 
 export function* fetchPosts(action) {
 	try {
@@ -320,6 +336,10 @@ function* watchFetchRestorePassword() {
 	yield takeEvery(FETCH_RESTORE_PASSWORD, fetchRestorePassword);
 }
 
+function* watchFetchGoogleAuth() {
+	yield takeEvery(AUTH_WITH_GOOGLE, fetchGoogleAuth);
+}
+
 export default function* profile() {
 	yield all([
 		watchGetSelectedUser(),
@@ -334,6 +354,7 @@ export default function* profile() {
 		watchFetchLogout(),
 		watchUpdateProfile(),
 		watchSendPost(),
-		watchFetchLogout()
+		watchFetchLogout(),
+		watchFetchGoogleAuth()
 	]);
 }
