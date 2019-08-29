@@ -24,6 +24,7 @@ type StoryVotingProps = {
 		deltaOptions: { x: number; y: number }
 	) => void;
 	backColor: { r: string; g: string; b: string; a: string } | string;
+	backgroundColor: string;
 	backImage?: string;
 	image_url?: string;
 	userId: string;
@@ -184,13 +185,14 @@ class StoryVoting extends React.Component<StoryVotingProps, StoryVotingState> {
 		if (this.state.redirect) return <Redirect to={'/create'} />;
 
 		const setRedirect = () => this.setState({ redirect: true });
+		const backgroundColor = this.props.backgroundColor;
 
 		return (
 			<div className="story-voting-wrp">
 				<div
 					className="story-voting"
 					id="voting-preview"
-					style={backgroundStyle}
+					style={{ backgroundColor: backgroundColor }}
 				>
 					<Draggable
 						bounds="parent"

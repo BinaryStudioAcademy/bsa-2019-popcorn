@@ -19,7 +19,7 @@ import { NavLink } from 'react-router-dom';
 interface IProps {
 	stories: Array<{
 		image_url: string;
-		bckg_color: string;
+		backgroundColor: string;
 		users: Array<{ name: string; image_url: string }>;
 		userInfo: {
 			userId: string;
@@ -161,6 +161,7 @@ class StoryViewer extends PureComponent<IProps, IState> {
 
 								{story.type === 'voting' && story.voting && (
 									<StoryVoting
+										backgroundColor={story.backgroundColor}
 										header={story.voting.header}
 										options={story.voting.options}
 										deltaPositionForHeader={{
@@ -181,7 +182,7 @@ class StoryViewer extends PureComponent<IProps, IState> {
 									<main
 										style={{
 											backgroundImage: 'url(' + story.image_url + ')',
-											backgroundColor: story.bckg_color
+											backgroundColor: story.backgroundColor
 										}}
 									>
 										<div className={'seen'}>

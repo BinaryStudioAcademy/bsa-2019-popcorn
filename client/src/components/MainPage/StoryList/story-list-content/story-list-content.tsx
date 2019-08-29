@@ -7,6 +7,7 @@ interface IStoryListItem {
 	id: string;
 	caption: string;
 	image_url: string;
+	backgroundColor: string;
 	user: {
 		avatar: string;
 		id: string;
@@ -61,6 +62,7 @@ class StoryListContent extends Component<IStoryListItemsProps> {
 							src={avatar || config.DEFAULT_AVATAR}
 						/>
 						<StoryVoting
+							backgroundColor={item.backgroundColor}
 							header={voting.header}
 							options={voting.options}
 							deltaPositionForHeader={{
@@ -86,6 +88,7 @@ class StoryListContent extends Component<IStoryListItemsProps> {
 					key={i}
 					imageUrl={item.image_url}
 					name={item.caption}
+					backgroundColor={item.backgroundColor}
 					avatar={item.user.avatar}
 					openViewer={this.props.openViewer}
 					index={i}

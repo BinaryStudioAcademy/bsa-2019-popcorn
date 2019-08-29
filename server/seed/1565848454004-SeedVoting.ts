@@ -32,6 +32,7 @@ export class SeedVoting1565848454004 implements MigrationInterface {
     secondOption.body = "NO";
     await getCustomRepository(VotingOptionRepository).save(secondOption);
     const story = new Story();
+    story.backgroundColor = "rgba(213,91,5,1)";
     story.caption = "New John Wick";
     story.type = "voting";
     story.activityId = vote.id;
@@ -58,6 +59,7 @@ export class SeedVoting1565848454004 implements MigrationInterface {
     secondOption1.body = "NO";
     await getCustomRepository(VotingOptionRepository).save(secondOption1);
     const story1 = new Story();
+    story1.backgroundColor = "rgba(21,240,80,1)";
     story1.caption = "Greate or greate ?";
     story1.type = "voting";
     story1.activityId = vote1.id;
@@ -65,6 +67,7 @@ export class SeedVoting1565848454004 implements MigrationInterface {
     await getCustomRepository(StoryRepository).save(story1);
 
     const story3 = new Story();
+    story3.backgroundColor = "rgba(123,154,71,1)";
     story3.caption = "Axax😂";
     story3.image_url = "https://i.imgur.com/db7C54t.jpg";
     const users3 = await getCustomRepository(UserRepository).find();
@@ -91,6 +94,7 @@ export class SeedVoting1565848454004 implements MigrationInterface {
     secondOption2.body = "GREATE";
     await getCustomRepository(VotingOptionRepository).save(secondOption2);
     const story2 = new Story();
+    story2.backgroundColor = "rgba(50,115,201,1)";
     story2.caption = "Euphoria ?";
     story2.type = "voting";
     story2.activityId = vote2.id;

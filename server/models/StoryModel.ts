@@ -9,4 +9,5 @@ export class Story {
   activityId: string;
   movieId: string;
   movieOption: string;
+  backgroundColor: string;
 }

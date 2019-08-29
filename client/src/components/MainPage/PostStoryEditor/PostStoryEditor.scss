@@ -7,36 +7,24 @@
 	align-items: center;
 	justify-content: space-around;
 	margin: 0 auto;
-	padding: 50px 50px 0;
+	padding: 30px 30px 0;
 	box-sizing: border-box;
 	flex: 1;
 
 	img {
-		max-width: 270px;
-		max-height: 270px;
+		height: 100%;
 	}
 
 	textarea {
-		height: 130px;
-		outline: none;
-		width: 100%;
-		color: $text-base-color;
-		box-sizing: border-box;
-		font-size: $form-font-size;
-		font-family: $base-font-family;
-		letter-spacing: $input-letter-spacing;
-		box-shadow: 0px 0px 10px $input-shadow-color;
-		border: 1px solid $border-color;
-		border-radius: 3px;
-		padding: 12px 15px;
-
-		&::placeholder {
-			color: $input-placeholder-color;
-		}
-
-		&:focus {
-			border: 1px solid $border-focus-color;
-		}
+		width: 80%;
+		text-align: center;
+		min-height: 40px;
+		max-height: 100%;
+		resize: none;
+		overflow: auto;
+		border: none;
+		background-color: transparent;
+		font-size: 1.5em;
 	}
 
 	button {
