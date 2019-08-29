@@ -19,6 +19,8 @@ interface IProps {
 	deleteEvent: (id: string, currentUserId: string) => any;
 	currentUserId: string;
 	currentUserRole: string;
+	selectedUserId: string;
+	isOwnData: boolean;
 	saveEvent: (event: any) => void;
 	updateEvent: (event: any) => void;
 	currentProfileUserId: string;
@@ -62,14 +64,6 @@ class UserEvents extends React.Component<IProps, IState> {
 		}
 	};
 
-	isOwnEvent = event => {
-		const { userId } = event;
-		return (
-			this.props.currentUserId === userId ||
-			this.props.currentUserRole === 'admin'
-		);
-	};
-
 	renderEventList = (eventList: IEventFormatClient[], deleteEventAction: any) =>
 		eventList.map(event => (
 			<EventItem
@@ -77,7 +71,7 @@ class UserEvents extends React.Component<IProps, IState> {
 				key={event.id}
 				deleteEvent={deleteEventAction}
 				editEvent={this.editEvent}
-				isOwnEvent={this.isOwnEvent(event)}
+				isOwnEvent={this.props.isOwnData}
 			/>
 		));
 
@@ -86,13 +80,13 @@ class UserEvents extends React.Component<IProps, IState> {
 			userEvents,
 			currentUserId,
 			deleteEvent,
-			currentProfileUserId
+			isOwnData
 		} = this.props;
 		const { openEventEditor, editableEvent } = this.state;
 		if (!userEvents) {
 			return <Spinner />;
 		}
-		console.log(currentUserId, currentProfileUserId);
+		
 		const ownEvents: IEventFormatClient[] = [];
 		const subscribeEvents: IEventFormatClient[] = [];
 
@@ -103,7 +97,7 @@ class UserEvents extends React.Component<IProps, IState> {
 		});
 		return (
 			<div className="user-events">
-				{currentUserId === currentProfileUserId && (
+				{isOwnData && (
 					<div
 						className="create-event-button hover"
 						onClick={() => this.editEvent()}
@@ -120,7 +114,7 @@ class UserEvents extends React.Component<IProps, IState> {
 					/>
 				) : (
 					<div>
-						{currentUserId === currentProfileUserId && (
+						{isOwnData && (
 							<div>
 								<div className="events-title">
 									<span>Your Events</span>

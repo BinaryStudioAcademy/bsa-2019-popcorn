@@ -11,7 +11,7 @@ interface IProps {
 	userId: string;
 	croppedSaved: boolean;
 	saveCropped: () => void;
-	currentUserId: string;
+	isOwnData: boolean;
 }
 const userPostStyle = {
 	marginRight: '0px',
@@ -24,7 +24,7 @@ const UserPosts: React.FC<IProps> = ({
 	userId,
 	croppedSaved,
 	saveCropped,
-	currentUserId
+	isOwnData
 }) => {
 	if (!posts) {
 		getUsersPosts();
@@ -33,7 +33,7 @@ const UserPosts: React.FC<IProps> = ({
 
 	return (
 		<div className="UserPosts">
-			{currentUserId === userId && (
+			{isOwnData && (
 				<PostConstructor
 					userId={userId}
 					saveCropped={saveCropped}
