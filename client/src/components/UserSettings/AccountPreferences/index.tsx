@@ -169,13 +169,15 @@ class AccountPreferences extends React.Component<IProps, IState> {
 						{EmailCurrPasswordError && (
 							<p className={'error-message'}>{EmailCurrPasswordError}</p>
 						)}
-						<button
-							className="settings-btn"
-							onClick={ev => this.updateEmail(ev)}
-							disabled={!!(EmailCurrPasswordError || EmailnewEmailError)}
-						>
-							Save
-						</button>
+						<div className="settings-btn-wrapper">
+							<button
+								className="settings-btn"
+								onClick={ev => this.updateEmail(ev)}
+								disabled={!!(EmailCurrPasswordError || EmailnewEmailError)}
+							>
+								Save
+							</button>
+						</div>
 					</div>
 					<div className={'question-container settings-container'}>
 						<h3 className={'survey-question'}>Change your password</h3>
@@ -237,15 +239,17 @@ class AccountPreferences extends React.Component<IProps, IState> {
 						{PasswordNewPasswordError && (
 							<p className={'error-message'}>{PasswordNewPasswordError}</p>
 						)}
-						<button
-							className="settings-btn"
-							onClick={ev => this.updatePassword(ev)}
-							disabled={
-								!!(PasswordNewPasswordError || PasswordCurrPasswordError)
-							}
-						>
-							Save
-						</button>
+						<div className="settings-btn-wrapper">
+							<button
+								className="settings-btn"
+								onClick={ev => this.updatePassword(ev)}
+								disabled={
+									!!(PasswordNewPasswordError || PasswordCurrPasswordError)
+								}
+							>
+								Save
+							</button>
+						</div>
 					</div>
 					<div className={'question-container settings-container'}>
 						<h3 className={'survey-question'}>Delete account</h3>

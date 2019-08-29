@@ -8,6 +8,7 @@
   },
   "dependencies": {
     "concurrently": "^4.1.1",
+    "imdb-scrapper": "^2.2.0",
     "rimraf": "^2.6.3"
   },
   "scripts": {

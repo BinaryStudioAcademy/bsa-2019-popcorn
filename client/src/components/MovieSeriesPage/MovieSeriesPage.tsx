@@ -12,7 +12,8 @@ import {
 	setUserRate,
 	fetchReviewByMovieUserId as fetchReview,
 	setReview,
-	removeReviewSet
+	removeReviewSet,
+	fetchAwards
 } from './Movie.redux/actions';
 
 interface IProps {
@@ -34,6 +35,8 @@ interface IProps {
 	avatar?: string;
 	userId: string;
 	username: string;
+	fetchAwards: (id: any) => any;
+	awards: any;
 }
 
 export interface IUserRate {
@@ -56,7 +59,9 @@ const MovieSeriesPage: React.SFC<IProps> = props => {
 		fetchReview,
 		ownReview,
 		setReview,
-		removeReviewSet
+		removeReviewSet,
+		fetchAwards,
+		awards
 	} = props;
 	const mainPath = `/movies/${props.match.params.id}`;
 
@@ -89,6 +94,8 @@ const MovieSeriesPage: React.SFC<IProps> = props => {
 				mainPath={mainPath}
 				movie={movie}
 				currentUser={{ avatar, id: userId, name: username }}
+				fetchAwards={fetchAwards}
+				awards={awards}
 			/>
 		</div>
 	);
@@ -101,7 +108,8 @@ const mapStateToProps = (rootState, props) => ({
 	avatar: rootState.profile.profileInfo && rootState.profile.profileInfo.avatar,
 	userId: rootState.profile.profileInfo && rootState.profile.profileInfo.id,
 	username: rootState.profile.profileInfo && rootState.profile.profileInfo.name,
-	ownReview: rootState.movie.ownReview
+	ownReview: rootState.movie.ownReview,
+	awards: rootState.movie.awards
 });
 
 const mapDispatchToProps = dispatch => {
@@ -111,7 +119,8 @@ const mapDispatchToProps = dispatch => {
 		setUserRate,
 		fetchReview,
 		setReview,
-		removeReviewSet
+		removeReviewSet,
+		fetchAwards
 	};
 	return bindActionCreators(actions, dispatch);
 };

@@ -3,6 +3,7 @@ import { MovieRate } from "../models/movieRateModel";
 import MovieRepository, {
   getMovieVideoLinkById,
   getCredits,
+  getAwards,
   getGenres
 } from "../repository/movie.repository";
 
@@ -32,6 +33,11 @@ export const getFiltredMovies = async (
 export const getMoviesGenres = async (): Promise<any[]> => {
   let genres = await getGenres();
   return genres.genres;
+};
+
+export const getMovieAwards = async (imdbId: any): Promise<any> => {
+  let awardList = await getAwards(imdbId);
+  return awardList.data.movies[0].awards;
 };
 
 export const getMovieById = async (movieId: string): Promise<any> => {

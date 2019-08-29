@@ -31,7 +31,9 @@ class DiscussionComponent extends Component<
 	constructor(props: IDiscussionProps) {
 		super(props);
 		this.state = {
-			messagesState: this.props.messages,
+			messagesState: this.props.messages.sort(
+				(m1, m2) => +new Date(m2.createdAt) - +new Date(m1.createdAt)
+			),
 			inputIsEmpty: true,
 			roomId: String(props.entityIdName).concat(props.entityId)
 		};
