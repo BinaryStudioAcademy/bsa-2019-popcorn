@@ -50,6 +50,7 @@ export class SeedStory1565606634607 implements MigrationInterface {
       story.caption =
         storyCaptions[Math.floor(Math.random() * storyCaptions.length)];
       story.image_url = imageUrl;
+      story.backgroundColor = "rgba(200, 13, 55, 1)";
       const users = await getCustomRepository(UserRepository).find();
       story.user = users[Math.floor(Math.random() * users.length)];
       await getCustomRepository(StoryRepository).save(story);

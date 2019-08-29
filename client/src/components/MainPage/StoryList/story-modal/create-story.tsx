@@ -2,10 +2,21 @@ import React from 'react';
 import { Redirect } from 'react-router';
 import PostStoryEditor from '../../PostStoryEditor/PostStoryEditor';
 import INewStory from '../INewStory';
-import { faPlusCircle } from '@fortawesome/free-solid-svg-icons';
+import { faPlus, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import TMovie from '../../../MovieSeriesPage/TMovie';
 import Spinner from '../../../shared/Spinner';
+import { SketchPicker } from 'react-color';
+import {
+	setBackground,
+	displayPicker,
+	setFontColor,
+	displayFontPicker,
+	displayInput,
+	setTextPosition
+} from '../story.redux/actions';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 
 interface IProps {
 	newStory: INewStory;
@@ -34,6 +45,18 @@ interface IProps {
 	isLoading: boolean;
 	photoSaved: boolean;
 	saveAfterCrop: () => void;
+	setBackground: (color: string) => void;
+	backgroundColor: string;
+	setFontColor: (color: string) => void;
+	fontColor: string;
+	displayPicker: (isShown: boolean) => void;
+	isShownPicker: boolean;
+	displayFontPicker: (isShown: boolean) => void;
+	isShownFontPicker: boolean;
+	displayInput: (isShown: boolean) => void;
+	isShownInput: boolean;
+	setTextPosition: (position: { x: number; y: number }) => void;
+	textPosition: { x: number; y: number };
 }
 
 class getAddStoryPopupContent extends React.Component<IProps> {
@@ -42,9 +65,46 @@ class getAddStoryPopupContent extends React.Component<IProps> {
 		extra: true
 	};
 
-	static valid({ image_url, caption, type }: INewStory) {
-		return (image_url && caption) || type === 'voting';
+	static valid({ image_url, backgroundColor, caption, type }: INewStory) {
+		return caption || type === 'voting';
 	}
+
+	//background picker
+	handleHideColorPicker = () => {
+		this.props.displayPicker(false);
+	};
+
+	handleColorChange = color => {
+		this.props.setBackground(
+			`rgba(${color.rgb.r},${color.rgb.g},${color.rgb.b},${color.rgb.a})`
+		);
+	};
+	handleShowColorPicker = () => {
+		this.props.displayPicker(!this.props.isShownPicker);
+	};
+
+	//font color picker
+	handleHideFontPicker = () => {
+		this.props.displayFontPicker(false);
+	};
+
+	handleFontChange = color => {
+		this.props.setFontColor(
+			`rgba(${color.rgb.r},${color.rgb.g},${color.rgb.b},${color.rgb.a})`
+		);
+	};
+	handleShowFontPicker = () => {
+		this.props.displayFontPicker(!this.props.isShownFontPicker);
+	};
+
+	toggleInput = () => {
+		this.props.displayInput(!this.props.isShownInput);
+		if (this.props.isShownInput) this.props.setCaption('', 0, 0, '');
+	};
+
+	changeTextPosition = (position: { x: number; y: number }) => {
+		this.props.setTextPosition(position);
+	};
 
 	render() {
 		const newStory = this.props.newStory;
@@ -64,12 +124,7 @@ class getAddStoryPopupContent extends React.Component<IProps> {
 					<div className={'content-wrp'}>
 						<PostStoryEditor
 							type={'story'}
-							body={newStory.caption || ''}
 							cursorPosition={this.props.cursorPosition}
-							imageUrl={newStory.image_url || ''}
-							changeBody={this.props.setCaption}
-							saveImage={this.props.saveImage}
-							changeActivity={this.props.changeActivity}
 							movies={this.props.movies}
 							fetchSearch={this.props.fetchSearch}
 							title={this.props.title}
@@ -80,41 +135,81 @@ class getAddStoryPopupContent extends React.Component<IProps> {
 						>
 							{newStory.activity && newStory.activity.name}
 						</PostStoryEditor>
-						<button
-							className={'btn'}
-							onClick={addExtra}
-							style={{
-								width: '50px',
-								minWidth: 'auto',
-								position: 'absolute',
-								top: '5px',
-								right: '65px',
-								height: '43px',
-								display: 'flex',
-								justifyContent: 'center'
-							}}
-						>
-							<FontAwesomeIcon icon={faPlusCircle} />
-						</button>
-					</div>
 
-					<div className={'btn-wrp'}>
-						<div className={'cancel-save'}>
-							<button onClick={close} className={'btn'}>
-								Cancel
-							</button>
-							<button
-								className={'btn'}
-								disabled={disabled}
-								onClick={() => {
-									this.props.createStory(newStory, this.props.userId);
-									this.props.history.push('/');
-								}}
+						<div className="story-editor-btns">
+							<div
+								onClick={this.handleShowColorPicker}
+								className="color-picker-btn"
 							>
-								Save
+								<div
+									style={{ backgroundColor: this.props.backgroundColor }}
+									className="color-picker-btn-preview"
+								/>
+							</div>
+							{this.props.isShownPicker ? (
+								<div className="color-picker-popover">
+									<div
+										className="color-picker-cover"
+										onClick={this.handleHideColorPicker}
+									/>
+									<SketchPicker
+										color={this.props.backgroundColor}
+										onChangeComplete={this.handleColorChange}
+									/>
+								</div>
+							) : null}
+
+							<button onClick={this.toggleInput}>T</button>
+							<div
+								onClick={this.handleShowFontPicker}
+								className="color-picker-btn"
+							>
+								<div
+									style={{ color: this.props.fontColor }}
+									className="color-picker-btn-preview text-preview"
+								>
+									T
+								</div>
+							</div>
+							{this.props.isShownFontPicker ? (
+								<div className="color-picker-popover">
+									<div
+										className="color-picker-cover"
+										onClick={this.handleHideFontPicker}
+									/>
+									<SketchPicker
+										className="font-picker"
+										color={this.props.fontColor}
+										onChangeComplete={this.handleFontChange}
+									/>
+								</div>
+							) : null}
+							<div className="color-picker-btn"></div>
+							<button onClick={addExtra}>
+								<FontAwesomeIcon icon={faPlus} />
 							</button>
 						</div>
 					</div>
+
+					<button onClick={close} className="cancel-btn">
+						<FontAwesomeIcon icon={faTimes} />
+					</button>
+					<button
+						className={'btn'}
+						disabled={disabled}
+						onClick={() => {
+							this.props.createStory(
+								{
+									...newStory,
+									backgroundColor: this.props.backgroundColor
+								},
+								this.props.userId
+							);
+							this.props.history.push('/');
+						}}
+					>
+						Share
+					</button>
 					{this.props.isLoading && <Spinner />}
 				</div>
 			</div>
@@ -122,4 +217,28 @@ class getAddStoryPopupContent extends React.Component<IProps> {
 	}
 }
 
-export default getAddStoryPopupContent;
+const mapStateToProps = (rootState, props) => ({
+	...props,
+	backgroundColor: rootState.story.newStory.backgroundColor,
+	isShownPicker: rootState.story.isShownPicker,
+	fontColor: rootState.story.newStory.fontColor,
+	isShownFontPicker: rootState.story.isShownFontPicker,
+	isShownInput: rootState.story.isShownInput,
+	textPosition: rootState.story.newStory.textPosition
+});
+
+const actions = {
+	setBackground,
+	displayPicker,
+	setFontColor,
+	displayFontPicker,
+	displayInput,
+	setTextPosition
+};
+
+const mapDispatchToProps = dispatch => bindActionCreators(actions, dispatch);
+
+export default connect(
+	mapStateToProps,
+	mapDispatchToProps
+)(getAddStoryPopupContent);
