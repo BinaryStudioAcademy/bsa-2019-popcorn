@@ -2,7 +2,11 @@ import * as admin from "firebase-admin";
 import * as path from "path";
 import { clientEmail, privateKey, projectId } from "../config/firebase.config";
 admin.initializeApp({
-  credential: admin.credential.cert({ clientEmail, privateKey, projectId }),
+  credential: admin.credential.cert({
+    clientEmail,
+    privateKey: privateKey.replace("/\\n/g", "\n"),
+    projectId
+  }),
   databaseURL: "https://popcorn-64a9a.firebaseio.com"
 });
 
