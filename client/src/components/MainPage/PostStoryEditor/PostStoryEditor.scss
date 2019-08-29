@@ -16,9 +16,13 @@
 	}
 
 	textarea {
+		width: 80%;
+		text-align: center;
+		min-height: 40px;
+		max-height: 100%;
 		resize: none;
 		overflow: auto;
-		border: 1px red solid;
+		border: none;
 		background-color: transparent;
 		font-size: 1.5em;
 	}

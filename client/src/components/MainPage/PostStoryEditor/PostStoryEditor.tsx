@@ -231,6 +231,7 @@ class PostStoryEditor extends React.Component<
 								<textarea
 									maxLength={30}
 									style={{ color: this.props.newStory.fontColor }}
+									spellCheck={false}
 									ref={this.textarea}
 									placeholder="Type a text here..."
 									defaultValue={this.props.newStory.caption || ''}
