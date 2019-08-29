@@ -62,8 +62,8 @@ class CastList extends React.Component<CastListProps, CastListState> {
 						this.setState({ isDown: false, class: '' });
 					}}
 				>
-					{this.props.cast.map(el => {
-						return <CastItem castItemInfo={el} />;
+					{this.props.cast.map((el, index) => {
+						return <CastItem castItemInfo={el} key={index} />;
 					})}
 				</div>
 			</div>

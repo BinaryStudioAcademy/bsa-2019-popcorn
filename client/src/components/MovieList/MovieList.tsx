@@ -4,23 +4,31 @@ import MovieListItem from './MovieListItem/MovieListItem';
 import TMovie from '../MovieSeriesPage/TMovie';
 import InfiniteScroll from 'react-infinite-scroller';
 import Spinner from '../shared/Spinner';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import {
+	faArrowCircleRight,
+	faArrowCircleLeft
+} from '@fortawesome/free-solid-svg-icons';
 
 interface IMovieListProps {
 	movies: Array<TMovie>;
 	setMovieSeries?: (movie: any) => any;
 	saveMovie?: (movie: TMovie) => any;
 	twoColumns?: boolean;
-	loadMoreMovie?: (size: number, from: number) => any;
+	loadMoreMovie?: (size: number, from: number, filters?: any) => any;
+	filters?: any;
 }
 
 const filter = { from: 50, size: 50 };
+const filter1 = { from: 0, size: 14 };
 
 const MovieList: React.FC<IMovieListProps> = ({
 	movies,
 	setMovieSeries,
 	saveMovie,
 	twoColumns = false,
-	loadMoreMovie
+	loadMoreMovie,
+	filters
 }) => {
 	if (!movies) return <div>Any movie in list</div>;
 	const movieListItems = movies.map(movie => {
@@ -39,11 +47,31 @@ const MovieList: React.FC<IMovieListProps> = ({
 			filter.from = filter.from + filter.size;
 		}
 	};
+
+	const nextPage = () => {
+		if (loadMoreMovie) {
+			if (filters) {
+				filter1.from = filter1.from + filter1.size;
+				loadMoreMovie(filter1.size, filter1.from, filters);
+			}
+		}
+	};
+
+	const previousPage = () => {
+		if (loadMoreMovie) {
+			if (filter) {
+				filter1.from = filter1.from - filter1.size;
+				loadMoreMovie(filter1.size, filter1.from, filters);
+			}
+		}
+	};
+
 	const style = twoColumns
 		? { display: 'grid', gridTemplateColumns: '.5fr .5fr' }
 		: {};
-	return loadMoreMovie ? (
+	return loadMoreMovie && !filters ? (
 		<InfiniteScroll
+			style={{ width: '100%' }}
 			pageStart={1}
 			loadMore={next}
 			loader={
@@ -57,6 +85,22 @@ const MovieList: React.FC<IMovieListProps> = ({
 				{movieListItems}
 			</div>
 		</InfiniteScroll>
+	) : filters ? (
+		<div style={{ width: '100%' }}>
+			<div className="movie-list" style={style}>
+				{movieListItems}
+			</div>
+			<div className="page-switch">
+				<button onClick={previousPage} disabled={!(filter1.from > 0)}>
+					<FontAwesomeIcon className="previous-icon" icon={faArrowCircleLeft} />
+					Previous page
+				</button>
+				<button onClick={nextPage} disabled={!(filter1.size === movies.length)}>
+					Next page
+					<FontAwesomeIcon className="next-icon" icon={faArrowCircleRight} />
+				</button>
+			</div>
+		</div>
 	) : (
 		<div className="movie-list" style={style}>
 			{movieListItems}

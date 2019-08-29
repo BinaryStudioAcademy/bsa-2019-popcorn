@@ -17,6 +17,8 @@ import {
 	SET_REGISTER_ERROR
 } from '../authorization/actionTypes';
 
+import { fetchUser } from '../../redux/routines';
+
 const initialState = {
 	profileInfo: null,
 	uploadUrl: '',
@@ -25,7 +27,8 @@ const initialState = {
 	registerError: null,
 	resetMessage: '',
 	restoreMessage: '',
-	loading: true,
+	loading: false,
+	error: null,
 	selectedProfileInfo: null,
 	croppedSaved: false
 };
@@ -113,6 +116,26 @@ export default function(state = initialState, action) {
 			return {
 				...state,
 				restoreMessage: action.payload.message
+			};
+		case fetchUser.TRIGGER:
+			return {
+				...state,
+				loading: true
+			};
+		case fetchUser.SUCCESS:
+			return {
+				...state,
+				profileInfo: action.payload.data.user
+			};
+		case fetchUser.FAILURE:
+			return {
+				...state,
+				error: action.payload.erorr
+			};
+		case fetchUser.FULFILL:
+			return {
+				...state,
+				loading: false
 			};
 		default:
 			return state;

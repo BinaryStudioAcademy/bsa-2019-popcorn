@@ -3,25 +3,34 @@
 .UserWatchList {
 	padding-top: 20px;
 	width: 100%;
+	display: flex;
+	justify-content: center;
+
 	.user-watch-list-container {
-		display: grid;
-		grid-template-columns: repeat(auto-fill, minmax(49%, 1fr));
-		column-count: 2;
-		column-gap: 20px;
+		width: 100%;
+		.search-input-container {
+			margin: 0 auto;
+			width: 500px;
+		}
 
 		.to-watch-block,
 		.watched-block {
-			width: 100%;
-			text-align: center;
+			display: flex;
+			flex-direction: column;
+			align-items: center;
 
 			.watch-block-name {
-				font-size: 1.2em;
+				margin-top: 15px;
+				margin-bottom: 15px;
+				font-size: 1.3em;
 				font-weight: 600;
 			}
-
-			.field-input {
-				margin-top: 5px;
-				margin-bottom: 20px;
+			.watch-items-container {
+				width: 100%;
+				display: grid;
+				grid-template-columns: repeat(auto-fill, minmax(49%, 1fr));
+				column-count: 2;
+				column-gap: 20px;
 			}
 		}
 	}
