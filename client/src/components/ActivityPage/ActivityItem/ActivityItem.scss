@@ -38,6 +38,15 @@
 	font-size: 2em;
 	margin-right: 1em;
 }
+.activity-icon-default {
+	margin-right: 1em;
+	svg {
+		cursor: pointer;
+		border-radius: 50%;
+		width: 31px;
+		height: 31px;
+	}
+}
 
 .activity-text {
 	color: $text-base-color;

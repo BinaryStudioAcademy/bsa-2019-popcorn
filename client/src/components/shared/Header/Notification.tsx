@@ -1,4 +1,4 @@
-import React, { useState, useEffect, createRef } from 'react';
+import React, { createRef } from 'react';
 import notifyIcon from '../../../assets/icons/general/header/notify-icon.svg';
 import { ReactComponent as DotIcon } from '../../../assets/icons/general/header/dot-icon.svg';
 import ActivityList from '../../ActivityPage/ActivityList/ActivityList';
@@ -6,6 +6,8 @@ import SocketService from '../../../services/socket.service';
 
 interface IProps {
 	userInfo: any;
+	sendTokenToServer: (token: string | null) => void;
+	firebase?: any;
 }
 interface IState {
 	notifications: Array<any>;
@@ -32,6 +34,11 @@ class Notification extends React.Component<IProps, IState> {
 	};
 	componentDidMount() {
 		document.addEventListener('mousedown', this.handleClickOutside);
+		this.props.firebase &&
+			this.props.firebase.messaging
+				.getToken()
+				.then(token => this.props.sendTokenToServer(token))
+				.catch(e => console.log(e));
 	}
 
 	componentWillUnmount() {
