@@ -51,6 +51,20 @@ class WatchRepository extends Repository<Watch> {
       return next({ status: err.status, message: err.message });
     }
   }
+
+  async getWatchStatus(userId, movieId, next) {
+    try {
+      const watch = await this.findOne({
+        where: { user: { id: userId }, movieId }
+      });
+      if (!watch) {
+        return { status: null, movieId };
+      }
+      return { ...watch };
+    } catch (err) {
+      return next({ status: err.status, message: err.message });
+    }
+  }
 }
 
 export default WatchRepository;

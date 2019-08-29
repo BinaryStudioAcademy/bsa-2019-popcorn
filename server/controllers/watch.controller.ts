@@ -12,6 +12,12 @@ router
       .then(result => res.send(result))
       .catch(next)
   )
+  .get("/movie/:id", errorHandlerMiddleware, (req, res, next) =>
+    watchService
+      .getWatchStatus(req.user.id, req.params.id, next)
+      .then(result => res.send(result))
+      .catch()
+  )
   .post("/", errorHandlerMiddleware, (req, res, next) =>
     watchService
       .saveNewUserWatch(req.user.id, req.body, next)
