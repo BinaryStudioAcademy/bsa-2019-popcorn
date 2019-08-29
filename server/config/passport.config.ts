@@ -92,7 +92,7 @@ passport.use(
     {
       clientID: googleConfig.clientID,
       clientSecret: googleConfig.clientSecret,
-      callbackURL: googleConfig.callbackURL,
+      callbackURL: "/api/auth/google/redirect",
       passReqToCallback: true
     },
     async (req, accessToken, refreshToken, data, done) => {
@@ -124,7 +124,7 @@ passport.use(
     {
       clientID: facebookConfig.clientID,
       clientSecret: facebookConfig.clientSecret,
-      callbackURL: facebookConfig.callbackURL,
+      callbackURL: "/api/auth/facebook/redirect",
       passReqToCallback: true
     },
     async (req, accessToken, refreshToken, data, done) => {
