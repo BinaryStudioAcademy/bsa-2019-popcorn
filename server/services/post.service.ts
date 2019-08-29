@@ -11,6 +11,7 @@ const uuid = require("uuid/v4");
 export const createPost = async (post: any): Promise<Post> => {
   post.user = await getCustomRepository(UserRepository).findOne(post.userId);
   delete post.userId;
+  post.createdAt = new Date();
   return await getCustomRepository(PostRepository).save(post);
 };
 
