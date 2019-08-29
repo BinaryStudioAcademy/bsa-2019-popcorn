@@ -2,7 +2,7 @@ import React from 'react';
 import { Redirect } from 'react-router';
 import PostStoryEditor from '../../PostStoryEditor/PostStoryEditor';
 import INewStory from '../INewStory';
-import { faPlusCircle } from '@fortawesome/free-solid-svg-icons';
+import { faPlus, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import TMovie from '../../../MovieSeriesPage/TMovie';
 import Spinner from '../../../shared/Spinner';
@@ -102,68 +102,68 @@ class getAddStoryPopupContent extends React.Component<IProps> {
 						>
 							{newStory.activity && newStory.activity.name}
 						</PostStoryEditor>
-						<div
-							onClick={this.handleShowColorPicker}
-							className="color-picker-btn"
-						>
+
+						<div className="story-editor-btns">
 							<div
-								style={{ backgroundColor: this.props.backgroundColor }}
-								className="color-picker-btn-preview"
-							/>
-						</div>
-						{this.props.displayColorPicker ? (
-							<div className="color-picker-popover">
+								onClick={this.handleShowColorPicker}
+								className="color-picker-btn"
+							>
 								<div
-									className="color-picker-cover"
-									onClick={this.handleHideColorPicker}
-								/>
-								<SketchPicker
-									color={this.props.backgroundColor}
-									onChangeComplete={this.handleColorChange}
+									style={{ backgroundColor: this.props.backgroundColor }}
+									className="color-picker-btn-preview"
 								/>
 							</div>
-						) : null}
-						<button
-							className={'btn'}
-							onClick={addExtra}
-							style={{
-								width: '50px',
-								minWidth: 'auto',
-								position: 'absolute',
-								top: '5px',
-								right: '65px',
-								height: '43px',
-								display: 'flex',
-								justifyContent: 'center'
-							}}
-						>
-							<FontAwesomeIcon icon={faPlusCircle} />
-						</button>
-					</div>
+							{this.props.displayColorPicker ? (
+								<div className="color-picker-popover">
+									<div
+										className="color-picker-cover"
+										onClick={this.handleHideColorPicker}
+									/>
+									<SketchPicker
+										color={this.props.backgroundColor}
+										onChangeComplete={this.handleColorChange}
+									/>
+								</div>
+							) : null}
 
-					<div className={'btn-wrp'}>
-						<div className={'cancel-save'}>
-							<button onClick={close} className={'btn'}>
-								Cancel
-							</button>
-							<button
-								className={'btn'}
-								disabled={disabled}
-								onClick={() => {
-									this.props.createStory(
-										{
-											...newStory,
-											backgroundColor: this.props.backgroundColor
-										},
-										this.props.userId
-									);
-									this.props.history.push('/');
-								}}
+							<button>T</button>
+							<div
+								// onClick={this.handleShowColorPicker}
+								className="color-picker-btn"
 							>
-								Save
+								<div
+									style={{ color: 'red' }} //todo
+									className="color-picker-btn-preview"
+								>
+									T
+								</div>
+							</div>
+							<div className="color-picker-btn"></div>
+							<button onClick={addExtra}>
+								<FontAwesomeIcon icon={faPlus} />
 							</button>
 						</div>
 					</div>
+
+					<button onClick={close} className="cancel-btn">
+						<FontAwesomeIcon icon={faTimes} />
+					</button>
+					<button
+						className={'btn'}
+						disabled={disabled}
+						onClick={() => {
+							this.props.createStory(
+								{
+									...newStory,
+									backgroundColor: this.props.backgroundColor
+								},
+								this.props.userId
+							);
+							this.props.history.push('/');
+						}}
+					>
+						Share
+					</button>
 					{this.props.isLoading && <Spinner />}
 				</div>
 			</div>
