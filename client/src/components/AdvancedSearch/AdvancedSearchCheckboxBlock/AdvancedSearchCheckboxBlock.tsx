@@ -5,6 +5,7 @@ type AdvancedSearchvaluesProps = {
 	values: Array<string>;
 	checkboxHandler: (genre: string) => void;
 	header: string;
+	onCastSearch?: (search: string) => void;
 };
 
 type AdvancedSearchCheckboxBlockState = {
@@ -28,7 +29,7 @@ class AdvancedSearchCheckboxBlock extends React.Component<
 
 	handleSearchChange = e => {
 		const filteredValues = this.props.values.filter(el =>
-			el.includes(e.target.value)
+			el.toLowerCase().includes(e.target.value.toLowerCase().trim())
 		);
 		this.setState({
 			avaliableValues: filteredValues,

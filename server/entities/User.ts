@@ -88,37 +88,41 @@ export class User {
   @Column({ default: "All" })
   privacyMessages: string;
 
-  @OneToMany(type => Voting, voting => voting.user)
+  @OneToMany(type => Voting, voting => voting.user, { onDelete: "CASCADE" })
   votings: Voting[];
 
   @OneToMany(
     type => VotingOptionReaction,
-    votingOptionReaction => votingOptionReaction.user
+    votingOptionReaction => votingOptionReaction.user,
+    { onDelete: "CASCADE" }
   )
   votingOptionReactions: VotingOptionReaction[];
 
   @Column({ default: "" })
   avatar: string;
 
-  @OneToMany(type => Top, top => top.user)
+  @OneToMany(type => Top, top => top.user, { onDelete: "CASCADE" })
   tops: Top[];
 
-  @OneToMany(type => Story, story => story.user)
+  @OneToMany(type => Story, story => story.user, { onDelete: "CASCADE" })
   stories: Story[];
 
-  @OneToMany(type => Surveys, surveys => surveys.user)
+  @OneToMany(type => Surveys, surveys => surveys.user, { onDelete: "CASCADE" })
   surveys: Surveys[];
 
   @OneToMany(
     type => SurveysQuestionAnswer,
-    surveysQuestionAnswer => surveysQuestionAnswer.user
+    surveysQuestionAnswer => surveysQuestionAnswer.user,
+    { onDelete: "CASCADE" }
   )
   surveysQuestionAnswer: SurveysQuestionAnswer[];
 
   @Column({ default: "", nullable: true })
   reset_token: string;
 
-  @OneToMany(type => Follower, follower => follower.user)
+  @OneToMany(type => Follower, follower => follower.user, {
+    onDelete: "CASCADE"
+  })
   followers: Follower[];
 
   @OneToMany(type => FavoriteList, favoriteList => favoriteList.user)

@@ -1,0 +1,14 @@
+[
+	{
+		"link": "/",
+		"label": "Account Managment"
+	},
+	{
+		"link": "/notification",
+		"label": "Notification Preferences"
+	},
+	{
+		"link": "/privacy",
+		"label": "Privacy Settings"
+	}
+]
