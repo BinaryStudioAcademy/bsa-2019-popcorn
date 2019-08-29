@@ -16,7 +16,6 @@ const AwardDescription: React.FC<IAwardDescription> = ({
 				namesStr = namesStr + el.name;
 			} else namesStr = namesStr + el.name + ', ';
 		});
-		console.log(namesStr);
 		return namesStr;
 	};
 	return (

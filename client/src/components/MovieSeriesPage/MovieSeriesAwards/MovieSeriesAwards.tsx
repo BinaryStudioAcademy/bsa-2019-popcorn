@@ -41,7 +41,6 @@ class MovieSeriesAwards extends Component<IMovieSeriesAwardsProps, {}> {
 		this.props.fetchAwards(this.props.imdbId);
 	}
 	render() {
-		this.props.awards ? console.log(this.props.awards[0]) : console.log('hi');
 		return this.props.awards ? (
 			<div className="movieAwards-wrapper">
 				{this.props.awards.map(item => (
