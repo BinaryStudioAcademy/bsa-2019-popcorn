@@ -175,6 +175,7 @@ class PostStoryEditor extends React.Component<
 						<div>
 							{!this.props.photoSaved && (
 								<Cropper
+									className="cropper"
 									ref={this.cropper}
 									src={this.props.imageUrl}
 									aspectRatio={9 / 16}
