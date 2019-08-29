@@ -35,6 +35,7 @@ interface IPostStoryEditorProps {
 	photoSaved: boolean;
 	saveAfterCrop: () => void;
 	backgroundColor: string;
+	isShownInput: boolean;
 }
 
 interface IPostStoryEditorState {
@@ -141,6 +142,7 @@ class PostStoryEditor extends React.Component<
 
 	render() {
 		const backgroundColor = this.props.backgroundColor;
+		const isShownInput = this.props.isShownInput;
 		const changeBody = (e, title) => {
 			this.props.changeBody(
 				e.target.value,
@@ -157,7 +159,7 @@ class PostStoryEditor extends React.Component<
 					<span className="upload-error">{this.state.errorMsg}</span>
 				)}
 				{this.props.imageUrl ? (
-					<div className={'photo-wrp'}>
+					<div className={'upload-image-wrp'}>
 						{this.props.photoSaved ? (
 							<img src={this.props.imageUrl} />
 						) : (
@@ -197,36 +199,40 @@ class PostStoryEditor extends React.Component<
 							enableUserSelectHack={false}
 							// disabled={!this.state.inEditor}
 						>
-							<textarea
-								ref={this.textarea}
-								placeholder="Type a text here..."
-								defaultValue={this.props.body}
-								className="story-text"
-								onChange={e => {
-									const title = PostStoryEditor.findMovie(e.target.value);
-									if (title.trim() && title.trim() !== this.props.title) {
-										if (this.props.fetchSearch) {
-											this.props.fetchSearch(title);
+							{isShownInput ? (
+								<textarea
+									ref={this.textarea}
+									placeholder="Type a text here..."
+									defaultValue={this.props.body}
+									className="story-text"
+									onChange={e => {
+										const title = PostStoryEditor.findMovie(e.target.value);
+										if (title.trim() && title.trim() !== this.props.title) {
+											if (this.props.fetchSearch) {
+												this.props.fetchSearch(title);
 
-											return changeBody(e, title.trim());
+												return changeBody(e, title.trim());
+											}
 										}
-									}
-									changeBody(e, this.props.title);
+										changeBody(e, this.props.title);
 
-									if (
-										!title.trim() &&
-										this.props.title &&
-										this.props.resetSearch
-									)
-										this.props.resetSearch();
-								}}
-								autoFocus
-								onFocus={function(e) {
-									const val = e.target.value;
-									e.target.value = '';
-									e.target.value = val;
-								}}
-							/>
+										if (
+											!title.trim() &&
+											this.props.title &&
+											this.props.resetSearch
+										)
+											this.props.resetSearch();
+									}}
+									autoFocus
+									onFocus={function(e) {
+										const val = e.target.value;
+										e.target.value = '';
+										e.target.value = val;
+									}}
+								/>
+							) : (
+								<div />
+							)}
 						</Draggable>
 						{/* a */}
 						<ImageUploader

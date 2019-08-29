@@ -8,7 +8,8 @@ import {
 	SET_STORIES,
 	SAVE_CROPPED_IMAGE,
 	SET_BACKGROUNG_NEWSTORY,
-	DISPLAY_PICKER
+	DISPLAY_PICKER,
+	DISPLAY_INPUT
 } from './actionTypes';
 import INewStory from '../INewStory';
 import replaceFilmSearch from '../../../../helpers/replaceFilmSearch';
@@ -20,6 +21,7 @@ const initialState: {
 	title: string;
 	photoSaved: boolean;
 	isShownPicker: boolean;
+	isShownInput: boolean;
 } = {
 	stories: null,
 	newStory: {
@@ -34,7 +36,8 @@ const initialState: {
 	cursorPosition: { start: 0, end: 0 },
 	title: '',
 	photoSaved: false,
-	isShownPicker: false
+	isShownPicker: false,
+	isShownInput: false
 };
 
 export default function(state = initialState, action) {
@@ -69,6 +72,11 @@ export default function(state = initialState, action) {
 			return {
 				...state,
 				isShownPicker: action.payload.isShown
+			};
+		case DISPLAY_INPUT:
+			return {
+				...state,
+				isShownInput: action.payload.isShown
 			};
 		case SAVE_CROPPED_IMAGE:
 			return {

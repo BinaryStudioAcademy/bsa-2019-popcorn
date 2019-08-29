@@ -7,7 +7,11 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import TMovie from '../../../MovieSeriesPage/TMovie';
 import Spinner from '../../../shared/Spinner';
 import { SketchPicker } from 'react-color';
-import { setBackground, displayPicker } from '../story.redux/actions';
+import {
+	setBackground,
+	displayPicker,
+	displayInput
+} from '../story.redux/actions';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
@@ -41,7 +45,9 @@ interface IProps {
 	setBackground: (color: string) => void;
 	backgroundColor: string;
 	displayPicker: (isShown: boolean) => void;
-	displayColorPicker: boolean;
+	isShownPicker: boolean;
+	displayInput: (isShown: boolean) => void;
+	isShownInput: boolean;
 }
 
 class getAddStoryPopupContent extends React.Component<IProps> {
@@ -64,7 +70,12 @@ class getAddStoryPopupContent extends React.Component<IProps> {
 		);
 	};
 	handleShowColorPicker = () => {
-		this.props.displayPicker(!this.props.displayColorPicker);
+		this.props.displayPicker(!this.props.isShownPicker);
+	};
+
+	toggleInput = () => {
+		this.props.displayInput(!this.props.isShownInput);
+		if (this.props.isShownInput) this.props.setCaption('', 0, 0, '');
 	};
 
 	render() {
@@ -99,6 +110,7 @@ class getAddStoryPopupContent extends React.Component<IProps> {
 							photoSaved={this.props.photoSaved}
 							saveAfterCrop={this.props.saveAfterCrop}
 							backgroundColor={this.props.backgroundColor}
+							isShownInput={this.props.isShownInput}
 						>
 							{newStory.activity && newStory.activity.name}
 						</PostStoryEditor>
@@ -113,7 +125,7 @@ class getAddStoryPopupContent extends React.Component<IProps> {
 									className="color-picker-btn-preview"
 								/>
 							</div>
-							{this.props.displayColorPicker ? (
+							{this.props.isShownPicker ? (
 								<div className="color-picker-popover">
 									<div
 										className="color-picker-cover"
@@ -126,7 +138,7 @@ class getAddStoryPopupContent extends React.Component<IProps> {
 								</div>
 							) : null}
 
-							<button>T</button>
+							<button onClick={this.toggleInput}>T</button>
 							<div
 								// onClick={this.handleShowColorPicker}
 								className="color-picker-btn"
@@ -174,12 +186,14 @@ class getAddStoryPopupContent extends React.Component<IProps> {
 const mapStateToProps = (rootState, props) => ({
 	...props,
 	backgroundColor: rootState.story.newStory.backgroundColor,
-	displayColorPicker: rootState.story.isShownPicker
+	isShownPicker: rootState.story.isShownPicker,
+	isShownInput: rootState.story.isShownInput
 });
 
 const actions = {
 	setBackground,
-	displayPicker
+	displayPicker,
+	displayInput
 };
 
 const mapDispatchToProps = dispatch => bindActionCreators(actions, dispatch);

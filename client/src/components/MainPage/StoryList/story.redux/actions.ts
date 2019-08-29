@@ -9,7 +9,8 @@ import {
 	SET_CAPTION_NEWSTORY,
 	SET_BACKGROUNG_NEWSTORY,
 	SAVE_CROPPED_IMAGE,
-	DISPLAY_PICKER
+	DISPLAY_PICKER,
+	DISPLAY_INPUT
 } from './actionTypes';
 import INewStory from '../INewStory';
 import IVoting from '../IVoting';
@@ -45,6 +46,15 @@ export const setBackground = color => {
 export const displayPicker = isShown => {
 	return {
 		type: DISPLAY_PICKER,
+		payload: {
+			isShown
+		}
+	};
+};
+
+export const displayInput = isShown => {
+	return {
+		type: DISPLAY_INPUT,
 		payload: {
 			isShown
 		}
