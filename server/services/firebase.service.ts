@@ -4,12 +4,11 @@ import { clientEmail, privateKey, projectId } from "../config/firebase.config";
 admin.initializeApp({
   credential: admin.credential.cert({
     clientEmail,
-    privateKey: privateKey.replace("/\\n/g", "\n"),
+    privateKey: privateKey.replace(/\\n/g, "\n"),
     projectId
   }),
   databaseURL: "https://popcorn-64a9a.firebaseio.com"
 });
-
 const db = admin.firestore();
 const notificationTokenPath = "notification_token";
 
