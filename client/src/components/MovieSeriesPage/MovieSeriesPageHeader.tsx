@@ -4,14 +4,10 @@ import { faStar } from '@fortawesome/free-solid-svg-icons';
 import StarRating from '../shared/StarRating/StarRating';
 import { IUserRate } from './MovieSeriesPage';
 import ReviewAddModal from '../MovieSeriesPage/MovieSeriesReviews/ReviewAddModal/ReviewAddModal';
+import TMovie from '../MovieSeriesPage/TMovie';
 
 interface IProps {
-	movieSeriesData: {
-		title: string;
-		release_date?: string;
-		genre?: string[];
-		vote_average?: string;
-	};
+	movie: TMovie;
 	userRate?: IUserRate;
 	setUserRate: (userRate: object) => any;
 	ownReview: any;
@@ -32,7 +28,7 @@ interface IProps {
 }
 
 const MovieSeriesPageHeader: React.FC<IProps> = ({
-	movieSeriesData,
+	movie,
 	userRate,
 	setUserRate,
 	ownReview,
@@ -47,7 +43,6 @@ const MovieSeriesPageHeader: React.FC<IProps> = ({
 	watchListLoading
 }) => {
 	const [modal, setModal] = useState(false);
-	const genre = movieSeriesData.genre && movieSeriesData.genre.join(', ');
 	const rate: number = userRate ? +userRate.rate : 0;
 
 	const onModalClick = () => {
@@ -89,7 +84,7 @@ const MovieSeriesPageHeader: React.FC<IProps> = ({
 				<ReviewAddModal
 					ownReview={ownReview!}
 					setModal={setModal}
-					movie={movieSeriesData}
+					movie={movie}
 					setReview={setReview}
 					userId={userId}
 					movieId={movieId}
@@ -99,14 +94,14 @@ const MovieSeriesPageHeader: React.FC<IProps> = ({
 			<div className="header-movie-title-rating">
 				<div className="header-movie-watch-list">{renderWatchIcon()}</div>
 				<div className="header-main-info">
-					<span className="movie-title">{movieSeriesData.title}</span>
+					<span className="movie-title">{movie.title}</span>
 					<span className="movie-year">
-						{movieSeriesData.release_date
-							? ' (' + movieSeriesData.release_date.slice(0, 4) + ')'
+						{movie.release_date
+							? ' (' + movie.release_date.slice(0, 4) + ')'
 							: null}
 					</span>
 					<div className="header-genres-review-own-rating">
-						<span className="header-genres">Action | Drama | Horror</span>
+						<span className="header-genres">{movie.genres}</span>
 						<div className="header-review-own-rating-container">
 							<button className="review-button" onClick={() => onModalClick()}>
 								review
@@ -122,7 +117,7 @@ const MovieSeriesPageHeader: React.FC<IProps> = ({
 				</div>
 				<div className="totaly-movie-rating">
 					<FontAwesomeIcon className="icon-star" icon={faStar} />
-					{Number(movieSeriesData.vote_average) || 0}
+					{Number(movie.vote_average) || 0}
 					<span className="max-rating">/5</span>
 				</div>
 			</div>

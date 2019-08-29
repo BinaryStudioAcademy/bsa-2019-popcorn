@@ -10,9 +10,10 @@ import surveySaga from '../components/UserPage/UserSurveys/UserSurveys.redux/sag
 import reviewSaga from '../components/MovieSeriesPage/MovieSeriesReviews/saga';
 import topListSaga from '../components/TopListPage/TopListPage.redux/saga';
 import followSaga from '../components/UserPage/ProfileComponent/FollowSystem/FollowSystem.redux/saga';
+import settingsSaga from '../components/UserSettings/saga';
 import watchListSaga from '../components/UserPage/UserWatchList/saga';
 import searchMovieSaga from '../components/shared/MovieSearch/saga';
-
+import notificationSaga from '../components/shared/Header/saga';
 export default function* rootSaga() {
 	yield all([
 		headerSaga(),
@@ -26,7 +27,9 @@ export default function* rootSaga() {
 		reviewSaga(),
 		topListSaga(),
 		followSaga(),
+		settingsSaga(),
 		watchListSaga(),
-		searchMovieSaga()
+		searchMovieSaga(),
+		notificationSaga()
 	]);
 }

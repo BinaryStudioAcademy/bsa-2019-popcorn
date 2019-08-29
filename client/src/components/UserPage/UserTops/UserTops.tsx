@@ -25,7 +25,7 @@ interface IUserTopProps {
 	addTop: (newTop: any) => any;
 	updateTop: (updatedTop: any) => any;
 	deleteTop: (topId: string) => any;
-	uploadImage: (data: FormData, titleId: string) => void;
+	uploadImage: (data: FormData, topId: string) => void;
 	userId: string;
 	userRole: string;
 	uploadUrl: string;
@@ -124,8 +124,6 @@ class UserTops extends React.Component<IUserTopProps, IUserTopsState> {
 	}
 
 	deleteTop = (top: ITopItem) => {
-		// console.log(top.id);
-
 		if (top.isNewTop) {
 			const topList = this.state.topList.filter(
 				(topItem: ITopItem) => topItem.id !== top.id
@@ -139,7 +137,6 @@ class UserTops extends React.Component<IUserTopProps, IUserTopsState> {
 
 	createTop = () => {
 		const { isCreated } = this.state;
-		// console.log(isCreated);
 
 		if (!isCreated) {
 			const { topList } = this.state;
@@ -153,36 +150,19 @@ class UserTops extends React.Component<IUserTopProps, IUserTopsState> {
 	};
 
 	saveUserTop = (updatedTopItem: ITopItem) => {
-		// if (updatedTopItem.isNewTop) {
-		// 	delete updatedTopItem.isNewTop;
-		// }
-
 		if (updatedTopItem.isNewTop) {
-			// console.log('creating');
-
-			// delete updatedTopItem.isNewTop;
-			// delete updatedTopItem.isOwnTop;
-
 			const addedTop: any = Object.assign({}, updatedTopItem);
 			addedTop.userId = this.props.userId;
 
 			this.props.addTop(addedTop);
-			this.setState({ isAction: true });
+			this.setState({ isAction: true, isCreated: false });
 		} else {
-			// console.log('update');
-
 			const updatedTop: any = Object.assign({}, updatedTopItem);
 			updatedTop.userId = this.props.userId;
 
 			this.props.updateTop(updatedTop);
-			this.setState({ isAction: true });
+			this.setState({ isAction: true, isCreated: false });
 		}
-
-		// const topList = this.state.topList.map(topItem =>
-		// 	topItem.id === updatedTopItem.id ? updatedTopItem : topItem
-		// );
-
-		// this.setState({ topList, isCreated: false });
 	};
 
 	isOwnTop(top) {
@@ -206,7 +186,6 @@ class UserTops extends React.Component<IUserTopProps, IUserTopsState> {
 				: null;
 
 		const topList = this.state.topList;
-		console.log(topList);
 
 		if (!topList) {
 			return <Spinner />;

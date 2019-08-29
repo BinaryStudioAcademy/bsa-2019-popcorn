@@ -18,7 +18,7 @@ import {
 	fetchReviewByMovieUserId as fetchReview,
 	setReview,
 	removeReviewSet,
-	fetchCastCrew
+	fetchAwards
 } from './Movie.redux/actions';
 
 interface IProps {
@@ -40,13 +40,13 @@ interface IProps {
 	avatar?: string;
 	userId: string;
 	username: string;
-	fetchCastCrew: (id: any) => any;
-	crewCast: any;
 	fetchWatchListStatus: (movieId: string) => object;
 	watchListStatus?: any;
 	addMovieToWatchList: (movieId: string) => object;
 	deleteMovieFromWatchList: (watchId: string, movieId: string) => object;
 	watchListLoading?: boolean;
+	fetchAwards: (id: any) => any;
+	awards: any;
 }
 
 export interface IUserRate {
@@ -70,13 +70,13 @@ const MovieSeriesPage: React.SFC<IProps> = props => {
 		ownReview,
 		setReview,
 		removeReviewSet,
-		fetchCastCrew,
-		crewCast,
 		fetchWatchListStatus,
 		watchListStatus,
 		addMovieToWatchList,
 		deleteMovieFromWatchList,
-		watchListLoading
+		watchListLoading,
+		fetchAwards,
+		awards
 	} = props;
 	const currentMovieId = props.match.params.id;
 	const mainPath = `/movies/${currentMovieId}`;
@@ -100,7 +100,7 @@ const MovieSeriesPage: React.SFC<IProps> = props => {
 	return (
 		<div className="movie-series-page">
 			<MovieSeriesPageHeader
-				movieSeriesData={movie}
+				movie={movie}
 				userRate={userRate}
 				setUserRate={rateObj => setUserRate(rateObj)}
 				ownReview={ownReview}
@@ -118,9 +118,9 @@ const MovieSeriesPage: React.SFC<IProps> = props => {
 			<MovieSeriesPageTabBody
 				mainPath={mainPath}
 				movie={movie}
-				fetchCastCrew={fetchCastCrew}
-				crewCast={crewCast}
 				currentUser={{ avatar, id: userId, name: username }}
+				fetchAwards={fetchAwards}
+				awards={awards}
 			/>
 		</div>
 	);
@@ -134,9 +134,9 @@ const mapStateToProps = (rootState, props) => ({
 	userId: rootState.profile.profileInfo && rootState.profile.profileInfo.id,
 	username: rootState.profile.profileInfo && rootState.profile.profileInfo.name,
 	ownReview: rootState.movie.ownReview,
-	crewCast: rootState.movie.crewCast,
 	watchListStatus: rootState.watchList.watchListStatus,
-	watchListLoading: rootState.watchList.isLoading
+	watchListLoading: rootState.watchList.isLoading,
+	awards: rootState.movie.awards
 });
 
 const mapDispatchToProps = dispatch => {
@@ -147,10 +147,10 @@ const mapDispatchToProps = dispatch => {
 		fetchReview,
 		setReview,
 		removeReviewSet,
-		fetchCastCrew,
 		fetchWatchListStatus,
 		addMovieToWatchList,
-		deleteMovieFromWatchList
+		deleteMovieFromWatchList,
+		fetchAwards
 	};
 	return bindActionCreators(actions, dispatch);
 };

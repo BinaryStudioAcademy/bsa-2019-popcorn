@@ -4,6 +4,7 @@ import { Activity } from '../ActivityList/ActivityList';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHeart, faComments, faStar } from '@fortawesome/free-solid-svg-icons';
 import Moment from 'react-moment';
+import { getIcon } from '../../MainPage/Post/PostReaction/PostReaction';
 type ActivityItemProps = {
 	activity: Activity;
 	readNotification?: (date: string) => void;
@@ -11,13 +12,6 @@ type ActivityItemProps = {
 
 const generateIcon = type => {
 	switch (type) {
-		case 'like':
-			return (
-				<FontAwesomeIcon
-					className="activity-icon activity-icon-like"
-					icon={faHeart}
-				/>
-			);
 		case 'comment':
 			return (
 				<FontAwesomeIcon
@@ -32,11 +26,13 @@ const generateIcon = type => {
 					icon={faStar}
 				/>
 			);
+		default:
+			return <div className="activity-icon-default"> {getIcon(type)}</div>;
 	}
 };
 
 const ActivityItem = ({
-	activity: { type, text, date, img, isRead },
+	activity: { type, title, body, date, img, isRead, id },
 	readNotification
 }: ActivityItemProps) => {
 	const [markedAsRead, setMarked] = useState(isRead);
@@ -48,11 +44,12 @@ const ActivityItem = ({
 	return (
 		<div
 			className={`activity-item ${markedAsRead ? ' ' : 'unread-activity'}`}
-			onMouseOut={() => setRead && setRead(date)}
+			onMouseOut={() => setRead && setRead(id)}
 		>
 			<div>{generateIcon(type)}</div>
 			<div>
-				<div className="activity-text">{text}</div>
+				<div className="activity-text">{title}</div>
+				<div className="activity-text">{body}</div>
 				<div className="activity-date">
 					<Moment format=" D MMM HH:mm " local>
 						{String(date)}

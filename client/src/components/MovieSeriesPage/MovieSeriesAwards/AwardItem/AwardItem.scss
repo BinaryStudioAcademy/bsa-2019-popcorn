@@ -1,6 +1,10 @@
 .item-wrapper {
-	display: grid;
-	grid-template-columns: 80px 1fr;
-	grid-gap: 10px;
+	display: flex;
 	align-items: center;
+	margin-bottom: 10px;
+
+	.award-icon {
+		height: 80px;
+		width: 80px;
+	}
 }
