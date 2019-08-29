@@ -21,17 +21,17 @@ export class Story {
   @Column({ nullable: true })
   type: string;
 
-  @Column()
+  @Column({ default: "rgba(255, 255, 255, 1)" })
   backgroundColor: string;
 
-  @Column({ nullable: true })
+  @Column({ nullable: true, default: "rgba(0, 0, 0, 1)" })
   fontColor: string;
 
-  @Column({ nullable: true })
-  testPositionX: number;
+  @Column({ nullable: true, default: 0 })
+  textPositionX: number;
 
-  @Column({ nullable: true })
-  testPositionY: number;
+  @Column({ nullable: true, default: 0 })
+  textPositionY: number;
 
   @Column({ nullable: true })
   activityId: string;

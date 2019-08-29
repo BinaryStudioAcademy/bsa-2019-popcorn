@@ -11,6 +11,6 @@ export class Story {
   movieOption: string;
   backgroundColor: string;
   fontColor: string;
-  testPositionX: number;
-  testPositionY: number;
+  textPositionX: number;
+  textPositionY: number;
 }
