@@ -201,7 +201,9 @@ class getAddStoryPopupContent extends React.Component<IProps> {
 							this.props.createStory(
 								{
 									...newStory,
-									backgroundColor: this.props.backgroundColor
+									backgroundColor: this.props.backgroundColor,
+									textPosition: this.props.textPosition,
+									fontColor: this.props.fontColor
 								},
 								this.props.userId
 							);

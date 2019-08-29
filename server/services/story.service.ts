@@ -37,7 +37,10 @@ export const createStory = async ({
   activity,
   movieId,
   movieOption,
-  backgroundColor
+  backgroundColor,
+  fontColor,
+  textPositionX,
+  textPositionY
 }): Promise<any> => {
   let story: any = new Story();
   story.id = uuid();
@@ -51,6 +54,9 @@ export const createStory = async ({
   story.movieId = movieId;
   story.movieOption = movieOption;
   story.backgroundColor = backgroundColor;
+  story.fontColor = fontColor;
+  story.textPositionX = textPositionX;
+  story.textPositionY = textPositionY;
 
   await getCustomRepository(StoryRepository).save(story);
 
