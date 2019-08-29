@@ -50,13 +50,14 @@ class UserRepository extends Repository<User> {
     let error = "";
     let success = true;
     try {
-      const { name, aboutMe, location, male, female } = newData;
-      await this.update({ id }, { name, aboutMe, location, male, female });
       if (newData.favoriteMovieIds) {
         await getCustomRepository(
           FavoriteListRepository
         ).updateFavoriteMoviesByUserId(id, newData.favoriteMovieIds);
       }
+      delete newData.favoriteMovieIds;
+      await this.update({ id }, newData);
+
       data.user = await this.findOne({ where: { id } });
       if (!data.user) throw new Error(`User with ${id} id is not found`);
     } catch (err) {
