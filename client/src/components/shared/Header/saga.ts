@@ -17,7 +17,11 @@ export function* sendTokenToServer(action) {
 			}
 		});
 	} catch (e) {
-		console.log('firebase saga sendTokenToServer: ', e.message);
+		console.log(
+			'firebase saga sendTokenToServer: ',
+			e,
+			e.response.data.message
+		);
 	}
 }
 

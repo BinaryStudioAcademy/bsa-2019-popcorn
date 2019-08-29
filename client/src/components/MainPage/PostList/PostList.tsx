@@ -7,26 +7,44 @@ import IPost from '../Post/IPost';
 import {
 	addNewReaction,
 	createReaction,
-	deletePost
+	deletePost,
+	addNewComment,
+	createComment
 } from '../FeedBlock/FeedBlock.redux/actions';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import IReaction from '../Post/IReaction';
+import SocketService from '../../../services/socket.service';
 
 interface IProps {
 	posts: Array<IPost>;
 	type?: string;
 	styleCustom?: any;
-	createComment?: (userId: string, text: string, postId: string) => any;
-	addNewComment?: (comment: IComment) => any;
+	createComment: (userId: string, text: string, postId: string) => any;
+	addNewComment: (comment: IComment) => any;
 	userId: string;
 	userRole: string;
-	createReaction?: (type: string, userId: string, postId: string) => any;
-	addNewReaction?: (reaction: IReaction) => any;
+	createReaction: (type: string, userId: string, postId: string) => any;
+	addNewReaction: (reaction: IReaction) => any;
 	deletePost: (id: string, userId: string) => any;
 }
+let wasAddedSockets = false;
+const addSocket = (addNewComment, addNewReaction) => {
+	if (wasAddedSockets) return;
+	SocketService.on(
+		'new-comment',
+		comment => addNewComment && addNewComment(comment)
+	);
+	SocketService.on('new-reaction', obj => {
+		console.log('here');
+		addNewReaction && addNewReaction(obj.reactions, obj.postId);
+	});
+	wasAddedSockets = true;
+};
 
 const PostList = (props: IProps) => {
+	// console.log(props.posts);
+	addSocket(props.addNewComment, props.addNewReaction);
 	return (
 		<div className="feed-list" style={props.styleCustom}>
 			{props.type === 'userPosts' ? null : (
@@ -35,21 +53,22 @@ const PostList = (props: IProps) => {
 					<span>News feed</span>
 				</div>
 			)}
-			{props.posts.map(post => {
-				return (
-					<Post
-						key={post.id}
-						post={post}
-						createComment={props.createComment}
-						createReaction={props.createReaction}
-						addNewComment={props.addNewComment}
-						addNewReaction={props.addNewReaction}
-						userId={props.userId}
-						userRole={props.userRole}
-						deletePost={props.deletePost}
-					/>
-				);
-			})}
+			{props.posts &&
+				props.posts.map(post => {
+					return (
+						<Post
+							key={post.id}
+							post={post}
+							createComment={props.createComment}
+							createReaction={props.createReaction}
+							addNewComment={props.addNewComment}
+							addNewReaction={props.addNewReaction}
+							userId={props.userId}
+							userRole={props.userRole}
+							deletePost={props.deletePost}
+						/>
+					);
+				})}
 		</div>
 	);
 };
@@ -62,7 +81,9 @@ const mapStateToProps = (rootState, props) => ({
 const actions = {
 	createReaction,
 	addNewReaction,
-	deletePost
+	deletePost,
+	addNewComment,
+	createComment
 };
 
 const mapDispatchToProps = dispatch => bindActionCreators(actions, dispatch);

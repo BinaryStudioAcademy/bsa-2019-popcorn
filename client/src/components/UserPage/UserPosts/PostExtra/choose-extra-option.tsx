@@ -125,7 +125,9 @@ class ChooseExtraOption extends React.Component<IProps> {
 										onClick={() =>
 											this.setOption({
 												title: item.title,
-												link: `/${option}-page/${item.id}`
+												link: `/${option}${
+													option === 'event' ? 's' : '-page'
+												}/${item.id}`
 											})
 										}
 									>

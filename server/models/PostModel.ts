@@ -9,5 +9,6 @@ export class Post {
   extraLink?: string;
   user: User;
   userId: string;
-  comments: PostComment[];
+  createdAt: Date;
+  // comments: PostComment[];
 }
