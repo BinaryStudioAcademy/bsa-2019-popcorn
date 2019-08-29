@@ -1,10 +1,31 @@
 import * as eventService from "../services/event.service";
 import * as postService from "../services/post.service";
 import { sendPushMessage } from "../services/firebase.service";
-import { text } from "body-parser";
+import { saveNotificitation } from "../services/notification.service";
 
-function sendNotification({ req, url, type, body, title, entity, entityType }) {
+async function sendNotification({
+  req,
+  url,
+  type,
+  body,
+  title,
+  entity,
+  entityType
+}) {
   if (req.user && entity.userId === req.user.id) return;
+  const notification = {
+    img: req.user.avatar,
+    type,
+    title,
+    body,
+    date: new Date(),
+    url
+  };
+  await saveNotificitation({
+    ...notification,
+    userId: entity.userId,
+    isRead: false
+  });
   sendPushMessage({
     link: url,
     title,
@@ -15,14 +36,7 @@ function sendNotification({ req, url, type, body, title, entity, entityType }) {
     entityId: entity.id
   });
 
-  req.io.to(entity.userId).emit("new-notification", {
-    img: req.user.avatar,
-    type,
-    title,
-    body,
-    date: new Date(),
-    url
-  });
+  req.io.to(entity.userId).emit("new-notification", notification);
 }
 
 export default async (req, res, next) => {

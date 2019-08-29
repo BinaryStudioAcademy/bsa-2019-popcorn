@@ -33,20 +33,23 @@ function buildPlatformMessage({
   const push = {
     notification: {
       icon
-    },
-    fcm_options: {
-      link
     }
   };
-  pushType === "webpush"
-    ? (push["headers"] = {
-        TTL: "0"
-      })
-    : (push["data"] = {
-        type: entityType,
-        id: entityId
-      }),
-    (fcmMessage["token"] = token);
+
+  if (pushType === "webpush") {
+    push["headers"] = {
+      TTL: "0"
+    };
+    push["fcm_options"] = {
+      link
+    };
+  } else {
+    push["data"] = {
+      type: entityType,
+      id: entityId
+    };
+  }
+  fcmMessage["token"] = token;
   fcmMessage[pushType] = push;
 
   return fcmMessage;
