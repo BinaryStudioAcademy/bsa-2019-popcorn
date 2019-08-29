@@ -29,7 +29,6 @@ export const getCastCrewById = async (movieId: number): Promise<any> => {
 
 export const getMovieAwards = async (imdbId: any): Promise<any> => {
   let awardList = await getAwards(imdbId);
-  console.log(awardList.data.movies.awards);
   return awardList.data.movies[0].awards;
 };
 
