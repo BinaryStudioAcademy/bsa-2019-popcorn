@@ -28,9 +28,10 @@
 			.watch-items-container {
 				width: 100%;
 				display: grid;
-				grid-template-columns: repeat(auto-fill, minmax(49%, 1fr));
-				column-count: 2;
-				column-gap: 20px;
+				grid-template-columns: repeat(auto-fill, minmax(220px, 230px));
+				grid-row-gap: 20px;
+				grid-column-gap: 10px;
+				align-items: center;
 			}
 		}
 	}

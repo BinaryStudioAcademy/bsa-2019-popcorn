@@ -1,87 +1,69 @@
+@import '../../../../styles/variables.scss';
+
 .WatchItem {
 	.watch-item-container {
-		border: 1px solid rgba(0, 0, 0, 0.11);
-		box-shadow: 0px 0px 11px rgba(0, 0, 0, 0.11);
-		text-align: left;
-		padding: 20px;
-		width: 100%;
-		margin-bottom: 20px;
-		display: grid;
-		grid-template-columns: 125px 1fr;
-		grid-gap: 20px;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
 
 		.watch-image-wrapper {
+			display: relative;
+			width: 180px;
+			height: 260px;
+			overflow: hidden;
+			padding: 1px;
 			font-size: 0;
-			min-height: 185px;
-
+			border: 1px solid rgba(0, 0, 0, 0.192);
 			img {
+				vertical-align: middle;
 				width: 100%;
+			}
+
+			.absolute-data-in-image {
+				color: red; //// TODO
 			}
 		}
 
-		.watch-main {
+		.watch-main-bottom {
 			display: flex;
 			flex-direction: column;
-			justify-content: space-between;
 			.watch-movie-title {
-				.movie-title-name {
-					font-weight: 600;
-				}
-
-				.movie-title-date {
-					font-weight: 400;
-					font-size: 0.8em;
-				}
-				.watch-movie-title-nav-link {
-					text-decoration: none;
-					color: inherit;
-				}
+				color: $text-base-color;
+				font-weight: 300;
+				margin-top: 5px;
+				max-width: 220px;
+				white-space: nowrap;
+				overflow: hidden;
+				text-overflow: ellipsis;
 			}
 
-			.movie-genre {
-				margin-top: 5px;
-			}
-
-			.movie-duration {
-				margin-top: 5px;
+			.watch-secondary {
 				display: flex;
+				justify-content: center;
 				align-items: center;
-				svg {
-					width: 20px;
-					margin-right: 5px;
-				}
-			}
-			.watch-buttons {
-				display: flex;
-				justify-content: flex-end;
-
-				button {
-					display: block;
-					outline: none;
-					border: 1px solid rgba(0, 0, 0, 0.11);
-					background-color: white;
-					cursor: pointer;
-					border-radius: 3px;
-					box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.2);
-					transition: box-shadow 0.3s ease, border-color 0.4s ease;
-
-					&:hover {
-						box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.12);
-						border-color: rgba(0, 0, 0, 0.05);
+				height: 20px;
+				.movie-duration {
+					display: flex;
+					align-items: center;
+					font-size: $base-font-size;
+					margin-right: 4px;
+					svg {
+						width: 15px;
+						height: 15px;
+						margin-right: 5px;
 					}
 				}
 
-				.move-button {
-					padding: 0 10px;
-					margin-right: 10px;
-					color: #00000099;
-					font-size: 15px;
-				}
-
-				.delete-button {
-					font-size: 0;
-					.delete-button-svg {
-						opacity: 0.6;
+				.totaly-movie-rating {
+					padding: 0;
+					font-size: $base-font-size;
+					display: flex;
+					align-items: center;
+					.icon-star {
+						width: 16px;
+						height: 16px;
+						color: #ffcd1e;
+						margin-right: 2px;
 					}
 				}
 			}
