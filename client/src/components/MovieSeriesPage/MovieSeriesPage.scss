@@ -43,6 +43,7 @@ $header-letter-spacing: 0.9px;
 				}
 				&.watched {
 					background-position-y: -10px;
+					cursor: default;
 					filter: none;
 				}
 				&.to-watch {
