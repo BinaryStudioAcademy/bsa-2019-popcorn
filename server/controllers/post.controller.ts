@@ -8,10 +8,7 @@ router
   .get("/", (req, res, next) =>
     postService
       .getPosts()
-      .then((posts: any[]) => {
-        console.log(posts);
-        res.send(posts);
-      })
+      .then((posts: any[]) => res.send(posts))
       .catch(next)
   )
   .get("/:id", (req, res, next) =>

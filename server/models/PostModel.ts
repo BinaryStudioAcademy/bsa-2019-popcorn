@@ -10,5 +10,4 @@ export class Post {
   user: User;
   userId: string;
   createdAt: Date;
-  // comments: PostComment[];
 }
