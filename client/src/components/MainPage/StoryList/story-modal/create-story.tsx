@@ -124,12 +124,7 @@ class getAddStoryPopupContent extends React.Component<IProps> {
 					<div className={'content-wrp'}>
 						<PostStoryEditor
 							type={'story'}
-							body={newStory.caption || ''}
 							cursorPosition={this.props.cursorPosition}
-							imageUrl={newStory.image_url || ''}
-							changeBody={this.props.setCaption}
-							saveImage={this.props.saveImage}
-							changeActivity={this.props.changeActivity}
 							movies={this.props.movies}
 							fetchSearch={this.props.fetchSearch}
 							title={this.props.title}
@@ -137,11 +132,6 @@ class getAddStoryPopupContent extends React.Component<IProps> {
 							saveMovie={this.props.saveMovie}
 							photoSaved={this.props.photoSaved}
 							saveAfterCrop={this.props.saveAfterCrop}
-							backgroundColor={this.props.backgroundColor}
-							isShownInput={this.props.isShownInput}
-							fontColor={this.props.fontColor}
-							textPosition={this.props.textPosition}
-							changeTextPosition={this.changeTextPosition}
 						>
 							{newStory.activity && newStory.activity.name}
 						</PostStoryEditor>

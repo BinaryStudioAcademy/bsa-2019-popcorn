@@ -13,14 +13,23 @@ import MovieList from '../../MovieList/MovieList';
 import Cropper from 'react-cropper';
 import 'cropperjs/dist/cropper.css';
 import Draggable from 'react-draggable';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import {
+	saveImage,
+	setCaption,
+	changeActivity,
+	setTextPosition
+} from '../StoryList/story.redux/actions';
+import INewStory from '../StoryList/INewStory';
 
 interface IPostStoryEditorProps {
 	id?: string;
 	type: 'story' | 'post';
+	newStory: INewStory;
+
 	saveImage: (url: string) => void;
-	body: string;
-	imageUrl: string;
-	changeBody: (text: string, start: number, end: number, title: string) => any;
+	setCaption: (text: string, start: number, end: number, title: string) => any;
 	changeActivity?: (
 		type: string,
 		activity: null | { id: string; name: string }
@@ -33,11 +42,8 @@ interface IPostStoryEditorProps {
 	saveMovie?: (movie: TMovie) => any;
 	photoSaved: boolean;
 	saveAfterCrop: () => void;
-	backgroundColor: string;
 	isShownInput: boolean;
-	fontColor: string;
-	textPosition: { x: number; y: number };
-	changeTextPosition: (position: { x: number; y: number }) => void;
+	setTextPosition: (position: { x: number; y: number }) => void;
 }
 
 interface IPostStoryEditorState {
@@ -47,10 +53,6 @@ interface IPostStoryEditorState {
 	savePhoto: boolean;
 	selectionStart: number;
 	selectionEnd: number;
-	position: {
-		x: number;
-		y: number;
-	};
 }
 
 class PostStoryEditor extends React.Component<
@@ -65,11 +67,7 @@ class PostStoryEditor extends React.Component<
 			isUploading: false,
 			savePhoto: false,
 			selectionStart: 0,
-			selectionEnd: 0,
-			position: {
-				x: 0,
-				y: 0
-			}
+			selectionEnd: 0
 		};
 
 		this.onCancel = this.onCancel.bind(this);
@@ -152,20 +150,20 @@ class PostStoryEditor extends React.Component<
 	}
 
 	handleDragText(e, ui) {
-		const { x, y } = this.props.textPosition;
+		const { x, y } = this.props.newStory.textPosition;
 		const newX = ui.x;
 		const newY = ui.y;
-		this.props.changeTextPosition({
+		this.props.setTextPosition({
 			x: newX,
 			y: newY
 		});
 	}
 
 	render() {
-		const backgroundColor = this.props.backgroundColor;
+		const backgroundColor = this.props.newStory.backgroundColor;
 		const isShownInput = this.props.isShownInput;
 		const changeBody = (e, title) => {
-			this.props.changeBody(
+			this.props.setCaption(
 				e.target.value,
 				this.textarea.current !== null
 					? this.textarea.current.selectionStart
@@ -184,20 +182,20 @@ class PostStoryEditor extends React.Component<
 					style={{
 						backgroundColor,
 						backgroundImage:
-							this.props.imageUrl && this.props.photoSaved
-								? `url(${this.props.imageUrl})`
+							this.props.newStory.image_url && this.props.photoSaved
+								? `url(${this.props.newStory.image_url})`
 								: undefined,
 						backgroundRepeat: 'no-repeat',
 						backgroundSize: 'cover'
 					}}
 				>
-					{this.props.imageUrl && (
+					{this.props.newStory.image_url && (
 						<div>
 							{!this.props.photoSaved && (
 								<Cropper
 									className="cropper"
 									ref={this.cropper}
-									src={this.props.imageUrl}
+									src={this.props.newStory.image_url}
 									aspectRatio={9 / 16}
 								/>
 							)}
@@ -223,8 +221,8 @@ class PostStoryEditor extends React.Component<
 						<Draggable
 							bounds="parent"
 							defaultPosition={{
-								x: this.props.textPosition.x,
-								y: this.props.textPosition.y
+								x: this.props.newStory.textPosition.x,
+								y: this.props.newStory.textPosition.y
 							}}
 							onStop={this.handleDragText}
 							enableUserSelectHack={false}
@@ -232,10 +230,10 @@ class PostStoryEditor extends React.Component<
 							{isShownInput ? (
 								<textarea
 									maxLength={30}
-									style={{ color: this.props.fontColor }}
+									style={{ color: this.props.newStory.fontColor }}
 									ref={this.textarea}
 									placeholder="Type a text here..."
-									defaultValue={this.props.body}
+									defaultValue={this.props.newStory.caption || ''}
 									className="story-text"
 									onChange={e => {
 										const title = PostStoryEditor.findMovie(e.target.value);
@@ -328,4 +326,25 @@ class PostStoryEditor extends React.Component<
 	}
 }
 
-export default PostStoryEditor;
+const mapStateToProps = (rootState, props) => ({
+	...props,
+	newStory: rootState.story.newStory,
+	isShownPicker: rootState.story.isShownPicker,
+	isShownFontPicker: rootState.story.isShownFontPicker,
+	isShownInput: rootState.story.isShownInput,
+	textPosition: rootState.story.newStory.textPosition
+});
+
+const actions = {
+	saveImage,
+	setCaption,
+	changeActivity,
+	setTextPosition
+};
+
+const mapDispatchToProps = dispatch => bindActionCreators(actions, dispatch);
+
+export default connect(
+	mapStateToProps,
+	mapDispatchToProps
+)(PostStoryEditor);
