@@ -32,12 +32,13 @@ class ProfileEditor extends Component<
 > {
 	constructor(props: IProfileEditorProps) {
 		super(props);
+		const favoriteLists = props.user.favoriteLists.filter(item => item.movie);
 		this.state = {
 			name: props.user.name,
 			gender: props.user.male,
 			aboutMe: props.user.aboutMe,
 			location: props.user.location,
-			favoriteMovies: props.user.favoriteLists.map(item => item.movie)
+			favoriteMovies: favoriteLists.map(item => item.movie)
 		};
 	}
 
