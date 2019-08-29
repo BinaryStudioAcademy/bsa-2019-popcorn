@@ -1,4 +1,5 @@
 import movieAdapter from '../MovieSeriesPage/movieAdapter';
+import config from '../../config';
 
 export interface ITop {
 	id: string;
@@ -44,7 +45,7 @@ export function convertServerDataFormatToClient(top: any): ITop | null {
 				id: movieInTop.movie.id,
 				title: movieInTop.movie.title,
 				release_date: movieInTop.movie.release_date,
-				poster_path: movieInTop.movie.poster_path,
+				poster_path: config.POSTER_PATH + movieInTop.movie.poster_path,
 				genres: movieInTop.movie.genres,
 				comment: movieInTop.comment
 			};
