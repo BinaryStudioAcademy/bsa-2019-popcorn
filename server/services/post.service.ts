@@ -37,6 +37,7 @@ export const createPost = async (post: any): Promise<Post> => {
   post.user = await getCustomRepository(UserRepository).findOne(post.userId);
   delete post.userId;
   post = await getExtra(post);
+  post.createdAt = new Date();
   return await getCustomRepository(PostRepository).save(post);
 };
 

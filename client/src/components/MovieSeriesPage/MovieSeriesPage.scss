@@ -20,61 +20,98 @@ $header-letter-spacing: 0.9px;
 	color: $text-base-color;
 }
 
-.review-button {
-	display: block;
-	padding: 2px 7px;
-	border-radius: 25px;
-	margin-left: 10px;
-	border: 2px solid $orange;
-	background-color: white;
-	cursor: pointer;
-	font-style: italic;
-	letter-spacing: $base-letter-spacing;
-
-	&:hover {
-		opacity: 0.8;
-	}
-}
-
 .movie-series-page-header {
-	margin-bottom: 15px;
-	text-align: left;
+	.header-movie-title-rating {
+		margin-bottom: 15px;
+		text-align: left;
+		display: grid;
+		grid-template-columns: 50px 1fr 55px;
+		grid-template-rows: auto;
 
-	.movie-title-rating {
-		display: flex;
-		position: relative;
-		align-items: center;
-	}
-	.rating {
-		position: absolute;
-		right: 20px;
-		font-size: 22px;
-	}
+		.header-movie-watch-list {
+			.watch-list-icon {
+				background: url('/images/sprite/sprite-icons.png') no-repeat;
+				filter: grayscale(100%);
+				margin-left: 10px;
+				height: 50px;
+				width: 40px;
+				background-position-x: -10px;
+				transition: filter 0.2s linear;
+				cursor: pointer;
+				&.add-to-watch-list {
+					background-position-y: -67px;
+				}
+				&.watched {
+					background-position-y: -10px;
+					cursor: default;
+					filter: none;
+				}
+				&.to-watch {
+					background-position-y: -10px;
+				}
+				&.loading-now {
+					background: url('/images/gifs/mini-spinner.gif') no-repeat center -1px;
+				}
 
-	.icon-star {
-		color: #ffcd1e;
-	}
+				&.add-to-watch-list:hover,
+				&.to-watch:hover {
+					filter: grayscale(100%) brightness(85%);
+				}
+			}
+		}
 
-	.max-rating {
-		font-size: 0.6em;
-		color: $text-secondary-color;
-	}
+		.header-main-info {
+			margin-left: 10px;
 
-	.title {
-		display: block;
-		margin-bottom: 5px;
-		text-transform: uppercase;
-		font-size: 22px;
-		font-weight: 600;
-		letter-spacing: $header-letter-spacing;
-	}
+			.movie-title {
+				text-transform: uppercase;
+				font-size: $header-medium;
+				font-weight: 600;
+				letter-spacing: $base-letter-spacing;
+				line-height: 19px;
+			}
 
-	.info-item {
-		margin-right: 20px;
-	}
+			.header-genres-review-own-rating {
+				display: flex;
 
-	.info-item:last-child {
-		margin-right: 0;
+				.header-review-own-rating-container {
+					display: flex;
+					.review-button {
+						display: block;
+						padding: 2px 7px;
+						border-radius: 25px;
+						margin-left: 10px;
+						border: 2px solid $orange;
+						background-color: white;
+						cursor: pointer;
+						font-style: italic;
+						letter-spacing: $base-letter-spacing;
+
+						&:hover {
+							opacity: 0.8;
+						}
+					}
+				}
+
+				.header-genres {
+					color: $text-secondary-color;
+					margin-top: 5px;
+					margin-left: 2px;
+				}
+			}
+		}
+		.totaly-movie-rating {
+			font-size: 22px;
+		}
+
+		.icon-star {
+			color: #ffcd1e;
+		}
+
+		.max-rating {
+			font-size: 0.6em;
+			color: $text-secondary-color;
+		}
 	}
 }
 

@@ -12,6 +12,7 @@ import topListReducer from '../components/TopListPage/TopListPage.redux/reducer'
 import followReducer from '../components/UserPage/ProfileComponent/FollowSystem/FollowSystem.redux/reducer';
 import watchListReducer from '../components/UserPage/UserWatchList/reducer';
 import searchMovieReducer from '../components/shared/MovieSearch/reducer';
+import notificationReducer from '../components/shared/Header/reducer';
 
 const reducers = {};
 
@@ -29,5 +30,6 @@ export default combineReducers({
 	topList: topListReducer,
 	follow: followReducer,
 	watchList: watchListReducer,
-	searchMovie: searchMovieReducer
+	searchMovie: searchMovieReducer,
+	notification: notificationReducer
 });

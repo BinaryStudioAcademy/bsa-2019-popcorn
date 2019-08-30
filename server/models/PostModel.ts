@@ -16,5 +16,5 @@ export class Post {
   event?: Event;
   user: User;
   userId: string;
-  comments: PostComment[];
+  createdAt: Date;
 }

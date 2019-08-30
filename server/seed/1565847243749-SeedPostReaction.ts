@@ -14,7 +14,7 @@ export class SeedPostReaction1565847243749 implements MigrationInterface {
       }));
     reactionsSeed.map(async reactionData => {
       const reaction = new PostReactions();
-      reaction.smile = reactionData.smile;
+      // reaction.smile = reactionData.smile;
       const users = await getCustomRepository(UserRepository).find();
       reaction.user = users[Math.floor(Math.random() * users.length)];
       const posts = await getCustomRepository(PostRepository).find();

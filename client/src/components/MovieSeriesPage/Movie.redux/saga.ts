@@ -24,6 +24,8 @@ import {
 	FETCH_REVIEW_BY_USER_MOVIE_ID_SUCCESS,
 	SET_REVIEW,
 	SET_REVIEW_SUCCESS,
+	SET_AWARDS,
+	GET_AWARDS,
 	FETCH_FILTRED_MOVIES,
 	SET_FILTRED_MOVIE_LIST,
 	SET_LOAD_MORE_FILTRED_MOVIE,
@@ -90,6 +92,19 @@ export function* getGenres() {
 		type: SET_GENRES,
 		payload: {
 			genres: genres
+		}
+	});
+}
+
+export function* fetchAwards(action) {
+	const awards = yield call(webApi, {
+		method: 'GET',
+		endpoint: '/api/movie/awards/' + action.payload.id
+	});
+	yield put({
+		type: SET_AWARDS,
+		payload: {
+			awards: awards
 		}
 	});
 }
@@ -358,6 +373,10 @@ function* watchFetchMovie() {
 	yield takeEvery(FETCH_MOVIE_BY_ID, fetchMovie);
 }
 
+function* watchFetchAwards() {
+	yield takeEvery(GET_AWARDS, fetchAwards);
+}
+
 function* watchSetUserRate() {
 	yield takeEvery(SET_USER_RATE, setUserRate);
 }
@@ -394,6 +413,7 @@ export default function* header() {
 		watchLoadMoreMovie(),
 		watchFetchReviewByUserMovieId(),
 		watchSetReview(),
+		watchFetchAwards(),
 		watchFetchFiltredMovieList(),
 		watchLoadMoreFiltredMovie(),
 		watchFetchGenres()

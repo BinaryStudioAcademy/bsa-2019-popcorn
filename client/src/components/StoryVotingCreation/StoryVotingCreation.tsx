@@ -260,6 +260,7 @@ class StoryVotingCreation extends React.Component<
 					<div className={'prev-wrp'}>
 						<StoryVoting
 							backColor={this.state.backgroundColor}
+							backgroundColor={'rgba(0,0,255,1)'} //change on back from story
 							image_url={this.state.imageUrl}
 							deltaPositionForOptionBlock={this.state.deltaPositionOptionBlock}
 							deltaPositionForHeader={this.state.deltaPositionHeader}

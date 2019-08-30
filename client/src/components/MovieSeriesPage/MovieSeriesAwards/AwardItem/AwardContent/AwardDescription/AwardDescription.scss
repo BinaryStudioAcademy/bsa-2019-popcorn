@@ -1,9 +1,6 @@
 @import '../../../../../../styles/variables.scss';
 .description-wrapper {
-	display: grid;
-	grid-template-columns: 80px 1fr 14px 50px;
-	grid-template-rows: 1fr 1fr;
-	grid-gap: 5px;
+	display: flex;
 	font-family: $base-font-family;
 	font-size: $base-font-size;
 	letter-spacing: $base-letter-spacing;
@@ -14,17 +11,9 @@
 }
 .nominationName {
 	color: $text-secondary-color;
+	margin-right: 0.5em;
 }
 .hyphen {
 	color: $text-secondary-color;
-}
-.gender {
-	color: $text-secondary-color;
-}
-.winnerName {
-	color: $text-secondary-color;
-}
-.winnerName {
-	grid-column: 2/3;
-	grid-row: 2/3;
+	margin-right: 0.5em;
 }

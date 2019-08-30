@@ -62,12 +62,16 @@ interface IProps {
 	mainPath: string;
 	movie: TMovie;
 	currentUser: IDiscussionUser;
+	fetchAwards: (id: any) => any;
+	awards: any;
 }
 
 const MovieSeriesPageTabBody: React.SFC<IProps> = ({
 	mainPath,
 	movie,
-	currentUser
+	currentUser,
+	fetchAwards,
+	awards
 }) => {
 	return (
 		<div className={'movie-series-page-tab-body'}>
@@ -83,7 +87,18 @@ const MovieSeriesPageTabBody: React.SFC<IProps> = ({
 				/>
 				<Route path={`${mainPath}/reviews`} component={MovieSeriesReviews} />
 				<Route path={`${mainPath}/posts`} component={MovieSeriesPosts} />
-				<Route path={`${mainPath}/awards`} component={MovieSeriesAwards} />
+				<Route
+					path={`${mainPath}/awards`}
+					render={() => {
+						return (
+							<MovieSeriesAwards
+								awards={awards}
+								imdbId={movie.imdb_id}
+								fetchAwards={fetchAwards}
+							/>
+						);
+					}}
+				/>
 				<Route
 					path={`${mainPath}/statistics`}
 					component={MovieSeriesStatistics}

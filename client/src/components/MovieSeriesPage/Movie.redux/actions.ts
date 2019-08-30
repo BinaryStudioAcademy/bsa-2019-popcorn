@@ -12,6 +12,7 @@ import {
 	FETCH_REVIEW_BY_USER_MOVIE_ID,
 	SET_REVIEW,
 	REMOVE_REVIEW_SET,
+	GET_AWARDS,
 	FETCH_FILTRED_MOVIES,
 	LOAD_MORE_FILTRED_MOVIE,
 	SET_FILTERS,
@@ -41,6 +42,15 @@ export const setMovieSeries = (movie): any => {
 		type: SET_MOVIE_SERIES,
 		payload: {
 			movie
+		}
+	};
+};
+
+export const fetchAwards = (id): any => {
+	return {
+		type: GET_AWARDS,
+		payload: {
+			id
 		}
 	};
 };

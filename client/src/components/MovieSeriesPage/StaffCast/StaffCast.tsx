@@ -13,7 +13,7 @@ class StaffCast extends React.Component<StaffCastProps> {
 	constructor(props) {
 		super(props);
 	}
-	
+
 	render() {
 		return this.props.movie ? (
 			<div className="staff-cast">
