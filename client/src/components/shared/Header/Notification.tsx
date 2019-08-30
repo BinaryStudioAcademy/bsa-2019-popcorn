@@ -18,7 +18,7 @@ interface IState {
 	notifications: Array<Activity>;
 	isShown: boolean;
 }
-
+let canSendToken = true;
 class Notification extends React.Component<IProps, IState> {
 	constructor(props) {
 		super(props);
@@ -45,11 +45,17 @@ class Notification extends React.Component<IProps, IState> {
 			...this.state,
 			notifications: this.props.unredNotifications
 		});
-		this.props.firebase &&
+		canSendToken &&
+			this.props.firebase &&
 			this.props.firebase.messaging
 				.getToken()
-				.then(token => this.props.sendTokenToServer(token))
-				.catch(e => console.log(e));
+				.then(token => {
+					canSendToken = false;
+					this.props.sendTokenToServer(token);
+				})
+				.catch(e => {
+					canSendToken = false;
+				});
 	}
 
 	componentWillUnmount() {
