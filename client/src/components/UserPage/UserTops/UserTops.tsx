@@ -149,24 +149,6 @@ class UserTops extends React.Component<IUserTopProps, IUserTopsState> {
 				
 				{topList.map(
 					(topItem: ITopItem) =>
-						((window.location.pathname ==
-								'/user-page/' + this.props.userId + '/tops') ||
-							window.location.pathname == '/tops/') && (
-							<TopItem
-								key={topItem.id}
-								saveUserTop={this.saveUserTop}
-								topItem={topItem}
-								isOwnData={this.props.isOwnData}
-								deleteTop={this.deleteTop}
-								uploadUrl={this.props.uploadUrl}
-								urlForTop={this.props.urlForTop}
-								uploadImage={this.props.uploadImage}
-							/>
-						)
-				)}
-
-				{/* {topList.map(
-					(topItem: ITopItem) =>
 						<TopItem
 							key={topItem.id}
 							saveUserTop={this.saveUserTop}
@@ -177,7 +159,7 @@ class UserTops extends React.Component<IUserTopProps, IUserTopsState> {
 							urlForTop={this.props.urlForTop}
 							uploadImage={this.props.uploadImage}
 						/>
-				)} */}
+				)}
 			</div>
 		);
 	}
