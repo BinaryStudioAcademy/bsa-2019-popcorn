@@ -116,7 +116,10 @@ class ChooseExtraOption extends React.Component<IProps> {
 												this.setOption({
 													type: this.props.option,
 													data: item,
-													link: `/${option}s/${item.id}`
+													link:
+														option === 'survey'
+															? `/${option}-page/${item.id}`
+															: `/${option}s/${item.id}`
 												})
 											}
 										>
