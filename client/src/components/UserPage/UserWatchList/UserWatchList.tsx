@@ -45,7 +45,7 @@ const UserWatchList: React.FC<IProps> = ({
 		fetchWatchList(selectedUserId);
 		return <Spinner />;
 	}
-	console.log(watchList);
+	
 	const watchedList: Array<IWatchItem> = [];
 	const toWatchList: Array<IWatchItem> = [];
 

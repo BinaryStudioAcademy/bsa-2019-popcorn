@@ -24,11 +24,6 @@ export function* fetchWatchList(action) {
 			endpoint: `/api/watch/user/${userId}`
 		});
 
-		// const watchList = yield call(webApi, {
-		// 	endpoint: `/api/watch`,
-		// 	method: 'GET'
-		// });
-
 		yield put({
 			type: FETCH_USER_WATCH_LIST_SUCCESS,
 			payload: { watchList }
