@@ -3,11 +3,12 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
 	faArrowCircleLeft,
 	faTimesCircle,
+	faTimes,
 	faPlus
 } from '@fortawesome/free-solid-svg-icons';
 import { Redirect } from 'react-router';
-import { fetchUserSurveys } from '../../UserSurveys/UserSurveys.redux/actions';
-import { getUserEvents } from '../../UserEvents/actions';
+import { fetchSurveys } from '../../UserSurveys/UserSurveys.redux/actions';
+import { getAllEvents } from '../../UserEvents/actions';
 import { fetchTops } from '../../UserTops/UserTops.redux/actions';
 import { connect } from 'react-redux';
 
@@ -22,8 +23,8 @@ interface IProps {
 	};
 	toggleModalOption: (data: any) => any;
 	setExtra: (data: any) => any;
-	fetchUserSurveys: (id: string) => any;
-	getUserEvents: (id: string) => any;
+	fetchSurveys: (id: string) => any;
+	getAllEvents: (id: string) => any;
 	fetchTops: (id: string) => any;
 }
 
@@ -35,10 +36,10 @@ class ChooseExtraOption extends React.Component<IProps> {
 	componentDidMount() {
 		switch (this.props.option) {
 			case 'survey':
-				this.props.fetchUserSurveys(this.props.userInfo.id);
+				this.props.fetchSurveys(this.props.userInfo.id);
 				break;
 			case 'event':
-				this.props.getUserEvents(this.props.userInfo.id);
+				this.props.getAllEvents(this.props.userInfo.id);
 				break;
 			case 'top':
 				this.props.fetchTops(this.props.userInfo.id);
@@ -48,6 +49,7 @@ class ChooseExtraOption extends React.Component<IProps> {
 
 	setOption(data) {
 		this.props.setExtra(data);
+		this.props.toggleModalOption(data);
 	}
 
 	render() {
@@ -91,50 +93,43 @@ class ChooseExtraOption extends React.Component<IProps> {
 		const create = () => this.setState({ create: false });
 
 		return (
-			<div className={'modal modal-story'}>
-				<div className={'nav-block-wrp'}>
-					<span onClick={this.props.toggleModalOption}>
-						<FontAwesomeIcon
-							icon={faArrowCircleLeft}
-							className={'fontAwesomeIcon'}
-						/>
-					</span>
-					<span onClick={this.props.toggleModalOption}>
-						<FontAwesomeIcon
-							icon={faTimesCircle}
-							className={'fontAwesomeIcon'}
-						/>
-					</span>
-				</div>
-				<div className={'choose-extra-option-wrp'}>
-					<div className={'create'} onClick={create}>
-						<span>
-							<FontAwesomeIcon
-								icon={faPlus}
-								style={{ marginRight: '2px', fontSize: '.8em' }}
-							/>
-							Create {option}
-						</span>
-					</div>
+			<div className={'post-constructor-modal'}>
+				<div className="postconstr-wrp postconstr-wrp--option">
+					<p className="close-modal" onClick={this.props.toggleModalOption}>
+						<FontAwesomeIcon icon={faTimes} />
+					</p>
+					<div className={'choose-extra-option-wrp postconstr'}>
+						<div className={'create'} onClick={create}>
+							<span style={{ cursor: 'pointer' }}>
+								<FontAwesomeIcon icon={faPlus} className="extra-icon" />
+								Create {option}
+							</span>
+						</div>
 
-					<div className={'recent-created'}>
-						{data
-							? data.map((item, i) => (
-									<span
-										key={i}
-										onClick={() =>
-											this.setOption({
-												title: item.title,
-												link: `/${option}${
-													option === 'event' ? 's' : '-page'
-												}/${item.id}`
-											})
-										}
-									>
-										{item.title}
-									</span>
-							  ))
-							: null}
+						<div className={'recent-created'}>
+							{data
+								? data.map((item, i) => (
+										<p
+											key={item.id}
+											className="option-item-wrapper"
+											onClick={() =>
+												this.setOption({
+													type: this.props.option,
+													data: item,
+													link:
+														option === 'survey'
+															? `/${option}-page/${item.id}`
+															: `/${option}s/${item.id}`
+												})
+											}
+										>
+											<span className="option-item" key={i}>
+												{item.title}
+											</span>
+										</p>
+								  ))
+								: null}
+						</div>
 					</div>
 				</div>
 			</div>
@@ -145,14 +140,14 @@ class ChooseExtraOption extends React.Component<IProps> {
 const mapStateToProps = rootState => ({
 	survey: rootState.survey.surveys,
 	loading: rootState.survey.loading,
-	userEvents: rootState.events.userEvents,
+	userEvents: rootState.events.allEvents,
 	userInfo: rootState.profile.profileInfo,
 	topList: rootState.userTops.topList
 });
 
 const mapDispatchToProps = {
-	fetchUserSurveys,
-	getUserEvents,
+	fetchSurveys,
+	getAllEvents,
 	fetchTops
 };
 
