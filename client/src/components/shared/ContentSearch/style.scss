@@ -1,0 +1,62 @@
+@import '../../../styles/variables';
+
+.content-search {
+	height: 40px;
+
+	position: relative;
+	display: flex;
+	margin-left: 5%;
+
+	.search {
+		border: 1px solid $border-color;
+		box-shadow: 0 0 11px $input-shadow-color;
+		border-radius: 2px 0 0 2px;
+		font-size: $base-font-size;
+		line-height: 15px;
+		align-items: center;
+		letter-spacing: $input-letter-spacing;
+		color: $input-placeholder-color;
+
+		.search-input {
+			border: none;
+			padding: 0 0 0 5px;
+			width: 240px;
+			display: block;
+			flex: 1;
+			height: 100%;
+		}
+
+		.search-input:focus {
+			outline: none;
+		}
+
+		.search-icon {
+			margin: 6px 10px 0px 10px;
+			display: block;
+			float: left;
+		}
+	}
+
+	.question-type {
+		flex: 1;
+		width: 30%;
+		background: $background-gray;
+		font-family: $base-font-family;
+		font-weight: 500;
+		font-size: $menu-font-size;
+		border: none;
+		cursor: pointer;
+
+		&:focus {
+			outline: none;
+		}
+	}
+
+	.movie-add-wrp {
+		padding: 10px;
+
+		.edit-form {
+			padding: 0;
+		}
+	}
+}

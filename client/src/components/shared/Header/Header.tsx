@@ -21,6 +21,7 @@ import Image from '../Image/Image';
 import Notification from './Notification';
 import { withFirebase } from '../../Firebase';
 import { Activity } from '../../ActivityPage/ActivityList/ActivityList';
+import ContentSearch from '../ContentSearch';
 interface IProps {
 	userInfo: {
 		//temporary put ? to use mocks inside component
@@ -136,12 +137,7 @@ const Header = ({
 					</Link>
 				</div>
 			</button>
-			<MovieSearch
-				movies={moviesSearch}
-				fetchFilms={fetchFilms}
-				alreadySearch={alreadySearch}
-				setMovieSeries={setMovieSeries}
-			/>
+			<ContentSearch />
 			<div className="notifications">
 				<div>
 					<img className="message-icon hover" src={messageIcon} alt="message" />

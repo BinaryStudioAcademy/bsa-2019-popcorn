@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import {
@@ -8,7 +8,6 @@ import {
 	deleteSelectedData
 } from './actions';
 import './MovieSearch.scss';
-import Spinner from '../Spinner';
 
 interface IProps {
 	searchData?: Array<IMovieTitle>;
