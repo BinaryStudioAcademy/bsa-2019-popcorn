@@ -131,7 +131,7 @@ class UserEvents extends React.Component<IProps, IState> {
 							</div>
 						)}
 						<div className="events-title">
-							<span>Events interested you</span>
+							<span>Events interested in</span>
 						</div>
 						<div className="event-list-container">
 							{subscribeEvents.length === 0 ? (
