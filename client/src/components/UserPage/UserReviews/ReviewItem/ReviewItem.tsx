@@ -19,6 +19,7 @@ interface IProps {
 	deleteReview: (reviewId: string) => object;
 	setReview: any;
 	removeReviewSet: any;
+	isOwnData: boolean;
 }
 
 interface IState {
@@ -82,7 +83,7 @@ class ReviewItem extends React.Component<IProps> {
 			reaction: { countDislikes, countLikes }
 		} = this.props.review;
 		const { review, setReview, removeReviewSet } = this.props;
-		const { deleteReview } = this.props;
+		const { deleteReview, isOwnData } = this.props;
 		const {
 			isBigBlock,
 			showFullReview,
@@ -128,22 +129,24 @@ class ReviewItem extends React.Component<IProps> {
 									</span>
 								</div>
 							</NavLink>
-							<div className="review-buttons">
-								<button
-									className="edit-button"
-									onClick={() =>
-										this.setState({ ...this.state, showModal: true })
-									}
-								>
-									Edit
+							{isOwnData && (
+								<div className="review-buttons">
+									<button
+										className="edit-button"
+										onClick={() =>
+											this.setState({ ...this.state, showModal: true })
+										}
+									>
+										Edit
 								</button>
-								<button
-									className="delete-button"
-									onClick={() => deleteReview(reviewId)}
-								>
-									<CloseIcon className="delete-button-svg" />
-								</button>
-							</div>
+									<button
+										className="delete-button"
+										onClick={() => deleteReview(reviewId)}
+									>
+										<CloseIcon className="delete-button-svg" />
+									</button>
+								</div>
+							)}
 						</div>
 						<div className="review-date">
 							<Moment format=" D MMMM YYYY" local>

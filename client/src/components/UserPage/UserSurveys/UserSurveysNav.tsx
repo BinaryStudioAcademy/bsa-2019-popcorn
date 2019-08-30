@@ -35,6 +35,7 @@ interface IProps {
 		name: string;
 		image_link: string;
 	};
+	isOwnData: boolean;
 }
 
 interface IState {
@@ -98,7 +99,7 @@ class UserSurveysNav extends React.Component<IProps, IState> {
 	};
 
 	render() {
-		const { mainPath, userInfo } = this.props;
+		const { mainPath, userInfo, isOwnData } = this.props;
 		if (!this.state.surveys) return <Spinner />;
 		return (
 			<Switch>
@@ -112,6 +113,7 @@ class UserSurveysNav extends React.Component<IProps, IState> {
 							surveys={this.state.surveys}
 							mainPath={mainPath}
 							deleteSurvey={this.deleteSurvey}
+							isOwnData={isOwnData}
 						/>
 					)}
 				/>

@@ -17,6 +17,8 @@ interface IProps {
 	fetchUserReviews: (userId: string) => object;
 	deleteReviewById: (reviewId: string) => object;
 	currentUserId: string;
+	selectedUserId: string;
+	isOwnData: boolean;
 	loading: boolean;
 	setReview: any;
 	removeReviewSet: any;
@@ -40,7 +42,7 @@ interface IReviewReaction {
 
 class UserReviews extends React.Component<IProps> {
 	componentDidMount() {
-		this.props.fetchUserReviews(this.props.currentUserId);
+		this.props.fetchUserReviews(this.props.selectedUserId);
 	}
 
 	render() {
@@ -50,7 +52,8 @@ class UserReviews extends React.Component<IProps> {
 			loading,
 			deleteReviewById,
 			setReview,
-			removeReviewSet
+			removeReviewSet,
+			isOwnData
 		} = this.props;
 
 		return (
@@ -70,6 +73,7 @@ class UserReviews extends React.Component<IProps> {
 										deleteReview={deleteReviewById}
 										setReview={setReview}
 										removeReviewSet={removeReviewSet}
+										isOwnData={isOwnData}
 									/>
 								);
 							})
