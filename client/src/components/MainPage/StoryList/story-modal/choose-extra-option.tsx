@@ -83,8 +83,9 @@ class ChooseExtraOption extends React.Component<IProps, IState> {
 		const back = () => this.setState({ back: false });
 		const create = () => this.setState({ create: false });
 		const choose = activity => {
+			const { name } = activity;
 			this.props.history.push('/create');
-			activity.name = activity.title;
+			activity.name = name || activity.title;
 			this.props.changeActivity(option, activity);
 		};
 
