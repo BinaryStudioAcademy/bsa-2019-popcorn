@@ -1,5 +1,8 @@
 import React from 'react';
 import './style.scss';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+
 const options = ['movie', 'event', 'survey', 'top'];
 const defaultOption = options[0];
 
@@ -26,6 +29,9 @@ class ContentSearch extends React.Component<{}, IState> {
 						value={value}
 						className="search-input"
 						onChange={e => this.setState({ value: e.target.value })}
+						onKeyPress={e => {
+							if (e.which === 13) console.log('send request');
+						}}
 					/>
 				</span>
 				<select
@@ -39,23 +45,20 @@ class ContentSearch extends React.Component<{}, IState> {
 						<option value={option}>{option}</option>
 					))}
 				</select>
-				{/*<span className="filter hover">*/}
-				{/*<NavLink to={'/advanced-search'}>*/}
-				{/*	Filter*/}
-				{/*	<FontAwesomeIcon icon={faChevronDown} />*/}
-				{/*</NavLink>*/}
-				{/*{focusInput && value.trim() ? (*/}
-				{/*    <div className="modal">*/}
-				{/*        {movies && movies.length > 0 ? (*/}
-				{/*            <MovieList movies={movies} setMovieSeries={setMovieSeries} />*/}
-				{/*        ) : (*/}
-				{/*            <span>Nothing was found</span>*/}
-				{/*        )}*/}
-				{/*    </div>*/}
-				{/*) : null}*/}
 			</div>
 		);
 	}
 }
 
-export default ContentSearch;
+const mapStateToProps = (rootState, props) => ({
+	...props
+});
+
+const actions = {};
+
+const mapDispatchToProps = dispatch => bindActionCreators(actions, dispatch);
+
+export default connect(
+	mapStateToProps,
+	mapDispatchToProps
+)(ContentSearch);

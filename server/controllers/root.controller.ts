@@ -13,6 +13,7 @@ import reviewRouter from "./review.controller";
 import watchRouter from "./watch.controller";
 import followRouter from "./follow.controller";
 import notificationRouter from "./notification.controller";
+import searchRouter from "./search.controller";
 
 // register all routes
 export default app => {
@@ -31,4 +32,5 @@ export default app => {
   app.use("/api/watch", watchRouter);
   app.use("/api/follow", followRouter);
   app.use("/api/notification", notificationRouter);
+  app.use("/api/search", searchRouter);
 };
