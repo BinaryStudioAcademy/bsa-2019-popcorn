@@ -1,5 +1,9 @@
 @import '../../../../styles/variables.scss';
 
+.follow-wrp {
+	width: 100%;
+}
+
 .follow-counter-wrp {
 	width: 50%;
 	display: inline-block;
@@ -40,7 +44,6 @@
 .follow-modal {
 	width: 400px;
 	height: 500px;
-	border-radius: 20px;
 	padding: 0;
 	&-close {
 		top: 6px;
