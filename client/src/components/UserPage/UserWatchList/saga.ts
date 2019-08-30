@@ -15,12 +15,19 @@ import {
 	DELETE_MOVIE_FROM_WATCH_LIST_SUCCESS
 } from './actionTypes';
 
-export function* fetchWatchList() {
+export function* fetchWatchList(action) {
 	try {
+		const { userId } = action.payload;
+
 		const watchList = yield call(webApi, {
-			endpoint: `/api/watch`,
-			method: 'GET'
+			method: 'GET',
+			endpoint: `/api/watch/user/${userId}`
 		});
+
+		// const watchList = yield call(webApi, {
+		// 	endpoint: `/api/watch`,
+		// 	method: 'GET'
+		// });
 
 		yield put({
 			type: FETCH_USER_WATCH_LIST_SUCCESS,

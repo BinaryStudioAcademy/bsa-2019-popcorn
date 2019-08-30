@@ -8,6 +8,7 @@ interface IWatch {
 }
 
 export const getAllUserWatch = async (userId: string, next) => {
+  console.log(userId);
   const watches = await getCustomRepository(WatchRepository).getByUserId(
     userId,
     next

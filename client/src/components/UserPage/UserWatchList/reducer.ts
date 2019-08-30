@@ -27,6 +27,7 @@ const initialState: IReducer = {
 export default (state = initialState, action) => {
 	switch (action.type) {
 		case FETCH_USER_WATCH_LIST_SUCCESS:
+			console.log(action.payload.watchList);
 			return {
 				...state,
 				watchList: formatWatchList(action.payload.watchList)

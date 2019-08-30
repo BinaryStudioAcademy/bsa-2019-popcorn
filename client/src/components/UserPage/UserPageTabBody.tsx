@@ -132,7 +132,15 @@ const UserPageTabs: React.SFC<IProps> = ({
 					)}
 				/>
 				<Route path={`${mainPath}/lists`} component={UserLists} />
-				<Route path={`${mainPath}/watch-list`} component={UserWatchList} />
+				<Route
+					path={`${mainPath}/watch-list`}
+					component={() => (
+						<UserWatchList
+							selectedUserId={selectedProfileInfo.id}
+							isOwnData={isOwnData}
+						/>
+					)}
+				/>
 			</Switch>
 		</div>
 	) : null;

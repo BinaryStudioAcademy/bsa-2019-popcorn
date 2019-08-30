@@ -15,10 +15,12 @@ import MovieSearch from '../../shared/MovieSearch/MovieSearch';
 
 interface IProps {
 	watchList: Array<IWatchItem>;
-	fetchWatchList: () => object;
+	fetchWatchList: (userId: string) => object;
 	saveWatchItem: (movie: any) => object;
 	moveToWatched: (watchId: string) => object;
 	deleteWatchItem: (watchId: string) => object;
+	selectedUserId: string;
+	isOwnData: boolean;
 }
 
 export interface IWatchItem {
@@ -33,15 +35,17 @@ const UserWatchList: React.FC<IProps> = ({
 	fetchWatchList,
 	saveWatchItem,
 	moveToWatched,
-	deleteWatchItem
+	deleteWatchItem,
+	selectedUserId,
+	isOwnData
 }) => {
 	const [select, setSelect] = useState('TO_WATCH');
 
 	if (!watchList) {
-		fetchWatchList();
+		fetchWatchList(selectedUserId);
 		return <Spinner />;
 	}
-
+	console.log(watchList);
 	const watchedList: Array<IWatchItem> = [];
 	const toWatchList: Array<IWatchItem> = [];
 
@@ -91,19 +95,21 @@ const UserWatchList: React.FC<IProps> = ({
 		<div className="UserWatchList">
 			<div className="user-watch-list-container">
 				<div className="watch-list-top-title">
-					<div className="watch-list-left">
-						<div className="watch-list-description">
-							Find a movie and add to watch list
+					{isOwnData && (
+						<div className="watch-list-left">
+							<div className="watch-list-description">
+								Find a movie and add to watch list
 						</div>
-						<div className="watch-search-and-sort">
-							<div className="search-input-container">
-								<MovieSearch
-									onSelectMovie={movie => onSelectMovie(movie)}
-									elasticProperties={elasticProperties}
-								/>
+							<div className="watch-search-and-sort">
+								<div className="search-input-container">
+									<MovieSearch
+										onSelectMovie={movie => onSelectMovie(movie)}
+										elasticProperties={elasticProperties}
+									/>
+								</div>
 							</div>
 						</div>
-					</div>
+					)}
 					<div className="watch-list-right">
 						<div className="sort-element-name">Sort:</div>
 						<div className="select-element-container">
