@@ -1,8 +1,7 @@
-import { EntityRepository, Repository } from "typeorm";
+import { EntityRepository, getCustomRepository, Repository } from "typeorm";
 import { Surveys } from "../entities/Surveys";
 import { Surveys as SurveysModel } from "../models/SurveysModel";
 import UserRepository from "./user.repository";
-import { getCustomRepository } from "typeorm";
 import { SurveysQuestion } from "../models/SurveysQuestionModel";
 import SurveysQuestionRepository from "./surveysQuestion.repository";
 
@@ -79,6 +78,22 @@ class SurveysRepository extends Repository<Surveys> {
     } catch (err) {
       return next({ status: err.status, message: err.message }, null);
     }
+  }
+
+  async getSurveysByTitle(title: string) {
+    return await this.findOne(
+      { title },
+      {
+        relations: [
+          "surveysQuestion",
+          "surveysQuestion.surveysQuestionOption",
+          "surveysQuestion.surveysQuestionAnswer",
+          "surveysQuestion.surveysQuestionAnswer.user",
+          "surveysQuestion.surveysQuestionAnswer.surveysQuestionOption",
+          "user"
+        ]
+      }
+    );
   }
 
   async getSurveysByUserId(id: string, next?) {

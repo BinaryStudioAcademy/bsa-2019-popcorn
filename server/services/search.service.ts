@@ -1,3 +1,8 @@
+import { getSurveysByTitle } from "./surveys.service";
+import { getEventByTitle } from "./event.service";
+import { getTopByTitle } from "./top.service";
+import { getByTitle } from "./movie.service";
+
 export const contentSearch = async ({
   title,
   type
@@ -21,8 +26,51 @@ export const contentSearch = async ({
   }
 };
 
-const contentAll = async (title: string) => {};
-const contentMovie = async (title: string) => {};
-const contentTop = async (title: string) => {};
-const contentEvent = async (title: string) => {};
-const contentSurvey = async (title: string) => {};
+const contentAll = async (title: string) => {
+  return [
+    await contentMovie(title, false),
+    await contentTop(title, false),
+    await contentEvent(title, false),
+    await contentSurvey(title, false)
+  ];
+};
+const contentMovie = async (title: string, wrap = true) => {
+  const movie = await getByTitle(title);
+
+  return wrap
+    ? [{ data: movie, type: "movie" }]
+    : {
+        movie,
+        type: "movie"
+      };
+};
+const contentTop = async (title: string, wrap = true) => {
+  const top = await getTopByTitle(title);
+
+  return wrap
+    ? [{ data: top, type: "top" }]
+    : {
+        top,
+        type: "top"
+      };
+};
+const contentEvent = async (title: string, wrap = true) => {
+  const event = await getEventByTitle(title);
+
+  return wrap
+    ? [{ data: event, type: "event" }]
+    : {
+        event,
+        type: "event"
+      };
+};
+const contentSurvey = async (title: string, wrap = true) => {
+  const survey = await getSurveysByTitle(title);
+
+  return wrap
+    ? [{ data: survey, type: "survey" }]
+    : {
+        survey,
+        type: "survey"
+      };
+};
