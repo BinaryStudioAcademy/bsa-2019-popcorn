@@ -7,8 +7,8 @@ import {
 	faPlus
 } from '@fortawesome/free-solid-svg-icons';
 import { Redirect } from 'react-router';
-import { fetchUserSurveys } from '../../UserSurveys/UserSurveys.redux/actions';
-import { getUserEvents } from '../../UserEvents/actions';
+import { fetchSurveys } from '../../UserSurveys/UserSurveys.redux/actions';
+import { getAllEvents } from '../../UserEvents/actions';
 import { fetchTops } from '../../UserTops/UserTops.redux/actions';
 import { connect } from 'react-redux';
 
@@ -23,8 +23,8 @@ interface IProps {
 	};
 	toggleModalOption: (data: any) => any;
 	setExtra: (data: any) => any;
-	fetchUserSurveys: (id: string) => any;
-	getUserEvents: (id: string) => any;
+	fetchSurveys: (id: string) => any;
+	getAllEvents: (id: string) => any;
 	fetchTops: (id: string) => any;
 }
 
@@ -36,10 +36,10 @@ class ChooseExtraOption extends React.Component<IProps> {
 	componentDidMount() {
 		switch (this.props.option) {
 			case 'survey':
-				this.props.fetchUserSurveys(this.props.userInfo.id);
+				this.props.fetchSurveys(this.props.userInfo.id);
 				break;
 			case 'event':
-				this.props.getUserEvents(this.props.userInfo.id);
+				this.props.getAllEvents(this.props.userInfo.id);
 				break;
 			case 'top':
 				this.props.fetchTops(this.props.userInfo.id);
@@ -116,7 +116,7 @@ class ChooseExtraOption extends React.Component<IProps> {
 												this.setOption({
 													type: this.props.option,
 													data: item,
-													link: `/${option}-page/${item.id}`
+													link: `/${option}s/${item.id}`
 												})
 											}
 										>
@@ -137,14 +137,14 @@ class ChooseExtraOption extends React.Component<IProps> {
 const mapStateToProps = rootState => ({
 	survey: rootState.survey.surveys,
 	loading: rootState.survey.loading,
-	userEvents: rootState.events.userEvents,
+	userEvents: rootState.events.allEvents,
 	userInfo: rootState.profile.profileInfo,
 	topList: rootState.userTops.topList
 });
 
 const mapDispatchToProps = {
-	fetchUserSurveys,
-	getUserEvents,
+	fetchSurveys,
+	getAllEvents,
 	fetchTops
 };
 

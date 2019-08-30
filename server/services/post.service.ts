@@ -12,21 +12,23 @@ import PostReactionsRepository from "../repository/postReactions.repository";
 const uuid = require("uuid/v4");
 
 const getExtra = async (post: any) => {
-  if (post.surveyId) {
-    post.survey = await getCustomRepository(SurveyRepository).findOne(
-      post.surveyId
-    );
-    delete post.surveyId;
-  }
-  if (post.topId) {
-    post.top = await getCustomRepository(TopRepository).findOne(post.topId);
-    delete post.topId;
-  }
-  if (post.eventId) {
-    post.event = await getCustomRepository(EventRepository).findOne(
-      post.eventId
-    );
-    delete post.eventId;
+  if (!post.extraType) return post;
+  switch (post.extraType) {
+    case "survey":
+      post.survey = await getCustomRepository(SurveyRepository).findOne(
+        post.extraData.id
+      );
+      break;
+    case "top":
+      post.top = await getCustomRepository(TopRepository).findOne(
+        post.extraData.id
+      );
+      break;
+    case "event":
+      post.event = await getCustomRepository(EventRepository).findOne(
+        post.extraData.id
+      );
+      break;
   }
   return post;
 };
@@ -40,7 +42,7 @@ export const createPost = async (post: any): Promise<Post> => {
 
 export const getPosts = async (): Promise<any[]> => {
   const posts = await getCustomRepository(PostRepository).find({
-    relations: ["user"]
+    relations: ["user", "top", "survey", "event"]
   });
   return Promise.all(
     posts.map(async post => {
@@ -64,7 +66,7 @@ export const getPostById = async (postId: string): Promise<Post> =>
 
 export const getPostsByUserId = async (userId: string): Promise<Post[]> =>
   await getCustomRepository(PostRepository).find({
-    relations: ["user"],
+    relations: ["user", "top", "survey", "event"],
     where: { user: { id: userId } }
   });
 

@@ -7,12 +7,13 @@ import {
 	faCalendarAlt
 } from '@fortawesome/free-solid-svg-icons';
 import Moment from 'react-moment';
-
+import './Extra.scss';
 interface IProps {
 	link: string;
 	data: any;
 	type: string;
 	clearExtra: (data: any) => any;
+	readyPost?: boolean;
 }
 const Extra = (props: IProps) => {
 	const getSurveyBody = data => {
@@ -29,6 +30,7 @@ const Extra = (props: IProps) => {
 		);
 	};
 	const getTopBody = data => {
+		const movieForShow = [...data.movieInTop].slice(0, 3);
 		return (
 			<>
 				<div className="extra-title">
@@ -37,7 +39,7 @@ const Extra = (props: IProps) => {
 				</div>
 				{data.movieInTop && (
 					<div className="extra-description">
-						{data.movieInTop.map((movieTop, i) => (
+						{movieForShow.map((movieTop, i) => (
 							<p key={movieTop.id} className="movie-top-item">
 								{i + 1}. {movieTop.movie.title}
 							</p>
@@ -92,9 +94,11 @@ const Extra = (props: IProps) => {
 	return (
 		<div className="extra">
 			<div className="extra-body">{getExtraBody(props.type, props.data)}</div>
-			<p className="remove-extra" onClick={() => props.clearExtra('')}>
-				<FontAwesomeIcon icon={faTimes} />
-			</p>
+			{!props.readyPost && (
+				<p className="remove-extra" onClick={() => props.clearExtra('')}>
+					<FontAwesomeIcon icon={faTimes} />
+				</p>
+			)}
 		</div>
 	);
 };

@@ -64,6 +64,8 @@
 			flex-direction: column;
 			align-items: center;
 			margin-top: 30px;
+			overflow: auto;
+			height: 80%;
 		}
 		.option-item-wrapper {
 			cursor: pointer;

@@ -12,11 +12,8 @@ export class Post {
   extraTitle?: string;
   extraLink?: string;
   survey?: Surveys;
-  surveyId?: string;
   top?: Top;
-  topId?: string;
   event?: Event;
-  eventId?: string;
   user: User;
   userId: string;
   comments: PostComment[];

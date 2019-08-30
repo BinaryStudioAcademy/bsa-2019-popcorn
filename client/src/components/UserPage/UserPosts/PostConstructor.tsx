@@ -46,7 +46,7 @@ interface IPostConstructorState {
 	croppedSaved: boolean;
 	reactions: Array<any>;
 	comments: Array<any>;
-	extraData: object;
+	extraData: any;
 	extraType: string;
 }
 
@@ -118,7 +118,22 @@ class PostConstructor extends React.Component<
 
 	onSave() {
 		if (this.state.description.trim() === '') return;
-		this.props.setPost(this.state);
+		const { extraType, extraData } = this.state;
+		if (extraType === 'top') {
+			this.setState({
+				extraData: {
+					id: extraData.id
+				}
+			});
+			this.props.setPost({
+				...this.state,
+				extraData: {
+					id: extraData.id
+				}
+			});
+		} else {
+			this.props.setPost(this.state);
+		}
 		this.props.fetchPosts();
 		this.setState({
 			image_url: '',
