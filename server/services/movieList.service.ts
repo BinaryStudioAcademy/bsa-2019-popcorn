@@ -3,8 +3,9 @@ import { getCustomRepository } from "typeorm";
 
 export class IRequest {
   title: string;
-  description: string;
-  image_url: string;
+  userId?: string;
+  description?: string;
+  image_url?: string;
   moviesId: Array<string>;
 }
 
@@ -24,3 +25,9 @@ export const getOwnUserLists = (userId: string) =>
 
 export const deleteMovieList = (movieListId: string) =>
   getCustomRepository(MovieListRepository).delete({ id: movieListId });
+
+export const updateMovieList = (movieListId: string, movieList: IRequest) =>
+  getCustomRepository(MovieListRepository).update(
+    { id: movieListId },
+    movieList
+  );
