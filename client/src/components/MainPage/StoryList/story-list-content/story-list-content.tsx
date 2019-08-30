@@ -8,6 +8,9 @@ interface IStoryListItem {
 	caption: string;
 	image_url: string;
 	backgroundColor: string;
+	fontColor?: string;
+	textPositionX?: number;
+	textPositionY?: number;
 	user: {
 		avatar: string;
 		id: string;
@@ -78,7 +81,7 @@ class StoryListContent extends Component<IStoryListItemsProps> {
 							inEditor={false}
 							image_url={voting.backImage || ''}
 						/>
-						<div className="story-name">{item.caption}</div>
+						{/* /	<div className="story-name">{item.caption}</div> */}
 					</div>
 				);
 			}
@@ -92,6 +95,9 @@ class StoryListContent extends Component<IStoryListItemsProps> {
 					avatar={item.user.avatar}
 					openViewer={this.props.openViewer}
 					index={i}
+					fontColor={item.fontColor}
+					textPositionX={item.textPositionX}
+					textPositionY={item.textPositionY}
 				/>
 			);
 		});

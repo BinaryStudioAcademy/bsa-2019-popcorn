@@ -86,21 +86,33 @@ const MovieList: React.FC<IMovieListProps> = ({
 			</div>
 		</InfiniteScroll>
 	) : filters ? (
-		<div style={{ width: '100%' }}>
-			<div className="movie-list" style={style}>
-				{movieListItems}
+		movies.length > 0 ? (
+			<div style={{ width: '100%' }}>
+				<div className="movie-list" style={style}>
+					{movieListItems}
+				</div>
+				<div className="page-switch">
+					<button onClick={previousPage} disabled={!(filter1.from > 0)}>
+						<FontAwesomeIcon
+							className="previous-icon"
+							icon={faArrowCircleLeft}
+						/>
+						Previous page
+					</button>
+					<button
+						onClick={nextPage}
+						disabled={!(filter1.size === movies.length)}
+					>
+						Next page
+						<FontAwesomeIcon className="next-icon" icon={faArrowCircleRight} />
+					</button>
+				</div>
 			</div>
-			<div className="page-switch">
-				<button onClick={previousPage} disabled={!(filter1.from > 0)}>
-					<FontAwesomeIcon className="previous-icon" icon={faArrowCircleLeft} />
-					Previous page
-				</button>
-				<button onClick={nextPage} disabled={!(filter1.size === movies.length)}>
-					Next page
-					<FontAwesomeIcon className="next-icon" icon={faArrowCircleRight} />
-				</button>
+		) : (
+			<div className="no-films-found">
+				Sorry, no results found. Please adjust your search.
 			</div>
-		</div>
+		)
 	) : (
 		<div className="movie-list" style={style}>
 			{movieListItems}
