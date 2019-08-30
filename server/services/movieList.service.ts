@@ -16,3 +16,8 @@ export const saveMovieList = (userId: string, movieList: IRequest) =>
 
 export const getListsByUserId = (userId: string) =>
   getCustomRepository(MovieListRepository).getListsByUserId(userId);
+
+export const getOwnUserLists = (userId: string) =>
+  getCustomRepository(MovieListRepository).find({
+    where: { user: { id: userId } }
+  });

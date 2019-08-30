@@ -12,6 +12,12 @@ router
       .then(result => res.send(result))
       .catch(next)
   )
+  .get("/", (req, res, next) =>
+    movieListService
+      .getOwnUserLists(req.user.id)
+      .then(result => res.send(result))
+      .catch(next)
+  )
   .post("/", (req, res, next) =>
     movieListService
       .saveMovieList(req.user.id, req.body)
