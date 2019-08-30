@@ -3,6 +3,11 @@ import UserPageTabs from './UserPageTabs';
 import UserPageTabBody from './UserPageTabBody';
 import './UserPage.scss';
 import { getSelectedUserInfo } from './actions';
+import {
+	fetchFollowersCount,
+	fetchFollowingsCount,
+	checkStatus
+} from './ProfileComponent/FollowSystem/FollowSystem.redux/actions';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import Spinner from '../shared/Spinner';
@@ -13,20 +18,31 @@ interface IProps {
 		path: string;
 		params: any;
 	};
+	currentUserId: string;
 	getSelectedUserInfo: (id: string) => any;
+	fetchFollowersCount: (userId: string) => any;
+	fetchFollowingsCount: (userId: string) => any;
+	checkStatus: (userId: string, followerId: string) => any;
 	selectedProfileInfo: any;
 }
 
 const User: React.SFC<IProps> = ({
 	match,
+	currentUserId,
 	getSelectedUserInfo,
-	selectedProfileInfo
+	selectedProfileInfo,
+	fetchFollowersCount,
+	fetchFollowingsCount,
+	checkStatus
 }) => {
 	if (match.params.id) {
-		if (selectedProfileInfo && match.params.id !== selectedProfileInfo.id) {
-			getSelectedUserInfo(match.params.id);
-			return <Spinner />;
-		} else if (selectedProfileInfo === null) {
+		if (
+			(selectedProfileInfo && match.params.id !== selectedProfileInfo.id) ||
+			selectedProfileInfo === null
+		) {
+			fetchFollowersCount(match.params.id);
+			fetchFollowingsCount(match.params.id);
+			checkStatus(currentUserId, match.params.id);
 			getSelectedUserInfo(match.params.id);
 			return <Spinner />;
 		}
@@ -44,11 +60,15 @@ const User: React.SFC<IProps> = ({
 };
 
 const mapStateToProps = (rootState, props) => ({
-	selectedProfileInfo: rootState.profile.selectedProfileInfo
+	selectedProfileInfo: rootState.profile.selectedProfileInfo,
+	currentUserId: rootState.profile.profileInfo.id
 });
 
 const actions = {
-	getSelectedUserInfo
+	getSelectedUserInfo,
+	fetchFollowersCount,
+	fetchFollowingsCount,
+	checkStatus
 };
 
 const mapDispatchToProps = dispatch => bindActionCreators(actions, dispatch);

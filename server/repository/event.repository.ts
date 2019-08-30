@@ -1,7 +1,6 @@
-import { EntityRepository, Repository, getCustomRepository } from "typeorm";
-import { Event, EventComment, EventVisitor } from "../entities/Events";
-import { getRepository, createQueryBuilder } from "typeorm";
-import EventVisitorRepository from "./eventVisitor.repository";
+import { EntityRepository, Repository } from "typeorm";
+import { Event, EventVisitor } from "../entities/Events";
+import { getRepository } from "typeorm";
 
 @EntityRepository(Event)
 class EventRepository extends Repository<Event> {

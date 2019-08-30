@@ -15,15 +15,15 @@ export class SeedTops1566549724762 implements MigrationInterface {
         topImageUrl:
           "https://telegraf.com.ua/files/2019/06/50822482_143507293267697_906821660758496382_n1-388x206.jpg",
         MovieInTop: [
-          "38219",
-          "39434",
-          "11899",
-          "44783",
-          "25676",
-          "11853",
-          "31591",
-          "27593",
-          "22705"
+          "4253",
+          "3966",
+          "3930",
+          "925",
+          "912",
+          "2241",
+          "2228",
+          "2180",
+          "1684"
         ],
         description:
           "Need a laugh? Then you were wise to visit Popcorn, because we’re presenting our guide to the best comedies of all times so far, ranked by me! (We’re also including the worst comedies of 2019, so you know what to avoid, or what to seek out if you’re in for a chuckle of a different variety.)"
@@ -33,7 +33,7 @@ export class SeedTops1566549724762 implements MigrationInterface {
         title: "The cutest melodramas",
         topImageUrl:
           "https://filmschoolrejects.com/wp-content/uploads/2019/02/44-notebook-700x500.jpg",
-        MovieInTop: ["89453", "65046", "55735", "9062", "15395"],
+        MovieInTop: ["2065", "921", "1252", "1959", "824"],
         description:
           "The romantic drama film genre is an intersection of drama films and romance films. Films in this category are classified as drama films and romance films."
       },
@@ -42,7 +42,7 @@ export class SeedTops1566549724762 implements MigrationInterface {
         title: "Very scary horror movies",
         topImageUrl:
           "https://cdn3.movieweb.com/i/article/FGtG5gX217RVxplSsipPUNPBnXtf7C/798:50/Netflix-Halloween-Horror-Movies.jpg",
-        MovieInTop: ["24499", "11417", "29778"],
+        MovieInTop: ["832", "814", "106"],
         description:
           "Sure, Halloween is months away, but does that mean you can't watch scary movies the rest of the year? Hell no! Thankfully, Popcorn has you covered with a healthy horror section full of prestige horror films and schlocky splatter movies. While your options are limitless, here are the best scary movies to stream on Netflix right now, which will ensure you'll have a spooky and creepy year (but don't blame us for the nightmares)."
       },
@@ -51,7 +51,7 @@ export class SeedTops1566549724762 implements MigrationInterface {
         title: "Fierce movies with fights",
         topImageUrl:
           "https://www.indiewire.com/wp-content/uploads/2014/11/contact-sports-movies-you-may-not-know-lesser-seen-warrior-girl-fight-fat-city-foxcatcher-vision-quest.jpg",
-        MovieInTop: ["29044", "550", "10254", "14286", "79090", "159849"],
+        MovieInTop: ["115", "98", "95", "70", "224", "653"],
         description:
           "The best movies with amazing fight scenes !! I am a crazy fan of all those films...I invite you to comment and share your thought ...I will watch it again and again and again !!!"
       },
@@ -60,7 +60,7 @@ export class SeedTops1566549724762 implements MigrationInterface {
         title: "Best films for children under 12 years old",
         topImageUrl:
           "https://images.fatherly.com/wp-content/uploads/2018/06/7bestmovieskids_headerb.jpg?q=65&enable=upscale&w=600",
-        MovieInTop: ["54007", "12559", "52229", "20735"],
+        MovieInTop: ["862", "863", "810", "1498"],
         description:
           "Looking for a great flick to watch with the kids at your next family movie night? Hoping to introduce your child to the films that defined your childhood? From Star Wars to Toy Story, here’s our definitive list of movies your kids absolutely must see before they’re not so little anymore. Grab the popcorn and keep scrolling."
       },
@@ -70,18 +70,18 @@ export class SeedTops1566549724762 implements MigrationInterface {
         topImageUrl:
           "https://camblycontent.files.wordpress.com/2016/07/favorite-movies-of-all-time.png?w=700&h=374",
         MovieInTop: [
-          "10551",
-          "11417",
-          "44181",
-          "21867",
-          "57834",
-          "11899",
-          "44783",
-          "25676",
-          "55735",
-          "9062",
-          "38219",
-          "39434"
+          "1931",
+          "990",
+          "1247",
+          "912",
+          "933",
+          "951",
+          "989",
+          "1278",
+          "1726",
+          "1830",
+          "1612",
+          "1701"
         ],
         description:
           "In honor of friendship we give you the top ten movies you must with watch your best friends."

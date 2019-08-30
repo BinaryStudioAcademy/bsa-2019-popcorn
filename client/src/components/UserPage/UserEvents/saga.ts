@@ -19,7 +19,7 @@ import webApi from '../../../services/webApi.service';
 export function* fetchEvents(action) {
 	try {
 		const data = yield call(webApi, {
-			endpoint: config.API_URL + '/api/event/visitor/' + action.payload.id,
+			endpoint: '/api/event/visitor/' + action.payload.id,
 			method: 'GET'
 		});
 
@@ -37,7 +37,7 @@ export function* fetchEvents(action) {
 export function* saveEvent(action) {
 	try {
 		const data = yield call(webApi, {
-			endpoint: config.API_URL + '/api/event',
+			endpoint: '/api/event',
 			method: 'Post',
 			body: action.payload.event
 		});
@@ -57,7 +57,7 @@ export function* saveEvent(action) {
 export function* updateEvent(action) {
 	try {
 		const data = yield call(webApi, {
-			endpoint: config.API_URL + '/api/event',
+			endpoint: '/api/event',
 			method: 'PUT',
 			body: action.payload.event
 		});
@@ -78,7 +78,7 @@ export function* deleteEvent(action) {
 	const { id, currentUserId } = action.payload;
 	try {
 		const data = yield call(webApi, {
-			endpoint: config.API_URL + '/api/event/' + id,
+			endpoint: '/api/event/' + id,
 			method: 'DELETE'
 		});
 
@@ -94,7 +94,7 @@ export function* deleteEvent(action) {
 export function* fetchAllEvents() {
 	try {
 		const allEvents = yield call(webApi, {
-			endpoint: config.API_URL + '/api/event',
+			endpoint: '/api/event',
 			method: 'GET'
 		});
 		yield put({
@@ -112,7 +112,7 @@ export function* subscribeToEvent(action) {
 	const { status, userId, eventId } = action.payload;
 	try {
 		const response = yield call(webApi, {
-			endpoint: config.API_URL + `/api/event/visitor`,
+			endpoint: `/api/event/visitor`,
 			method: 'POST',
 			body: {
 				status,
@@ -134,7 +134,7 @@ export function* subscribeToEvent(action) {
 export function* fetchEventById(action) {
 	try {
 		const event = yield call(webApi, {
-			endpoint: config.API_URL + `/api/event/${action.payload.eventId}`,
+			endpoint: `/api/event/${action.payload.eventId}`,
 			method: 'GET'
 		});
 		yield put({

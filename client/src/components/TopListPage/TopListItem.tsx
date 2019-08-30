@@ -41,7 +41,7 @@ const TopListItem: React.FC<ITopLIstItemProps> = ({ top }) => {
 				/>
 			</div>
 			<div className="top-main-section">
-				<NavLink to={`/top-page/${top.id}`}>
+				<NavLink to={`/tops/${top.id}`}>
 					<div className="top-title">{top.title}</div>
 				</NavLink>
 
@@ -49,11 +49,11 @@ const TopListItem: React.FC<ITopLIstItemProps> = ({ top }) => {
 					<ol>
 						{top.movieInTop.slice(0, 3).map(movie => (
 							<li>
-								{movie.movie.original_title} ({getReleaseYear(movie)})
+								{movie.movie.title} ({getReleaseYear(movie)})
 							</li>
 						))}
 					</ol>
-					<NavLink to={`/top-page/${top.id}`}>
+					<NavLink to={`/tops/${top.id}`}>
 						<div className="add-info">{getAdditionalInfo()}</div>
 					</NavLink>
 				</div>

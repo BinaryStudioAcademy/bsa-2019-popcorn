@@ -7,7 +7,7 @@ import UserEvents from '../UserEvents/UserEvents';
 import UserSurveys from '../UserSurveys/UserSurveys';
 import UserTops from '../UserTops/UserTops';
 import UserLists from '../UserLists/UserLists';
-import UserWatched from '../UserWatched/UserWatched';
+import UserWatchList from '../UserWatchList/UserWatchList';
 import ProfileComponent from '../ProfileComponent/ProfileComponent';
 
 type ProfileProps = {
@@ -56,7 +56,7 @@ const UserPageTabs: React.SFC<IProps> = ({ mainPath }) => {
 				<Route path={`${mainPath}/surveys`} component={UserSurveys} />
 				<Route path={`${mainPath}/tops`} component={UserTops} />
 				<Route path={`${mainPath}/lists`} component={UserLists} />
-				<Route path={`${mainPath}/watched`} component={UserWatched} />
+				<Route path={`${mainPath}/watch-list`} component={UserWatchList} />
 			</Switch>
 		</div>
 	);

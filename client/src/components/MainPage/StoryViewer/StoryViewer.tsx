@@ -19,7 +19,11 @@ import { NavLink } from 'react-router-dom';
 interface IProps {
 	stories: Array<{
 		image_url: string;
-		bckg_color: string;
+		backgroundColor: string;
+		fontColor: string;
+		textPositionX?: number;
+		caption: string;
+		textPositionY?: number;
 		users: Array<{ name: string; image_url: string }>;
 		userInfo: {
 			userId: string;
@@ -161,6 +165,7 @@ class StoryViewer extends PureComponent<IProps, IState> {
 
 								{story.type === 'voting' && story.voting && (
 									<StoryVoting
+										backgroundColor={story.backgroundColor}
 										header={story.voting.header}
 										options={story.voting.options}
 										deltaPositionForHeader={{
@@ -181,9 +186,31 @@ class StoryViewer extends PureComponent<IProps, IState> {
 									<main
 										style={{
 											backgroundImage: 'url(' + story.image_url + ')',
-											backgroundColor: story.bckg_color
+											backgroundColor: story.backgroundColor,
+											flexDirection: 'column',
+											justifyContent: 'space-between'
 										}}
 									>
+										<div
+											className="story-caption"
+											style={{
+												fontSize: '37px',
+												position: 'static',
+												marginTop: story.textPositionY
+													? story.textPositionY * 1.25 + 'px'
+													: 0,
+												marginLeft: story.textPositionX
+													? story.textPositionX * 1.25 + 'px'
+													: 0,
+												color: story.fontColor,
+												textAlign: 'center',
+												width: '280px',
+												maxWidth: '350px',
+												maxHeight: '100px'
+											}}
+										>
+											{story.caption}
+										</div>
 										<div className={'seen'}>
 											<p
 												className={'seen-by-info'}
@@ -208,7 +235,7 @@ class StoryViewer extends PureComponent<IProps, IState> {
 													)}
 													{story.type && story.activity}
 													{story.movieId && story.movie && (
-														<NavLink to={'/movie-series/' + story.movie.id}>
+														<NavLink to={'/movies/' + story.movie.id}>
 															{story.movie.title}
 														</NavLink>
 													)}

@@ -13,7 +13,7 @@ import EventList from '../../components/EventPage/EventList';
 import AdminPanelPage from '../../components/AdminPanelPage/AdminPanelPage';
 import SurveyPage from '../../components/SurveyPage/SurveyPage';
 import TopPage from '../../components/TopPage/TopPage';
-
+import AdvancedSearchPage from '../../components/AdvancedSearch/AdvancedSearchPage';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import Spinner from '../../components/shared/Spinner';
@@ -37,6 +37,7 @@ import {
 	IEventFormatDataBase
 } from '../../components/UserPage/UserEvents/UserEvents.service';
 import TopList from '../../components/TopListPage/TopList';
+import SettingsPage from '../../components/UserSettings';
 
 const { notifications } = {
 	notifications: {
@@ -92,11 +93,7 @@ const MovieSeriesRender = props => {
 
 const allSurveysRender = props => {
 	return (
-		<UserSurveysNav
-			id={props.id}
-			userInfo={props}
-			mainPath={'/surveys-list/'}
-		/>
+		<UserSurveysNav id={props.id} userInfo={props} mainPath={'/surveys'} />
 	);
 };
 
@@ -125,8 +122,16 @@ const Main = ({
 	return (
 		<div className={'main-wrap'}>
 			{isAuthorized ? <Header userInfo={userInfo} /> : null}
-			<div className="main-page">
-				<MainPageSidebar notifications={notifications} />
+			<div
+				className={
+					window.location.pathname === '/advanced-search'
+						? 'main-page-search'
+						: 'main-page'
+				}
+			>
+				{window.location.pathname !== '/advanced-search' ? (
+					<MainPageSidebar notifications={notifications} />
+				) : null}
 				<div
 				// style={{ width: 'calc(100vw - 205px)' }}
 				>
@@ -134,7 +139,11 @@ const Main = ({
 						<Route exact path={[`/`, '/create*']} component={MainPage} />
 						<Route path={`/user-page/:id`} component={UserPage} />
 						<Route
-							path={`/event-page/:id`}
+							path={'/settings'}
+							render={() => <SettingsPage mainPath={'/settings'} />}
+						/>
+						<Route
+							path={`/events/:id`}
 							render={props =>
 								EventPageRender({
 									...props,
@@ -146,20 +155,20 @@ const Main = ({
 							}
 						/>
 						<Route
-							path={`/event-page`}
+							path={`/events`}
 							render={props =>
 								EventListRender({ ...props, allEvents, getAllEvents })
 							}
 						/>
-
+						<Route path={`/advanced-search`} component={AdvancedSearchPage} />
 						<Route path={`/survey-page/:id`} component={SurveyPage} />
 						<Route path={`/admin-panel-page`} component={AdminPanelPage} />
 						<Route
-							path={`/movie-series/:id`}
+							path={`/movies/:id`}
 							render={props => MovieSeriesRender(props)}
 						/>
 						<Route
-							path={`/movie-list`}
+							path={`/movies`}
 							render={() =>
 								MovieListRender(
 									movieList,
@@ -170,11 +179,11 @@ const Main = ({
 							}
 						/>
 						<Route
-							path={`/surveys-list`}
+							path={`/surveys`}
 							render={() => allSurveysRender(userInfo)}
 						></Route>
-						<Route path={`/movie-tops`} render={() => <TopList />} />
-						<Route path={`/top-page/:id`} component={TopPage} />
+						<Route exact path={`/tops`} render={() => <TopList />} />
+						<Route path={`/tops/:id`} component={TopPage} />
 						<Route path={`/*`} exact component={NotFound} />
 					</Switch>
 				</div>

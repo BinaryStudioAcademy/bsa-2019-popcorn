@@ -2,13 +2,13 @@
 	height: 190px;
 	width: 120px;
 	background-color: #f7f8f9;
-	margin-top: 4px;
+	margin-top: 5px;
 }
 
 .card-wrapper {
 	display: grid;
 	grid-template-columns: 30px 30px 30px 30px;
-	grid-template-rows: 30px 65px 65px 30px;
+	grid-template-rows: 30px 60px 65px 50px;
 	align-items: center;
 	justify-items: center;
 	cursor: pointer;

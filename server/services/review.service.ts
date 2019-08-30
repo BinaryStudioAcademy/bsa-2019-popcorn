@@ -1,11 +1,12 @@
-import { getCustomRepository } from "typeorm";
-import { Review } from "../models/ReviewModel";
+import { getCustomRepository, getRepository } from "typeorm";
+import { Review } from "../models/Review/ReviewModel";
 import ReviewRepository from "../repository/review.repository";
 import {
   getById as getMovieElasticById,
   getByIdValues as getMovieElasticByIdValues
 } from "../repository/movieElastic.repository";
 import UserRepository from "../repository/user.repository";
+import ReviewReactionRepository from "../repository/reviewReaction.repository";
 
 interface IRequestBody {
   userId: string;
@@ -28,6 +29,7 @@ export const createReview = async (
 
 export const getReviewsByMovieId = async (
   movieId: string,
+  userId: string,
   next
 ): Promise<any> => {
   let movie = await getMovieElasticById(movieId);
@@ -38,11 +40,25 @@ export const getReviewsByMovieId = async (
     );
   }
   movie = movie.hits.hits[0]._source;
-  const reviews = await getCustomRepository(
-    ReviewRepository
-  ).getReviewsByMovieId(movieId, next);
+  let reviews = await getCustomRepository(ReviewRepository).getReviewsByMovieId(
+    movieId,
+    next
+  );
+
+  reviews = await addReactionsToReviews(userId, reviews);
   return { reviews, movie };
 };
+
+const addReactionsToReviews = async (userId: string, reviews: any) =>
+  Promise.all(
+    reviews.map(async review => {
+      const reaction = await getCustomRepository(
+        ReviewReactionRepository
+      ).getReactionByReviewId(review.id, userId);
+      review.reaction = reaction;
+      return review;
+    })
+  );
 
 export const getReviewByMovieIdUserId = async (
   userId: string,
@@ -94,11 +110,52 @@ export const getReviewsByUserId = async (id: string, next) => {
   const elasticMovies = await Promise.all(
     idValues.map(id => getMovieElasticById(id))
   );
-  const result = reviews.map(review => {
+  let result = reviews.map(review => {
     const index = idValues.findIndex(item => item === review.movieId);
     review.movie = elasticMovies[index].hits.hits[0]._source;
     return review;
   });
 
+  result = addReactionsToReviews(id, result);
+
   return result;
+};
+
+export const setNewReaction = async (
+  userId: string,
+  { reviewId, isLike },
+  next
+) => {
+  const reaction = await getCustomRepository(ReviewReactionRepository).findOne({
+    where: {
+      user: { id: userId },
+      review: { id: reviewId }
+    }
+  });
+  if (!reaction) {
+    await getCustomRepository(ReviewReactionRepository).save({
+      user: { id: userId },
+      review: { id: reviewId },
+      isLike
+    });
+  }
+  if (reaction) {
+    if (reaction.isLike === isLike) {
+      await getCustomRepository(ReviewReactionRepository).deleteReactionById(
+        reaction.id,
+        next
+      );
+      isLike = null;
+    } else {
+      await getCustomRepository(ReviewReactionRepository).updateReactionById(
+        reaction.id,
+        isLike,
+        next
+      );
+    }
+  }
+  const result = await getCustomRepository(
+    ReviewReactionRepository
+  ).getCountLikesDislikes(reviewId);
+  return { ...result, userLike: isLike };
 };

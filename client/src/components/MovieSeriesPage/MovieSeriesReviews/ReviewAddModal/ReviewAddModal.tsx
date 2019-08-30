@@ -5,10 +5,11 @@ import MovieItem from '../../../MovieList/MovieListItem/MovieListItem';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import { Redirect } from 'react-router';
+import TMovie from '../../../MovieSeriesPage/TMovie';
 
 interface IProps {
 	ownReview: any;
-	movie: any;
+	movie: TMovie;
 	setModal: (boolean) => any;
 	setReview: (
 		userId: string,
@@ -75,8 +76,8 @@ class ReviewAddModal extends React.Component<IProps, IState> {
 		const { usePut, showError, redirect } = this.state;
 		return (
 			<div className={'modal-wrp'}>
-				{redirect && <Redirect to={`/movie-series/${movieId}/reviews`} />}
-				<div className={'modal modal-story'}>
+				{redirect && <Redirect to={`/movies/${movieId}/reviews`} />}
+				<div className={'modal modal-review-container'}>
 					{ownReview ? (
 						<div className="modal-review">
 							<div className="modal-title">

@@ -1,6 +1,7 @@
 import { Router, NextFunction, Request, Response } from "express";
 import * as movieService from "../services/movie.service";
 import { Movie } from "../models/MovieModel";
+import errorHandlerMiddleware from "../middlewares/error-handler.middleware";
 
 const router = Router();
 
@@ -12,6 +13,12 @@ router
       .then((movies: Movie[]) => res.send(movies))
       .catch(next)
   )
+  .post("/advanced", (req: Request, res: Response, next: NextFunction) => {
+    movieService
+      .getFiltredMovies(req.query, req.body)
+      .then((movies: Movie[]) => res.send(movies))
+      .catch(next);
+  })
   .get("/find", (req, res, next) =>
     movieService
       .getByTitle(req.query.title)
@@ -60,9 +67,30 @@ router
         .catch(next);
     }
   )
-  .get("/cast-crew/:movieId", (req: any, res: Response, next: NextFunction) => {
+  .get(
+    "/advanced/get-genres",
+    (req: any, res: Response, next: NextFunction) => {
+      return movieService
+        .getMoviesGenres()
+        .then((response: any) => res.send(response))
+        .catch(next);
+    }
+  )
+  .get("/elastic/search", errorHandlerMiddleware, (req, res, next) =>
+    movieService
+      .searchMovieTitles(req.query.title, next)
+      .then(result => res.send(result))
+      .catch(next)
+  )
+  .get("/elastic/properties/id", errorHandlerMiddleware, (req, res, next) =>
+    movieService
+      .getMovieProperties(req.query.settings, next)
+      .then(result => res.send(result))
+      .catch(next)
+  )
+  .get("/awards/:imdbId", (req: any, res: Response, next: NextFunction) => {
     return movieService
-      .getCastCrewById(req.params.movieId) // get movie by userId and movieId
+      .getMovieAwards(req.params.imdbId) // get movie by userId and movieId
       .then((response: any) => res.send(response))
       .catch(next);
   });

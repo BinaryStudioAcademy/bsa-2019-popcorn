@@ -4,13 +4,15 @@ import { Top } from "./TopModel";
 import { Story } from "./StoryModel";
 import { Surveys } from "./SurveysModel";
 import { SurveysQuestionAnswer } from "./SurveysQuestionAnswer";
+import { Follower } from "./FollowerModel";
+import { FavoriteList } from "./FavoriteListModel";
 
 export class User {
   id: string;
   name: string;
   email: string;
   role: string;
-  password: string;
+  password: string | null;
   location: string;
   aboutMe: string;
   male: boolean;
@@ -23,4 +25,23 @@ export class User {
   reset_token: string;
   surveys: Surveys[];
   surveysQuestionAnswer: SurveysQuestionAnswer[];
+  followers: Follower[];
+  favoriteLists: FavoriteList[];
+  emailNotificationNews?: boolean;
+  emailNotificationUpdatesFromFollowed?: boolean;
+  emailNotificationComments?: boolean;
+  emailNotificationEvents?: boolean;
+  siteNotificationUpdatesFromFollowed?: boolean;
+  siteNotificationComments?: boolean;
+  siteNotificationEvents?: boolean;
+  privacyProfileInfo?: string;
+  privacyMyPosts?: string;
+  privacyStories?: string;
+  privacyEvents?: string;
+  privacySurveys?: string;
+  privacyTops?: string;
+  privacyCollections?: string;
+  privacyWatchlist?: string;
+  privacyReviews?: string;
+  privacyMessages?: string;
 }

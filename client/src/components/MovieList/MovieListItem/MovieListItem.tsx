@@ -39,7 +39,7 @@ const MovieListItem: React.FC<IMovieListItemProps> = ({
 			<div className="movie-info">
 				{!saveMovie && (
 					<NavLink
-						to={`/movie-series/${movie.id}`}
+						to={`/movies/${movie.id}`}
 						className="movie-link"
 						onClick={() => setMovieSeries && setMovieSeries(movie)}
 					>
@@ -71,7 +71,7 @@ const MovieListItem: React.FC<IMovieListItemProps> = ({
 					)}
 				</div>
 				<div className="movie-cast">
-					<b>Main cast:</b> {movie.cast}
+					<b>Main cast:</b> {movie.mainCast}
 				</div>
 			</div>
 		</div>

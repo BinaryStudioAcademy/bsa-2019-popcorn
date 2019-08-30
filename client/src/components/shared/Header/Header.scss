@@ -11,6 +11,43 @@
 	border: 1px solid $border-color;
 	box-shadow: 0px 0px 10px $input-shadow-color;
 
+	.notification-header {
+		background: white;
+		z-index: 3;
+
+		.dot-icon {
+			position: absolute;
+			margin: -5px 0 0 28px;
+		}
+		.activity-list {
+			position: absolute;
+			z-index: 99999;
+			margin-left: -255px;
+			font-family: 'Inter', sans-serif;
+			background: white;
+			border: 1px solid rgba(0, 0, 0, 0.11);
+			box-shadow: 2px 1px 8px rgba(0, 0, 0, 0.04);
+			border-bottom: none;
+			border-radius: 3px;
+			font-size: 12px;
+			line-height: 15px;
+			padding: 0px 0px 0px 0px;
+			margin-top: 30px;
+			overflow-y: auto;
+			max-height: 500px;
+			box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.37);
+
+			img {
+				height: 50px;
+				border-radius: 50px;
+			}
+			.activity-item {
+				border-bottom: 1px solid rgba(0, 0, 0, 0.11);
+				height: 70px;
+				padding: 0 0 0 20px;
+			}
+		}
+	}
 	.header-logo-link {
 		text-decoration: none;
 		color: inherit;
@@ -161,7 +198,8 @@
 			transform: scaleY(1);
 		}
 	}
-	.search-area:hover {
+
+	.search-area {
 		.modal {
 			transform: scale(1);
 			width: 150%;

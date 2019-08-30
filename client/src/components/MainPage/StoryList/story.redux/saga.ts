@@ -15,7 +15,7 @@ export function* fetchStories(action) {
 	try {
 		const data = yield call(webApi, {
 			method: 'GET',
-			endpoint: config.API_URL + '/api/story'
+			endpoint: '/api/story'
 		});
 
 		yield put({
@@ -31,10 +31,13 @@ export function* fetchStories(action) {
 
 export function* createStory(action) {
 	const { newStory, userId } = action.payload;
+	newStory.textPositionX = newStory.textPosition.x;
+	newStory.textPositionY = newStory.textPosition.y;
+	delete newStory.textPosition;
 	try {
 		const story = yield call(webApi, {
 			method: 'POST',
-			endpoint: config.API_URL + '/api/story',
+			endpoint: '/api/story',
 			body: {
 				userId,
 				...newStory,
@@ -60,7 +63,7 @@ export function* createVoting(action) {
 	try {
 		const data = yield call(webApi, {
 			method: 'POST',
-			endpoint: config.API_URL + '/api/voting',
+			endpoint: '/api/voting',
 			body: {
 				...action.payload.voting,
 				options
@@ -69,7 +72,7 @@ export function* createVoting(action) {
 
 		yield call(webApi, {
 			method: 'POST',
-			endpoint: config.API_URL + `/api/voting/${data.id}/options`,
+			endpoint: `/api/voting/${data.id}/options`,
 			body: {
 				options: action.payload.voting.options
 			}

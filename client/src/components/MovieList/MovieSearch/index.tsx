@@ -2,11 +2,26 @@
 import searchIcon from '../../../assets/icons/general/header/search-icon.svg';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronDown } from '@fortawesome/free-solid-svg-icons';
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import MovieList from '../MovieList';
+import { NavLink } from 'react-router-dom';
 
-const MovieSearch = ({ movies, fetchFilms, alreadySearch, setMovieSeries }) => {
+interface IMovieSearch {
+	movies: any;
+	fetchFilms: (data: string) => void;
+	alreadySearch: boolean;
+	setMovieSeries: (movie: any) => any;
+}
+
+const MovieSearch: React.FC<IMovieSearch> = ({
+	movies,
+	fetchFilms,
+	alreadySearch,
+	setMovieSeries
+}) => {
 	const [value, setValue] = useState('');
+	const [focusInput, setFocusInput] = useState(false);
+	const inputSearch: any = useRef(null);
 
 	const startFetchFilms = () => {
 		if (value.trim() !== '') {
@@ -14,29 +29,45 @@ const MovieSearch = ({ movies, fetchFilms, alreadySearch, setMovieSeries }) => {
 		}
 	};
 
+	function handleChangeInput(data) {
+		setValue(data);
+		startFetchFilms();
+	}
+
+	function setFocus(focus: boolean): void {
+		if (focus) {
+			inputSearch.current.focus();
+		} else {
+			inputSearch.current.blur();
+		}
+	}
+
 	return (
-		<div className={'search-area hover'}>
-			<span className={'search'}>
+		<div className="search-area">
+			<span className="search">
 				<img
-					className={'search-icon hover'}
+					className="search-icon hover"
 					src={searchIcon}
-					alt={'search'}
-					onClick={startFetchFilms}
+					alt="search"
+					onClick={e => setFocus(true)}
 				/>
 				<input
 					type="text"
 					placeholder="Search"
 					value={value}
 					className="search-input"
-					onChange={e => (
-						setValue(e.target.value), e.target.value && startFetchFilms()
-					)}
+					ref={inputSearch}
+					onChange={e => handleChangeInput(e.target.value)}
+					onFocus={e => setFocusInput(true)}
+					onBlur={e => setFocusInput(false)}
 				/>
 			</span>
 			<span className="filter hover">
-				Filter
-				<FontAwesomeIcon icon={faChevronDown} />
-				{alreadySearch ? (
+				<NavLink to={'/advanced-search'}>
+					Filter
+					<FontAwesomeIcon icon={faChevronDown} />
+				</NavLink>
+				{focusInput && value.trim() ? (
 					<div className="modal">
 						{movies && movies.length > 0 ? (
 							<MovieList movies={movies} setMovieSeries={setMovieSeries} />

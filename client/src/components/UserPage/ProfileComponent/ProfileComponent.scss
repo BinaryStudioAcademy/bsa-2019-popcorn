@@ -18,11 +18,13 @@ h2 {
 .ProfileWrap {
 	display: flex;
 	align-items: flex-start;
+	position: relative;
+
 	.profilePhotoWrap {
 		padding-top: 16px;
-		margin-right: 2%;
-		width: 400px;
-		height: 400px;
+		margin-right: 20px;
+		width: 200px;
+		height: auto;
 
 		.avatar-preview {
 			width: 100%;
@@ -37,8 +39,12 @@ h2 {
 			transition: all 0.3s linear;
 			overflow: hidden;
 			margin-top: 40px;
+			&:hover {
+				margin-top: 0;
+				height: 40px;
+			}
 		}
-		&:hover .upload-wrp {
+		.profile-avatar:hover + div .upload-wrp {
 			margin-top: 0;
 			height: 40px;
 		}
@@ -52,12 +58,26 @@ h2 {
 		}
 	}
 	.ProfileInfo {
-		width: 60%;
+		width: 70%;
 	}
 	svg {
 		fill: #000;
 		width: 100%;
 		height: auto;
+	}
+
+	.edit-icon {
+		position: absolute;
+		right: 0;
+		top: 20px;
+		width: 20px;
+	}
+	.follow-btn {
+		float: left;
+		position: absolute;
+		right: 0;
+		top: 20px;
+		width: 100px;
 	}
 	.profileRow {
 		letter-spacing: $base-letter-spacing;
@@ -74,17 +94,17 @@ h2 {
 			padding-left: 20px;
 			width: 70%;
 			p {
-				background-color: rgba($orange, 0.7);
-				padding: 5px;
-				border-radius: 10px;
-				color: white;
+				background-color: $background-gray;
+				padding: 10px 15px;
+				border-radius: 4px;
+				color: $text-base-color;
 				display: inline-block;
 				line-height: 1.3em;
 				margin-bottom: 5px;
 				margin-right: 5px;
 				transition: all 0.1s linear;
+				font-size: 14px;
 				&:hover {
-					background-color: $orange;
 					text-shadow: 0 0 0.65px white, 0 0 0.65px white;
 					text-decoration: underline;
 				}

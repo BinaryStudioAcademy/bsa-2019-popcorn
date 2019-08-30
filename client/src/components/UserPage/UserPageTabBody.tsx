@@ -5,7 +5,7 @@ import UserReviews from './UserReviews/UserReviews';
 import UserEvents from './UserEvents/UserEvents';
 import UserTops from './UserTops/UserTops';
 import UserLists from './UserLists/UserLists';
-import UserWatched from './UserWatched/UserWatched';
+import UserWatchList from './UserWatchList/UserWatchList';
 import ProfileComponent from './ProfileComponent/ProfileComponent';
 import UserSurveysNav from './UserSurveys/UserSurveysNav';
 import ISelectedProfileInfo from './SelectedProfileInterface';
@@ -76,6 +76,7 @@ const UserPageTabs: React.SFC<IProps> = ({
 					path={`${mainPath}/posts`}
 					component={() => (
 						<UserPosts
+							currentUserId={profileInfo.id}
 							userId={selectedProfileInfo.id}
 							posts={userPosts}
 							saveCropped={saveCropped}
@@ -102,7 +103,7 @@ const UserPageTabs: React.SFC<IProps> = ({
 				/>
 				<Route path={`${mainPath}/tops`} component={UserTops} />
 				<Route path={`${mainPath}/lists`} component={UserLists} />
-				<Route path={`${mainPath}/watched`} component={UserWatched} />
+				<Route path={`${mainPath}/watch-list`} component={UserWatchList} />
 			</Switch>
 		</div>
 	) : null;

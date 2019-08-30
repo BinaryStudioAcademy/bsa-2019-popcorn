@@ -39,7 +39,6 @@ const TopItem: React.FC<ITopItemProps> = ({
 	useEffect(() => {
 		if (urlForTop == topItem.id) {
 			setTopImageUrl(uploadUrl);
-			saveUserTop({ ...topItem, title, topImageUrl });
 		}
 	}, [uploadUrl]);
 
@@ -74,7 +73,7 @@ const TopItem: React.FC<ITopItemProps> = ({
 					/>
 				) : (
 					<div className="top-item-title">
-						<NavLink to={`/top-page/${topItem.id}`} className="link-reset">
+						<NavLink to={`/tops/${topItem.id}`} className="link-reset">
 							{title}
 						</NavLink>
 					</div>

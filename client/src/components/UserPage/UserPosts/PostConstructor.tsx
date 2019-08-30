@@ -11,7 +11,8 @@ import Extra from '././PostExtra/extra';
 import {
 	faPaperclip,
 	faCheckCircle,
-	faTimesCircle
+	faTimesCircle,
+	faTimes
 } from '@fortawesome/free-solid-svg-icons';
 
 import { setPost } from '../actions';
@@ -20,6 +21,7 @@ import { getUsersPosts } from '../../UserPage/actions';
 import Cropper from 'react-cropper';
 import { uploadFile } from '../../../services/file.service';
 import config from '../../../config';
+import Image from '../../shared/Image/Image';
 
 interface IPostConstructorProps {
 	userId: string;
@@ -30,6 +32,7 @@ interface IPostConstructorProps {
 	userAvatar: string;
 	croppedSaved: boolean;
 	saveCropped: () => void;
+	togglePostConstructor: (ev) => void;
 }
 
 interface IPostConstructorState {
@@ -43,6 +46,8 @@ interface IPostConstructorState {
 	croppedSaved: boolean;
 	reactions: Array<any>;
 	comments: Array<any>;
+	extraData: any;
+	extraType: string;
 }
 
 class PostConstructor extends React.Component<
@@ -58,6 +63,8 @@ class PostConstructor extends React.Component<
 			userId: this.props.userId,
 			extraLink: '',
 			extraTitle: '',
+			extraData: {},
+			extraType: '',
 			modalExtra: false,
 			croppedSaved: false,
 			reactions: [],
@@ -77,11 +84,15 @@ class PostConstructor extends React.Component<
 		data
 			? this.setState({
 					extraLink: data.link,
-					extraTitle: data.title
+					extraTitle: data.data.title,
+					extraData: data.data,
+					extraType: data.type
 			  })
 			: this.setState({
 					extraLink: '',
-					extraTitle: ''
+					extraTitle: '',
+					extraData: {},
+					extraType: ''
 			  });
 	}
 
@@ -107,7 +118,22 @@ class PostConstructor extends React.Component<
 
 	onSave() {
 		if (this.state.description.trim() === '') return;
-		this.props.setPost(this.state);
+		const { extraType, extraData } = this.state;
+		if (extraType === 'top') {
+			this.setState({
+				extraData: {
+					id: extraData.id
+				}
+			});
+			this.props.setPost({
+				...this.state,
+				extraData: {
+					id: extraData.id
+				}
+			});
+		} else {
+			this.props.setPost(this.state);
+		}
 		this.props.fetchPosts();
 		this.setState({
 			image_url: '',
@@ -135,7 +161,7 @@ class PostConstructor extends React.Component<
 							url.shift();
 							url = url.join('/');
 
-							url = config.API_URL + '/' + url;
+							url = '/' + url;
 
 							this.imageStateHandler(url, true);
 						} else {
@@ -143,7 +169,7 @@ class PostConstructor extends React.Component<
 							url.shift();
 							url = url.join('/');
 
-							url = config.API_URL + '/' + url;
+							url = '/' + url;
 
 							this.imageStateHandler(url, true);
 						}
@@ -155,76 +181,79 @@ class PostConstructor extends React.Component<
 
 	render() {
 		return (
-			<div className="postconstr-wrp">
-				<div className="post-item-header">
-					<img
-						className="post-item-avatar"
-						src={this.props.userAvatar}
-						alt="author"
-					/>
-					<div className="post-item-info">
-						<div className="post-item-author-name">{this.props.userName}</div>
-					</div>
-				</div>
-				<div className="postconstr">
-					<textarea
-						placeholder="Create new post..."
-						value={this.state.description}
-						onChange={e => this.onChangeData(e.target.value, 'description')}
-					/>
-					<div className="extra-buttons">
-						<ImageUploader
-							isIcon={true}
-							imageHandler={uploadFile}
-							imageStateHandler={this.imageStateHandler}
+			<div className="post-constructor-modal">
+				<div
+					className="overlay"
+					onClick={ev => this.props.togglePostConstructor(ev)}
+				></div>
+				<div className="postconstr-wrp">
+					<p
+						className="close-modal"
+						onClick={ev => this.props.togglePostConstructor(ev)}
+					>
+						<FontAwesomeIcon icon={faTimes} />
+					</p>
+					<div className="postconstr">
+						{this.state.image_url && !this.state.croppedSaved && (
+							<div>
+								<Cropper
+									ref={this.cropper}
+									className="postconstr-img"
+									src={this.state.image_url}
+								/>
+								<span onClick={this.onSaveCropped}>
+									<FontAwesomeIcon
+										icon={faCheckCircle}
+										className="fontAwesomeIcon"
+									/>
+								</span>
+								<span onClick={this.onCancel}>
+									<FontAwesomeIcon
+										icon={faTimesCircle}
+										className={'fontAwesomeIcon'}
+									/>
+								</span>
+							</div>
+						)}
+						<div className="image-list-wrapper">
+							<div className="card-wrapper">
+								<button className="button-image">
+									<ImageUploader
+										isIcon={true}
+										imageHandler={uploadFile}
+										imageStateHandler={this.imageStateHandler}
+									/>
+								</button>
+							</div>
+							{this.state.image_url && this.state.croppedSaved && (
+								<div className="post-img-wrapper">
+									<img className="post-img" src={this.state.image_url} />
+								</div>
+							)}
+						</div>
+						{this.state.extraLink && (
+							<Extra
+								link={this.state.extraLink}
+								data={this.state.extraData}
+								type={this.state.extraType}
+								clearExtra={this.setExtraData}
+							/>
+						)}
+						<textarea
+							placeholder="Create new post..."
+							value={this.state.description}
+							onChange={e => this.onChangeData(e.target.value, 'description')}
 						/>
-						<button className={'btn'} onClick={() => this.toggleModal()}>
-							<FontAwesomeIcon icon={faPaperclip} />
+						<ChooseExtra
+							toggleModal={this.toggleModal}
+							setExtra={this.setExtraData}
+						/>
+					</div>
+					<div className="save-wrp">
+						<button className="save-btn" onClick={this.onSave}>
+							Share
 						</button>
 					</div>
-				</div>
-				{this.state.extraLink ? (
-					<Extra
-						title={this.state.extraTitle}
-						link={this.state.extraLink}
-						clearExtra={this.setExtraData}
-					/>
-				) : null}
-				{this.state.modalExtra ? (
-					<ChooseExtra
-						toggleModal={this.toggleModal}
-						setExtra={this.setExtraData}
-					/>
-				) : null}
-				{this.state.image_url ? (
-					!this.state.croppedSaved ? (
-						<div>
-							<Cropper
-								ref={this.cropper}
-								className="postconstr-img"
-								src={this.state.image_url}
-							/>
-							<span onClick={this.onSaveCropped}>
-								<FontAwesomeIcon
-									icon={faCheckCircle}
-									className="fontAwesomeIcon"
-								/>
-							</span>
-							<span onClick={this.onCancel}>
-								<FontAwesomeIcon
-									icon={faTimesCircle}
-									className={'fontAwesomeIcon'}
-								/>
-							</span>
-						</div>
-					) : (
-						<img className="postconstr-img" src={this.state.image_url} />
-					)
-				) : null}
-				<div className="save-wrp">
-					<button className="save-btn" onClick={this.onSave}>
-						Post
-					</button>
 				</div>
 			</div>
 		);

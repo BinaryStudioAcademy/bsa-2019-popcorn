@@ -14,10 +14,15 @@ import { Surveys } from "./Surveys";
 import { SurveysQuestion } from "./SurveysQuestion";
 import { SurveysQuestionAnswer } from "./SurveysQuestionAnswer";
 import { SurveysQuestionOption } from "./SurveysQuestionOption";
-import { MovieRate } from "./MovieRate/MovieRate";
-import { Review } from "./Review";
+import { MovieRate } from "./MovieRate";
+import { Review } from "./Review/Review";
+import { ReviewReaction } from "./Review/ReviewReaction";
 import { Discussion } from "./Discussion";
-
+import { Watch } from "./Watch";
+import { Follower } from "./Follower";
+import { FavoriteList } from "./FavoriteList";
+import { Notification } from "./Notification";
+import { NotificationToken } from "./NotificationToken";
 export default [
   User,
   Post,
@@ -38,6 +43,12 @@ export default [
   SurveysQuestionAnswer,
   SurveysQuestionOption,
   MovieRate,
+  ReviewReaction,
   Review,
-  Discussion
+  Discussion,
+  Follower,
+  FavoriteList,
+  Watch,
+  Notification,
+  NotificationToken
 ];

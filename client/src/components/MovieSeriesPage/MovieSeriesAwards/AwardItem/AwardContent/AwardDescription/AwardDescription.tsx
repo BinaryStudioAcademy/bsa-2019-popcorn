@@ -1,26 +1,28 @@
 import React from 'react';
 import './AwardDescription.scss';
 interface IAwardDescription {
-	isWinner: boolean;
 	nominationName: string;
-	gender: string;
-	winnerName?: string;
+	nominationWinner: Array<{ name: string }>;
 }
 
 const AwardDescription: React.FC<IAwardDescription> = ({
-	isWinner,
 	nominationName,
-	gender,
-	winnerName
+	nominationWinner
 }) => {
-	const achievement = isWinner ? 'Winner' : 'Nomination';
+	const generateWinnerNames = () => {
+		let namesStr = '';
+		nominationWinner.map((el, index) => {
+			if (index === nominationWinner.length - 1) {
+				namesStr = namesStr + el.name;
+			} else namesStr = namesStr + el.name + ', ';
+		});
+		return namesStr;
+	};
 	return (
 		<div className="description-wrapper">
-			<div className="achievement">{achievement}</div>
-			<div className="nominationName">{nominationName}</div>
-			<div className="hyphen">&mdash;</div>
-			<div className="gender">{gender}</div>
-			<div className="winnerName">{winnerName}</div>
+			<div className="nominationName">{`${nominationName}`}</div>
+			<div className="hyphen">{nominationWinner.length !== 0 ? '—' : ''}</div>
+			<div className="nomination-winner-name">{generateWinnerNames()}</div>
 		</div>
 	);
 };

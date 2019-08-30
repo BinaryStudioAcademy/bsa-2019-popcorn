@@ -17,7 +17,8 @@ import { Link } from 'react-router-dom';
 import IPost from './IPost';
 import IComment from './IComment';
 import IReaction from './IReaction';
-
+import Image from '../../shared/Image/Image';
+import Extra from './../../UserPage/UserPosts/PostExtra/extra';
 type IPostProps = {
 	post: IPost;
 	userId: string;
@@ -86,7 +87,13 @@ class Post extends Component<IPostProps, IPostState> {
 			<PostEditModal isOwn={this.isOwnPost()} deletePost={this.deletePost} />
 		) : null;
 	}
-
+	getType = () => {
+		const post = this.props.post;
+		if (post.survey) return 'survey';
+		if (post.top) return 'top';
+		if (post.event) return 'event';
+		return 'Nothing';
+	};
 	nestComments(commentList) {
 		const commentMap = {};
 		commentList.forEach(comment => (commentMap[comment.id] = comment));
@@ -115,7 +122,6 @@ class Post extends Component<IPostProps, IPostState> {
 			created_At,
 			image_url,
 			extraLink,
-			extraTitle,
 			description,
 			content,
 			comments,
@@ -137,11 +143,14 @@ class Post extends Component<IPostProps, IPostState> {
 			<div className="post-item">
 				<div className="post-item-header">
 					<Link className="user-link" to={`/user-page/${user.id}`}>
-						<img
-							className="post-item-avatar"
-							src={(user && user.avatar) || config.DEFAULT_AVATAR}
-							alt="author"
-						/>
+						{user && (
+							<Image
+								className="post-item-avatar"
+								src={user.avatar}
+								defaultSrc={config.DEFAULT_AVATAR}
+								alt="author"
+							/>
+						)}
 						<div className="post-item-info">
 							<div className="post-item-author-name">{user.name}</div>
 							{created_At && (
@@ -159,17 +168,20 @@ class Post extends Component<IPostProps, IPostState> {
 				)}
 				{description && <div className="post-body">{description}</div>}
 				{content && <PostContent content={content} />}
-				{extraTitle && (
-					<div className="extra">
-						{linkType === 'event-page' && (
-							<FontAwesomeIcon icon={faCalendarAlt} />
-						)}
-						{linkType === 'survey-page' && <FontAwesomeIcon icon={faTasks} />}
-						{linkType === 'top-page' && <FontAwesomeIcon icon={faTrophy} />}
-						<span className="extra-link">
-							{<NavLink to={`${extraLink}`}>{extraTitle}</NavLink>}
-						</span>
-					</div>
+				{extraLink && (
+					<NavLink
+						to={`${extraLink}`}
+						style={{ textDecoration: 'none', color: '#122737' }}
+						className="extra-wrapper"
+					>
+						<Extra
+							readyPost={true}
+							clearExtra={() => {}}
+							link={extraLink}
+							type={this.getType()}
+							data={this.props.post[this.getType()]}
+						/>
+					</NavLink>
 				)}
 				{reactionsShow}
 				<div className="post-item-action-buttons">

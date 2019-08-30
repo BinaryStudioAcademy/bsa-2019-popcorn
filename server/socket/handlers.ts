@@ -1,5 +1,9 @@
 import * as movieService from "../services/movie.service";
 import * as eventService from "../services/event.service";
+import * as postService from "../services/post.service";
+import { sendPushMessage } from "../services/firebase.service";
+import { saveNotificitation } from "../services/notification.service";
+const uuid = require("uuid/v4");
 export default socket => {
   socket.on("createRoom", roomId => {
     socket.join(roomId);
@@ -10,11 +14,45 @@ export default socket => {
 
   socket.on("send-message-to-discussion", async messageInfo => {
     const entityIdName = messageInfo.entityIdName;
-    console.log("message info", messageInfo);
-    if (entityIdName === "movieId")
-      await movieService.saveDiscussionMessage(messageInfo);
-    if (entityIdName === "eventId")
-      await eventService.createComment(messageInfo);
+    if (entityIdName === "movieId") {
+      const discussion = await movieService.saveDiscussionMessage(messageInfo);
+    }
+    if (entityIdName === "eventId") {
+      const discussion = await eventService.createComment(messageInfo);
+      const event = await eventService.getEventById(discussion.eventId);
+      const url = `/events/${messageInfo.eventId}/discussion`;
+      const title = `${messageInfo.user.name} left message in your event`;
+      const userId = event.userId;
+
+      if (userId !== messageInfo.user.id) {
+        const notification = {
+          img: messageInfo.user.avatar,
+          type: "comment",
+          title,
+          body: messageInfo.text,
+          date: new Date(),
+          url,
+          id: uuid(),
+          entityType: "event",
+          entityId: event.id
+        };
+        await saveNotificitation({
+          ...notification,
+          userId,
+          isRead: false
+        });
+        sendPushMessage({
+          link: url,
+          title,
+          body: messageInfo.text,
+          icon: messageInfo.user.avatar,
+          userId,
+          entityType: "event",
+          entityId: event.id
+        });
+        socket.to(event.userId).emit("new-notification", notification);
+      }
+    }
     socket
       .to(entityIdName.concat(messageInfo[entityIdName]))
       .emit("add-message-to-discussion", messageInfo);

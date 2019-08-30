@@ -20,7 +20,7 @@ export function* fetchUserSurveys(action) {
 	try {
 		const data = yield call(webApi, {
 			method: 'GET',
-			endpoint: config.API_URL + '/api/surveys/user/' + action.payload.userId
+			endpoint: '/api/surveys/user/' + action.payload.userId
 		});
 		if (data) {
 			setArrangementInSurveys(data);
@@ -45,7 +45,7 @@ export function* fetchSurveys() {
 	try {
 		const data = yield call(webApi, {
 			method: 'GET',
-			endpoint: config.API_URL + '/api/surveys'
+			endpoint: '/api/surveys'
 		});
 		if (data) {
 			setArrangementInSurveys(data);
@@ -69,7 +69,7 @@ export function* addSurvey(action) {
 	try {
 		const data = yield call(webApi, {
 			method: 'POST',
-			endpoint: config.API_URL + '/api/surveys',
+			endpoint: '/api/surveys',
 			body: {
 				...action.payload.data
 			}
@@ -88,7 +88,7 @@ export function* updateSurvey(action) {
 	try {
 		const data = yield call(webApi, {
 			method: 'PUT',
-			endpoint: config.API_URL + '/api/surveys/' + action.payload.id,
+			endpoint: '/api/surveys/' + action.payload.id,
 			body: {
 				...action.payload.data
 			}
@@ -107,7 +107,7 @@ function* deleteSurvey(action) {
 	try {
 		const data = yield call(webApi, {
 			method: 'DELETE',
-			endpoint: config.API_URL + '/api/surveys/' + action.payload.id
+			endpoint: '/api/surveys/' + action.payload.id
 		});
 		if (data) yield put({ type: FETCH_SURVEYS });
 	} catch (e) {
@@ -123,7 +123,7 @@ function* getSurveyById(action) {
 	try {
 		const data = yield call(webApi, {
 			method: 'GET',
-			endpoint: config.API_URL + '/api/surveys/' + action.payload.id
+			endpoint: '/api/surveys/' + action.payload.id
 		});
 
 		const surveys = [data];
@@ -152,12 +152,12 @@ function* recreateSurvey(action) {
 	try {
 		const deletedData = yield call(webApi, {
 			method: 'DELETE',
-			endpoint: config.API_URL + '/api/surveys/' + action.payload.id
+			endpoint: '/api/surveys/' + action.payload.id
 		});
 		if (deletedData) {
 			const data = yield call(webApi, {
 				method: 'POST',
-				endpoint: config.API_URL + '/api/surveys',
+				endpoint: '/api/surveys',
 				body: {
 					...action.payload.data
 				}
@@ -178,7 +178,7 @@ function* postAnswers(action) {
 			action.payload.data.map(answer =>
 				call(webApi, {
 					method: 'POST',
-					endpoint: config.API_URL + '/api/surveys/answer',
+					endpoint: '/api/surveys/answer',
 					body: {
 						...answer
 					}

@@ -3,16 +3,11 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar } from '@fortawesome/free-solid-svg-icons';
 import StarRating from '../shared/StarRating/StarRating';
 import { IUserRate } from './MovieSeriesPage';
-import Spinner from '../shared/Spinner';
 import ReviewAddModal from '../MovieSeriesPage/MovieSeriesReviews/ReviewAddModal/ReviewAddModal';
+import TMovie from '../MovieSeriesPage/TMovie';
 
 interface IProps {
-	movieSeriesData: {
-		title: string;
-		release_date?: string;
-		genre?: string[];
-		vote_average?: string;
-	};
+	movie: TMovie;
 	userRate?: IUserRate;
 	setUserRate: (userRate: object) => any;
 	ownReview: any;
@@ -26,10 +21,14 @@ interface IProps {
 		prevId?: string
 	) => any;
 	removeReviewSet: () => object;
+	watchListStatus: any;
+	addMovieToWatchList: (movieId: string) => object;
+	deleteMovieFromWatchList: (watchId: string, movieId: string) => object;
+	watchListLoading?: boolean;
 }
 
 const MovieSeriesPageHeader: React.FC<IProps> = ({
-	movieSeriesData,
+	movie,
 	userRate,
 	setUserRate,
 	ownReview,
@@ -37,53 +36,90 @@ const MovieSeriesPageHeader: React.FC<IProps> = ({
 	userId,
 	movieId,
 	setReview,
-	removeReviewSet
+	removeReviewSet,
+	watchListStatus,
+	addMovieToWatchList,
+	deleteMovieFromWatchList,
+	watchListLoading
 }) => {
 	const [modal, setModal] = useState(false);
-	const genre = movieSeriesData.genre && movieSeriesData.genre.join(', ');
 	const rate: number = userRate ? +userRate.rate : 0;
 
 	const onModalClick = () => {
 		setModal(true);
 		fetchReview(userId, movieId);
 	};
+
+	const renderWatchIcon = () => {
+		const { status, id: watchId } = watchListStatus;
+		if (watchListLoading) {
+			return <div className={`watch-list-icon loading-now`} />;
+		}
+		if (status === 'to_watch') {
+			return (
+				<div
+					className={`watch-list-icon to-watch`}
+					onClick={() => deleteMovieFromWatchList(watchId, movieId)}
+					title="Click to remove from watch list"
+				/>
+			);
+		}
+		return status === 'watched' ? (
+			<div
+				className={`watch-list-icon watched`}
+				title="You have already watched this movie"
+			/>
+		) : (
+			<div
+				className={`watch-list-icon add-to-watch-list`}
+				onClick={() => addMovieToWatchList(movieId)}
+				title="add to watch list"
+			/>
+		);
+	};
+
 	return (
 		<header className="movie-series-page-header">
 			{modal && ownReview && (
 				<ReviewAddModal
 					ownReview={ownReview!}
 					setModal={setModal}
-					movie={movieSeriesData}
+					movie={movie}
 					setReview={setReview}
 					userId={userId}
 					movieId={movieId}
 					removeReviewSet={removeReviewSet}
 				/>
 			)}
-			<div className="movie-title-rating">
-				<div className="title">
-					{movieSeriesData.title}
-					{movieSeriesData.release_date
-						? '(' + movieSeriesData.release_date.slice(0, 4) + ')'
-						: null}
+			<div className="header-movie-title-rating">
+				<div className="header-movie-watch-list">{renderWatchIcon()}</div>
+				<div className="header-main-info">
+					<span className="movie-title">{movie.title}</span>
+					<span className="movie-year">
+						{movie.release_date
+							? ' (' + movie.release_date.slice(0, 4) + ')'
+							: null}
+					</span>
+					<div className="header-genres-review-own-rating">
+						<span className="header-genres">{movie.genres}</span>
+						<div className="header-review-own-rating-container">
+							<button className="review-button" onClick={() => onModalClick()}>
+								review
+							</button>
+							<StarRating
+								size={5}
+								default={rate}
+								setUserRate={setUserRate}
+								userRate={userRate}
+							/>
+						</div>
+					</div>
 				</div>
-				<div className="review-button" onClick={() => onModalClick()}>
-					review
-				</div>
-				<StarRating
-					size={5}
-					default={rate}
-					setUserRate={setUserRate}
-					userRate={userRate}
-				/>
-				<span className="rating">
+				<div className="totaly-movie-rating">
 					<FontAwesomeIcon className="icon-star" icon={faStar} />
-					{Number(movieSeriesData.vote_average) || 0}
+					{Number(movie.vote_average) || 0}
 					<span className="max-rating">/5</span>
-				</span>
-			</div>
-			<div className="info">
-				<span className="info-item">Action, Drama, Horror</span>
+				</div>
 			</div>
 		</header>
 	);

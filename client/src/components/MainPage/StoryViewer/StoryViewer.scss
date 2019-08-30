@@ -55,7 +55,7 @@
 
 	.story-slider {
 		width: 350px;
-		height: 690px;
+		height: 98%;
 		overflow: hidden;
 		white-space: nowrap;
 
@@ -114,9 +114,9 @@
 			.seen {
 				padding-left: 10px;
 				background-color: rgba($color: $black, $alpha: 0.5);
-				align-self: flex-end;
 				width: 100%;
 				height: 35px;
+				bottom: 2px;
 				display: flex;
 				align-items: center;
 

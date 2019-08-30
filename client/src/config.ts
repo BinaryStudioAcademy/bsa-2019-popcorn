@@ -1,6 +1,4 @@
-require('dotenv').config();
 const config = {
-	API_URL: process.env.REACT_APP_API_URL || 'http://localhost:5000',
 	DEFAULT_AVATAR: '/images/default/avatar-default.png',
 	DEFAULT_EVENT_IMAGE: '/images/default/event-default.png',
 	DEFAULT_MOVIE_IMAGE: '/images/default/movie-default.png',
@@ -8,4 +6,14 @@ const config = {
 		'https://www.goldderby.com/wp-content/uploads/2017/12/Oscar-statuette-trophy-atmo.png',
 	POSTER_PATH: 'https://image.tmdb.org/t/p/w500'
 };
+const firebaseConfig = {
+	apiKey: 'AIzaSyDBZq6hgJwMbJEi3u6GSTRi4QFphjnl32Q',
+	authDomain: 'popcorn-64a9a.firebaseapp.com',
+	databaseURL: 'https://popcorn-64a9a.firebaseio.com',
+	projectId: 'popcorn-64a9a',
+	storageBucket: '',
+	messagingSenderId: '1087618889886',
+	appId: '1:1087618889886:web:8e958466df264490'
+};
 export default config;
+export { firebaseConfig };
