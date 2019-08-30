@@ -1,11 +1,15 @@
-import MovieListRepository, {
-  IRequest
-} from "../repository/movieList.repository";
+import MovieListRepository from "../repository/movieList.repository";
 import { getCustomRepository } from "typeorm";
 
-export const saveMovieList = (userId: string, movieList: IRequest, next) =>
-  getCustomRepository(MovieListRepository).saveMovieList(
-    userId,
-    movieList,
-    next
-  );
+export class IRequest {
+  title: string;
+  description: string;
+  image_url: string;
+  moviesId: Array<string>;
+}
+
+export const saveMovieList = (userId: string, movieList: IRequest) =>
+  getCustomRepository(MovieListRepository).save({
+    user: { id: userId },
+    ...movieList
+  });

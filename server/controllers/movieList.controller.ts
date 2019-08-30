@@ -4,9 +4,9 @@ import * as movieListService from "../services/movieList.service";
 
 const router = Router();
 
-router.post("/", errorHandlerMiddleware, (req, res, next) =>
+router.post("/", (req, res, next) =>
   movieListService
-    .saveMovieList(req.user.id, req.body, next)
+    .saveMovieList(req.user.id, req.body)
     .then(result => res.send(result))
     .catch(next)
 );
