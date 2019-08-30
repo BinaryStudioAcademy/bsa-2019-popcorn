@@ -18,7 +18,7 @@ export class MovieList {
   @Column({ nullable: true })
   description: string;
 
-  @Column({ nullable: false })
+  @Column({ nullable: true })
   image_url: string;
 
   @Column({ nullable: false })
