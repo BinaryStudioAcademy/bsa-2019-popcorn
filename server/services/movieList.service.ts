@@ -21,3 +21,6 @@ export const getOwnUserLists = (userId: string) =>
   getCustomRepository(MovieListRepository).find({
     where: { user: { id: userId } }
   });
+
+export const deleteMovieList = (movieListId: string) =>
+  getCustomRepository(MovieListRepository).delete({ id: movieListId });

@@ -23,6 +23,12 @@ router
       .saveMovieList(req.user.id, req.body)
       .then(result => res.send(result))
       .catch(next)
+  )
+  .delete("/:id", (req, res, next) =>
+    movieListService
+      .deleteMovieList(req.params.id)
+      .then(result => res.send(result))
+      .catch(next)
   );
 
 export default router;
