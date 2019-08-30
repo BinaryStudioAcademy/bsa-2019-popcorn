@@ -12,6 +12,9 @@
 	justify-items: center;
 	background: #efefef;
 	width: max-content;
+	img.story-pic {
+		max-height: 210px;
+	}
 }
 
 .story-pic {
@@ -36,10 +39,11 @@
 	left: 5px;
 }
 .story-name {
+	position: relative;
 	font-family: Inter;
 	font-weight: 500;
 	font-size: 12px;
 	line-height: 15px;
 	letter-spacing: 0.4px;
-	min-height: 30px;
+	height: 40px;
 }
