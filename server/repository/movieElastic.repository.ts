@@ -141,7 +141,8 @@ export const getByIdValues = async idValues => {
           terms: {
             id: [...idValues]
           }
-        }
+        },
+        size: idValues.length
       })
     }
   );

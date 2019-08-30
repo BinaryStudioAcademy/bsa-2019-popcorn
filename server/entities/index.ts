@@ -21,6 +21,7 @@ import { Discussion } from "./Discussion";
 import { Watch } from "./Watch";
 import { Follower } from "./Follower";
 import { FavoriteList } from "./FavoriteList";
+import { Notification } from "./Notification";
 
 export default [
   User,
@@ -47,5 +48,6 @@ export default [
   Discussion,
   Follower,
   FavoriteList,
-  Watch
+  Watch,
+  Notification
 ];

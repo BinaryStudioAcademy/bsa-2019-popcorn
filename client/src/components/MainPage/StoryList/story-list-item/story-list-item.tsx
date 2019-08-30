@@ -6,12 +6,13 @@ interface IStoryListItemProps {
 	imageUrl: string;
 	avatar: string;
 	index: number;
+	backgroundColor: string;
 	openViewer: (number) => void;
 }
 
 class StoryListItem extends Component<IStoryListItemProps> {
 	render() {
-		const { imageUrl, name, avatar } = this.props;
+		const { imageUrl, name, avatar, backgroundColor } = this.props;
 		return (
 			<div
 				className="story-list-item-wrapper"
@@ -19,13 +20,15 @@ class StoryListItem extends Component<IStoryListItemProps> {
 					this.props.openViewer(this.props.index);
 				}}
 			>
-				<div className="card">
+				<div className="card" style={{ backgroundColor: backgroundColor }}>
 					<img
 						alt="avatar"
 						className="avatar avatar-story"
 						src={avatar || config.DEFAULT_AVATAR}
 					/>
-					<img alt="story-pic" className="story-pic" src={imageUrl} />
+					{imageUrl && (
+						<img alt="story-pic" className="story-pic" src={imageUrl} />
+					)}
 				</div>
 				<div className="story-name">{name}</div>
 			</div>

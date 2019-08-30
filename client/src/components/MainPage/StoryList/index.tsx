@@ -32,6 +32,7 @@ interface IStoryListItem {
 	id: string;
 	caption: string;
 	image_url: string;
+	backgroundColor: string;
 	user: {
 		avatar: string;
 		id: string;

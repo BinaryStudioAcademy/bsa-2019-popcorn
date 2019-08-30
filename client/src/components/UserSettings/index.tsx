@@ -11,7 +11,7 @@ interface IProps {
 
 const UserSettings: React.SFC<IProps> = ({ mainPath }) => {
 	return (
-		<div className={'user'}>
+		<div className={'user user-settings'}>
 			<UserSettingsTabs mainPath={mainPath} />
 			<UserSettingsTabBody mainPath={mainPath} />
 		</div>

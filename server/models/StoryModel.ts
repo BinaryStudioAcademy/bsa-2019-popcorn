@@ -9,4 +9,8 @@ export class Story {
   activityId: string;
   movieId: string;
   movieOption: string;
+  backgroundColor: string;
+  fontColor: string;
+  textPositionX: number;
+  textPositionY: number;
 }

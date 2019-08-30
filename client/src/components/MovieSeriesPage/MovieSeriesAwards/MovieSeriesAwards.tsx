@@ -1,7 +1,18 @@
 import React, { Component } from 'react';
 import AwardItem from './AwardItem/AwardItem';
 import './MovieSeriesAwards.scss';
-class MovieSeriesAwards extends Component<Component> {
+import Spinner from '../../shared/Spinner';
+
+interface IMovieSeriesAwardsProps {
+	fetchAwards: (id: any) => any;
+	imdbId: string;
+	awards: any;
+}
+
+class MovieSeriesAwards extends Component<IMovieSeriesAwardsProps, {}> {
+	constructor(props) {
+		super(props);
+	}
 	mockedAwards = [
 		{
 			isWinner: true,
@@ -26,20 +37,18 @@ class MovieSeriesAwards extends Component<Component> {
 			gender: 'Male'
 		}
 	];
+	componentDidMount() {
+		this.props.fetchAwards(this.props.imdbId);
+	}
 	render() {
-		return (
+		return this.props.awards ? (
 			<div className="movieAwards-wrapper">
-				{this.mockedAwards.map(item => (
-					<AwardItem
-						isWinner={item.isWinner}
-						title={item.title}
-						year={item.year}
-						nominationName={item.nominationName}
-						gender={item.gender}
-						winnerName={item.winnerName}
-					/>
+				{this.props.awards.map(item => (
+					<AwardItem title={item.award} nominations={item.titlesAwards[0]} />
 				))}
 			</div>
+		) : (
+			<Spinner />
 		);
 	}
 }

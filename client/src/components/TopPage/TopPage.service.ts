@@ -1,4 +1,5 @@
 import movieAdapter from '../MovieSeriesPage/movieAdapter';
+import config from '../../config';
 
 export interface ITop {
 	id: string;
@@ -28,6 +29,7 @@ export function convertServerDataFormatToClient(top: any): ITop | null {
 	}
 
 	top.movieInTop.map(movieInTop => {
+		if (movieInTop.movie) return;
 		movieInTop.movie = movieAdapter(movieInTop.movie);
 		return movieInTop;
 	});
@@ -37,14 +39,17 @@ export function convertServerDataFormatToClient(top: any): ITop | null {
 		title: top.title,
 		topImageUrl: top.topImageUrl,
 		created_at: top.created_at,
-		movieList: top.movieInTop.map(movieInTop => ({
-			id: movieInTop.movie.id,
-			title: movieInTop.movie.title,
-			release_date: movieInTop.movie.release_date,
-			poster_path: movieInTop.movie.poster_path,
-			genres: movieInTop.movie.genres,
-			comment: movieInTop.comment
-		})),
+		movieList: top.movieInTop.map(movieInTop => {
+			if (!movieInTop.movie) return;
+			return {
+				id: movieInTop.movie.id,
+				title: movieInTop.movie.title,
+				release_date: movieInTop.movie.release_date,
+				poster_path: config.POSTER_PATH + movieInTop.movie.poster_path,
+				genres: movieInTop.movie.genres,
+				comment: movieInTop.comment
+			};
+		}),
 		user: {
 			id: top.user.id,
 			name: top.user.name,

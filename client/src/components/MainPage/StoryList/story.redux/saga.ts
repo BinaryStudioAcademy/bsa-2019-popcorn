@@ -31,6 +31,9 @@ export function* fetchStories(action) {
 
 export function* createStory(action) {
 	const { newStory, userId } = action.payload;
+	newStory.textPositionX = newStory.textPosition.x;
+	newStory.textPositionY = newStory.textPosition.y;
+	delete newStory.textPosition;
 	try {
 		const story = yield call(webApi, {
 			method: 'POST',

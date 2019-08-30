@@ -15,17 +15,8 @@ export const createPost = async (post: any): Promise<Post> => {
 };
 
 export const getPosts = async (): Promise<any[]> => {
-  const posts = await getCustomRepository(PostRepository).find({
-    relations: ["user"]
-  });
-  return Promise.all(
-    posts.map(async post => {
-      const Post: any = { ...post };
-      Post.comments = await getComments(post);
-      Post.reactions = await getReactions(post);
-      return Post;
-    })
-  );
+  const posts = await getCustomRepository(PostRepository).getAllPosts();
+  return posts;
 };
 
 export const deletePostById = async (postId: string): Promise<Post> => {
@@ -39,10 +30,7 @@ export const getPostById = async (postId: string): Promise<Post> =>
   await getCustomRepository(PostRepository).findOne({ id: postId });
 
 export const getPostsByUserId = async (userId: string): Promise<Post[]> =>
-  await getCustomRepository(PostRepository).find({
-    relations: ["user"],
-    where: { user: { id: userId } }
-  });
+  await getCustomRepository(PostRepository).getPostsByUserId(userId);
 
 export const createComment = async ({ userId, postId, text }) => {
   const user = await getCustomRepository(UserRepository).findOne({

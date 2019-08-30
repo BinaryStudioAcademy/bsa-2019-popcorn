@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { IWatchItem } from '../UserWatchList';
 import './WatchItem.scss';
 import Image from '../../../shared/Image/Image';
@@ -7,7 +7,7 @@ import { NavLink } from 'react-router-dom';
 import { ReactComponent as DurationIcon } from '../../../../assets/icons/general/movie/duration-icon.svg';
 import getFilmDuration from '../../../../helpers/getFilmDuration';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTimes } from '@fortawesome/free-solid-svg-icons';
+import { faTimes, faStar } from '@fortawesome/free-solid-svg-icons';
 import { ReactComponent as CloseIcon } from '../../../../assets/icons/general/closeIcon.svg';
 
 interface IProps {
@@ -28,11 +28,16 @@ const WatchItem: React.FC<IProps> = props => {
 	} = props.watchItem.movie;
 	const { moveToWatched, deleteWatchItem } = props;
 	const duration = getFilmDuration(runtime);
+	const [hover, setHover] = useState(false);
 
 	return (
 		<div className="WatchItem">
 			<div className="watch-item-container">
-				<div className="watch-image-wrapper">
+				<div
+					className="watch-image-wrapper"
+					onMouseEnter={() => setHover(true)}
+					onMouseLeave={() => setHover(false)}
+				>
 					<NavLink to={'/movies/' + movieId}>
 						<Image
 							src={poster_path}
@@ -40,53 +45,39 @@ const WatchItem: React.FC<IProps> = props => {
 							alt="poster"
 						/>
 					</NavLink>
+
+					{status === 'watched' ? (
+						<div
+							className={`absolute watch-status watched`}
+							title="You have already watched this movie"
+						></div>
+					) : (
+						<div
+							className={`absolute watch-status to-watch`}
+							title='Click to mark as "watched"'
+							onClick={() => {
+								moveToWatched(id);
+							}}
+						></div>
+					)}
+					{hover && (
+						<div onClick={() => deleteWatchItem(id)}>
+							<FontAwesomeIcon
+								className="watch-delete-button absolute"
+								icon={faTimes}
+								title="Click to delete from watch list"
+							/>
+						</div>
+					)}
 				</div>
 				<div className="watch-main">
-					<div className="watch-main-top">
+					<div className="watch-main-bottom">
 						<div className="watch-movie-title">
-							<NavLink
-								className="watch-movie-title-nav-link"
-								to={'/movies/' + movieId}
-							>
-								<div className="movie-title-name">
-									{title}
-									<span className="movie-title-date">
-										{release_date
-											? ' (' + release_date.slice(0, 4) + ')'
-											: null}
-									</span>
-								</div>
-							</NavLink>
+							{title}
+							<span className="watch-movie-date">
+								{release_date ? ' (' + release_date.slice(0, 4) + ')' : null}
+							</span>
 						</div>
-						<div className="movie-genre">{genres}</div>
-						{duration && (
-							<div className="movie-duration">
-								<DurationIcon />
-								{duration}
-							</div>
-						)}
-					</div>
-					<div className="watch-buttons">
-						{status === 'to_watch' && (
-							<button
-								className="move-button"
-								onClick={e => {
-									e.preventDefault();
-									moveToWatched(id);
-								}}
-							>
-								Move to Watched
-							</button>
-						)}
-						<button
-							className="delete-button"
-							onClick={e => {
-								e.preventDefault();
-								deleteWatchItem(id);
-							}}
-						>
-							<CloseIcon className="delete-button-svg" />
-						</button>
 					</div>
 				</div>
 			</div>

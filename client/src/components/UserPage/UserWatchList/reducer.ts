@@ -2,17 +2,26 @@ import {
 	FETCH_USER_WATCH_LIST_SUCCESS,
 	SAVE_WATCH_ITEM_SUCCESS,
 	MOVE_WATCH_ITEM_TO_WATCHED,
-	DELETE_WATCH_ITEM
+	DELETE_WATCH_ITEM,
+	FETCH_WATCH_LIST_STATUS_SUCCESS,
+	ADD_MOVIE_TO_WATCH_LIST_SUCCESS,
+	DELETE_MOVIE_FROM_WATCH_LIST_SUCCESS,
+	DELETE_MOVIE_FROM_WATCH_LIST,
+	ADD_MOVIE_TO_WATCH_LIST
 } from './actionTypes';
 import movieAdapter from '../../MovieSeriesPage/movieAdapter';
 import config from '../../../config';
 
 interface IReducer {
 	watchList?: Array<any>;
+	watchListStatus?: string;
+	isLoading?: boolean;
 }
 
 const initialState: IReducer = {
-	watchList: undefined
+	watchList: undefined,
+	watchListStatus: undefined,
+	isLoading: undefined
 };
 
 export default (state = initialState, action) => {
@@ -27,7 +36,8 @@ export default (state = initialState, action) => {
 			if (!newMovie) return { ...state };
 			return {
 				...state,
-				watchList: [newMovie, ...state.watchList]
+				watchList: [newMovie, ...state.watchList],
+				watchListStatus: undefined
 			};
 		case MOVE_WATCH_ITEM_TO_WATCHED:
 			const prevWatchList = [...state.watchList];
@@ -41,7 +51,8 @@ export default (state = initialState, action) => {
 			prevWatchList.splice(index, 1, putItem);
 			return {
 				...state,
-				watchList: [...prevWatchList]
+				watchList: [...prevWatchList],
+				watchListStatus: undefined
 			};
 		case DELETE_WATCH_ITEM:
 			const watchList = [...state.watchList];
@@ -49,7 +60,37 @@ export default (state = initialState, action) => {
 				...state,
 				watchList: watchList.filter(
 					watch => watch.id !== action.payload.watchId
-				)
+				),
+				watchListStatus: undefined
+			};
+		case FETCH_WATCH_LIST_STATUS_SUCCESS:
+			return {
+				...state,
+				watchListStatus: action.payload.watchListStatus
+			};
+		case ADD_MOVIE_TO_WATCH_LIST:
+			return {
+				...state,
+				isLoading: true
+			};
+		case ADD_MOVIE_TO_WATCH_LIST_SUCCESS:
+			return {
+				...state,
+				watchListStatus: action.payload,
+				watchList: undefined,
+				isLoading: false
+			};
+		case DELETE_MOVIE_FROM_WATCH_LIST:
+			return {
+				...state,
+				isLoading: true
+			};
+		case DELETE_MOVIE_FROM_WATCH_LIST_SUCCESS:
+			return {
+				...state,
+				watchListStatus: action.payload.watchListStatus,
+				watchList: undefined,
+				isLoading: false
 			};
 		default:
 			return state;

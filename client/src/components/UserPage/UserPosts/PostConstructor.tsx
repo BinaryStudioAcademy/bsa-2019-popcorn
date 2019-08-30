@@ -44,6 +44,7 @@ interface IPostConstructorState {
 	croppedSaved: boolean;
 	reactions: Array<any>;
 	comments: Array<any>;
+	createdAt: Date | null;
 }
 
 class PostConstructor extends React.Component<
@@ -62,7 +63,8 @@ class PostConstructor extends React.Component<
 			modalExtra: false,
 			croppedSaved: false,
 			reactions: [],
-			comments: []
+			comments: [],
+			createdAt: new Date()
 		};
 		this.imageStateHandler = this.imageStateHandler.bind(this);
 		this.onSave = this.onSave.bind(this);

@@ -32,12 +32,13 @@ class ProfileEditor extends Component<
 > {
 	constructor(props: IProfileEditorProps) {
 		super(props);
+		const favoriteLists = props.user.favoriteLists.filter(item => item.movie);
 		this.state = {
 			name: props.user.name,
 			gender: props.user.male,
 			aboutMe: props.user.aboutMe,
 			location: props.user.location,
-			favoriteMovies: props.user.favoriteLists.map(item => item.movie)
+			favoriteMovies: favoriteLists.map(item => item.movie)
 		};
 	}
 
@@ -65,9 +66,8 @@ class ProfileEditor extends Component<
 
 	onDeleteFavoriteMovie = (e, id) => {
 		e.preventDefault();
-		const newMovies = this.state.favoriteMovies.filter(
-			movie => movie.id !== id
-		);
+		const recievedMovies = this.state.favoriteMovies.filter(movie => movie);
+		const newMovies = recievedMovies.filter(movie => movie.id !== id);
 		this.setState({ favoriteMovies: newMovies });
 	};
 

@@ -1,7 +1,9 @@
 import * as movieService from "../services/movie.service";
 import * as eventService from "../services/event.service";
 import * as postService from "../services/post.service";
-
+import { sendPushMessage } from "../services/firebase.service";
+import { saveNotificitation } from "../services/notification.service";
+const uuid = require("uuid/v4");
 export default socket => {
   socket.on("createRoom", roomId => {
     socket.join(roomId);
@@ -18,12 +20,36 @@ export default socket => {
     if (entityIdName === "eventId") {
       const discussion = await eventService.createComment(messageInfo);
       const event = await eventService.getEventById(discussion.eventId);
-      socket.to(event.userId).emit("new-notification", {
-        img: messageInfo.user.avatar,
-        type: "comment",
-        text: `${messageInfo.user.name} left message in your event`,
-        date: new Date()
-      });
+      const url = `/events/${messageInfo.eventId}/discussion`;
+      const title = `${messageInfo.user.name} left message in your event`;
+      const userId = event.userId;
+
+      if (userId !== messageInfo.user.id) {
+        const notification = {
+          img: messageInfo.user.avatar,
+          type: "comment",
+          title,
+          body: messageInfo.text,
+          date: new Date(),
+          url,
+          id: uuid()
+        };
+        await saveNotificitation({
+          ...notification,
+          userId,
+          isRead: false
+        });
+        sendPushMessage({
+          link: url,
+          title,
+          body: messageInfo.text,
+          icon: messageInfo.user.avatar,
+          userId,
+          entityType: "event",
+          entityId: event.id
+        });
+        socket.to(event.userId).emit("new-notification", notification);
+      }
     }
     socket
       .to(entityIdName.concat(messageInfo[entityIdName]))

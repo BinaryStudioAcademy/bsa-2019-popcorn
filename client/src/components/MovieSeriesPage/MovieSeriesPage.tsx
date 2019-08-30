@@ -7,12 +7,18 @@ import { connect } from 'react-redux';
 import Spinner from '../shared/Spinner';
 import { bindActionCreators } from 'redux';
 import {
+	fetchWatchListStatus,
+	addMovieToWatchList,
+	deleteMovieFromWatchList
+} from '../UserPage/UserWatchList/actions';
+import {
 	fetchUserRate,
 	fetchMovie,
 	setUserRate,
 	fetchReviewByMovieUserId as fetchReview,
 	setReview,
-	removeReviewSet
+	removeReviewSet,
+	fetchAwards
 } from './Movie.redux/actions';
 
 interface IProps {
@@ -34,6 +40,13 @@ interface IProps {
 	avatar?: string;
 	userId: string;
 	username: string;
+	fetchWatchListStatus: (movieId: string) => object;
+	watchListStatus?: any;
+	addMovieToWatchList: (movieId: string) => object;
+	deleteMovieFromWatchList: (watchId: string, movieId: string) => object;
+	watchListLoading?: boolean;
+	fetchAwards: (id: any) => any;
+	awards: any;
 }
 
 export interface IUserRate {
@@ -56,16 +69,29 @@ const MovieSeriesPage: React.SFC<IProps> = props => {
 		fetchReview,
 		ownReview,
 		setReview,
-		removeReviewSet
+		removeReviewSet,
+		fetchWatchListStatus,
+		watchListStatus,
+		addMovieToWatchList,
+		deleteMovieFromWatchList,
+		watchListLoading,
+		fetchAwards,
+		awards
 	} = props;
-	const mainPath = `/movies/${props.match.params.id}`;
+	const currentMovieId = props.match.params.id;
+	const mainPath = `/movies/${currentMovieId}`;
 
-	if (!fetchedMovie || fetchedMovie.id != props.match.params.id) {
-		fetchMovie(props.match.params.id);
+	if (!fetchedMovie || fetchedMovie.id != currentMovieId) {
+		fetchMovie(currentMovieId);
 		return <Spinner />;
 	}
-	if (!userRate || userRate.movieId != props.match.params.id) {
-		fetchUserRate(userId, props.match.params.id);
+	if (!userRate || userRate.movieId != currentMovieId) {
+		fetchUserRate(userId, currentMovieId);
+		return <Spinner />;
+	}
+
+	if (!watchListStatus || watchListStatus.movieId != currentMovieId) {
+		fetchWatchListStatus(currentMovieId);
 		return <Spinner />;
 	}
 
@@ -83,12 +109,18 @@ const MovieSeriesPage: React.SFC<IProps> = props => {
 				movieId={movie.id}
 				setReview={setReview}
 				removeReviewSet={removeReviewSet}
+				watchListStatus={watchListStatus}
+				addMovieToWatchList={addMovieToWatchList}
+				deleteMovieFromWatchList={deleteMovieFromWatchList}
+				watchListLoading={watchListLoading}
 			/>
 			<MovieSeriesPageTabs mainPath={mainPath} />
 			<MovieSeriesPageTabBody
 				mainPath={mainPath}
 				movie={movie}
 				currentUser={{ avatar, id: userId, name: username }}
+				fetchAwards={fetchAwards}
+				awards={awards}
 			/>
 		</div>
 	);
@@ -101,7 +133,10 @@ const mapStateToProps = (rootState, props) => ({
 	avatar: rootState.profile.profileInfo && rootState.profile.profileInfo.avatar,
 	userId: rootState.profile.profileInfo && rootState.profile.profileInfo.id,
 	username: rootState.profile.profileInfo && rootState.profile.profileInfo.name,
-	ownReview: rootState.movie.ownReview
+	ownReview: rootState.movie.ownReview,
+	watchListStatus: rootState.watchList.watchListStatus,
+	watchListLoading: rootState.watchList.isLoading,
+	awards: rootState.movie.awards
 });
 
 const mapDispatchToProps = dispatch => {
@@ -111,7 +146,11 @@ const mapDispatchToProps = dispatch => {
 		setUserRate,
 		fetchReview,
 		setReview,
-		removeReviewSet
+		removeReviewSet,
+		fetchWatchListStatus,
+		addMovieToWatchList,
+		deleteMovieFromWatchList,
+		fetchAwards
 	};
 	return bindActionCreators(actions, dispatch);
 };

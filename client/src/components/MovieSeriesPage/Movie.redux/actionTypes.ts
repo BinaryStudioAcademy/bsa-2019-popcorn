@@ -30,4 +30,5 @@ export const SET_SHOW_SPINNER = 'SET_SHOW_SPINNER';
 export const SET_HIDE_SPINNER = 'SET_HIDE_SPINNER';
 export const GET_GENRES = 'GET_GENRES';
 export const SET_GENRES = 'SET_GENRES';
-
+export const GET_AWARDS = 'GET_AWARDS';
+export const SET_AWARDS = 'SET_AWARDS';

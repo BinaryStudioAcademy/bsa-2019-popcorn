@@ -12,6 +12,7 @@ import {
 	FETCH_REVIEW_BY_USER_MOVIE_ID_SUCCESS,
 	SET_REVIEW_SUCCESS,
 	REMOVE_REVIEW_SET,
+	SET_AWARDS,
 	SET_FILTRED_MOVIE_LIST,
 	SET_LOAD_MORE_FILTRED_MOVIE,
 	SET_FILTERS,
@@ -34,6 +35,7 @@ const initialState: {
 	searchTitle: string;
 	isLoading: boolean;
 	ownReview: any;
+	awards: any;
 	movieSearchInAdvancedSearch: null | Array<TMovie>;
 	filters: any;
 	showSpinner: boolean;
@@ -50,6 +52,7 @@ const initialState: {
 	userRate: null,
 	fetchedMovie: null,
 	ownReview: null,
+	awards: null,
 	movieSearchInAdvancedSearch: null,
 	filters: {
 		nameValue: '',
@@ -94,7 +97,13 @@ export default function(state = initialState, action) {
 			return {
 				...state,
 				movieSeries: action.payload.movie,
+				awards: null,
 				alreadySearch: true
+			};
+		case SET_AWARDS:
+			return {
+				...state,
+				awards: action.payload.awards
 			};
 		case FETCH_MOVIE_USER_RATE_SUCCESS:
 			return {
