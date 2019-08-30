@@ -4,6 +4,7 @@ import './StoryVoting.scss';
 import Draggable from 'react-draggable';
 import IVoting from '../MainPage/StoryList/IVoting';
 import { Redirect } from 'react-router';
+import { connect } from 'react-redux';
 
 type StoryVotingProps = {
 	header: string;
@@ -30,6 +31,7 @@ type StoryVotingProps = {
 	userId: string;
 	createVoting?: (voting: IVoting) => any;
 	inEditor: boolean;
+	fontColor: string;
 };
 
 type StoryVotingState = {
@@ -203,7 +205,12 @@ class StoryVoting extends React.Component<StoryVotingProps, StoryVotingState> {
 						onDrag={this.handleDragHead}
 						disabled={!this.state.inEditor}
 					>
-						<div className="story-voting-header">{this.props.header}</div>
+						<div
+							className="story-voting-header"
+							style={{ color: this.props.fontColor }}
+						>
+							{this.props.header}
+						</div>
 					</Draggable>
 					<Draggable
 						bounds="parent"
@@ -237,4 +244,9 @@ class StoryVoting extends React.Component<StoryVotingProps, StoryVotingState> {
 	}
 }
 
-export default StoryVoting;
+const mapStateToProps = (rootState, props) => ({
+	...props,
+	fontColor: rootState.story.newStory.fontColor
+});
+
+export default connect(mapStateToProps)(StoryVoting);
