@@ -70,13 +70,13 @@ class Notification extends React.Component<IProps, IState> {
 
 	toogleNotifications = () => {
 		const isShown = !this.state.isShown;
-		if (!isShown) {
-			const updatedNotifications = this.state.notifications.filter(
-				notification => notification.isRead === false
-			);
-			this.setState({ notifications: updatedNotifications });
-		} else {
-		}
+		// if (!isShown) {
+		// 	const updatedNotifications = this.state.notifications.filter(
+		// 		notification => notification.isRead === false
+		// 	);
+		// 	this.setState({ notifications: updatedNotifications });
+		// } else {
+		// }
 		this.state.notifications.length !== 0 && this.setState({ isShown });
 	};
 
