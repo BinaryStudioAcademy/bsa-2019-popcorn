@@ -194,7 +194,15 @@ class UserSurveys extends React.Component<IProps, IState> {
 						{surveys.map((survey, i) => {
 							// add "if (isOwnData)" check when it will survey list with surveys of all users
 							return (
-								<NavLink key={i} exact={!i} to={`${mainPath}/${survey.id}`}>
+								<NavLink
+									key={i}
+									exact={!i}
+									to={
+										isOwnData
+											? `${mainPath}/${survey.id}`
+											: `/survey-page/${survey.id}`
+									}
+								>
 									<div className="survey-list-item">
 										<span>{survey.title}</span>
 										{isOwnData ? (

@@ -21,7 +21,9 @@ async function sendNotification({
     body,
     date: new Date(),
     url,
-    id: uuid()
+    id: uuid(),
+    entityType,
+    entityId: entity.id
   };
   await saveNotificitation({
     ...notification,
