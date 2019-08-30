@@ -1,6 +1,8 @@
 import * as admin from "firebase-admin";
 import * as path from "path";
 import { clientEmail, privateKey, projectId } from "../config/firebase.config";
+import notificationTokenReposity from "../repository/notificationToken.repository";
+import { getCustomRepository } from "typeorm";
 admin.initializeApp({
   credential: admin.credential.cert({
     clientEmail,
@@ -9,8 +11,8 @@ admin.initializeApp({
   }),
   databaseURL: "https://popcorn-64a9a.firebaseio.com"
 });
-const db = admin.firestore();
-const notificationTokenPath = "notification_token";
+// const db = admin.firestore();
+// const notificationTokenPath = "notification_token";
 
 function buildCommonMessage(title, body) {
   return {
@@ -68,14 +70,15 @@ export async function sendPushMessage({
   entityId
 }) {
   const tokens = await getAppInstanceToken(userId);
-  Object.keys(tokens).forEach(tokenType => {
-    const pushType = tokenType === "web" ? "webpush" : "android";
+  console.log("t", tokens);
+  tokens.forEach(token => {
+    const pushType = token.type === "web" ? "webpush" : "android";
     const message = buildPlatformMessage({
       link,
       title,
       body,
       icon,
-      token: tokens[tokenType],
+      token: token.token,
       pushType,
       entityType,
       entityId
@@ -94,15 +97,25 @@ export async function sendPushMessage({
 
 export async function storeAppInstanceToken({ token, userId, type }) {
   try {
-    return await db
-      .collection(notificationTokenPath)
-      .doc(userId)
-      .set(
-        {
-          [type]: token
-        },
-        { merge: true }
-      );
+    const tokenInDb = await getCustomRepository(
+      notificationTokenReposity
+    ).findOne({ userId, type });
+    let tokenToSave = { token, userId, type };
+    if (tokenInDb) {
+      tokenToSave["id"] = tokenInDb.id;
+    }
+    return await getCustomRepository(notificationTokenReposity).save(
+      tokenToSave
+    );
+    // return await db
+    //   .collection(notificationTokenPath)
+    //   .doc(userId)
+    //   .set(
+    //     {
+    //       [type]: token
+    //     },
+    //     { merge: true }
+    //   );
   } catch (err) {
     console.log(`Error storing token [${token}] in firestore`, err);
     return null;
@@ -110,29 +123,33 @@ export async function storeAppInstanceToken({ token, userId, type }) {
 }
 
 //not working now
-export async function deleteAppInstanceToken(token) {
-  try {
-    const deleteQuery = db
-      .collection(notificationTokenPath)
-      .where("token", "==", token);
-    const querySnapshot = await deleteQuery.get();
-    querySnapshot.docs.forEach(async doc => {
-      await doc.ref.delete();
-    });
-    return true;
-  } catch (err) {
-    console.log(`Error deleting token [${token}] in firestore`, err);
-    return null;
-  }
-}
+// export async function deleteAppInstanceToken(token) {
+//   try {
+//     const deleteQuery = db
+//       .collection(notificationTokenPath)
+//       .where("token", "==", token);
+//     const querySnapshot = await deleteQuery.get();
+//     querySnapshot.docs.forEach(async doc => {
+//       await doc.ref.delete();
+//     });
+//     return true;
+//   } catch (err) {
+//     console.log(`Error deleting token [${token}] in firestore`, err);
+//     return null;
+//   }
+// }
 
 export async function getAppInstanceToken(userId) {
   try {
-    let tokens = await db
-      .collection(notificationTokenPath)
-      .doc(userId)
-      .get();
-    return tokens.data();
+    // let tokens = await db
+    //   .collection(notificationTokenPath)
+    //   .doc(userId)
+    //   .get();
+    // return tokens.data();
+    const tokens = await getCustomRepository(notificationTokenReposity).find({
+      userId
+    });
+    return tokens;
   } catch (err) {
     console.log(`Error getting token [${userId}] in firestore`, err);
     return null;
