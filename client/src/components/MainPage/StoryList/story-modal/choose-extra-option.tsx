@@ -6,6 +6,10 @@ import {
 	faTimesCircle
 } from '@fortawesome/free-solid-svg-icons';
 import { Redirect } from 'react-router';
+import { connect } from 'react-redux';
+import { fetchSurveys } from '../../../UserPage/UserSurveys/UserSurveys.redux/actions';
+import { fetchTops } from '../../../UserPage/UserTops/UserTops.redux/actions';
+import { getAllEvents } from '../../../UserPage/UserEvents/actions';
 
 interface IProps {
 	match: {
@@ -13,8 +17,6 @@ interface IProps {
 			option: string;
 		};
 	};
-	top: [{ id: string; name: string; any }];
-	survey: [{ id: string; name: string; any }];
 	changeActivity: (
 		type: string,
 		activity: null | { id: string; name: string }
@@ -23,6 +25,13 @@ interface IProps {
 	history: {
 		push: (path: string) => void;
 	};
+	currentUserId: string;
+	survey: any;
+	topList: any;
+	event: any;
+	fetchSurveys: (id: string) => any;
+	fetchTops: (id: string) => any;
+	getAllEvents: (id: string) => any;
 }
 
 interface IState {
@@ -40,12 +49,23 @@ class ChooseExtraOption extends React.Component<IProps, IState> {
 		option: true
 	};
 
+	componentDidMount() {
+		const option = this.props.match && this.props.match.params.option;
+		if (option === 'survey') {
+			this.props.fetchSurveys(this.props.currentUserId);
+		}
+		if (option === 'top') {
+			this.props.fetchTops(this.props.currentUserId);
+		}
+		if (option === 'event') {
+			this.props.getAllEvents(this.props.currentUserId);
+		}
+	}
+
 	render() {
 		const option = this.props.match && this.props.match.params.option;
 
-		const options: Array<{ id: string; name: string; any }> = this.props[
-			option
-		];
+		const options = this.props[option];
 
 		if (!this.state.open) return <Redirect to={'/'} />;
 		if (!this.state.back || !option) return <Redirect to={'/create/extra'} />;
@@ -62,8 +82,9 @@ class ChooseExtraOption extends React.Component<IProps, IState> {
 		const close = () => this.setState({ open: false });
 		const back = () => this.setState({ back: false });
 		const create = () => this.setState({ create: false });
-		const choose = (activity: { id: string; name: string; any }) => {
+		const choose = activity => {
 			this.props.history.push('/create');
+			activity.name = activity.title;
 			this.props.changeActivity(option, activity);
 		};
 
@@ -99,12 +120,13 @@ class ChooseExtraOption extends React.Component<IProps, IState> {
 							{options &&
 								options.map(item => (
 									<span
+										className="recent-created-item"
 										key={item.id}
 										onClick={() => {
 											choose(item);
 										}}
 									>
-										{item.name}
+										{item.title}
 									</span>
 								))}
 						</div>
@@ -115,4 +137,20 @@ class ChooseExtraOption extends React.Component<IProps, IState> {
 	}
 }
 
-export default ChooseExtraOption;
+const mapStateToProps = rootState => ({
+	survey: rootState.survey.surveys,
+	topList: rootState.userTops.topList,
+	currentUserId: rootState.profile.profileInfo.id,
+	event: rootState.events.allEvents
+});
+
+const mapDispatchToProps = {
+	fetchSurveys,
+	fetchTops,
+	getAllEvents
+};
+
+export default connect(
+	mapStateToProps,
+	mapDispatchToProps
+)(ChooseExtraOption);
