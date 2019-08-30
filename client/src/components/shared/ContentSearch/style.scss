@@ -59,4 +59,41 @@
 			padding: 0;
 		}
 	}
+	.modal-data-search-show {
+		transform: scaleY(1) !important;
+	}
+
+	.modal-data-search {
+		transform: scaleY(0);
+		font-family: $base-font-family;
+		background: #f7f8f9;
+		border: 1px solid $border-color;
+		box-shadow: 2px 1px 8px $input-shadow-color;
+		border-radius: 3px;
+		position: absolute;
+		top: 100%;
+		left: 0;
+		z-index: 10;
+		transform-origin: 0 0;
+		transition: 0.5s ease-in-out;
+		text-align: left;
+		cursor: default;
+		font-size: $base-font-size;
+		line-height: 15px;
+		width: 600px;
+		padding: 0 10px 10px 10px;
+		.hover {
+			color: inherit;
+		}
+		a {
+			text-decoration: none;
+
+			display: block;
+			padding-top: 15px;
+			line-height: 20px;
+			&:hover {
+				cursor: pointer;
+			}
+		}
+	}
 }
