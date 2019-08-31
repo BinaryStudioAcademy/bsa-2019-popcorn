@@ -48,6 +48,7 @@ export const updateEmail = async (
   email: string,
   next
 ) => {
+  console.log(user);
   if (userId !== user.id)
     return next({ status: 401, message: "Permision denied." }, null);
   const userByEmail = await getByEmail(email);

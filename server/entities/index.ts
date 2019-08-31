@@ -23,6 +23,7 @@ import { Follower } from "./Follower";
 import { FavoriteList } from "./FavoriteList";
 import { Notification } from "./Notification";
 import { NotificationToken } from "./NotificationToken";
+import { UserTemp } from "./UserTemp";
 export default [
   User,
   Post,
@@ -50,5 +51,6 @@ export default [
   FavoriteList,
   Watch,
   Notification,
-  NotificationToken
+  NotificationToken,
+  UserTemp
 ];

@@ -9,7 +9,15 @@ export const getUser = async () => {
 };
 
 export const updateEmail = async (userId: string, email: string) => {
-	const body = { email };
+	const token =
+		Math.random()
+			.toString(36)
+			.substring(2, 15) +
+		Math.random()
+			.toString(36)
+			.substring(2, 15);
+	const body = { email, token };
+
 	const res = await callWebApi({
 		method: 'PUT',
 		endpoint: `/api/user/email/${userId}`,
@@ -19,7 +27,14 @@ export const updateEmail = async (userId: string, email: string) => {
 };
 
 export const updatePassword = async (userId: string, password: string) => {
-	const body = { password };
+	const token =
+		Math.random()
+			.toString(36)
+			.substring(2, 15) +
+		Math.random()
+			.toString(36)
+			.substring(2, 15);
+	const body = { password, token };
 	const res = await callWebApi({
 		method: 'PUT',
 		endpoint: `/api/user/password/${userId}`,

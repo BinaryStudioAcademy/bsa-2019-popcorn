@@ -28,6 +28,7 @@ import {
 	SET_LOGIN_ERROR,
 	SET_REGISTER_ERROR
 } from '../authorization/actionTypes';
+import { CONFIRM_CHANGES } from '../ConfirmChange/actionTypes';
 import config from '../../config';
 import webApi from '../../services/webApi.service';
 
@@ -126,6 +127,21 @@ export function* fetchLogin(action) {
 				loginError: e.response.data.message
 			}
 		});
+	}
+}
+
+export function* confirmChanges(action) {
+	try {
+		yield call(webApi, {
+			method: 'PUT',
+			endpoint: `/api/confirm/${action.payload.token}`
+		});
+
+		yield put({
+			type: LOGOUT
+		});
+	} catch (e) {
+		console.log('user saga confirm', e);
 	}
 }
 
@@ -320,6 +336,10 @@ function* watchFetchRestorePassword() {
 	yield takeEvery(FETCH_RESTORE_PASSWORD, fetchRestorePassword);
 }
 
+function* watchConfirm() {
+	yield takeEvery(CONFIRM_CHANGES, confirmChanges);
+}
+
 export default function* profile() {
 	yield all([
 		watchGetSelectedUser(),
@@ -334,6 +354,7 @@ export default function* profile() {
 		watchFetchLogout(),
 		watchUpdateProfile(),
 		watchSendPost(),
-		watchFetchLogout()
+		watchFetchLogout(),
+		watchConfirm()
 	]);
 }
