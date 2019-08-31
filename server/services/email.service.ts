@@ -46,3 +46,18 @@ export const sendConfirmPasswordChange = (email, token) => {
   };
   return emailRepository.send(msg);
 };
+
+export const sendWelcomeEmail = (email) => {
+  const msg = {
+    to: email,
+    from: process.env.USER_MAIL,
+    subject: "Congratulation with registation",
+    html: `
+      <h1 style='text-align: center;'>
+        Welcome to Pop Corn!
+      <h1>
+    `
+  };
+  return emailRepository.send(msg); 
+}
+
