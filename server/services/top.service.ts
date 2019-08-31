@@ -72,13 +72,19 @@ export const getTopById = async (topId: string): Promise<Top> => {
 };
 
 export const getTopByTitle = async (title: string): Promise<Array<Top>> => {
-  const top: Array<Top> = await getCustomRepository(TopRepository).find({
+  const tops: Array<Top> = await getCustomRepository(TopRepository).find({
     relations: ["user", "movieInTop"],
     where: { title: Like(`%${title}%`) }
   });
-  if (top.length === 0) return [];
 
-  return getTopWithMovies(top);
+  return await Promise.all(
+    tops.map(async top => {
+      const movieIds = top.movieInTop.map(top => top.movieId);
+      const elasticResponse = await getByIdValues(movieIds);
+      top.movieInTop = elasticResponse.hits.hits.map(movie => movie._source);
+      return top;
+    })
+  );
 };
 
 export const getTopsByUserId = async (userId: string): Promise<any[]> => {
@@ -87,7 +93,14 @@ export const getTopsByUserId = async (userId: string): Promise<any[]> => {
     where: { userId }
   });
 
-  return await getTopWithMovies(tops);
+  return await Promise.all(
+    tops.map(async top => {
+      const movieIds = top.movieInTop.map(top => top.movieId);
+      const elasticResponse = await getByIdValues(movieIds);
+      top.movieInTop = elasticResponse.hits.hits.map(movie => movie._source);
+      return top;
+    })
+  );
 };
 
 export const createTop = async (top: Top): Promise<Top> =>
