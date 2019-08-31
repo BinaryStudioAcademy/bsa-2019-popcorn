@@ -223,8 +223,7 @@ class ProfileComponent extends Component<ProfileProps, IProfileComponentState> {
 									</div>
 								</div>
 							)}
-							{this.props.userId !== id && <FollowButton />}
-							<Follow userId={id} />
+							<Follow userId={id} className="follow" />
 						</div>
 					)}
 
@@ -238,7 +237,12 @@ class ProfileComponent extends Component<ProfileProps, IProfileComponentState> {
 									/>
 								</span>
 							)}
-							<div className="profileRow-username">{name}</div>
+							{this.props.userId !== id && (
+								<FollowButton className="follow-btn" />
+							)}
+							<div className="profileRow-username">
+								<span>{name}</span>
+							</div>
 							<div className="profileRow-info">
 								{male && (
 									<div className="user-gender">
