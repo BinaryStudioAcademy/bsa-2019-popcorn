@@ -10,7 +10,7 @@ const uploadToImgur = async image => {
     })).json();
     return data.data.link;
   } catch (e) {
-    return e;
+    throw e;
   }
 };
 
