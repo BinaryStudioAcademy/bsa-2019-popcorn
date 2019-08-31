@@ -1,4 +1,9 @@
-import { EntityRepository, getCustomRepository, Repository } from "typeorm";
+import {
+  EntityRepository,
+  getCustomRepository,
+  Like,
+  Repository
+} from "typeorm";
 import { Surveys } from "../entities/Surveys";
 import { Surveys as SurveysModel } from "../models/SurveysModel";
 import UserRepository from "./user.repository";
@@ -81,19 +86,17 @@ class SurveysRepository extends Repository<Surveys> {
   }
 
   async getSurveysByTitle(title: string) {
-    return await this.findOne(
-      { title },
-      {
-        relations: [
-          "surveysQuestion",
-          "surveysQuestion.surveysQuestionOption",
-          "surveysQuestion.surveysQuestionAnswer",
-          "surveysQuestion.surveysQuestionAnswer.user",
-          "surveysQuestion.surveysQuestionAnswer.surveysQuestionOption",
-          "user"
-        ]
-      }
-    );
+    return await this.find({
+      where: { title: Like(`%${title}%`) },
+      relations: [
+        "surveysQuestion",
+        "surveysQuestion.surveysQuestionOption",
+        "surveysQuestion.surveysQuestionAnswer",
+        "surveysQuestion.surveysQuestionAnswer.user",
+        "surveysQuestion.surveysQuestionAnswer.surveysQuestionOption",
+        "user"
+      ]
+    });
   }
 
   async getSurveysByUserId(id: string, next?) {

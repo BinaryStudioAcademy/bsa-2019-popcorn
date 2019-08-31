@@ -60,6 +60,30 @@ class ContentSearch extends React.Component<IProps, IState> {
 						/>
 					</NavLink>
 				));
+			case 'top':
+				return elem.data.map(top => (
+					<NavLink to={'/tops/' + top.id}>
+						<Extra
+							clearExtra={data => null}
+							data={top}
+							link={'/tops/' + top.id}
+							type={'top'}
+							readyPost={true}
+						/>
+					</NavLink>
+				));
+			case 'survey':
+				return elem.data.map(survey => (
+					<NavLink to={`/user-page/${survey.user.id}/survey/${survey.id}`}>
+						<Extra
+							clearExtra={data => null}
+							data={survey}
+							link={`/user-page/${survey.user.id}/survey/${survey.id}`}
+							type={'survey'}
+							readyPost={true}
+						/>
+					</NavLink>
+				));
 		}
 	}
 

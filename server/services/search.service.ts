@@ -50,7 +50,7 @@ const contentTop = async (title: string, wrap = true) => {
   return wrap
     ? [{ data: top, type: "top" }]
     : {
-        top,
+        data: top,
         type: "top"
       };
 };
@@ -70,7 +70,7 @@ const contentSurvey = async (title: string, wrap = true) => {
   return wrap
     ? [{ data: survey, type: "survey" }]
     : {
-        survey,
+        data: survey,
         type: "survey"
       };
 };

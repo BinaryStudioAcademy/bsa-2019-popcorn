@@ -26,7 +26,9 @@ export const getSurveysById = async (id: string, next): Promise<Surveys> => {
   return await getCustomRepository(SurveysRepository).getSurveysById(id, next);
 };
 
-export const getSurveysByTitle = async (title: string): Promise<Surveys> => {
+export const getSurveysByTitle = async (
+  title: string
+): Promise<Array<Surveys>> => {
   return await getCustomRepository(SurveysRepository).getSurveysByTitle(title);
 };
 

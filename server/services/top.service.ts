@@ -1,7 +1,7 @@
 import { Top } from "../models/TopModel";
 import TopRepository from "../repository/top.repository";
 import MovieInTopRepository from "../repository/movieInTop.repository";
-import { getCustomRepository } from "typeorm";
+import { getCustomRepository, Like } from "typeorm";
 import * as movieService from "./movie.service";
 import { getByIdValues } from "../repository/movieElastic.repository";
 
@@ -74,7 +74,7 @@ export const getTopById = async (topId: string): Promise<Top> => {
 export const getTopByTitle = async (title: string): Promise<Array<Top>> => {
   const top: Array<Top> = await getCustomRepository(TopRepository).find({
     relations: ["user", "movieInTop"],
-    where: { title }
+    where: { title: Like(`%${title}%`) }
   });
   if (top.length === 0) return [];
 
