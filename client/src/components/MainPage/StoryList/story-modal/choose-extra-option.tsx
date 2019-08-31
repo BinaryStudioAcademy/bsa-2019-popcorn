@@ -27,7 +27,7 @@ interface IProps {
 	};
 	currentUserId: string;
 	survey: any;
-	topList: any;
+	top: any;
 	event: any;
 	fetchSurveys: (id: string) => any;
 	fetchTops: (id: string) => any;
@@ -140,7 +140,7 @@ class ChooseExtraOption extends React.Component<IProps, IState> {
 
 const mapStateToProps = rootState => ({
 	survey: rootState.survey.surveys,
-	topList: rootState.userTops.topList,
+	top: rootState.userTops.topList,
 	currentUserId: rootState.profile.profileInfo.id,
 	event: rootState.events.allEvents
 });
