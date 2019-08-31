@@ -71,17 +71,9 @@ export function* uploadAvatar(action) {
 	try {
 		const data = yield call(uploadFile, action.payload.file);
 
-		// remove public in order to save public path to img in server
-		let url;
-		if (data.imageUrl.indexOf('\\') !== -1) {
-			url = data.imageUrl.split(`\\`);
-		} else url = data.imageUrl.split(`/`);
-
-		url.shift();
-
 		yield put({
 			type: SET_TEMP_AVATAR,
-			payload: { uploadUrl: '/' + url.join('/') }
+			payload: { uploadUrl: data.imageUrl }
 		});
 	} catch (e) {
 		console.log('user page saga catch: uploadAvatar', e.message);

@@ -50,15 +50,6 @@ class ImageUploader extends React.Component<
 			this.props
 				.imageHandler(data)
 				.then(({ imageUrl }) => {
-					let url;
-					url =
-						imageUrl.indexOf('\\') !== -1
-							? imageUrl.split(`\\`)
-							: imageUrl.split(`/`);
-					url.shift();
-					url = url.join('/');
-
-					url = '/' + url;
 					const splittedUrl = imageUrl.split('.');
 					if (
 						!(
@@ -69,8 +60,8 @@ class ImageUploader extends React.Component<
 					) {
 						throw new Error('Incorrect image format');
 					}
-					this.setState({ imageUrl: url, isUploading: false, errorMsg: '' });
-					this.props.imageStateHandler(url);
+					this.setState({ imageUrl, isUploading: false, errorMsg: '' });
+					this.props.imageStateHandler(imageUrl);
 				})
 				.catch(error => {
 					this.setState({ isUploading: false, errorMsg: error.message });
