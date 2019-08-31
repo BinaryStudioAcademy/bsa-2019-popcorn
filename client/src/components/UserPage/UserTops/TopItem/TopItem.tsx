@@ -9,7 +9,7 @@ import { ITopItem } from '../UserTops.service';
 
 interface ITopItemProps {
 	topItem: ITopItem;
-	isOwnTop: boolean;
+	isOwnData: boolean;
 	deleteTop: (topItem: ITopItem) => void;
 	saveUserTop: (topItem: ITopItem) => void;
 	uploadImage: (data: any, titleId: string) => void;
@@ -23,7 +23,7 @@ interface ITopItemProps {
 const TopItem: React.FC<ITopItemProps> = ({
 	saveUserTop,
 	topItem,
-	isOwnTop,
+	isOwnData,
 	deleteTop,
 	uploadImage,
 	uploadUrl,
@@ -32,9 +32,9 @@ const TopItem: React.FC<ITopItemProps> = ({
 }) => {
 	const [editTop, canEditTop] = useState(topItem.isNewTop || false);
 	const [title, setTitle] = useState(topItem.title);
-	// const [isOwnTop] = useState(topItem.isOwnTop);
+	// const [isOwnData] = useState(topItem.isOwnData);
 	// const [topImageUrl, setTopImageUrl] = useState(topItem.topImageUrl);
-	// const [isOwnTop] = useState(topItem.isOwnTop);
+	// const [isOwnData] = useState(topItem.isOwnData);
 	const [topImageUrl, setTopImageUrl] = useState(topItem.topImageUrl);
 	useEffect(() => {
 		if (urlForTop == topItem.id) {
@@ -94,12 +94,12 @@ const TopItem: React.FC<ITopItemProps> = ({
 						<FontAwesomeIcon icon={faImage} className="fontAwesomeIcon" />
 					</label>
 				)}
-				{isOwnTop && (
+				{isOwnData && (
 					<div className="edit-top hover" onClick={toogleEdit}>
 						Edit
 					</div>
 				)}
-				{isOwnTop && (
+				{isOwnData && (
 					<div className="delete-top hover" onClick={() => deleteTop(topItem)}>
 						<CloseIcon className="close-icon" />
 					</div>

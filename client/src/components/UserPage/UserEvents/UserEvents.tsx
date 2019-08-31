@@ -19,6 +19,8 @@ interface IProps {
 	deleteEvent: (id: string, currentUserId: string) => any;
 	currentUserId: string;
 	currentUserRole: string;
+	selectedUserId: string;
+	isOwnData: boolean;
 	saveEvent: (event: any) => void;
 	updateEvent: (event: any) => void;
 	currentProfileUserId: string;
@@ -44,8 +46,8 @@ class UserEvents extends React.Component<IProps, IState> {
 	}
 
 	componentDidMount() {
-		const { currentUserId } = this.props;
-		this.props.getUserEvents(currentUserId);
+		const { currentProfileUserId } = this.props;
+		this.props.getUserEvents(currentProfileUserId);
 	}
 
 	editEvent = (editableEvent: null | IEventFormatClient = null) => {
@@ -62,14 +64,6 @@ class UserEvents extends React.Component<IProps, IState> {
 		}
 	};
 
-	isOwnEvent = event => {
-		const { userId } = event;
-		return (
-			this.props.currentUserId === userId ||
-			this.props.currentUserRole === 'admin'
-		);
-	};
-
 	renderEventList = (eventList: IEventFormatClient[], deleteEventAction: any) =>
 		eventList.map(event => (
 			<EventItem
@@ -77,17 +71,12 @@ class UserEvents extends React.Component<IProps, IState> {
 				key={event.id}
 				deleteEvent={deleteEventAction}
 				editEvent={this.editEvent}
-				isOwnEvent={this.isOwnEvent(event)}
+				isOwnEvent={this.props.isOwnData}
 			/>
 		));
 
 	render() {
-		const {
-			userEvents,
-			currentUserId,
-			deleteEvent,
-			currentProfileUserId
-		} = this.props;
+		const { userEvents, currentUserId, deleteEvent, isOwnData } = this.props;
 		const { openEventEditor, editableEvent } = this.state;
 		if (!userEvents) {
 			return <Spinner />;
@@ -103,14 +92,14 @@ class UserEvents extends React.Component<IProps, IState> {
 		});
 		return (
 			<div className="user-events">
-				{/* {currentProfileUserId === currentUserId ? ( */}
-				<div
-					className="create-event-button hover"
-					onClick={() => this.editEvent()}
-				>
-					{openEventEditor ? BACK_TO_EVENTS_TEXT : CREATE_EVENT_TEXT}{' '}
-				</div>
-				{/* // ) : null} */}
+				{isOwnData && (
+					<div
+						className="create-event-button hover"
+						onClick={() => this.editEvent()}
+					>
+						{openEventEditor ? BACK_TO_EVENTS_TEXT : CREATE_EVENT_TEXT}{' '}
+					</div>
+				)}
 				{openEventEditor ? (
 					<UserEventsEditor
 						closeEditor={this.editEvent}
@@ -120,20 +109,24 @@ class UserEvents extends React.Component<IProps, IState> {
 					/>
 				) : (
 					<div>
-						<div className="events-title">
-							<span>Your Events</span>
-						</div>
-						<div className="event-list-container">
-							{ownEvents.length === 0 ? (
-								<div className="event-show-warning">
-									No events yet. You can create
+						{isOwnData && (
+							<div>
+								<div className="events-title">
+									<span>Your Events</span>
 								</div>
-							) : (
-								this.renderEventList(ownEvents, deleteEvent)
-							)}
-						</div>
+								<div className="event-list-container">
+									{ownEvents.length === 0 ? (
+										<div className="event-show-warning">
+											No events yet. You can create
+										</div>
+									) : (
+										this.renderEventList(ownEvents, deleteEvent)
+									)}
+								</div>
+							</div>
+						)}
 						<div className="events-title">
-							<span>Events interested you</span>
+							<span>Events interested in</span>
 						</div>
 						<div className="event-list-container">
 							{subscribeEvents.length === 0 ? (

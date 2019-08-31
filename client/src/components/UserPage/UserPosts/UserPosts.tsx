@@ -11,7 +11,7 @@ interface IProps {
 	userId: string;
 	croppedSaved: boolean;
 	saveCropped: () => void;
-	currentUserId: string;
+	isOwnData: boolean;
 }
 const userPostStyle = {
 	marginRight: '0px',
@@ -24,7 +24,7 @@ const UserPosts: React.FC<IProps> = ({
 	userId,
 	croppedSaved,
 	saveCropped,
-	currentUserId
+	isOwnData
 }) => {
 	const [showPostsConstructor, setShowPostsConstructor] = useState(false);
 	if (!posts) {
@@ -37,7 +37,7 @@ const UserPosts: React.FC<IProps> = ({
 	};
 	return (
 		<div className="UserPosts">
-			{currentUserId === userId && (
+			{isOwnData && (
 				<button
 					className="create-post-btn hover"
 					onClick={ev => togglePostConstructor(ev)}
