@@ -47,6 +47,7 @@ interface IProps {
 			}>;
 		};
 		activity?: string;
+		activityId?: string;
 		movieId?: string;
 		movie?: {
 			title: string;
@@ -212,11 +213,7 @@ class StoryViewer extends PureComponent<IProps, IState> {
 											{story.caption}
 										</div>
 										<div className={'seen'}>
-											<p
-												className={'seen-by-info'}
-												onClick={this.toogleSeenByModal}
-												style={{ width: '100%' }}
-											>
+											<p className={'seen-by-info'} style={{ width: '100%' }}>
 												<span
 													style={{
 														display: 'flex',
@@ -225,15 +222,13 @@ class StoryViewer extends PureComponent<IProps, IState> {
 														width: '100%'
 													}}
 												>
-													{this.isOwnStory(story) && (
-														<span>
-															<FontAwesomeIcon icon={faEye} />
-															<span className="seen-by-amount">
-																{story.users.length}
-															</span>
-														</span>
+													{story.type && (
+														<NavLink
+															to={'/' + story.type + 's/' + story.activityId}
+														>
+															{story.activity}
+														</NavLink>
 													)}
-													{story.type && story.activity}
 													{story.movieId && story.movie && (
 														<NavLink to={'/movies/' + story.movie.id}>
 															{story.movie.title}
