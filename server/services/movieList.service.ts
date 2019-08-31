@@ -1,6 +1,6 @@
 import MovieListRepository from "../repository/movieList.repository";
 import { getCustomRepository } from "typeorm";
-
+import * as elasticRepository from "../repository/movieElastic.repository";
 export class IRequest {
   title: string;
   userId?: string;
@@ -31,3 +31,32 @@ export const updateMovieList = (movieListId: string, movieList: IRequest) =>
     { id: movieListId },
     movieList
   );
+
+export const getMovieListDetails = async (movieListId: string) => {
+  const movieList = await getCustomRepository(MovieListRepository).getListById(
+    movieListId
+  );
+
+  const { moviesId } = movieList;
+  const elasticProperties = [
+    "id",
+    "title",
+    "runtime",
+    "poster_path",
+    "release_date"
+  ];
+
+  const elasticData = await elasticRepository.getPropertiesByIdValues(
+    moviesId,
+    elasticProperties
+  );
+
+  const movies = elasticData.hits.hits.map(data => data._source);
+
+  movies.sort(
+    (a, b) =>
+      moviesId.indexOf(a.id.toString()) - moviesId.indexOf(b.id.toString())
+  );
+
+  return { movieList, movies };
+};
