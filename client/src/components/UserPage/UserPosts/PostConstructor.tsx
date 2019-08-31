@@ -9,10 +9,9 @@ import ImageUploader from '../../MainPage/ImageUploader/ImageUploader';
 import ChooseExtra from './PostExtra/choose-extra';
 import Extra from '././PostExtra/extra';
 import {
-	faPaperclip,
 	faCheckCircle,
-	faTimesCircle,
-	faTimes
+	faTimes,
+	faTimesCircle
 } from '@fortawesome/free-solid-svg-icons';
 
 import { setPost } from '../actions';
@@ -20,8 +19,6 @@ import { fetchPosts } from '../../MainPage/FeedBlock/FeedBlock.redux/actions';
 import { getUsersPosts } from '../../UserPage/actions';
 import Cropper from 'react-cropper';
 import { uploadFile } from '../../../services/file.service';
-import config from '../../../config';
-import Image from '../../shared/Image/Image';
 
 interface IPostConstructorProps {
 	userId: string;
@@ -149,6 +146,7 @@ class PostConstructor extends React.Component<
 			image_url: ''
 		});
 	}
+
 	onSaveCropped() {
 		if (this.cropper.current) {
 			const dataUrl = this.cropper.current.getCroppedCanvas().toBlob(blob => {
@@ -156,23 +154,7 @@ class PostConstructor extends React.Component<
 				data.append('file', blob);
 				uploadFile(data)
 					.then(({ imageUrl }) => {
-						if (imageUrl.indexOf('\\') !== -1) {
-							let url = imageUrl.split(`\\`);
-							url.shift();
-							url = url.join('/');
-
-							url = '/' + url;
-
-							this.imageStateHandler(url, true);
-						} else {
-							let url = imageUrl.split(`/`);
-							url.shift();
-							url = url.join('/');
-
-							url = '/' + url;
-
-							this.imageStateHandler(url, true);
-						}
+						this.imageStateHandler(imageUrl, true);
 					})
 					.catch(error => {});
 			});
