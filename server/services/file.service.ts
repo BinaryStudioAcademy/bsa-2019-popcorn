@@ -1,4 +1,5 @@
 import { Form } from "multiparty";
+import { upload } from "./image.service";
 const uuid = require("uuid/v4");
 const fs = require("fs");
 
@@ -13,12 +14,15 @@ export const uploadFile = req =>
         maxFilesSize: 1048576 * 3
       });
       form.parse(req, function(err, fields, files): any {
-        console.log(files);
         if (err) return reject(err);
 
-        if (files.file) return resolve(files.file[0].path);
+        const file = Buffer.from(fs.readFileSync(files.file[0].path)).toString(
+          "base64"
+        );
 
-        if (files.image) return resolve(files.image[0].path);
+        upload(file)
+          .then(url => resolve(url))
+          .catch(e => reject(e));
       });
     } else if (contentType && contentType === "octet-stream") {
       const buffer = [];
@@ -30,12 +34,9 @@ export const uploadFile = req =>
         const concat = Buffer.concat(buffer);
         req.body = JSON.parse(concat.toString("utf8"));
 
-        const format = req.body.format.split("/").pop();
-        const name = `public/files/${uuid()}.${format}`;
-        fs.writeFile(name, req.body.base, "base64", err => {
-          if (err) return reject(err);
-          return resolve(name);
-        });
+        upload(req.body.base)
+          .then(url => resolve(url))
+          .catch(e => reject(e));
       });
     } else reject(new Error("Bad request"));
   });
