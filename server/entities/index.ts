@@ -24,6 +24,8 @@ import { FavoriteList } from "./FavoriteList";
 import { Notification } from "./Notification";
 import { NotificationToken } from "./NotificationToken";
 import { UserTemp } from "./UserTemp";
+import { Chat } from "./Chat";
+import { Message } from "./Message";
 export default [
   User,
   Post,
@@ -52,5 +54,7 @@ export default [
   Watch,
   Notification,
   NotificationToken,
-  UserTemp
+  UserTemp,
+  Chat,
+  Message
 ];
