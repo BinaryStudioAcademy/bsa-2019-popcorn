@@ -116,12 +116,12 @@ class ReviewItem extends React.Component<IProps, IState> {
 								<div className="profile-name">
 									{user.id === currentUserId ? 'You' : user.name}
 								</div>
+								<div className="profile-review-date">
+									<Moment format=" D MMM HH:mm " local>
+										{String(created_at)}
+									</Moment>
+								</div>
 							</div>
-						</div>
-						<div className="profile-review-date">
-							<Moment format=" D MMM HH:mm " local>
-								{String(created_at)}
-							</Moment>
 						</div>
 					</div>
 					<div
