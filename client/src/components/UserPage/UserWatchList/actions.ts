@@ -8,8 +8,9 @@ import {
 	DELETE_MOVIE_FROM_WATCH_LIST
 } from './actionTypes';
 
-export const fetchWatchList = () => ({
-	type: FETCH_USER_WATCH_LIST
+export const fetchWatchList = (userId: string) => ({
+	type: FETCH_USER_WATCH_LIST,
+	payload: { userId }
 });
 
 export const saveWatchItem = (movie: any) => ({

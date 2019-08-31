@@ -30,7 +30,7 @@ type ProfileProps = {
 	croppedSaved: boolean;
 	saveCropped: () => void;
 	userId: string;
-	userRole: string;
+	isOwnData: boolean;
 	updateProfile: (
 		id: string,
 		data: {
@@ -121,15 +121,6 @@ class ProfileComponent extends Component<ProfileProps, IProfileComponentState> {
 		this.props.saveCropped();
 	}
 
-	isOwnProfile() {
-		const {
-			userId,
-			userRole,
-			profileInfo: { id: ownerId }
-		} = this.props;
-		return userRole === 'admin' || userId === ownerId;
-	}
-
 	render() {
 		let {
 			name,
@@ -150,8 +141,13 @@ class ProfileComponent extends Component<ProfileProps, IProfileComponentState> {
 		}
 
 		const { isEditing } = this.state;
-		const isOwnProfile = this.isOwnProfile();
-		const { uploadUrl, cancelAvatar, setAvatar, croppedSaved } = this.props;
+		const {
+			uploadUrl,
+			cancelAvatar,
+			setAvatar,
+			croppedSaved,
+			isOwnData
+		} = this.props;
 		return (
 			<div className={'UserProfileComponent'}>
 				{this.state.errorMsg && (
@@ -201,7 +197,7 @@ class ProfileComponent extends Component<ProfileProps, IProfileComponentState> {
 								style={{ width: '100%', height: '100%' }}
 								alt=""
 							/>
-							{isOwnProfile && (
+							{isOwnData && (
 								<div>
 									<input
 										name="image"
@@ -229,7 +225,7 @@ class ProfileComponent extends Component<ProfileProps, IProfileComponentState> {
 
 					{!isEditing ? (
 						<div className="ProfileInfo">
-							{isOwnProfile && (
+							{isOwnData && (
 								<span onClick={this.onEdit}>
 									<FontAwesomeIcon
 										icon={faEdit}
@@ -312,8 +308,7 @@ class ProfileComponent extends Component<ProfileProps, IProfileComponentState> {
 
 const mapStateToProps = (rootState, props) => ({
 	...props,
-	userId: rootState.profile.profileInfo.id,
-	userRole: rootState.profile.profileInfo.role
+	userId: rootState.profile.profileInfo.id
 });
 
 const actions = {
