@@ -3,12 +3,16 @@ import './style.scss';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { fetchData } from './redux/actions';
+import MoviePreview from './MoviePreview/index';
+import Extra from '../../UserPage/UserPosts/PostExtra/extra';
+import { NavLink } from 'react-router-dom';
 
 const options = ['all', 'movie', 'event', 'survey', 'top'];
 const defaultOption = options[0];
 
 interface IProps {
 	fetchData: (title: string, type: string) => any;
+	data: null | Array<{ data: any; type: string }>;
 }
 
 interface IState {
@@ -21,23 +25,48 @@ class ContentSearch extends React.Component<IProps, IState> {
 	state = {
 		title: '',
 		type: defaultOption,
-		showModal: true
+		showModal: false
 	};
 
 	componentDidMount(): void {
 		document.addEventListener('click', () => {
-			this.showModal(false);
+			this.setModal(false);
 		});
 	}
 
-	showModal(option: boolean) {
+	setModal(option: boolean) {
 		this.setState({ showModal: option });
 	}
 
-	render() {
-		const { title, type, showModal } = this.state;
+	showModal(): boolean {
+		return this.state.showModal;
+	}
 
-		const { fetchData } = this.props;
+	renderList(elem: { data: any; type: string }) {
+		switch (elem.type) {
+			case 'movie':
+				return elem.data.map(movie => (
+					<MoviePreview movie={movie} key={movie.id} />
+				));
+			case 'event':
+				return elem.data.map(event => (
+					<NavLink to={'/events/' + event.id}>
+						<Extra
+							clearExtra={data => null}
+							data={event}
+							link={'/events/' + event.id}
+							type={'event'}
+							readyPost={true}
+						/>
+					</NavLink>
+				));
+		}
+	}
+
+	render() {
+		const { title, type } = this.state;
+
+		const { fetchData, data } = this.props;
 
 		return (
 			<div className={'content-search'}>
@@ -49,9 +78,9 @@ class ContentSearch extends React.Component<IProps, IState> {
 						className="search-input"
 						onChange={e => this.setState({ title: e.target.value })}
 						onKeyPress={e => {
-							if (e.which === 13) {
-								console.log('send request');
+							if (e.which === 13 && title.trim()) {
 								fetchData(title, type);
+								this.setModal(true);
 							}
 						}}
 					/>
@@ -69,10 +98,11 @@ class ContentSearch extends React.Component<IProps, IState> {
 				</select>
 				<div
 					className={
-						'modal-data-search ' + (showModal ? 'modal-data-search-show' : '')
+						'modal-data-search ' +
+						(this.showModal() ? 'modal-data-search-show' : '')
 					}
 				>
-					<div>something</div>
+					{data && data.map(elem => this.renderList(elem))}
 				</div>
 			</div>
 		);
@@ -80,7 +110,8 @@ class ContentSearch extends React.Component<IProps, IState> {
 }
 
 const mapStateToProps = (rootState, props) => ({
-	...props
+	...props,
+	data: rootState.contentSearch.data
 });
 
 const actions = {

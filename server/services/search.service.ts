@@ -40,7 +40,7 @@ const contentMovie = async (title: string, wrap = true) => {
   return wrap
     ? [{ data: movie, type: "movie" }]
     : {
-        movie,
+        data: movie,
         type: "movie"
       };
 };
@@ -60,7 +60,7 @@ const contentEvent = async (title: string, wrap = true) => {
   return wrap
     ? [{ data: event, type: "event" }]
     : {
-        event,
+        data: event,
         type: "event"
       };
 };

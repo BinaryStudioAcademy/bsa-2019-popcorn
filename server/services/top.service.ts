@@ -71,18 +71,14 @@ export const getTopById = async (topId: string): Promise<Top> => {
   return topsWithMovies[0];
 };
 
-export const getTopByTitle = async (title: string): Promise<Top> => {
-  const top: Top = await getCustomRepository(TopRepository).findOne({
+export const getTopByTitle = async (title: string): Promise<Array<Top>> => {
+  const top: Array<Top> = await getCustomRepository(TopRepository).find({
     relations: ["user", "movieInTop"],
     where: { title }
   });
+  if (top.length === 0) return [];
 
-  const topsWithMovies = await getMoviesInTops(
-    [top],
-    ["id", "title", "release_date", "poster_path"],
-    top.movieInTop.length
-  );
-  return topsWithMovies[0];
+  return getTopWithMovies(top);
 };
 
 export const getTopsByUserId = async (userId: string): Promise<any[]> => {

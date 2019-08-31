@@ -21,7 +21,7 @@ export const getEventsByUserId = async (userId: string): Promise<any[]> => {
 export const getEventById = async (eventId: string): Promise<Event> =>
   await getCustomRepository(EventRepository).getEvent(eventId);
 
-export const getEventByTitle = async (title: string): Promise<Event> =>
+export const getEventByTitle = async (title: string): Promise<Array<Event>> =>
   await getCustomRepository(EventRepository).getEventByTitle(title);
 
 export const createEvent = async (event: any): Promise<Event> => {

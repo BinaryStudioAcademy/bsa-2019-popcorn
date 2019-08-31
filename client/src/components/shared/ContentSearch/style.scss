@@ -64,6 +64,8 @@
 	}
 
 	.modal-data-search {
+		max-height: 600px;
+		overflow-y: scroll;
 		transform: scaleY(0);
 		font-family: $base-font-family;
 		background: #f7f8f9;
@@ -95,5 +97,14 @@
 				cursor: pointer;
 			}
 		}
+	}
+	.extra {
+		border: none;
+	}
+	.extra-body {
+		max-width: 100%;
+	}
+	.active {
+		width: 100% !important;
 	}
 }
