@@ -22,8 +22,8 @@ $border-radius: 5px;
 	position: fixed;
 	top: 50%;
 	left: 50%;
-	width: 500px;
-	height: 700px;
+	width: 360px;
+	height: 720px;
 	transform: translate(-50%, -50%);
 	background-color: $background-gray;
 	z-index: 9;
@@ -57,8 +57,8 @@ $border-radius: 5px;
 		display: flex;
 		justify-content: space-between;
 		position: absolute;
-		top: 30px;
-		left: 110px;
+		top: 40px;
+		left: 40px;
 		button,
 		.color-picker-btn {
 			outline: none;
@@ -113,8 +113,8 @@ $border-radius: 5px;
 		line-height: 22px;
 
 		position: absolute;
-		bottom: 30px;
-		left: 163px;
+		bottom: 20px;
+		left: 93px;
 
 		min-width: 174px;
 		height: $btn-height;
@@ -156,10 +156,19 @@ $border-radius: 5px;
 				height: 500px;
 				width: 280px;
 			}
+
+			& + span {
+				position: absolute;
+				right: 0px;
+				& + span {
+					position: absolute;
+					right: 20px;
+				}
+			}
 		}
 		.upload-image-button {
 			position: absolute;
-			top: -75px;
+			top: -65px;
 			right: 58px;
 			outline: none;
 			border: none;
@@ -219,21 +228,17 @@ $border-radius: 5px;
 
 		.extra-item {
 			width: 200px;
-			border: $border;
-			padding: 5px;
+			padding: 10px;
+			border: 1px solid $border-color;
+			background-color: white;
 			border-radius: $border-radius;
 			font-size: $header-medium;
 			margin-bottom: 10px;
 			cursor: pointer;
 			position: relative;
 			left: 0;
-			transition: all 0.5s ease;
 			display: flex;
 			justify-content: space-between;
-		}
-
-		.extra-item:hover {
-			left: 20px;
 		}
 	}
 
@@ -265,18 +270,16 @@ $border-radius: 5px;
 			margin-top: 40px;
 
 			span {
-				border: $border;
+				padding: 10px;
+				border: 1px solid $border-color;
+				background-color: white;
 				border-radius: $border-radius;
-				padding: 5px;
 				margin-bottom: 10px;
 				cursor: pointer;
 				position: relative;
+				width: 90%;
+				text-align: center;
 				left: 0;
-				transition: all 0.5s ease;
-			}
-
-			span:hover {
-				left: 20px;
 			}
 		}
 	}

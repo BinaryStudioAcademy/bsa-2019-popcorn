@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import './story-list-item.scss';
 import config from '../../../../config';
+import { connect } from 'react-redux';
+
 interface IStoryListItemProps {
 	name: string;
 	imageUrl: string;
@@ -8,6 +10,9 @@ interface IStoryListItemProps {
 	index: number;
 	backgroundColor: string;
 	openViewer: (number) => void;
+	fontColor: string;
+	textPositionX?: number;
+	textPositionY?: number;
 }
 
 class StoryListItem extends Component<IStoryListItemProps> {
@@ -30,10 +35,30 @@ class StoryListItem extends Component<IStoryListItemProps> {
 						<img alt="story-pic" className="story-pic" src={imageUrl} />
 					)}
 				</div>
-				<div className="story-name">{name}</div>
+				<div
+					className="story-name"
+					style={{
+						color: this.props.fontColor,
+						top: this.props.textPositionY
+							? this.props.textPositionY / 3 - 205 + 'px'
+							: '-205px',
+						left: this.props.textPositionX
+							? this.props.textPositionX / 3 + 'px'
+							: 0
+					}}
+				>
+					{name}
+				</div>
 			</div>
 		);
 	}
 }
 
-export default StoryListItem;
+const mapStateToProps = (rootState, props) => ({
+	...props
+	// fontColor: rootState.story.newStory.fontColor,
+	// textPositionX: rootState.story.newStory.textPositionX,
+	// textPositionY: rootState.story.newStory.textPositionY,
+});
+
+export default connect(mapStateToProps)(StoryListItem);

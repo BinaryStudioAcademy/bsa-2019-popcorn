@@ -133,7 +133,7 @@ class UserTops extends React.Component<IUserTopProps, IUserTopsState> {
 		if (!topList) {
 			return <Spinner />;
 		}
-		
+
 		return (
 			<div className="user-tops">
 				{url_callback && (
@@ -146,20 +146,19 @@ class UserTops extends React.Component<IUserTopProps, IUserTopsState> {
 						Create Top
 					</div>
 				)}
-				
-				{topList.map(
-					(topItem: ITopItem) =>
-						<TopItem
-							key={topItem.id}
-							saveUserTop={this.saveUserTop}
-							topItem={topItem}
-							isOwnData={this.props.isOwnData}
-							deleteTop={this.deleteTop}
-							uploadUrl={this.props.uploadUrl}
-							urlForTop={this.props.urlForTop}
-							uploadImage={this.props.uploadImage}
-						/>
-				)}
+
+				{topList.map((topItem: ITopItem) => (
+					<TopItem
+						key={topItem.id}
+						saveUserTop={this.saveUserTop}
+						topItem={topItem}
+						isOwnData={this.props.isOwnData}
+						deleteTop={this.deleteTop}
+						uploadUrl={this.props.uploadUrl}
+						urlForTop={this.props.urlForTop}
+						uploadImage={this.props.uploadImage}
+					/>
+				))}
 			</div>
 		);
 	}

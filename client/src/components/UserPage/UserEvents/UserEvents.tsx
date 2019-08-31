@@ -76,17 +76,12 @@ class UserEvents extends React.Component<IProps, IState> {
 		));
 
 	render() {
-		const {
-			userEvents,
-			currentUserId,
-			deleteEvent,
-			isOwnData
-		} = this.props;
+		const { userEvents, currentUserId, deleteEvent, isOwnData } = this.props;
 		const { openEventEditor, editableEvent } = this.state;
 		if (!userEvents) {
 			return <Spinner />;
 		}
-		
+
 		const ownEvents: IEventFormatClient[] = [];
 		const subscribeEvents: IEventFormatClient[] = [];
 
@@ -123,10 +118,10 @@ class UserEvents extends React.Component<IProps, IState> {
 									{ownEvents.length === 0 ? (
 										<div className="event-show-warning">
 											No events yet. You can create
-							</div>
+										</div>
 									) : (
-											this.renderEventList(ownEvents, deleteEvent)
-										)}
+										this.renderEventList(ownEvents, deleteEvent)
+									)}
 								</div>
 							</div>
 						)}

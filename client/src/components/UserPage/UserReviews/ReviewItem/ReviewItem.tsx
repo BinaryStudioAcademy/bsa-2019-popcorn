@@ -138,7 +138,7 @@ class ReviewItem extends React.Component<IProps> {
 										}
 									>
 										Edit
-								</button>
+									</button>
 									<button
 										className="delete-button"
 										onClick={() => deleteReview(reviewId)}

@@ -1,18 +1,16 @@
 import React from 'react';
 import { ReactComponent as CrossIcon } from '../../assets/icons/storyVote/crossIcon.svg';
-import { SketchPicker } from 'react-color';
 import StoryVoting from '../StoryVoting/StoryVoting';
 import './StoryVotingCreation.scss';
 import { uploadFile } from '../../services/file.service';
-import config from '../../config';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
 	faArrowCircleLeft,
 	faTimesCircle
 } from '@fortawesome/free-solid-svg-icons';
-import { faCamera } from '@fortawesome/free-solid-svg-icons/faCamera';
 import { Redirect } from 'react-router';
 import IVoting from '../MainPage/StoryList/IVoting';
+import { connect } from 'react-redux';
 
 type StoryVotingCreationState = {
 	header: string;
@@ -38,6 +36,7 @@ class StoryVotingCreation extends React.Component<
 	{
 		userId: string;
 		createVoting: (voting: IVoting) => any;
+		backgroundColor: string;
 	},
 	StoryVotingCreationState
 > {
@@ -259,8 +258,8 @@ class StoryVotingCreation extends React.Component<
 				{this.state.previewIsShown ? (
 					<div className={'prev-wrp'}>
 						<StoryVoting
-							backColor={this.state.backgroundColor}
-							backgroundColor={'rgba(0,0,255,1)'} //change on back from story
+							backColor={this.props.backgroundColor}
+							backgroundColor={this.props.backgroundColor} //change on back from story
 							image_url={this.state.imageUrl}
 							deltaPositionForOptionBlock={this.state.deltaPositionOptionBlock}
 							deltaPositionForHeader={this.state.deltaPositionHeader}
@@ -275,7 +274,6 @@ class StoryVotingCreation extends React.Component<
 				) : (
 					<div className="story-voting-creation-form">
 						<div className="head">
-							<img className="author" src={config.DEFAULT_AVATAR} alt={''} />
 							<input
 								className="story-voting-header-input"
 								style={styles.errorsStyle}
@@ -296,46 +294,6 @@ class StoryVotingCreation extends React.Component<
 							</button>
 						</div>
 
-						<div className="color-picker">
-							<label className="color-picker-label">Select back color:</label>
-							<div
-								onClick={this.handleShowColorPicker}
-								className="color-picker-btn"
-							>
-								<div
-									style={styles.backStyle}
-									className="color-picker-btn-preview"
-								/>
-							</div>
-							{this.state.displayColorPicker ? (
-								<div className="color-picker-popover">
-									<div
-										className="color-picker-cover"
-										onClick={this.handleHideColorPicker}
-									/>
-									<SketchPicker
-										color={this.state.backgroundColor}
-										onChange={this.handleColorChange}
-									/>
-								</div>
-							) : null}
-						</div>
-						<div className="image-uploading">
-							<label htmlFor="image" className="upload-image-button">
-								<FontAwesomeIcon icon={faCamera} className="fontAwesomeIcon" />
-							</label>
-							<input
-								name="image"
-								type="file"
-								onChange={this.handleUploadFile}
-								className="upload-image"
-								id="image"
-								accept=".jpg, .jpeg, .png"
-								disabled={this.state.isUploading}
-							/>
-						</div>
-						<div className="errors-field">{this.state.errorMsg}</div>
-
 						<div>
 							<button
 								type="button"
@@ -352,4 +310,9 @@ class StoryVotingCreation extends React.Component<
 	}
 }
 
-export default StoryVotingCreation;
+const mapStateToProps = (rootState, props) => ({
+	...props,
+	backgroundColor: rootState.story.newStory.backgroundColor
+});
+
+export default connect(mapStateToProps)(StoryVotingCreation);

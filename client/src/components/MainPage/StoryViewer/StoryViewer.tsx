@@ -20,6 +20,10 @@ interface IProps {
 	stories: Array<{
 		image_url: string;
 		backgroundColor: string;
+		fontColor: string;
+		textPositionX?: number;
+		caption: string;
+		textPositionY?: number;
 		users: Array<{ name: string; image_url: string }>;
 		userInfo: {
 			userId: string;
@@ -43,6 +47,7 @@ interface IProps {
 			}>;
 		};
 		activity?: string;
+		activityId?: string;
 		movieId?: string;
 		movie?: {
 			title: string;
@@ -182,15 +187,36 @@ class StoryViewer extends PureComponent<IProps, IState> {
 									<main
 										style={{
 											backgroundImage: 'url(' + story.image_url + ')',
-											backgroundColor: story.backgroundColor
+											backgroundColor: story.backgroundColor,
+											flexDirection: 'column',
+											justifyContent: 'space-between'
 										}}
 									>
+										<div
+											className="story-caption"
+											style={{
+												fontSize: '37px',
+												position: 'static',
+												marginTop: story.textPositionY
+													? story.textPositionY * 1.25 + 'px'
+													: 0,
+												marginLeft: story.textPositionX
+													? story.textPositionX * 1.25 + 'px'
+													: 0,
+												color: story.fontColor,
+												textAlign: 'center',
+												width: '280px',
+												maxWidth: '350px',
+												maxHeight: '100px',
+												wordBreak: 'break-all',
+												overflowWrap: 'break-word',
+												whiteSpace: 'pre-line'
+											}}
+										>
+											{story.caption}
+										</div>
 										<div className={'seen'}>
-											<p
-												className={'seen-by-info'}
-												onClick={this.toogleSeenByModal}
-												style={{ width: '100%' }}
-											>
+											<p className={'seen-by-info'} style={{ width: '100%' }}>
 												<span
 													style={{
 														display: 'flex',
@@ -199,15 +225,13 @@ class StoryViewer extends PureComponent<IProps, IState> {
 														width: '100%'
 													}}
 												>
-													{this.isOwnStory(story) && (
-														<span>
-															<FontAwesomeIcon icon={faEye} />
-															<span className="seen-by-amount">
-																{story.users.length}
-															</span>
-														</span>
+													{story.type && (
+														<NavLink
+															to={'/' + story.type + 's/' + story.activityId}
+														>
+															{story.activity}
+														</NavLink>
 													)}
-													{story.type && story.activity}
 													{story.movieId && story.movie && (
 														<NavLink to={'/movies/' + story.movie.id}>
 															{story.movie.title}

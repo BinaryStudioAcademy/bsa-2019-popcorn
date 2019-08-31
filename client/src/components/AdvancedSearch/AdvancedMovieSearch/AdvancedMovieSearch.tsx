@@ -204,6 +204,7 @@ class AdvancedMovieSearch extends React.Component<
 					step={0.1}
 					marks={{ 0: '0', 10: '10' }}
 					header="Rating"
+					tooltip=""
 				/>
 				<AdvancedSearchInputBlock
 					handleSearchChange={this.handleDescriptionChange}
@@ -216,6 +217,7 @@ class AdvancedMovieSearch extends React.Component<
 					step={1}
 					marks={{ 0: '0', 600: '600' }}
 					header="Duration"
+					tooltip="min"
 				/>
 			</div>
 		);

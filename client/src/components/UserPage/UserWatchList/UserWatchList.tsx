@@ -45,7 +45,7 @@ const UserWatchList: React.FC<IProps> = ({
 		fetchWatchList(selectedUserId);
 		return <Spinner />;
 	}
-	
+
 	const watchedList: Array<IWatchItem> = [];
 	const toWatchList: Array<IWatchItem> = [];
 
@@ -99,7 +99,7 @@ const UserWatchList: React.FC<IProps> = ({
 						<div className="watch-list-left">
 							<div className="watch-list-description">
 								Find a movie and add to watch list
-						</div>
+							</div>
 							<div className="watch-search-and-sort">
 								<div className="search-input-container">
 									<MovieSearch

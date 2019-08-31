@@ -32,7 +32,9 @@ export default socket => {
           body: messageInfo.text,
           date: new Date(),
           url,
-          id: uuid()
+          id: uuid(),
+          entityType: "event",
+          entityId: event.id
         };
         await saveNotificitation({
           ...notification,

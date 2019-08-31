@@ -13,10 +13,12 @@ export const saveNotificitation = async (
 
 export const setNotificitationIsRead = async (
   notificationId: string
-): Promise<DeleteResult> => {
-  return await getCustomRepository(NotificationRepository).delete({
+): Promise<any> => {
+  let notification = await getCustomRepository(NotificationRepository).findOne({
     id: notificationId
   });
+  notification.isRead = true;
+  return await getCustomRepository(NotificationRepository).save(notification);
 };
 
 export const getNotificationsByUserId = async (

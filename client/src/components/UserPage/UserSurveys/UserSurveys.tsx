@@ -184,8 +184,7 @@ class UserSurveys extends React.Component<IProps, IState> {
 					</button>
 				)}
 				<div className="userSurveys">
-					{isOwnData ||
-					window.location.pathname === '/surveys' ? (
+					{isOwnData || window.location.pathname === '/surveys' ? (
 						<NavLink to={`${mainPath}/create`} className="create-button">
 							<button>Create survey</button>
 						</NavLink>
@@ -194,7 +193,15 @@ class UserSurveys extends React.Component<IProps, IState> {
 						{surveys.map((survey, i) => {
 							// add "if (isOwnData)" check when it will survey list with surveys of all users
 							return (
-								<NavLink key={i} exact={!i} to={`${mainPath}/${survey.id}`}>
+								<NavLink
+									key={i}
+									exact={!i}
+									to={
+										isOwnData
+											? `${mainPath}/${survey.id}`
+											: `/survey-page/${survey.id}`
+									}
+								>
 									<div className="survey-list-item">
 										<span>{survey.title}</span>
 										{isOwnData ? (

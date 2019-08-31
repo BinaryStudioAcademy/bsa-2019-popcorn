@@ -141,7 +141,13 @@ class ProfileComponent extends Component<ProfileProps, IProfileComponentState> {
 		}
 
 		const { isEditing } = this.state;
-		const { uploadUrl, cancelAvatar, setAvatar, croppedSaved, isOwnData } = this.props;
+		const {
+			uploadUrl,
+			cancelAvatar,
+			setAvatar,
+			croppedSaved,
+			isOwnData
+		} = this.props;
 		return (
 			<div className={'UserProfileComponent'}>
 				{this.state.errorMsg && (
@@ -213,8 +219,7 @@ class ProfileComponent extends Component<ProfileProps, IProfileComponentState> {
 									</div>
 								</div>
 							)}
-							{this.props.userId !== id && <FollowButton />}
-							<Follow userId={id} />
+							<Follow userId={id} className="follow" />
 						</div>
 					)}
 
@@ -228,7 +233,12 @@ class ProfileComponent extends Component<ProfileProps, IProfileComponentState> {
 									/>
 								</span>
 							)}
-							<div className="profileRow-username">{name}</div>
+							{this.props.userId !== id && (
+								<FollowButton className="follow-btn" />
+							)}
+							<div className="profileRow-username">
+								<span>{name}</span>
+							</div>
 							<div className="profileRow-info">
 								{male && (
 									<div className="user-gender">

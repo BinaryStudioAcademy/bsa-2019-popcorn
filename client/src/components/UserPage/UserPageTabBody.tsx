@@ -55,8 +55,9 @@ const UserPageTabs: React.SFC<IProps> = ({
 	croppedSaved,
 	saveCropped
 }) => {
-	const isOwnData = (profileInfo.id === selectedProfileInfo.id || profileInfo.role === 'admin');
-	
+	const isOwnData =
+		profileInfo.id === selectedProfileInfo.id || profileInfo.role === 'admin';
+
 	return selectedProfileInfo ? (
 		<div className={'user-tab-body'}>
 			<Switch>

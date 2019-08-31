@@ -162,6 +162,7 @@ class PostStoryEditor extends React.Component<
 	render() {
 		const backgroundColor = this.props.newStory.backgroundColor;
 		const isShownInput = this.props.isShownInput;
+
 		const changeBody = (e, title) => {
 			this.props.setCaption(
 				e.target.value,
@@ -233,7 +234,7 @@ class PostStoryEditor extends React.Component<
 									style={{ color: this.props.newStory.fontColor }}
 									spellCheck={false}
 									ref={this.textarea}
-									placeholder="Type a text here..."
+									// placeholder="Type a text here..."
 									defaultValue={this.props.newStory.caption || ''}
 									className="story-text"
 									onChange={e => {
