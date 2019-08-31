@@ -8,7 +8,6 @@ interface IConfirmChangesProps {
 
 class ConfirmChange extends React.Component<IConfirmChangesProps> {
 	componentDidMount() {
-		console.log(window.location.pathname.split('/'));
 		const token = window.location.pathname.split('/')[2];
 		this.props.confirm(token);
 	}
