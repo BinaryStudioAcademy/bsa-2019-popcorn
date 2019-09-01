@@ -71,14 +71,14 @@ export async function sendPushMessage({
 }) {
   const tokens = await getAppInstanceToken(userId);
   console.log("t", tokens);
-  tokens.forEach(token => {
-    const pushType = token.type === "web" ? "webpush" : "android";
+  Object.keys(tokens).forEach(tokenType => {
+    const pushType = tokenType === "web" ? "webpush" : "android";
     const message = buildPlatformMessage({
       link,
       title,
       body,
       icon,
-      token: token.token,
+      token: tokens[tokenType],
       pushType,
       entityType,
       entityId
