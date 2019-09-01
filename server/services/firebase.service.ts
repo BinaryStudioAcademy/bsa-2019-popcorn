@@ -11,8 +11,8 @@ admin.initializeApp({
   }),
   databaseURL: "https://popcorn-64a9a.firebaseio.com"
 });
-// const db = admin.firestore();
-// const notificationTokenPath = "notification_token";
+const db = admin.firestore();
+const notificationTokenPath = "notification_token";
 
 function buildCommonMessage(title, body) {
   return {
@@ -71,14 +71,14 @@ export async function sendPushMessage({
 }) {
   const tokens = await getAppInstanceToken(userId);
   console.log("t", tokens);
-  tokens.forEach(token => {
-    const pushType = token.type === "web" ? "webpush" : "android";
+  Object.keys(tokens).forEach(tokenType => {
+    const pushType = tokenType === "web" ? "webpush" : "android";
     const message = buildPlatformMessage({
       link,
       title,
       body,
       icon,
-      token: token.token,
+      token: tokens[tokenType],
       pushType,
       entityType,
       entityId
@@ -97,59 +97,44 @@ export async function sendPushMessage({
 
 export async function storeAppInstanceToken({ token, userId, type }) {
   try {
-    const tokenInDb = await getCustomRepository(
-      notificationTokenReposity
-    ).findOne({ userId, type });
-    let tokenToSave = { token, userId, type };
-    if (tokenInDb) {
-      tokenToSave["id"] = tokenInDb.id;
-    }
-    return await getCustomRepository(notificationTokenReposity).save(
-      tokenToSave
-    );
-    // return await db
-    //   .collection(notificationTokenPath)
-    //   .doc(userId)
-    //   .set(
-    //     {
-    //       [type]: token
-    //     },
-    //     { merge: true }
-    //   );
+    return await db
+      .collection(notificationTokenPath)
+      .doc(userId)
+      .set(
+        {
+          [type]: token
+        },
+        { merge: true }
+      );
   } catch (err) {
     console.log(`Error storing token [${token}] in firestore`, err);
     return null;
   }
 }
 
-//not working now
-// export async function deleteAppInstanceToken(token) {
-//   try {
-//     const deleteQuery = db
-//       .collection(notificationTokenPath)
-//       .where("token", "==", token);
-//     const querySnapshot = await deleteQuery.get();
-//     querySnapshot.docs.forEach(async doc => {
-//       await doc.ref.delete();
-//     });
-//     return true;
-//   } catch (err) {
-//     console.log(`Error deleting token [${token}] in firestore`, err);
-//     return null;
-//   }
-// }
+export async function deleteAppInstanceToken(token) {
+  try {
+    const deleteQuery = db
+      .collection(notificationTokenPath)
+      .where("token", "==", token);
+    const querySnapshot = await deleteQuery.get();
+    querySnapshot.docs.forEach(async doc => {
+      await doc.ref.delete();
+    });
+    return true;
+  } catch (err) {
+    console.log(`Error deleting token [${token}] in firestore`, err);
+    return null;
+  }
+}
 
 export async function getAppInstanceToken(userId) {
   try {
-    // let tokens = await db
-    //   .collection(notificationTokenPath)
-    //   .doc(userId)
-    //   .get();
-    // return tokens.data();
-    const tokens = await getCustomRepository(notificationTokenReposity).find({
-      userId
-    });
-    return tokens;
+    let tokens = await db
+      .collection(notificationTokenPath)
+      .doc(userId)
+      .get();
+    return tokens.data();
   } catch (err) {
     console.log(`Error getting token [${userId}] in firestore`, err);
     return null;
