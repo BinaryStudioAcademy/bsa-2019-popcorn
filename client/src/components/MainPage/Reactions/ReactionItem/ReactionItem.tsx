@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import ReactTooltip from 'react-tooltip';
+import { Tooltip } from 'react-tippy';
+import 'react-tippy/dist/tippy.css';
 import './ReactionItem.scss';
 import { ReactComponent as LikeIcon } from '../../../../assets/icons/reactions/like.svg';
 import { ReactComponent as DislikeIcon } from '../../../../assets/icons/reactions/dislike.svg';
@@ -8,6 +9,7 @@ import { ReactComponent as AngryIcon } from '../../../../assets/icons/reactions/
 import { ReactComponent as HahaIcon } from '../../../../assets/icons/reactions/haha.svg';
 import { ReactComponent as WowIcon } from '../../../../assets/icons/reactions/wow.svg';
 import { ReactComponent as SadIcon } from '../../../../assets/icons/reactions/sad.svg';
+
 interface IReactItemProps {
 	name: string;
 	tooltip: string;
@@ -15,40 +17,40 @@ interface IReactItemProps {
 }
 
 class ReactionItem extends Component<IReactItemProps> {
-	getIcon = (name: string, tooltip: string) => {
+	getIcon = (name: string) => {
 		switch (name) {
 			case 'like':
-				return <LikeIcon data-tip={tooltip} />;
+				return <LikeIcon className='post-reaction-icon' />;
 			case 'dislike':
-				return <DislikeIcon data-tip={tooltip} />;
+				return <DislikeIcon className='post-reaction-icon' />;
 			case 'popcorn':
-				return <PopcornIcon data-tip={tooltip} />;
+				return <PopcornIcon className='post-reaction-icon' />;
 			case 'haha':
-				return <HahaIcon data-tip={tooltip} />;
+				return <HahaIcon className='post-reaction-icon' />;
 			case 'wow':
-				return <WowIcon data-tip={tooltip} />;
+				return <WowIcon className='post-reaction-icon' />;
 			case 'sad':
-				return <SadIcon data-tip={tooltip} />;
+				return <SadIcon className='post-reaction-icon' />;
 			case 'angry':
-				return <AngryIcon data-tip={tooltip} />;
+				return <AngryIcon className='post-reaction-icon' />;
 		}
 	};
 
 	render() {
 		const { name, tooltip, onClick } = this.props;
-		const icon = this.getIcon(name, tooltip);
+		const icon = this.getIcon(name);
 		return (
 			<div onClick={onClick} className="item-wrapper">
-				{icon}
-				<ReactTooltip
-					place="top"
-					type="dark"
-					effect="solid"
-					className="tooltip"
-				/>
+				<Tooltip
+					title={tooltip}
+					distance={30}
+				>
+					{icon}
+				</Tooltip>
 			</div>
 		);
 	}
 }
 
 export default ReactionItem;
+
