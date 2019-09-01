@@ -1,0 +1,12 @@
+import {
+  EntityRepository,
+  Repository,
+  getCustomRepository,
+  createQueryBuilder
+} from "typeorm";
+import { Message } from "../entities/Message";
+
+@EntityRepository(Message)
+class MessageRepository extends Repository<Message> {}
+
+export default MessageRepository;
