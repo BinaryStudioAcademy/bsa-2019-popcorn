@@ -1,25 +1,25 @@
 import { Form } from "multiparty";
 import { upload } from "./image.service";
+const path = require("path");
 const uuid = require("uuid/v4");
 const fs = require("fs");
 
 export const uploadFile = req =>
-  new Promise<string>((resolve, reject) => {
+  new Promise<any>((resolve, reject) => {
     const contentType = req.headers["content-type"];
 
     if (contentType && contentType.indexOf("multipart") === 0) {
       const form = new Form({
         autoFiles: true,
-        uploadDir: "public/files",
+        uploadDir: path.resolve(`${__dirname}/../../client/build/images`),
         maxFilesSize: 1048576 * 3
       });
       form.parse(req, function(err, fields, files): any {
         if (err) return reject(err);
 
-        const file = Buffer.from(fs.readFileSync(files.file[0].path)).toString(
-          "base64"
-        );
-
+        const file = Buffer.from(
+          fs.readFileSync(path.resolve(files.file[0].path))
+        ).toString("base64");
         upload(file)
           .then(url => resolve(url))
           .catch(e => reject(e));
