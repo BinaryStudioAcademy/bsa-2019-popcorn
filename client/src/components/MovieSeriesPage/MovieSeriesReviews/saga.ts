@@ -15,8 +15,10 @@ import {
 
 export function* fetchMovieReviews(action) {
 	try {
+		const { movieId } = action.payload;
+
 		const response = yield call(webApi, {
-			endpoint: `/api/review/movie/${action.payload}`,
+			endpoint: `/api/review/movie/${movieId}`,
 			method: 'GET'
 		});
 
