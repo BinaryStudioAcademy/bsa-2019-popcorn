@@ -5,7 +5,7 @@ node_js:
 
 branches:
   only:
-    - dev
+    - aws-deploy
 
 before_install:
   - pip install --user awscli
@@ -25,7 +25,7 @@ deploy:
     skip_cleanup: true
     on: &2
       repo: BinaryStudioAcademy/bsa-2019-popcorn
-      branch: dev
+      branch: aws-deploy
     bucket: popcorn-bucket
     region: eu-central-1
   - provider: codedeploy
