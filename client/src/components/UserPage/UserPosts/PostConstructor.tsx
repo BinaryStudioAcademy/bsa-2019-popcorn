@@ -19,6 +19,7 @@ import { fetchPosts } from '../../MainPage/FeedBlock/FeedBlock.redux/actions';
 import { getUsersPosts } from '../../UserPage/actions';
 import Cropper from 'react-cropper';
 import { uploadFile } from '../../../services/file.service';
+import MovieSearch from './MovieSearch';
 
 interface IPostConstructorProps {
 	userId: string;
@@ -45,6 +46,7 @@ interface IPostConstructorState {
 	comments: Array<any>;
 	extraData: any;
 	extraType: string;
+	movieSearchTitle: null | string;
 }
 
 class PostConstructor extends React.Component<
@@ -65,7 +67,8 @@ class PostConstructor extends React.Component<
 			modalExtra: false,
 			croppedSaved: false,
 			reactions: [],
-			comments: []
+			comments: [],
+			movieSearchTitle: null
 		};
 		this.imageStateHandler = this.imageStateHandler.bind(this);
 		this.onSave = this.onSave.bind(this);
@@ -93,6 +96,15 @@ class PostConstructor extends React.Component<
 			  });
 	}
 
+	static findMovie(str: string) {
+		let find = str.match(/\$(.+)(.*?)(\s*?)/g);
+		if (find && find[0]) {
+			find = find[0].split(' ');
+			if (find) return find[0].slice(1);
+		}
+		return '';
+	}
+
 	toggleModal() {
 		this.setState({
 			modalExtra: !this.state.modalExtra
@@ -107,9 +119,11 @@ class PostConstructor extends React.Component<
 	}
 
 	onChangeData(value: string, keyword: string) {
+		const title = PostConstructor.findMovie(value);
 		this.setState({
 			...this.state,
-			[keyword]: value
+			[keyword]: value,
+			movieSearchTitle: title || null
 		});
 	}
 
@@ -161,7 +175,17 @@ class PostConstructor extends React.Component<
 		}
 	}
 
+	addMovieCaption(movie, movieSearchTitle) {
+		const { description } = this.state;
+		const caption = `@${movie.id}{${movie.title}}`;
+		const newDescription = description.replace(`$${movieSearchTitle}`, caption);
+		this.setState({
+			description: newDescription,
+			movieSearchTitle: null
+		});
+	}
 	render() {
+		const { movieSearchTitle } = this.state;
 		return (
 			<div className="post-constructor-modal">
 				<div
@@ -226,6 +250,18 @@ class PostConstructor extends React.Component<
 							value={this.state.description}
 							onChange={e => this.onChangeData(e.target.value, 'description')}
 						/>
+						{movieSearchTitle && (
+							<div style={{ width: '100%' }}>
+								<MovieSearch
+									inputData={movieSearchTitle}
+									onSelectMovie={movie =>
+										this.addMovieCaption(movie, movieSearchTitle)
+									}
+									elasticProperties={['id', 'title']}
+								/>
+							</div>
+						)}
+
 						<ChooseExtra
 							toggleModal={this.toggleModal}
 							setExtra={this.setExtraData}
