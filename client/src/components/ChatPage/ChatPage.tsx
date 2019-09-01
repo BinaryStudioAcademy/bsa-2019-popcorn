@@ -4,7 +4,8 @@ import { bindActionCreators } from 'redux';
 import { fetchChats } from './ChatPage.redux/actions';
 import { Switch, Route } from 'react-router';
 import Chat from './Chat';
-import ChatList from './ChatList';
+import ChatList from './ChatList/ChatList';
+import './ChatPage.scss';
 
 interface IProps {
 	fetchChats: (userId) => void;
@@ -22,10 +23,12 @@ class ChatPage extends React.Component<IProps> {
 		if (this.props.isLoadingList) return <div>Loading...</div>;
 
 		return (
-			<div>
-				<ChatList chats={this.props.chats} />
+			<div className="chat-wrp">
+				<div className="chat-list">
+					<ChatList chats={this.props.chats} />
+				</div>
 
-				<div>
+				<div className="chat">
 					<Switch>
 						<Route path={`/chat/:id`} component={Chat} />
 					</Switch>

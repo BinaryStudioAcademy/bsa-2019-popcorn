@@ -1,0 +1,68 @@
+@import '../../styles/variables.scss';
+
+.chat-wrp {
+	border: 3px red solid;
+	display: flex;
+	box-sizing: border-box;
+	margin: 50px auto;
+	width: 90%;
+	height: 90%;
+	a {
+		color: $text-base-color;
+		text-decoration: none;
+		&:visited {
+			color: $text-base-color;
+		}
+		&:hover {
+			color: $text-base-color;
+		}
+		&:active {
+			color: $text-base-color;
+		}
+	}
+	.chat-list {
+		width: 30%;
+		&-item {
+			border-bottom: 1px solid $border-color;
+			height: 70px;
+			padding: 5px;
+			display: flex;
+			transition: all 0.1s linear;
+			&:hover {
+				background-color: $background-gray;
+			}
+			.avatar {
+				height: 100%;
+			}
+			&-info {
+				width: 100%;
+				margin: 0 5px;
+				display: flex;
+				flex-direction: column;
+				justify-content: space-between;
+				.info-header {
+					display: flex;
+					justify-content: space-between;
+					.user-name {
+						font-weight: 600;
+					}
+					.last-date {
+						color: $text-secondary-color;
+						font-size: 0.85em;
+					}
+				}
+				.last-message {
+					color: rgba($text-base-color, 0.9);
+					font-size: 0.9em;
+					height: 35px;
+					text-overflow: ellipsis;
+					overflow: hidden;
+				}
+			}
+		}
+	}
+	.chat {
+		width: 70%;
+		border: 3px green solid;
+	}
+}
