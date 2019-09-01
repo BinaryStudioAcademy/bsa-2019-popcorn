@@ -9,13 +9,13 @@ interface IReactionsProps {
 }
 class Reactions extends Component<IReactionsProps> {
 	reactions = [
-		{ id: 1, name: 'like' },
-		{ id: 2, name: 'dislike' },
-		{ id: 3, name: 'popcorn' },
-		{ id: 4, name: 'haha' },
-		{ id: 5, name: 'wow' },
-		{ id: 6, name: 'sad' },
-		{ id: 7, name: 'angry' }
+		{ id: 1, name: 'like', tooltip: 'Like' },
+		{ id: 2, name: 'dislike', tooltip: 'Dislike' },
+		{ id: 3, name: 'popcorn', tooltip: 'Popcorn' },
+		{ id: 4, name: 'haha', tooltip: 'Haha' },
+		{ id: 5, name: 'wow', tooltip: 'Wow' },
+		{ id: 6, name: 'sad', tooltip: 'Sad' },
+		{ id: 7, name: 'angry', tooltip: 'Angry' }
 	];
 	render() {
 		const {
@@ -35,6 +35,7 @@ class Reactions extends Component<IReactionsProps> {
 							key={item.name}
 							onClick={() => onReactionClick(item)}
 							name={item.name}
+							tooltip={item.tooltip}
 						/>
 					))}
 				</div>
