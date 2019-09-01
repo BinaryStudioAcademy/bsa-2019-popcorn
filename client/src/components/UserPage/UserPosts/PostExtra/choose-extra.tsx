@@ -2,6 +2,9 @@ import React from 'react';
 import { Redirect } from 'react-router';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import ChooseExtraOption from './choose-extra-option';
+import ImageUploader from '../../../MainPage/ImageUploader/ImageUploader';
+import { uploadFile } from './../../../../services/file.service';
+
 import {
 	faArrowCircleLeft,
 	faChevronRight,
@@ -29,6 +32,7 @@ const options = [
 interface IPropsExtra {
 	toggleModal: () => any;
 	setExtra: (data: any) => any;
+	imageStateHandler: (data, croppedSaved?: boolean) => any;
 }
 
 interface IStateExtra {
@@ -54,7 +58,7 @@ class ChooseExtra extends React.Component<IPropsExtra, IStateExtra> {
 	}
 
 	render() {
-		const { toggleModal } = this.props;
+		const { toggleModal, imageStateHandler } = this.props;
 
 		return (
 			<>
@@ -82,6 +86,12 @@ class ChooseExtra extends React.Component<IPropsExtra, IStateExtra> {
 								</div>
 							);
 						})}
+					<ImageUploader
+						postContructor={true}
+						isIcon={true}
+						imageHandler={uploadFile}
+						imageStateHandler={imageStateHandler}
+					/>
 				</div>
 			</>
 		);

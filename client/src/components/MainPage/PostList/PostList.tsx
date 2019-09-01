@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Post from '../Post/Post';
 import { ReactComponent as FeedIcon } from '../../../assets/icons/general/newsFeed.svg';
 import './PostList.scss';
@@ -15,6 +15,9 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import IReaction from '../Post/IReaction';
 import SocketService from '../../../services/socket.service';
+import PostConstructor from '../../UserPage/UserPosts/PostConstructor';
+import { faPlusCircle } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 interface IProps {
 	posts: Array<IPost>;
@@ -44,14 +47,32 @@ const addSocket = (addNewComment, addNewReaction) => {
 
 const PostList = (props: IProps) => {
 	// console.log(props.posts);
+	const [showPostsConstructor, setShowPostsConstructor] = useState(false);
+	const togglePostConstructor = ev => {
+		ev.preventDefault();
+		setShowPostsConstructor(!showPostsConstructor);
+	};
 	addSocket(props.addNewComment, props.addNewReaction);
 	return (
 		<div className="feed-list" style={props.styleCustom}>
 			{props.type === 'userPosts' ? null : (
 				<div className="feed-heading">
-					<FeedIcon />
-					<span>News feed</span>
+					<div
+						className="feedAddPost"
+						onClick={ev => togglePostConstructor(ev)}
+					>
+						<FontAwesomeIcon className="feedAddPostIcon" icon={faPlusCircle} />
+					</div>
+					<span>Add post</span>
 				</div>
+			)}
+			{showPostsConstructor && (
+				<PostConstructor
+					userId={props.userId}
+					saveCropped={() => {}}
+					croppedSaved={false}
+					togglePostConstructor={togglePostConstructor}
+				/>
 			)}
 			{props.posts &&
 				props.posts.map(post => {

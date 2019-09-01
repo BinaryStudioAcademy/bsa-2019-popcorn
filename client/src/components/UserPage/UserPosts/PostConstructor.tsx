@@ -11,7 +11,8 @@ import Extra from '././PostExtra/extra';
 import {
 	faCheckCircle,
 	faTimes,
-	faTimesCircle
+	faTimesCircle,
+	faPlus
 } from '@fortawesome/free-solid-svg-icons';
 
 import { setPost } from '../actions';
@@ -226,22 +227,23 @@ class PostConstructor extends React.Component<
 								</span>
 							</div>
 						)}
-						<div className="image-list-wrapper">
-							<div className="card-wrapper">
-								<button className="button-image">
-									<ImageUploader
-										isIcon={true}
-										imageHandler={uploadFile}
-										imageStateHandler={this.imageStateHandler}
-									/>
-								</button>
-							</div>
-							{this.state.image_url && this.state.croppedSaved && (
+						{this.state.image_url && this.state.croppedSaved && (
+							<div className="image-list-wrapper">
 								<div className="post-img-wrapper">
 									<img className="post-img" src={this.state.image_url} />
 								</div>
-							)}
-						</div>
+								<div className="card-wrapper">
+									<button className="button-image">
+										<ImageUploader
+											icon={faPlus}
+											isIcon={true}
+											imageHandler={uploadFile}
+											imageStateHandler={this.imageStateHandler}
+										/>
+									</button>
+								</div>
+							</div>
+						)}
 						{this.state.extraLink && (
 							<Extra
 								link={this.state.extraLink}
@@ -268,6 +270,7 @@ class PostConstructor extends React.Component<
 						)}
 
 						<ChooseExtra
+							imageStateHandler={this.imageStateHandler}
 							toggleModal={this.toggleModal}
 							setExtra={this.setExtraData}
 						/>
