@@ -33,4 +33,10 @@ export class Notification {
 
   @Column()
   userId: string;
+
+  @Column()
+  entityType: string;
+
+  @Column()
+  entityId: string;
 }
