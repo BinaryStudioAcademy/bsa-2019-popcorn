@@ -4,7 +4,7 @@ import {
 	SEND_TOKEN_TO_SERVER,
 	GET_UNREAD_NOTIFICATIONS_SUCCESS,
 	GET_UNREAD_NOTIFICATIONS,
-	SET_NOTIFICITATION_IS_READ
+	SET_NOTIFICATION_IS_READ
 } from './actionTypes';
 export function* sendTokenToServer(action) {
 	try {
@@ -24,21 +24,21 @@ export function* sendTokenToServer(action) {
 export function* getUnreadNotifications(action) {
 	try {
 		const userId = action.payload.userId;
-		const unredNotifications = yield call(webApi, {
+		const unreadNotifications = yield call(webApi, {
 			method: 'GET',
 			endpoint: `/api/notification/${userId}`
 		});
 
 		yield put({
 			type: GET_UNREAD_NOTIFICATIONS_SUCCESS,
-			payload: { unredNotifications }
+			payload: { unreadNotifications }
 		});
 	} catch (e) {
 		console.log('notification saga getUnreadNotifications: ', e.message);
 	}
 }
 
-export function* setNotificitationIsRead(action) {
+export function* setNotificationIsRead(action) {
 	try {
 		const notificationId = action.payload.notificationId;
 		const response = yield call(webApi, {
@@ -46,7 +46,7 @@ export function* setNotificitationIsRead(action) {
 			endpoint: `/api/notification/${notificationId}`
 		});
 	} catch (e) {
-		console.log('notification saga setNotificitationIsRead: ', e.message);
+		console.log('notification saga setNotificationIsRead: ', e.message);
 	}
 }
 
@@ -56,13 +56,13 @@ function* watchSendTokenToServer() {
 function* watchGetUnreadNotifications() {
 	yield takeEvery(GET_UNREAD_NOTIFICATIONS, getUnreadNotifications);
 }
-function* watchSetNotificitationIsRead() {
-	yield takeEvery(SET_NOTIFICITATION_IS_READ, setNotificitationIsRead);
+function* watchSetNotificationIsRead() {
+	yield takeEvery(SET_NOTIFICATION_IS_READ, setNotificationIsRead);
 }
 export default function* notification() {
 	yield all([
 		watchSendTokenToServer(),
 		watchGetUnreadNotifications(),
-		watchSetNotificitationIsRead()
+		watchSetNotificationIsRead()
 	]);
 }

@@ -23,7 +23,7 @@ router
   )
   .delete("/:id", (req: any, res: Response, next: NextFunction) =>
     notificationService
-      .setNotificitationIsRead(req.params.id)
+      .setNotificationIsRead(req.params.id)
       .then(response => {
         res.send(response);
       })

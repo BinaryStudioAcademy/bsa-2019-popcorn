@@ -1,7 +1,7 @@
 import { GET_UNREAD_NOTIFICATIONS_SUCCESS } from './actionTypes';
 
 const initialState = {
-	unredNotifications: []
+	unreadNotifications: []
 };
 
 export default (state = initialState, action) => {
@@ -9,7 +9,7 @@ export default (state = initialState, action) => {
 		case GET_UNREAD_NOTIFICATIONS_SUCCESS:
 			return {
 				...state,
-				unredNotifications: action.payload.unredNotifications
+				unreadNotifications: action.payload.unreadNotifications
 			};
 		default:
 			return state;

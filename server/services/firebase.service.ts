@@ -1,8 +1,6 @@
 import * as admin from "firebase-admin";
-import * as path from "path";
 import { clientEmail, privateKey, projectId } from "../config/firebase.config";
-import notificationTokenReposity from "../repository/notificationToken.repository";
-import { getCustomRepository } from "typeorm";
+
 admin.initializeApp({
   credential: admin.credential.cert({
     clientEmail,
@@ -11,52 +9,47 @@ admin.initializeApp({
   }),
   databaseURL: "https://popcorn-64a9a.firebaseio.com"
 });
+
 const db = admin.firestore();
 const notificationTokenPath = "notification_token";
 
-function buildCommonMessage(title, body) {
-  return {
+function buildMobileMessage({ title, body, icon, entityType, entityId }) {
+  const fcmMessage = {
     notification: {
-      title: title,
-      body: body
+      title,
+      body
+    },
+    android: {
+      notification: {
+        icon
+      },
+      data: {
+        type: entityType,
+        id: entityId
+      }
     }
   };
+  return fcmMessage;
 }
 
-function buildPlatformMessage({
-  link,
-  title,
-  body,
-  icon,
-  token,
-  pushType,
-  entityType,
-  entityId
-}): any {
-  const fcmMessage = buildCommonMessage(title, body);
-
-  const push = {
+function buildBrowserMessage({ title, body, icon, link }) {
+  const fcmMessage = {
     notification: {
-      icon
+      title,
+      body
+    },
+    webpush: {
+      notification: {
+        icon
+      },
+      headers: {
+        TTL: "0"
+      },
+      fcm_options: {
+        link
+      }
     }
   };
-
-  if (pushType === "webpush") {
-    push["headers"] = {
-      TTL: "0"
-    };
-    push["fcm_options"] = {
-      link
-    };
-  } else {
-    push["data"] = {
-      type: entityType,
-      id: entityId
-    };
-  }
-  fcmMessage["token"] = token;
-  fcmMessage[pushType] = push;
-
   return fcmMessage;
 }
 
@@ -69,26 +62,18 @@ export async function sendPushMessage({
   entityType,
   entityId
 }) {
-  const tokens = await getAppInstanceToken(userId);
-  console.log("t", tokens);
-  Object.keys(tokens).forEach(tokenType => {
-    const pushType = tokenType === "web" ? "webpush" : "android";
-    const message = buildPlatformMessage({
-      link,
-      title,
-      body,
-      icon,
-      token: tokens[tokenType],
-      pushType,
-      entityType,
-      entityId
-    });
+  const userTokens = await getAppInstanceTokens(userId);
+
+  Object.keys(userTokens).forEach(tokenType => {
+    let message = null;
+    if (tokenType === "web")
+      message = buildBrowserMessage({ title, body, icon, link });
+    if (tokenType === "mobile")
+      message = buildMobileMessage({ title, body, icon, entityId, entityType });
     admin
       .messaging()
-      .send(message)
-      .then(response => {
-        console.log("Successfully sent message:", response);
-      })
+      .sendMulticast({ ...message, tokens: userTokens[tokenType] })
+      .then(response => {})
       .catch(error => {
         console.log("Error sending message:", error);
       });
@@ -102,7 +87,7 @@ export async function storeAppInstanceToken({ token, userId, type }) {
       .doc(userId)
       .set(
         {
-          [type]: token
+          [type]: admin.firestore.FieldValue.arrayUnion(token)
         },
         { merge: true }
       );
@@ -112,7 +97,7 @@ export async function storeAppInstanceToken({ token, userId, type }) {
   }
 }
 
-export async function deleteAppInstanceToken(token) {
+export async function deleteAppInstanceToken(token: string) {
   try {
     const deleteQuery = db
       .collection(notificationTokenPath)
@@ -128,7 +113,7 @@ export async function deleteAppInstanceToken(token) {
   }
 }
 
-export async function getAppInstanceToken(userId) {
+export async function getAppInstanceTokens(userId: string) {
   try {
     let tokens = await db
       .collection(notificationTokenPath)

@@ -2,9 +2,9 @@ import * as eventService from "../services/event.service";
 import * as postService from "../services/post.service";
 import UserRepository from "../repository/user.repository";
 import * as followerService from "../services/follow.service";
-import PostReactionsRepository from '../repository/postReactions.repository';
+import PostReactionsRepository from "../repository/postReactions.repository";
 import { sendPushMessage } from "../services/firebase.service";
-import { saveNotificitation } from "../services/notification.service";
+import { saveNotification } from "../services/notification.service";
 import { getCustomRepository } from "typeorm";
 const uuid = require("uuid/v4");
 
@@ -29,7 +29,7 @@ async function sendNotification({
     entityType,
     entityId: entity.id
   };
-  await saveNotificitation({
+  await saveNotification({
     ...notification,
     userId: entity.userId,
     isRead: false
@@ -68,10 +68,13 @@ export default async (req, res, next) => {
       const follower = await getCustomRepository(UserRepository).findOne({
         id: req.body.userId
       });
-      const { isFollowing } = await followerService.checkFollowStatus(follower.id, req.body.followerId);
+      const { isFollowing } = await followerService.checkFollowStatus(
+        follower.id,
+        req.body.followerId
+      );
       if (!isFollowing) {
         const title = `${follower.name} started following you`;
-        
+
         sendNotification({
           req,
           url: `/user-page/${follower.id}`,
@@ -79,7 +82,7 @@ export default async (req, res, next) => {
           title,
           body: "",
           entity: { ...follower, userId: req.body.followerId },
-          entityType: 'follower'
+          entityType: "follower"
         });
       }
     }

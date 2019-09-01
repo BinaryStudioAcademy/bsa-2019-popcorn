@@ -11,7 +11,7 @@ import {
 	fetchFilms,
 	sendTokenToServer,
 	getUnreadNotifications,
-	setNotificitationIsRead
+	setNotificationIsRead
 } from '../Header/actions';
 import { unauthorize } from '../../authorization/actions';
 import { NavLink, Link } from 'react-router-dom';
@@ -44,8 +44,8 @@ interface IProps {
 	unauthorize: () => void;
 	sendTokenToServer: (token: string | null) => void;
 	getUnreadNotifications: (userId: string) => void;
-	setNotificitationIsRead: (notificatonId: string) => void;
-	unredNotifications: Activity[];
+	setNotificationIsRead: (notificationId: string) => void;
+	unreadNotifications: Activity[];
 }
 
 const Header = ({
@@ -57,8 +57,8 @@ const Header = ({
 	unauthorize,
 	sendTokenToServer,
 	getUnreadNotifications,
-	setNotificitationIsRead,
-	unredNotifications
+	setNotificationIsRead,
+	unreadNotifications
 }: IProps) => {
 	const MOVIES_IN_CINEMA = 'Movies in cinema';
 	const MOVIE_TOPS = 'Movie tops';
@@ -75,7 +75,7 @@ const Header = ({
 
 	const { avatar } = userInfo;
 
-	const Notifications = withFirebase(Notification);
+	const NotificationWithFireBase = withFirebase(Notification);
 	return (
 		<div className="header">
 			<NavLink to="/" className="header-logo-link">
@@ -147,12 +147,12 @@ const Header = ({
 					<img className="message-icon hover" src={messageIcon} alt="message" />
 				</div>
 				{
-					<Notifications
+					<NotificationWithFireBase
 						sendTokenToServer={sendTokenToServer}
 						userInfo={userInfo}
 						getUnreadNotifications={getUnreadNotifications}
-						setNotificitationIsRead={setNotificitationIsRead}
-						unredNotifications={unredNotifications}
+						setNotificationIsRead={setNotificationIsRead}
+						unreadNotifications={unreadNotifications}
 					/>
 				}
 			</div>
@@ -182,7 +182,7 @@ const mapStateToProps = (rootState, props) => ({
 	userInfo: rootState.profile.profileInfo,
 	moviesSearch: rootState.movie.moviesSearch,
 	alreadySearch: rootState.movie.alreadySearch,
-	unredNotifications: rootState.notification.unredNotifications
+	unreadNotifications: rootState.notification.unreadNotifications
 });
 
 const actions = {
@@ -191,7 +191,7 @@ const actions = {
 	unauthorize,
 	sendTokenToServer,
 	getUnreadNotifications,
-	setNotificitationIsRead
+	setNotificationIsRead
 };
 
 const mapDispatchToProps = dispatch => bindActionCreators(actions, dispatch);
