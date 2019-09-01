@@ -1,16 +1,22 @@
-import fetch from "node-fetch";
+import axios from "axios";
 import { imgurId } from "../config/imgur.config";
 
 const uploadToImgur = async image => {
   try {
-    const data = await (await fetch("https://api.imgur.com/3/upload", {
-      body: image,
-      headers: { Authorization: `Client-ID ${imgurId}` },
-      method: "POST"
-    })).json();
-    return data.data.link;
+    const data = await axios.post(
+      "https://api.imgur.com/3/upload",
+      {
+        image
+      },
+      {
+        headers: { Authorization: `Client-ID ${imgurId}` }
+      }
+    );
+    return data.data.data.link;
   } catch (e) {
-    throw e;
+    // parse Imgur error
+    console.log(e.message, e);
+    return Promise.reject(e);
   }
 };
 
