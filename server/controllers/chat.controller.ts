@@ -7,20 +7,20 @@ const router = Router();
 
 router
   .get(
-    "/",
+    "/:userId",
     errorHandlerMiddleware,
-    (req: Request & { user: User }, res: Response, next: NextFunction) =>
+    (req: Request, res: Response, next: NextFunction) =>
       chatService
-        .getChatsByUser(req.user, next)
+        .getChatsByUser(req.params.userId, next)
         .then(result => res.send(result))
         .catch(next)
   )
   .get(
-    "/:id",
+    "/:userId/:chatId",
     errorHandlerMiddleware,
     (req: Request, res: Response, next: NextFunction) =>
       chatService
-        .getMessagesByChatId(req.params.id, next)
+        .getMessagesByChatId(req.params.chatId, next)
         .then(result => res.send(result))
         .catch(next)
   );

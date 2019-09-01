@@ -9,7 +9,10 @@ import UserRepository from "./user.repository";
 
 @EntityRepository(Chat)
 class ChatRepository extends Repository<Chat> {
-  async getChatsByUser(user, next?) {
+  async getChatsByUser(userId, next?) {
+    const user = await getCustomRepository(UserRepository).findOne({
+      id: userId
+    });
     const chats = await this.find({
       where: [{ user1: user }, { user2: user }],
       relations: ["user1", "user2", "messages"]
@@ -18,7 +21,7 @@ class ChatRepository extends Repository<Chat> {
       const formatChat: any = {};
       formatChat.id = chat.id;
       formatChat.user =
-        chat.user1.id === user.id
+        chat.user1.id !== userId
           ? this.formatUser(chat.user1)
           : this.formatUser(chat.user2);
       formatChat.lastMessage = chat.messages.sort((a, b) =>

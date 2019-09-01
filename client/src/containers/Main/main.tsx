@@ -38,6 +38,7 @@ import {
 } from '../../components/UserPage/UserEvents/UserEvents.service';
 import TopList from '../../components/TopListPage/TopList';
 import SettingsPage from '../../components/UserSettings';
+import ChatPage from '../../components/ChatPage/ChatPage';
 
 const { notifications } = {
 	notifications: {
@@ -184,6 +185,7 @@ const Main = ({
 						></Route>
 						<Route exact path={`/tops`} render={() => <TopList />} />
 						<Route path={`/tops/:id`} component={TopPage} />
+						<Route path={`/chat`} component={ChatPage} />
 						<Route path={`/*`} exact component={NotFound} />
 					</Switch>
 				</div>

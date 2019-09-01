@@ -11,7 +11,7 @@ export function* fetchChats(action) {
 	try {
 		const data = yield call(webApi, {
 			method: 'GET',
-			endpoint: `/api/chat`
+			endpoint: `/api/chat/${action.payload.userId}`
 		});
 
 		yield put({
@@ -33,13 +33,14 @@ export function* fetchMessages(action) {
 	try {
 		const messages = yield call(webApi, {
 			method: 'GET',
-			endpoint: `/api/chat/${action.payload.chatId}`
+			endpoint: `/api/chat/${action.payload.userId}/${action.payload.chatId}`
 		});
 
 		yield put({
 			type: SET_MESSAGES,
 			payload: {
-				messages
+				messages,
+				chatId: action.payload.chatId
 			}
 		});
 	} catch (e) {
