@@ -2,9 +2,11 @@ import {
   Entity,
   PrimaryGeneratedColumn,
   ManyToOne,
-  CreateDateColumn
+  CreateDateColumn,
+  OneToMany
 } from "typeorm";
 import { User } from "./User";
+import { Message } from "./Message";
 
 @Entity()
 export class Chat {
@@ -19,4 +21,7 @@ export class Chat {
 
   @CreateDateColumn({ type: "timestamp" })
   created_at: Date;
+
+  @OneToMany(type => Message, message => message.chat)
+  messages: Message[];
 }
