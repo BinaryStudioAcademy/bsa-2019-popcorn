@@ -35,7 +35,7 @@ export const changeFollowStatus = async ({ userId, followerId }, next) => {
   );
 };
 
-export const checkFollowStatus = async (userId, followerId, next) => {
+export const checkFollowStatus = async (userId, followerId, next?) => {
   return await getCustomRepository(FollowerRepository).checkFollowStatus(
     userId,
     followerId,
