@@ -174,6 +174,11 @@ class PostConstructor extends React.Component<
 			});
 		}
 	}
+	preparseDescription(description) {
+		const arr = description.split('@');
+		const res = arr.map(str => str.replace(/(.+)\{(.+)\}/, '$2'));
+		return res.join('');
+	}
 
 	addMovieCaption(movie, movieSearchTitle) {
 		const { description } = this.state;
@@ -247,7 +252,7 @@ class PostConstructor extends React.Component<
 						)}
 						<textarea
 							placeholder="Create new post..."
-							value={this.state.description}
+							value={this.preparseDescription(this.state.description)}
 							onChange={e => this.onChangeData(e.target.value, 'description')}
 						/>
 						{movieSearchTitle && (
