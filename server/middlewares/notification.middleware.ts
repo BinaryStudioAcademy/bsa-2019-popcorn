@@ -1,7 +1,11 @@
 import * as eventService from "../services/event.service";
 import * as postService from "../services/post.service";
+import UserRepository from "../repository/user.repository";
+import * as followerService from "../services/follow.service";
+import PostReactionsRepository from '../repository/postReactions.repository';
 import { sendPushMessage } from "../services/firebase.service";
 import { saveNotificitation } from "../services/notification.service";
+import { getCustomRepository } from "typeorm";
 const uuid = require("uuid/v4");
 
 async function sendNotification({
@@ -60,6 +64,26 @@ export default async (req, res, next) => {
       });
     }
 
+    if (req.url === "/api/follow") {
+      const follower = await getCustomRepository(UserRepository).findOne({
+        id: req.body.userId
+      });
+      const { isFollowing } = await followerService.checkFollowStatus(follower.id, req.body.followerId);
+      if (!isFollowing) {
+        const title = `${follower.name} started following you`;
+        
+        sendNotification({
+          req,
+          url: `/user-page/${follower.id}`,
+          type: "follower",
+          title,
+          body: "",
+          entity: { ...follower, userId: req.body.followerId },
+          entityType: 'follower'
+        });
+      }
+    }
+
     if (req.url === "/api/event/visitor") {
       const event = await eventService.getEventById(req.body.eventId);
       const title = `${req.user.name} ${req.body.status} to your event`;
@@ -76,17 +100,26 @@ export default async (req, res, next) => {
       });
     }
     if (req.url === "/api/post/reaction") {
-      const post = await postService.getPostById(req.body.postId);
-      const title = `${req.user.name} reacted to your post`;
-      sendNotification({
-        req,
-        url: `/`,
-        type: req.body.type,
-        title,
-        body: "",
-        entity: post,
-        entityType: "post"
+      const { userId, postId, type } = req.body;
+      const user = await getCustomRepository(UserRepository).findOne({
+        id: userId
       });
+      const post = await postService.getPostById(postId);
+      const postReactionRepository = await getCustomRepository(
+        PostReactionsRepository
+      );
+      if (!(await postReactionRepository.findOne({ user, post, type }))) {
+        const title = `${req.user.name} reacted to your post`;
+        sendNotification({
+          req,
+          url: `/`,
+          type: req.body.type,
+          title,
+          body: "",
+          entity: post,
+          entityType: "post"
+        });
+      }
     }
   }
   next();
