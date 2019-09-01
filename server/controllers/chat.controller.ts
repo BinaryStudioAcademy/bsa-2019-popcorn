@@ -20,7 +20,7 @@ router
     errorHandlerMiddleware,
     (req: Request, res: Response, next: NextFunction) =>
       chatService
-        .getChatById(req.params.id, next)
+        .getMessagesByChatId(req.params.id, next)
         .then(result => res.send(result))
         .catch(next)
   );

@@ -34,22 +34,17 @@ class ChatRepository extends Repository<Chat> {
     avatar: user.avatar
   });
 
-  async getChatById(chatId, next?) {
+  async getMessagesByChatId(chatId, next?) {
     const chat = await this.findOne({
       where: [{ id: chatId }],
-      relations: ["user1", "user2", "messages", "messages.user"]
+      relations: ["messages", "messages.user"]
     });
-    const formatChat: any = {};
-    formatChat.id = chat.id;
-    formatChat.user1 = this.formatUser(chat.user1);
-    formatChat.user2 = this.formatUser(chat.user2);
-    formatChat.messages = chat.messages.sort((a, b) =>
-      a.created_at > b.created_at ? 1 : -1
-    );
-    formatChat.messages.forEach(message => {
+    const messages = [...chat.messages];
+    messages.sort((a, b) => (a.created_at > b.created_at ? 1 : -1));
+    messages.forEach((message: any) => {
       message.user = this.formatUser(message.user);
     });
-    return formatChat;
+    return messages;
   }
 }
 

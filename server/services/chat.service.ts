@@ -5,6 +5,9 @@ export const getChatsByUser = async (user, next) => {
   return await getCustomRepository(ChatRepository).getChatsByUser(user, next);
 };
 
-export const getChatById = async (chatId, next) => {
-  return await getCustomRepository(ChatRepository).getChatById(chatId, next);
+export const getMessagesByChatId = async (chatId, next) => {
+  return await getCustomRepository(ChatRepository).getMessagesByChatId(
+    chatId,
+    next
+  );
 };

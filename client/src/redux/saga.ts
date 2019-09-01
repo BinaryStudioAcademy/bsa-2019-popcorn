@@ -14,6 +14,7 @@ import settingsSaga from '../components/UserSettings/saga';
 import watchListSaga from '../components/UserPage/UserWatchList/saga';
 import searchMovieSaga from '../components/shared/MovieSearch/saga';
 import notificationSaga from '../components/shared/Header/saga';
+import chatSaga from '../components/ChatPage/ChatPage.redux/saga';
 export default function* rootSaga() {
 	yield all([
 		headerSaga(),
@@ -30,6 +31,7 @@ export default function* rootSaga() {
 		settingsSaga(),
 		watchListSaga(),
 		searchMovieSaga(),
-		notificationSaga()
+		notificationSaga(),
+		chatSaga()
 	]);
 }
