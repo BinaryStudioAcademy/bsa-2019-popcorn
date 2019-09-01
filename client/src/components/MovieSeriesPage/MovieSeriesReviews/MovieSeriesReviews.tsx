@@ -41,6 +41,21 @@ class MovieSeriesReviews extends React.Component<IProps> {
 		this.props.fetchMovieReviews(this.props.movieId);
 	}
 
+	sortByLikes(reviews: IReview[]): IReview[]  {
+		const sorteredReviews: IReview[] = Object.assign([], reviews);
+		
+		return sorteredReviews.
+			sort((a, b) => {
+				const diffCountLikes = b.reaction.countLikes - a.reaction.countLikes;
+				
+				if (!diffCountLikes) {
+					return +b.analysis - +a.analysis;
+				}
+
+				return diffCountLikes;
+			});
+	}
+
 	render() {
 		const {
 			reviews,
@@ -49,6 +64,8 @@ class MovieSeriesReviews extends React.Component<IProps> {
 			setReaction,
 			errorWithReview
 		} = this.props;
+		const sorteredReviews = this.sortByLikes(reviews);
+		
 		return (
 			<div className="MovieSeriesReviews">
 				{!isLoaded && !reviews ? (
@@ -58,7 +75,7 @@ class MovieSeriesReviews extends React.Component<IProps> {
 						{!reviews.length ? (
 							<div className="warning">No reviews yet</div>
 						) : (
-							reviews.map((item: IReview) => {
+							sorteredReviews.map((item: IReview) => {
 								return (
 									<ReviewItem
 										review={item}
