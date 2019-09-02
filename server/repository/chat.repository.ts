@@ -64,6 +64,10 @@ class ChatRepository extends Repository<Chat> {
     if (!chat) {
       await this.save({ user1, user2 });
     }
+    const newChat = await this.findOne({
+      where: [{ user1, user2 }, { user1: user2, user2: user1 }]
+    });
+    return { chatId: newChat.id };
   }
 
   async createMessage(chatId, userId, body, next?) {

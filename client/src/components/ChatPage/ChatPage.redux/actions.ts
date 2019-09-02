@@ -1,4 +1,9 @@
-import { FETCH_CHATS, FETCH_MESSAGES } from './actionTypes';
+import {
+	FETCH_CHATS,
+	FETCH_MESSAGES,
+	CREATE_CHAT,
+	CREATE_MESSAGE
+} from './actionTypes';
 
 export const fetchChats = userId => {
 	return {
@@ -15,6 +20,27 @@ export const fetchMessages = (userId, chatId) => {
 		payload: {
 			userId,
 			chatId
+		}
+	};
+};
+
+export const createChat = (user1Id, user2Id) => {
+	return {
+		type: CREATE_CHAT,
+		payload: {
+			user1Id,
+			user2Id
+		}
+	};
+};
+
+export const createMessage = (userId, chatId, body) => {
+	return {
+		type: CREATE_MESSAGE,
+		payload: {
+			userId,
+			chatId,
+			body
 		}
 	};
 };
