@@ -2,13 +2,14 @@ import React from 'react';
 import { NavLink } from 'react-router-dom';
 import ChatListItem from './ChatListItem';
 import SocketService from '../../../services/socket.service';
-import { addMessage } from '../ChatPage.redux/actions';
+import { addMessage, deleteMessageStore } from '../ChatPage.redux/actions';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
 interface IProps {
 	chats: any; //todo
 	addMessage: (any) => void;
+	deleteMessageStore: (chatId, messageId) => void;
 }
 class ChatList extends React.Component<IProps> {
 	componentDidMount() {
@@ -16,6 +17,9 @@ class ChatList extends React.Component<IProps> {
 		if (Object.keys(chats).length > 0) {
 			Object.keys(chats).forEach(SocketService.join);
 			SocketService.on('new-message', this.props.addMessage);
+			SocketService.on('delete-message', ({ chatId, messageId }) =>
+				this.props.deleteMessageStore(chatId, messageId)
+			);
 		}
 	}
 
@@ -38,7 +42,8 @@ const mapStateToProps = (rootState, props) => ({
 });
 
 const actions = {
-	addMessage
+	addMessage,
+	deleteMessageStore
 };
 
 const mapDispatchToProps = dispatch => bindActionCreators(actions, dispatch);

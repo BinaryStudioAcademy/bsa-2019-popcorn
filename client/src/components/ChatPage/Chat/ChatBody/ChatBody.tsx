@@ -4,14 +4,12 @@ import OutgoingMessage from './OutgoingMessage';
 import IncomingMessage from './IncomingMessage';
 import BreakLine from './BreakLine';
 import ScrollToBottom from 'react-scroll-to-bottom';
-import { addMessage } from '../../ChatPage.redux/actions';
 import { bindActionCreators } from 'redux';
 
 interface IProps {
 	messages: any; //todo
 	userId: string;
 	chatId: string;
-	addMessage: (message: any) => void;
 }
 
 class ChatBody extends React.Component<IProps> {
@@ -58,9 +56,7 @@ const mapStateToProps = (rootState, props) => ({
 	userId: rootState.profile.profileInfo.id
 });
 
-const actions = {
-	addMessage
-};
+const actions = {};
 
 const mapDispatchToProps = dispatch => bindActionCreators(actions, dispatch);
 

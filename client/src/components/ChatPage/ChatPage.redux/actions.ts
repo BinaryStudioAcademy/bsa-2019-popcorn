@@ -5,7 +5,8 @@ import {
 	CREATE_MESSAGE,
 	DELETE_MESSAGE,
 	UPDATE_MESSAGE,
-	ADD_MESSAGE
+	ADD_MESSAGE_STORE,
+	DELETE_MESSAGE_STORE
 } from './actionTypes';
 
 export const fetchChats = userId => {
@@ -69,9 +70,19 @@ export const updateMessage = (id, body) => {
 
 export const addMessage = message => {
 	return {
-		type: ADD_MESSAGE,
+		type: ADD_MESSAGE_STORE,
 		payload: {
 			message
+		}
+	};
+};
+
+export const deleteMessageStore = (chatId, messageId) => {
+	return {
+		type: DELETE_MESSAGE_STORE,
+		payload: {
+			chatId,
+			messageId
 		}
 	};
 };

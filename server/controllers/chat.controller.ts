@@ -53,16 +53,24 @@ router
   .delete(
     "/:id",
     errorHandlerMiddleware,
-    (req: Request, res: Response, next: NextFunction) =>
+    (req: Request & { io: any }, res: Response, next: NextFunction) =>
       chatService
         .deleteMessage(req.params.id, next)
-        .then(result => res.send(result))
+        .then(result => {
+          req.io
+            .to(result.chatId)
+            .emit("delete-message", {
+              chatId: result.chatId,
+              messageId: req.params.id
+            });
+          res.send({ result });
+        })
         .catch(next)
   )
   .put(
     "/:id",
     errorHandlerMiddleware,
-    (req: Request, res: Response, next: NextFunction) =>
+    (req: Request & { io: any }, res: Response, next: NextFunction) =>
       chatService
         .updateMessage(req.params.id, req.body.body, next)
         .then(result => res.send(result))

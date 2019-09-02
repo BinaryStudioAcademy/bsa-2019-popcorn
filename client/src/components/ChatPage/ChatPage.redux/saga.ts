@@ -95,17 +95,9 @@ function* watchCreateMessage() {
 
 export function* deleteMessage(action) {
 	try {
-		const response = yield call(webApi, {
+		yield call(webApi, {
 			method: 'DELETE',
 			endpoint: `/api/chat/${action.payload.id}`
-		});
-
-		yield put({
-			type: FETCH_MESSAGES,
-			payload: {
-				chatId: response.chatId,
-				userId: response.userId
-			}
 		});
 	} catch (e) {
 		console.log('chat saga delete message:', e.message);

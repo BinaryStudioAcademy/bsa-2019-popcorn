@@ -3,7 +3,8 @@ import {
 	SET_MESSAGES,
 	FETCH_CHATS,
 	FETCH_MESSAGES,
-	ADD_MESSAGE
+	ADD_MESSAGE_STORE,
+	DELETE_MESSAGE_STORE
 } from './actionTypes';
 
 const initialState = {
@@ -44,7 +45,7 @@ export default function(state = initialState, action) {
 				},
 				isLoadingMessages: false
 			};
-		case ADD_MESSAGE:
+		case ADD_MESSAGE_STORE:
 			const newMessage = action.payload.message;
 			const chatId = newMessage.chat.id;
 			delete newMessage.chat;
@@ -58,8 +59,23 @@ export default function(state = initialState, action) {
 						messages: [...state.chats[chatId].messages, newMessage],
 						lastMessage: newMessage
 					}
-				},
-				isLoadingMessages: false
+				}
+			};
+		case DELETE_MESSAGE_STORE:
+			const { chatId: chat_id, messageId } = action.payload;
+			const filteredMessages = state.chats[chat_id].messages.filter(
+				message => message.id !== messageId
+			);
+
+			return {
+				...state,
+				chats: {
+					...state.chats,
+					[chat_id]: {
+						...state.chats[chat_id],
+						messages: [...filteredMessages]
+					}
+				}
 			};
 		default:
 			return state;
