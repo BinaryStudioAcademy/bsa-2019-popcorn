@@ -49,7 +49,7 @@ const MovieListPreviewItem: React.FC<IProps> = ({
 					<FontAwesomeIcon
 						className="preview-delete-button absolute"
 						icon={faTimes}
-						title="Click to delete from watch list"
+						title="Click to delete from movie list"
 					/>
 				</div>
 			)}
