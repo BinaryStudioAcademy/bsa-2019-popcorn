@@ -60,6 +60,7 @@ $color: black;
 			padding: 0;
 		}
 	}
+
 	.modal-data-search-show {
 		transform: scaleY(1) !important;
 	}
@@ -85,29 +86,36 @@ $color: black;
 		line-height: 15px;
 		width: 600px;
 		padding: 0 10px 10px 10px;
+
 		.hover {
 			color: inherit;
 		}
+
 		a {
 			text-decoration: none;
 
 			display: block;
 			padding-top: 15px;
 			line-height: 20px;
+
 			&:hover {
 				cursor: pointer;
 			}
 		}
 	}
+
 	.extra {
 		border: none;
 	}
+
 	.extra-body {
 		max-width: 100%;
 	}
+
 	.active {
 		width: 100% !important;
 	}
+
 	.loading {
 		padding: 5px;
 		margin-top: 10px;
@@ -123,55 +131,22 @@ $color: black;
 			border-collapse: collapse;
 			vertical-align: top;
 		}
+	}
+}
 
-		.loader {
-			width: 10px;
-			height: 10px;
-			top: 50%;
-			border-radius: 50%;
-			position: absolute;
-			-webkit-animation: loader-2 0.9s 0.35s ease alternate infinite;
-			animation: loader-2 0.9s 0.35s ease alternate infinite;
-			margin: -20px auto 0;
-		}
+.result-list {
+	padding: 10px 0;
 
-		.loader:after,
-		.loader:before {
-			content: '';
-			position: absolute;
-			width: 10px;
-			height: 10px;
-			border-radius: 50%;
-			animation: loader-2 0.9s ease alternate infinite;
-			-webkit-animation: loader-2 0.9s ease alternate infinite;
-		}
+	.list-header {
+		background-color: $orange-light;
+		text-transform: capitalize;
+		color: white;
+		padding: 5px 5px 5px 50px;
+		text-align: center;
+	}
 
-		.loader:before {
-			left: -20px;
-			animation-delay: 0.2s;
-		}
-
-		.loader:after {
-			right: -20px;
-			animation-delay: 0.5s;
-		}
-
-		@keyframes loader {
-			0% {
-				box-shadow: 0 15px 0 -15px $color;
-			}
-			100% {
-				box-shadow: 0 15px 0 $color;
-			}
-		}
-
-		@-webkit-keyframes loader {
-			0% {
-				box-shadow: 0 15px 0 -15px $color;
-			}
-			100% {
-				box-shadow: 0 15px 0 $color;
-			}
-		}
+	.list-content {
+		padding: 10px;
+		box-sizing: border-box;
 	}
 }

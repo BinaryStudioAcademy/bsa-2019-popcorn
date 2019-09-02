@@ -19,6 +19,9 @@ export const getUsers = async (): Promise<IResponse> => {
 export const getUserById = async (id: string): Promise<IResponse> => {
   return await getCustomRepository(UserRepository).getUserById(id);
 };
+export const getUserByName = async (name: string): Promise<Array<User>> => {
+  return await getCustomRepository(UserRepository).find({ name });
+};
 
 export const updateById = async (id: string, body: any): Promise<IResponse> => {
   return await getCustomRepository(UserRepository).updateById(id, body);

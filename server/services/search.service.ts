@@ -2,6 +2,7 @@ import { getSurveysByTitle } from "./surveys.service";
 import { getEventByTitle } from "./event.service";
 import { getTopByTitle } from "./top.service";
 import { getByTitle } from "./movie.service";
+import { getUserByName } from "./user.service";
 
 export const contentSearch = async ({
   title,
@@ -21,6 +22,8 @@ export const contentSearch = async ({
       return await contentEvent(title);
     case "survey":
       return await contentSurvey(title);
+    case "user":
+      return await contentUser(title);
     default:
       throw new Error("Bad request");
   }
@@ -31,7 +34,8 @@ const contentAll = async (title: string) => {
     await contentMovie(title, false),
     await contentTop(title, false),
     await contentEvent(title, false),
-    await contentSurvey(title, false)
+    await contentSurvey(title, false),
+    await contentUser(title, false)
   ];
 };
 const contentMovie = async (title: string, wrap = true) => {
@@ -72,5 +76,15 @@ const contentSurvey = async (title: string, wrap = true) => {
     : {
         data: survey,
         type: "survey"
+      };
+};
+const contentUser = async (title: string, wrap = true) => {
+  const users = await getUserByName(title);
+
+  return wrap
+    ? [{ data: users, type: "user" }]
+    : {
+        data: users,
+        type: "user"
       };
 };

@@ -47,6 +47,7 @@ interface IProps {
 	getUnreadNotifications: (userId: string) => void;
 	setNotificitationIsRead: (notificatonId: string) => void;
 	unredNotifications: Activity[];
+	history: any;
 }
 
 const Header = ({
@@ -59,7 +60,8 @@ const Header = ({
 	sendTokenToServer,
 	getUnreadNotifications,
 	setNotificitationIsRead,
-	unredNotifications
+	unredNotifications,
+	history
 }: IProps) => {
 	const MOVIES_IN_CINEMA = 'Movies in cinema';
 	const MOVIE_TOPS = 'Movie tops';

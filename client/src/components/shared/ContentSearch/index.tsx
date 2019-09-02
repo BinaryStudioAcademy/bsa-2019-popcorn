@@ -5,7 +5,8 @@ import { connect } from 'react-redux';
 import { fetchData } from './redux/actions';
 import MoviePreview from './MoviePreview/index';
 import Extra from '../../UserPage/UserPosts/PostExtra/extra';
-import { NavLink } from 'react-router-dom';
+import { NavLink, Redirect } from 'react-router-dom';
+import ResultList from './ResultList';
 
 const options = ['all', 'movie', 'event', 'survey', 'top', 'user'];
 const defaultOption = options[0];
@@ -16,19 +17,22 @@ interface IProps {
 	data: null | Array<{ data: any; type: string }>;
 	loading: boolean;
 	error: string;
+	history: any;
 }
 
 interface IState {
 	title: string;
 	type: string;
 	showModal: boolean;
+	redirectAdvanceSearch: boolean;
 }
 
 class ContentSearch extends React.Component<IProps, IState> {
 	state = {
 		title: '',
 		type: defaultOption,
-		showModal: false
+		showModal: false,
+		redirectAdvanceSearch: false
 	};
 
 	static isEmpty(data) {
@@ -55,55 +59,14 @@ class ContentSearch extends React.Component<IProps, IState> {
 		return this.state.showModal || this.props.loading || !!this.props.error;
 	}
 
-	renderList(elem: { data: any; type: string }) {
-		switch (elem.type) {
-			case 'movie':
-				return elem.data.map(movie => (
-					<MoviePreview movie={movie} key={movie.id} />
-				));
-			case 'event':
-				return elem.data.map(event => (
-					<NavLink to={'/events/' + event.id}>
-						<Extra
-							clearExtra={data => null}
-							data={event}
-							link={'/events/' + event.id}
-							type={'event'}
-							readyPost={true}
-						/>
-					</NavLink>
-				));
-			case 'top':
-				return elem.data.map(top => (
-					<NavLink to={'/tops/' + top.id}>
-						<Extra
-							clearExtra={data => null}
-							data={top}
-							link={'/tops/' + top.id}
-							type={'top'}
-							readyPost={true}
-						/>
-					</NavLink>
-				));
-			case 'survey':
-				return elem.data.map(survey => (
-					<NavLink to={`/user-page/${survey.user.id}/survey/${survey.id}`}>
-						<Extra
-							clearExtra={data => null}
-							data={survey}
-							link={`/user-page/${survey.user.id}/survey/${survey.id}`}
-							type={'survey'}
-							readyPost={true}
-						/>
-					</NavLink>
-				));
-		}
-	}
-
 	render() {
-		const { title, type } = this.state;
+		const { title, type, redirectAdvanceSearch } = this.state;
+		if (redirectAdvanceSearch) {
+			this.setState({ redirectAdvanceSearch: false });
+			return <Redirect to={'/advanced-search'} />;
+		}
 
-		const { fetchData, data, loading, error } = this.props;
+		const { fetchData, data } = this.props;
 
 		return (
 			<div className={'content-search'}>
@@ -129,12 +92,16 @@ class ContentSearch extends React.Component<IProps, IState> {
 					className="question-type"
 					value={type}
 					onChange={event => {
-						this.setState({ type: event.target.value });
+						if (event.target.value !== 'Advance movie search')
+							return this.setState({ type: event.target.value });
+
+						this.setState({ redirectAdvanceSearch: true });
 					}}
 				>
 					{options.map(option => (
 						<option value={option}>{option}</option>
 					))}
+					<option value="Advance movie search">Advance movie search</option>
 				</select>
 				<div
 					className={
@@ -142,17 +109,7 @@ class ContentSearch extends React.Component<IProps, IState> {
 						(this.showModal() ? 'modal-data-search-show' : '')
 					}
 				>
-					{loading && (
-						<div className={'loading'}>
-							<span>Loading...</span>
-						</div>
-					)}
-					{error && (
-						<div className={'loading'}>
-							<span>{error}</span>
-						</div>
-					)}
-					{data && data.map(elem => this.renderList(elem))}
+					<ResultList />
 				</div>
 			</div>
 		);
