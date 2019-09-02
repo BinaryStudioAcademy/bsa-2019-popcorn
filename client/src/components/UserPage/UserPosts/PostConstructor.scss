@@ -2,7 +2,7 @@
 .postconstr-wrp {
 	background-color: $white;
 	left: 50%;
-	max-width: 600px;
+	max-width: 650px;
 	top: 20%;
 	transform: translateX(-50%);
 	width: 100%;
@@ -24,7 +24,10 @@
 		margin-right: 25px;
 		margin-top: 10px;
 	}
-
+	.upload-image-button {
+		height: 24px;
+		color: $text-base-color;
+	}
 	.close-modal:hover {
 		cursor: pointer;
 	}
@@ -85,6 +88,7 @@
 			color: $text-base-color;
 		}
 		.extra-title {
+			font-weight: 300;
 			font-size: 18px;
 			letter-spacing: 0.4px;
 			color: $text-base-color;
@@ -161,6 +165,7 @@
 			align-content: center;
 			justify-content: center;
 			cursor: pointer;
+			margin-left: 20px;
 		}
 
 		.button-image {
@@ -215,7 +220,6 @@
 		display: flex;
 		flex-direction: row;
 		.post-img-wrapper {
-			margin-left: 20px;
 			width: 100px;
 		}
 		.post-img {
