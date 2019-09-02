@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { createMessage } from '../ChatPage.redux/actions';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPaperPlane } from '@fortawesome/free-solid-svg-icons';
 
 interface IProps {
 	createMessage: (userId: string, chatId: string, body: string) => void;
@@ -16,6 +18,7 @@ const ChatInput: React.FC<IProps> = ({ chatId, userId, createMessage }) => {
 	};
 
 	const sendMessage = () => {
+		if (message.trim() === '') return;
 		changeMessage('');
 		createMessage(userId, chatId, message);
 	};
@@ -32,7 +35,9 @@ const ChatInput: React.FC<IProps> = ({ chatId, userId, createMessage }) => {
 				value={message}
 				onChange={onMessageChange}
 			/>
-			<button onClick={sendMessage}>Send</button>
+			<button onClick={sendMessage} className="send-btn">
+				<FontAwesomeIcon icon={faPaperPlane} />
+			</button>
 		</div>
 	);
 };

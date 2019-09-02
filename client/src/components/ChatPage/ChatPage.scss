@@ -34,6 +34,7 @@
 			}
 			.avatar {
 				height: 100%;
+				border-radius: 50%;
 			}
 			&-info {
 				width: 100%;
@@ -53,6 +54,9 @@
 					}
 				}
 				.last-message {
+					word-break: break-all;
+					white-space: pre-line;
+					overflow: hidden;
 					color: rgba($text-base-color, 0.9);
 					font-size: 0.9em;
 					height: 35px;
@@ -73,6 +77,7 @@
 			align-items: center;
 			background-color: $background-gray;
 			.header-avatar {
+				border-radius: 50%;
 				height: 100%;
 			}
 			.user-name {
@@ -85,8 +90,10 @@
 			overflow: auto;
 			font-size: 0.8em;
 			padding: 10px;
+			padding-top: 0;
 			.to-bottom {
 				background-color: transparent;
+				margin-bottom: 10px;
 				border-radius: 0;
 				border: solid $orange;
 				border-width: 0 3px 3px 0;
@@ -106,11 +113,14 @@
 			}
 			.incoming-message,
 			.outgoing-message {
-				max-width: 50%;
+				max-width: 400px;
 				padding: 10px;
 				border-radius: 20px;
 				margin: 10px 0;
 				font-weight: 500;
+				word-wrap: break-word;
+				white-space: pre-line;
+				overflow: hidden;
 			}
 			.incoming-message {
 				color: white;
@@ -134,6 +144,36 @@
 		}
 		.chat-input {
 			height: 50px;
+			border-top: 1px solid $border-color;
+
+			input {
+				width: calc(100% - 50px);
+				font-size: 0.8em;
+				height: 100%;
+				border: none;
+				outline: none;
+				margin: 0;
+				padding: 10px;
+				background-color: transparent;
+			}
+			.send-btn {
+				&:hover {
+					background-color: $background-gray;
+				}
+				cursor: pointer;
+				float: right;
+				height: 100%;
+				width: 50px;
+				margin: 0;
+				padding: 15px;
+				background-color: transparent;
+				outline: none;
+				border: none;
+				svg {
+					width: 100%;
+					height: 100%;
+				}
+			}
 		}
 	}
 }
