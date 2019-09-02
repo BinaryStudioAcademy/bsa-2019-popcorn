@@ -56,6 +56,7 @@ class ContentSearch extends React.Component<IProps, IState> {
 	}
 
 	showModal(): boolean {
+		if (window.location.pathname === '/content-search') return false;
 		return this.state.showModal || this.props.loading || !!this.props.error;
 	}
 
@@ -109,7 +110,7 @@ class ContentSearch extends React.Component<IProps, IState> {
 						(this.showModal() ? 'modal-data-search-show' : '')
 					}
 				>
-					<ResultList />
+					<ResultList redirect={true} />
 				</div>
 			</div>
 		);

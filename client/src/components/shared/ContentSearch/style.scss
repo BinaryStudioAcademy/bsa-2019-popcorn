@@ -149,4 +149,12 @@ $color: black;
 		padding: 10px;
 		box-sizing: border-box;
 	}
+
+	.show-more-button {
+		color: rgba(18, 39, 55, 0.5);
+		font-style: italic;
+		cursor: pointer;
+		transition: opacity 0.3s ease;
+		text-align: right;
+	}
 }
