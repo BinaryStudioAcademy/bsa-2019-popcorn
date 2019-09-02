@@ -90,7 +90,11 @@ const MovieListCreator: React.FC<IProps> = ({
 					<label className="item-label item-label-image">Image:</label>
 					<div className="item-right-content-container">
 						{imageUrl === '' ? (
-							<ImageLoader setImageUrl={setImageUrl} isIcon={false} />
+							<ImageLoader
+								setImageUrl={setImageUrl}
+								isIcon={false}
+								aspectRatio={1}
+							/>
 						) : (
 							<div
 								className="image-preview-container"

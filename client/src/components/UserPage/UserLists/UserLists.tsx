@@ -3,8 +3,13 @@ import './UserLists.scss';
 import MovieListCreator from './MovieListCreator/MovieListCreator';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { saveMovieList, fetchMovieListsPreview } from './actions';
+import {
+	saveMovieList,
+	fetchMovieListsPreview,
+	deleteMovieList
+} from './actions';
 import Spinner from '../../shared/Spinner';
+import MovieListPreviewItem from './MovieListPreviewItem/MovieListPreviewItem';
 
 export interface INewMovieList {
 	title: string;
@@ -17,13 +22,15 @@ export interface INewMovieList {
 interface IProps {
 	saveMovieList: (movieList: INewMovieList) => object;
 	fetchMovieListsPreview: () => object;
+	deleteMovieList: (movieListId: string) => object;
 	movieListsPreview?: Array<any>;
 }
 
 const UserLists: React.FC<IProps> = ({
 	saveMovieList,
 	fetchMovieListsPreview,
-	movieListsPreview
+	movieListsPreview,
+	deleteMovieList
 }) => {
 	const [showCreator, setShowCreator] = useState(false);
 
@@ -32,16 +39,26 @@ const UserLists: React.FC<IProps> = ({
 		return <Spinner />;
 	}
 
+	if (showCreator) {
+		return (
+			<MovieListCreator
+				setShowCreator={setShowCreator}
+				saveMovieList={saveMovieList}
+			/>
+		);
+	}
 	return (
 		<div className="UserLists">
-			{showCreator ? (
-				<MovieListCreator
-					setShowCreator={setShowCreator}
-					saveMovieList={saveMovieList}
-				/>
-			) : (
-				<button onClick={() => setShowCreator(true)}>CREATE</button>
-			)}
+			<button onClick={() => setShowCreator(true)}>CREATE</button>
+			<div className="movie-list-preview-container">
+				{movieListsPreview.map(preview => (
+					<MovieListPreviewItem
+						key={preview.id}
+						deleteMovieList={deleteMovieList}
+						moviePreview={preview}
+					/>
+				))}
+			</div>
 		</div>
 	);
 };
@@ -54,7 +71,8 @@ const mapStateToProps = (rootState, props) => ({
 const mapDispatchToProps = dispatch => {
 	const actions = {
 		saveMovieList,
-		fetchMovieListsPreview
+		fetchMovieListsPreview,
+		deleteMovieList
 	};
 
 	return bindActionCreators(actions, dispatch);

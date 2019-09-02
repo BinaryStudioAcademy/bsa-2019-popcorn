@@ -1,0 +1,61 @@
+@import '../../../../styles/variables.scss';
+
+.movie-list-preview {
+	position: relative;
+	display: grid;
+	grid-template-columns: 30% 1fr;
+	padding: 10px;
+	border: 1px solid $border-color;
+
+	.movie-list-preview-main {
+		display: flex;
+		flex-direction: column;
+		justify-content: space-between;
+		height: 100%;
+	}
+
+	.preview-title {
+		padding-right: 22px;
+		line-height: 22px;
+		font-weight: 600;
+		font-size: 1.2em;
+		padding-bottom: 1.5px;
+		border-bottom: 1px solid $border-focus-color;
+	}
+
+	.preview-description {
+		margin-top: 10px;
+		color: $text-secondary-color;
+	}
+
+	.preview-count-movies {
+		margin-top: 10px;
+		font-weight: 200;
+		color: $text-secondary-color;
+		text-align: right;
+		margin-bottom: -6px;
+		margin-right: -6px;
+		font-size: 0.9em;
+	}
+
+	.image-container {
+		margin-right: 10px;
+		img {
+			width: 100%;
+		}
+	}
+	.button-absolute-position {
+		position: absolute;
+		top: 5px;
+		right: 5px;
+		.preview-delete-button {
+			width: 22px;
+			padding: 5px;
+			height: 22px;
+			border-radius: 5px;
+			color: white;
+			background-color: rgba(0, 0, 0, 0.726);
+			cursor: pointer;
+		}
+	}
+}
