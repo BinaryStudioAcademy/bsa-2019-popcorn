@@ -86,7 +86,7 @@ class ImageLoader extends React.Component<IProps, IState> {
 				</button>
 				{this.state.image_url && !this.state.croppedSaved && (
 					<div>
-						<div className="cropper-container">
+						<div className="image-cropper-container">
 							<Cropper
 								ref={this.cropper}
 								className="cropper-creator-img"
