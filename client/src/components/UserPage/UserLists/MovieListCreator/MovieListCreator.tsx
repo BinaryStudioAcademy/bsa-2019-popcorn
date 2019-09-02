@@ -28,6 +28,10 @@ const MovieListCreator: React.FC<IProps> = ({ saveMovieList }) => {
 	const elasticProperties = ['id', 'title'];
 
 	const onSaveMovieList = () => {
+		if (!title || moviesDetails.length == 0) {
+			// show error
+			return;
+		}
 		const movieList = {
 			title,
 			description,
