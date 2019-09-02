@@ -6,10 +6,10 @@ const green = {
 	MAX_RATE: 3,
 	setResult: opacity => `rgba(0, 255, 0, ${opacity})`
 };
-const yellow = {
+const white = {
 	MIN_RATE: -0.5,
 	MAX_RATE: 0.7,
-	setResult: opacity => `rgba(255, 255, 0, ${opacity})`
+	setResult: () => `rgba(255, 255, 255, .2)`
 };
 const red = {
 	MIN_RATE: -3,
@@ -19,7 +19,7 @@ const red = {
 
 const DEFAULT_RGBA = 'rgba(255, 255, 255, 1)';
 
-export const analysisToGRBA = (analysis: string): string => {
+export const analysisToRGBA = (analysis: string): string => {
 	const rate = +analysis;
 	if (isNaN(rate)) {
 		return DEFAULT_RGBA;
@@ -31,8 +31,8 @@ export const analysisToGRBA = (analysis: string): string => {
 		const result = getOpacityValue(green, rate);
 		return green.setResult(result);
 	}
-	if (rate >= yellow.MIN_RATE && rate <= yellow.MAX_RATE) {
-		return yellow.setResult((MAX_OPACITY + MIN_OPACITY) / 2);
+	if (rate >= white.MIN_RATE && rate <= white.MAX_RATE) {
+		return white.setResult();
 	}
 	if (rate <= red.MAX_RATE) {
 		if (rate < red.MIN_RATE) {
