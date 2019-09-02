@@ -4,7 +4,11 @@ import {
 	SEND_TOKEN_TO_SERVER,
 	GET_UNREAD_NOTIFICATIONS_SUCCESS,
 	GET_UNREAD_NOTIFICATIONS,
-	SET_NOTIFICATION_IS_READ
+	SET_NOTIFICATION_IS_READ,
+	GET_FIREBASE_TOKEN,
+	GET_FIREBASE_TOKEN_SUCCESS,
+	DELETE_FIREBASE_TOKEN,
+	SET_FIREBASE_TOKEN_UNDEFINED
 } from './actionTypes';
 export function* sendTokenToServer(action) {
 	try {
@@ -50,6 +54,47 @@ export function* setNotificationIsRead(action) {
 	}
 }
 
+export function* getFirebaseToken(action) {
+	try {
+		const firebase = action.payload.firebase;
+		const firebaseToken = yield firebase.messaging.getToken();
+		yield put({
+			type: GET_FIREBASE_TOKEN_SUCCESS,
+			payload: { firebaseToken }
+		});
+		yield put({
+			type: SEND_TOKEN_TO_SERVER,
+			payload: { token: firebaseToken }
+		});
+	} catch (e) {
+		yield put({
+			type: GET_FIREBASE_TOKEN_SUCCESS,
+			payload: { firebaseToken: null }
+		});
+		console.log('notification saga getFirebaseToken: ', e.message);
+	}
+}
+
+export function* deleteFirebaseToken(action) {
+	try {
+		if (action.payload && action.payload.firebaseToken) {
+			yield call(webApi, {
+				method: 'DELETE',
+				endpoint: `/api/notification/token/${action.payload.firebaseToken}`
+			});
+			yield put({
+				type: SET_FIREBASE_TOKEN_UNDEFINED
+			});
+		}
+	} catch (e) {
+		yield put({
+			type: GET_FIREBASE_TOKEN_SUCCESS,
+			payload: { firebaseToken: null }
+		});
+		console.log('notification saga getFirebaseToken: ', e.message);
+	}
+}
+
 function* watchSendTokenToServer() {
 	yield takeEvery(SEND_TOKEN_TO_SERVER, sendTokenToServer);
 }
@@ -59,10 +104,19 @@ function* watchGetUnreadNotifications() {
 function* watchSetNotificationIsRead() {
 	yield takeEvery(SET_NOTIFICATION_IS_READ, setNotificationIsRead);
 }
+function* watchGetFirebaseToken() {
+	yield takeEvery(GET_FIREBASE_TOKEN, getFirebaseToken);
+}
+function* watchDeleteFirebaseToken() {
+	yield takeEvery(DELETE_FIREBASE_TOKEN, deleteFirebaseToken);
+}
+
 export default function* notification() {
 	yield all([
 		watchSendTokenToServer(),
 		watchGetUnreadNotifications(),
-		watchSetNotificationIsRead()
+		watchSetNotificationIsRead(),
+		watchGetFirebaseToken(),
+		watchDeleteFirebaseToken()
 	]);
 }

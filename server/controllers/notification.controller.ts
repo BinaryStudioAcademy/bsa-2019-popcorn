@@ -28,5 +28,13 @@ router
         res.send(response);
       })
       .catch(next)
+  )
+  .delete("/token/:id", (req: any, res: Response, next: NextFunction) =>
+    firebaseService
+      .deleteAppInstanceToken(req.params.id, req.user.id)
+      .then(response => {
+        res.send(response);
+      })
+      .catch(next)
   );
 export default router;

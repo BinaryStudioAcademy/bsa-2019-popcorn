@@ -12,6 +12,7 @@ admin.initializeApp({
 
 const db = admin.firestore();
 const notificationTokenPath = "notification_token";
+let tokensStorage = {};
 
 function buildMobileMessage({ title, body, icon, entityType, entityId }) {
   const fcmMessage = {
@@ -63,6 +64,9 @@ export async function sendPushMessage({
   entityId
 }) {
   const userTokens = await getAppInstanceTokens(userId);
+  if (!userTokens) {
+    return;
+  }
 
   Object.keys(userTokens).forEach(tokenType => {
     let message = null;
@@ -81,8 +85,10 @@ export async function sendPushMessage({
 }
 
 export async function storeAppInstanceToken({ token, userId, type }) {
+  if (tokensStorage[userId] && tokensStorage[userId][type].includes(token))
+    return;
   try {
-    return await db
+    const result = await db
       .collection(notificationTokenPath)
       .doc(userId)
       .set(
@@ -91,21 +97,44 @@ export async function storeAppInstanceToken({ token, userId, type }) {
         },
         { merge: true }
       );
+    if (result) {
+      const tokens =
+        (tokensStorage[userId] && tokensStorage[userId][type]) || [];
+      tokensStorage[userId] = {
+        ...tokensStorage[userId],
+        [type]: [...tokens, token]
+      };
+    }
+    return result;
   } catch (err) {
     console.log(`Error storing token [${token}] in firestore`, err);
     return null;
   }
 }
 
-export async function deleteAppInstanceToken(token: string) {
+export async function deleteAppInstanceToken(token: string, userId: string) {
   try {
-    const deleteQuery = db
+    const result = await db
       .collection(notificationTokenPath)
-      .where("token", "==", token);
-    const querySnapshot = await deleteQuery.get();
-    querySnapshot.docs.forEach(async doc => {
-      await doc.ref.delete();
-    });
+      .doc(userId)
+      .update({
+        web: admin.firestore.FieldValue.arrayRemove(token),
+        mobile: admin.firestore.FieldValue.arrayRemove(token)
+      });
+    if (tokensStorage[userId]) {
+      if (tokensStorage[userId]["web"]) {
+        const webTokens = tokensStorage[userId]["web"].filter(
+          webToken => webToken !== token
+        );
+        tokensStorage[userId]["web"] = webTokens;
+      }
+      if (tokensStorage[userId]["mobile"]) {
+        const mobileTokens = tokensStorage[userId]["web"].filter(
+          mobileToken => mobileToken !== token
+        );
+        tokensStorage[userId]["mobile"] = mobileTokens;
+      }
+    }
     return true;
   } catch (err) {
     console.log(`Error deleting token [${token}] in firestore`, err);
@@ -115,13 +144,18 @@ export async function deleteAppInstanceToken(token: string) {
 
 export async function getAppInstanceTokens(userId: string) {
   try {
-    let tokens = await db
-      .collection(notificationTokenPath)
-      .doc(userId)
-      .get();
-    return tokens.data();
+    if (tokensStorage[userId]) return tokensStorage[userId];
+    else {
+      const tokensFromFirebase = await db
+        .collection(notificationTokenPath)
+        .doc(userId)
+        .get();
+      tokensStorage[userId] = tokensFromFirebase.data();
+      return tokensStorage[userId];
+    }
   } catch (err) {
     console.log(`Error getting token [${userId}] in firestore`, err);
+    tokensStorage[userId] = [];
     return null;
   }
 }

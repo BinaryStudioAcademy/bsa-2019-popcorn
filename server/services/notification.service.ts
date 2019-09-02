@@ -24,5 +24,8 @@ export const setNotificationIsRead = async (
 export const getNotificationsByUserId = async (
   userId: string
 ): Promise<NotificationModel[]> => {
-  return await getCustomRepository(NotificationRepository).find({ userId });
+  return await getCustomRepository(NotificationRepository).find({
+    where: { userId },
+    order: { date: "DESC" }
+  });
 };
