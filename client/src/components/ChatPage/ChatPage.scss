@@ -150,6 +150,14 @@
 				margin-left: 50%;
 				background-color: $background-gray;
 				position: relative;
+				&::before {
+					content: '';
+					position: absolute;
+					top: 0;
+					bottom: 0;
+					width: 100px;
+					left: -100px;
+				}
 				&:hover {
 					.message-btns {
 						display: flex;
