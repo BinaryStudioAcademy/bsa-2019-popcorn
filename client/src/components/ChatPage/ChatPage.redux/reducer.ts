@@ -2,7 +2,8 @@ import {
 	SET_CHATS,
 	SET_MESSAGES,
 	FETCH_CHATS,
-	FETCH_MESSAGES
+	FETCH_MESSAGES,
+	ADD_MESSAGE
 } from './actionTypes';
 
 const initialState = {
@@ -39,6 +40,23 @@ export default function(state = initialState, action) {
 					[action.payload.chatId]: {
 						...state.chats[action.payload.chatId],
 						messages: action.payload.messages
+					}
+				},
+				isLoadingMessages: false
+			};
+		case ADD_MESSAGE:
+			const newMessage = action.payload.message;
+			if (!newMessage.chat) return { ...state };
+			const chatId = newMessage.chat.id;
+			delete newMessage.chat;
+
+			return {
+				...state,
+				chats: {
+					...state.chats,
+					[chatId]: {
+						...state.chats[chatId],
+						messages: [...state.chats[chatId].messages, newMessage]
 					}
 				},
 				isLoadingMessages: false

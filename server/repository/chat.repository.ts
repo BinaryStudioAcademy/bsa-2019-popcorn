@@ -75,8 +75,13 @@ class ChatRepository extends Repository<Chat> {
     const user = await getCustomRepository(UserRepository).findOne({
       id: userId
     });
-    await getCustomRepository(MessageRepository).save({ chat, user, body });
-    return { success: true };
+    const newMessage: any = await getCustomRepository(MessageRepository).save({
+      chat,
+      user,
+      body
+    });
+    newMessage.user = this.formatUser(newMessage.user);
+    return newMessage;
   }
 
   async deleteMessage(id, next?) {

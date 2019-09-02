@@ -84,14 +84,6 @@ export function* createMessage(action) {
 				body: action.payload.body
 			}
 		});
-
-		yield put({
-			type: FETCH_MESSAGES,
-			payload: {
-				chatId: action.payload.chatId,
-				userId: action.payload.userId
-			}
-		});
 	} catch (e) {
 		console.log('chat saga create message:', e.message);
 	}

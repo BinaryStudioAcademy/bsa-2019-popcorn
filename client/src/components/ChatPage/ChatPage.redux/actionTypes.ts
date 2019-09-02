@@ -7,3 +7,4 @@ export const SET_MESSAGES = 'SET_MESSAGES';
 export const CREATE_MESSAGE = 'CREATE_MESSAGE';
 export const DELETE_MESSAGE = 'DELETE_MESSAGE';
 export const UPDATE_MESSAGE = 'UPDATE_MESSAGE';
+export const ADD_MESSAGE = 'ADD_MESSAGE';

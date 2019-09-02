@@ -36,7 +36,7 @@ router
   .post(
     "/:userId/:chatId",
     errorHandlerMiddleware,
-    (req: Request, res: Response, next: NextFunction) =>
+    (req: Request & { io: any }, res: Response, next: NextFunction) =>
       chatService
         .createMessage(
           req.params.chatId,
@@ -44,7 +44,10 @@ router
           req.body.body,
           next
         )
-        .then(result => res.send(result))
+        .then(result => {
+          req.io.to(req.params.chatId).emit("new-message", result);
+          res.send({ result });
+        })
         .catch(next)
   )
   .delete(
