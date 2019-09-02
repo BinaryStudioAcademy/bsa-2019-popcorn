@@ -86,7 +86,7 @@ export async function sendPushMessage({
 
 export async function storeAppInstanceToken({ token, userId, type }) {
   if (tokensStorage[userId] && tokensStorage[userId][type].includes(token))
-    return;
+    return true;
   try {
     const result = await db
       .collection(notificationTokenPath)
@@ -105,7 +105,7 @@ export async function storeAppInstanceToken({ token, userId, type }) {
         [type]: [...tokens, token]
       };
     }
-    return result;
+    return true;
   } catch (err) {
     console.log(`Error storing token [${token}] in firestore`, err);
     return null;
