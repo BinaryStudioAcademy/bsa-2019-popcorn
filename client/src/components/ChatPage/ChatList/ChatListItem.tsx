@@ -12,13 +12,17 @@ const ChatListItem: React.FC<IProps> = ({ chat }) => {
 			<div className="chat-list-item-info">
 				<div className="info-header">
 					<div className="user-name">{chat.user.name}</div>
-					<div className="last-date">
-						<Moment format="D.MM.YY" local>
-							{chat.lastMessage.created_at}
-						</Moment>
-					</div>
+					{chat.lastMessage && (
+						<div className="last-date">
+							<Moment format="D.MM.YY" local>
+								{chat.lastMessage.created_at}
+							</Moment>
+						</div>
+					)}
 				</div>
-				<div className="last-message">{chat.lastMessage.body}</div>
+				{chat.lastMessage && (
+					<div className="last-message">{chat.lastMessage.body}</div>
+				)}
 			</div>
 		</div>
 	);

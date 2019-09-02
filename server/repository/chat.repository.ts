@@ -6,6 +6,7 @@ import {
 } from "typeorm";
 import { Chat } from "../entities/Chat";
 import UserRepository from "./user.repository";
+import MessageRepository from "./message.repository";
 
 @EntityRepository(Chat)
 class ChatRepository extends Repository<Chat> {
@@ -48,6 +49,29 @@ class ChatRepository extends Repository<Chat> {
       message.user = this.formatUser(message.user);
     });
     return messages;
+  }
+
+  async createChat(user1Id, user2Id, next?) {
+    const user1 = await getCustomRepository(UserRepository).findOne({
+      id: user1Id
+    });
+    const user2 = await getCustomRepository(UserRepository).findOne({
+      id: user2Id
+    });
+    const chat = await this.findOne({
+      where: [{ user1, user2 }, { user1: user2, user2: user1 }]
+    });
+    if (!chat) {
+      await this.save({ user1, user2 });
+    }
+  }
+
+  async createMessage(chatId, userId, body, next?) {
+    const chat = await this.findOne({ id: chatId });
+    const user = await getCustomRepository(UserRepository).findOne({
+      id: userId
+    });
+    await getCustomRepository(MessageRepository).save({ chat, user, body });
   }
 }
 

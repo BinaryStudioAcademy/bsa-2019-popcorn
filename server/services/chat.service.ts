@@ -11,3 +11,20 @@ export const getMessagesByChatId = async (chatId, next) => {
     next
   );
 };
+
+export const createChat = async (user1Id, user2Id, next) => {
+  return await getCustomRepository(ChatRepository).createChat(
+    user1Id,
+    user2Id,
+    next
+  );
+};
+
+export const createMessage = async (chatId, userId, body, next) => {
+  return await getCustomRepository(ChatRepository).createMessage(
+    chatId,
+    userId,
+    body,
+    next
+  );
+};

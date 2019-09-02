@@ -23,6 +23,29 @@ router
         .getMessagesByChatId(req.params.chatId, next)
         .then(result => res.send(result))
         .catch(next)
+  )
+  .post(
+    "/",
+    errorHandlerMiddleware,
+    (req: Request, res: Response, next: NextFunction) =>
+      chatService
+        .createChat(req.body.user1Id, req.body.user2Id, next)
+        .then(result => res.send(result))
+        .catch(next)
+  )
+  .post(
+    "/:userId/:chatId",
+    errorHandlerMiddleware,
+    (req: Request, res: Response, next: NextFunction) =>
+      chatService
+        .createMessage(
+          req.params.chatId,
+          req.params.userId,
+          req.body.body,
+          next
+        )
+        .then(result => res.send(result))
+        .catch(next)
   );
 
 export default router;
