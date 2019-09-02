@@ -4,6 +4,9 @@ import { connect } from 'react-redux';
 import MoviePreview from '../MoviePreview';
 import { NavLink, Redirect } from 'react-router-dom';
 import Extra from './extra';
+import Image from '../../Image/Image';
+import config from '../../../../config';
+
 const default_amount = 5;
 
 interface IProps {
@@ -29,6 +32,7 @@ class ResultList extends React.Component<IProps, IState> {
 			user: default_amount
 		}
 	};
+
 	getView(dataElem, type, render) {
 		const data = dataElem.slice(0, this.state.amount[type]);
 
@@ -107,7 +111,19 @@ class ResultList extends React.Component<IProps, IState> {
 				);
 			case 'user':
 				return this.getView(elem.data, 'user', data =>
-					data.map(user => <NavLink to={`/user-page/${user.id}`}></NavLink>)
+					data.map(user => (
+						<NavLink to={`/user-page/${user.id}`}>
+							<div className={'user-info'}>
+								<Image
+									src={user.avatar}
+									defaultSrc={config.DEFAULT_AVATAR}
+									alt={''}
+									className={'avatar'}
+								/>
+								<span className={'user-name'}>{user.name}</span>
+							</div>
+						</NavLink>
+					))
 				);
 		}
 	}

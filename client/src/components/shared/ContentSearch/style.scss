@@ -157,4 +157,22 @@ $color: black;
 		transition: opacity 0.3s ease;
 		text-align: right;
 	}
+
+	.avatar {
+		width: 50px;
+		height: 50px;
+		border-radius: 50%;
+		margin-right: 10px;
+	}
+	.user-info {
+		font-weight: 600;
+		font-size: 14px;
+		line-height: 17px;
+		align-items: center;
+		text-align: center;
+		letter-spacing: 0.4px;
+		color: #122737;
+		display: flex;
+		margin: 10px 0;
+	}
 }
