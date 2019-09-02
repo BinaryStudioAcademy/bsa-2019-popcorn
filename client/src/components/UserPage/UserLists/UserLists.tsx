@@ -1,7 +1,44 @@
 import React from 'react';
+import './UserLists.scss';
+import MovieListCreator from './MovieListCreator/MovieListCreator';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { saveMovieList } from './actions';
 
-const UserLists: React.FC = () => {
-	return <div className="UserLists">UserLists</div>;
+export interface INewMovieList {
+	title: string;
+	isPrivate: boolean;
+	despription?: string;
+	image_url?: string;
+	moviesId: string[];
+}
+
+interface IProps {
+	saveMovieList: (movieList: INewMovieList) => object;
+}
+
+const UserLists: React.FC<IProps> = ({ saveMovieList }) => {
+	return (
+		<div className="UserLists">
+			<MovieListCreator saveMovieList={saveMovieList} />
+		</div>
+	);
 };
 
-export default UserLists;
+const mapStateToProps = (rootState, props) => ({
+	...props,
+	test: rootState.movieList.test
+});
+
+const mapDispatchToProps = dispatch => {
+	const actions = {
+		saveMovieList
+	};
+
+	return bindActionCreators(actions, dispatch);
+};
+
+export default connect(
+	mapStateToProps,
+	mapDispatchToProps
+)(UserLists);

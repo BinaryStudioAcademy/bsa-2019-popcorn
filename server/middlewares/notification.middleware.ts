@@ -2,7 +2,7 @@ import * as eventService from "../services/event.service";
 import * as postService from "../services/post.service";
 import UserRepository from "../repository/user.repository";
 import * as followerService from "../services/follow.service";
-import PostReactionsRepository from '../repository/postReactions.repository';
+import PostReactionsRepository from "../repository/postReactions.repository";
 import { sendPushMessage } from "../services/firebase.service";
 import { saveNotificitation } from "../services/notification.service";
 import { getCustomRepository } from "typeorm";
@@ -73,9 +73,12 @@ export default async (req, res, next) => {
       const follower = await getCustomRepository(UserRepository).findOne({
         id: req.body.userId
       });
-      const { isFollowing } = await followerService.checkFollowStatus(follower.id, req.body.followerId);
+      const { isFollowing } = await followerService.checkFollowStatus(
+        follower.id,
+        req.body.followerId
+      );
       if (!isFollowing) {
-        const title = `${follower.name} started following you`;    
+        const title = `${follower.name} started following you`;
         sendNotification({
           req,
           url: `/user-page/${follower.id}`,
@@ -83,7 +86,7 @@ export default async (req, res, next) => {
           title,
           body: "",
           entity: { ...follower, userId: req.body.followerId },
-          entityType: 'follower'
+          entityType: "follower"
         });
       }
     }
@@ -135,37 +138,37 @@ export default async (req, res, next) => {
     if (req.url === "/api/post/") {
       const userId = req.user.id;
       const followers = await followerService.getFollowersByUserId(userId);
-      const title = `${req.user.name} published new post`
+      const title = `${req.user.name} published new post`;
       followers.forEach(({ follower }) => {
         if (follower.siteNotificationUpdatesFromFollowed)
-        sendNotification({
-          req,
-          url: '/',
-          type: 'new post from followed',
-          title: title,
-          body: "",
-          entity: { ...req.body, userId: follower.id, id: '' },
-          entityType: "post"
-        })
-      })
+          sendNotification({
+            req,
+            url: "/",
+            type: "new post from followed",
+            title: title,
+            body: "",
+            entity: { ...req.body, userId: follower.id, id: "" },
+            entityType: "post"
+          });
+      });
     }
 
     if (req.url === "/api/story") {
       const userId = req.user.id;
       const followers = await followerService.getFollowersByUserId(userId);
-      const title = `${req.user.name} published new story`
+      const title = `${req.user.name} published new story`;
       followers.forEach(({ follower }) => {
         if (follower.siteNotificationUpdatesFromFollowed)
-        sendNotification({
-          req,
-          url: '/',
-          type: 'new story from followed',
-          title: title,
-          body: "",
-          entity: { ...req.body, userId: follower.id, id: '' },
-          entityType: "story"
-        });
-      })
+          sendNotification({
+            req,
+            url: "/",
+            type: "new story from followed",
+            title: title,
+            body: "",
+            entity: { ...req.body, userId: follower.id, id: "" },
+            entityType: "story"
+          });
+      });
     }
   }
   next();

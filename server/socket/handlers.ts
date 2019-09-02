@@ -28,7 +28,11 @@ export default socket => {
       const user = await getCustomRepository(UserRepository).findOne({
         id: userId
       });
-      if (userId !== messageInfo.user.id && user.siteNotificationEvents && user.siteNotificationComments) {
+      if (
+        userId !== messageInfo.user.id &&
+        user.siteNotificationEvents &&
+        user.siteNotificationComments
+      ) {
         const notification = {
           img: messageInfo.user.avatar,
           type: "comment",
