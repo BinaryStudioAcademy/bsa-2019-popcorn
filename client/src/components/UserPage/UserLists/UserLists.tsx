@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './UserLists.scss';
 import MovieListCreator from './MovieListCreator/MovieListCreator';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { saveMovieList } from './actions';
+import { saveMovieList, fetchMovieListsPreview } from './actions';
+import Spinner from '../../shared/Spinner';
 
 export interface INewMovieList {
 	title: string;
@@ -15,24 +16,45 @@ export interface INewMovieList {
 
 interface IProps {
 	saveMovieList: (movieList: INewMovieList) => object;
+	fetchMovieListsPreview: () => object;
+	movieListsPreview?: Array<any>;
 }
 
-const UserLists: React.FC<IProps> = ({ saveMovieList }) => {
+const UserLists: React.FC<IProps> = ({
+	saveMovieList,
+	fetchMovieListsPreview,
+	movieListsPreview
+}) => {
+	const [showCreator, setShowCreator] = useState(false);
+
+	if (!movieListsPreview) {
+		fetchMovieListsPreview();
+		return <Spinner />;
+	}
+
 	return (
 		<div className="UserLists">
-			<MovieListCreator saveMovieList={saveMovieList} />
+			{showCreator ? (
+				<MovieListCreator
+					setShowCreator={setShowCreator}
+					saveMovieList={saveMovieList}
+				/>
+			) : (
+				<button onClick={() => setShowCreator(true)}>CREATE</button>
+			)}
 		</div>
 	);
 };
 
 const mapStateToProps = (rootState, props) => ({
 	...props,
-	test: rootState.movieList.test
+	movieListsPreview: rootState.movieList.movieListsPreview
 });
 
 const mapDispatchToProps = dispatch => {
 	const actions = {
-		saveMovieList
+		saveMovieList,
+		fetchMovieListsPreview
 	};
 
 	return bindActionCreators(actions, dispatch);

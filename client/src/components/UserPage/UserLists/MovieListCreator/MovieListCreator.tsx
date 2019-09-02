@@ -9,9 +9,13 @@ import { faTimesCircle } from '@fortawesome/free-solid-svg-icons';
 
 interface IProps {
 	saveMovieList: (movieList: INewMovieList) => object;
+	setShowCreator: (openCreator: boolean) => void;
 }
 
-const MovieListCreator: React.FC<IProps> = ({ saveMovieList }) => {
+const MovieListCreator: React.FC<IProps> = ({
+	saveMovieList,
+	setShowCreator
+}) => {
 	const [title, setTitle] = useState(''),
 		[description, setDescription] = useState(''),
 		[imageUrl, setImageUrl] = useState(''),
@@ -25,6 +29,7 @@ const MovieListCreator: React.FC<IProps> = ({ saveMovieList }) => {
 			setMoviesDetails([movie, ...moviesDetails]);
 		}
 	};
+
 	const elasticProperties = ['id', 'title'];
 
 	const onSaveMovieList = () => {
@@ -40,6 +45,7 @@ const MovieListCreator: React.FC<IProps> = ({ saveMovieList }) => {
 			isPrivate
 		};
 		saveMovieList(movieList);
+		setShowCreator(false);
 	};
 
 	const onDeleteMovieLabel = movieId => {
@@ -148,7 +154,12 @@ const MovieListCreator: React.FC<IProps> = ({ saveMovieList }) => {
 				</div>
 			</div>
 			<div className="movie-list-creator-buttons">
-				<button className="movie-creator-cancel-button">cancel</button>
+				<button
+					className="movie-creator-cancel-button"
+					onClick={() => setShowCreator(false)}
+				>
+					cancel
+				</button>
 				<button className="movie-creator-save-button" onClick={onSaveMovieList}>
 					save
 				</button>
