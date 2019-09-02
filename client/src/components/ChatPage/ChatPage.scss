@@ -125,7 +125,6 @@
 				font-weight: 500;
 				word-wrap: break-word;
 				white-space: pre-line;
-				overflow: hidden;
 				display: inline-block;
 				time {
 					margin-left: 10px;
@@ -147,6 +146,37 @@
 				float: right;
 				margin-left: 50%;
 				background-color: $background-gray;
+				position: relative;
+				&:hover {
+					.message-btns {
+						display: flex;
+					}
+				}
+				.message-btns {
+					display: none;
+					position: absolute;
+					top: 0;
+					left: -60px;
+					width: 60px;
+					justify-content: center;
+					padding-right: 10px;
+					height: 100%;
+					&:hover {
+						display: flex;
+					}
+					button {
+						border: none;
+						outline: none;
+						background-color: transparent;
+						&:first-of-type {
+							margin-right: 10px;
+						}
+						svg {
+							width: 15px;
+							height: 15px;
+						}
+					}
+				}
 			}
 		}
 		.chat-input {
