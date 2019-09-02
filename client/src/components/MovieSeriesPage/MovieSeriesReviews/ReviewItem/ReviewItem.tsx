@@ -4,7 +4,7 @@ import { IReview } from '../MovieSeriesReviews';
 import Moment from 'react-moment';
 import Image from '../../../shared/Image/Image';
 import config from '../../../../config';
-import { analysisToGRBA } from '../../../../helpers/analysisToGRBA';
+import { analysisToRGBA } from '../../../../helpers/analysisToRGBA';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
@@ -98,10 +98,10 @@ class ReviewItem extends React.Component<IProps, IState> {
 		} = this.props;
 		const { showFullReview, textBlockHeight, isBigBlock } = this.state;
 
-		const analysisRBGA = analysisToGRBA(analysis);
+		const analysisRGBA = analysisToRGBA(analysis);
 
 		return (
-			<div className="review-wrapper" style={{ backgroundColor: analysisRBGA }}>
+			<div className="review-wrapper" style={{ backgroundColor: analysisRGBA }}>
 				<div className="review-item">
 					<div className="review-item-header">
 						<div className="review-item-header-profile">
