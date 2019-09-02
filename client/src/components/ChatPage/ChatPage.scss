@@ -127,6 +127,9 @@
 				white-space: pre-line;
 				display: inline-block;
 				time {
+					display: flex;
+					align-items: center;
+					height: 17px;
 					margin-left: 10px;
 					font-size: 0.8em;
 					float: right;
