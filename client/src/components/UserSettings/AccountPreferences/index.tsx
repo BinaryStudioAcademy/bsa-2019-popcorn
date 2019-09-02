@@ -255,7 +255,7 @@ class AccountPreferences extends React.Component<IProps, IState> {
 						<h3 className={'survey-question'}>Delete account</h3>
 						<p className="settings-current-info-wrapper info-settings">
 							This account will no longer be available and all data in the
-							accaount will be permanently deleted
+							account will be permanently deleted
 						</p>
 						<button
 							className="settings-btn"
