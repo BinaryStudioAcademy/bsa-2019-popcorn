@@ -28,3 +28,15 @@ export const createMessage = async (chatId, userId, body, next) => {
     next
   );
 };
+
+export const updateMessage = async (id, body, next) => {
+  return await getCustomRepository(ChatRepository).updateMessage(
+    id,
+    body,
+    next
+  );
+};
+
+export const deleteMessage = async (id, next) => {
+  return await getCustomRepository(ChatRepository).deleteMessage(id, next);
+};

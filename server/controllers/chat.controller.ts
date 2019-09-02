@@ -46,6 +46,24 @@ router
         )
         .then(result => res.send(result))
         .catch(next)
+  )
+  .delete(
+    "/:id",
+    errorHandlerMiddleware,
+    (req: Request, res: Response, next: NextFunction) =>
+      chatService
+        .deleteMessage(req.params.id, next)
+        .then(result => res.send(result))
+        .catch(next)
+  )
+  .put(
+    "/:id",
+    errorHandlerMiddleware,
+    (req: Request, res: Response, next: NextFunction) =>
+      chatService
+        .updateMessage(req.params.id, req.body.body, next)
+        .then(result => res.send(result))
+        .catch(next)
   );
 
 export default router;

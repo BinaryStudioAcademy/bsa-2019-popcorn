@@ -78,6 +78,14 @@ class ChatRepository extends Repository<Chat> {
     await getCustomRepository(MessageRepository).save({ chat, user, body });
     return { success: true };
   }
+
+  async deleteMessage(id, next?) {
+    return await getCustomRepository(MessageRepository).delete(id);
+  }
+
+  async updateMessage(id, body, next?) {
+    return await getCustomRepository(MessageRepository).update(id, { body });
+  }
 }
 
 export default ChatRepository;
