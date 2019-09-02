@@ -1,6 +1,8 @@
 import React from 'react';
 import './UserLists.scss';
 import MovieListCreator from './MovieListCreator/MovieListCreator';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 
 export interface INewMovieList {
 	title: string;
@@ -10,7 +12,12 @@ export interface INewMovieList {
 	moviesId: string[];
 }
 
-const UserLists: React.FC = () => {
+interface IProps {
+	test: any;
+}
+
+const UserLists: React.FC<IProps> = ({ test }) => {
+	console.log(test);
 	const saveMovieList = (movieList: INewMovieList) => {
 		console.log(movieList);
 	};
@@ -22,4 +29,18 @@ const UserLists: React.FC = () => {
 	);
 };
 
-export default UserLists;
+const mapStateToProps = (rootState, props) => ({
+	...props,
+	test: rootState.movieList.test
+});
+
+const mapDispatchToProps = dispatch => {
+	const actions = {};
+
+	return bindActionCreators(actions, dispatch);
+};
+
+export default connect(
+	mapStateToProps,
+	mapDispatchToProps
+)(UserLists);
