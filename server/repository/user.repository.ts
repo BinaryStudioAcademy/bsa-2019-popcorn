@@ -58,7 +58,7 @@ class UserRepository extends Repository<User> {
       delete newData.favoriteMovieIds;
       await this.update({ id }, newData);
 
-      data.user = await this.findOne({ where: { id } });
+      data.user = (await this.getUserById(id)).data.user;
       if (!data.user) throw new Error(`User with ${id} id is not found`);
     } catch (err) {
       error = err.message;

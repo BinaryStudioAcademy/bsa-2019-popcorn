@@ -8,4 +8,6 @@ export class NotificationModel {
   userId: string;
   isRead: boolean;
   date: Date;
+  entityType: string;
+  entityId: string;
 }

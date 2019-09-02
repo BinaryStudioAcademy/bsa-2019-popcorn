@@ -1,4 +1,5 @@
 import callWebApi from './webApi.service';
+import { v4 as uuid } from 'uuid';
 
 export const getUser = async () => {
 	const res = await callWebApi({
@@ -9,7 +10,9 @@ export const getUser = async () => {
 };
 
 export const updateEmail = async (userId: string, email: string) => {
-	const body = { email };
+	const token = uuid();
+	const body = { email, token };
+
 	const res = await callWebApi({
 		method: 'PUT',
 		endpoint: `/api/user/email/${userId}`,
@@ -19,7 +22,8 @@ export const updateEmail = async (userId: string, email: string) => {
 };
 
 export const updatePassword = async (userId: string, password: string) => {
-	const body = { password };
+	const token = uuid();
+	const body = { password, token };
 	const res = await callWebApi({
 		method: 'PUT',
 		endpoint: `/api/user/password/${userId}`,

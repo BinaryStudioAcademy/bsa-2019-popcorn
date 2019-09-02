@@ -19,6 +19,8 @@ import IComment from './IComment';
 import IReaction from './IReaction';
 import Image from '../../shared/Image/Image';
 import Extra from './../../UserPage/UserPosts/PostExtra/extra';
+import JsxParser from 'react-jsx-parser';
+
 type IPostProps = {
 	post: IPost;
 	userId: string;
@@ -94,6 +96,16 @@ class Post extends Component<IPostProps, IPostState> {
 		if (post.event) return 'event';
 		return 'Nothing';
 	};
+	parseDescription(description) {
+		const arr = description.split('@');
+		const res = arr.map(str =>
+			str.replace(
+				/(.+)\{(.+)\}/,
+				'<Link className={"movie-link"} to={"/movies/$1"}>$2</Link>'
+			)
+		);
+		return <JsxParser components={{ Link }} jsx={`<p>${res.join('')}</p>`} />;
+	}
 	nestComments(commentList) {
 		const commentMap = {};
 		commentList.forEach(comment => (commentMap[comment.id] = comment));
@@ -166,7 +178,9 @@ class Post extends Component<IPostProps, IPostState> {
 				{image_url && (
 					<img className="post-item-image" src={image_url} alt="post" />
 				)}
-				{description && <div className="post-body">{description}</div>}
+				{description && (
+					<div className="post-body">{this.parseDescription(description)}</div>
+				)}
 				{content && <PostContent content={content} />}
 				{extraLink && (
 					<NavLink

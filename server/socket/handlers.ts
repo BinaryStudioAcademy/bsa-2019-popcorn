@@ -1,8 +1,10 @@
 import * as movieService from "../services/movie.service";
 import * as eventService from "../services/event.service";
 import * as postService from "../services/post.service";
+import UserRepository from "../repository/user.repository";
 import { sendPushMessage } from "../services/firebase.service";
 import { saveNotificitation } from "../services/notification.service";
+import { getCustomRepository } from "typeorm";
 const uuid = require("uuid/v4");
 export default socket => {
   socket.on("createRoom", roomId => {
@@ -23,8 +25,14 @@ export default socket => {
       const url = `/events/${messageInfo.eventId}/discussion`;
       const title = `${messageInfo.user.name} left message in your event`;
       const userId = event.userId;
-
-      if (userId !== messageInfo.user.id) {
+      const user = await getCustomRepository(UserRepository).findOne({
+        id: userId
+      });
+      if (
+        userId !== messageInfo.user.id &&
+        user.siteNotificationEvents &&
+        user.siteNotificationComments
+      ) {
         const notification = {
           img: messageInfo.user.avatar,
           type: "comment",

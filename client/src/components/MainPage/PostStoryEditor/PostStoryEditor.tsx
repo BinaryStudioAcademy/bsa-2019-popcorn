@@ -111,23 +111,7 @@ class PostStoryEditor extends React.Component<
 				data.append('file', blob);
 				uploadFile(data)
 					.then(({ imageUrl }) => {
-						if (imageUrl.indexOf('\\') !== -1) {
-							let url = imageUrl.split(`\\`);
-							url.shift();
-							url = url.join('/');
-
-							url = '/' + url;
-
-							this.imageStateHandler(url);
-						} else {
-							let url = imageUrl.split(`/`);
-							url.shift();
-							url = url.join('/');
-
-							url = '/' + url;
-
-							this.imageStateHandler(url);
-						}
+						this.imageStateHandler(imageUrl);
 					})
 					.catch(error => {
 						this.setState({ isUploading: false, errorMsg: error.message });

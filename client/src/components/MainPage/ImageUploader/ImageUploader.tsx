@@ -8,6 +8,8 @@ interface IPostImageUploaderProps {
 	imageHandler: (s: any) => any;
 	imageStateHandler: (s: any) => any;
 	isIcon?: boolean;
+	icon?: any;
+	postContructor?: boolean;
 }
 
 interface IPostImageUploaderState {
@@ -50,15 +52,6 @@ class ImageUploader extends React.Component<
 			this.props
 				.imageHandler(data)
 				.then(({ imageUrl }) => {
-					let url;
-					url =
-						imageUrl.indexOf('\\') !== -1
-							? imageUrl.split(`\\`)
-							: imageUrl.split(`/`);
-					url.shift();
-					url = url.join('/');
-
-					url = '/' + url;
 					const splittedUrl = imageUrl.split('.');
 					if (
 						!(
@@ -69,8 +62,8 @@ class ImageUploader extends React.Component<
 					) {
 						throw new Error('Incorrect image format');
 					}
-					this.setState({ imageUrl: url, isUploading: false, errorMsg: '' });
-					this.props.imageStateHandler(url);
+					this.setState({ imageUrl, isUploading: false, errorMsg: '' });
+					this.props.imageStateHandler(imageUrl);
 				})
 				.catch(error => {
 					this.setState({ isUploading: false, errorMsg: error.message });
@@ -80,7 +73,7 @@ class ImageUploader extends React.Component<
 
 	render() {
 		return (
-			<div>
+			<div className="extra-item">
 				{this.state.errorMsg && (
 					<span className="upload-error">{this.state.errorMsg}</span>
 				)}
@@ -97,7 +90,13 @@ class ImageUploader extends React.Component<
 					this.props.children
 				) : this.props.isIcon ? (
 					<label htmlFor="image" className="upload-image-button">
-						<FontAwesomeIcon icon={faCamera} />
+						<FontAwesomeIcon
+							className="extra-icon"
+							icon={this.props.icon || faCamera}
+						/>
+						{this.props.postContructor && (
+							<span className={'extra-title'}>Image</span>
+						)}
 					</label>
 				) : (
 					<label htmlFor="image" className="upload-image-button">
