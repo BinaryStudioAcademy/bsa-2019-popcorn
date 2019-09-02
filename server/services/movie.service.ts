@@ -8,7 +8,7 @@ import MovieRepository, {
 } from "../repository/movie.repository";
 
 import MovieRateRepository from "../repository/movieRate.repository";
-import { getCustomRepository, Like, getRepository } from "typeorm";
+import { getCustomRepository } from "typeorm";
 import * as elasticRepository from "../repository/movieElastic.repository";
 import DiscussionRepository from "../repository/discussion.repository";
 import { ExtendedDiscussion, Discussion } from "models/DiscussionModel";
@@ -159,4 +159,16 @@ export const getMovieProperties = async (settings: string, next) => {
     properties
   );
   return elasticResponse.hits.hits[0]._source;
+};
+
+export const getMovieStatistics = async (movieId: string) => {
+  // const rate = await getCustomRepository(MovieRateRepository).find({ movieId, },);
+  const rate = await getCustomRepository(MovieRateRepository)
+    .createQueryBuilder("movie_rate")
+    .select("movie_rate.rate AS rate")
+    .addSelect("COUNT(*) AS count")
+    .groupBy("movie_rate.rate")
+    .where({ movieId })
+    .getRawMany();
+  return rate;
 };
