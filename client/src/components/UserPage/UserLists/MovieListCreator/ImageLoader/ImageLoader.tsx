@@ -10,6 +10,7 @@ import {
 
 interface IProps {
 	setImageUrl: (image_url: string) => void;
+	aspectRatio?: number;
 }
 
 interface IState {
@@ -74,52 +75,42 @@ class ImageLoader extends React.Component<IProps, IState> {
 	};
 
 	render() {
-		if (this.state.image_url && this.state.croppedSaved) {
-			console.log('kek');
-			this.props.setImageUrl(this.state.image_url);
-		}
 		return (
 			<div className="ImageLoader">
-				<button className="button-image">
+				<button className="button-load-image">
 					<ImageUploader
 						isIcon={true}
 						imageHandler={uploadFile}
 						imageStateHandler={this.imageStateHandler}
 					/>
 				</button>
-
 				{this.state.image_url && !this.state.croppedSaved && (
 					<div>
-						<Cropper
-							ref={this.cropper}
-							className="movie-list-creator-img"
-							src={this.state.image_url}
-							aspectRatio={16 / 9}
-						/>
-						<span onClick={this.onSaveCropped}>
-							<FontAwesomeIcon
-								icon={faCheckCircle}
-								className="fontAwesomeIcon"
+						<div className="cropper-container">
+							<Cropper
+								ref={this.cropper}
+								className="cropper-creator-img"
+								src={this.state.image_url}
+								aspectRatio={this.props.aspectRatio}
 							/>
-						</span>
-						<span onClick={this.onCancel}>
-							<FontAwesomeIcon
-								icon={faTimesCircle}
-								className={'fontAwesomeIcon'}
-							/>
-						</span>
+							<span onClick={this.onSaveCropped}>
+								<FontAwesomeIcon
+									icon={faCheckCircle}
+									className="fontAwesomeIcon"
+								/>
+							</span>
+							<span onClick={this.onCancel}>
+								<FontAwesomeIcon
+									icon={faTimesCircle}
+									className={'fontAwesomeIcon'}
+								/>
+							</span>
+						</div>
 					</div>
 				)}
-
-				{/* {this.state.image_url && this.state.croppedSaved && (
-					<div className="movie-list-img-wrapper" style={{ width: '500px' }}>
-						<img
-							className="movie-list-img"
-							src={this.state.image_url}
-							style={{ width: '100%' }}
-						/>
-					</div>
-				)} */}
+				{this.state.image_url &&
+					this.state.croppedSaved &&
+					this.props.setImageUrl(this.state.image_url)}
 			</div>
 		);
 	}
