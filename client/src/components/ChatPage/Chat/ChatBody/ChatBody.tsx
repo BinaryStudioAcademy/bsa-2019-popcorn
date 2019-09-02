@@ -4,7 +4,6 @@ import OutgoingMessage from './OutgoingMessage';
 import IncomingMessage from './IncomingMessage';
 import BreakLine from './BreakLine';
 import ScrollToBottom from 'react-scroll-to-bottom';
-import SocketService from '../../../../services/socket.service';
 import { addMessage } from '../../ChatPage.redux/actions';
 import { bindActionCreators } from 'redux';
 
@@ -16,23 +15,6 @@ interface IProps {
 }
 
 class ChatBody extends React.Component<IProps> {
-	constructor(props) {
-		super(props);
-		this.addSocketEvents();
-	}
-
-	addSocketEvents = () => {
-		const { chatId } = this.props;
-		SocketService.join(chatId);
-		SocketService.on('new-message', message =>
-			this.addMessage(chatId, message)
-		);
-	};
-
-	addMessage = (chatId, message) => {
-		this.props.addMessage(message);
-	};
-
 	render() {
 		let tmpDate = '';
 		const { messages, userId } = this.props;
