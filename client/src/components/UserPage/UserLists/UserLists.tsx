@@ -3,6 +3,7 @@ import './UserLists.scss';
 import MovieListCreator from './MovieListCreator/MovieListCreator';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import { saveMovieList } from './actions';
 
 export interface INewMovieList {
 	title: string;
@@ -13,18 +14,13 @@ export interface INewMovieList {
 }
 
 interface IProps {
-	test: any;
+	saveMovieList: (movieList: INewMovieList) => object;
 }
 
-const UserLists: React.FC<IProps> = ({ test }) => {
-	console.log(test);
-	const saveMovieList = (movieList: INewMovieList) => {
-		console.log(movieList);
-	};
-
+const UserLists: React.FC<IProps> = ({ saveMovieList }) => {
 	return (
 		<div className="UserLists">
-			<MovieListCreator saveMovieList={movieList => saveMovieList(movieList)} />
+			<MovieListCreator saveMovieList={saveMovieList} />
 		</div>
 	);
 };
@@ -35,7 +31,9 @@ const mapStateToProps = (rootState, props) => ({
 });
 
 const mapDispatchToProps = dispatch => {
-	const actions = {};
+	const actions = {
+		saveMovieList
+	};
 
 	return bindActionCreators(actions, dispatch);
 };

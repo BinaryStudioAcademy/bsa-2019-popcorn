@@ -1,3 +1,163 @@
+@import '../../../../styles/variables.scss';
+
 .MovieListCreator {
-	color: indigo;
+	border: 1px solid $border-color;
+	padding: 30px;
+	padding-top: 50px;
+	color: $text-base-color;
+
+	.ImageLoader {
+		display: flex;
+		.button-loader-container {
+			margin-right: 40px;
+		}
+		.image-cropper-container {
+			max-width: 500px;
+			max-height: 400px;
+		}
+		.cropper-creator-img {
+			max-width: 500px;
+			max-height: 400px;
+		}
+	}
+
+	.image-preview-container {
+		max-width: 500px;
+		max-height: 400px;
+		overflow: hidden;
+		.cover {
+			object-fit: cover;
+			max-width: 200px;
+			max-height: 200px;
+		}
+	}
+
+	.form-inputs-container {
+		padding-left: 5%;
+		padding-right: 5%;
+
+		.form-item {
+			display: flex;
+			margin-bottom: 35px;
+			align-items: center;
+			width: 100%;
+
+			.item-label {
+				width: 20%;
+				text-align: left;
+				min-width: 130px;
+				font-size: 20px;
+			}
+
+			.item-right-content-container {
+				width: 100% !important;
+			}
+
+			.movie-list-preview-container {
+				margin-top: 10px;
+				display: flex;
+				flex-wrap: wrap;
+				.movie-preview-item {
+					background-color: rgb(194, 194, 194);
+					padding: 10px 15px;
+					border-radius: 4px;
+					color: $text-base-color;
+					display: inline-block;
+					line-height: 1.3em;
+					margin-bottom: 5px;
+					margin-right: 5px;
+					font-size: 13px;
+					.delete-movie {
+						svg {
+							color: white;
+							width: 20px;
+							font-size: 14px;
+							cursor: pointer;
+							&:hover {
+								opacity: 0.7;
+							}
+						}
+						background-color: transparent;
+						margin-left: 5px;
+						display: inline-block;
+					}
+
+					.link-to-movie {
+						text-decoration: none;
+						color: $text-base-color;
+						&:hover {
+							text-decoration: underline;
+						}
+					}
+				}
+			}
+
+			.item-label-search {
+				align-self: flex-start;
+				margin-top: 5px;
+			}
+
+			.item-label-descriontion,
+			.item-label-image {
+				align-self: flex-start;
+				margin-top: 9px;
+			}
+
+			#movie-list-description-input,
+			#movie-list-title-input {
+				letter-spacing: $input-letter-spacing;
+				font-size: $form-font-size;
+				border: 2px solid $border-color;
+				outline: none;
+				padding: 10px;
+				line-height: 19px;
+				font-family: $base-font-family;
+
+				&::placeholder {
+					color: $input-placeholder-color;
+				}
+			}
+
+			#movie-list-title-input {
+				width: 100%;
+			}
+
+			#movie-list-description-input {
+				width: 100%;
+				resize: none;
+			}
+		}
+	}
+	.movie-list-creator-buttons {
+		display: flex;
+		margin-top: 50px;
+		justify-content: flex-end;
+		margin-right: 20px;
+
+		button {
+			height: 43px;
+			border-radius: 55px;
+			margin-left: 10px;
+			width: 100px;
+			border: none;
+			outline: none;
+			font-size: $header-medium;
+			font-weight: bold;
+			cursor: pointer;
+			&.movie-creator-save-button {
+				background-color: $button-background;
+				color: $white;
+				&:hover {
+					background-color: rgb(216, 86, 0);
+				}
+			}
+
+			&.movie-creator-cancel-button {
+				color: $text-secondary-color;
+				&:hover {
+					background-color: rgb(207, 207, 207);
+				}
+			}
+		}
+	}
 }

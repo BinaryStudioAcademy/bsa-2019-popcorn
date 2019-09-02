@@ -10,6 +10,7 @@ import {
 
 interface IProps {
 	setImageUrl: (image_url: string) => void;
+	isIcon: boolean;
 	aspectRatio?: number;
 }
 
@@ -77,13 +78,13 @@ class ImageLoader extends React.Component<IProps, IState> {
 	render() {
 		return (
 			<div className="ImageLoader">
-				<button className="button-load-image">
+				<div className="button-loader-container">
 					<ImageUploader
-						isIcon={true}
+						isIcon={this.props.isIcon}
 						imageHandler={uploadFile}
 						imageStateHandler={this.imageStateHandler}
 					/>
-				</button>
+				</div>
 				{this.state.image_url && !this.state.croppedSaved && (
 					<div>
 						<div className="image-cropper-container">
