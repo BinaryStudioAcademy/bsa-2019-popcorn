@@ -85,6 +85,14 @@
 			overflow: auto;
 			font-size: 0.8em;
 			padding: 10px;
+			.to-bottom {
+				background-color: transparent;
+				border-radius: 0;
+				border: solid $orange;
+				border-width: 0 3px 3px 0;
+				transform: rotate(45deg);
+				-webkit-transform: rotate(45deg);
+			}
 			.break-line {
 				width: 80px;
 				text-align: center;

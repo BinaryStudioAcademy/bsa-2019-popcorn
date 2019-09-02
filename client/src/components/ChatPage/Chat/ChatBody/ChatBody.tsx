@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import OutgoingMessage from './OutgoingMessage';
 import IncomingMessage from './IncomingMessage';
 import BreakLine from './BreakLine';
+import ScrollToBottom from 'react-scroll-to-bottom';
 
 interface IProps {
 	messages: any; //todo
@@ -12,7 +13,7 @@ interface IProps {
 const ChatBody: React.FC<IProps> = ({ messages, userId }) => {
 	let tmpDate = '';
 	return (
-		<div className="chat-body">
+		<ScrollToBottom className="chat-body" followButtonClassName="to-bottom">
 			{messages.map(message => {
 				const date = new Date(message.created_at);
 				const currentDate = `${date.getDate()}.${date.getMonth()}.${date.getFullYear()}`;
@@ -41,7 +42,7 @@ const ChatBody: React.FC<IProps> = ({ messages, userId }) => {
 					}
 				}
 			})}
-		</div>
+		</ScrollToBottom>
 	);
 };
 
