@@ -91,6 +91,10 @@
 			font-size: 0.8em;
 			padding: 10px;
 			padding-top: 0;
+			.break-line-wrp {
+				width: 100%;
+				display: inline-block;
+			}
 			.to-bottom {
 				background-color: transparent;
 				margin-bottom: 10px;
@@ -101,7 +105,8 @@
 				-webkit-transform: rotate(45deg);
 			}
 			.break-line {
-				width: 80px;
+				min-width: 80px;
+				max-width: 100px;
 				text-align: center;
 				padding: 5px;
 				margin: 20px auto;
@@ -113,14 +118,22 @@
 			}
 			.incoming-message,
 			.outgoing-message {
-				max-width: 400px;
+				max-width: 380px;
 				padding: 10px;
 				border-radius: 20px;
-				margin: 10px 0;
+				margin: 5px 0;
 				font-weight: 500;
 				word-wrap: break-word;
 				white-space: pre-line;
 				overflow: hidden;
+				display: inline-block;
+				time {
+					margin-left: 10px;
+					font-size: 0.8em;
+					float: right;
+					font-style: italic;
+					color: $text-secondary-color;
+				}
 			}
 			.incoming-message {
 				color: white;
@@ -131,15 +144,9 @@
 				}
 			}
 			.outgoing-message {
+				float: right;
 				margin-left: 50%;
 				background-color: $background-gray;
-			}
-			time {
-				margin-left: 10px;
-				font-size: 0.8em;
-				float: right;
-				font-style: italic;
-				color: $text-secondary-color;
 			}
 		}
 		.chat-input {

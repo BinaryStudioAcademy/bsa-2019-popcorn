@@ -21,15 +21,15 @@ const ChatBody: React.FC<IProps> = ({ messages, userId }) => {
 					tmpDate = currentDate;
 					if (message.user.id === userId) {
 						return (
-							<div>
-								<BreakLine date={currentDate} />
+							<div className="break-line-wrp">
+								<BreakLine date={date} />
 								<OutgoingMessage message={message} />
 							</div>
 						);
 					} else {
 						return (
-							<div>
-								<BreakLine date={currentDate} />
+							<div className="break-line-wrp">
+								<BreakLine date={date} />
 								<IncomingMessage message={message} />
 							</div>
 						);
