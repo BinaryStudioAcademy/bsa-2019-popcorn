@@ -4,7 +4,8 @@ import {
 	FETCH_CHATS,
 	FETCH_MESSAGES,
 	ADD_MESSAGE_STORE,
-	DELETE_MESSAGE_STORE
+	DELETE_MESSAGE_STORE,
+	UPDATE_MESSAGE_STORE
 } from './actionTypes';
 
 const initialState = {
@@ -74,6 +75,22 @@ export default function(state = initialState, action) {
 					[chat_id]: {
 						...state.chats[chat_id],
 						messages: [...filteredMessages]
+					}
+				}
+			};
+		case UPDATE_MESSAGE_STORE:
+			const { chatId: id, message } = action.payload;
+			const updatedMessages = state.chats[id].messages.map(mes =>
+				mes.id === message.id ? message : mes
+			);
+
+			return {
+				...state,
+				chats: {
+					...state.chats,
+					[id]: {
+						...state.chats[id],
+						messages: [...updatedMessages]
 					}
 				}
 			};

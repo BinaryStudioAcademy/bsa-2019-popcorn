@@ -105,7 +105,12 @@ class ChatRepository extends Repository<Chat> {
       relations: ["chat", "user"]
     });
     await getCustomRepository(MessageRepository).update(id, { body });
-    return { userId, chatId };
+    const message: any = await getCustomRepository(MessageRepository).findOne({
+      where: [{ id }],
+      relations: ["user"]
+    });
+    message.user = this.formatUser(message.user);
+    return { userId, chatId, message };
   }
 }
 

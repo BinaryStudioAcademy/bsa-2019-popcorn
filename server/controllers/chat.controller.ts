@@ -57,12 +57,10 @@ router
       chatService
         .deleteMessage(req.params.id, next)
         .then(result => {
-          req.io
-            .to(result.chatId)
-            .emit("delete-message", {
-              chatId: result.chatId,
-              messageId: req.params.id
-            });
+          req.io.to(result.chatId).emit("delete-message", {
+            chatId: result.chatId,
+            messageId: req.params.id
+          });
           res.send({ result });
         })
         .catch(next)
@@ -73,7 +71,10 @@ router
     (req: Request & { io: any }, res: Response, next: NextFunction) =>
       chatService
         .updateMessage(req.params.id, req.body.body, next)
-        .then(result => res.send(result))
+        .then(result => {
+          req.io.to(result.chatId).emit("update-message", result);
+          res.send({ result });
+        })
         .catch(next)
   );
 

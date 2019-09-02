@@ -6,7 +6,8 @@ import {
 	DELETE_MESSAGE,
 	UPDATE_MESSAGE,
 	ADD_MESSAGE_STORE,
-	DELETE_MESSAGE_STORE
+	DELETE_MESSAGE_STORE,
+	UPDATE_MESSAGE_STORE
 } from './actionTypes';
 
 export const fetchChats = userId => {
@@ -83,6 +84,16 @@ export const deleteMessageStore = (chatId, messageId) => {
 		payload: {
 			chatId,
 			messageId
+		}
+	};
+};
+
+export const updateMessageStore = (chatId, message) => {
+	return {
+		type: UPDATE_MESSAGE_STORE,
+		payload: {
+			chatId,
+			message
 		}
 	};
 };

@@ -115,14 +115,6 @@ export function* updateMessage(action) {
 			endpoint: `/api/chat/${action.payload.id}`,
 			body: { body: action.payload.body }
 		});
-
-		yield put({
-			type: FETCH_MESSAGES,
-			payload: {
-				chatId: response.chatId,
-				userId: response.userId
-			}
-		});
 	} catch (e) {
 		console.log('chat saga delete message:', e.message);
 	}
