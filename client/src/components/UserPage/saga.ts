@@ -346,7 +346,6 @@ export default function* profile() {
 		watchFetchLogout(),
 		watchUpdateProfile(),
 		watchSendPost(),
-		watchFetchLogout(),
 		watchConfirm()
 	]);
 }

@@ -4,7 +4,7 @@ import UserRepository from "../repository/user.repository";
 import * as followerService from "../services/follow.service";
 import PostReactionsRepository from "../repository/postReactions.repository";
 import { sendPushMessage } from "../services/firebase.service";
-import { saveNotificitation } from "../services/notification.service";
+import { saveNotification } from "../services/notification.service";
 import { getCustomRepository } from "typeorm";
 const uuid = require("uuid/v4");
 
@@ -29,7 +29,7 @@ async function sendNotification({
     entityType,
     entityId: entity.id
   };
-  await saveNotificitation({
+  await saveNotification({
     ...notification,
     userId: entity.userId,
     isRead: false
