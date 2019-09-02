@@ -12,7 +12,7 @@ router
       .then(result => res.send(result))
       .catch(next)
   )
-  .get("/", (req, res, next) =>
+  .get("/", errorHandlerMiddleware, (req, res, next) =>
     movieListService
       .getOwnUserLists(req.user.id)
       .then(result => res.send(result))
@@ -24,7 +24,7 @@ router
       .then(result => res.send(result))
       .catch(next)
   )
-  .post("/", (req, res, next) =>
+  .post("/", errorHandlerMiddleware, (req, res, next) =>
     movieListService
       .saveMovieList(req.user.id, req.body)
       .then(result => res.send(result))
