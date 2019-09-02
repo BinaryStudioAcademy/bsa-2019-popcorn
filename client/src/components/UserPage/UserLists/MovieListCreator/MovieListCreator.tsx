@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './MovieListCreator.scss';
 import { INewMovieList } from '../UserLists';
 import { uploadFile } from '../../../../services/file.service';
@@ -9,118 +9,26 @@ import {
 	faTimesCircle,
 	faCheckCircle
 } from '@fortawesome/free-solid-svg-icons';
+import ImageLoader from './ImageLoader/ImageLoader';
 
 interface IProps {
 	saveMovieList: (movieList: INewMovieList) => void;
 }
 
-interface IState {
-	image_url: string;
-	croppedSaved: boolean;
-}
+const MovieListCreator: React.FC<IProps> = () => {
+	const [imageUrl, setImageUrl] = useState('');
 
-class MovieListCreator extends React.Component<IProps, IState> {
-	constructor(props) {
-		super(props);
+	// const setImageUrl = (imageUrl: string) => {
+	//   console.log(image_url);
+	// }
 
-		this.state = {
-			image_url: '',
-			croppedSaved: false
-		};
-	}
+	console.log(imageUrl);
 
-	private cropper = React.createRef<Cropper>();
-
-	imageStateHandler = (data, croppedSaved?: boolean) => {
-		this.setState({
-			image_url: data,
-			croppedSaved: croppedSaved ? croppedSaved : this.state.croppedSaved
-		});
-	};
-
-	onSaveCropped = () => {
-		if (this.cropper.current) {
-			const dataUrl = this.cropper.current.getCroppedCanvas().toBlob(blob => {
-				const data = new FormData();
-				data.append('file', blob);
-				uploadFile(data)
-					.then(({ imageUrl }) => {
-						if (imageUrl.indexOf('\\') !== -1) {
-							let url = imageUrl.split(`\\`);
-							url.shift();
-							url = url.join('/');
-
-							url = '/' + url;
-
-							this.imageStateHandler(url, true);
-						} else {
-							let url = imageUrl.split(`/`);
-							url.shift();
-							url = url.join('/');
-
-							url = '/' + url;
-
-							this.imageStateHandler(url, true);
-						}
-					})
-					.catch(error => {});
-			});
-		}
-	};
-
-	onCancel = () => {
-		this.setState({
-			image_url: '',
-			croppedSaved: false
-		});
-	};
-
-	render() {
-		return (
-			<div className="MovieListCreator">
-				<button className="button-image">
-					<ImageUploader
-						isIcon={true}
-						imageHandler={uploadFile}
-						imageStateHandler={this.imageStateHandler}
-					/>
-				</button>
-
-				{this.state.image_url && !this.state.croppedSaved && (
-					<div>
-						<Cropper
-							ref={this.cropper}
-							className="movie-list-creator-img"
-							src={this.state.image_url}
-							aspectRatio={16 / 9}
-						/>
-						<span onClick={this.onSaveCropped}>
-							<FontAwesomeIcon
-								icon={faCheckCircle}
-								className="fontAwesomeIcon"
-							/>
-						</span>
-						<span onClick={this.onCancel}>
-							<FontAwesomeIcon
-								icon={faTimesCircle}
-								className={'fontAwesomeIcon'}
-							/>
-						</span>
-					</div>
-				)}
-
-				{this.state.image_url && this.state.croppedSaved && (
-					<div className="movie-list-img-wrapper" style={{ width: '500px' }}>
-						<img
-							className="movie-list-img"
-							src={this.state.image_url}
-							style={{ width: '100%' }}
-						/>
-					</div>
-				)}
-			</div>
-		);
-	}
-}
+	return (
+		<div className="MovieListCreator">
+			<ImageLoader setImageUrl={setImageUrl} />
+		</div>
+	);
+};
 
 export default MovieListCreator;
