@@ -4,7 +4,6 @@ import webApi from '../../../services/webApi.service';
 
 export function* saveMovieList(action) {
 	const { movieList } = action.payload;
-	console.log(movieList);
 	try {
 		yield call(webApi, {
 			method: 'POST',
