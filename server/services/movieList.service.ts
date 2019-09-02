@@ -20,7 +20,8 @@ export const getListsByUserId = (userId: string) =>
 
 export const getOwnUserLists = (userId: string) =>
   getCustomRepository(MovieListRepository).find({
-    where: { user: { id: userId } }
+    where: { user: { id: userId } },
+    order: { created_at: "DESC" }
   });
 
 export const deleteMovieList = (movieListId: string) =>
