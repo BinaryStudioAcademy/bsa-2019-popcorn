@@ -46,7 +46,6 @@ export default function(state = initialState, action) {
 			};
 		case ADD_MESSAGE:
 			const newMessage = action.payload.message;
-			if (!newMessage.chat) return { ...state };
 			const chatId = newMessage.chat.id;
 			delete newMessage.chat;
 
@@ -56,7 +55,8 @@ export default function(state = initialState, action) {
 					...state.chats,
 					[chatId]: {
 						...state.chats[chatId],
-						messages: [...state.chats[chatId].messages, newMessage]
+						messages: [...state.chats[chatId].messages, newMessage],
+						lastMessage: newMessage
 					}
 				},
 				isLoadingMessages: false
