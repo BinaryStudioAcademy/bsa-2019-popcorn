@@ -1,5 +1,6 @@
 @import '../../../styles/variables';
 
+$color: black;
 .content-search {
 	height: 40px;
 
@@ -106,5 +107,71 @@
 	}
 	.active {
 		width: 100% !important;
+	}
+	.loading {
+		padding: 5px;
+		margin-top: 10px;
+
+		.loader-container {
+			font-size: 10px;
+			position: relative;
+			width: 100px;
+			height: 100px;
+			display: inline-block;
+			text-align: center;
+			border: 1px solid #ccc;
+			border-collapse: collapse;
+			vertical-align: top;
+		}
+
+		.loader {
+			width: 10px;
+			height: 10px;
+			top: 50%;
+			border-radius: 50%;
+			position: absolute;
+			-webkit-animation: loader-2 0.9s 0.35s ease alternate infinite;
+			animation: loader-2 0.9s 0.35s ease alternate infinite;
+			margin: -20px auto 0;
+		}
+
+		.loader:after,
+		.loader:before {
+			content: '';
+			position: absolute;
+			width: 10px;
+			height: 10px;
+			border-radius: 50%;
+			animation: loader-2 0.9s ease alternate infinite;
+			-webkit-animation: loader-2 0.9s ease alternate infinite;
+		}
+
+		.loader:before {
+			left: -20px;
+			animation-delay: 0.2s;
+		}
+
+		.loader:after {
+			right: -20px;
+			animation-delay: 0.5s;
+		}
+
+		@keyframes loader {
+			0% {
+				box-shadow: 0 15px 0 -15px $color;
+			}
+			100% {
+				box-shadow: 0 15px 0 $color;
+			}
+		}
+
+		@-webkit-keyframes loader {
+			0% {
+				box-shadow: 0 15px 0 -15px $color;
+			}
+			100% {
+				box-shadow: 0 15px 0 $color;
+			}
+		}
 	}
 }

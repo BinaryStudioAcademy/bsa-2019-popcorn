@@ -7,12 +7,15 @@ import MoviePreview from './MoviePreview/index';
 import Extra from '../../UserPage/UserPosts/PostExtra/extra';
 import { NavLink } from 'react-router-dom';
 
-const options = ['all', 'movie', 'event', 'survey', 'top'];
+const options = ['all', 'movie', 'event', 'survey', 'top', 'user'];
 const defaultOption = options[0];
+const whiteList = ['content-search', 'question-type', 'search-input'];
 
 interface IProps {
 	fetchData: (title: string, type: string) => any;
 	data: null | Array<{ data: any; type: string }>;
+	loading: boolean;
+	error: string;
 }
 
 interface IState {
@@ -28,9 +31,19 @@ class ContentSearch extends React.Component<IProps, IState> {
 		showModal: false
 	};
 
+	static isEmpty(data) {
+		return !(data && data.some(elem => elem.data && elem.data.length > 0));
+	}
+
 	componentDidMount(): void {
-		document.addEventListener('click', () => {
-			this.setModal(false);
+		document.addEventListener('click', (e: any) => {
+			if (!(e && e.target && e.target.classList)) return this.setModal(false);
+
+			const classList = e.target.classList;
+
+			if (whiteList.indexOf(classList[0]) === -1) {
+				return this.setModal(false);
+			}
 		});
 	}
 
@@ -39,7 +52,7 @@ class ContentSearch extends React.Component<IProps, IState> {
 	}
 
 	showModal(): boolean {
-		return this.state.showModal;
+		return this.state.showModal || this.props.loading || !!this.props.error;
 	}
 
 	renderList(elem: { data: any; type: string }) {
@@ -90,7 +103,7 @@ class ContentSearch extends React.Component<IProps, IState> {
 	render() {
 		const { title, type } = this.state;
 
-		const { fetchData, data } = this.props;
+		const { fetchData, data, loading, error } = this.props;
 
 		return (
 			<div className={'content-search'}>
@@ -107,6 +120,9 @@ class ContentSearch extends React.Component<IProps, IState> {
 								this.setModal(true);
 							}
 						}}
+						onFocus={() =>
+							ContentSearch.isEmpty(data) ? null : this.setModal(true)
+						}
 					/>
 				</span>
 				<select
@@ -126,6 +142,16 @@ class ContentSearch extends React.Component<IProps, IState> {
 						(this.showModal() ? 'modal-data-search-show' : '')
 					}
 				>
+					{loading && (
+						<div className={'loading'}>
+							<span>Loading...</span>
+						</div>
+					)}
+					{error && (
+						<div className={'loading'}>
+							<span>{error}</span>
+						</div>
+					)}
 					{data && data.map(elem => this.renderList(elem))}
 				</div>
 			</div>
@@ -135,7 +161,9 @@ class ContentSearch extends React.Component<IProps, IState> {
 
 const mapStateToProps = (rootState, props) => ({
 	...props,
-	data: rootState.contentSearch.data
+	data: rootState.contentSearch.data,
+	loading: rootState.contentSearch.loading,
+	error: rootState.contentSearch.error
 });
 
 const actions = {

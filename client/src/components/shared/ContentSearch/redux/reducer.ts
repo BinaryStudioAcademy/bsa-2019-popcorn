@@ -1,11 +1,20 @@
-import { CONTENT_SEARCH_SET_DATA } from './actionTypes';
+import {
+	CONTENT_SEARCH_FETCH_DATA,
+	CONTENT_SEARCH_SET_DATA
+} from './actionTypes';
 import movieAdapter from '../../../MovieSeriesPage/movieAdapter';
 
-const initialState: { data: null | Array<{ data: any; type: string }> } = {
-	data: null
+const initialState: {
+	data: null | Array<{ data: any; type: string }>;
+	loading: boolean;
+	error: string;
+} = {
+	data: null,
+	loading: false,
+	error: ''
 };
 
-function adaptMoview(data) {
+function adaptMovie(data) {
 	return data.map(elem =>
 		elem.type === 'movie'
 			? { data: (elem.data || []).map(movieAdapter), type: 'movie' }
@@ -18,7 +27,16 @@ export default function(state = initialState, action) {
 		case CONTENT_SEARCH_SET_DATA:
 			return {
 				...state,
-				data: adaptMoview(action.payload.data)
+				data: adaptMovie(action.payload.data),
+				loading: false,
+				error: action.payload.error
+			};
+		case CONTENT_SEARCH_FETCH_DATA:
+			return {
+				...state,
+				loading: true,
+				data: [],
+				error: ''
 			};
 	}
 	return state;

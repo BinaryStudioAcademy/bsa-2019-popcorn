@@ -1,9 +1,10 @@
-import { all, takeEvery, call, put } from '@redux-saga/core/effects';
+import { all, call, put, takeEvery } from '@redux-saga/core/effects';
 import {
 	CONTENT_SEARCH_FETCH_DATA,
 	CONTENT_SEARCH_SET_DATA
 } from './actionTypes';
 import webApi from '../../../../services/webApi.service';
+import ContentSearch from '../index';
 
 export function* fetchData(action) {
 	try {
@@ -17,7 +18,7 @@ export function* fetchData(action) {
 
 		yield put({
 			type: CONTENT_SEARCH_SET_DATA,
-			payload: { data }
+			payload: { data, error: ContentSearch.isEmpty(data) ? 'Not found' : '' }
 		});
 	} catch (e) {
 		console.log('contentSearch saga: ', e.message);
