@@ -5,7 +5,8 @@ import {
 	SET_CHATS,
 	SET_MESSAGES,
 	CREATE_CHAT,
-	CREATE_MESSAGE
+	CREATE_MESSAGE,
+	DELETE_MESSAGE
 } from './actionTypes';
 import webApi from '../../../services/webApi.service';
 
@@ -99,11 +100,35 @@ function* watchCreateMessage() {
 	yield takeEvery(CREATE_MESSAGE, createMessage);
 }
 
+export function* deleteMessage(action) {
+	try {
+		const response = yield call(webApi, {
+			method: 'DELETE',
+			endpoint: `/api/chat/${action.payload.id}`
+		});
+
+		yield put({
+			type: FETCH_MESSAGES,
+			payload: {
+				chatId: response.chatId,
+				userId: response.userId
+			}
+		});
+	} catch (e) {
+		console.log('chat saga delete message:', e.message);
+	}
+}
+
+function* watchDeleteMessage() {
+	yield takeEvery(DELETE_MESSAGE, deleteMessage);
+}
+
 export default function* chat() {
 	yield all([
 		watchFetchChats(),
 		watchFetchMessages(),
 		watchCreateChat(),
-		watchCreateMessage()
+		watchCreateMessage(),
+		watchDeleteMessage()
 	]);
 }
