@@ -32,7 +32,7 @@ class Chat extends React.Component<IProps> {
 			<div>
 				<ChatHeader user={this.props.chat.user} />
 				<ChatBody messages={this.props.chat.messages} />
-				<ChatInput />
+				<ChatInput chatId={this.props.chat.id} />
 			</div>
 		);
 	}

@@ -4,7 +4,8 @@ import {
 	FETCH_MESSAGES,
 	SET_CHATS,
 	SET_MESSAGES,
-	CREATE_CHAT
+	CREATE_CHAT,
+	CREATE_MESSAGE
 } from './actionTypes';
 import webApi from '../../../services/webApi.service';
 
@@ -72,6 +73,37 @@ function* watchCreateChat() {
 	yield takeEvery(CREATE_CHAT, createChat);
 }
 
+export function* createMessage(action) {
+	try {
+		yield call(webApi, {
+			method: 'POST',
+			endpoint: `/api/chat/${action.payload.userId}/${action.payload.chatId}`,
+			body: {
+				body: action.payload.body
+			}
+		});
+
+		yield put({
+			type: FETCH_MESSAGES,
+			payload: {
+				chatId: action.payload.chatId,
+				userId: action.payload.userId
+			}
+		});
+	} catch (e) {
+		console.log('chat saga create message:', e.message);
+	}
+}
+
+function* watchCreateMessage() {
+	yield takeEvery(CREATE_MESSAGE, createMessage);
+}
+
 export default function* chat() {
-	yield all([watchFetchChats(), watchFetchMessages(), watchCreateChat()]);
+	yield all([
+		watchFetchChats(),
+		watchFetchMessages(),
+		watchCreateChat(),
+		watchCreateMessage()
+	]);
 }

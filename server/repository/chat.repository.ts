@@ -76,6 +76,7 @@ class ChatRepository extends Repository<Chat> {
       id: userId
     });
     await getCustomRepository(MessageRepository).save({ chat, user, body });
+    return { success: true };
   }
 }
 
