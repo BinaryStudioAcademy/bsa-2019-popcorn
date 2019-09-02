@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { fetchChats } from './ChatPage.redux/actions';
 import { Switch, Route } from 'react-router';
-import Chat from './Chat';
+import Chat from './Chat/Chat';
 import ChatList from './ChatList/ChatList';
 import './ChatPage.scss';
 

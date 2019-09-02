@@ -1,12 +1,12 @@
 @import '../../styles/variables.scss';
 
 .chat-wrp {
-	border: 3px red solid;
+	border: 1px $border-color solid;
 	display: flex;
 	box-sizing: border-box;
 	margin: 50px auto;
 	width: 90%;
-	height: 90%;
+	height: 600px;
 	a {
 		color: $text-base-color;
 		text-decoration: none;
@@ -22,6 +22,7 @@
 	}
 	.chat-list {
 		width: 30%;
+		overflow: auto;
 		&-item {
 			border-bottom: 1px solid $border-color;
 			height: 70px;
@@ -63,6 +64,68 @@
 	}
 	.chat {
 		width: 70%;
-		border: 3px green solid;
+		border-left: 1px $border-color solid;
+		.chat-header {
+			padding: 5px 10px;
+			height: 50px;
+			display: flex;
+			justify-content: flex-start;
+			align-items: center;
+			background-color: $background-gray;
+			.header-avatar {
+				height: 100%;
+			}
+			.user-name {
+				font-weight: 600;
+				margin-left: 10px;
+			}
+		}
+		.chat-body {
+			height: 500px;
+			overflow: auto;
+			font-size: 0.8em;
+			padding: 10px;
+			.break-line {
+				width: 80px;
+				text-align: center;
+				padding: 5px;
+				margin: 20px auto;
+				background-color: #adadad;
+				border-radius: 15px;
+				color: white;
+				font-weight: bold;
+				max-height: 25px;
+			}
+			.incoming-message,
+			.outgoing-message {
+				max-width: 50%;
+				padding: 10px;
+				border-radius: 20px;
+				margin: 10px 0;
+				font-weight: 500;
+			}
+			.incoming-message {
+				color: white;
+				margin-right: 50%;
+				background-color: $orange;
+				time {
+					color: rgba(white, 0.8);
+				}
+			}
+			.outgoing-message {
+				margin-left: 50%;
+				background-color: $background-gray;
+			}
+			time {
+				margin-left: 10px;
+				font-size: 0.8em;
+				float: right;
+				font-style: italic;
+				color: $text-secondary-color;
+			}
+		}
+		.chat-input {
+			height: 50px;
+		}
 	}
 }
