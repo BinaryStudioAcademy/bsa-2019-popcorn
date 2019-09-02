@@ -1,7 +1,9 @@
 import {
 	FETCH_MOVIE_LISTS_PREVIEW,
 	FETCH_MOVIE_LISTS_PREVIEW_SUCCESS,
-	DELETE_MOVIE_LIST
+	DELETE_MOVIE_LIST,
+	SAVE_MOVIE_LIST_SUCCESS,
+	SAVE_MOVIE_LIST
 } from './actionTypes';
 
 interface IReducerState {
@@ -34,6 +36,19 @@ export default (state = initialState, action) => {
 				movieListsPreview: prevMovieList.filter(
 					movieList => movieList.id !== movieListId
 				)
+			};
+
+		case SAVE_MOVIE_LIST:
+			return {
+				...state,
+				isLoading: true
+			};
+
+		case SAVE_MOVIE_LIST_SUCCESS:
+			return {
+				...state,
+				movieListPreview: [action.payload.newList, ...state.movieListsPreview],
+				isLoading: false
 			};
 
 		default:

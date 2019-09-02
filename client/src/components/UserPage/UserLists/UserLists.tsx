@@ -24,18 +24,24 @@ interface IProps {
 	fetchMovieListsPreview: () => object;
 	deleteMovieList: (movieListId: string) => object;
 	movieListsPreview?: Array<any>;
+	isLoading: boolean;
 }
 
 const UserLists: React.FC<IProps> = ({
 	saveMovieList,
 	fetchMovieListsPreview,
 	movieListsPreview,
-	deleteMovieList
+	deleteMovieList,
+	isLoading
 }) => {
 	const [showCreator, setShowCreator] = useState(false);
 
 	if (!movieListsPreview) {
 		fetchMovieListsPreview();
+		return <Spinner />;
+	}
+
+	if (isLoading) {
 		return <Spinner />;
 	}
 
@@ -49,7 +55,12 @@ const UserLists: React.FC<IProps> = ({
 	}
 	return (
 		<div className="UserLists">
-			<button onClick={() => setShowCreator(true)}>CREATE</button>
+			<button
+				className="create-movie-list-button"
+				onClick={() => setShowCreator(true)}
+			>
+				Create movie list
+			</button>
 			<div className="movie-list-preview-container">
 				{movieListsPreview.map(preview => (
 					<MovieListPreviewItem
@@ -65,7 +76,8 @@ const UserLists: React.FC<IProps> = ({
 
 const mapStateToProps = (rootState, props) => ({
 	...props,
-	movieListsPreview: rootState.movieList.movieListsPreview
+	movieListsPreview: rootState.movieList.movieListsPreview,
+	isLoading: rootState.movieList.isLoading
 });
 
 const mapDispatchToProps = dispatch => {

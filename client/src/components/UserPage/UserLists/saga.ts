@@ -3,17 +3,23 @@ import {
 	SAVE_MOVIE_LIST,
 	FETCH_MOVIE_LISTS_PREVIEW,
 	FETCH_MOVIE_LISTS_PREVIEW_SUCCESS,
-	DELETE_MOVIE_LIST
+	DELETE_MOVIE_LIST,
+	SAVE_MOVIE_LIST_SUCCESS
 } from './actionTypes';
 import webApi from '../../../services/webApi.service';
 
 export function* saveMovieList(action) {
 	const { movieList } = action.payload;
 	try {
-		yield call(webApi, {
+		const newMovieList = yield call(webApi, {
 			method: 'POST',
 			endpoint: '/api/movie-list',
 			body: { ...movieList }
+		});
+
+		yield put({
+			type: SAVE_MOVIE_LIST_SUCCESS,
+			payload: { newMovieList }
 		});
 	} catch (e) {
 		console.log(e.message);
