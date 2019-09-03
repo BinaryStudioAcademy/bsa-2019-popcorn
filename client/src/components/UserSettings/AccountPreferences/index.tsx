@@ -1,5 +1,5 @@
 import React from 'react';
-import UserInterdace from './../UserSettingsInterface';
+import UserInterface from './../UserSettingsInterface';
 import './../../UserPage/SurveyItems/SurveyShortAnswer/SurveyShortAnswer.scss';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -7,7 +7,7 @@ import Spinner from '../../shared/Spinner';
 import { updateEmail, updatePassword, deleteUser } from './../actions';
 
 interface IProps {
-	profileInfo: UserInterdace;
+	profileInfo: UserInterface;
 	updateEmail: (userId: string, email: string) => void;
 	updatePassword: (userId: string, password: string) => void;
 	deleteUser: (userId: string) => void;
@@ -29,7 +29,15 @@ interface IState {
 	PasswordNewPasswordError: string;
 }
 
+interface IErrorPasswordMessage {
+	required: string;
+	length: string;
+	correct: string;
+}
+
 class AccountPreferences extends React.Component<IProps, IState> {
+	errorPasswordMessage: IErrorPasswordMessage;
+
 	constructor(props) {
 		super(props);
 
@@ -47,6 +55,12 @@ class AccountPreferences extends React.Component<IProps, IState> {
 			PasswordNewPasswordFocus: false,
 			PasswordNewPasswordError: ''
 		};
+
+		this.errorPasswordMessage = {
+			required: 'Password is required',
+			length: 'Password must be at least 6 characters',
+			correct: 'Current password is incorrect'
+		};
 	}
 
 	validateEmail = (email: string) => {
@@ -58,28 +72,54 @@ class AccountPreferences extends React.Component<IProps, IState> {
 	};
 
 	validatePassword = password => {
-		if (password.trim() === '') return { error: 'Password is required' };
+		if (password.trim() === '') return { error: this.errorPasswordMessage.required };
 		else if (password.length < 6)
 			return {
-				error: 'Password must be at least 6 characters'
+				error: this.errorPasswordMessage.length
 			};
 		else return { error: null, success: true };
 	};
 
 	updateEmail(ev) {
 		ev.preventDefault();
-		const { password: userPassword, id: userId } = this.props.profileInfo;
-		const { EmailnewEmail, EmailCurrPassword } = this.state;
-		if (userPassword !== EmailCurrPassword) return;
+
+		const {
+			password: userPassword,
+			id: userId
+		} = this.props.profileInfo;
+		const {
+			EmailnewEmail,
+			EmailCurrPassword,
+			EmailCurrPasswordError
+		} = this.state;
+		
+		if (!EmailCurrPasswordError && EmailCurrPassword !== userPassword) {
+			this.setState({ EmailCurrPasswordError: this.errorPasswordMessage.correct });
+			return;
+		}
+
 		const { updateEmail } = this.props;
 		updateEmail(userId, EmailnewEmail);
 	}
 
 	updatePassword(ev) {
 		ev.preventDefault();
-		const { password: userPassword, id: userId } = this.props.profileInfo;
-		const { PasswordCurrPassword, PasswordNewPassword } = this.state;
-		if (PasswordCurrPassword !== userPassword) return;
+		
+		const {
+			password: userPassword,
+			id: userId
+		} = this.props.profileInfo;
+		const {
+			PasswordCurrPassword,
+			PasswordNewPassword,
+			PasswordCurrPasswordError
+		} = this.state;
+
+		if (!PasswordCurrPasswordError && PasswordCurrPassword !== userPassword) {
+			this.setState({ PasswordCurrPasswordError: this.errorPasswordMessage.correct });
+			return;
+		}
+
 		const { updatePassword } = this.props;
 		updatePassword(userId, PasswordNewPassword);
 	}
