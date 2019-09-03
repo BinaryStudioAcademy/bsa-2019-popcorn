@@ -60,9 +60,9 @@ class EventActions {
         page.deleteEventButton.click();
     }
 
-    countEventItems(title) {
+    countEventItems() {
         page.eventItems[0].waitForDisplayed(5000);
-        return page.eventItems(title).length;
+        return page.eventItems.length;
     }
 }
 

@@ -28,7 +28,7 @@ describe('Events on the Popcorn site', () => {
     });
 
 
-    it('should create event with valid credentials', () => {
+    xit('should create event with valid credentials', () => {
         let title = faker.random.words();
         pageActions.clickCreateEventButton();
         pageActions.enterTitle(title);

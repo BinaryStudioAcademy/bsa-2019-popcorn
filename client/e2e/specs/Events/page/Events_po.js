@@ -1,6 +1,6 @@
 class EventPage {
 
-    get eventItems (title) {return $$(`//div[contains(@class, "event-title") and contains(., ${title})]`)};
+    get eventItems () {return $$(`//div[@class="event-title"]`)};
     get createEventButton () {return $('//div[contains(@class, "button") and contains(., "Create Event")]')}; // $('div.create-event-button')
     get titleInput () {return $('//span[contains(., "Title")]/../input')};
     get imageInput () {return $('input.upload-image')};
