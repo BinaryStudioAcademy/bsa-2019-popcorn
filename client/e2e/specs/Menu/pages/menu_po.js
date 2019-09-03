@@ -4,6 +4,7 @@ class MenuPage {
     get userPage () {return $('div.user-info a[href*="/user-page"]')};
     get settings () {return $('div.user-info a[href*="/settings"]')};
     get logOut () {return $('//a[contains(., "Logout")]')};
+    get movieList () {return $('//a[contains(@href, "/movies")]')};
 };
 
 module.exports = MenuPage;

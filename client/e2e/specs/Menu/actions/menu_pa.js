@@ -31,6 +31,11 @@ class MenuActions {
         menu.logOut.waitForDisplayed(4000);
         menu.logOut.click();
     }
+
+    navigateToMovieList() {
+        menu.movieList.waitForDisplayed(4000);
+        menu.movieList.click();
+    }
 }
 
 module.exports = MenuActions;
