@@ -1,8 +1,8 @@
 import { NotificationModel } from "../models/NotificationModel";
 import NotificationRepository from "../repository/notification.repository";
-import { getCustomRepository, DeleteResult } from "typeorm";
+import { getCustomRepository } from "typeorm";
 
-export const saveNotificitation = async (
+export const saveNotification = async (
   notification: any
 ): Promise<NotificationModel> => {
   const newNotification = await getCustomRepository(
@@ -11,7 +11,7 @@ export const saveNotificitation = async (
   return newNotification;
 };
 
-export const setNotificitationIsRead = async (
+export const setNotificationIsRead = async (
   notificationId: string
 ): Promise<any> => {
   let notification = await getCustomRepository(NotificationRepository).findOne({
@@ -24,5 +24,8 @@ export const setNotificitationIsRead = async (
 export const getNotificationsByUserId = async (
   userId: string
 ): Promise<NotificationModel[]> => {
-  return await getCustomRepository(NotificationRepository).find({ userId });
+  return await getCustomRepository(NotificationRepository).find({
+    where: { userId },
+    order: { date: "DESC" }
+  });
 };

@@ -1,10 +1,10 @@
 import * as movieService from "../services/movie.service";
 import * as eventService from "../services/event.service";
-import * as postService from "../services/post.service";
 import UserRepository from "../repository/user.repository";
 import { sendPushMessage } from "../services/firebase.service";
-import { saveNotificitation } from "../services/notification.service";
+import { saveNotification } from "../services/notification.service";
 import { getCustomRepository } from "typeorm";
+
 const uuid = require("uuid/v4");
 export default socket => {
   socket.on("createRoom", roomId => {
@@ -28,7 +28,11 @@ export default socket => {
       const user = await getCustomRepository(UserRepository).findOne({
         id: userId
       });
-      if (userId !== messageInfo.user.id && user.siteNotificationEvents && user.siteNotificationComments) {
+      if (
+        userId !== messageInfo.user.id &&
+        user.siteNotificationEvents &&
+        user.siteNotificationComments
+      ) {
         const notification = {
           img: messageInfo.user.avatar,
           type: "comment",
@@ -40,7 +44,7 @@ export default socket => {
           entityType: "event",
           entityId: event.id
         };
-        await saveNotificitation({
+        await saveNotification({
           ...notification,
           userId,
           isRead: false

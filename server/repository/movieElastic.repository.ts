@@ -198,3 +198,24 @@ export const getPropertiesByMovieId = async (
   );
   return response.json();
 };
+
+export const getPropertiesByIdValues = async (idValues, properties) => {
+  const response = await fetch(
+    process.env.ELASTIC_API_URL + `/popcorn/_search`,
+    {
+      method: "POST",
+      body: JSON.stringify({
+        _source: {
+          includes: [...properties]
+        },
+        query: {
+          terms: {
+            id: [...idValues]
+          }
+        },
+        size: idValues.length
+      })
+    }
+  );
+  return response.json();
+};
