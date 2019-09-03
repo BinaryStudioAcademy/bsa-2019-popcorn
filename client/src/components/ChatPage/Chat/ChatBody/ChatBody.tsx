@@ -5,14 +5,39 @@ import IncomingMessage from './IncomingMessage';
 import BreakLine from './BreakLine';
 import ScrollToBottom from 'react-scroll-to-bottom';
 import { bindActionCreators } from 'redux';
+import { readMessages } from '../../ChatPage.redux/actions';
 
 interface IProps {
 	messages: any; //todo
 	userId: string;
 	chatId: string;
+	readMessages: (chatId: string, userId: string) => void;
 }
 
-class ChatBody extends React.Component<IProps> {
+interface IState {
+	chatId: string;
+	messages: any;
+}
+
+class ChatBody extends React.Component<IProps, IState> {
+	constructor(props) {
+		super(props);
+		this.state = {
+			chatId: '',
+			messages: []
+		};
+	}
+
+	static getDerivedStateFromProps(nextProps, prevState) {
+		if (nextProps.chatId !== prevState.chatId) {
+			nextProps.readMessages(nextProps.chatId, nextProps.userId);
+			return {
+				messages: nextProps.messages,
+				chatId: nextProps.chatId
+			};
+		}
+		return null;
+	}
 	render() {
 		let tmpDate = '';
 		const { messages, userId } = this.props;
@@ -56,7 +81,9 @@ const mapStateToProps = (rootState, props) => ({
 	userId: rootState.profile.profileInfo.id
 });
 
-const actions = {};
+const actions = {
+	readMessages
+};
 
 const mapDispatchToProps = dispatch => bindActionCreators(actions, dispatch);
 

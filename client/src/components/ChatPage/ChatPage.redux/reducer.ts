@@ -127,16 +127,17 @@ export default function(state = initialState, action) {
 			};
 		case READ_MESSAGES_STORE:
 			const { chatId: id_chat, userId } = action.payload;
-			const filteredUnreadMessages = state.chats[id_chat].unreadMessages.filter(
-				message => message.chatId !== id_chat // && message.user.id === userId
-			);
+			if (!state.chats[id_chat]) {
+				return { ...state };
+			}
+
 			return {
 				...state,
 				chats: {
 					...state.chats,
 					[id_chat]: {
 						...state.chats[id_chat],
-						unreadMessages: [...filteredUnreadMessages]
+						unreadMessagesCount: 0
 					}
 				}
 			};

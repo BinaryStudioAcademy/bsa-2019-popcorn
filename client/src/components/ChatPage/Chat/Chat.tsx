@@ -16,7 +16,6 @@ interface IProps {
 	chat: any; //todo
 	userId: string;
 	isLoadingMessages: boolean;
-	readMessages: (chatId: string, userId: string) => void;
 }
 
 class Chat extends React.Component<IProps> {
@@ -29,8 +28,6 @@ class Chat extends React.Component<IProps> {
 		}
 
 		if (!this.props.chat.messages) return <div>Loading...</div>;
-
-		this.props.readMessages(this.props.chat.id, this.props.userId);
 
 		return (
 			<div>

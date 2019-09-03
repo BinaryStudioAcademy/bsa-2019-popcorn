@@ -42,10 +42,7 @@ class ChatList extends React.Component<IProps> {
 				this.props.updateMessageStore(chatId, message)
 			);
 			SocketService.on('read-chat', ({ chatId, userId }) => {
-				if (userId !== this.props.userId) {
-					console.log('hello');
-					this.props.readMessagesStore(chatId, userId);
-				}
+				this.props.readMessagesStore(chatId, userId);
 			});
 		}
 	}
