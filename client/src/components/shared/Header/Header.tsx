@@ -22,6 +22,7 @@ import Image from '../Image/Image';
 import Notification from './Notification';
 import { withFirebase } from '../../Firebase';
 import { Activity } from '../../ActivityPage/ActivityList/ActivityList';
+import ContentSearch from '../ContentSearch';
 interface IProps {
 	userInfo: {
 		id: string;
@@ -50,6 +51,7 @@ interface IProps {
 	firebase?: any;
 	firebaseToken: string | null | undefined;
 	getFirebaseToken: (firebase: any) => void;
+	history: any;
 }
 
 const Header = ({
@@ -65,7 +67,8 @@ const Header = ({
 	firebase,
 	firebaseToken,
 	getFirebaseToken,
-	deleteFirebaseToken
+	deleteFirebaseToken,
+	history
 }: IProps) => {
 	const MOVIES_IN_CINEMA = 'Movies in cinema';
 	const MOVIE_TOPS = 'Movie tops';
@@ -146,12 +149,7 @@ const Header = ({
 					</Link>
 				</div>
 			</button>
-			<MovieSearch
-				movies={moviesSearch}
-				fetchFilms={fetchFilms}
-				alreadySearch={alreadySearch}
-				setMovieSeries={setMovieSeries}
-			/>
+			<ContentSearch />
 			<div className="notifications">
 				<div>
 					<img className="message-icon hover" src={messageIcon} alt="message" />
