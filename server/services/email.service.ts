@@ -70,9 +70,8 @@ export const sendWelcomeEmail = (email) => {
           <a
             href=${process.env.FRONTEND_HOST}
             style='
-              display: flex;
-              justify-conent: left;
-              align-items: center;
+              display: block;
+              text-align: center;
               text-decoration: none;
               color: #000;
             '
@@ -83,16 +82,17 @@ export const sendWelcomeEmail = (email) => {
               style='
                 width: 50px;
                 height: 50px;
+                vertical-align: middle;
               '
             />
-            <h2
+            <span
               style='
                 margin-left: 5px;
+                font-size: 1.5em;
+                font-weight: bold;
               '>
-            Pop Corn</h2>
+            Pop Corn</span>
           </a>
-
-          
         </header>
         
         <main
@@ -101,7 +101,10 @@ export const sendWelcomeEmail = (email) => {
           '
         >
           <h1
-            style='color: #000'
+            style='
+              color: #000;
+              text-align: center;
+            '
           >Welcome to Pop Corn!</h1>
           <p
             style='
@@ -130,13 +133,17 @@ export const sendWelcomeEmail = (email) => {
             <li><a href='${process.env.FRONTEND_HOST}/surveys'>Surveys</a></li>
           </ul>
 
-          <a href='${process.env.FRONTEND_HOST}' style='cursor: pointer;'>
+          <a
+            href='${process.env.FRONTEND_HOST}'
+            style='cursor: pointer; text-decoration: none;'>
             <button 
               style='
+                display: block;
+                margin: 0 auto;
                 box-sizing: border-box;
                 padding: 10px 20px;  
                 border: none;
-                border-radius: 15px;
+                border-radius: 4px;
                 outline: none;
                 background-color: #ff6501;
                 text-align: center;
