@@ -78,11 +78,11 @@ router
         .catch(next)
   )
   .put(
-    "/:chatId/read",
+    "/:chatId/:userId/read",
     errorHandlerMiddleware,
     (req: Request & { io: any }, res: Response, next: NextFunction) =>
       chatService
-        .readMessagesByChatId(req.params.chatId, next)
+        .readMessagesByChatId(req.params.chatId, req.params.userId, next)
         .then(result => {
           req.io.to(req.params.chatId).emit("read-chat", result);
           res.send({ result });

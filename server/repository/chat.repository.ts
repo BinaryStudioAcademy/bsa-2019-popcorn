@@ -113,14 +113,16 @@ class ChatRepository extends Repository<Chat> {
     return { userId, chatId, message };
   }
 
-  async readMessagesByChatId(id, body, next?) {
+  async readMessagesByChatId(chatId, userId, next?) {
     await getCustomRepository(MessageRepository)
       .createQueryBuilder("message")
-      .leftJoinAndSelect("message.chat", "chat")
+      .leftJoin("message.chat", "chat")
+      .where("chat.id = :id", { id: chatId })
+      .leftJoin("message.user", "user")
+      .where("user.id != :id", { id: userId })
+      .andWhere("isRead = :isRead", { isRead: false })
       .update()
       .set({ isRead: true })
-      .where("chat.id = :id", { id })
-      .andWhere("isRead = :isRead", { isRead: false })
       .execute();
     return {};
   }

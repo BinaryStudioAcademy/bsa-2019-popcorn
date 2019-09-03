@@ -41,9 +41,10 @@ export const deleteMessage = async (id, next) => {
   return await getCustomRepository(ChatRepository).deleteMessage(id, next);
 };
 
-export const readMessagesByChatId = async (id, next) => {
+export const readMessagesByChatId = async (chatId, userId, next) => {
   return await getCustomRepository(ChatRepository).readMessagesByChatId(
-    id,
+    chatId,
+    userId,
     next
   );
 };
