@@ -16,11 +16,14 @@ class ChatRepository extends Repository<Chat> {
     });
     const chats = await this.find({
       where: [{ user1: user }, { user2: user }],
-      relations: ["user1", "user2", "messages"]
+      relations: ["user1", "user2", "messages", "messages.user"]
     });
-    return chats.map(chat => {
+    const formattedChats = chats.map(chat => {
       const formatChat: any = {};
       formatChat.id = chat.id;
+      formatChat.unreadMessagesCount = chat.messages.filter(
+        message => !message.isRead && message.user.id !== userId
+      ).length;
       formatChat.user =
         chat.user1.id !== userId
           ? this.formatUser(chat.user1)
@@ -30,6 +33,7 @@ class ChatRepository extends Repository<Chat> {
       )[0];
       return formatChat;
     });
+    return formattedChats;
   }
 
   formatUser = user => ({

@@ -5,7 +5,8 @@ import SocketService from '../../../services/socket.service';
 import {
 	addMessage,
 	deleteMessageStore,
-	updateMessageStore
+	updateMessageStore,
+	addUnreadMessage
 } from '../ChatPage.redux/actions';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -15,7 +16,7 @@ interface IProps {
 	addMessage: (any) => void;
 	deleteMessageStore: (chatId, messageId) => void;
 	updateMessageStore: (chatId, message) => void;
-	unreadMessages: any;
+	addUnreadMessage: (chatId) => void;
 	userId: string;
 }
 class ChatList extends React.Component<IProps> {
@@ -23,7 +24,14 @@ class ChatList extends React.Component<IProps> {
 		const { chats } = this.props;
 		if (Object.keys(chats).length > 0) {
 			Object.keys(chats).forEach(SocketService.join);
-			SocketService.on('new-message', this.props.addMessage);
+
+			SocketService.on('new-message', message => {
+				const chatId = message.chat.id;
+				this.props.addMessage(message);
+				if (message.user.id !== this.props.userId) {
+					this.props.addUnreadMessage(chatId);
+				}
+			});
 			SocketService.on('delete-message', ({ chatId, messageId }) =>
 				this.props.deleteMessageStore(chatId, messageId)
 			);
@@ -33,14 +41,6 @@ class ChatList extends React.Component<IProps> {
 		}
 	}
 
-	countUnreadMessages = chatId => {
-		const { unreadMessages, userId } = this.props;
-		const filteredUnreadMessages = unreadMessages.filter(
-			message => message.chatId === chatId && message.user.id !== userId
-		);
-		return filteredUnreadMessages.length;
-	};
-
 	render() {
 		const { chats } = this.props;
 		return (
@@ -49,7 +49,7 @@ class ChatList extends React.Component<IProps> {
 					<NavLink to={`/chat/${chats[key].id}`} key={chats[key].id}>
 						<ChatListItem
 							chat={chats[key]}
-							unreadMessagesCount={this.countUnreadMessages(chats[key].id)}
+							unreadMessagesCount={chats[key].unreadMessagesCount}
 						/>
 					</NavLink>
 				))}
@@ -60,14 +60,15 @@ class ChatList extends React.Component<IProps> {
 
 const mapStateToProps = (rootState, props) => ({
 	...props,
-	unreadMessages: rootState.chat.unreadMessages,
+	// unreadMessages: rootState.chat.unreadMessages,
 	userId: rootState.profile.profileInfo.id
 });
 
 const actions = {
 	addMessage,
 	deleteMessageStore,
-	updateMessageStore
+	updateMessageStore,
+	addUnreadMessage
 };
 
 const mapDispatchToProps = dispatch => bindActionCreators(actions, dispatch);

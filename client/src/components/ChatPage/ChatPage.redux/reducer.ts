@@ -6,17 +6,21 @@ import {
 	ADD_MESSAGE_STORE,
 	DELETE_MESSAGE_STORE,
 	UPDATE_MESSAGE_STORE,
-	READ_MESSAGES
+	READ_MESSAGES,
+	ADD_UNREAD_MESSAGE
 } from './actionTypes';
 
 const initialState: {
 	chats: any;
-	unreadMessages: any[];
+	// unreadMessages: Array<{
+	// 	chatId: string,
+	// 	unreadMessagesCount: number
+	// }>;
 	isLoadingList: boolean;
 	isLoadingMessages: boolean;
 } = {
 	chats: {},
-	unreadMessages: [],
+	// unreadMessages: [],
 	isLoadingList: false,
 	isLoadingMessages: false
 };
@@ -58,8 +62,6 @@ export default function(state = initialState, action) {
 			const chatId = newMessage.chat.id;
 			delete newMessage.chat;
 
-			const unreadMessage = { ...newMessage, chatId };
-
 			return {
 				...state,
 				chats: {
@@ -69,9 +71,22 @@ export default function(state = initialState, action) {
 						messages: [...state.chats[chatId].messages, newMessage],
 						lastMessage: newMessage
 					}
-				},
-				unreadMessages: [...state.unreadMessages, unreadMessage]
+				}
 			};
+		case ADD_UNREAD_MESSAGE:
+			return {
+				...state,
+				chats: {
+					...state.chats,
+					[action.payload.chatId]: {
+						...state.chats[action.payload.chatId],
+
+						unreadMessagesCount:
+							state.chats[action.payload.chatId].unreadMessagesCount + 1
+					}
+				}
+			};
+
 		case DELETE_MESSAGE_STORE:
 			const { chatId: chat_id, messageId } = action.payload;
 			const filteredMessages = state.chats[chat_id].messages.filter(
