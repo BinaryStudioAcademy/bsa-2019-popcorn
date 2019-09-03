@@ -138,12 +138,12 @@ class ResultList extends React.Component<IProps, IState> {
 		return (
 			<div className={'result-list'}>
 				{loading && (
-					<div className={'loading'}>
+					<div className={'loading list-content'}>
 						<span>Loading...</span>
 					</div>
 				)}
 				{error && (
-					<div className={'loading'}>
+					<div className={'loading list-content'}>
 						<span>{error}</span>
 					</div>
 				)}
