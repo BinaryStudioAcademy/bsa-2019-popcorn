@@ -129,8 +129,7 @@ export default function(state = initialState, action) {
 					...state.newStory,
 					type: action.payload.type,
 					activity: action.payload.activity
-				},
-				photoSaved: false
+				}
 			};
 		case ADD_STORY:
 			const stories = state.stories
@@ -149,7 +148,8 @@ export default function(state = initialState, action) {
 					caption: '',
 					activity: null,
 					type: ''
-				}
+				},
+				photoSaved: false
 			};
 		case SAVE_MOVIE:
 			return {

@@ -8,15 +8,11 @@ import webApi from '../../../../services/webApi.service';
 export function* uploadImage(action) {
 	try {
 		const data = yield call(uploadFile, action.payload.data);
-		let url;
-		if (data.imageUrl.indexOf('/') !== -1) url = data.imageUrl.split(`/`);
-		else url = data.imageUrl.split(`\\`);
-		url.shift();
 
 		yield put({
 			type: ActionTypes.SET_TOP_IMAGE,
 			payload: {
-				uploadUrl: '/' + url.join('/'),
+				uploadUrl: data.imageUrl,
 				topId: action.payload.topId
 			}
 		});

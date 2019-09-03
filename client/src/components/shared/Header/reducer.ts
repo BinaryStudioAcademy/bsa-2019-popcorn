@@ -1,7 +1,12 @@
-import { GET_UNREAD_NOTIFICATIONS_SUCCESS } from './actionTypes';
+import {
+	GET_UNREAD_NOTIFICATIONS_SUCCESS,
+	GET_FIREBASE_TOKEN_SUCCESS,
+	SET_FIREBASE_TOKEN_UNDEFINED
+} from './actionTypes';
 
 const initialState = {
-	unredNotifications: []
+	unreadNotifications: [],
+	firebaseToken: undefined
 };
 
 export default (state = initialState, action) => {
@@ -9,7 +14,17 @@ export default (state = initialState, action) => {
 		case GET_UNREAD_NOTIFICATIONS_SUCCESS:
 			return {
 				...state,
-				unredNotifications: action.payload.unredNotifications
+				unreadNotifications: action.payload.unreadNotifications
+			};
+		case GET_FIREBASE_TOKEN_SUCCESS:
+			return {
+				...state,
+				firebaseToken: action.payload.firebaseToken
+			};
+		case SET_FIREBASE_TOKEN_UNDEFINED:
+			return {
+				...state,
+				firebaseToken: undefined
 			};
 		default:
 			return state;

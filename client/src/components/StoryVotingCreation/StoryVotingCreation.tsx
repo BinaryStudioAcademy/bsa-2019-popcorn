@@ -176,15 +176,7 @@ class StoryVotingCreation extends React.Component<
 		data.append('file', target.files[0]);
 		uploadFile(data)
 			.then(({ imageUrl }) => {
-				let url;
-				if (imageUrl.indexOf(`\\`) !== -1) url = imageUrl.split(`\\`);
-				else url = imageUrl.split(`/`);
-				url.shift();
-				url = url.join('/');
-
-				url = '/' + url;
-
-				this.setState({ imageUrl: url, isUploading: false, errorMsg: '' });
+				this.setState({ imageUrl, isUploading: false, errorMsg: '' });
 			})
 			.catch(error => {
 				this.setState({ isUploading: false, errorMsg: error.message });

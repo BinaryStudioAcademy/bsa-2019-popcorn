@@ -19,7 +19,9 @@ export default function(state = initialState, action) {
 			};
 		case ActionType.DELETE_USERS_SUCCESS:
 			const userId = action.payload.userId;
-			const userList: any = Object.assign([], state.users);
+
+			const userList: any[] = Object.assign([], state.users);
+
 			const newUserList = userList.filter((user: any) => user.id != userId);
 
 			return {
@@ -33,7 +35,9 @@ export default function(state = initialState, action) {
 			};
 		case ActionType.DELETE_MOVIES_SUCCESS:
 			const movieId = action.payload.movieId;
-			const movieList: any = Object.assign([], state.movies);
+
+			const movieList: any[] = Object.assign([], state.movies);
+
 			const newMovieList = movieList.filter(
 				(movie: any) => movie.id != movieId
 			);
@@ -49,7 +53,9 @@ export default function(state = initialState, action) {
 			};
 		case ActionType.DELETE_POSTS_SUCCESS:
 			const postId = action.payload.postId;
-			const postList: any = Object.assign([], state.posts);
+
+			const postList: any[] = Object.assign([], state.posts);
+
 			const newPostList = postList.filter((post: any) => post.id != postId);
 
 			return {
@@ -63,7 +69,9 @@ export default function(state = initialState, action) {
 			};
 		case ActionType.DELETE_TOPS_SUCCESS:
 			const topId = action.payload.topId;
-			const topList: any = Object.assign([], state.tops);
+
+			const topList: any[] = Object.assign([], state.tops);
+
 			const newTopList = topList.filter((top: any) => top.id != topId);
 
 			return {
@@ -77,7 +85,9 @@ export default function(state = initialState, action) {
 			};
 		case ActionType.DELETE_STORIES_SUCCESS:
 			const storyId = action.payload.storyId;
-			const storyList: any = Object.assign([], state.stories);
+
+			const storyList: any[] = Object.assign([], state.stories);
+
 			const newStoryList = storyList.filter(
 				(story: any) => story.id != storyId
 			);
@@ -93,7 +103,9 @@ export default function(state = initialState, action) {
 			};
 		case ActionType.DELETE_EVENTS_SUCCESS:
 			const eventId = action.payload.eventId;
-			const eventList: any = Object.assign([], state.events);
+
+			const eventList: any[] = Object.assign([], state.events);
+
 			const newEventList = eventList.filter(
 				(event: any) => event.id != eventId
 			);
@@ -109,7 +121,9 @@ export default function(state = initialState, action) {
 			};
 		case ActionType.DELETE_VOTING_SUCCESS:
 			const votingId = action.payload.votingId;
-			const votingList: any = Object.assign([], state.voting);
+
+			const votingList: any[] = Object.assign([], state.voting);
+
 			const newVotingList = votingList.filter(
 				(voting: any) => voting.id != votingId
 			);
