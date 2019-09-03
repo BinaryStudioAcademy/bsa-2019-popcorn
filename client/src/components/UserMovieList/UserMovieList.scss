@@ -1,0 +1,72 @@
+@import '../../styles/variables.scss';
+
+.UserMovieList {
+	width: 100%;
+	.movie-list-container {
+		display: block;
+		margin: 20px auto;
+		padding: 30px;
+		max-width: 1200px;
+
+		header.movie-list-header {
+			display: grid;
+			grid-template-columns: 200px 1fr;
+			grid-gap: 40px;
+			.movie-list-image-container {
+				font-size: 0;
+				img {
+					width: 100%;
+				}
+			}
+			.movie-list-main {
+				.movie-list-title {
+					color: $text-base-color;
+					font-size: $header-medium;
+					font-weight: 600;
+					text-transform: uppercase;
+					line-height: $header-medium;
+				}
+				.movie-list-description {
+					margin-top: 10px;
+					color: $text-secondary-color;
+					font-size: $header-medium;
+					font-weight: 300;
+					max-width: 400px;
+					text-align: justify;
+				}
+				.user-info-container {
+					margin-top: 20px;
+					display: inline-flex;
+					align-items: center;
+					text-decoration: none;
+					.user-image-container {
+						width: 40px;
+						font-size: 0;
+						margin-right: 10px;
+						img {
+							border-radius: 50%;
+							width: 100%;
+						}
+					}
+					.user-name {
+						color: $text-base-color;
+						font-weight: 600;
+						letter-spacing: $base-letter-spacing;
+						transition: opacity 0.2s ease;
+
+						&:hover {
+							opacity: 0.8;
+						}
+					}
+				}
+				.movie-list-created {
+					display: flex;
+					align-items: center;
+					margin-top: 10px;
+					color: $text-base-color;
+					font-weight: 200;
+				}
+			}
+		}
+	}
+}
