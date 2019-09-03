@@ -25,6 +25,7 @@ type StoryVotingProps = {
 		deltaOptions: { x: number; y: number }
 	) => void;
 	backColor: { r: string; g: string; b: string; a: string } | string;
+	backgroundImage: string;
 	backgroundColor: string;
 	backImage?: string;
 	image_url?: string;
@@ -194,7 +195,11 @@ class StoryVoting extends React.Component<StoryVotingProps, StoryVotingState> {
 				<div
 					className="story-voting"
 					id="voting-preview"
-					style={{ backgroundColor: backgroundColor }}
+					style={{
+						backgroundColor: backgroundColor,
+						backgroundImage: `url(${this.props.backImage ||
+							this.props.backgroundImage})`
+					}}
 				>
 					<Draggable
 						bounds="parent"
@@ -246,7 +251,8 @@ class StoryVoting extends React.Component<StoryVotingProps, StoryVotingState> {
 
 const mapStateToProps = (rootState, props) => ({
 	...props,
-	fontColor: rootState.story.newStory.fontColor
+	fontColor: rootState.story.newStory.fontColor,
+	backgroundImage: rootState.story.newStory.image_url
 });
 
 export default connect(mapStateToProps)(StoryVoting);

@@ -3,7 +3,6 @@ export interface ITopItem {
 	title: string;
 	topImageUrl: string;
 	moviesList: IMovie[];
-	isOwnTop: boolean;
 	isNewTop?: boolean;
 }
 
@@ -29,8 +28,7 @@ export function convertServerDataFormatToClient(
 				id: movieInTop.movie.id,
 				title: movieInTop.movie.title,
 				comment: movieInTop.comment
-			})),
-			isOwnTop: true
+			}))
 		};
 	});
 

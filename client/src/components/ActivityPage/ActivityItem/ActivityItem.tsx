@@ -44,7 +44,7 @@ const ActivityItem = ({
 	return (
 		<div
 			className={`activity-item ${markedAsRead ? ' ' : 'unread-activity'}`}
-			onMouseOut={() => setRead && setRead(id)}
+			onMouseEnter={() => setRead && setRead(id)}
 		>
 			<div>{generateIcon(type)}</div>
 			<div>

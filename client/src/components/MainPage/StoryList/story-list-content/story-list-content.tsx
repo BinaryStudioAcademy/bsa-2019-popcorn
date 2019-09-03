@@ -65,6 +65,7 @@ class StoryListContent extends Component<IStoryListItemsProps> {
 							src={avatar || config.DEFAULT_AVATAR}
 						/>
 						<StoryVoting
+							backImage={item.image_url}
 							backgroundColor={item.backgroundColor}
 							header={voting.header}
 							options={voting.options}

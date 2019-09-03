@@ -3,7 +3,7 @@ import { FETCH_MOVIE_REVIEWS, SET_REACTION } from './actionTypes';
 export const fetchMovieReviews = (movieId: string) => {
 	return {
 		type: FETCH_MOVIE_REVIEWS,
-		payload: movieId
+		payload: { movieId }
 	};
 };
 

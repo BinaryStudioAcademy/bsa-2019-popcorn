@@ -1,0 +1,1 @@
+export const CONFIRM_CHANGES = 'CONFIRM_CHANGES';

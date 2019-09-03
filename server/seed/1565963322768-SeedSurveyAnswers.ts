@@ -14,25 +14,21 @@ export class SeedSurveyAnswers1565963322768 implements MigrationInterface {
     const randomNumber = (max: number) => Math.floor(Math.random() * max);
 
     const generateSingleAnswer = async (user, question, options) => {
-      await getCustomRepository(
-        SurveysQuestionAnswerRepository
-      ).setQuestionAnswer(
-        user.id,
-        options[randomNumber(options.length)].id,
-        question.id,
-        ""
-      );
+      const answer = new SurveysQuestionAnswer();
+      answer.user = user;
+      answer.surveysQuestion = question;
+      answer.surveysQuestionOption = options[randomNumber(options.length)];
+      answer.value = "";
+      await getCustomRepository(SurveysQuestionAnswerRepository).save(answer);
     };
 
     const generateMultipleAnswer = async (user, question, options) => {
-      await getCustomRepository(
-        SurveysQuestionAnswerRepository
-      ).setQuestionAnswer(
-        user.id,
-        options[randomNumber(options.length)].id,
-        question.id,
-        ""
-      );
+      const answer = new SurveysQuestionAnswer();
+      answer.user = user;
+      answer.surveysQuestion = question;
+      answer.surveysQuestionOption = options[randomNumber(options.length)];
+      answer.value = "";
+      await getCustomRepository(SurveysQuestionAnswerRepository).save(answer);
     };
 
     const generateShortAnswer = async (user, question) => {
