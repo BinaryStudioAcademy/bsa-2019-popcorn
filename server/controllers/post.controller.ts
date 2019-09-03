@@ -29,10 +29,13 @@ router
       .then(response => res.send(response))
       .catch(next)
   )
-  .delete("/:id", (req, res, next) =>
+  .delete("/:id", (req: Request & { io: any }, res, next) =>
     postService
       .deletePostById(req.params.id)
-      .then((response: Post) => res.send(response))
+      .then(() => {
+        res.sendStatus(200);
+        req.io.emit("delete-post", req.params.id);
+      })
       .catch(next)
   )
   .post("/comment", (req: Request & { io: any }, res, next) => {

@@ -55,11 +55,8 @@ export const getPosts = async (): Promise<any[]> => {
   );
 };
 
-export const deletePostById = async (postId: string): Promise<Post> => {
-  const post = await getCustomRepository(PostRepository).findOne({
-    id: postId
-  });
-  return await getCustomRepository(PostRepository).remove(post);
+export const deletePostById = async (postId: string): Promise<any> => {
+  return await getCustomRepository(PostRepository).delete({ id: postId });
 };
 
 export const getPostById = async (postId: string): Promise<Post> =>
