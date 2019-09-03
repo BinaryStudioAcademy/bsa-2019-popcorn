@@ -77,7 +77,7 @@ export const sendWelcomeEmail = (email) => {
             '
           >
             <img
-              src='https://upload.wikimedia.org/wikipedia/commons/thumb/b/bb/Anime_eye.svg/2000px-Anime_eye.svg.png'
+              src='https://popcorn-staging.herokuapp.com/email/popcorn-logo.svg'
               alt='popcorn-logo'
               style='
                 width: 50px;
