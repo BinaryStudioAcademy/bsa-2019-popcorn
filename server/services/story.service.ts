@@ -5,20 +5,22 @@ import UserRepository from "../repository/user.repository";
 import { getVotingById } from "./voting.service";
 import { getMovieById } from "./movie.service";
 
-const uuid = require("uuid/v4");
+import uuid from "uuid/v4";
 
-export const getStories = async (): Promise<Array<Story>> => {
+export const getStories = async (): Promise<Story[]> => {
   const stories = (await getCustomRepository(StoryRepository).find({
     relations: ["user"]
   })).reverse();
   return Promise.all(
     stories.map(async item => {
-      let story: any = { ...item };
+      const story: any = { ...item };
       switch (story.type) {
         case "voting":
           story.voting = await getVotingById(story.activityId);
       }
-      if (story.movieId) story.movie = await getMovieById(story.movieId);
+      if (story.movieId) {
+        story.movie = await getMovieById(story.movieId);
+      }
 
       return story;
     })
@@ -42,7 +44,7 @@ export const createStory = async ({
   textPositionX,
   textPositionY
 }): Promise<any> => {
-  let story: any = new Story();
+  const story: any = new Story();
   story.id = uuid();
   story.user = await getCustomRepository(UserRepository).findOne({
     id: userId
@@ -65,7 +67,9 @@ export const createStory = async ({
   } else if (type) {
     story.activity = activity.name;
   }
-  if (movieId) story.movie = await getMovieById(movieId);
+  if (movieId) {
+    story.movie = await getMovieById(movieId);
+  }
 
   return story;
 };

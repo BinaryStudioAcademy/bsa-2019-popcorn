@@ -17,8 +17,8 @@ import "reflect-metadata";
 import socketInjector from "./socket/inject";
 import socketHandlers from "./socket/handlers";
 
-const cors = require("cors");
-const http = require("http");
+import cors from "cors";
+import http from "http";
 const app = express();
 
 app.use(cors());

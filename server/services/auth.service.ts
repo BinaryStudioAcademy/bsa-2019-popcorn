@@ -4,7 +4,7 @@ import { getCustomRepository } from "typeorm";
 import { sendToken } from "./email.service";
 import { User } from "../models/UserModel";
 
-const crypto = require("crypto");
+import crypto from "crypto";
 
 export const login = async (user: User) => ({
   token: tokenHelper.createToken({ id: user.id }),
@@ -19,7 +19,9 @@ export const register = async (userData: User) => {
 export const reset = async (email: string) => {
   const user = await getCustomRepository(userRepository).getByEmail(email);
 
-  if (!user) throw new Error("Not Found");
+  if (!user) {
+    throw new Error("Not Found");
+  }
 
   const token = (await crypto.randomBytes(20)).toString("hex");
   await getCustomRepository(userRepository).updateById(user.id, {
@@ -34,7 +36,9 @@ export const restore = async (password: string, token: string) => {
   const repository = await getCustomRepository(userRepository);
   const user = await repository.getByToken(token);
 
-  if (!user) throw new Error("Invalid token");
+  if (!user) {
+    throw new Error("Invalid token");
+  }
 
   await repository.updateById(user.id, { password, reset_token: "" });
 };

@@ -24,7 +24,9 @@ class UserRepository extends Repository<User> {
         if (!movie) return;
         item.movie = { id: movie.id, name: movie.title };
       });
-      if (!data.user) throw new Error(`User with ${id} id is not found`);
+      if (!data.user) {
+        throw new Error(`User with ${id} id is not found`);
+      }
     } catch (err) {
       error = err.message;
       success = false;
@@ -59,7 +61,9 @@ class UserRepository extends Repository<User> {
       await this.update({ id }, newData);
 
       data.user = (await this.getUserById(id)).data.user;
-      if (!data.user) throw new Error(`User with ${id} id is not found`);
+      if (!data.user) {
+        throw new Error(`User with ${id} id is not found`);
+      }
     } catch (err) {
       error = err.message;
       success = false;
@@ -73,7 +77,9 @@ class UserRepository extends Repository<User> {
     let success = true;
     try {
       const user = await this.findOne({ where: { id } });
-      if (!user) throw new Error(`User with ${id} id is not found`);
+      if (!user) {
+        throw new Error(`User with ${id} id is not found`);
+      }
       await this.delete({ id });
     } catch (err) {
       error = err.message;
