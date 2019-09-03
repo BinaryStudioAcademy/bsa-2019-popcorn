@@ -30,6 +30,7 @@ type IPostProps = {
 	createReaction?: (type: string, userId: string, postId: string) => any;
 	addNewReaction?: (reaction: IReaction) => any;
 	deletePost: (id: string, userId: string) => any;
+	setShowPostsConstructor: any;
 };
 
 interface IReactItem {
@@ -86,7 +87,11 @@ class Post extends Component<IPostProps, IPostState> {
 
 	isModalShown() {
 		return this.state.isModalShown ? (
-			<PostEditModal isOwn={this.isOwnPost()} deletePost={this.deletePost} />
+			<PostEditModal
+				isOwn={this.isOwnPost()}
+				deletePost={this.deletePost}
+				editPost={() => this.props.setShowPostsConstructor(this.props.post)}
+			/>
 		) : null;
 	}
 	getType = () => {

@@ -10,9 +10,9 @@ import ChooseExtra from './PostExtra/choose-extra';
 import Extra from '././PostExtra/extra';
 import {
 	faCheckCircle,
+	faPlus,
 	faTimes,
-	faTimesCircle,
-	faPlus
+	faTimesCircle
 } from '@fortawesome/free-solid-svg-icons';
 
 import { setPost } from '../actions';
@@ -32,9 +32,11 @@ interface IPostConstructorProps {
 	croppedSaved: boolean;
 	saveCropped: () => void;
 	togglePostConstructor: (ev) => void;
+	newPost?: INewPost | null | {};
 }
 
-interface IPostConstructorState {
+export interface INewPost {
+	id?: string;
 	image_url: string;
 	description: string;
 	title: string;
@@ -52,7 +54,7 @@ interface IPostConstructorState {
 
 class PostConstructor extends React.Component<
 	IPostConstructorProps,
-	IPostConstructorState
+	INewPost & { event?: any; top?: any; survey?: any }
 > {
 	constructor(props: IPostConstructorProps) {
 		super(props);
@@ -63,13 +65,14 @@ class PostConstructor extends React.Component<
 			userId: this.props.userId,
 			extraLink: '',
 			extraTitle: '',
-			extraData: {},
+			extraData: null,
 			extraType: '',
 			modalExtra: false,
 			croppedSaved: false,
 			reactions: [],
 			comments: [],
-			movieSearchTitle: null
+			movieSearchTitle: null,
+			...(props.newPost ? { ...props.newPost } : {})
 		};
 		this.imageStateHandler = this.imageStateHandler.bind(this);
 		this.onSave = this.onSave.bind(this);
@@ -175,6 +178,7 @@ class PostConstructor extends React.Component<
 			});
 		}
 	}
+
 	preparseDescription(description) {
 		const arr = description.split('@');
 		const res = arr.map(str => str.replace(/(.+)\{(.+)\}/, '$2'));
@@ -190,14 +194,17 @@ class PostConstructor extends React.Component<
 			movieSearchTitle: null
 		});
 	}
+
 	render() {
+		console.log(this.state);
+
 		const { movieSearchTitle } = this.state;
 		return (
 			<div className="post-constructor-modal">
 				<div
 					className="overlay"
 					onClick={ev => this.props.togglePostConstructor(ev)}
-				></div>
+				/>
 				<div className="postconstr-wrp">
 					<p
 						className="close-modal"
@@ -247,7 +254,13 @@ class PostConstructor extends React.Component<
 						{this.state.extraLink && (
 							<Extra
 								link={this.state.extraLink}
-								data={this.state.extraData}
+								data={
+									this.state.extraData ||
+									this.state.event ||
+									this.state.top ||
+									this.state.survey ||
+									{}
+								}
 								type={this.state.extraType}
 								clearExtra={this.setExtraData}
 							/>

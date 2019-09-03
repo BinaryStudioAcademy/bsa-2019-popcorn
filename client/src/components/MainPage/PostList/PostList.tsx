@@ -15,7 +15,9 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import IReaction from '../Post/IReaction';
 import SocketService from '../../../services/socket.service';
-import PostConstructor from '../../UserPage/UserPosts/PostConstructor';
+import PostConstructor, {
+	INewPost
+} from '../../UserPage/UserPosts/PostConstructor';
 import { faPlusCircle } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
@@ -45,11 +47,12 @@ const addSocket = (addNewComment, addNewReaction) => {
 };
 
 const PostList = (props: IProps) => {
-	// console.log(props.posts);
-	const [showPostsConstructor, setShowPostsConstructor] = useState(false);
+	const [showPostsConstructor, setShowPostsConstructor] = useState<
+		null | INewPost | {}
+	>(null);
 	const togglePostConstructor = ev => {
 		ev.preventDefault();
-		setShowPostsConstructor(!showPostsConstructor);
+		setShowPostsConstructor(showPostsConstructor ? null : {});
 	};
 	addSocket(props.addNewComment, props.addNewReaction);
 	return (
@@ -71,6 +74,7 @@ const PostList = (props: IProps) => {
 					saveCropped={() => {}}
 					croppedSaved={false}
 					togglePostConstructor={togglePostConstructor}
+					newPost={showPostsConstructor}
 				/>
 			)}
 			{props.posts &&
@@ -86,6 +90,7 @@ const PostList = (props: IProps) => {
 							userId={props.userId}
 							userRole={props.userRole}
 							deletePost={props.deletePost}
+							setShowPostsConstructor={setShowPostsConstructor}
 						/>
 					);
 				})}
