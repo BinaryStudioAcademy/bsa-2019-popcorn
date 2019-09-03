@@ -8,7 +8,15 @@ import Extra from '../../UserPage/UserPosts/PostExtra/extra';
 import { NavLink, Redirect } from 'react-router-dom';
 import ResultList from './ResultList';
 
-const options = ['all', 'movie', 'event', 'survey', 'top', 'user'];
+const options = [
+	'all',
+	'movie',
+	'event',
+	'survey',
+	'top',
+	'user',
+	'advance movie search   '
+];
 const defaultOption = options[0];
 const whiteList = ['content-search', 'question-type', 'search-input'];
 
@@ -93,16 +101,15 @@ class ContentSearch extends React.Component<IProps, IState> {
 					className="question-type"
 					value={type}
 					onChange={event => {
-						if (event.target.value !== 'Advance movie search')
+						if (event.target.value !== 'advance movie search   ')
 							return this.setState({ type: event.target.value });
 
 						this.setState({ redirectAdvanceSearch: true });
 					}}
 				>
 					{options.map(option => (
-						<option value={option}>{option}</option>
+						<option value={option}>{option}&nbsp;</option>
 					))}
-					<option value="Advance movie search">Advance movie search</option>
 				</select>
 				<div
 					className={

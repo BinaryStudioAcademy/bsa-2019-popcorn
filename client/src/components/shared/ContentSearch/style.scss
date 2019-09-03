@@ -46,8 +46,10 @@ $color: black;
 		font-weight: 500;
 		font-size: $menu-font-size;
 		border: none;
-		cursor: pointer;
-
+		text-indent: 5px;
+		option {
+			text-indent: 5px;
+		}
 		&:focus {
 			outline: none;
 		}
@@ -173,6 +175,9 @@ $color: black;
 		letter-spacing: 0.4px;
 		color: #122737;
 		display: flex;
-		margin: 10px 0;
+		padding: 15px;
 	}
+}
+.text-decoration {
+	text-decoration: none;
 }
