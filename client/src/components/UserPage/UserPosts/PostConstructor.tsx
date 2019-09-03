@@ -21,6 +21,8 @@ import { getUsersPosts } from '../../UserPage/actions';
 import Cropper from 'react-cropper';
 import { uploadFile } from '../../../services/file.service';
 import MovieSearch from './MovieSearch';
+import IReaction from '../../MainPage/Post/IReaction';
+import IComment from '../../MainPage/Post/IComment';
 
 interface IPostConstructorProps {
 	userId: string;
@@ -45,8 +47,8 @@ export interface INewPost {
 	extraTitle: string;
 	modalExtra: boolean;
 	croppedSaved: boolean;
-	reactions: Array<any>;
-	comments: Array<any>;
+	reactions: IReaction[];
+	comments: IComment[];
 	extraData: any;
 	extraType: string;
 	movieSearchTitle: null | string;
@@ -56,6 +58,17 @@ class PostConstructor extends React.Component<
 	IPostConstructorProps,
 	INewPost & { event?: any; top?: any; survey?: any }
 > {
+	static findMovie(str: string) {
+		let find = str.match(/\$(.+)(.*?)(\s*?)/g);
+		if (find && find[0]) {
+			find = find[0].split(' ');
+			if (find) {
+				return find[0].slice(1);
+			}
+		}
+		return '';
+	}
+
 	constructor(props: IPostConstructorProps) {
 		super(props);
 		this.state = {
@@ -98,15 +111,6 @@ class PostConstructor extends React.Component<
 					extraData: {},
 					extraType: ''
 			  });
-	}
-
-	static findMovie(str: string) {
-		let find = str.match(/\$(.+)(.*?)(\s*?)/g);
-		if (find && find[0]) {
-			find = find[0].split(' ');
-			if (find) return find[0].slice(1);
-		}
-		return '';
 	}
 
 	toggleModal() {

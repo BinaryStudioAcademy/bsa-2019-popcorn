@@ -216,12 +216,12 @@ export function* fetchPosts(action) {
 	}
 }
 
-export function* sendPost(post) {
+export function* sendPost(action) {
 	try {
 		yield call(webApi, {
-			method: 'POST',
+			method: action.payload.data.id ? 'PUT' : 'POST',
 			endpoint: '/api/post/',
-			body: { ...post.payload.data }
+			body: { ...action.payload.data }
 		});
 
 		yield put({

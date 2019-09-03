@@ -22,7 +22,7 @@ import { faPlusCircle } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 interface IProps {
-	posts: Array<IPost>;
+	posts: IPost[];
 	type?: string;
 	styleCustom?: any;
 	createComment: (userId: string, text: string, postId: string) => any;
