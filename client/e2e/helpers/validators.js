@@ -13,6 +13,11 @@ class AssertHelper {
         const element = $$(`//div[contains(., "${name}")]`);
         assert.isAtLeast(element.length, 1, `${name} element is not found`);
     }
+
+    elementsQuantityChanged(basicQty, items, sign) {
+        const actualQty = items.length;
+        assert.strictEqual(actualQty, basicQty + +(sign+1))
+    };
 }
 
 module.exports = new AssertHelper();
