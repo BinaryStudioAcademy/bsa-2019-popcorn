@@ -1,15 +1,15 @@
 import { all, call, put, takeEvery } from 'redux-saga/effects';
 import {
 	FINISH_UPLOAD_AVATAR,
+	GET_SELECTED_USER_INFO,
+	SEND_POST,
 	SET_AVATAR,
+	SET_SELECTED_USER,
 	SET_TEMP_AVATAR,
 	SET_USER_POSTS,
 	START_UPLOAD_AVATAR,
-	USER_POSTS,
-	SEND_POST,
-	GET_SELECTED_USER_INFO,
-	SET_SELECTED_USER,
-	UPDATE_PROFILE
+	UPDATE_PROFILE,
+	USER_POSTS
 } from './actionTypes';
 import { uploadFile } from '../../services/file.service';
 import axios from 'axios';
@@ -29,7 +29,6 @@ import {
 	SET_REGISTER_ERROR
 } from '../authorization/actionTypes';
 import { CONFIRM_CHANGES } from '../ConfirmChange/actionTypes';
-import config from '../../config';
 import webApi from '../../services/webApi.service';
 
 export function* getSelectedUser(action) {
@@ -217,11 +216,33 @@ export function* fetchPosts(action) {
 }
 
 export function* sendPost(action) {
+	const {
+		id,
+		image_url,
+		description,
+		title,
+		userId,
+		extraLink,
+		extraTitle,
+		extraType,
+		extraData
+	} = action.payload.data;
+	const post = {
+		id,
+		image_url,
+		description,
+		title,
+		userId,
+		extraLink,
+		extraTitle,
+		extraType,
+		extraData
+	};
 	try {
 		yield call(webApi, {
-			method: action.payload.data.id ? 'PUT' : 'POST',
-			endpoint: '/api/post/',
-			body: { ...action.payload.data }
+			method: id ? 'PUT' : 'POST',
+			endpoint: '/api/post',
+			body: { ...post }
 		});
 
 		yield put({

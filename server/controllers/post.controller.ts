@@ -29,6 +29,15 @@ router
       .then(response => res.send(response))
       .catch(next)
   )
+  .put("/", (req: Request & { io: any }, res, next) =>
+    postService
+      .updateById(req.body)
+      .then(post => {
+        res.send(post);
+        req.io.emit("update-post", post);
+      })
+      .catch(next)
+  )
   .delete("/:id", (req: Request & { io: any }, res, next) =>
     postService
       .deletePostById(req.params.id)

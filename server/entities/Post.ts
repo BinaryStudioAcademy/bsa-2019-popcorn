@@ -36,7 +36,7 @@ export class Post {
   @Column({ nullable: true })
   extraLink: string;
 
-  @ManyToOne(type => User, user => user.id)
+  @ManyToOne(type => User, user => user.id, { cascade: true })
   user: User;
 
   @Column()
@@ -54,8 +54,7 @@ export class Post {
   @JoinColumn()
   top: Top;
 
-  @ManyToMany(type => PostComments, post_comments => post_comments.post.id)
-  @Column({ nullable: true })
+  @Column()
   createdAt: Date;
 
   @OneToMany(type => PostComments, post_comments => post_comments.post)

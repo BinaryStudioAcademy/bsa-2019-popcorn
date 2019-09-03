@@ -52,6 +52,7 @@ export interface INewPost {
 	extraData: any;
 	extraType: string;
 	movieSearchTitle: null | string;
+	createdAt: string;
 }
 
 class PostConstructor extends React.Component<
@@ -85,6 +86,7 @@ class PostConstructor extends React.Component<
 			reactions: [],
 			comments: [],
 			movieSearchTitle: null,
+			createdAt: '',
 			...(props.newPost ? { ...props.newPost } : {})
 		};
 		this.imageStateHandler = this.imageStateHandler.bind(this);

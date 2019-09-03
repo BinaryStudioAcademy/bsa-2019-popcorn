@@ -30,12 +30,11 @@ const getExtra = async (post: any) => {
       );
       break;
   }
+  delete post.extraData;
   return post;
 };
 
 export const createPost = async (post: any): Promise<Post> => {
-  post.user = await getCustomRepository(UserRepository).findOne(post.userId);
-  delete post.userId;
   post = await getExtra(post);
   post.createdAt = new Date();
   return await getCustomRepository(PostRepository).save(post);
@@ -43,7 +42,8 @@ export const createPost = async (post: any): Promise<Post> => {
 
 export const getPosts = async (): Promise<any[]> => {
   const posts = await getCustomRepository(PostRepository).find({
-    relations: ["user", "top", "survey", "event"]
+    relations: ["user", "top", "survey", "event"],
+    order: { createdAt: "DESC" }
   });
   return Promise.all(
     posts.map(async post => {
@@ -59,6 +59,13 @@ export const deletePostById = async (postId: string): Promise<any> => {
   return await getCustomRepository(PostRepository).delete({ id: postId });
 };
 
+export const updateById = async (post: any): Promise<any> => {
+  post = await getExtra(post);
+  return await getCustomRepository(PostRepository).update(
+    { id: post.id },
+    { ...post }
+  );
+};
 export const getPostById = async (postId: string): Promise<Post> =>
   await getCustomRepository(PostRepository).findOne({ id: postId });
 
