@@ -128,7 +128,7 @@ class ChatRepository extends Repository<Chat> {
       .update()
       .set({ isRead: true })
       .execute();
-    return {};
+    return { chatId, userId };
   }
 }
 

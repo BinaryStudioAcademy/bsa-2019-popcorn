@@ -7,7 +7,8 @@ import {
 	CREATE_CHAT,
 	CREATE_MESSAGE,
 	DELETE_MESSAGE,
-	UPDATE_MESSAGE
+	UPDATE_MESSAGE,
+	READ_MESSAGES
 } from './actionTypes';
 import webApi from '../../../services/webApi.service';
 
@@ -58,7 +59,7 @@ function* watchFetchMessages() {
 
 export function* createChat(action) {
 	try {
-		const response = yield call(webApi, {
+		yield call(webApi, {
 			method: 'POST',
 			endpoint: `/api/chat/`,
 			body: {
@@ -110,7 +111,7 @@ function* watchDeleteMessage() {
 
 export function* updateMessage(action) {
 	try {
-		const response = yield call(webApi, {
+		yield call(webApi, {
 			method: 'PUT',
 			endpoint: `/api/chat/${action.payload.id}`,
 			body: { body: action.payload.body }
@@ -124,6 +125,21 @@ function* watchUpdateMessage() {
 	yield takeEvery(UPDATE_MESSAGE, updateMessage);
 }
 
+export function* readMessages(action) {
+	try {
+		yield call(webApi, {
+			method: 'PUT',
+			endpoint: `/api/chat/${action.payload.chatId}/${action.payload.userId}/read`
+		});
+	} catch (e) {
+		console.log('chat saga delete message:', e.message);
+	}
+}
+
+function* watchReadMessages() {
+	yield takeEvery(READ_MESSAGES, readMessages);
+}
+
 export default function* chat() {
 	yield all([
 		watchFetchChats(),
@@ -131,6 +147,7 @@ export default function* chat() {
 		watchCreateChat(),
 		watchCreateMessage(),
 		watchUpdateMessage(),
-		watchDeleteMessage()
+		watchDeleteMessage(),
+		watchReadMessages()
 	]);
 }

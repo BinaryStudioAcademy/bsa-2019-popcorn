@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { fetchMessages } from '../ChatPage.redux/actions';
+import { fetchMessages, readMessages } from '../ChatPage.redux/actions';
 import ChatHeader from './ChatHeader';
 import ChatBody from './ChatBody/ChatBody';
 import ChatInput from './ChatInput';
@@ -16,6 +16,7 @@ interface IProps {
 	chat: any; //todo
 	userId: string;
 	isLoadingMessages: boolean;
+	readMessages: (chatId: string, userId: string) => void;
 }
 
 class Chat extends React.Component<IProps> {
@@ -28,6 +29,9 @@ class Chat extends React.Component<IProps> {
 		}
 
 		if (!this.props.chat.messages) return <div>Loading...</div>;
+
+		this.props.readMessages(this.props.chat.id, this.props.userId);
+
 		return (
 			<div>
 				<ChatHeader user={this.props.chat.user} />
@@ -49,7 +53,8 @@ const mapStateToProps = (rootState, props) => ({
 });
 
 const actions = {
-	fetchMessages
+	fetchMessages,
+	readMessages
 };
 
 const mapDispatchToProps = dispatch => bindActionCreators(actions, dispatch);

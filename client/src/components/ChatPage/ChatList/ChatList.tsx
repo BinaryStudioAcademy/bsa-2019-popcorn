@@ -6,7 +6,8 @@ import {
 	addMessage,
 	deleteMessageStore,
 	updateMessageStore,
-	addUnreadMessage
+	addUnreadMessage,
+	readMessagesStore
 } from '../ChatPage.redux/actions';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -17,6 +18,7 @@ interface IProps {
 	deleteMessageStore: (chatId, messageId) => void;
 	updateMessageStore: (chatId, message) => void;
 	addUnreadMessage: (chatId) => void;
+	readMessagesStore: (chatId: string, userId: string) => void;
 	userId: string;
 }
 class ChatList extends React.Component<IProps> {
@@ -39,6 +41,12 @@ class ChatList extends React.Component<IProps> {
 			SocketService.on('update-message', ({ chatId, message }) =>
 				this.props.updateMessageStore(chatId, message)
 			);
+			SocketService.on('read-chat', ({ chatId, userId }) => {
+				if (userId !== this.props.userId) {
+					console.log('hello');
+					this.props.readMessagesStore(chatId, userId);
+				}
+			});
 		}
 	}
 
@@ -61,7 +69,6 @@ class ChatList extends React.Component<IProps> {
 
 const mapStateToProps = (rootState, props) => ({
 	...props,
-	// unreadMessages: rootState.chat.unreadMessages,
 	userId: rootState.profile.profileInfo.id
 });
 
@@ -69,7 +76,8 @@ const actions = {
 	addMessage,
 	deleteMessageStore,
 	updateMessageStore,
-	addUnreadMessage
+	addUnreadMessage,
+	readMessagesStore
 };
 
 const mapDispatchToProps = dispatch => bindActionCreators(actions, dispatch);

@@ -7,8 +7,10 @@ import {
 	DELETE_MESSAGE_STORE,
 	UPDATE_MESSAGE_STORE,
 	READ_MESSAGES,
-	ADD_UNREAD_MESSAGE
+	ADD_UNREAD_MESSAGE,
+	READ_MESSAGES_STORE
 } from './actionTypes';
+import chat from './saga';
 
 const initialState: {
 	chats: any;
@@ -61,6 +63,10 @@ export default function(state = initialState, action) {
 			const newMessage = action.payload.message;
 			const chatId = newMessage.chat.id;
 			delete newMessage.chat;
+
+			if (!state.chats[chatId].messages) {
+				return { ...state };
+			}
 
 			return {
 				...state,
@@ -119,10 +125,10 @@ export default function(state = initialState, action) {
 					}
 				}
 			};
-		case READ_MESSAGES:
+		case READ_MESSAGES_STORE:
 			const { chatId: id_chat, userId } = action.payload;
 			const filteredUnreadMessages = state.chats[id_chat].unreadMessages.filter(
-				message => message.chatId !== id_chat && message.user.id === userId
+				message => message.chatId !== id_chat // && message.user.id === userId
 			);
 			return {
 				...state,

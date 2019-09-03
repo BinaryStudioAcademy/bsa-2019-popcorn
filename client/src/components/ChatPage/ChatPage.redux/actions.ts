@@ -9,7 +9,8 @@ import {
 	DELETE_MESSAGE_STORE,
 	UPDATE_MESSAGE_STORE,
 	READ_MESSAGES,
-	ADD_UNREAD_MESSAGE
+	ADD_UNREAD_MESSAGE,
+	READ_MESSAGES_STORE
 } from './actionTypes';
 
 export const fetchChats = userId => {
@@ -100,6 +101,15 @@ export const updateMessageStore = (chatId, message) => {
 	};
 };
 
+export const readMessagesStore = (chatId, userId) => {
+	return {
+		type: READ_MESSAGES_STORE,
+		payload: {
+			chatId,
+			userId
+		}
+	};
+};
 export const readMessages = (chatId, userId) => {
 	return {
 		type: READ_MESSAGES,
