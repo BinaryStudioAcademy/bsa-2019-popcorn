@@ -6,7 +6,7 @@ class HelpClass
 {
 
     clickMovieInList(name) {
-        const movie = $$(`//div[contains(., "${name}")]/../a[contains(@class, "movie-link")`);
+        const movie = $$(`//div[contains(., '${name}')]/../../a[contains(@class, "movie-link")]`);
         if (movie.length === 0) {
             throw new Error("Element not found");
         }
