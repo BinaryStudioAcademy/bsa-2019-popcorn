@@ -51,7 +51,7 @@ interface IProps {
 	firebase?: any;
 	firebaseToken: string | null | undefined;
 	getFirebaseToken: (firebase: any) => void;
-  history: any;
+	history: any;
 }
 
 const Header = ({
@@ -67,8 +67,8 @@ const Header = ({
 	firebase,
 	firebaseToken,
 	getFirebaseToken,
-	deleteFirebaseToken
-  history
+	deleteFirebaseToken,
+	history
 }: IProps) => {
 	const MOVIES_IN_CINEMA = 'Movies in cinema';
 	const MOVIE_TOPS = 'Movie tops';
