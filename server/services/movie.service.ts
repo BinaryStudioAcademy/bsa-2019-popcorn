@@ -16,9 +16,14 @@ import { ExtendedDiscussion, Discussion } from "models/DiscussionModel";
 export const getMovies = async ({ size, from }): Promise<any[]> => {
   let data = await elasticRepository.get(size, from);
 
-  data = data.hits.hits;
+  try {
+    data = data.hits.hits;
 
-  return data.map(movie => movie._source);
+    return data.map(movie => movie._source);
+  } catch (e) {
+    console.log(e);
+    return [];
+  }
 };
 
 export const getFiltredMovies = async (
