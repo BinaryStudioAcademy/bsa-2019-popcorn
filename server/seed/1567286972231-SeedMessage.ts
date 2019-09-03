@@ -43,6 +43,7 @@ export class SeedMessage1567286972231 implements MigrationInterface {
         message.user =
           Math.floor(Math.random() * 2) === 0 ? chat.user1 : chat.user2;
         message.chat = chat;
+        message.isRead = true;
         await getCustomRepository(MessageRepository).save(message);
       }
     }

@@ -5,7 +5,8 @@ import {
 	FETCH_MESSAGES,
 	ADD_MESSAGE_STORE,
 	DELETE_MESSAGE_STORE,
-	UPDATE_MESSAGE_STORE
+	UPDATE_MESSAGE_STORE,
+	READ_MESSAGES
 } from './actionTypes';
 
 const initialState: {
@@ -103,6 +104,22 @@ export default function(state = initialState, action) {
 					}
 				}
 			};
+		case READ_MESSAGES:
+			const { chatId: id_chat, userId } = action.payload;
+			const filteredUnreadMessages = state.chats[id_chat].unreadMessages.filter(
+				message => message.chatId !== id_chat && message.user.id === userId
+			);
+			return {
+				...state,
+				chats: {
+					...state.chats,
+					[id_chat]: {
+						...state.chats[id_chat],
+						unreadMessages: [...filteredUnreadMessages]
+					}
+				}
+			};
+
 		default:
 			return state;
 	}

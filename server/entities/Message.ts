@@ -16,6 +16,9 @@ export class Message {
   @Column()
   body: string;
 
+  @Column({ default: false })
+  isRead: boolean;
+
   @ManyToOne(type => Chat, chat => chat.id, { onDelete: "CASCADE" })
   chat: Chat;
 
