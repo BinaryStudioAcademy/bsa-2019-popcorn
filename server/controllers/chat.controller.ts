@@ -76,6 +76,18 @@ router
           res.send({ result });
         })
         .catch(next)
+  )
+  .put(
+    "/:chatId/read",
+    errorHandlerMiddleware,
+    (req: Request & { io: any }, res: Response, next: NextFunction) =>
+      chatService
+        .readMessagesByChatId(req.params.chatId, next)
+        .then(result => {
+          req.io.to(req.params.chatId).emit("read-chat", result);
+          res.send({ result });
+        })
+        .catch(next)
   );
 
 export default router;

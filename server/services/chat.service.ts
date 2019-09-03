@@ -40,3 +40,10 @@ export const updateMessage = async (id, body, next) => {
 export const deleteMessage = async (id, next) => {
   return await getCustomRepository(ChatRepository).deleteMessage(id, next);
 };
+
+export const readMessagesByChatId = async (id, next) => {
+  return await getCustomRepository(ChatRepository).readMessagesByChatId(
+    id,
+    next
+  );
+};
