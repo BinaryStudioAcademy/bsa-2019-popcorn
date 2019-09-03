@@ -5,13 +5,23 @@ class CustomWaits {
         spinner.waitForDisplayed(10000, true);
     }
 
-    forElementLoaded(itemsPath) {
+    forNewElementLoaded(itemsPath, sign) {
         const numberOfElements = $$(`${itemsPath}`).length;
         browser.waitUntil(() => {
-            return $$(`${itemsPath}`).length === numberOfElements + 1;
+            return $$(`${itemsPath}`).length === numberOfElements + +(sign+1);
         }, 5000, `Nothing is changed`)
     };
 
+    forElementsLoaded(itemsPath) {
+        try {
+            browser.waitUntil(() => {
+                return $$(`${itemsPath}`).length > 0
+            }, 5000, `There is no elements loaded ${$$(`${itemsPath}`).length}`)
+        }
+        catch(err) {
+            return true;
+        }
+    }
 }
 
 module.exports = new CustomWaits();
