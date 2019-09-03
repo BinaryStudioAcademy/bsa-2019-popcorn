@@ -4,6 +4,7 @@ import config from '../../../../config';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import './MovieListPreviewItem.scss';
+import { Redirect } from 'react-router';
 
 interface IProps {
 	moviePreview: any; //*****//
@@ -15,10 +16,15 @@ const MovieListPreviewItem: React.FC<IProps> = ({
 	deleteMovieList
 }) => {
 	const [hover, setHover] = useState(false);
+	const [redirect, setRedirect] = useState(false);
 	const moviesLength = moviePreview.moviesId.length;
+
+	if (redirect) return <Redirect to={`/movie-list/${moviePreview.id}`} />;
+
 	return (
 		<div
 			className="movie-list-preview"
+			onClick={() => setRedirect(true)}
 			onMouseEnter={() => setHover(true)}
 			onMouseLeave={() => setHover(false)}
 		>

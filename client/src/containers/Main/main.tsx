@@ -38,6 +38,7 @@ import {
 } from '../../components/UserPage/UserEvents/UserEvents.service';
 import TopList from '../../components/TopListPage/TopList';
 import SettingsPage from '../../components/UserSettings';
+import UserMovieList from '../../components/UserMovieList/UserMovieList';
 
 const { notifications } = {
 	notifications: {
@@ -184,6 +185,7 @@ const Main = ({
 						></Route>
 						<Route exact path={`/tops`} render={() => <TopList />} />
 						<Route path={`/tops/:id`} component={TopPage} />
+						<Route path={`/movie-list/:id`} component={UserMovieList} />
 						<Route path={`/*`} exact component={NotFound} />
 					</Switch>
 				</div>
