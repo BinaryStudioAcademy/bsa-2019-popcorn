@@ -8,8 +8,14 @@ import {
 	UPDATE_MESSAGE_STORE
 } from './actionTypes';
 
-const initialState = {
+const initialState: {
+	chats: any;
+	unreadMessages: any[];
+	isLoadingList: boolean;
+	isLoadingMessages: boolean;
+} = {
 	chats: {},
+	unreadMessages: [],
 	isLoadingList: false,
 	isLoadingMessages: false
 };
@@ -51,6 +57,8 @@ export default function(state = initialState, action) {
 			const chatId = newMessage.chat.id;
 			delete newMessage.chat;
 
+			const unreadMessage = { ...newMessage, chatId };
+
 			return {
 				...state,
 				chats: {
@@ -60,7 +68,8 @@ export default function(state = initialState, action) {
 						messages: [...state.chats[chatId].messages, newMessage],
 						lastMessage: newMessage
 					}
-				}
+				},
+				unreadMessages: [...state.unreadMessages, unreadMessage]
 			};
 		case DELETE_MESSAGE_STORE:
 			const { chatId: chat_id, messageId } = action.payload;

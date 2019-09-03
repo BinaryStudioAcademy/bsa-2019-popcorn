@@ -10,6 +10,7 @@ interface IProps {
 	messages: any; //todo
 	userId: string;
 	chatId: string;
+	unreadMessages: any;
 }
 
 class ChatBody extends React.Component<IProps> {
@@ -53,7 +54,8 @@ class ChatBody extends React.Component<IProps> {
 
 const mapStateToProps = (rootState, props) => ({
 	...props,
-	userId: rootState.profile.profileInfo.id
+	userId: rootState.profile.profileInfo.id,
+	unreadMessages: rootState.chat.unreadMessages
 });
 
 const actions = {};

@@ -15,6 +15,8 @@ interface IProps {
 	addMessage: (any) => void;
 	deleteMessageStore: (chatId, messageId) => void;
 	updateMessageStore: (chatId, message) => void;
+	unreadMessages: any;
+	userId: string;
 }
 class ChatList extends React.Component<IProps> {
 	componentDidMount() {
@@ -31,13 +33,24 @@ class ChatList extends React.Component<IProps> {
 		}
 	}
 
+	countUnreadMessages = chatId => {
+		const { unreadMessages, userId } = this.props;
+		const filteredUnreadMessages = unreadMessages.filter(
+			message => message.chatId === chatId && message.user.id !== userId
+		);
+		return filteredUnreadMessages.length;
+	};
+
 	render() {
 		const { chats } = this.props;
 		return (
 			<div>
 				{Object.keys(chats).map(key => (
 					<NavLink to={`/chat/${chats[key].id}`} key={chats[key].id}>
-						<ChatListItem chat={chats[key]} />
+						<ChatListItem
+							chat={chats[key]}
+							unreadMessagesCount={this.countUnreadMessages(chats[key].id)}
+						/>
 					</NavLink>
 				))}
 			</div>
@@ -46,7 +59,9 @@ class ChatList extends React.Component<IProps> {
 }
 
 const mapStateToProps = (rootState, props) => ({
-	...props
+	...props,
+	unreadMessages: rootState.chat.unreadMessages,
+	userId: rootState.profile.profileInfo.id
 });
 
 const actions = {

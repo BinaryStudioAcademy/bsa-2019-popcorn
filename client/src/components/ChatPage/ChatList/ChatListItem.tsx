@@ -3,15 +3,18 @@ import Moment from 'react-moment';
 
 interface IProps {
 	chat: any; //todo
+	unreadMessagesCount: any;
 }
 
-const ChatListItem: React.FC<IProps> = ({ chat }) => {
+const ChatListItem: React.FC<IProps> = ({ chat, unreadMessagesCount }) => {
 	return (
 		<div className="chat-list-item">
 			<img className="avatar" src={chat.user.avatar} alt="avatar" />
 			<div className="chat-list-item-info">
 				<div className="info-header">
-					<div className="user-name">{chat.user.name}</div>
+					<div className="user-name">
+						{chat.user.name} | {unreadMessagesCount}
+					</div>
 					{chat.lastMessage && (
 						<div className="last-date">
 							<Moment format="D.MM.YY" local>
