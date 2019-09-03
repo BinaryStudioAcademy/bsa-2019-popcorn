@@ -15,33 +15,84 @@ const MovieSeriesStatistics: React.FC<IProps> = ({
 	useEffect(() => {
 		fetchStatistics();
 	}, []);
-	console.log(statistics);
 	if (!statistics) return <Spinner />;
+	console.log(statistics);
+	const averageStatistics = statistics.averageStatistics;
 	return (
 		<div className="movie-series-statistics">
-			<ResponsiveBar
-				data={statistics}
-				keys={['count']}
-				indexBy={'rate'}
-				// groupMode="grouped"
-				margin={{ top: 10, right: 50, bottom: 50, left: 100 }}
-				padding={0.3}
-				layout="horizontal"
-				colors={{ scheme: 'nivo' }}
-				labelSkipWidth={12}
-				minValue="auto"
-				maxValue="auto"
-				labelSkipHeight={12}
-				labelTextColor={{ from: 'color', modifiers: [['darker', 2]] }}
-				animate={true}
-				motionStiffness={90}
-				motionDamping={15}
-				tooltip={({ id, value, color }) => (
-					<strong style={{ color }}>
-						{id}: {value}
-					</strong>
-				)}
-			/>
+			{statistics.statisticsByRate.length !== 0 && (
+				<div style={{ height: 600 }}>
+					<div className="statistics-title">PopCorn users rating</div>
+					<ResponsiveBar
+						data={statistics.statisticsByRate}
+						keys={['users']}
+						indexBy={'rate'}
+						// groupMode="grouped"
+						enableGridY={false}
+						margin={{ right: 50, bottom: 300, left: 50 }}
+						padding={0.1}
+						layout="horizontal"
+						colors={'rgba(255, 101, 1, 0.4)'}
+						labelSkipWidth={12}
+						minValue="auto"
+						maxValue="auto"
+						labelSkipHeight={12}
+						labelTextColor={{ from: 'color', modifiers: [['darker', 2]] }}
+						animate={true}
+						motionStiffness={90}
+						motionDamping={15}
+						axisBottom={null}
+						axisLeft={{ tickSize: 0, legendOffset: -30 }}
+						tooltip={({ id, value, color }) => (
+							<strong style={{ color }}>
+								{value} {'votes'}
+							</strong>
+						)}
+					/>
+				</div>
+			)}
+			{statistics.averageStatistics.length !== 0 && (
+				<div className="average-statistics">
+					<div className="statistics-title">PopCorn average rating</div>
+					<div className="average-statistics-content">
+						<div className="average-statistics-item">
+							<div className="average-statistics-item-title">All</div>
+							<div className="average-statistics-item-content">
+								<div className="item-content-average">
+									{(+averageStatistics[0].average +
+										+averageStatistics[0].average) /
+										2}
+								</div>
+								<div className="item-content-count">
+									{+averageStatistics[0].count + +averageStatistics[0].count}
+								</div>
+							</div>
+						</div>
+						<div className="average-statistics-item">
+							<div className="average-statistics-item-title">Female</div>
+							<div className="average-statistics-item-content">
+								<div className="item-content-average">
+									{averageStatistics[0].average}
+								</div>
+								<div className="item-content-count">
+									{averageStatistics[0].count}
+								</div>
+							</div>
+						</div>
+						<div className="average-statistics-item">
+							<div className="average-statistics-item-title">Male</div>
+							<div className="average-statistics-item-content">
+								<div className="item-content-average">
+									{averageStatistics[1].average}
+								</div>
+								<div className="item-content-count">
+									{averageStatistics[1].count}
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			)}
 		</div>
 	);
 };
