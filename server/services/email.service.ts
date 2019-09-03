@@ -1,4 +1,5 @@
 import * as emailRepository from "../repository/email.repository";
+import * as emailView from "../public/email/email.view";
 
 const resetUrl = token => `${process.env.FRONTEND_HOST}/reset/${token}`;
 const confirmUrl = token => `${process.env.FRONTEND_HOST}/confirm/${token}`;
@@ -51,122 +52,8 @@ export const sendWelcomeEmail = (email) => {
   const msg = {
     to: email,
     from: process.env.USER_MAIL,
-    subject: "Congratulation with registation",
-    html: `
-      <div
-        style='
-          width: 40%;
-          margin: 0 auto;
-        '  
-      >
-        <header
-          style='
-            padding: 10px 5px;
-            box-sizing: border-box;
-            border-top: 4px solid silver;
-            border-bottom: 4px solid silver;
-          '
-        >
-          <a
-            href=${process.env.FRONTEND_HOST}
-            style='
-              display: block;
-              text-align: center;
-              text-decoration: none;
-              color: #000;
-            '
-          >
-            <img
-              src='https://popcorn-staging.herokuapp.com/email/popcorn-logo.svg'
-              alt='popcorn-logo'
-              style='
-                width: 50px;
-                height: 50px;
-                vertical-align: middle;
-              '
-            />
-            <span
-              style='
-                margin-left: 5px;
-                font-size: 1.5em;
-                font-weight: bold;
-              '>
-            Pop Corn</span>
-          </a>
-        </header>
-        
-        <main
-          style='
-            font-size: 16px;
-          '
-        >
-          <h1
-            style='
-              color: #000;
-              text-align: center;
-            '
-          >Welcome to Pop Corn!</h1>
-          <p
-            style='
-              font-size: 16px;
-              color: #000;
-            '
-          >
-            Please, go to <a href='${process.env.FRONTEND_HOST}'>link</a> for confirm registration.
-          </p>
-
-          <p
-            style='
-              font-size: 16px;
-              color: #000;
-            '
-          >You might be interested in:</p>
-          <ul
-            style='
-              font-size: 16px;
-              color: #000;
-              cursor: pointer;
-            '
-          >
-            <li><a href='${process.env.FRONTEND_HOST}/tops'>Tops</a></li>
-            <li><a href='${process.env.FRONTEND_HOST}/events'>Events</a></li>
-            <li><a href='${process.env.FRONTEND_HOST}/surveys'>Surveys</a></li>
-          </ul>
-
-          <a
-            href='${process.env.FRONTEND_HOST}'
-            style='cursor: pointer; text-decoration: none;'>
-            <button 
-              style='
-                display: block;
-                margin: 0 auto;
-                box-sizing: border-box;
-                padding: 10px 20px;  
-                border: none;
-                border-radius: 4px;
-                outline: none;
-                background-color: #ff6501;
-                text-align: center;
-                letter-spacing: 0.4px;
-                line-height: 22px;
-                font-size: 18px;
-                font-weight: 600;
-                color: #fff;
-              '
-            >Let's go</button>
-          </a>
-        </main>
-        
-        <footer
-          style='
-            font-size: 14px;
-            color: #000;
-          '
-        >
-          <p>The Pop Corn Team</p>
-        </footer>
-      </div>
-    `
+    subject: "Congratulation with registration",
+    html: emailView.welcome()
   };
   return emailRepository.send(msg); 
 }
