@@ -59,7 +59,7 @@ class AccountPreferences extends React.Component<IProps, IState> {
 		this.errorPasswordMessage = {
 			required: 'Password is required',
 			length: 'Password must be at least 6 characters',
-			correct: 'Current password is incorrect'
+			correct: 'Password is incorrect'
 		};
 	}
 
