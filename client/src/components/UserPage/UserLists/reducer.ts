@@ -47,7 +47,10 @@ export default (state = initialState, action) => {
 		case SAVE_MOVIE_LIST_SUCCESS:
 			return {
 				...state,
-				movieListPreview: [action.payload.newList, ...state.movieListsPreview],
+				movieListsPreview: [
+					action.payload.newMovieList,
+					...state.movieListsPreview
+				],
 				isLoading: false
 			};
 
