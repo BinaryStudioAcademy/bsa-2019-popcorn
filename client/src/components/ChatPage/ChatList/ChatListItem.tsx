@@ -12,9 +12,7 @@ const ChatListItem: React.FC<IProps> = ({ chat, unreadMessagesCount }) => {
 			<img className="avatar" src={chat.user.avatar} alt="avatar" />
 			<div className="chat-list-item-info">
 				<div className="info-header">
-					<div className="user-name">
-						{chat.user.name} | {unreadMessagesCount}
-					</div>
+					<div className="user-name">{chat.user.name}</div>
 					{chat.lastMessage && (
 						<div className="last-date">
 							<Moment format="D.MM.YY" local>
@@ -24,7 +22,12 @@ const ChatListItem: React.FC<IProps> = ({ chat, unreadMessagesCount }) => {
 					)}
 				</div>
 				{chat.lastMessage && (
-					<div className="last-message">{chat.lastMessage.body}</div>
+					<div className="last-message">
+						{chat.lastMessage.body}
+						{unreadMessagesCount && (
+							<span className="counter">{unreadMessagesCount}</span>
+						)}
+					</div>
 				)}
 			</div>
 		</div>

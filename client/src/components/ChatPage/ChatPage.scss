@@ -32,6 +32,16 @@
 			&:hover {
 				background-color: $background-gray;
 			}
+			.counter {
+				float: right;
+				background-color: $orange;
+				color: white;
+				font-weight: 600;
+				border-radius: 12px;
+				min-width: 24px;
+				padding: 3px;
+				text-align: center;
+			}
 			.avatar {
 				height: 100%;
 				border-radius: 50%;
