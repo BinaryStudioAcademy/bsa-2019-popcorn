@@ -26,6 +26,7 @@ class ChatList extends React.Component<IProps> {
 			Object.keys(chats).forEach(SocketService.join);
 
 			SocketService.on('new-message', message => {
+				if (!message.chat) return;
 				const chatId = message.chat.id;
 				this.props.addMessage(message);
 				if (message.user.id !== this.props.userId) {

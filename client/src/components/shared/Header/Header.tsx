@@ -21,6 +21,9 @@ import Image from '../Image/Image';
 import Notification from './Notification';
 import { withFirebase } from '../../Firebase';
 import { Activity } from '../../ActivityPage/ActivityList/ActivityList';
+import { hasUnreadMessages } from './header.service';
+import { fetchChats } from '../../ChatPage/ChatPage.redux/actions';
+
 interface IProps {
 	userInfo: {
 		//temporary put ? to use mocks inside component
@@ -46,143 +49,162 @@ interface IProps {
 	getUnreadNotifications: (userId: string) => void;
 	setNotificitationIsRead: (notificatonId: string) => void;
 	unredNotifications: Activity[];
+	chats: any; //todo
+	fetchChats: (userId: string) => void;
 }
 
-const Header = ({
-	userInfo,
-	moviesSearch,
-	fetchFilms,
-	alreadySearch,
-	setMovieSeries,
-	unauthorize,
-	sendTokenToServer,
-	getUnreadNotifications,
-	setNotificitationIsRead,
-	unredNotifications
-}: IProps) => {
-	const MOVIES_IN_CINEMA = 'Movies in cinema';
-	const MOVIE_TOPS = 'Movie tops';
-	const USER_MOVIE_TOPS = `${userInfo.name}'s Movie Lists`;
-	const NEW_TV_SERIES = 'New TV Series';
-	const TV_SERIES_TOPS = 'TV Series tops';
-	const USER_TV_SERIES_TOPS = `${userInfo.name}'s TV Series Lists`;
-	const POPULAR_MOVIES = 'Popular Movies';
-	const POPULAR_TV_SERIES = 'Popular TV Series';
-	const POPULAR_USERS = 'Popular Users';
-	const PROFILE = 'Profile';
-	const SETTINGS = 'Settings';
-	const LOGOUT = 'Logout';
+class Header extends React.Component<IProps> {
+	componentDidMount() {
+		this.props.fetchChats(this.props.userInfo.id);
+	}
+	render() {
+		const {
+			userInfo,
+			moviesSearch,
+			fetchFilms,
+			alreadySearch,
+			setMovieSeries,
+			unauthorize,
+			sendTokenToServer,
+			getUnreadNotifications,
+			setNotificitationIsRead,
+			unredNotifications,
+			chats
+		} = this.props;
+		const MOVIES_IN_CINEMA = 'Movies in cinema';
+		const MOVIE_TOPS = 'Movie tops';
+		const USER_MOVIE_TOPS = `${userInfo.name}'s Movie Lists`;
+		const NEW_TV_SERIES = 'New TV Series';
+		const TV_SERIES_TOPS = 'TV Series tops';
+		const USER_TV_SERIES_TOPS = `${userInfo.name}'s TV Series Lists`;
+		const POPULAR_MOVIES = 'Popular Movies';
+		const POPULAR_TV_SERIES = 'Popular TV Series';
+		const POPULAR_USERS = 'Popular Users';
+		const PROFILE = 'Profile';
+		const SETTINGS = 'Settings';
+		const LOGOUT = 'Logout';
 
-	const { avatar } = userInfo;
+		const { avatar } = userInfo;
 
-	const Notifications = withFirebase(Notification);
-	return (
-		<div className="header">
-			<NavLink to="/" className="header-logo-link">
-				<div className="logo-wrapper">
-					<img src={logo} className="logo" alt="logo" />
-				</div>
-				<div className="title">Pop Corn</div>
-			</NavLink>
-			<button className="header-buttons hover">
-				<NavLink
-					to={'/movies'}
-					style={{ textDecoration: 'none' }}
-					className="header-buttons"
-				>
-					Movies
+		const Notifications = withFirebase(Notification);
+		return (
+			<div className="header">
+				<NavLink to="/" className="header-logo-link">
+					<div className="logo-wrapper">
+						<img src={logo} className="logo" alt="logo" />
+					</div>
+					<div className="title">Pop Corn</div>
 				</NavLink>
-				<FontAwesomeIcon icon={faChevronDown} />
-				<div className="modal">
-					<Link aria-current="page" className="hover" to="#">
-						{MOVIES_IN_CINEMA}
-					</Link>
-					<Link aria-current="page" className="hover" to="/tops">
-						{MOVIE_TOPS}
-					</Link>
-					<Link aria-current="page" className="hover" to="/user-page/lists">
-						{USER_MOVIE_TOPS}
-					</Link>
-				</div>
-			</button>
-
-			<button className="header-buttons hover">
-				TV
-				<FontAwesomeIcon icon={faChevronDown} />
-				<div className="modal">
-					<Link aria-current="page" className="hover" to="#">
-						{NEW_TV_SERIES}
-					</Link>
-					<Link aria-current="page" className="hover" to="#">
-						{TV_SERIES_TOPS}
-					</Link>
-					<Link aria-current="page" className="hover" to="/user-page/lists">
-						{USER_TV_SERIES_TOPS}
-					</Link>
-				</div>
-			</button>
-			<button className="header-buttons hover">
-				Ratings
-				<FontAwesomeIcon icon={faChevronDown} />
-				<div className="modal">
-					<Link aria-current="page" className="hover" to="#">
-						{POPULAR_MOVIES}
-					</Link>
-					<Link aria-current="page" className="hover" to="#">
-						{POPULAR_TV_SERIES}
-					</Link>
-					<Link aria-current="page" className="hover" to="#">
-						{POPULAR_USERS}
-					</Link>
-				</div>
-			</button>
-			<MovieSearch
-				movies={moviesSearch}
-				fetchFilms={fetchFilms}
-				alreadySearch={alreadySearch}
-				setMovieSeries={setMovieSeries}
-			/>
-			<div className="notifications">
-				<div>
-					<img className="message-icon hover" src={messageIcon} alt="message" />
-				</div>
-				{
-					<Notifications
-						sendTokenToServer={sendTokenToServer}
-						userInfo={userInfo}
-						getUnreadNotifications={getUnreadNotifications}
-						setNotificitationIsRead={setNotificitationIsRead}
-						unredNotifications={unredNotifications}
-					/>
-				}
-			</div>
-			<div className="user-info header-buttons hover">
-				<Image src={avatar} defaultSrc={config.DEFAULT_AVATAR} alt="avatar" />
-				<span className="user-name">{userInfo.name}</span>
-				<div className="modal">
-					<Link
-						aria-current="page"
-						className="hover"
-						to={`/user-page/${userInfo.id}`}
+				<button className="header-buttons hover">
+					<NavLink
+						to={'/movies'}
+						style={{ textDecoration: 'none' }}
+						className="header-buttons"
 					>
-						{PROFILE}
-					</Link>
-					<Link aria-current="page" className="hover" to="/settings">
-						{SETTINGS}
-					</Link>
-					<a onClick={() => unauthorize()}>{LOGOUT}</a>
+						Movies
+					</NavLink>
+					<FontAwesomeIcon icon={faChevronDown} />
+					<div className="modal">
+						<Link aria-current="page" className="hover" to="#">
+							{MOVIES_IN_CINEMA}
+						</Link>
+						<Link aria-current="page" className="hover" to="/tops">
+							{MOVIE_TOPS}
+						</Link>
+						<Link aria-current="page" className="hover" to="/user-page/lists">
+							{USER_MOVIE_TOPS}
+						</Link>
+					</div>
+				</button>
+
+				<button className="header-buttons hover">
+					TV
+					<FontAwesomeIcon icon={faChevronDown} />
+					<div className="modal">
+						<Link aria-current="page" className="hover" to="#">
+							{NEW_TV_SERIES}
+						</Link>
+						<Link aria-current="page" className="hover" to="#">
+							{TV_SERIES_TOPS}
+						</Link>
+						<Link aria-current="page" className="hover" to="/user-page/lists">
+							{USER_TV_SERIES_TOPS}
+						</Link>
+					</div>
+				</button>
+				<button className="header-buttons hover">
+					Ratings
+					<FontAwesomeIcon icon={faChevronDown} />
+					<div className="modal">
+						<Link aria-current="page" className="hover" to="#">
+							{POPULAR_MOVIES}
+						</Link>
+						<Link aria-current="page" className="hover" to="#">
+							{POPULAR_TV_SERIES}
+						</Link>
+						<Link aria-current="page" className="hover" to="#">
+							{POPULAR_USERS}
+						</Link>
+					</div>
+				</button>
+				<MovieSearch
+					movies={moviesSearch}
+					fetchFilms={fetchFilms}
+					alreadySearch={alreadySearch}
+					setMovieSeries={setMovieSeries}
+				/>
+				<div className="notifications">
+					<div className="notifications-message">
+						<NavLink to={'/chat'}>
+							{hasUnreadMessages(chats) && (
+								<div className="unread-message"></div>
+							)}
+							<img
+								className="message-icon hover"
+								src={messageIcon}
+								alt="message"
+							/>
+						</NavLink>
+					</div>
+					{
+						<Notifications
+							sendTokenToServer={sendTokenToServer}
+							userInfo={userInfo}
+							getUnreadNotifications={getUnreadNotifications}
+							setNotificitationIsRead={setNotificitationIsRead}
+							unredNotifications={unredNotifications}
+						/>
+					}
+				</div>
+				<div className="user-info header-buttons hover">
+					<Image src={avatar} defaultSrc={config.DEFAULT_AVATAR} alt="avatar" />
+					<span className="user-name">{userInfo.name}</span>
+					<div className="modal">
+						<Link
+							aria-current="page"
+							className="hover"
+							to={`/user-page/${userInfo.id}`}
+						>
+							{PROFILE}
+						</Link>
+						<Link aria-current="page" className="hover" to="/settings">
+							{SETTINGS}
+						</Link>
+						<a onClick={() => unauthorize()}>{LOGOUT}</a>
+					</div>
 				</div>
 			</div>
-		</div>
-	);
-};
+		);
+	}
+}
 
 const mapStateToProps = (rootState, props) => ({
 	...props,
 	userInfo: rootState.profile.profileInfo,
 	moviesSearch: rootState.movie.moviesSearch,
 	alreadySearch: rootState.movie.alreadySearch,
-	unredNotifications: rootState.notification.unredNotifications
+	unredNotifications: rootState.notification.unredNotifications,
+	chats: rootState.chat.chats
 });
 
 const actions = {
@@ -191,7 +213,8 @@ const actions = {
 	unauthorize,
 	sendTokenToServer,
 	getUnreadNotifications,
-	setNotificitationIsRead
+	setNotificitationIsRead,
+	fetchChats
 };
 
 const mapDispatchToProps = dispatch => bindActionCreators(actions, dispatch);
