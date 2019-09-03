@@ -55,11 +55,10 @@ const OutgoingMessage: React.FC<IProps> = ({
 				focusTrapped={false}
 				center
 				classNames={{
-					modal: 'follow-modal',
+					modal: 'edit-message-modal',
 					closeButton: 'follow-modal-close'
 				}}
 			>
-				{message.body}
 				<input
 					type="text"
 					value={editedMessage || message.body}

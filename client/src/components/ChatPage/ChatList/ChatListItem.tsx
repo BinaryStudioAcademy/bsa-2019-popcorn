@@ -24,9 +24,9 @@ const ChatListItem: React.FC<IProps> = ({ chat, unreadMessagesCount }) => {
 				{chat.lastMessage && (
 					<div className="last-message">
 						{chat.lastMessage.body}
-						{unreadMessagesCount && (
+						{unreadMessagesCount ? (
 							<span className="counter">{unreadMessagesCount}</span>
-						)}
+						) : null}
 					</div>
 				)}
 			</div>
