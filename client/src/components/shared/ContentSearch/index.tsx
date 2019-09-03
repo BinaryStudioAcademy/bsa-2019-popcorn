@@ -3,11 +3,9 @@ import './style.scss';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { fetchData } from './redux/actions';
-import MoviePreview from './MoviePreview/index';
-import Extra from '../../UserPage/UserPosts/PostExtra/extra';
-import { NavLink, Redirect } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 import ResultList from './ResultList';
-
+import { ReactComponent as SearchIcon } from '../../../assets/icons/general/search-icon.dbb24f09.svg';
 const options = [
 	'all',
 	'movie',
@@ -80,6 +78,17 @@ class ContentSearch extends React.Component<IProps, IState> {
 		return (
 			<div className={'content-search'}>
 				<span className="search">
+					<span
+						className={'search-icon-wrp'}
+						onClick={() => {
+							if (title.trim()) {
+								fetchData(title, type);
+								this.setModal(true);
+							}
+						}}
+					>
+						<SearchIcon className={'search-icon'} />
+					</span>
 					<input
 						type="text"
 						placeholder="Search"
