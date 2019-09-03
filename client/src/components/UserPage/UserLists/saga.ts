@@ -4,7 +4,10 @@ import {
 	FETCH_MOVIE_LISTS_PREVIEW,
 	FETCH_MOVIE_LISTS_PREVIEW_SUCCESS,
 	DELETE_MOVIE_LIST,
-	SAVE_MOVIE_LIST_SUCCESS
+	SAVE_MOVIE_LIST_SUCCESS,
+	FETCH_MOVIE_LIST_DETAILS,
+	FETCH_MOVIE_LIST_DETAILS_SUCCESS,
+	FETCH_MOVIE_LIST_DETAILS_FAILURE
 } from './actionTypes';
 import webApi from '../../../services/webApi.service';
 
@@ -55,6 +58,23 @@ export function* deleteMovieList(action) {
 	}
 }
 
+export function* fetchMovieListDetails(action) {
+	const { movieListId } = action.payload;
+	try {
+		const movieListDetails = yield call(webApi, {
+			method: 'GET',
+			endpoint: `/api/movie-list/details/${movieListId}`
+		});
+
+		yield put({
+			type: FETCH_MOVIE_LIST_DETAILS_SUCCESS,
+			payload: { movieListDetails }
+		});
+	} catch (e) {
+		console.log(e.message);
+	}
+}
+
 function* watchSaveMovieList() {
 	yield takeEvery(SAVE_MOVIE_LIST, saveMovieList);
 }
@@ -67,10 +87,15 @@ function* watchDeleteMovieList() {
 	yield takeEvery(DELETE_MOVIE_LIST, deleteMovieList);
 }
 
+function* watchFetchMovieListDetails() {
+	yield takeEvery(FETCH_MOVIE_LIST_DETAILS, fetchMovieListDetails);
+}
+
 export default function* profile() {
 	yield all([
 		watchSaveMovieList(),
 		watchFetchListsPreview(),
-		watchDeleteMovieList()
+		watchDeleteMovieList(),
+		watchFetchMovieListDetails()
 	]);
 }

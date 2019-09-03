@@ -3,17 +3,21 @@ import {
 	FETCH_MOVIE_LISTS_PREVIEW_SUCCESS,
 	DELETE_MOVIE_LIST,
 	SAVE_MOVIE_LIST_SUCCESS,
-	SAVE_MOVIE_LIST
+	SAVE_MOVIE_LIST,
+	FETCH_MOVIE_LIST_DETAILS,
+	FETCH_MOVIE_LIST_DETAILS_SUCCESS
 } from './actionTypes';
 
 interface IReducerState {
 	isLoading: boolean;
-	movieListsPreview?: Array<any>; // TODO SHOW REAL interface
+	movieListsPreview?: Array<any>;
+	movieListDetails?: any;
 }
 
 const initialState: IReducerState = {
 	isLoading: false,
-	movieListsPreview: undefined
+	movieListsPreview: undefined,
+	movieListDetails: undefined
 };
 
 export default (state = initialState, action) => {
@@ -52,6 +56,19 @@ export default (state = initialState, action) => {
 					...state.movieListsPreview
 				],
 				isLoading: false
+			};
+
+		case FETCH_MOVIE_LIST_DETAILS:
+			return {
+				...state,
+				isLoading: true
+			};
+
+		case FETCH_MOVIE_LIST_DETAILS_SUCCESS:
+			return {
+				...state,
+				isLoading: false,
+				movieListDetails: action.payload.movieListDetails
 			};
 
 		default:
