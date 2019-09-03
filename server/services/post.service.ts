@@ -31,6 +31,7 @@ const getExtra = async (post: any) => {
       break;
   }
   delete post.extraData;
+  delete post.extraType;
   return post;
 };
 
@@ -60,7 +61,6 @@ export const deletePostById = async (postId: string): Promise<any> => {
 };
 
 export const updateById = async (post: any): Promise<any> => {
-  post = await getExtra(post);
   return await getCustomRepository(PostRepository).update(
     { id: post.id },
     { ...post }

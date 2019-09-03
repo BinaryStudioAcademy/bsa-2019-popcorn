@@ -227,17 +227,20 @@ export function* sendPost(action) {
 		extraType,
 		extraData
 	} = action.payload.data;
-	const post = {
-		id,
-		image_url,
-		description,
-		title,
-		userId,
-		extraLink,
-		extraTitle,
-		extraType,
-		extraData
-	};
+	const post = id
+		? {
+				id,
+				image_url,
+				description,
+				title,
+				userId,
+				extraLink,
+				extraTitle,
+				survey: extraType === 'survey' ? { id: extraData.id } : {},
+				top: extraType === 'top' ? { id: extraData.id } : {},
+				event: extraType === 'event' ? { id: extraData.id } : {}
+		  }
+		: action.payload.data;
 	try {
 		yield call(webApi, {
 			method: id ? 'PUT' : 'POST',
