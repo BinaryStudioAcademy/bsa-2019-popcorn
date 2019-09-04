@@ -3,8 +3,9 @@ import './PostEditModal.scss';
 
 interface IPostEditProps {
 	isOwn: boolean;
-	deletePost: (any) => void;
+	deletePost: () => void;
 	editPost: () => any;
+	toggleModal: () => any;
 }
 
 const PostEditModal = (props: IPostEditProps) => {
@@ -12,9 +13,24 @@ const PostEditModal = (props: IPostEditProps) => {
 		<div className="post-modal-container">
 			<div className="post-modal">
 				<button>Copy link</button>
-				{props.isOwn && <button onClick={props.editPost}>Edit</button>}
 				{props.isOwn && (
-					<button className="delete" onClick={props.deletePost}>
+					<button
+						onClick={() => {
+							props.editPost();
+							props.toggleModal();
+						}}
+					>
+						Edit
+					</button>
+				)}
+				{props.isOwn && (
+					<button
+						className="delete"
+						onClick={() => {
+							props.deletePost();
+							props.toggleModal();
+						}}
+					>
 						Delete
 					</button>
 				)}
