@@ -11,6 +11,7 @@ export default () => {
 		description: '',
 		type: 'Open',
 		user_id: '',
+		image: '',
 		user: {},
 		participants: 0,
 		questions: [

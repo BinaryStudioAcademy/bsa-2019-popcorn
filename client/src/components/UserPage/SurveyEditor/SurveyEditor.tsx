@@ -11,6 +11,8 @@ import SurveyCheckboxes from '../SurveyItems/SurveyMultipleAnswer/SurveyMultiple
 import SurveyShortAnswer from '../SurveyItems/SurveyShortAnswer/SurveyShortAnswer';
 import SurveyLinearScale from '../SurveyItems/SurveyLinearScale/SurveyLinearScale';
 import '../Survey/Survey.scss';
+import ImageUploader from '../../MainPage/ImageUploader/ImageUploader';
+import { uploadFile } from '../../../services/file.service';
 
 interface IQuestion {
 	index: number;
@@ -43,6 +45,7 @@ interface ISurvey {
 	title: string;
 	type: string;
 	description: string;
+	image: string;
 	user_id: string;
 	user: {
 		name: string;
@@ -293,6 +296,26 @@ class SurveyEditor extends Component<IProps, IState> {
 								value={description}
 								maxLength={255}
 							/>
+							<ImageUploader
+								imageHandler={uploadFile}
+								imageStateHandler={image => {
+									this.setState({
+										...this.state,
+										surveyInfo: {
+											...this.state.surveyInfo,
+											image: image
+										}
+									});
+								}}
+							/>
+							{this.state.surveyInfo.image && (
+								<div>
+									<img
+										className="survey-img"
+										src={this.state.surveyInfo.image}
+									/>
+								</div>
+							)}
 						</header>
 					)}
 					{this.state.currentElement !== -1 && (
