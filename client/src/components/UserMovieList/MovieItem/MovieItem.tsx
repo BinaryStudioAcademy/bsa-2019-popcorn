@@ -9,12 +9,16 @@ interface IProps {
 	movie: IMovie;
 	addMovieToWatchList: (watchId: string) => object;
 	deleteMovieFromWatchList: (watchId: string, movieId: string) => object;
+	watchListLoading?: boolean;
+	loadingOnMovie?: string;
 }
 
 const MovieItem: React.FC<IProps> = ({
 	movie,
 	addMovieToWatchList,
-	deleteMovieFromWatchList
+	deleteMovieFromWatchList,
+	watchListLoading,
+	loadingOnMovie
 }) => {
 	const {
 		id,
@@ -28,6 +32,16 @@ const MovieItem: React.FC<IProps> = ({
 	} = movie;
 
 	const renderWatchItemElement = () => {
+		if (watchListLoading && String(loadingOnMovie) === String(id)) {
+			return (
+				<div
+					className={`watch-list-icon loading-now`}
+					onClick={ev => ev.preventDefault()}
+				>
+					<div className="loading-now-spinner"></div>
+				</div>
+			);
+		}
 		if (!watchInfo) {
 			return (
 				<div
@@ -58,7 +72,9 @@ const MovieItem: React.FC<IProps> = ({
 			return (
 				<div
 					className={`watch-list-icon watched`}
-					onClick={ev => ev.preventDefault()}
+					onClick={ev => {
+						ev.preventDefault();
+					}}
 					title="You have already watched this movie"
 				/>
 			);

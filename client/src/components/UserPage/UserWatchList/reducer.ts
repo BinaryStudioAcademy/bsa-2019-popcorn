@@ -18,13 +18,15 @@ interface IReducer {
 	watchListStatus?: string;
 	isLoading?: boolean;
 	watchListIds?: any[];
+	loadingOnMovie?: string;
 }
 
 const initialState: IReducer = {
 	watchList: undefined,
 	watchListStatus: undefined,
 	isLoading: undefined,
-	watchListIds: undefined
+	watchListIds: undefined,
+	loadingOnMovie: undefined
 };
 
 export default (state = initialState, action) => {
@@ -94,24 +96,28 @@ export default (state = initialState, action) => {
 		case ADD_MOVIE_TO_WATCH_LIST:
 			return {
 				...state,
-				isLoading: true
+				isLoading: true,
+				loadingOnMovie: action.payload.movieId
 			};
 
 		case ADD_MOVIE_TO_WATCH_LIST_SUCCESS:
-			const newWatchListIds = [...state.watchListIds];
-			newWatchListIds.push(action.payload);
+			const newWatchListIds = state.watchListIds
+				? [...state.watchListIds, action.payload]
+				: undefined;
 			return {
 				...state,
 				watchListStatus: action.payload,
 				watchList: undefined,
 				isLoading: false,
-				watchListIds: [...state.watchListIds, action.payload]
+				watchListIds: newWatchListIds,
+				loadingOnMovie: undefined
 			};
 
 		case DELETE_MOVIE_FROM_WATCH_LIST:
 			return {
 				...state,
-				isLoading: true
+				isLoading: true,
+				loadingOnMovie: action.payload.movieId
 			};
 
 		case DELETE_MOVIE_FROM_WATCH_LIST_SUCCESS:
@@ -120,12 +126,14 @@ export default (state = initialState, action) => {
 				watchListStatus: action.payload.watchListStatus,
 				watchList: undefined,
 				isLoading: false,
-				watchListIds: [...state.watchListIds].filter(watch => {
-					return (
-						String(watch.movieId) !==
-						String(action.payload.watchListStatus.movieId)
-					);
-				})
+				loadingOnMovie: undefined,
+				watchListIds: state.watchListIds
+					? [...state.watchListIds].filter(
+							watch =>
+								String(watch.movieId) !==
+								String(action.payload.watchListStatus.movieId)
+					  )
+					: undefined
 			};
 
 		default:
