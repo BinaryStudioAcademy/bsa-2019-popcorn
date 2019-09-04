@@ -10,7 +10,7 @@
 		"eject": "react-scripts eject",
 		"pretty": "prettier --write --tab-width 2 \"src/**/*.tsx\"",
 		"prettier-watch": "onchange '**/*.tsx' -- prettier --write {{changed}}",
-		"lint": "tslint -c tslint.json -p tsconfig.json --exclude **/*.d.ts"
+		"lint": "tslint -c tslint.json -p tsconfig.json"
 	},
 	"husky": {
 		"hooks": {

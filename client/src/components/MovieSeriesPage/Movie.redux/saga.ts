@@ -33,6 +33,11 @@ import {
 	SET_SEARCH_MOVIE_TO_ADD,
 	SET_SHOW_SPINNER,
 	SET_USER_RATE
+	SET_HIDE_SPINNER,
+	GET_GENRES,
+	SET_GENRES,
+	FETCH_STATISTICS,
+	FETCH_STATISTICS_SUCCESS
 } from './actionTypes';
 import { FETCH_MOVIE_REVIEWS } from '../MovieSeriesReviews/actionTypes';
 
@@ -350,6 +355,26 @@ export function* setReview(action) {
 	}
 }
 
+export function* fetchStatistics(action) {
+	const { movieId } = action.payload;
+	console.log(movieId);
+	try {
+		const statistics = yield call(webApi, {
+			endpoint: `/api/movie/${movieId}/statistics`,
+			method: 'GET'
+		});
+
+		yield put({
+			type: FETCH_STATISTICS_SUCCESS,
+			payload: {
+				statistics
+			}
+		});
+	} catch (error) {
+		console.log(error);
+	}
+}
+
 function* watchFetchFiltredMovieList() {
 	yield takeEvery(FETCH_FILTRED_MOVIES, fetchFiltredMovieList);
 }
@@ -406,6 +431,9 @@ function* watchFetchGenres() {
 	yield takeEvery(GET_GENRES, getGenres);
 }
 
+function* watchFetchStatistics() {
+	yield takeEvery(FETCH_STATISTICS, fetchStatistics);
+}
 export default function* header() {
 	yield all([
 		watchFetchFilms(),
@@ -421,6 +449,7 @@ export default function* header() {
 		watchFetchAwards(),
 		watchFetchFiltredMovieList(),
 		watchLoadMoreFiltredMovie(),
-		watchFetchGenres()
+		watchFetchGenres(),
+		watchFetchStatistics()
 	]);
 }

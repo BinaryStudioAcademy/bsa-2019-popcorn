@@ -8,17 +8,15 @@ import SocketService from '../../../services/socket.service';
 
 interface IProps {
 	userInfo: any;
-	sendTokenToServer: (token: string | null) => void;
 	getUnreadNotifications: (userId: string) => void;
-	setNotificitationIsRead: (notificatonId: string) => void;
-	firebase?: any;
-	unredNotifications: Activity[];
+	setNotificationIsRead: (notificationId: string) => void;
+	unreadNotifications: Activity[];
 }
 interface IState {
 	notifications: Array<Activity>;
 	isShown: boolean;
 }
-let canSendToken = true;
+
 class Notification extends React.Component<IProps, IState> {
 	constructor(props) {
 		super(props);
@@ -29,6 +27,7 @@ class Notification extends React.Component<IProps, IState> {
 		this.addSocketEvents();
 	}
 	private wrapperRef = createRef<HTMLDivElement>();
+
 	handleClickOutside = event => {
 		if (
 			this.wrapperRef.current &&
@@ -37,25 +36,16 @@ class Notification extends React.Component<IProps, IState> {
 			this.setState({ isShown: false });
 		}
 	};
+
 	componentDidMount() {
 		document.addEventListener('mousedown', this.handleClickOutside);
-		this.props.unredNotifications.length === 0 &&
-			this.props.getUnreadNotifications(this.props.userInfo.id);
-		this.setState({
-			...this.state,
-			notifications: this.props.unredNotifications
-		});
-		canSendToken &&
-			this.props.firebase &&
-			this.props.firebase.messaging
-				.getToken()
-				.then(token => {
-					canSendToken = false;
-					this.props.sendTokenToServer(token);
-				})
-				.catch(e => {
-					canSendToken = false;
-				});
+		this.props.getUnreadNotifications(this.props.userInfo.id);
+	}
+
+	componentDidUpdate(prevProps: IProps) {
+		if (prevProps.unreadNotifications !== this.props.unreadNotifications) {
+			this.setState({ notifications: this.props.unreadNotifications });
+		}
 	}
 
 	componentWillUnmount() {
@@ -70,19 +60,12 @@ class Notification extends React.Component<IProps, IState> {
 	addNotification = (data: Activity) => {
 		const notifications = this.state.notifications;
 		this.setState({
-			notifications: [...notifications, { ...data, isRead: false }]
+			notifications: [{ ...data, isRead: false }, ...notifications]
 		});
 	};
 
-	toogleNotifications = () => {
+	toggleNotifications = () => {
 		const isShown = !this.state.isShown;
-		// if (!isShown) {
-		// 	const updatedNotifications = this.state.notifications.filter(
-		// 		notification => notification.isRead === false
-		// 	);
-		// 	this.setState({ notifications: updatedNotifications });
-		// } else {
-		// }
 		this.state.notifications.length !== 0 && this.setState({ isShown });
 	};
 
@@ -96,7 +79,7 @@ class Notification extends React.Component<IProps, IState> {
 			notification.id == activityId ? updatedNotification : notification
 		);
 		this.setState({ notifications: updatedNotifications });
-		this.props.setNotificitationIsRead(activityId);
+		this.props.setNotificationIsRead(activityId);
 	};
 
 	render() {
@@ -109,7 +92,7 @@ class Notification extends React.Component<IProps, IState> {
 				{!isAllRed && (
 					<div
 						className="dot-icon hover"
-						onClick={() => this.toogleNotifications()}
+						onClick={() => this.toggleNotifications()}
 					>
 						<DotIcon />
 					</div>
@@ -118,7 +101,7 @@ class Notification extends React.Component<IProps, IState> {
 					className="notify-icon hover"
 					src={notifyIcon}
 					alt="bell"
-					onClick={() => this.toogleNotifications()}
+					onClick={() => this.toggleNotifications()}
 				/>
 				{isShown ? (
 					<div className="">

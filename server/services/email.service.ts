@@ -1,4 +1,5 @@
 import * as emailRepository from "../repository/email.repository";
+import * as emailView from "../public/email/email.view";
 
 const resetUrl = token => `${process.env.FRONTEND_HOST}/reset/${token}`;
 const confirmUrl = token => `${process.env.FRONTEND_HOST}/confirm/${token}`;
@@ -46,3 +47,14 @@ export const sendConfirmPasswordChange = (email, token) => {
   };
   return emailRepository.send(msg);
 };
+
+export const sendWelcomeEmail = (email) => {
+  const msg = {
+    to: email,
+    from: process.env.USER_MAIL,
+    subject: "Congratulation with registration",
+    html: emailView.welcome()
+  };
+  return emailRepository.send(msg); 
+}
+
