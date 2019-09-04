@@ -8,7 +8,7 @@ class HelpClass
     clickMovieInList(name) {
         const movie = $$(`//div[contains(., '${name}')]/../../a[contains(@class, "movie-link")]`);
         if (movie.length === 0) {
-            throw new Error("Element not found");
+            throw new Error(`"${name}" movie is not found`);
         }
         movie[0].scrollIntoView({block: "center"});
         movie[0].click();
@@ -32,6 +32,13 @@ class HelpClass
         page.clickLoginButton();
     }
 
+    search(value) {
+        const searchInput = $('input.search-input');
+        searchInput.waitForDisplayed();
+        searchInput.clearValue();
+        searchInput.setValue(value);
+        browser.keys("\uE007"); 
+    }
 }
 
 module.exports = new HelpClass();
