@@ -82,7 +82,7 @@ export function* createMessage(action) {
 			method: 'POST',
 			endpoint: `/api/chat/${action.payload.userId}/${action.payload.chatId}`,
 			body: {
-				body: action.payload.body
+				...action.payload.body
 			}
 		});
 	} catch (e) {

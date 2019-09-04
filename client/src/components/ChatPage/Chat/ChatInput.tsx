@@ -6,7 +6,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPaperPlane } from '@fortawesome/free-solid-svg-icons';
 
 interface IProps {
-	createMessage: (userId: string, chatId: string, body: string) => void;
+	createMessage: (userId: string, chatId: string, body: any) => void;
 	chatId: string;
 	userId: string;
 }
@@ -20,7 +20,7 @@ const ChatInput: React.FC<IProps> = ({ chatId, userId, createMessage }) => {
 	const sendMessage = () => {
 		if (message.trim() === '') return;
 		changeMessage('');
-		createMessage(userId, chatId, message);
+		createMessage(userId, chatId, { body: message });
 	};
 
 	const onMessageChange = e => {
