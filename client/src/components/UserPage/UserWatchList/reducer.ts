@@ -8,7 +8,6 @@ import {
 	DELETE_MOVIE_FROM_WATCH_LIST_SUCCESS,
 	DELETE_MOVIE_FROM_WATCH_LIST,
 	ADD_MOVIE_TO_WATCH_LIST,
-	FETCH_WATCH_LIST_IDS,
 	FETCH_WATCH_LIST_IDS_SUCCESS
 } from './actionTypes';
 import movieAdapter from '../../MovieSeriesPage/movieAdapter';
@@ -45,13 +44,9 @@ export default (state = initialState, action) => {
 				watchListStatus: undefined
 			};
 
-		case FETCH_WATCH_LIST_IDS:
-			return { ...state, isLoading: true };
-
 		case FETCH_WATCH_LIST_IDS_SUCCESS:
 			return {
 				...state,
-				isLoading: false,
 				watchListIds: action.payload.watchListIds
 			};
 
@@ -68,7 +63,13 @@ export default (state = initialState, action) => {
 			return {
 				...state,
 				watchList: [...prevWatchList],
-				watchListStatus: undefined
+				watchListStatus: undefined,
+				watchListIds: [
+					...prevWatchList.map(watch => {
+						watch.movieId = watch.movie.id;
+						return watch;
+					})
+				]
 			};
 
 		case DELETE_WATCH_ITEM:
@@ -78,7 +79,10 @@ export default (state = initialState, action) => {
 				watchList: watchList.filter(
 					watch => watch.id !== action.payload.watchId
 				),
-				watchListStatus: undefined
+				watchListStatus: undefined,
+				watchListIds: [...state.watchListIds].filter(
+					watch => watch.id !== action.payload.watchId
+				)
 			};
 
 		case FETCH_WATCH_LIST_STATUS_SUCCESS:
@@ -94,11 +98,14 @@ export default (state = initialState, action) => {
 			};
 
 		case ADD_MOVIE_TO_WATCH_LIST_SUCCESS:
+			const newWatchListIds = [...state.watchListIds];
+			newWatchListIds.push(action.payload);
 			return {
 				...state,
 				watchListStatus: action.payload,
 				watchList: undefined,
-				isLoading: false
+				isLoading: false,
+				watchListIds: [...state.watchListIds, action.payload]
 			};
 
 		case DELETE_MOVIE_FROM_WATCH_LIST:
@@ -112,7 +119,13 @@ export default (state = initialState, action) => {
 				...state,
 				watchListStatus: action.payload.watchListStatus,
 				watchList: undefined,
-				isLoading: false
+				isLoading: false,
+				watchListIds: [...state.watchListIds].filter(watch => {
+					return (
+						String(watch.movieId) !==
+						String(action.payload.watchListStatus.movieId)
+					);
+				})
 			};
 
 		default:

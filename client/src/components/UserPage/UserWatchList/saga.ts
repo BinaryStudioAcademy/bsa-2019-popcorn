@@ -39,7 +39,7 @@ export function* fetchWatchListIds() {
 	try {
 		const watchListIds = yield call(webApi, {
 			method: 'GET',
-			endpoint: `/api/watch/user/`
+			endpoint: `/api/watch`
 		});
 
 		yield put({
