@@ -34,7 +34,7 @@ interface IPostConstructorProps {
 	croppedSaved: boolean;
 	saveCropped: () => void;
 	togglePostConstructor: (ev) => void;
-	newPost?: INewPost | null | {};
+	newPost?: INewPost | null;
 }
 
 export interface INewPost {
@@ -53,6 +53,9 @@ export interface INewPost {
 	extraType: string;
 	movieSearchTitle: null | string;
 	createdAt: string;
+	top?: any;
+	event?: any;
+	survey?: any;
 }
 
 class PostConstructor extends React.Component<
@@ -72,23 +75,51 @@ class PostConstructor extends React.Component<
 
 	constructor(props: IPostConstructorProps) {
 		super(props);
-		this.state = {
-			image_url: '',
-			description: '',
-			title: 'test title',
-			userId: this.props.userId,
-			extraLink: '',
-			extraTitle: '',
-			extraData: null,
-			extraType: '',
-			modalExtra: false,
-			croppedSaved: false,
-			reactions: [],
-			comments: [],
-			movieSearchTitle: null,
-			createdAt: '',
-			...(props.newPost ? { ...props.newPost } : {})
-		};
+
+		let item = { title: '' };
+		if (props.newPost) {
+			item = props.newPost.top ||
+				props.newPost.event ||
+				props.newPost.survey || { title: '' };
+			this.state = {
+				image_url: '',
+				description: '',
+				title: 'test title',
+				userId: this.props.userId,
+				extraLink: '',
+				extraTitle: '',
+				extraData: null,
+				extraType: '',
+				modalExtra: false,
+				croppedSaved: false,
+				reactions: [],
+				comments: [],
+				movieSearchTitle: null,
+				createdAt: '',
+				...(props.newPost
+					? {
+							...props.newPost,
+							extraLink: props.newPost.extraLink,
+							extraTitle: item.title,
+							extraData: item,
+							extraType:
+								props.newPost.extraLink &&
+								props.newPost.extraLink.split('/')[1].slice(0, -1)
+					  }
+					: {})
+			};
+		}
+		// tslint:disable-next-line:no-shadowed-variable
+		// if (props.newPost && props.newPost.extraLink) {
+		//     const item = props.newPost.top || props.newPost.event || props.newPost.survey || {};
+		//     console.log(
+		//     this.setExtraData({
+		//         type: props.newPost.extraLink.split('/')[1].slice(0, -1),
+		//         data: item,
+		//         link: props.newPost.extraLink
+		//     })
+		// }
+
 		this.imageStateHandler = this.imageStateHandler.bind(this);
 		this.onSave = this.onSave.bind(this);
 		this.onCancel = this.onCancel.bind(this);
@@ -100,6 +131,7 @@ class PostConstructor extends React.Component<
 	private cropper = React.createRef<Cropper>();
 
 	setExtraData(data) {
+		console.log(data);
 		data
 			? this.setState({
 					extraLink: data.link,

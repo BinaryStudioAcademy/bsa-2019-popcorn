@@ -1,15 +1,14 @@
 import React, { useState } from 'react';
 import Post from '../Post/Post';
-import { ReactComponent as FeedIcon } from '../../../assets/icons/general/newsFeed.svg';
 import './PostList.scss';
 import IComment from '../Post/IComment';
 import IPost from '../Post/IPost';
 import {
-	addNewReaction,
-	createReaction,
-	deletePost,
 	addNewComment,
-	createComment
+	addNewReaction,
+	createComment,
+	createReaction,
+	deletePost
 } from '../FeedBlock/FeedBlock.redux/actions';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
@@ -33,6 +32,7 @@ interface IProps {
 	addNewReaction: (reaction: IReaction) => any;
 	deletePost: (id: string, userId: string) => any;
 }
+
 let wasAddedSockets = false;
 const addSocket = (addNewComment, addNewReaction) => {
 	if (wasAddedSockets) return;
@@ -47,12 +47,32 @@ const addSocket = (addNewComment, addNewReaction) => {
 };
 
 const PostList = (props: IProps) => {
-	const [showPostsConstructor, setShowPostsConstructor] = useState<
-		null | INewPost | {}
-	>(null);
+	const [
+		showPostsConstructor,
+		setShowPostsConstructor
+	] = useState<null | INewPost>(null);
 	const togglePostConstructor = ev => {
 		ev.preventDefault();
-		setShowPostsConstructor(showPostsConstructor ? null : {});
+		setShowPostsConstructor(
+			showPostsConstructor
+				? null
+				: {
+						image_url: '',
+						description: '',
+						title: 'test title',
+						userId: props.userId,
+						extraLink: '',
+						extraTitle: '',
+						extraData: null,
+						extraType: '',
+						modalExtra: false,
+						croppedSaved: false,
+						reactions: [],
+						comments: [],
+						movieSearchTitle: null,
+						createdAt: ''
+				  }
+		);
 	};
 	addSocket(props.addNewComment, props.addNewReaction);
 	return (
