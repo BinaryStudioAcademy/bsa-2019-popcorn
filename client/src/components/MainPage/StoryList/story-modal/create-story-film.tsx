@@ -10,16 +10,6 @@ import MovieListItem from "../../../MovieList/MovieListItem/MovieListItem";
 import { getGenre, getMainCast } from "../../../MovieSeriesPage/movieAdapter";
 import config from "../../../../config";
 
-const elasticProperties = [
-	'id',
-	'title',
-	'runtime',
-	'poster_path',
-	'release_date',
-	'cast',
-	'genres'
-];
-
 const options = ["I've watched", "I'm going to watch", 'I recommend'];
 interface IProps {
 	saveMovie: (movie: TMovie, movieOption?: string) => any;
@@ -34,6 +24,16 @@ const CreateStoryFilm = ({ ...props }: IProps) => {
 	const back = () => props.history.push('/create/extra');
 
 	const [movie, setMovie] = useState();
+
+	const elasticProperties = [
+		'id',
+		'title',
+		'runtime',
+		'poster_path',
+		'release_date',
+		'cast',
+		'genres'
+	];
 
 	const convertMovie = (movie) => {
 		return {
