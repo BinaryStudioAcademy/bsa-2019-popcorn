@@ -9,7 +9,8 @@ import {
 	createComment,
 	createReaction,
 	deletePost,
-	deletePostFromList
+	deletePostFromList,
+	updatePost
 } from '../FeedBlock/FeedBlock.redux/actions';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
@@ -33,10 +34,16 @@ interface IProps {
 	addNewReaction: (reaction: IReaction) => any;
 	deletePost: (id: string, userId: string) => any;
 	deletePostFromList: (id: string) => any;
+	updatePost: (post: IPost) => any;
 }
 
 let wasAddedSockets = false;
-const addSocket = (addNewComment, addNewReaction, deletePostFromList) => {
+const addSocket = (
+	addNewComment,
+	addNewReaction,
+	deletePostFromList,
+	updatePost
+) => {
 	if (wasAddedSockets) return;
 	SocketService.on(
 		'new-comment',
@@ -47,6 +54,12 @@ const addSocket = (addNewComment, addNewReaction, deletePostFromList) => {
 	});
 	SocketService.on('delete-post', postId => {
 		deletePostFromList && deletePostFromList(postId);
+	});
+	SocketService.on('update-post', post => {
+		console.log(post);
+		if (post) {
+			updatePost && updatePost(post);
+		}
 	});
 	wasAddedSockets = true;
 };
@@ -82,7 +95,8 @@ const PostList = (props: IProps) => {
 	addSocket(
 		props.addNewComment,
 		props.addNewReaction,
-		props.deletePostFromList
+		props.deletePostFromList,
+		props.updatePost
 	);
 	return (
 		<div className="feed-list" style={props.styleCustom}>
@@ -133,6 +147,7 @@ const mapStateToProps = (rootState, props) => ({
 });
 
 const actions = {
+	updatePost,
 	createReaction,
 	addNewReaction,
 	deletePost,

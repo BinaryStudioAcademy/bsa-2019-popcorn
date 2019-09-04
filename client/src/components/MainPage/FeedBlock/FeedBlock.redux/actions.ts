@@ -3,12 +3,14 @@ import {
 	ADD_NEW_REACTION,
 	CREATE_COMMENT,
 	CREATE_REACTION,
-	FETCH_POSTS,
 	DELETE_POST,
-	DELETE_POST_FROM_LIST
+	DELETE_POST_FROM_LIST,
+	FETCH_POSTS,
+	UPDATE_POST
 } from './actionTypes';
 import IComment from '../../Post/IComment';
 import IReaction from '../../Post/IReaction';
+import IPost from '../../Post/IPost';
 
 export const fetchPosts = () => {
 	return {
@@ -74,6 +76,14 @@ export const deletePostFromList = (id: string) => {
 		type: DELETE_POST_FROM_LIST,
 		payload: {
 			id
+		}
+	};
+};
+export const updatePost = (post: IPost) => {
+	return {
+		type: UPDATE_POST,
+		payload: {
+			post
 		}
 	};
 };

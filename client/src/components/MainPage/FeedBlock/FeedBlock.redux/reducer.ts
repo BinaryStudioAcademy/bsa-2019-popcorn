@@ -2,7 +2,8 @@ import {
 	ADD_NEW_COMMENT,
 	ADD_NEW_REACTION,
 	DELETE_POST_FROM_LIST,
-	SET_POSTS
+	SET_POSTS,
+	UPDATE_POST
 } from './actionTypes';
 import IComment from '../../Post/IComment';
 import findIndexInArray from '../../../../helpers/findIndexInArray';
@@ -64,6 +65,26 @@ export default function(state = initialState, action) {
 			return {
 				...state,
 				posts: [...postsList]
+			};
+		case UPDATE_POST:
+			const updatePost = action.payload.post;
+			if (!updatePost || !state.posts) {
+				return state;
+			}
+
+			const postsListForUpdate = [...state.posts];
+
+			const indexUpdatePost = postsListForUpdate.findIndex(
+				elem => elem.id === updatePost.id
+			);
+			if (indexUpdatePost === -1) {
+				return state;
+			}
+
+			postsListForUpdate[indexUpdatePost] = updatePost;
+			return {
+				...state,
+				posts: [...postsListForUpdate]
 			};
 		default:
 			return state;

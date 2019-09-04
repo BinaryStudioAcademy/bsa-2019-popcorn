@@ -61,13 +61,20 @@ export const deletePostById = async (postId: string): Promise<any> => {
 };
 
 export const updateById = async (post: any): Promise<any> => {
-  return await getCustomRepository(PostRepository).update(
+  await getCustomRepository(PostRepository).update(
     { id: post.id },
     { ...post }
   );
+  return await getCustomRepository(PostRepository).findOne({
+    where: { id: post.id },
+    relations: ["user", "top", "survey", "event"]
+  });
 };
 export const getPostById = async (postId: string): Promise<Post> =>
-  await getCustomRepository(PostRepository).findOne({ id: postId });
+  await getCustomRepository(PostRepository).findOne({
+    where: { id: postId },
+    relations: ["user", "top", "survey", "event"]
+  });
 
 export const getPostsByUserId = async (userId: string): Promise<Post[]> =>
   await getCustomRepository(PostRepository).find({
