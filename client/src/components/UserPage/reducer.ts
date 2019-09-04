@@ -19,6 +19,11 @@ import {
 } from '../authorization/actionTypes';
 
 import { fetchUser } from '../../redux/routines';
+import {
+	ADD_NEW_REACTION,
+	ADD_NEW_COMMENT
+} from '../MainPage/FeedBlock/FeedBlock.redux/actionTypes';
+import findIndexInArray from '../../helpers/findIndexInArray';
 
 const initialState = {
 	profileInfo: null,
@@ -137,6 +142,34 @@ export default function(state = initialState, action) {
 			return {
 				...state,
 				loading: false
+			};
+		case ADD_NEW_COMMENT:
+			if (!state.userPosts) return state;
+			const posts = state.userPosts || new Array();
+			const comment = action.payload.comment.comment;
+
+			const index = findIndexInArray(posts, 'id', comment.post.id);
+			if (index === -1) return state;
+			const post = posts[index];
+			if (!post.comments) post.comments = [comment];
+			else post.comments.push(comment);
+			return {
+				...state,
+				userPosts: [...posts]
+			};
+		case ADD_NEW_REACTION:
+			if (!state.userPosts) return state;
+			const postsForNewReact = state.userPosts || new Array();
+			const { reactions, postId } = action.payload;
+
+			const i = findIndexInArray(postsForNewReact, 'id', postId);
+			if (i === -1) return state;
+			const postForNewReact = postsForNewReact[i];
+			postForNewReact.reactions = [...reactions];
+
+			return {
+				...state,
+				userPosts: [...postsForNewReact]
 			};
 		case AUTH_WITH_GOOGLE:
 			return {

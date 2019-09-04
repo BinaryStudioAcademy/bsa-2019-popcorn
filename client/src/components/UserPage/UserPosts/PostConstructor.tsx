@@ -9,9 +9,10 @@ import ImageUploader from '../../MainPage/ImageUploader/ImageUploader';
 import ChooseExtra from './PostExtra/choose-extra';
 import Extra from '././PostExtra/extra';
 import {
-	faPaperclip,
 	faCheckCircle,
-	faTimesCircle
+	faTimes,
+	faTimesCircle,
+	faPlus
 } from '@fortawesome/free-solid-svg-icons';
 
 import { setPost } from '../actions';
@@ -19,8 +20,7 @@ import { fetchPosts } from '../../MainPage/FeedBlock/FeedBlock.redux/actions';
 import { getUsersPosts } from '../../UserPage/actions';
 import Cropper from 'react-cropper';
 import { uploadFile } from '../../../services/file.service';
-import config from '../../../config';
-import Image from '../../shared/Image/Image';
+import MovieSearch from './MovieSearch';
 
 interface IPostConstructorProps {
 	userId: string;
@@ -31,6 +31,7 @@ interface IPostConstructorProps {
 	userAvatar: string;
 	croppedSaved: boolean;
 	saveCropped: () => void;
+	togglePostConstructor: (ev) => void;
 }
 
 interface IPostConstructorState {
@@ -44,6 +45,9 @@ interface IPostConstructorState {
 	croppedSaved: boolean;
 	reactions: Array<any>;
 	comments: Array<any>;
+	extraData: any;
+	extraType: string;
+	movieSearchTitle: null | string;
 }
 
 class PostConstructor extends React.Component<
@@ -59,10 +63,13 @@ class PostConstructor extends React.Component<
 			userId: this.props.userId,
 			extraLink: '',
 			extraTitle: '',
+			extraData: {},
+			extraType: '',
 			modalExtra: false,
 			croppedSaved: false,
 			reactions: [],
-			comments: []
+			comments: [],
+			movieSearchTitle: null
 		};
 		this.imageStateHandler = this.imageStateHandler.bind(this);
 		this.onSave = this.onSave.bind(this);
@@ -78,12 +85,25 @@ class PostConstructor extends React.Component<
 		data
 			? this.setState({
 					extraLink: data.link,
-					extraTitle: data.title
+					extraTitle: data.data.title,
+					extraData: data.data,
+					extraType: data.type
 			  })
 			: this.setState({
 					extraLink: '',
-					extraTitle: ''
+					extraTitle: '',
+					extraData: {},
+					extraType: ''
 			  });
+	}
+
+	static findMovie(str: string) {
+		let find = str.match(/\$(.+)(.*?)(\s*?)/g);
+		if (find && find[0]) {
+			find = find[0].split(' ');
+			if (find) return find[0].slice(1);
+		}
+		return '';
 	}
 
 	toggleModal() {
@@ -100,15 +120,32 @@ class PostConstructor extends React.Component<
 	}
 
 	onChangeData(value: string, keyword: string) {
+		const title = PostConstructor.findMovie(value);
 		this.setState({
 			...this.state,
-			[keyword]: value
+			[keyword]: value,
+			movieSearchTitle: title || null
 		});
 	}
 
 	onSave() {
 		if (this.state.description.trim() === '') return;
-		this.props.setPost(this.state);
+		const { extraType, extraData } = this.state;
+		if (extraType === 'top') {
+			this.setState({
+				extraData: {
+					id: extraData.id
+				}
+			});
+			this.props.setPost({
+				...this.state,
+				extraData: {
+					id: extraData.id
+				}
+			});
+		} else {
+			this.props.setPost(this.state);
+		}
 		this.props.fetchPosts();
 		this.setState({
 			image_url: '',
@@ -124,6 +161,7 @@ class PostConstructor extends React.Component<
 			image_url: ''
 		});
 	}
+
 	onSaveCropped() {
 		if (this.cropper.current) {
 			const dataUrl = this.cropper.current.getCroppedCanvas().toBlob(blob => {
@@ -131,102 +169,117 @@ class PostConstructor extends React.Component<
 				data.append('file', blob);
 				uploadFile(data)
 					.then(({ imageUrl }) => {
-						if (imageUrl.indexOf('\\') !== -1) {
-							let url = imageUrl.split(`\\`);
-							url.shift();
-							url = url.join('/');
-
-							url = '/' + url;
-
-							this.imageStateHandler(url, true);
-						} else {
-							let url = imageUrl.split(`/`);
-							url.shift();
-							url = url.join('/');
-
-							url = '/' + url;
-
-							this.imageStateHandler(url, true);
-						}
+						this.imageStateHandler(imageUrl, true);
 					})
 					.catch(error => {});
 			});
 		}
 	}
+	preparseDescription(description) {
+		const arr = description.split('@');
+		const res = arr.map(str => str.replace(/(.+)\{(.+)\}/, '$2'));
+		return res.join('');
+	}
 
+	addMovieCaption(movie, movieSearchTitle) {
+		const { description } = this.state;
+		const caption = `@${movie.id}{${movie.title}}`;
+		const newDescription = description.replace(`$${movieSearchTitle}`, caption);
+		this.setState({
+			description: newDescription,
+			movieSearchTitle: null
+		});
+	}
 	render() {
+		const { movieSearchTitle } = this.state;
 		return (
-			<div className="postconstr-wrp">
-				<div className="post-item-header">
-					<Image
-						src={this.props.userAvatar}
-						defaultSrc={config.DEFAULT_AVATAR}
-						alt="author"
-						className="post-item-avatar"
-					/>
-					<div className="post-item-info">
-						<div className="post-item-author-name">{this.props.userName}</div>
-					</div>
-				</div>
-				<div className="postconstr">
-					<textarea
-						placeholder="Create new post..."
-						value={this.state.description}
-						onChange={e => this.onChangeData(e.target.value, 'description')}
-					/>
-					<div className="extra-buttons">
-						<ImageUploader
-							isIcon={true}
-							imageHandler={uploadFile}
-							imageStateHandler={this.imageStateHandler}
+			<div className="post-constructor-modal">
+				<div
+					className="overlay"
+					onClick={ev => this.props.togglePostConstructor(ev)}
+				></div>
+				<div className="postconstr-wrp">
+					<p
+						className="close-modal"
+						onClick={ev => this.props.togglePostConstructor(ev)}
+					>
+						<FontAwesomeIcon icon={faTimes} />
+					</p>
+					<div className="postconstr">
+						{this.state.image_url && !this.state.croppedSaved && (
+							<div>
+								<Cropper
+									ref={this.cropper}
+									className="postconstr-img"
+									src={this.state.image_url}
+								/>
+								<span onClick={this.onSaveCropped}>
+									<FontAwesomeIcon
+										icon={faCheckCircle}
+										className="fontAwesomeIcon"
+									/>
+								</span>
+								<span onClick={this.onCancel}>
+									<FontAwesomeIcon
+										icon={faTimesCircle}
+										className={'fontAwesomeIcon'}
+									/>
+								</span>
+							</div>
+						)}
+						{this.state.image_url && this.state.croppedSaved && (
+							<div className="image-list-wrapper">
+								<div className="post-img-wrapper">
+									<img className="post-img" src={this.state.image_url} />
+								</div>
+								<div className="card-wrapper">
+									<button className="button-image">
+										<ImageUploader
+											icon={faPlus}
+											isIcon={true}
+											imageHandler={uploadFile}
+											imageStateHandler={this.imageStateHandler}
+										/>
+									</button>
+								</div>
+							</div>
+						)}
+						{this.state.extraLink && (
+							<Extra
+								link={this.state.extraLink}
+								data={this.state.extraData}
+								type={this.state.extraType}
+								clearExtra={this.setExtraData}
+							/>
+						)}
+						<textarea
+							placeholder="Create new post..."
+							value={this.preparseDescription(this.state.description)}
+							onChange={e => this.onChangeData(e.target.value, 'description')}
 						/>
-						<button className={'btn'} onClick={() => this.toggleModal()}>
-							<FontAwesomeIcon icon={faPaperclip} />
+						{movieSearchTitle && (
+							<div style={{ width: '100%' }}>
+								<MovieSearch
+									inputData={movieSearchTitle}
+									onSelectMovie={movie =>
+										this.addMovieCaption(movie, movieSearchTitle)
+									}
+									elasticProperties={['id', 'title']}
+								/>
+							</div>
+						)}
+
+						<ChooseExtra
+							imageStateHandler={this.imageStateHandler}
+							toggleModal={this.toggleModal}
+							setExtra={this.setExtraData}
+						/>
+					</div>
+					<div className="save-wrp">
+						<button className="save-btn" onClick={this.onSave}>
+							Share
 						</button>
 					</div>
-				</div>
-				{this.state.extraLink ? (
-					<Extra
-						title={this.state.extraTitle}
-						link={this.state.extraLink}
-						clearExtra={this.setExtraData}
-					/>
-				) : null}
-				{this.state.modalExtra ? (
-					<ChooseExtra
-						toggleModal={this.toggleModal}
-						setExtra={this.setExtraData}
-					/>
-				) : null}
-				{this.state.image_url ? (
-					!this.state.croppedSaved ? (
-						<div>
-							<Cropper
-								ref={this.cropper}
-								className="postconstr-img"
-								src={this.state.image_url}
-							/>
-							<span onClick={this.onSaveCropped}>
-								<FontAwesomeIcon
-									icon={faCheckCircle}
-									className="fontAwesomeIcon"
-								/>
-							</span>
-							<span onClick={this.onCancel}>
-								<FontAwesomeIcon
-									icon={faTimesCircle}
-									className={'fontAwesomeIcon'}
-								/>
-							</span>
-						</div>
-					) : (
-						<img className="postconstr-img" src={this.state.image_url} />
-					)
-				) : null}
-				<div className="save-wrp">
-					<button className="save-btn" onClick={this.onSave}>
-						Post
-					</button>
 				</div>
 			</div>
 		);

@@ -12,8 +12,19 @@ import {
 	FETCH_REVIEW_BY_USER_MOVIE_ID,
 	SET_REVIEW,
 	REMOVE_REVIEW_SET,
-	GET_CAST_CREW
+	GET_AWARDS,
+	FETCH_FILTRED_MOVIES,
+	LOAD_MORE_FILTRED_MOVIE,
+	SET_FILTERS,
+	GET_GENRES,
+	FETCH_STATISTICS
 } from './actionTypes';
+
+export const getGenres = (): any => {
+	return {
+		type: GET_GENRES
+	};
+};
 
 export const fetchMovieList = (): any => {
 	return {
@@ -21,6 +32,12 @@ export const fetchMovieList = (): any => {
 	};
 };
 
+export const fetchFiltredMovies = (filters): any => {
+	return {
+		type: FETCH_FILTRED_MOVIES,
+		payload: filters
+	};
+};
 export const setMovieSeries = (movie): any => {
 	return {
 		type: SET_MOVIE_SERIES,
@@ -30,9 +47,9 @@ export const setMovieSeries = (movie): any => {
 	};
 };
 
-export const fetchCastCrew = (id): any => {
+export const fetchAwards = (id): any => {
 	return {
-		type: GET_CAST_CREW,
+		type: GET_AWARDS,
 		payload: {
 			id
 		}
@@ -69,6 +86,15 @@ export const fetchMovie = (movieId: string): object => {
 		type: FETCH_MOVIE_BY_ID,
 		payload: {
 			movieId
+		}
+	};
+};
+
+export const setFilters = (filters: any): object => {
+	return {
+		type: SET_FILTERS,
+		payload: {
+			filters
 		}
 	};
 };
@@ -110,6 +136,21 @@ export const loadMoreMovie = (size: number, from: number): any => {
 	};
 };
 
+export const loadMoreFiltredMovie = (
+	size: number,
+	from: number,
+	filters: any
+): any => {
+	return {
+		type: LOAD_MORE_FILTRED_MOVIE,
+		payload: {
+			size,
+			from,
+			filters
+		}
+	};
+};
+
 export const fetchReviewByMovieUserId = (
 	userId: string,
 	movieId: string
@@ -143,5 +184,14 @@ export const setReview = (
 export const removeReviewSet = () => {
 	return {
 		type: REMOVE_REVIEW_SET
+	};
+};
+
+export const fetchStatistics = (movieId: string) => {
+	return {
+		type: FETCH_STATISTICS,
+		payload: {
+			movieId
+		}
 	};
 };

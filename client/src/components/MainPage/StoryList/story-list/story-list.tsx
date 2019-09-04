@@ -16,6 +16,7 @@ interface IStoryListItem {
 	id: string;
 	caption: string;
 	image_url: string;
+	backgroundColor: string;
 	user: {
 		avatar: string;
 		id: string;
@@ -46,8 +47,6 @@ interface IProps {
 	newStory: INewStory;
 	cursorPosition: { start: number; end: number };
 	setCaption: (caption: string) => any;
-	top: { id: string; name: string; any };
-	survey: { id: string; name: string; any };
 	saveImage: (url: string) => any;
 	changeActivity: (
 		type: string,

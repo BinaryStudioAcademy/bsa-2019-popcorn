@@ -2,17 +2,37 @@ import React from 'react';
 import { Redirect } from 'react-router';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import ChooseExtraOption from './choose-extra-option';
+import ImageUploader from '../../../MainPage/ImageUploader/ImageUploader';
+import { uploadFile } from './../../../../services/file.service';
+
 import {
 	faArrowCircleLeft,
 	faChevronRight,
-	faTimesCircle
+	faTimesCircle,
+	faTasks,
+	faTrophy,
+	faCalendarAlt
 } from '@fortawesome/free-solid-svg-icons';
 
-const options = ['survey', 'top', 'event'];
+const options = [
+	{
+		title: 'survey',
+		icon: faTasks
+	},
+	{
+		title: 'top',
+		icon: faTrophy
+	},
+	{
+		title: 'event',
+		icon: faCalendarAlt
+	}
+];
 
 interface IPropsExtra {
 	toggleModal: () => any;
 	setExtra: (data: any) => any;
+	imageStateHandler: (data, croppedSaved?: boolean) => any;
 }
 
 interface IStateExtra {
@@ -38,52 +58,41 @@ class ChooseExtra extends React.Component<IPropsExtra, IStateExtra> {
 	}
 
 	render() {
-		const { toggleModal } = this.props;
+		const { toggleModal, imageStateHandler } = this.props;
 
 		return (
 			<>
-				{this.state.modalOption ? (
+				{this.state.modalOption && (
 					<ChooseExtraOption
 						setExtra={this.props.setExtra}
 						toggleModalOption={this.toggleModalOption}
 						option={this.state.option}
 					/>
-				) : (
-					<div className={'modal modal-story'}>
-						<div className={'nav-block-wrp'}>
-							<span onClick={() => toggleModal()}>
-								<FontAwesomeIcon
-									icon={faArrowCircleLeft}
-									className={'fontAwesomeIcon'}
-								/>
-							</span>
-							<span onClick={() => toggleModal()}>
-								<FontAwesomeIcon
-									icon={faTimesCircle}
-									className={'fontAwesomeIcon'}
-								/>
-							</span>
-						</div>
-						<div className={'content-extra'}>
-							{options &&
-								options.map((option, i) => {
-									return (
-										<div
-											key={i}
-											className={'extra-item'}
-											onClick={() => this.toggleModalOption(option)}
-										>
-											<span>Add {option}</span>
-											<FontAwesomeIcon
-												icon={faChevronRight}
-												style={{ color: '#ffab07' }}
-											/>
-										</div>
-									);
-								})}
-						</div>
-					</div>
 				)}
+				<div className={'extra-buttons'}>
+					{options &&
+						options.map((option, i) => {
+							return (
+								<div
+									key={i}
+									className={'extra-item'}
+									onClick={() => this.toggleModalOption(option.title)}
+								>
+									<FontAwesomeIcon className="extra-icon" icon={option.icon} />
+									<span className={'extra-title'}>
+										{option.title.charAt(0).toUpperCase() +
+											option.title.slice(1)}
+									</span>
+								</div>
+							);
+						})}
+					<ImageUploader
+						postContructor={true}
+						isIcon={true}
+						imageHandler={uploadFile}
+						imageStateHandler={imageStateHandler}
+					/>
+				</div>
 			</>
 		);
 	}

@@ -1,24 +1,28 @@
 import { Form } from "multiparty";
+import { upload } from "./image.service";
+const path = require("path");
 const uuid = require("uuid/v4");
 const fs = require("fs");
 
 export const uploadFile = req =>
-  new Promise<string>((resolve, reject) => {
+  new Promise<any>((resolve, reject) => {
     const contentType = req.headers["content-type"];
 
     if (contentType && contentType.indexOf("multipart") === 0) {
       const form = new Form({
         autoFiles: true,
-        uploadDir: "public/files",
+        uploadDir: path.resolve(`${__dirname}/../../client/build/images`),
         maxFilesSize: 1048576 * 3
       });
       form.parse(req, function(err, fields, files): any {
-        console.log(files);
         if (err) return reject(err);
 
-        if (files.file) return resolve(files.file[0].path);
-
-        if (files.image) return resolve(files.image[0].path);
+        const file = Buffer.from(
+          fs.readFileSync(path.resolve(files.file[0].path))
+        ).toString("base64");
+        upload(file)
+          .then(url => resolve(url))
+          .catch(e => reject(e));
       });
     } else if (contentType && contentType === "octet-stream") {
       const buffer = [];
@@ -30,12 +34,9 @@ export const uploadFile = req =>
         const concat = Buffer.concat(buffer);
         req.body = JSON.parse(concat.toString("utf8"));
 
-        const format = req.body.format.split("/").pop();
-        const name = `public/files/${uuid()}.${format}`;
-        fs.writeFile(name, req.body.base, "base64", err => {
-          if (err) return reject(err);
-          return resolve(name);
-        });
+        upload(req.body.base)
+          .then(url => resolve(url))
+          .catch(e => reject(e));
       });
     } else reject(new Error("Bad request"));
   });

@@ -1,31 +1,28 @@
 import React from 'react';
 import AwardDescription from './AwardDescription/AwardDescription';
 import AwardTitle from './AwardTitle/AwardTitle';
+import './AwardContent.scss';
+
 interface IAwardContent {
-	isWinner: boolean;
 	title: string;
-	year: number;
-	nominationName: string;
-	gender: string;
-	winnerName?: string;
+	subtitle: string;
+	nominations: any;
 }
 const AwardContent: React.FC<IAwardContent> = ({
-	isWinner,
 	title,
-	year,
-	nominationName,
-	gender,
-	winnerName
+	nominations,
+	subtitle
 }) => {
 	return (
-		<div>
-			<AwardTitle title={title} year={year} />
-			<AwardDescription
-				isWinner={isWinner}
-				nominationName={nominationName}
-				gender={gender}
-				winnerName={winnerName}
-			/>
+		<div style={{ marginLeft: '15px' }}>
+			<AwardTitle title={title} />
+			<div className="award-subtitle">{subtitle}</div>
+			{nominations.categories.map(el => (
+				<AwardDescription
+					nominationName={el.category}
+					nominationWinner={el.names}
+				/>
+			))}
 		</div>
 	);
 };

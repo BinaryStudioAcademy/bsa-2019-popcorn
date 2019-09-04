@@ -11,9 +11,12 @@ type TMovie = {
 	budget: number;
 	vote_average: string;
 	video: string;
-	cast: string;
+	cast: any;
+	mainCast: string;
+	crew: any;
 	messages: IDiscussionMessage[];
 	hasVideo: boolean;
+	imdb_id: string;
 };
 
 export default TMovie;

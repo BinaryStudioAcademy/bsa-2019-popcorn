@@ -14,6 +14,7 @@ import {
 	deleteTop
 } from './UserTops.redux/actions';
 import { ITopItem, convertServerDataFormatToClient } from './UserTops.service';
+
 export interface IUserTopsState {
 	topList: any;
 	isCreated: boolean;
@@ -25,9 +26,10 @@ interface IUserTopProps {
 	addTop: (newTop: any) => any;
 	updateTop: (updatedTop: any) => any;
 	deleteTop: (topId: string) => any;
-	uploadImage: (data: FormData, titleId: string) => void;
+	uploadImage: (data: FormData, topId: string) => void;
 	userId: string;
-	userRole: string;
+	selectedUserId: string;
+	isOwnData: boolean;
 	uploadUrl: string;
 	urlForTop: string;
 	location?: {
@@ -40,61 +42,12 @@ interface IUserTopProps {
 	};
 }
 
-// add user info to each top
-// const topItemsMock: ITopItem[] = [
-// 	{
-// 		id: '1',
-// 		title: 'My Top 1',
-// 		topImageUrl: '',
-// 		moviesList: [
-// 			{ title: 'The Avengers', id: '1', comment: 'Nice' },
-// 			{ title: 'Spider-Man', id: '2', comment: 'Nice' },
-// 			{ title: 'Batman', id: '3', comment: 'Nice' }
-// 		],
-// 		isOwnTop: true
-// 	},
-// 	{
-// 		id: '2',
-// 		title: 'My Top 2',
-// 		topImageUrl: '',
-// 		moviesList: [
-// 			{ title: 'The Avengers', id: '1', comment: 'Nice' },
-// 			{ title: 'Spider-Man', id: '2', comment: 'Nice' },
-// 			{ title: 'Batman', id: '3', comment: 'Nice' }
-// 		],
-// 		isOwnTop: true
-// 	},
-// 	{
-// 		id: '3',
-// 		title: 'My Top 3',
-// 		topImageUrl: '',
-// 		moviesList: [
-// 			{ title: 'The Avengers', id: '1', comment: 'Nice' },
-// 			{ title: 'Spider-Man', id: '2', comment: 'Nice' },
-// 			{ title: 'Batman', id: '3', comment: 'Nice' }
-// 		],
-// 		isOwnTop: true
-// 	},
-// 	{
-// 		id: '4',
-// 		title: "Somebody's Top",
-// 		topImageUrl: 'https://www.w3schools.com/images/colorpicker.gif',
-// 		moviesList: [
-// 			{ title: 'The Avengers', id: '1', comment: 'Nice' },
-// 			{ title: 'Spider-Man', id: '2', comment: 'Nice' },
-// 			{ title: 'Batman', id: '3', comment: 'Nice' }
-// 		],
-// 		isOwnTop: false
-// 	}
-// ];
-
 const newTop = (): ITopItem => {
 	return {
 		id: Date.now().toString(),
 		title: '',
 		moviesList: [],
 		topImageUrl: '',
-		isOwnTop: true,
 		isNewTop: true
 	};
 };
@@ -110,7 +63,7 @@ class UserTops extends React.Component<IUserTopProps, IUserTopsState> {
 	}
 
 	componentDidMount() {
-		this.props.fetchTops(this.props.userId);
+		this.props.fetchTops(this.props.selectedUserId);
 	}
 
 	static getDerivedStateFromProps(props, state) {
@@ -124,8 +77,6 @@ class UserTops extends React.Component<IUserTopProps, IUserTopsState> {
 	}
 
 	deleteTop = (top: ITopItem) => {
-		// console.log(top.id);
-
 		if (top.isNewTop) {
 			const topList = this.state.topList.filter(
 				(topItem: ITopItem) => topItem.id !== top.id
@@ -139,7 +90,6 @@ class UserTops extends React.Component<IUserTopProps, IUserTopsState> {
 
 	createTop = () => {
 		const { isCreated } = this.state;
-		// console.log(isCreated);
 
 		if (!isCreated) {
 			const { topList } = this.state;
@@ -153,47 +103,20 @@ class UserTops extends React.Component<IUserTopProps, IUserTopsState> {
 	};
 
 	saveUserTop = (updatedTopItem: ITopItem) => {
-		// if (updatedTopItem.isNewTop) {
-		// 	delete updatedTopItem.isNewTop;
-		// }
-
 		if (updatedTopItem.isNewTop) {
-			// console.log('creating');
-
-			// delete updatedTopItem.isNewTop;
-			// delete updatedTopItem.isOwnTop;
-
 			const addedTop: any = Object.assign({}, updatedTopItem);
 			addedTop.userId = this.props.userId;
 
 			this.props.addTop(addedTop);
-			this.setState({ isAction: true });
+			this.setState({ isAction: true, isCreated: false });
 		} else {
-			// console.log('update');
-
 			const updatedTop: any = Object.assign({}, updatedTopItem);
 			updatedTop.userId = this.props.userId;
 
 			this.props.updateTop(updatedTop);
-			this.setState({ isAction: true });
+			this.setState({ isAction: true, isCreated: false });
 		}
-
-		// const topList = this.state.topList.map(topItem =>
-		// 	topItem.id === updatedTopItem.id ? updatedTopItem : topItem
-		// );
-
-		// this.setState({ topList, isCreated: false });
 	};
-
-	isOwnTop(top) {
-		const { userId, userRole } = this.props;
-		if (top.user) {
-			// delete this check when top will have user info
-			return userRole === 'admin' || userId === top.user.userId;
-		} else {
-			return true;
-		}
-	}
 
 	render() {
 		const url_callback =
@@ -206,7 +129,6 @@ class UserTops extends React.Component<IUserTopProps, IUserTopsState> {
 				: null;
 
 		const topList = this.state.topList;
-		console.log(topList);
 
 		if (!topList) {
 			return <Spinner />;
@@ -219,27 +141,24 @@ class UserTops extends React.Component<IUserTopProps, IUserTopsState> {
 						Back to story
 					</button>
 				)}
-				<div className="create-top-button hover" onClick={this.createTop}>
-					Create Top
-				</div>
-				{topList.map(
-					(topItem: ITopItem) =>
-						((this.isOwnTop(topItem) &&
-							window.location.pathname ==
-								'/user-page/' + this.props.userId + '/tops') ||
-							window.location.pathname == '/tops/') && (
-							<TopItem
-								key={topItem.id}
-								saveUserTop={this.saveUserTop}
-								topItem={topItem}
-								isOwnTop={this.isOwnTop(topItem)}
-								deleteTop={this.deleteTop}
-								uploadUrl={this.props.uploadUrl}
-								urlForTop={this.props.urlForTop}
-								uploadImage={this.props.uploadImage}
-							/>
-						)
+				{this.props.isOwnData && (
+					<div className="create-top-button hover" onClick={this.createTop}>
+						Create Top
+					</div>
 				)}
+
+				{topList.map((topItem: ITopItem) => (
+					<TopItem
+						key={topItem.id}
+						saveUserTop={this.saveUserTop}
+						topItem={topItem}
+						isOwnData={this.props.isOwnData}
+						deleteTop={this.deleteTop}
+						uploadUrl={this.props.uploadUrl}
+						urlForTop={this.props.urlForTop}
+						uploadImage={this.props.uploadImage}
+					/>
+				))}
 			</div>
 		);
 	}
@@ -248,7 +167,6 @@ class UserTops extends React.Component<IUserTopProps, IUserTopsState> {
 const mapStateToProps = (rootState, props) => ({
 	...props,
 	userId: rootState.profile.profileInfo.id,
-	userRole: rootState.profile.profileInfo.role,
 	uploadUrl: rootState.userTops.uploadUrl,
 	urlForTop: rootState.userTops.urlForTop,
 	topList: rootState.userTops.topList

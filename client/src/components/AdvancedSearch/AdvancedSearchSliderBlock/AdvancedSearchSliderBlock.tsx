@@ -21,6 +21,8 @@ type AdvancedSearchSliderBlockProps = {
 	min: number;
 	max: number;
 	step: number;
+	marks: object;
+	tooltip: string;
 };
 
 class AdvancedSearchSliderBlock extends React.Component<
@@ -41,6 +43,7 @@ class AdvancedSearchSliderBlock extends React.Component<
 				<div className="slider-header">{this.props.header}</div>
 				<div className="slider-wrp">
 					<Range
+						tipFormatter={value => `${value} ${this.props.tooltip}`}
 						onChange={this.handleSliderChange}
 						id="2"
 						min={this.props.min}
@@ -48,6 +51,7 @@ class AdvancedSearchSliderBlock extends React.Component<
 						step={this.props.step}
 						railStyle={railStyle}
 						defaultValue={[this.props.min, this.props.max]}
+						marks={this.props.marks}
 					/>
 				</div>
 			</div>

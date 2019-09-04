@@ -1,24 +1,30 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronDown } from '@fortawesome/free-solid-svg-icons';
 import './Header.scss';
 import messageIcon from '../../../assets/icons/general/header/message-icon.svg';
-import notifyIcon from '../../../assets/icons/general/header/notify-icon.svg';
 import logo from '../../../assets/icons/general/popcorn-logo.svg';
 import MovieSearch from '../../MovieList/MovieSearch/index';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { fetchFilms } from '../Header/actions';
+import {
+	fetchFilms,
+	getUnreadNotifications,
+	setNotificationIsRead,
+	getFirebaseToken,
+	deleteFirebaseToken
+} from '../Header/actions';
 import { unauthorize } from '../../authorization/actions';
 import { NavLink, Link } from 'react-router-dom';
 import { setMovieSeries } from '../../MovieSeriesPage/Movie.redux/actions';
 import config from '../../../config';
 import Image from '../Image/Image';
 import Notification from './Notification';
-
+import { withFirebase } from '../../Firebase';
+import { Activity } from '../../ActivityPage/ActivityList/ActivityList';
+import ContentSearch from '../ContentSearch';
 interface IProps {
 	userInfo: {
-		//temporary put ? to use mocks inside component
 		id: string;
 		name: string;
 		image: string;
@@ -37,6 +43,15 @@ interface IProps {
 	alreadySearch: boolean;
 	setMovieSeries: (movie: any) => any;
 	unauthorize: () => void;
+	deleteFirebaseToken: (firebaseToken: any) => void;
+	sendTokenToServer: (token: string | null) => void;
+	getUnreadNotifications: (userId: string) => void;
+	setNotificationIsRead: (notificationId: string) => void;
+	unreadNotifications: Activity[];
+	firebase?: any;
+	firebaseToken: string | null | undefined;
+	getFirebaseToken: (firebase: any) => void;
+	history: any;
 }
 
 const Header = ({
@@ -45,7 +60,15 @@ const Header = ({
 	fetchFilms,
 	alreadySearch,
 	setMovieSeries,
-	unauthorize
+	unauthorize,
+	getUnreadNotifications,
+	setNotificationIsRead,
+	unreadNotifications,
+	firebase,
+	firebaseToken,
+	getFirebaseToken,
+	deleteFirebaseToken,
+	history
 }: IProps) => {
 	const MOVIES_IN_CINEMA = 'Movies in cinema';
 	const MOVIE_TOPS = 'Movie tops';
@@ -61,7 +84,11 @@ const Header = ({
 	const LOGOUT = 'Logout';
 
 	const { avatar } = userInfo;
-
+	useEffect(() => {
+		if (firebaseToken === undefined) {
+			getFirebaseToken(firebase);
+		}
+	});
 	return (
 		<div className="header">
 			<NavLink to="/" className="header-logo-link">
@@ -122,17 +149,19 @@ const Header = ({
 					</Link>
 				</div>
 			</button>
-			<MovieSearch
-				movies={moviesSearch}
-				fetchFilms={fetchFilms}
-				alreadySearch={alreadySearch}
-				setMovieSeries={setMovieSeries}
-			/>
+			<ContentSearch />
 			<div className="notifications">
 				<div>
 					<img className="message-icon hover" src={messageIcon} alt="message" />
 				</div>
-				<Notification userInfo={userInfo} />
+				{
+					<Notification
+						userInfo={userInfo}
+						getUnreadNotifications={getUnreadNotifications}
+						setNotificationIsRead={setNotificationIsRead}
+						unreadNotifications={unreadNotifications}
+					/>
+				}
 			</div>
 			<div className="user-info header-buttons hover">
 				<Image src={avatar} defaultSrc={config.DEFAULT_AVATAR} alt="avatar" />
@@ -148,24 +177,37 @@ const Header = ({
 					<Link aria-current="page" className="hover" to="/settings">
 						{SETTINGS}
 					</Link>
-					<a onClick={() => unauthorize()}>{LOGOUT}</a>
+					<a
+						onClick={() => {
+							deleteFirebaseToken(firebaseToken);
+							unauthorize();
+						}}
+					>
+						{LOGOUT}
+					</a>
 				</div>
 			</div>
 		</div>
 	);
 };
-
+const HeaderWithFirebase = withFirebase(Header);
 const mapStateToProps = (rootState, props) => ({
 	...props,
 	userInfo: rootState.profile.profileInfo,
 	moviesSearch: rootState.movie.moviesSearch,
-	alreadySearch: rootState.movie.alreadySearch
+	alreadySearch: rootState.movie.alreadySearch,
+	unreadNotifications: rootState.notification.unreadNotifications,
+	firebaseToken: rootState.notification.firebaseToken
 });
 
 const actions = {
 	fetchFilms,
 	setMovieSeries,
-	unauthorize
+	unauthorize,
+	getUnreadNotifications,
+	setNotificationIsRead,
+	getFirebaseToken,
+	deleteFirebaseToken
 };
 
 const mapDispatchToProps = dispatch => bindActionCreators(actions, dispatch);
@@ -173,4 +215,4 @@ const mapDispatchToProps = dispatch => bindActionCreators(actions, dispatch);
 export default connect(
 	mapStateToProps,
 	mapDispatchToProps
-)(Header);
+)(HeaderWithFirebase);

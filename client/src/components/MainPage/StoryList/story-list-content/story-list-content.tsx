@@ -7,6 +7,10 @@ interface IStoryListItem {
 	id: string;
 	caption: string;
 	image_url: string;
+	backgroundColor: string;
+	fontColor?: string;
+	textPositionX?: number;
+	textPositionY?: number;
 	user: {
 		avatar: string;
 		id: string;
@@ -61,6 +65,8 @@ class StoryListContent extends Component<IStoryListItemsProps> {
 							src={avatar || config.DEFAULT_AVATAR}
 						/>
 						<StoryVoting
+							backImage={item.image_url}
+							backgroundColor={item.backgroundColor}
 							header={voting.header}
 							options={voting.options}
 							deltaPositionForHeader={{
@@ -76,7 +82,7 @@ class StoryListContent extends Component<IStoryListItemsProps> {
 							inEditor={false}
 							image_url={voting.backImage || ''}
 						/>
-						<div className="story-name">{item.caption}</div>
+						{/* /	<div className="story-name">{item.caption}</div> */}
 					</div>
 				);
 			}
@@ -86,9 +92,13 @@ class StoryListContent extends Component<IStoryListItemsProps> {
 					key={i}
 					imageUrl={item.image_url}
 					name={item.caption}
+					backgroundColor={item.backgroundColor}
 					avatar={item.user.avatar}
 					openViewer={this.props.openViewer}
 					index={i}
+					fontColor={item.fontColor}
+					textPositionX={item.textPositionX}
+					textPositionY={item.textPositionY}
 				/>
 			);
 		});

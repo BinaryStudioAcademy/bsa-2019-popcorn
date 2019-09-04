@@ -4,7 +4,7 @@ import Login from '../../components/authorization/Login/Login';
 import Registration from '../../components/authorization/Registration/index';
 import Main from './../Main/main';
 import NotFound from './../../components/NotFound/NotFound';
-
+import ConfirmChange from '../../components/ConfirmChange/ConfirmChange';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import {
@@ -15,7 +15,7 @@ import {
 	registration,
 	authWithGoogle
 } from '../../components/authorization/actions';
-
+import { confirmChanges } from '../../components/ConfirmChange/actions';
 import Spinner from '../../components/shared/Spinner/index';
 import Reset from '../../components/authorization/Reset';
 import Restore from '../../components/authorization/Restore';
@@ -43,6 +43,7 @@ interface IProps {
 	resetMessage: string;
 	restoreMessage: string;
 	fetchRestorePassword: (password: string, token: string) => any;
+	confirmChanges: (token: string) => any;
 	authWithGoogle: () => any;
 }
 
@@ -57,7 +58,8 @@ const Routing = ({
 	fetchResetPassword,
 	restoreMessage,
 	fetchRestorePassword,
-	authWithGoogle
+	authWithGoogle,
+	confirmChanges
 }: IProps) => {
 	const token = localStorage.getItem('token');
 	if (token && !isAuthorized) {
@@ -112,6 +114,10 @@ const Routing = ({
 						/>
 					)}
 				/>
+				<Route
+					path="/confirm/:token"
+					component={props => <ConfirmChange confirm={confirmChanges} />}
+				/>
 				<Route path="/" component={Main} />
 				{/* Not found route */}
 				<Route path="*" exact component={NotFound} />
@@ -135,6 +141,7 @@ const actions = {
 	registration,
 	fetchResetPassword,
 	fetchRestorePassword,
+	confirmChanges,
 	authWithGoogle
 };
 

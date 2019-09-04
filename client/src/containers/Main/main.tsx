@@ -13,7 +13,7 @@ import EventList from '../../components/EventPage/EventList';
 import AdminPanelPage from '../../components/AdminPanelPage/AdminPanelPage';
 import SurveyPage from '../../components/SurveyPage/SurveyPage';
 import TopPage from '../../components/TopPage/TopPage';
-
+import AdvancedSearchPage from '../../components/AdvancedSearch/AdvancedSearchPage';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import Spinner from '../../components/shared/Spinner';
@@ -38,6 +38,7 @@ import {
 } from '../../components/UserPage/UserEvents/UserEvents.service';
 import TopList from '../../components/TopListPage/TopList';
 import SettingsPage from '../../components/UserSettings';
+import ResultList from '../../components/shared/ContentSearch/ResultList';
 
 const { notifications } = {
 	notifications: {
@@ -122,8 +123,16 @@ const Main = ({
 	return (
 		<div className={'main-wrap'}>
 			{isAuthorized ? <Header userInfo={userInfo} /> : null}
-			<div className="main-page">
-				<MainPageSidebar notifications={notifications} />
+			<div
+				className={
+					window.location.pathname === '/advanced-search'
+						? 'main-page-search'
+						: 'main-page'
+				}
+			>
+				{window.location.pathname !== '/advanced-search' ? (
+					<MainPageSidebar notifications={notifications} />
+				) : null}
 				<div
 				// style={{ width: 'calc(100vw - 205px)' }}
 				>
@@ -134,6 +143,7 @@ const Main = ({
 							path={'/settings'}
 							render={() => <SettingsPage mainPath={'/settings'} />}
 						/>
+						<Route path={'/content-search'} component={ResultList} />
 						<Route
 							path={`/events/:id`}
 							render={props =>
@@ -152,7 +162,7 @@ const Main = ({
 								EventListRender({ ...props, allEvents, getAllEvents })
 							}
 						/>
-
+						<Route path={`/advanced-search`} component={AdvancedSearchPage} />
 						<Route path={`/survey-page/:id`} component={SurveyPage} />
 						<Route path={`/admin-panel-page`} component={AdminPanelPage} />
 						<Route

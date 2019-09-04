@@ -2,7 +2,6 @@ import React from 'react';
 import { Switch, Route } from 'react-router-dom';
 import DiscussionComponent from './DiscussionComponent/DiscussionComponent';
 import FilmBasicTabComponent from './FilmBasicTabComponent/FilmBasicTabComponent';
-import MovieSeriesCastCrew from './MovieSeriesCastCrew/MovieSeriesCastCrew';
 import MovieSeriesReviews from './MovieSeriesReviews/MovieSeriesReviews';
 import MovieSeriesPosts from './MovieSeriesPosts/MovieSeriesPosts';
 import MovieSeriesAwards from './MovieSeriesAwards/MovieSeriesAwards';
@@ -62,16 +61,20 @@ interface IProps {
 	mainPath: string;
 	movie: TMovie;
 	currentUser: IDiscussionUser;
-	fetchCastCrew: (id: any) => any;
-	crewCast: any;
+	fetchAwards: (id: any) => any;
+	awards: any;
+	fetchStatistics: (movieId: string) => void;
+	statistics: any;
 }
 
 const MovieSeriesPageTabBody: React.SFC<IProps> = ({
 	mainPath,
 	movie,
 	currentUser,
-	fetchCastCrew,
-	crewCast
+	fetchAwards,
+	awards,
+	fetchStatistics,
+	statistics
 }) => {
 	return (
 		<div className={'movie-series-page-tab-body'}>
@@ -83,22 +86,30 @@ const MovieSeriesPageTabBody: React.SFC<IProps> = ({
 				/>
 				<Route
 					path={`${mainPath}/cast-crew`}
-					render={() => {
-						return (
-							<StaffCast
-								crewCast={crewCast}
-								fetchCastCrew={fetchCastCrew}
-								movieId={movie.id}
-							></StaffCast>
-						);
-					}}
+					render={() => <StaffCast movie={movie} />}
 				/>
 				<Route path={`${mainPath}/reviews`} component={MovieSeriesReviews} />
 				<Route path={`${mainPath}/posts`} component={MovieSeriesPosts} />
-				<Route path={`${mainPath}/awards`} component={MovieSeriesAwards} />
+				<Route
+					path={`${mainPath}/awards`}
+					render={() => {
+						return (
+							<MovieSeriesAwards
+								awards={awards}
+								imdbId={movie.imdb_id}
+								fetchAwards={fetchAwards}
+							/>
+						);
+					}}
+				/>
 				<Route
 					path={`${mainPath}/statistics`}
-					component={MovieSeriesStatistics}
+					render={() => (
+						<MovieSeriesStatistics
+							statistics={statistics}
+							fetchStatistics={() => fetchStatistics(movie.id)}
+						/>
+					)}
 				/>
 			</Switch>
 			<DiscussionComponent

@@ -12,7 +12,15 @@ import {
 	FETCH_REVIEW_BY_USER_MOVIE_ID_SUCCESS,
 	SET_REVIEW_SUCCESS,
 	REMOVE_REVIEW_SET,
-	SET_CAST_CREW
+	SET_AWARDS,
+	SET_FILTRED_MOVIE_LIST,
+	SET_LOAD_MORE_FILTRED_MOVIE,
+	SET_FILTERS,
+	SET_SHOW_SPINNER,
+	SET_HIDE_SPINNER,
+	SET_GENRES,
+	FETCH_STATISTICS,
+	FETCH_STATISTICS_SUCCESS
 } from './actionTypes';
 import TMovie from '../TMovie';
 import movieAdapter from '../movieAdapter';
@@ -29,7 +37,12 @@ const initialState: {
 	searchTitle: string;
 	isLoading: boolean;
 	ownReview: any;
-	crewCast: any;
+	awards: any;
+	movieSearchInAdvancedSearch: null | Array<TMovie>;
+	filters: any;
+	showSpinner: boolean;
+	genres: any;
+	statistics: any;
 } = {
 	moviesSearch: [],
 	alreadySearch: false,
@@ -42,7 +55,24 @@ const initialState: {
 	userRate: null,
 	fetchedMovie: null,
 	ownReview: null,
-	crewCast: null
+	awards: null,
+	movieSearchInAdvancedSearch: null,
+	filters: {
+		nameValue: '',
+		genresValues: [],
+		ratingValues: [],
+		yearValues: {
+			startDate: '1900-01-01',
+			endDate: '2100-01-01'
+		},
+		descriptionValue: '',
+		castValues: '',
+		crewValues: [],
+		durationValues: []
+	},
+	showSpinner: false,
+	genres: null,
+	statistics: null
 };
 
 export default function(state = initialState, action) {
@@ -59,17 +89,25 @@ export default function(state = initialState, action) {
 				movieList: (action.payload.movies || []).map(movieAdapter),
 				alreadySearch: true
 			};
+		case SET_FILTRED_MOVIE_LIST:
+			return {
+				...state,
+				showSpinner: false,
+				movieSearchInAdvancedSearch: (action.payload.movies || []).map(
+					movieAdapter
+				)
+			};
 		case SET_MOVIE_SERIES:
 			return {
 				...state,
 				movieSeries: action.payload.movie,
-				crewCast: null,
+				awards: null,
 				alreadySearch: true
 			};
-		case SET_CAST_CREW:
+		case SET_AWARDS:
 			return {
 				...state,
-				crewCast: action.payload.credits
+				awards: action.payload.awards
 			};
 		case FETCH_MOVIE_USER_RATE_SUCCESS:
 			return {
@@ -94,6 +132,11 @@ export default function(state = initialState, action) {
 				),
 				searchTitle: action.payload.searchTitle
 			};
+		case SET_GENRES:
+			return {
+				...state,
+				genres: action.payload.genres
+			};
 		case RESET_SEARCH_MOVIE:
 			return {
 				...state,
@@ -112,6 +155,29 @@ export default function(state = initialState, action) {
 					...(action.payload.movies || []).map(movieAdapter)
 				]
 			};
+		case SET_LOAD_MORE_FILTRED_MOVIE:
+			return {
+				...state,
+				showSpinner: false,
+				movieSearchInAdvancedSearch: (action.payload.movies || []).map(
+					movieAdapter
+				)
+			};
+		case SET_FILTERS:
+			return {
+				...state,
+				filters: action.payload.filters
+			};
+		case SET_SHOW_SPINNER:
+			return {
+				...state,
+				showSpinner: true
+			};
+		case SET_HIDE_SPINNER:
+			return {
+				...state,
+				showSpinner: false
+			};
 		case FETCH_REVIEW_BY_USER_MOVIE_ID_SUCCESS:
 			return {
 				...state,
@@ -126,6 +192,17 @@ export default function(state = initialState, action) {
 			return {
 				...state,
 				ownReview: null
+			};
+		case FETCH_STATISTICS:
+			return {
+				...state,
+				showSpinner: true
+			};
+		case FETCH_STATISTICS_SUCCESS:
+			return {
+				...state,
+				showSpinner: false,
+				statistics: action.payload.statistics
 			};
 		default:
 			return state;

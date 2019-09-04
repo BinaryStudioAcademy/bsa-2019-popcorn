@@ -21,7 +21,10 @@ import { Discussion } from "./Discussion";
 import { Watch } from "./Watch";
 import { Follower } from "./Follower";
 import { FavoriteList } from "./FavoriteList";
-
+import { Notification } from "./Notification";
+import { NotificationToken } from "./NotificationToken";
+import { MovieList } from "./MovieList";
+import { UserTemp } from "./UserTemp";
 export default [
   User,
   Post,
@@ -47,5 +50,9 @@ export default [
   Discussion,
   Follower,
   FavoriteList,
-  Watch
+  Watch,
+  Notification,
+  NotificationToken,
+  MovieList,
+  UserTemp
 ];

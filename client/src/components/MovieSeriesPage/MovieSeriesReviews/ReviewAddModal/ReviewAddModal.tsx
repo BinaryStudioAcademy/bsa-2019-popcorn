@@ -3,12 +3,17 @@ import Spinner from '../../../shared/Spinner';
 import './ReviewAddModal.scss';
 import MovieItem from '../../../MovieList/MovieListItem/MovieListItem';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTimes } from '@fortawesome/free-solid-svg-icons';
+import { faTimes, faStar } from '@fortawesome/free-solid-svg-icons';
 import { Redirect } from 'react-router';
+import TMovie from '../../../MovieSeriesPage/TMovie';
+import { ReactComponent as DurationIcon } from '../../../../assets/icons/general/movie/duration-icon.svg';
+import { ReactComponent as CloseIcon } from '../../../../assets/icons/general/closeIcon.svg';
+
+import getFilmDuration from '../../../../helpers/getFilmDuration';
 
 interface IProps {
 	ownReview: any;
-	movie: any;
+	movie: TMovie;
 	setModal: (boolean) => any;
 	setReview: (
 		userId: string,
@@ -76,28 +81,41 @@ class ReviewAddModal extends React.Component<IProps, IState> {
 		return (
 			<div className={'modal-wrp'}>
 				{redirect && <Redirect to={`/movies/${movieId}/reviews`} />}
-				<div className={'modal modal-story'}>
+				<div className={'modal modal-review-container'}>
 					{ownReview ? (
 						<div className="modal-review">
 							<div className="modal-title">
 								Write your opinion about <span>{movie.title}</span>
 							</div>
-							<div className="movie-item-for-review">
-								<MovieItem movie={movie} key={movie.id} />
+							<div className="movie-review-body">
+								<div className="movie-item-for-review">
+									<img className="movie-poster" src={movie.poster_path} />
+									<div className="create-review-movie-title">{movie.title}</div>
+									<div className="movie-secondary-info">
+										<div className="create-review-duration">
+											<DurationIcon className="create-review-duration-icon" />
+											{getFilmDuration(movie.runtime)}
+										</div>
+										<div>
+											<FontAwesomeIcon className="icon-star" icon={faStar} />
+											{movie.vote_average ? movie.vote_average : 0}
+										</div>
+									</div>
+								</div>
+								<textarea
+									autoFocus={true}
+									value={this.state.textArea}
+									onChange={e =>
+										this.setState({
+											...this.state,
+											textArea: e.target.value,
+											showError: false
+										})
+									}
+									placeholder="Write here..."
+									className="review-text-area"
+								></textarea>
 							</div>
-							<textarea
-								autoFocus={true}
-								value={this.state.textArea}
-								onChange={e =>
-									this.setState({
-										...this.state,
-										textArea: e.target.value,
-										showError: false
-									})
-								}
-								placeholder="Write here..."
-								className="review-text-area"
-							></textarea>
 							<div className="review-buttons">
 								<div
 									onClick={() => {
@@ -106,7 +124,7 @@ class ReviewAddModal extends React.Component<IProps, IState> {
 									}}
 									className="close-button"
 								>
-									<FontAwesomeIcon icon={faTimes} />
+									<CloseIcon />
 								</div>
 								<div className="edit-button-wrapper">
 									<div

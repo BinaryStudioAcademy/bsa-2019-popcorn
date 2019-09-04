@@ -5,4 +5,7 @@ export default interface INewStory {
 	type: string;
 	movieId: null | string;
 	movieOption: string;
+	backgroundColor: string;
+	fontColor: string;
+	textPosition: { x: number; y: number };
 }

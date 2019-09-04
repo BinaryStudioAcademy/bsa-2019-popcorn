@@ -1,9 +1,9 @@
-// @ts-ignore
 import searchIcon from '../../../assets/icons/general/header/search-icon.svg';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronDown } from '@fortawesome/free-solid-svg-icons';
 import React, { useState, useRef } from 'react';
 import MovieList from '../MovieList';
+import { NavLink } from 'react-router-dom';
 
 interface IMovieSearch {
 	movies: any;
@@ -62,8 +62,10 @@ const MovieSearch: React.FC<IMovieSearch> = ({
 				/>
 			</span>
 			<span className="filter hover">
-				Filter
-				<FontAwesomeIcon icon={faChevronDown} />
+				<NavLink to={'/advanced-search'}>
+					Filter
+					<FontAwesomeIcon icon={faChevronDown} />
+				</NavLink>
 				{focusInput && value.trim() ? (
 					<div className="modal">
 						{movies && movies.length > 0 ? (

@@ -1,0 +1,1 @@
+export const SAVE_MOVIE_LIST = 'SAVE_MOVIE_LIST';

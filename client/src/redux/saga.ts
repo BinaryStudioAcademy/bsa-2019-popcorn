@@ -13,7 +13,9 @@ import followSaga from '../components/UserPage/ProfileComponent/FollowSystem/Fol
 import settingsSaga from '../components/UserSettings/saga';
 import watchListSaga from '../components/UserPage/UserWatchList/saga';
 import searchMovieSaga from '../components/shared/MovieSearch/saga';
-
+import notificationSaga from '../components/shared/Header/saga';
+import contentSearchSaga from '../components/shared/ContentSearch/redux/saga';
+import movieListSaga from '../components/UserPage/UserLists/saga';
 export default function* rootSaga() {
 	yield all([
 		headerSaga(),
@@ -29,6 +31,9 @@ export default function* rootSaga() {
 		followSaga(),
 		settingsSaga(),
 		watchListSaga(),
-		searchMovieSaga()
+		searchMovieSaga(),
+		notificationSaga(),
+		contentSearchSaga(),
+		movieListSaga()
 	]);
 }

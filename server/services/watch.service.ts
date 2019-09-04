@@ -44,3 +44,6 @@ export const deleteWatch = (watchId: string, next) =>
 
 export const changeWatchStatus = (watchId: string, next) =>
   getCustomRepository(WatchRepository).changeStatus(watchId, next);
+
+export const getWatchStatus = (userId: string, movieId: string, next) =>
+  getCustomRepository(WatchRepository).getWatchStatus(userId, movieId, next);

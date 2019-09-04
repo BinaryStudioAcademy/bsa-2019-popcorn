@@ -24,4 +24,7 @@ export default interface IPost {
 		tagName: string;
 	}[];
 	reactions: Array<IReaction>;
+	survey: any;
+	top: any;
+	event: any;
 }

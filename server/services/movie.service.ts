@@ -2,11 +2,13 @@ import { Movie } from "../models/MovieModel";
 import { MovieRate } from "../models/movieRateModel";
 import MovieRepository, {
   getMovieVideoLinkById,
-  getCredits
+  getCredits,
+  getAwards,
+  getGenres
 } from "../repository/movie.repository";
 
 import MovieRateRepository from "../repository/movieRate.repository";
-import { getCustomRepository, Like, getRepository } from "typeorm";
+import { getCustomRepository } from "typeorm";
 import * as elasticRepository from "../repository/movieElastic.repository";
 import DiscussionRepository from "../repository/discussion.repository";
 import { ExtendedDiscussion, Discussion } from "models/DiscussionModel";
@@ -19,25 +21,44 @@ export const getMovies = async ({ size, from }): Promise<any[]> => {
   return data.map(movie => movie._source);
 };
 
-export const getCastCrewById = async (movieId: number): Promise<any> => {
-  const credits = await getCredits(movieId);
-  return credits.credits;
+export const getFiltredMovies = async (
+  { from, size },
+  filters
+): Promise<any[]> => {
+  let data = await elasticRepository.getFiltred(size, from, filters);
+  data = data.hits.hits;
+  return data.map(movie => movie._source);
+};
+
+export const getMoviesGenres = async (): Promise<any[]> => {
+  let genres = await getGenres();
+  return genres.genres;
+};
+
+export const getMovieAwards = async (imdbId: any): Promise<any> => {
+  let awardList = await getAwards(imdbId);
+  return awardList.data.movies[0].awards;
 };
 
 export const getMovieById = async (movieId: string): Promise<any> => {
   const data = await elasticRepository.getById(movieId);
   let movie = data.hits.hits[0]._source;
+
   const messages = await getCustomRepository(DiscussionRepository).getMessages(
     movieId
   );
   movie.messages = messages;
-  const rate = await getCustomRepository(MovieRateRepository)
-    .createQueryBuilder("movieRate")
-    .select("AVG(movieRate.rate)", "average")
-    .where("movieRate.movieId = :id", { id: movie.id })
-    .getRawOne();
+
+  const rate = await getCustomRepository(MovieRateRepository).getRateByMovieId(
+    movie.id
+  );
   movie.rate = rate ? parseFloat(rate.average).toFixed(2) : null;
+
   movie.video_link = await getMovieVideoLinkById(movie.id);
+
+  const credits = await getCredits(movieId);
+  movie.crew = credits.credits.crew;
+
   return movie;
 };
 
@@ -105,7 +126,6 @@ export const saveDiscussionMessage = async (
   const result = await getCustomRepository(DiscussionRepository).save(
     discussion
   );
-  console.log("saved discussion", result);
   return result;
 };
 
@@ -136,4 +156,14 @@ export const getMovieProperties = async (settings: string, next) => {
     properties
   );
   return elasticResponse.hits.hits[0]._source;
+};
+
+export const getMovieStatistics = async (movieId: string) => {
+  const statisticsByRate = await getCustomRepository(
+    MovieRateRepository
+  ).getStatisticsByMovieId(movieId);
+  const averageStatistics = await getCustomRepository(
+    MovieRateRepository
+  ).getAverageStatisticsByMovieId(movieId);
+  return { averageStatistics, statisticsByRate };
 };
