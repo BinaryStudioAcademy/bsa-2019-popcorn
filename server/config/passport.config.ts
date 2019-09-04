@@ -1,3 +1,4 @@
+// tslint:disable-next-line:no-var-requires
 const passport = require("passport");
 import { Strategy as LocalStrategy } from "passport-local";
 import { Strategy as JwtStrategy, ExtractJwt } from "passport-jwt";
