@@ -22,6 +22,12 @@ class CustomWaits {
             return true;
         }
     }
+
+    untilLoading() {
+        const loadingElement = $('//span[contains(., "Loading...")]');
+        loadingElement.waitForDisplayed(2000);
+        loadingElement.waitForDisplayed(5000, true);
+    }
 }
 
 module.exports = new CustomWaits();
