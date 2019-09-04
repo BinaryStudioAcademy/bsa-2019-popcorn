@@ -1,7 +1,7 @@
 import { Form } from "multiparty";
 import { upload } from "./image.service";
-import path from "path";
-import fs from "fs";
+const path = require("path");
+const fs = require("fs");
 
 export const uploadFile = req =>
   new Promise<any>((resolve, reject) => {

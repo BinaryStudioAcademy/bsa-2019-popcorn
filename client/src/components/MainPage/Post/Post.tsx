@@ -3,8 +3,8 @@ import AddComment from '../../shared/AddComment/AddComment';
 import './Post.scss';
 import { ReactComponent as SettingIcon } from '../../../assets/icons/general/settings.svg';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faHeart, faCalendarAlt } from '@fortawesome/free-regular-svg-icons';
-import { faShare, faTasks, faTrophy } from '@fortawesome/free-solid-svg-icons';
+import { faHeart } from '@fortawesome/free-regular-svg-icons';
+import { faShare } from '@fortawesome/free-solid-svg-icons';
 import Comment from '../Comment/Comment';
 import Tag from '../Tag/Tag';
 import PostEditModal from '../PostEditModal/PostEditModal';
@@ -12,8 +12,7 @@ import PostContent from '../PostContent/PostContent';
 import config from '../../../config';
 import Reactions from '../Reactions/Reactions';
 import PostReaction from './PostReaction/PostReaction';
-import { NavLink } from 'react-router-dom';
-import { Link } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 import IPost from './IPost';
 import IComment from './IComment';
 import IReaction from './IReaction';
@@ -91,9 +90,11 @@ class Post extends Component<IPostProps, IPostState> {
 				isOwn={this.isOwnPost()}
 				deletePost={this.deletePost}
 				editPost={() => this.props.setShowPostsConstructor(this.props.post)}
+				toggleModal={() => this.toggleModal()}
 			/>
 		) : null;
 	}
+
 	getType = () => {
 		const post = this.props.post;
 		if (post.survey) return 'survey';
@@ -101,6 +102,7 @@ class Post extends Component<IPostProps, IPostState> {
 		if (post.event) return 'event';
 		return 'Nothing';
 	};
+
 	parseDescription(description) {
 		const arr = description.split('@');
 		const res = arr.map(str =>
@@ -111,6 +113,7 @@ class Post extends Component<IPostProps, IPostState> {
 		);
 		return <JsxParser components={{ Link }} jsx={`<p>${res.join('')}</p>`} />;
 	}
+
 	nestComments(commentList) {
 		const commentMap = {};
 		commentList.forEach(comment => (commentMap[comment.id] = comment));

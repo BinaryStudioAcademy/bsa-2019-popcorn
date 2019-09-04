@@ -28,6 +28,7 @@ export class Post {
   description: string;
 
   @Column()
+  // tslint:disable-next-line:variable-name
   image_url: string;
 
   @Column({ nullable: true })
@@ -36,7 +37,7 @@ export class Post {
   @Column({ nullable: true })
   extraLink: string;
 
-  @ManyToOne(type => User, user => user.id, { cascade: true })
+  @ManyToOne(type => User, user => user.id)
   user: User;
 
   @Column()
