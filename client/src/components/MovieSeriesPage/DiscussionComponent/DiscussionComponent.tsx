@@ -40,7 +40,6 @@ class DiscussionComponent extends Component<
 		this.addSocketEvents(this.addMessage, this.state.roomId);
 	}
 	private newMessage = createRef<HTMLTextAreaElement>();
-	private userPhoto = createRef<HTMLImageElement>();
 	private discussionComponent = createRef<HTMLDivElement>();
 
 	addSocketEvents = (addMessage, roomId) => {
@@ -134,39 +133,44 @@ class DiscussionComponent extends Component<
 
 	render() {
 		const messages = this.state.messagesState;
+
 		return (
-			<div className="UserDiscussionComponent" id="scroller">
-				<div className="MessageContainer" ref={this.discussionComponent}>
-					{messages.map(message => (
-						<div className="messageItem" key={message.id}>
-							<img
-								src={message.user.avatar || config.DEFAULT_AVATAR}
-								alt="userPhoto"
-							/>
-							<div className="messageBody">
-								<div className="messageInfo">
-									<div className="name">
-										{message.user.id === this.props.currentUser.id
-											? 'Me '
-											: message.user.name}
+			<div className="user-discussion-component" id="scroller">
+				<div className="message-container" ref={this.discussionComponent}>
+					{messages.map(message => {
+						const isMyMessage = message.user.id === this.props.currentUser.id;
+						return (
+							<div
+								className={`message-item ${isMyMessage &&
+									'message-item-reverse'} `}
+								key={message.id}
+							>
+								<img
+									src={message.user.avatar || config.DEFAULT_AVATAR}
+									alt="userPhoto"
+								/>
+								<div className="message-body">
+									<div className="message-info">
+										<div className="name">
+											{isMyMessage ? 'Me ' : message.user.name}
+										</div>
+										<div className="date">
+											<Moment format=" D MMM HH:mm " local>
+												{String(message.createdAt)}
+											</Moment>
+										</div>
 									</div>
-									<div className="date">
-										&nbsp;
-										<Moment format=" D MMM HH:mm " local>
-											{String(message.createdAt)}
-										</Moment>
-									</div>
+									<div className="body">{message.text}</div>
 								</div>
-								<div className="body">{message.text}</div>
 							</div>
-						</div>
-					))}
+						);
+					})}
 				</div>
-				<div className="messageItem newMessageItem" tabIndex={0} id="anchor">
-					<div className="messageBody">
-						<div className="newMessage">
+				<div className="message-item new-message-item" tabIndex={0} id="anchor">
+					<div className="message-body">
+						<div className="new-message">
 							<textarea
-								className="newMessageInput"
+								className="new-message-input"
 								wrap="soft"
 								ref={this.newMessage}
 								placeholder="Type a message"
