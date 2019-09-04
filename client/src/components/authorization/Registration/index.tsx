@@ -5,6 +5,11 @@ import './Registration.scss';
 import { NavLink, Redirect } from 'react-router-dom';
 import logo from '../../../assets/icons/general/popcorn-logo.svg';
 import Spinner from '../../shared/Spinner';
+import {
+	FacebookLoginButton,
+	GoogleLoginButton
+} from 'react-social-login-buttons';
+import config from './../../../config';
 
 interface Values {
 	name: string;
@@ -228,6 +233,14 @@ class Registration extends React.Component<IProps, IState> {
 								Login
 							</NavLink>
 							<i className="icon icon-arrow-right"> > </i>
+							<div style={{ marginTop: 20 }}>
+								<a href={`${config.API_URL}/api/auth/google`}>
+									<GoogleLoginButton text={'Signup with Google'} />
+								</a>
+								<a href={`${config.API_URL}/api/auth/facebook`}>
+									<FacebookLoginButton text={'Signup with Facebook'} />
+								</a>
+							</div>
 						</div>
 					</div>
 				)}

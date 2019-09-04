@@ -8,7 +8,8 @@ import {
 	FacebookLoginButton,
 	GoogleLoginButton
 } from 'react-social-login-buttons';
-
+import * as queryString from 'query-string';
+import config from './../../../config';
 interface IValues {
 	email: string;
 	password: string;
@@ -18,7 +19,7 @@ interface IProps {
 	onSubmit: (values: IValues) => any;
 	isAuthorized: boolean;
 	loginError: string | null;
-	onAuthWithGoogle: () => any;
+	authWithSocial: (data: any) => any;
 }
 
 interface IState {
@@ -27,6 +28,20 @@ interface IState {
 
 class Login extends React.Component<IProps, IState, IValues> {
 	state: IState = { isLoading: false };
+
+	componentDidMount = () => {
+		const { location } = window;
+		const data = this.getUserFromQuery(location);
+		this.props.authWithSocial(data);
+	};
+	getUserFromQuery = location => {
+		if (!location.search) {
+			return null;
+		}
+		const data = queryString.parse(location.search).user;
+		//@ts-ignore
+		return JSON.parse(data);
+	};
 
 	linkToRegistration() {
 		return (
@@ -137,8 +152,14 @@ class Login extends React.Component<IProps, IState, IValues> {
 					<i className="icon icon-arrow-right" />
 				</div>
 				{this.linkToRegistration()}
-				<GoogleLoginButton onClick={() => this.props.onAuthWithGoogle()} />
-				<FacebookLoginButton />
+				<div style={{ marginTop: 20 }}>
+					<a href={`${config.API_URL}/api/auth/google`}>
+						<GoogleLoginButton />
+					</a>
+					<a href={`${config.API_URL}/api/auth/facebook`}>
+						<FacebookLoginButton />
+					</a>
+				</div>
 			</div>
 		) : (
 			<Redirect to="/" />

@@ -5,7 +5,7 @@ import {
 	FETCH_REGISTRATION,
 	FETCH_RESET_PASSWORD,
 	FETCH_RESTORE_PASSWORD,
-	AUTH_WITH_GOOGLE
+	AUTH_WITH_SOCIAL
 } from './actionTypes';
 import uuid from 'uuid/v4';
 
@@ -78,11 +78,11 @@ export const fetchRestorePassword = (password: string, token: string): any => {
 	};
 };
 
-export const authWithGoogle = (redirect_url: string) => {
+export const authWithSocial = (data: any) => {
 	return {
-		type: AUTH_WITH_GOOGLE,
+		type: AUTH_WITH_SOCIAL,
 		payload: {
-			redirect_url
+			data
 		}
 	};
 };
