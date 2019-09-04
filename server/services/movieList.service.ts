@@ -44,7 +44,9 @@ export const getMovieListDetails = async (movieListId: string) => {
     "title",
     "runtime",
     "poster_path",
-    "release_date"
+    "release_date",
+    "genres",
+    "overview"
   ];
 
   const elasticData = await elasticRepository.getPropertiesByIdValues(
@@ -53,11 +55,16 @@ export const getMovieListDetails = async (movieListId: string) => {
   );
 
   const movies = elasticData.hits.hits.map(data => data._source);
+  const moviesWithGenres = movies.map(movie => {
+    const genres = movie["genres"] ? JSON.parse(movie["genres"]) : [];
+    movie.genres = genres.map(genre => genre.name);
+    return movie;
+  });
 
   movies.sort(
     (a, b) =>
       moviesId.indexOf(a.id.toString()) - moviesId.indexOf(b.id.toString())
   );
 
-  return { movieList, movies };
+  return { movieList, movies: moviesWithGenres };
 };
