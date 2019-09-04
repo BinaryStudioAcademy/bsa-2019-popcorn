@@ -1,7 +1,7 @@
 import { Top } from "../models/TopModel";
 import TopRepository from "../repository/top.repository";
 import MovieInTopRepository from "../repository/movieInTop.repository";
-import { getCustomRepository, Like } from "typeorm";
+import { getCustomRepository } from "typeorm";
 import * as movieService from "./movie.service";
 import { getByIdValues } from "../repository/movieElastic.repository";
 

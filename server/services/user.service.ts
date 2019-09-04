@@ -1,6 +1,6 @@
 import { User } from "../models/UserModel";
 import UserRepository from "../repository/user.repository";
-import { getCustomRepository, Like } from "typeorm";
+import { getCustomRepository } from "typeorm";
 
 interface IResponse {
   data: { user?: User; users?: User[] };
