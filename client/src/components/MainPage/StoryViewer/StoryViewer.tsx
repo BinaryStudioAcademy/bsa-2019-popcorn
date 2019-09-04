@@ -202,7 +202,7 @@ class StoryViewer extends PureComponent<IProps, IState> {
 										/>
 										<ChatInput
 											chatId={this.getChatId(story.userInfo.userId)}
-											storyId={story.id}
+											story={story}
 										/>
 									</div>
 								)}
@@ -246,7 +246,7 @@ class StoryViewer extends PureComponent<IProps, IState> {
 												/>
 												<ChatInput
 													chatId={this.getChatId(story.userInfo.userId)}
-													storyId={story.id}
+													story={story}
 												/>
 												<span
 													style={{

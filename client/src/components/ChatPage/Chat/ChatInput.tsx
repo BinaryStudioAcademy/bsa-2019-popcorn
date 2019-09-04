@@ -1,22 +1,24 @@
 import React, { useState } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { createMessage } from '../ChatPage.redux/actions';
+import { createMessage, createChat } from '../ChatPage.redux/actions';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPaperPlane } from '@fortawesome/free-solid-svg-icons';
 
 interface IProps {
 	createMessage: (userId: string, chatId: string, body: any) => void;
+	createChat: (userId1: string, chatId2: string) => void;
 	chatId: string;
 	userId: string;
-	storyId?: string;
+	story?: any;
 }
 
 const ChatInput: React.FC<IProps> = ({
 	chatId,
 	userId,
 	createMessage,
-	storyId
+	createChat,
+	story
 }) => {
 	const [message, changeMessage] = useState('');
 	const handleKeyPress = e => {
@@ -26,7 +28,14 @@ const ChatInput: React.FC<IProps> = ({
 	const sendMessage = () => {
 		if (message.trim() === '') return;
 		changeMessage('');
-		createMessage(userId, chatId, { body: message, storyId });
+		if (!chatId) {
+			createChat(userId, story.userInfo.userId);
+			return; // to do: pass callback on creating message
+		}
+		createMessage(userId, chatId, {
+			body: message,
+			storyId: story && story.id
+		});
 	};
 
 	const onMessageChange = e => {
@@ -54,7 +63,8 @@ const mapStateToProps = (rootState, props) => ({
 });
 
 const actions = {
-	createMessage
+	createMessage,
+	createChat
 };
 const mapDispatchToProps = dispatch => bindActionCreators(actions, dispatch);
 
