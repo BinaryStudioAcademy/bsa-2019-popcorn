@@ -18,12 +18,12 @@ export default interface IPost {
 		link: string;
 		description: string;
 	};
-	comments?: Array<IComment>;
+	comments?: IComment[];
 	tags?: {
 		id: string;
 		tagName: string;
 	}[];
-	reactions: Array<IReaction>;
+	reactions: IReaction[];
 	survey: any;
 	top: any;
 	event: any;

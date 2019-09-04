@@ -2,10 +2,10 @@ import { User } from "./UserModel";
 
 export class MovieList {
   id: string;
-  created_at: Date;
+  createdAt: Date;
   title: string;
   description: string;
-  image_url: string;
+  imageUrl: string;
   isPrivate: boolean;
   moviesId: string[];
   user: User;

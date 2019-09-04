@@ -22,12 +22,9 @@ const WatchItem: React.FC<IProps> = props => {
 		poster_path,
 		title,
 		id: movieId,
-		release_date,
-		runtime,
-		genres
+		release_date
 	} = props.watchItem.movie;
 	const { moveToWatched, deleteWatchItem } = props;
-	const duration = getFilmDuration(runtime);
 	const [hover, setHover] = useState(false);
 
 	return (
@@ -45,7 +42,6 @@ const WatchItem: React.FC<IProps> = props => {
 							alt="poster"
 						/>
 					</NavLink>
-
 					{status === 'watched' ? (
 						<div
 							className={`absolute watch-status watched`}

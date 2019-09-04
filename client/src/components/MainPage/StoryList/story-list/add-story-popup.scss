@@ -23,7 +23,8 @@ $border-radius: 5px;
 	top: 50%;
 	left: 50%;
 	width: 360px;
-	height: 720px;
+	height: 100%;
+	max-height: 720px;
 	transform: translate(-50%, -50%);
 	background-color: $background-gray;
 	z-index: 9;
@@ -283,25 +284,36 @@ $border-radius: 5px;
 			}
 		}
 	}
+
 	.question-type {
-		width: 30%;
+		width: 150px;
 		background: $background-gray;
 		height: 30px;
 		font-family: $base-font-family;
 		font-weight: 500;
 		font-size: $menu-font-size;
 		border: none;
-		box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.37);
+		box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.2);
 		cursor: pointer;
 
 		&:focus {
 			outline: none;
 		}
 	}
+
 	.movie-add-wrp {
 		padding: 10px;
+
 		.edit-form {
 			padding: 0;
+
+			.MovieSearch {
+				margin-bottom: 10px;
+			}
+		}
+
+		.selected-movie {
+			margin-top: 20px;
 		}
 	}
 }

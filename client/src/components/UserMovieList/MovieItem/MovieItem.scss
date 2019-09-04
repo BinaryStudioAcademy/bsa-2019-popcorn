@@ -1,0 +1,51 @@
+@import '../../../styles/variables.scss';
+
+.MovieItem {
+	display: grid;
+	grid-template-columns: 140px 1fr;
+	grid-gap: 20px;
+	padding: 17px;
+	box-shadow: 0 0 5px -2px rgba(0, 0, 0, 0.438);
+
+	.movie-item-image-container {
+		font-size: 0;
+		img {
+			width: 100%;
+		}
+	}
+	.movie-item-main {
+		.movie-item-title {
+			font-size: $header-medium;
+			font-weight: 600;
+			line-height: 19px;
+			text-decoration: none;
+			color: $text-base-color;
+			transition: opacity 0.2s ease;
+			&:hover {
+				opacity: 0.8;
+			}
+			.movie-item-date {
+				font-weight: 400;
+				font-size: $base-font-size;
+			}
+		}
+		.movie-item-duration-genres {
+			font-size: 15px;
+			.duration {
+				color: $text-secondary-color;
+			}
+			.border-element {
+				color: $text-secondary-color;
+				font-weight: 400;
+			}
+			.genres {
+				color: $text-secondary-color;
+			}
+		}
+		.movie-item-overview {
+			text-align: justify;
+			margin-top: 20px;
+			font-size: $base-font-size;
+		}
+	}
+}
