@@ -138,11 +138,17 @@
 				font-weight: bold;
 				max-height: 25px;
 			}
+			.story-wrp {
+				display: block;
+				.story {
+					height: 177px;
+					width: 100px;
+					border-radius: 20px;
+				}
+			}
 			.incoming-message,
 			.outgoing-message {
 				max-width: 380px;
-				padding: 10px;
-				border-radius: 20px;
 				margin: 5px 0;
 				font-weight: 500;
 				word-wrap: break-word;
@@ -162,7 +168,11 @@
 			.incoming-message {
 				color: white;
 				margin-right: 50%;
-				background-color: $orange;
+				.incoming-message-text {
+					border-radius: 20px;
+					padding: 10px;
+					background-color: rgb(240, 159, 66);
+				}
 				time {
 					color: rgba(white, 0.8);
 				}
@@ -170,19 +180,23 @@
 			.outgoing-message {
 				float: right;
 				margin-left: 50%;
-				background-color: $background-gray;
-				position: relative;
-				&::before {
-					content: '';
-					position: absolute;
-					top: 0;
-					bottom: 0;
-					width: 100px;
-					left: -100px;
-				}
-				&:hover {
-					.message-btns {
-						display: flex;
+				.outgoing-message-text {
+					position: relative;
+					background-color: $background-gray;
+					border-radius: 20px;
+					padding: 10px;
+					&::before {
+						content: '';
+						position: absolute;
+						top: 0;
+						bottom: 0;
+						width: 100px;
+						left: -100px;
+					}
+					&:hover {
+						.message-btns {
+							display: flex;
+						}
 					}
 				}
 				.message-btns {

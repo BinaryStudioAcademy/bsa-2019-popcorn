@@ -1,6 +1,7 @@
 import { MigrationInterface, QueryRunner, getCustomRepository } from "typeorm";
 import ChatRepository from "../repository/chat.repository";
 import MessageRepository from "../repository/message.repository";
+import StoryRepository from "../repository/story.repository";
 import { Message } from "../models/MessageModel";
 
 export class SeedMessage1567286972231 implements MigrationInterface {
@@ -31,12 +32,18 @@ export class SeedMessage1567286972231 implements MigrationInterface {
       "I like it, but I am not exciting"
     ];
 
+    const REACTION_TYPES = ["laugh", "fire", "claps"];
+
     const chats = await getCustomRepository(ChatRepository).find({
       relations: ["user1", "user2"]
     });
 
+    const stories = await getCustomRepository(StoryRepository).find();
+
     for (const chat of chats) {
       const messagesNumber = Math.floor(Math.random() * 100);
+      const randomMessage1 = Math.floor(Math.random() * messagesNumber);
+      const randomMessage2 = Math.floor(Math.random() * messagesNumber);
       for (let i = 0; i < messagesNumber; i++) {
         const message = new Message();
         message.body = MESSAGES[Math.floor(Math.random() * MESSAGES.length)];
@@ -44,6 +51,14 @@ export class SeedMessage1567286972231 implements MigrationInterface {
           Math.floor(Math.random() * 2) === 0 ? chat.user1 : chat.user2;
         message.chat = chat;
         message.isRead = true;
+        if (i === randomMessage1) {
+          message.story = stories[Math.floor(Math.random() * stories.length)];
+        }
+        if (i === randomMessage2) {
+          message.story = stories[Math.floor(Math.random() * stories.length)];
+          message.reactionType =
+            REACTION_TYPES[Math.floor(Math.random() * REACTION_TYPES.length)];
+        }
         await getCustomRepository(MessageRepository).save(message);
       }
     }
