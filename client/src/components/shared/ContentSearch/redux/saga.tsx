@@ -15,7 +15,7 @@ export function* fetchData(action) {
 				...action.payload
 			}
 		});
-
+		console.log(data);
 		yield put({
 			type: CONTENT_SEARCH_SET_DATA,
 			payload: { data, error: ContentSearch.isEmpty(data) ? 'Not found' : '' }

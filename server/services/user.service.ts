@@ -21,7 +21,7 @@ export const getUserById = async (id: string): Promise<IResponse> => {
 };
 export const getUserByName = async (name: string): Promise<Array<User>> => {
   return await getCustomRepository(UserRepository).find({
-    name: Like(`%${name}%`)
+    where: `name ILIKE '%${name}%'` 
   });
 };
 

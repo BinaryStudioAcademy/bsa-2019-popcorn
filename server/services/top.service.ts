@@ -74,7 +74,7 @@ export const getTopById = async (topId: string): Promise<Top> => {
 export const getTopByTitle = async (title: string): Promise<Array<Top>> => {
   const tops: Array<Top> = await getCustomRepository(TopRepository).find({
     relations: ["user", "movieInTop"],
-    where: { title: Like(`%${title}%`) }
+    where: `title ILIKE '%${title}%'` 
   });
 
   return await Promise.all(
