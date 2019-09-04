@@ -23,11 +23,21 @@ interface IProps {
 	saveMovieList: (movieList: INewMovieList) => object;
 	fetchMovieListsPreview: (userId: string) => object;
 	deleteMovieList: (movieListId: string) => object;
-	movieListsPreview?: Array<any>;
+	movieListsPreview?: Array<IMovieListPreview>;
 	isLoading: boolean;
 	selectedUserId: string;
 	isOwnData: boolean;
 	selectedPreviewUserId?: string;
+}
+
+export interface IMovieListPreview {
+	id: string;
+	title: string;
+	description: string;
+	image_url: string;
+	isPrivate: boolean;
+	moviesId: Array<string>;
+	created_at: Date;
 }
 
 const UserLists: React.FC<IProps> = ({
@@ -76,6 +86,7 @@ const UserLists: React.FC<IProps> = ({
 							key={preview.id}
 							deleteMovieList={deleteMovieList}
 							moviePreview={preview}
+							isOwnData={isOwnData}
 						/>
 					))}
 				</div>

@@ -5,18 +5,22 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import './MovieListPreviewItem.scss';
 import { Redirect } from 'react-router';
+import { IMovieListPreview } from '../UserLists';
 
 interface IProps {
-	moviePreview: any; //*****//
+	moviePreview: IMovieListPreview;
 	deleteMovieList: (movieListId: string) => object;
+	isOwnData: boolean;
 }
 
 const MovieListPreviewItem: React.FC<IProps> = ({
 	moviePreview,
-	deleteMovieList
+	deleteMovieList,
+	isOwnData
 }) => {
 	const [hover, setHover] = useState(false);
 	const [redirect, setRedirect] = useState(false);
+
 	const moviesLength = moviePreview.moviesId.length;
 
 	if (redirect) return <Redirect to={`/movie-list/${moviePreview.id}`} />;
@@ -47,7 +51,7 @@ const MovieListPreviewItem: React.FC<IProps> = ({
 					</div>
 				</div>
 			</div>
-			{hover && (
+			{hover && isOwnData && (
 				<div
 					className="button-absolute-position"
 					onClick={() => deleteMovieList(moviePreview.id)}
