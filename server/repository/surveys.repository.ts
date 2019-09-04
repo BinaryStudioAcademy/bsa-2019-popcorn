@@ -1,7 +1,6 @@
 import {
   EntityRepository,
   getCustomRepository,
-  Like,
   Repository
 } from "typeorm";
 import { Surveys } from "../entities/Surveys";
@@ -87,15 +86,8 @@ class SurveysRepository extends Repository<Surveys> {
 
   async getSurveysByTitle(title: string) {
     return await this.find({
-      where: { title: Like(`%${title}%`) },
-      relations: [
-        "surveysQuestion",
-        "surveysQuestion.surveysQuestionOption",
-        "surveysQuestion.surveysQuestionAnswer",
-        "surveysQuestion.surveysQuestionAnswer.user",
-        "surveysQuestion.surveysQuestionAnswer.surveysQuestionOption",
-        "user"
-      ]
+      relations: ["user"],
+      where: `title ILIKE '%${title}%'`
     });
   }
 
