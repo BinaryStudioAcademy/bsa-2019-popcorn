@@ -30,10 +30,11 @@ export function* saveMovieList(action) {
 }
 
 export function* fetchMovieListsPreview(action) {
+	const { userId } = action.payload;
 	try {
 		const movieListsPreview = yield call(webApi, {
 			method: 'GET',
-			endpoint: '/api/movie-list'
+			endpoint: `/api/movie-list/${userId}`
 		});
 
 		yield put({

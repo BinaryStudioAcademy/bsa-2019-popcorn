@@ -10,8 +10,9 @@ export const saveMovieList = (movieList: any) => ({
 	payload: { movieList }
 });
 
-export const fetchMovieListsPreview = () => ({
-	type: FETCH_MOVIE_LISTS_PREVIEW
+export const fetchMovieListsPreview = (userId: string) => ({
+	type: FETCH_MOVIE_LISTS_PREVIEW,
+	payload: { userId }
 });
 
 export const deleteMovieList = (movieListId: string) => ({

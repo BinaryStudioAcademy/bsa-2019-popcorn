@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './UserLists.scss';
 import MovieListCreator from './MovieListCreator/MovieListCreator';
 import { connect } from 'react-redux';
@@ -21,10 +21,12 @@ export interface INewMovieList {
 
 interface IProps {
 	saveMovieList: (movieList: INewMovieList) => object;
-	fetchMovieListsPreview: () => object;
+	fetchMovieListsPreview: (userId: string) => object;
 	deleteMovieList: (movieListId: string) => object;
 	movieListsPreview?: Array<any>;
 	isLoading: boolean;
+	selectedUserId: string;
+	isOwnData: boolean;
 }
 
 const UserLists: React.FC<IProps> = ({
@@ -32,12 +34,14 @@ const UserLists: React.FC<IProps> = ({
 	fetchMovieListsPreview,
 	movieListsPreview,
 	deleteMovieList,
-	isLoading
+	isLoading,
+	selectedUserId,
+	isOwnData
 }) => {
 	const [showCreator, setShowCreator] = useState(false);
 
 	if (!movieListsPreview) {
-		fetchMovieListsPreview();
+		fetchMovieListsPreview(selectedUserId);
 		return <Spinner />;
 	}
 
@@ -55,21 +59,27 @@ const UserLists: React.FC<IProps> = ({
 	}
 	return (
 		<div className="UserLists">
-			<button
-				className="create-movie-list-button"
-				onClick={() => setShowCreator(true)}
-			>
-				Create movie list
-			</button>
-			<div className="movie-list-preview-container">
-				{movieListsPreview.map(preview => (
-					<MovieListPreviewItem
-						key={preview.id}
-						deleteMovieList={deleteMovieList}
-						moviePreview={preview}
-					/>
-				))}
-			</div>
+			{isOwnData && (
+				<button
+					className="create-movie-list-button"
+					onClick={() => setShowCreator(true)}
+				>
+					Create movie list
+				</button>
+			)}
+			{movieListsPreview.length ? (
+				<div className="movie-list-preview-container">
+					{movieListsPreview.map(preview => (
+						<MovieListPreviewItem
+							key={preview.id}
+							deleteMovieList={deleteMovieList}
+							moviePreview={preview}
+						/>
+					))}
+				</div>
+			) : (
+				<div className="movie-list-empty">No movie lists yet</div>
+			)}
 		</div>
 	);
 };

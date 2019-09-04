@@ -30,4 +30,11 @@
 			color: darken($text-secondary-color, 10);
 		}
 	}
+	.movie-list-empty {
+		width: 100%;
+		margin-top: 30px;
+		text-align: center;
+		font-size: $header-medium;
+		color: $text-secondary-color;
+	}
 }
