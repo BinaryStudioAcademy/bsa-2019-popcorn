@@ -18,12 +18,20 @@
 	}
 
 	.preview-title {
+		display: flex;
+		align-items: center;
 		padding-right: 22px;
 		line-height: 22px;
 		font-weight: 600;
 		font-size: 1.2em;
 		padding-bottom: 1.5px;
 		border-bottom: 1px solid $border-focus-color;
+
+		.lock-icon {
+			margin-left: 7px;
+			color: rgba(0, 0, 0, 0.363);
+			font-size: 14px;
+		}
 	}
 
 	.preview-description {

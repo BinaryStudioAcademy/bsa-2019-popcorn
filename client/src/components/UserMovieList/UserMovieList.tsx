@@ -9,6 +9,8 @@ import config from '../../config';
 import { NavLink } from 'react-router-dom';
 import ReactTimeAgo from 'react-time-ago';
 import MovieItem from './MovieItem/MovieItem';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faLock } from '@fortawesome/free-solid-svg-icons';
 
 interface IProps {
 	match: any;
@@ -84,7 +86,12 @@ const UserMovieList: React.FC<IProps> = ({ ...props }) => {
 						/>
 					</div>
 					<div className="movie-list-main">
-						<div className="movie-list-title">{title}</div>
+						<div className="movie-list-title">
+							{title}
+							{isPrivate && (
+								<FontAwesomeIcon className="lock-icon" icon={faLock} />
+							)}
+						</div>
 						<div className="movie-list-description">{description}</div>
 						<NavLink
 							className="user-info-container"

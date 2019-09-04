@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import Image from '../../../shared/Image/Image';
 import config from '../../../../config';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTimes } from '@fortawesome/free-solid-svg-icons';
+import { faTimes, faLock } from '@fortawesome/free-solid-svg-icons';
 import './MovieListPreviewItem.scss';
 import { Redirect } from 'react-router';
 import { IMovieListPreview } from '../UserLists';
@@ -41,7 +41,12 @@ const MovieListPreviewItem: React.FC<IProps> = ({
 			</div>
 			<div className="movie-list-preview-main">
 				<div className="movie-list-preview-top">
-					<div className="preview-title">{moviePreview.title}</div>
+					<div className="preview-title">
+						{moviePreview.title}
+						{moviePreview.isPrivate && (
+							<FontAwesomeIcon className="lock-icon" icon={faLock} />
+						)}
+					</div>
 					<div className="preview-description">{moviePreview.description}</div>
 				</div>
 				<div className="movie-list-preview-bottom">
