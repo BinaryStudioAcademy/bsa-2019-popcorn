@@ -12,6 +12,7 @@ import {
 	UPDATE_PROFILE
 } from './actionTypes';
 import { uploadFile } from '../../services/file.service';
+import callWebApi from './../../services/webApi.service';
 import axios from 'axios';
 import {
 	FETCH_LOGIN,
@@ -26,7 +27,8 @@ import {
 	RESTORE_ERROR,
 	RESTORE_OK,
 	SET_LOGIN_ERROR,
-	SET_REGISTER_ERROR
+	SET_REGISTER_ERROR,
+	AUTH_WITH_SOCIAL
 } from '../authorization/actionTypes';
 import { CONFIRM_CHANGES } from '../ConfirmChange/actionTypes';
 import config from '../../config';
@@ -196,6 +198,19 @@ export function* fetchRegistration(action) {
 		});
 	}
 }
+export function* fetchSocialAuth(action) {
+	try {
+		const { data } = action.payload;
+		localStorage.setItem('token', data.token);
+
+		yield put({
+			type: LOGIN,
+			payload: { user: data.user[0] }
+		});
+	} catch (e) {
+		console.log('Something went wrong with logout');
+	}
+}
 
 export function* fetchPosts(action) {
 	try {
@@ -332,6 +347,10 @@ function* watchConfirm() {
 	yield takeEvery(CONFIRM_CHANGES, confirmChanges);
 }
 
+function* watchFetchSocialAuth() {
+	yield takeEvery(AUTH_WITH_SOCIAL, fetchSocialAuth);
+}
+
 export default function* profile() {
 	yield all([
 		watchGetSelectedUser(),
@@ -346,6 +365,8 @@ export default function* profile() {
 		watchFetchLogout(),
 		watchUpdateProfile(),
 		watchSendPost(),
-		watchConfirm()
+		watchConfirm(),
+		watchFetchLogout(),
+		watchFetchSocialAuth()
 	]);
 }

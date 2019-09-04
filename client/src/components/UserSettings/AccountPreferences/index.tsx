@@ -72,7 +72,8 @@ class AccountPreferences extends React.Component<IProps, IState> {
 	};
 
 	validatePassword = password => {
-		if (password.trim() === '') return { error: this.errorPasswordMessage.required };
+		if (password.trim() === '')
+			return { error: this.errorPasswordMessage.required };
 		else if (password.length < 6)
 			return {
 				error: this.errorPasswordMessage.length
@@ -83,18 +84,17 @@ class AccountPreferences extends React.Component<IProps, IState> {
 	updateEmail(ev) {
 		ev.preventDefault();
 
-		const {
-			password: userPassword,
-			id: userId
-		} = this.props.profileInfo;
+		const { password: userPassword, id: userId } = this.props.profileInfo;
 		const {
 			EmailnewEmail,
 			EmailCurrPassword,
 			EmailCurrPasswordError
 		} = this.state;
-		
+
 		if (!EmailCurrPasswordError && EmailCurrPassword !== userPassword) {
-			this.setState({ EmailCurrPasswordError: this.errorPasswordMessage.correct });
+			this.setState({
+				EmailCurrPasswordError: this.errorPasswordMessage.correct
+			});
 			return;
 		}
 
@@ -104,11 +104,8 @@ class AccountPreferences extends React.Component<IProps, IState> {
 
 	updatePassword(ev) {
 		ev.preventDefault();
-		
-		const {
-			password: userPassword,
-			id: userId
-		} = this.props.profileInfo;
+
+		const { password: userPassword, id: userId } = this.props.profileInfo;
 		const {
 			PasswordCurrPassword,
 			PasswordNewPassword,
@@ -116,7 +113,9 @@ class AccountPreferences extends React.Component<IProps, IState> {
 		} = this.state;
 
 		if (!PasswordCurrPasswordError && PasswordCurrPassword !== userPassword) {
-			this.setState({ PasswordCurrPasswordError: this.errorPasswordMessage.correct });
+			this.setState({
+				PasswordCurrPasswordError: this.errorPasswordMessage.correct
+			});
 			return;
 		}
 

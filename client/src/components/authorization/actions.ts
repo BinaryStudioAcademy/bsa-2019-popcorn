@@ -4,7 +4,8 @@ import {
 	FETCH_USER_BY_TOKEN,
 	FETCH_REGISTRATION,
 	FETCH_RESET_PASSWORD,
-	FETCH_RESTORE_PASSWORD
+	FETCH_RESTORE_PASSWORD,
+	AUTH_WITH_SOCIAL
 } from './actionTypes';
 import uuid from 'uuid/v4';
 
@@ -73,6 +74,15 @@ export const fetchRestorePassword = (password: string, token: string): any => {
 		payload: {
 			password,
 			token
+		}
+	};
+};
+
+export const authWithSocial = (data: any) => {
+	return {
+		type: AUTH_WITH_SOCIAL,
+		payload: {
+			data
 		}
 	};
 };

@@ -9,13 +9,17 @@ import { faTimesCircle } from '@fortawesome/free-solid-svg-icons';
 
 interface IProps {
 	saveMovieList: (movieList: INewMovieList) => object;
+	setShowCreator: (openCreator: boolean) => void;
 }
 
-const MovieListCreator: React.FC<IProps> = ({ saveMovieList }) => {
+const MovieListCreator: React.FC<IProps> = ({
+	saveMovieList,
+	setShowCreator
+}) => {
 	const [title, setTitle] = useState(''),
 		[description, setDescription] = useState(''),
 		[imageUrl, setImageUrl] = useState(''),
-		[moviesDetails, setMoviesDetails]: Array<any> = useState([]),
+		[moviesDetails, setMoviesDetails]: any[] = useState([]),
 		[isPrivate, setIsPrivate] = useState(false),
 		[isDropDownOpen, setIsDropDownOpen] = useState(false);
 
@@ -25,6 +29,7 @@ const MovieListCreator: React.FC<IProps> = ({ saveMovieList }) => {
 			setMoviesDetails([movie, ...moviesDetails]);
 		}
 	};
+
 	const elasticProperties = ['id', 'title'];
 
 	const onSaveMovieList = () => {
@@ -35,11 +40,12 @@ const MovieListCreator: React.FC<IProps> = ({ saveMovieList }) => {
 		const movieList = {
 			title,
 			description,
-			image_url: imageUrl,
+			imageUrl,
 			moviesId: moviesDetails.map(movie => movie.id),
 			isPrivate
 		};
 		saveMovieList(movieList);
+		setShowCreator(false);
 	};
 
 	const onDeleteMovieLabel = movieId => {
@@ -84,7 +90,11 @@ const MovieListCreator: React.FC<IProps> = ({ saveMovieList }) => {
 					<label className="item-label item-label-image">Image:</label>
 					<div className="item-right-content-container">
 						{imageUrl === '' ? (
-							<ImageLoader setImageUrl={setImageUrl} isIcon={false} />
+							<ImageLoader
+								setImageUrl={setImageUrl}
+								isIcon={false}
+								aspectRatio={1}
+							/>
 						) : (
 							<div
 								className="image-preview-container"
@@ -148,7 +158,12 @@ const MovieListCreator: React.FC<IProps> = ({ saveMovieList }) => {
 				</div>
 			</div>
 			<div className="movie-list-creator-buttons">
-				<button className="movie-creator-cancel-button">cancel</button>
+				<button
+					className="movie-creator-cancel-button"
+					onClick={() => setShowCreator(false)}
+				>
+					cancel
+				</button>
 				<button className="movie-creator-save-button" onClick={onSaveMovieList}>
 					save
 				</button>

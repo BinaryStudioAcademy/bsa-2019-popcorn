@@ -1,5 +1,5 @@
 export const welcome = () => {
-	return `
+  return `
 		<div
 			style='
 				width: 40%;
@@ -116,4 +116,4 @@ export const welcome = () => {
 			</footer>
 		</div>
 	`;
-}
+};

@@ -16,7 +16,6 @@ import notificationReducer from '../components/shared/Header/reducer';
 import contentSearchReducer from '../components/shared/ContentSearch/redux/reducer';
 import movieListReducer from '../components/UserPage/UserLists/reducer';
 
-
 const reducers = {};
 
 export default combineReducers({
