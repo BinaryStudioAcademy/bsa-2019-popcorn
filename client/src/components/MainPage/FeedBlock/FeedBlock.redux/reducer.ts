@@ -1,5 +1,6 @@
 import {
 	ADD_NEW_COMMENT,
+	ADD_NEW_POST,
 	ADD_NEW_REACTION,
 	DELETE_POST_FROM_LIST,
 	SET_POSTS,
@@ -9,7 +10,7 @@ import IComment from '../../Post/IComment';
 import findIndexInArray from '../../../../helpers/findIndexInArray';
 import IPost from '../../Post/IPost';
 
-const initialState: { posts: null | Array<IPost> } = {
+const initialState: { posts: null | IPost[] } = {
 	posts: null
 };
 
@@ -86,6 +87,14 @@ export default function(state = initialState, action) {
 				...state,
 				posts: [...postsListForUpdate]
 			};
+		case ADD_NEW_POST:
+			const newPost: IPost = action.payload.post;
+			if (!newPost) {
+				return state;
+			}
+
+			return { posts: [newPost, ...(state.posts || [])] };
+
 		default:
 			return state;
 	}

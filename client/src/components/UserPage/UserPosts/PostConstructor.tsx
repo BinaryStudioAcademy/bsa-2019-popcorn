@@ -158,7 +158,7 @@ class PostConstructor extends React.Component<
 		});
 	}
 
-	onSave() {
+	onSave(ev) {
 		if (this.state.description.trim() === '') return;
 		const { extraType, extraData } = this.state;
 		if (extraType === 'top') {
@@ -183,6 +183,7 @@ class PostConstructor extends React.Component<
 			extraTitle: '',
 			croppedSaved: false
 		});
+		this.props.togglePostConstructor(ev);
 	}
 
 	onCancel() {
@@ -315,7 +316,7 @@ class PostConstructor extends React.Component<
 						/>
 					</div>
 					<div className="save-wrp">
-						<button className="save-btn" onClick={this.onSave}>
+						<button className="save-btn" onClick={ev => this.onSave(ev)}>
 							Share
 						</button>
 					</div>

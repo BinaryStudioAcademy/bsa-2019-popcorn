@@ -7,3 +7,4 @@ export const ADD_NEW_REACTION = 'ADD_NEW_REACTION';
 export const DELETE_POST = 'DELETE_POST';
 export const DELETE_POST_FROM_LIST = 'DELETE_POST_FROM_LIST';
 export const UPDATE_POST = 'UPDATE_POST';
+export const ADD_NEW_POST = 'ADD_NEW_POST';

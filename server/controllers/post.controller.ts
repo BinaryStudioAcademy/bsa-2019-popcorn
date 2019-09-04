@@ -23,10 +23,13 @@ router
       .then((posts: Post[]) => res.send(posts))
       .catch(next)
   )
-  .post("/", (req, res, next) =>
+  .post("/", (req: Request & { io: any }, res, next) =>
     postService
       .createPost(req.body)
-      .then(response => res.send(response))
+      .then(post => {
+        res.send(post);
+        req.io.emit("new-post", post);
+      })
       .catch(next)
   )
   .put("/", (req: Request & { io: any }, res, next) =>

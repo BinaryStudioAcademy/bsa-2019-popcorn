@@ -1,5 +1,6 @@
 import {
 	ADD_NEW_COMMENT,
+	ADD_NEW_POST,
 	ADD_NEW_REACTION,
 	CREATE_COMMENT,
 	CREATE_REACTION,
@@ -82,6 +83,14 @@ export const deletePostFromList = (id: string) => {
 export const updatePost = (post: IPost) => {
 	return {
 		type: UPDATE_POST,
+		payload: {
+			post
+		}
+	};
+};
+export const addNewPost = (post: IPost) => {
+	return {
+		type: ADD_NEW_POST,
 		payload: {
 			post
 		}

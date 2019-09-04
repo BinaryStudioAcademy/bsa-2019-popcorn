@@ -38,7 +38,11 @@ const getExtra = async (post: any) => {
 export const createPost = async (post: any): Promise<Post> => {
   post = await getExtra(post);
   post.createdAt = new Date();
-  return await getCustomRepository(PostRepository).save(post);
+  await getCustomRepository(PostRepository).save(post);
+  return await getCustomRepository(PostRepository).findOne({
+    where: { id: post.id },
+    relations: ["user", "top", "survey", "event"]
+  });
 };
 
 export const getPosts = async (): Promise<any[]> => {
