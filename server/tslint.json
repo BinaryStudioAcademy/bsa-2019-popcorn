@@ -13,6 +13,9 @@
     "jsx-no-lambda": false,
     "no-empty": false,
     "no-console": false,
-    "quotemark": false
-  }
+    "quotemark": false,
+    "member-access": false,
+    "prefer-for-of": false
+  },
+  "defaultSeverity": "warning"
 }

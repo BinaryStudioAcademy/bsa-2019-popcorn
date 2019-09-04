@@ -34,7 +34,6 @@ class Firebase {
 	initializeMessaging = () => {
 		Notification.requestPermission().then(permission => {
 			if (permission === 'granted') {
-				console.log('Notification permission granted.');
 				this.messaging
 					.getToken()
 					.then(currentToken => {
@@ -50,7 +49,6 @@ class Firebase {
 						console.log('An error occurred while retrieving token. ', err);
 					});
 			} else {
-				console.log('Unable to get permission to notify.');
 			}
 		});
 

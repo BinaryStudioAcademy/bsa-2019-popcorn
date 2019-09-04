@@ -28,6 +28,18 @@ class EventRepository extends Repository<Event> {
       .where("event.id = :id", { id: eventId })
       .getOne();
   }
+  async getEventByTitle(title: string): Promise<Array<Event>> {
+    return await getRepository(Event)
+      .createQueryBuilder("event")
+      .leftJoinAndSelect("event.eventComments", "comments")
+      .leftJoinAndSelect("event.eventVisitors", "visitors")
+      .leftJoin("comments.user", "cuser")
+      .addSelect(["cuser.name", "cuser.avatar", "cuser.id"])
+      .leftJoin("visitors.user", "user")
+      .addSelect(["user.name", "user.avatar", "user.id"])
+      .where("event.title like :title", { title: "%" + title + "%" })
+      .getMany();
+  }
 
   async getEventsByVisitorId(userId: string): Promise<EventVisitor[]> {
     return await getRepository(EventVisitor)

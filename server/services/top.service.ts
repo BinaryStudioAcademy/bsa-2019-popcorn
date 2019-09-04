@@ -1,7 +1,7 @@
 import { Top } from "../models/TopModel";
 import TopRepository from "../repository/top.repository";
 import MovieInTopRepository from "../repository/movieInTop.repository";
-import { getCustomRepository } from "typeorm";
+import { getCustomRepository, Like } from "typeorm";
 import * as movieService from "./movie.service";
 import { getByIdValues } from "../repository/movieElastic.repository";
 
@@ -71,13 +71,37 @@ export const getTopById = async (topId: string): Promise<Top> => {
   return topsWithMovies[0];
 };
 
+export const getTopByTitle = async (title: string): Promise<Top[]> => {
+  const tops: Top[] = await getCustomRepository(TopRepository).find({
+    relations: ["user", "movieInTop"],
+    where: { title: Like(`%${title}%`) }
+  });
+
+  return await Promise.all(
+    tops.map(async top => {
+      const movieIds = top.movieInTop.map(movie => movie.movieId);
+      const elasticResponse = await getByIdValues(movieIds);
+      console.log(elasticResponse);
+      top.movieInTop = elasticResponse.hits.hits.map(movie => movie._source);
+      return top;
+    })
+  );
+};
+
 export const getTopsByUserId = async (userId: string): Promise<any[]> => {
   const tops: Top[] = await getCustomRepository(TopRepository).find({
     relations: ["movieInTop"],
     where: { userId }
   });
 
-  return await getTopWithMovies(tops);
+  return await Promise.all(
+    tops.map(async top => {
+      const movieIds = top.movieInTop.map(movie => movie.movieId);
+      const elasticResponse = await getByIdValues(movieIds);
+      top.movieInTop = elasticResponse.hits.hits.map(movie => movie._source);
+      return top;
+    })
+  );
 };
 
 export const createTop = async (top: Top): Promise<Top> =>

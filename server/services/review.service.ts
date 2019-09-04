@@ -14,6 +14,16 @@ interface IRequestBody {
   text: string;
 }
 
+const sortReviewsByLikes = (a, b) => {
+  const diffCountLikes = b.reaction.countLikes - a.reaction.countLikes;
+
+  if (!diffCountLikes) {
+    return +b.analysis - +a.analysis;
+  }
+
+  return diffCountLikes;
+};
+
 export const createReview = async (
   requestBody: IRequestBody,
   next
@@ -39,14 +49,16 @@ export const getReviewsByMovieId = async (
       null
     );
   }
-  movie = movie.hits.hits[0]._source;
+
   let reviews = await getCustomRepository(ReviewRepository).getReviewsByMovieId(
     movieId,
     next
   );
 
   reviews = await addReactionsToReviews(userId, reviews);
-  return { reviews, movie };
+  reviews.sort(sortReviewsByLikes);
+
+  return reviews;
 };
 
 const addReactionsToReviews = async (userId: string, reviews: any) =>

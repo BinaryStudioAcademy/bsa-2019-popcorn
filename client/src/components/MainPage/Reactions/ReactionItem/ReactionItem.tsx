@@ -20,19 +20,19 @@ class ReactionItem extends Component<IReactItemProps> {
 	getIcon = (name: string) => {
 		switch (name) {
 			case 'like':
-				return <LikeIcon className='post-reaction-icon' />;
+				return <LikeIcon className="post-reaction-icon" />;
 			case 'dislike':
-				return <DislikeIcon className='post-reaction-icon' />;
+				return <DislikeIcon className="post-reaction-icon" />;
 			case 'popcorn':
-				return <PopcornIcon className='post-reaction-icon' />;
+				return <PopcornIcon className="post-reaction-icon" />;
 			case 'haha':
-				return <HahaIcon className='post-reaction-icon' />;
+				return <HahaIcon className="post-reaction-icon" />;
 			case 'wow':
-				return <WowIcon className='post-reaction-icon' />;
+				return <WowIcon className="post-reaction-icon" />;
 			case 'sad':
-				return <SadIcon className='post-reaction-icon' />;
+				return <SadIcon className="post-reaction-icon" />;
 			case 'angry':
-				return <AngryIcon className='post-reaction-icon' />;
+				return <AngryIcon className="post-reaction-icon" />;
 		}
 	};
 
@@ -41,10 +41,7 @@ class ReactionItem extends Component<IReactItemProps> {
 		const icon = this.getIcon(name);
 		return (
 			<div onClick={onClick} className="item-wrapper">
-				<Tooltip
-					title={tooltip}
-					distance={30}
-				>
+				<Tooltip title={tooltip} distance={30}>
 					{icon}
 				</Tooltip>
 			</div>
@@ -53,4 +50,3 @@ class ReactionItem extends Component<IReactItemProps> {
 }
 
 export default ReactionItem;
-

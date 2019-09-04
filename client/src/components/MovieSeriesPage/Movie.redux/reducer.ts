@@ -18,7 +18,9 @@ import {
 	SET_FILTERS,
 	SET_SHOW_SPINNER,
 	SET_HIDE_SPINNER,
-	SET_GENRES
+	SET_GENRES,
+	FETCH_STATISTICS,
+	FETCH_STATISTICS_SUCCESS
 } from './actionTypes';
 import TMovie from '../TMovie';
 import movieAdapter from '../movieAdapter';
@@ -40,6 +42,7 @@ const initialState: {
 	filters: any;
 	showSpinner: boolean;
 	genres: any;
+	statistics: any;
 } = {
 	moviesSearch: [],
 	alreadySearch: false,
@@ -68,7 +71,8 @@ const initialState: {
 		durationValues: []
 	},
 	showSpinner: false,
-	genres: null
+	genres: null,
+	statistics: null
 };
 
 export default function(state = initialState, action) {
@@ -188,6 +192,17 @@ export default function(state = initialState, action) {
 			return {
 				...state,
 				ownReview: null
+			};
+		case FETCH_STATISTICS:
+			return {
+				...state,
+				showSpinner: true
+			};
+		case FETCH_STATISTICS_SUCCESS:
+			return {
+				...state,
+				showSpinner: false,
+				statistics: action.payload.statistics
 			};
 		default:
 			return state;

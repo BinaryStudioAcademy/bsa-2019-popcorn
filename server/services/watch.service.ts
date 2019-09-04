@@ -26,6 +26,9 @@ export const getAllUserWatch = async (userId: string, next) => {
   return result;
 };
 
+export const getMoviesIdWatchList = (userId: string, next) =>
+  getCustomRepository(WatchRepository).getByUserId(userId, next);
+
 export const saveNewUserWatch = (userId: string, watch: IWatch, next) => {
   const { status } = watch;
   if (status === "watched" || status === "to_watch") {

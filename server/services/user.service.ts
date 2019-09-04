@@ -1,6 +1,6 @@
 import { User } from "../models/UserModel";
 import UserRepository from "../repository/user.repository";
-import { getCustomRepository } from "typeorm";
+import { getCustomRepository, Like } from "typeorm";
 
 interface IResponse {
   data: { user?: User; users?: User[] };
@@ -18,6 +18,11 @@ export const getUsers = async (): Promise<IResponse> => {
 
 export const getUserById = async (id: string): Promise<IResponse> => {
   return await getCustomRepository(UserRepository).getUserById(id);
+};
+export const getUserByName = async (name: string): Promise<User[]> => {
+  return await getCustomRepository(UserRepository).find({
+    name: Like(`%${name}%`)
+  });
 };
 
 export const updateById = async (id: string, body: any): Promise<IResponse> => {

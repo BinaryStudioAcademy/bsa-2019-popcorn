@@ -9,10 +9,12 @@
 		"interface-over-type-literal": false,
 		"object-literal-sort-keys": false,
 		"unified-signatures": false,
-		"react-hooks-nesting": "error",
 		"jsx-no-lambda": false,
 		"no-empty": false,
 		"no-console": false,
-		"quotemark": false
-	}
+		"quotemark": false,
+		"member-access": false,
+		"prefer-for-of": false
+	},
+	"defaultSeverity": "warning"
 }

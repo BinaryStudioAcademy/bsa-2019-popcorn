@@ -8,6 +8,8 @@ interface IPostImageUploaderProps {
 	imageHandler: (s: any) => any;
 	imageStateHandler: (s: any) => any;
 	isIcon?: boolean;
+	icon?: any;
+	postContructor?: boolean;
 }
 
 interface IPostImageUploaderState {
@@ -71,7 +73,7 @@ class ImageUploader extends React.Component<
 
 	render() {
 		return (
-			<div>
+			<div className="extra-item">
 				{this.state.errorMsg && (
 					<span className="upload-error">{this.state.errorMsg}</span>
 				)}
@@ -88,7 +90,13 @@ class ImageUploader extends React.Component<
 					this.props.children
 				) : this.props.isIcon ? (
 					<label htmlFor="image" className="upload-image-button">
-						<FontAwesomeIcon icon={faCamera} />
+						<FontAwesomeIcon
+							className="extra-icon"
+							icon={this.props.icon || faCamera}
+						/>
+						{this.props.postContructor && (
+							<span className={'extra-title'}>Image</span>
+						)}
 					</label>
 				) : (
 					<label htmlFor="image" className="upload-image-button">
