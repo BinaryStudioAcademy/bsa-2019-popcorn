@@ -23,6 +23,7 @@ interface IProps {
 		type: string;
 		description: string;
 		user_id: string;
+		image: string;
 		user: {
 			name: string;
 			image_link: string;
@@ -170,7 +171,8 @@ class Survey extends PureComponent<IProps, IState> {
 			participants,
 			title,
 			description,
-			questions
+			questions,
+			image
 		} = surveyInfo;
 
 		return (
@@ -190,6 +192,7 @@ class Survey extends PureComponent<IProps, IState> {
 						<h1>{title}</h1>
 						<p>{description}</p>
 						<p className="required-label">*required</p>
+						<img src={image} />
 					</header>
 					{questions.map((question, i) => {
 						if (question.type === 'Multiple choice') {

@@ -10,6 +10,7 @@ interface ISurvey {
 	type: string;
 	description: string;
 	user_id: string;
+	image: string;
 	user: {
 		name: string;
 		image_link: string;
