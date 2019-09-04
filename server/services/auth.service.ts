@@ -1,7 +1,7 @@
 import tokenHelper from "./../helpers/token.helper";
 import userRepository from "./../repository/user.repository";
 import { getCustomRepository } from "typeorm";
-import { sendToken } from "./email.service";
+import * as emailService from "./email.service";
 import { User } from "../models/UserModel";
 
 const crypto = require("crypto");
@@ -13,6 +13,11 @@ export const login = async (user: User) => ({
 
 export const register = async (userData: User) => {
   const newUser = await getCustomRepository(userRepository).save(userData);
+
+  if (newUser) {
+    emailService.sendWelcomeEmail(newUser.email);
+  }
+
   return login(newUser);
 };
 
@@ -26,7 +31,7 @@ export const reset = async (email: string) => {
     reset_token: token
   });
 
-  await sendToken(email, token);
+  await emailService.sendToken(email, token);
 };
 
 export const restore = async (password: string, token: string) => {

@@ -23,6 +23,7 @@ import { Follower } from "./Follower";
 import { FavoriteList } from "./FavoriteList";
 import { Notification } from "./Notification";
 import { NotificationToken } from "./NotificationToken";
+import { MovieList } from "./MovieList";
 import { UserTemp } from "./UserTemp";
 import { Chat } from "./Chat";
 import { Message } from "./Message";
@@ -56,5 +57,6 @@ export default [
   NotificationToken,
   UserTemp,
   Chat,
-  Message
+  Message,
+  MovieList
 ];

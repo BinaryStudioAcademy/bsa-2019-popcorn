@@ -14,6 +14,8 @@ import watchListReducer from '../components/UserPage/UserWatchList/reducer';
 import searchMovieReducer from '../components/shared/MovieSearch/reducer';
 import notificationReducer from '../components/shared/Header/reducer';
 import chatReducer from '../components/ChatPage/ChatPage.redux/reducer';
+import contentSearchReducer from '../components/shared/ContentSearch/redux/reducer';
+import movieListReducer from '../components/UserPage/UserLists/reducer';
 
 const reducers = {};
 
@@ -33,5 +35,7 @@ export default combineReducers({
 	watchList: watchListReducer,
 	searchMovie: searchMovieReducer,
 	notification: notificationReducer,
-	chat: chatReducer
+	chat: chatReducer,
+	contentSearch: contentSearchReducer,
+	movieList: movieListReducer
 });

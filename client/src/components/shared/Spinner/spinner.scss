@@ -1,5 +1,6 @@
 .spinner-wrp {
 	width: 100%;
+	z-index: -1;
 }
 .lds-css {
 	position: fixed;
@@ -11,6 +12,7 @@
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
+	z-index: -1;
 }
 
 @keyframes lds-double-ring {

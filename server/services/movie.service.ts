@@ -8,7 +8,7 @@ import MovieRepository, {
 } from "../repository/movie.repository";
 
 import MovieRateRepository from "../repository/movieRate.repository";
-import { getCustomRepository, Like, getRepository } from "typeorm";
+import { getCustomRepository } from "typeorm";
 import * as elasticRepository from "../repository/movieElastic.repository";
 import DiscussionRepository from "../repository/discussion.repository";
 import { ExtendedDiscussion, Discussion } from "models/DiscussionModel";
@@ -16,9 +16,14 @@ import { ExtendedDiscussion, Discussion } from "models/DiscussionModel";
 export const getMovies = async ({ size, from }): Promise<any[]> => {
   let data = await elasticRepository.get(size, from);
 
-  data = data.hits.hits;
+  try {
+    data = data.hits.hits;
 
-  return data.map(movie => movie._source);
+    return data.map(movie => movie._source);
+  } catch (e) {
+    console.log(e);
+    return [];
+  }
 };
 
 export const getFiltredMovies = async (
@@ -49,11 +54,9 @@ export const getMovieById = async (movieId: string): Promise<any> => {
   );
   movie.messages = messages;
 
-  const rate = await getCustomRepository(MovieRateRepository)
-    .createQueryBuilder("movieRate")
-    .select("AVG(movieRate.rate)", "average")
-    .where("movieRate.movieId = :id", { id: movie.id })
-    .getRawOne();
+  const rate = await getCustomRepository(MovieRateRepository).getRateByMovieId(
+    movie.id
+  );
   movie.rate = rate ? parseFloat(rate.average).toFixed(2) : null;
 
   movie.video_link = await getMovieVideoLinkById(movie.id);
@@ -128,7 +131,6 @@ export const saveDiscussionMessage = async (
   const result = await getCustomRepository(DiscussionRepository).save(
     discussion
   );
-  console.log("saved discussion", result);
   return result;
 };
 
@@ -159,4 +161,14 @@ export const getMovieProperties = async (settings: string, next) => {
     properties
   );
   return elasticResponse.hits.hits[0]._source;
+};
+
+export const getMovieStatistics = async (movieId: string) => {
+  const statisticsByRate = await getCustomRepository(
+    MovieRateRepository
+  ).getStatisticsByMovieId(movieId);
+  const averageStatistics = await getCustomRepository(
+    MovieRateRepository
+  ).getAverageStatisticsByMovieId(movieId);
+  return { averageStatistics, statisticsByRate };
 };

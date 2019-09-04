@@ -2,7 +2,9 @@ import {
 	START_FETCH_SEARCH_FILMS,
 	SEND_TOKEN_TO_SERVER,
 	GET_UNREAD_NOTIFICATIONS,
-	SET_NOTIFICITATION_IS_READ
+	SET_NOTIFICATION_IS_READ,
+	GET_FIREBASE_TOKEN,
+	DELETE_FIREBASE_TOKEN
 } from './actionTypes';
 
 export const fetchFilms = (text: string) => {
@@ -31,11 +33,28 @@ export const getUnreadNotifications = (userId: string): any => {
 	};
 };
 
-export const setNotificitationIsRead = (notificationId: string): any => {
+export const setNotificationIsRead = (notificationId: string): any => {
 	return {
-		type: SET_NOTIFICITATION_IS_READ,
+		type: SET_NOTIFICATION_IS_READ,
 		payload: {
 			notificationId
+		}
+	};
+};
+
+export const getFirebaseToken = (firebase: any) => {
+	return {
+		type: GET_FIREBASE_TOKEN,
+		payload: {
+			firebase
+		}
+	};
+};
+export const deleteFirebaseToken = (firebaseToken: string) => {
+	return {
+		type: DELETE_FIREBASE_TOKEN,
+		payload: {
+			firebaseToken
 		}
 	};
 };

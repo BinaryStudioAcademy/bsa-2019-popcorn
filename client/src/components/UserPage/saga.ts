@@ -12,6 +12,7 @@ import {
 	UPDATE_PROFILE
 } from './actionTypes';
 import { uploadFile } from '../../services/file.service';
+import callWebApi from './../../services/webApi.service';
 import axios from 'axios';
 import {
 	FETCH_LOGIN,
@@ -26,7 +27,8 @@ import {
 	RESTORE_ERROR,
 	RESTORE_OK,
 	SET_LOGIN_ERROR,
-	SET_REGISTER_ERROR
+	SET_REGISTER_ERROR,
+	AUTH_WITH_SOCIAL
 } from '../authorization/actionTypes';
 import { CONFIRM_CHANGES } from '../ConfirmChange/actionTypes';
 import config from '../../config';
@@ -71,17 +73,9 @@ export function* uploadAvatar(action) {
 	try {
 		const data = yield call(uploadFile, action.payload.file);
 
-		// remove public in order to save public path to img in server
-		let url;
-		if (data.imageUrl.indexOf('\\') !== -1) {
-			url = data.imageUrl.split(`\\`);
-		} else url = data.imageUrl.split(`/`);
-
-		url.shift();
-
 		yield put({
 			type: SET_TEMP_AVATAR,
-			payload: { uploadUrl: '/' + url.join('/') }
+			payload: { uploadUrl: data.imageUrl }
 		});
 	} catch (e) {
 		console.log('user page saga catch: uploadAvatar', e.message);
@@ -202,6 +196,19 @@ export function* fetchRegistration(action) {
 				registerError: e.response.data.message
 			}
 		});
+	}
+}
+export function* fetchSocialAuth(action) {
+	try {
+		const { data } = action.payload;
+		localStorage.setItem('token', data.token);
+
+		yield put({
+			type: LOGIN,
+			payload: { user: data.user[0] }
+		});
+	} catch (e) {
+		console.log('Something went wrong with logout');
 	}
 }
 
@@ -340,6 +347,10 @@ function* watchConfirm() {
 	yield takeEvery(CONFIRM_CHANGES, confirmChanges);
 }
 
+function* watchFetchSocialAuth() {
+	yield takeEvery(AUTH_WITH_SOCIAL, fetchSocialAuth);
+}
+
 export default function* profile() {
 	yield all([
 		watchGetSelectedUser(),
@@ -354,7 +365,8 @@ export default function* profile() {
 		watchFetchLogout(),
 		watchUpdateProfile(),
 		watchSendPost(),
+		watchConfirm(),
 		watchFetchLogout(),
-		watchConfirm()
+		watchFetchSocialAuth()
 	]);
 }

@@ -39,6 +39,7 @@ import {
 import TopList from '../../components/TopListPage/TopList';
 import SettingsPage from '../../components/UserSettings';
 import ChatPage from '../../components/ChatPage/ChatPage';
+import ResultList from '../../components/shared/ContentSearch/ResultList';
 
 const { notifications } = {
 	notifications: {
@@ -143,6 +144,7 @@ const Main = ({
 							path={'/settings'}
 							render={() => <SettingsPage mainPath={'/settings'} />}
 						/>
+						<Route path={'/content-search'} component={ResultList} />
 						<Route
 							path={`/events/:id`}
 							render={props =>

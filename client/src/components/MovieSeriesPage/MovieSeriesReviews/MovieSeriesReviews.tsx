@@ -1,4 +1,4 @@
-import React, { SFC } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 import './MovieSeriesReviews.scss';
 import ReviewItem from './ReviewItem/ReviewItem';
@@ -49,6 +49,7 @@ class MovieSeriesReviews extends React.Component<IProps> {
 			setReaction,
 			errorWithReview
 		} = this.props;
+
 		return (
 			<div className="MovieSeriesReviews">
 				{!isLoaded && !reviews ? (

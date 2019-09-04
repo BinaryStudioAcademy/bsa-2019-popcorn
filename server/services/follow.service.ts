@@ -7,7 +7,7 @@ export const getFollowersCountByUserId = async (userId: string, next) => {
   ).getFollowersCountByUserId(userId, next);
 };
 
-export const getFollowersByUserId = async (userId: string, next) => {
+export const getFollowersByUserId = async (userId: string, next?) => {
   return await getCustomRepository(FollowerRepository).getFollowersByUserId(
     userId,
     next
@@ -35,7 +35,7 @@ export const changeFollowStatus = async ({ userId, followerId }, next) => {
   );
 };
 
-export const checkFollowStatus = async (userId, followerId, next) => {
+export const checkFollowStatus = async (userId, followerId, next?) => {
   return await getCustomRepository(FollowerRepository).checkFollowStatus(
     userId,
     followerId,
