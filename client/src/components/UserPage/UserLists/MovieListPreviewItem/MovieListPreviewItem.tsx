@@ -34,7 +34,7 @@ const MovieListPreviewItem: React.FC<IProps> = ({
 		>
 			<div className="image-container">
 				<Image
-					src={moviePreview.image_url}
+					src={moviePreview.imageUrl}
 					defaultSrc={config.DEFAULT_MOVIELIST_IMAGE}
 					alt="movie-list"
 				/>

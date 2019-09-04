@@ -10,7 +10,7 @@ export class MovieList {
     nullable: false,
     default: () => "CURRENT_TIMESTAMP"
   })
-  created_at: Date;
+  createdAt: Date;
 
   @Column({ nullable: false })
   title: string;
@@ -19,7 +19,7 @@ export class MovieList {
   description: string;
 
   @Column({ nullable: true })
-  image_url: string;
+  imageUrl: string;
 
   @Column({ nullable: false })
   isPrivate: boolean;

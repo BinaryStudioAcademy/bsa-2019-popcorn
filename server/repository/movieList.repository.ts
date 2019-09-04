@@ -5,7 +5,7 @@ import { MovieList } from "../entities/MovieList";
 class MovieListRepository extends Repository<MovieList> {
   getListsByUserId = (userId: string) =>
     this.createQueryBuilder("movie_list")
-      .addOrderBy("movie_list.created_at", "DESC")
+      .addOrderBy("movie_list.createdAt", "DESC")
       .leftJoin("movie_list.user", "user")
       .addSelect(["user.id", "user.name", "user.avatar"])
       .where("movie_list.isPrivate = :isPrivate", { isPrivate: false })
@@ -14,6 +14,7 @@ class MovieListRepository extends Repository<MovieList> {
 
   getListById = (movieListId: string) =>
     this.createQueryBuilder("movie_list")
+      .addOrderBy("movie_list.createdAt", "DESC")
       .leftJoin("movie_list.user", "user")
       .addSelect(["user.id", "user.name", "user.avatar"])
       .where("movie_list.id = :movieListId", { movieListId })

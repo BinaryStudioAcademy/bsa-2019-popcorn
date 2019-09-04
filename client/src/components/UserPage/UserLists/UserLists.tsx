@@ -15,7 +15,7 @@ export interface INewMovieList {
 	title: string;
 	isPrivate: boolean;
 	despription?: string;
-	image_url?: string;
+	imageUrl?: string;
 	moviesId: string[];
 }
 
@@ -23,7 +23,7 @@ interface IProps {
 	saveMovieList: (movieList: INewMovieList) => object;
 	fetchMovieListsPreview: (userId: string) => object;
 	deleteMovieList: (movieListId: string) => object;
-	movieListsPreview?: Array<IMovieListPreview>;
+	movieListsPreview?: IMovieListPreview[];
 	isLoading: boolean;
 	selectedUserId: string;
 	isOwnData: boolean;
@@ -34,10 +34,10 @@ export interface IMovieListPreview {
 	id: string;
 	title: string;
 	description: string;
-	image_url: string;
+	imageUrl: string;
 	isPrivate: boolean;
-	moviesId: Array<string>;
-	created_at: Date;
+	moviesId: string[];
+	createdAt: Date;
 }
 
 const UserLists: React.FC<IProps> = ({

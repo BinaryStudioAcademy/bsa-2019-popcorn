@@ -19,7 +19,7 @@ const MovieListCreator: React.FC<IProps> = ({
 	const [title, setTitle] = useState(''),
 		[description, setDescription] = useState(''),
 		[imageUrl, setImageUrl] = useState(''),
-		[moviesDetails, setMoviesDetails]: Array<any> = useState([]),
+		[moviesDetails, setMoviesDetails]: any[] = useState([]),
 		[isPrivate, setIsPrivate] = useState(false),
 		[isDropDownOpen, setIsDropDownOpen] = useState(false);
 
@@ -40,7 +40,7 @@ const MovieListCreator: React.FC<IProps> = ({
 		const movieList = {
 			title,
 			description,
-			image_url: imageUrl,
+			imageUrl,
 			moviesId: moviesDetails.map(movie => movie.id),
 			isPrivate
 		};

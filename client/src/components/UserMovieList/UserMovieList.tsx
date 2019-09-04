@@ -25,9 +25,9 @@ interface IMovieListDetails {
 		title: string;
 		description: string;
 		isPrivate: boolean;
-		image_url: string;
+		imageUrl: string;
 		moviesId: Array<string>;
-		created_at: Date;
+		createdAt: Date;
 		user: {
 			id: string;
 			name: string;
@@ -44,7 +44,7 @@ export interface IMovie {
 	release_date: string;
 	runtime: number;
 	overview: string;
-	genres: Array<string>;
+	genres: string[];
 }
 
 const UserMovieList: React.FC<IProps> = ({ ...props }) => {
@@ -52,7 +52,6 @@ const UserMovieList: React.FC<IProps> = ({ ...props }) => {
 		match: {
 			params: { id: movieListId }
 		},
-		isLoading,
 		movieListDetails,
 		fetchMovieListDetails
 	} = props;
@@ -67,8 +66,8 @@ const UserMovieList: React.FC<IProps> = ({ ...props }) => {
 		title,
 		description,
 		isPrivate,
-		image_url,
-		created_at,
+		imageUrl,
+		createdAt,
 		user: { id: userId, name: userName, avatar: userAvatar }
 	} = movieListDetails.movieList;
 
@@ -80,7 +79,7 @@ const UserMovieList: React.FC<IProps> = ({ ...props }) => {
 				<header className="movie-list-header">
 					<div className="movie-list-image-container">
 						<Image
-							src={image_url}
+							src={imageUrl}
 							defaultSrc={config.DEFAULT_MOVIELIST_IMAGE}
 							alt="movie-list"
 						/>
@@ -107,7 +106,7 @@ const UserMovieList: React.FC<IProps> = ({ ...props }) => {
 							<div className="user-name">{userName}</div>
 						</NavLink>
 						<div className="movie-list-created">
-							<ReactTimeAgo date={new Date(created_at)} />
+							<ReactTimeAgo date={new Date(createdAt)} />
 						</div>
 					</div>
 				</header>
@@ -123,7 +122,6 @@ const UserMovieList: React.FC<IProps> = ({ ...props }) => {
 
 const mapStateToProps = (rootState, props) => ({
 	...props,
-	isLoading: rootState.movieList.isLoading,
 	movieListDetails: rootState.movieList.movieListDetails
 });
 

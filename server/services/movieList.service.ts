@@ -5,8 +5,8 @@ export class IRequest {
   title: string;
   userId?: string;
   description?: string;
-  image_url?: string;
-  moviesId: Array<string>;
+  imageUrl?: string;
+  moviesId: string[];
 }
 
 export const saveMovieList = (userId: string, movieList: IRequest) =>
@@ -19,14 +19,14 @@ export const getListsByUserId = (userId: string, passportUserId: string) =>
   userId === passportUserId
     ? getCustomRepository(MovieListRepository).find({
         where: { user: { id: userId } },
-        order: { created_at: "DESC" }
+        order: { createdAt: "DESC" }
       })
     : getCustomRepository(MovieListRepository).getListsByUserId(userId);
 
 export const getOwnUserLists = (userId: string) =>
   getCustomRepository(MovieListRepository).find({
     where: { user: { id: userId } },
-    order: { created_at: "DESC" }
+    order: { createdAt: "DESC" }
   });
 
 export const deleteMovieList = (movieListId: string) =>
