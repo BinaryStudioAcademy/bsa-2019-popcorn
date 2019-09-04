@@ -19,7 +19,7 @@ export const getUsers = async (): Promise<IResponse> => {
 export const getUserById = async (id: string): Promise<IResponse> => {
   return await getCustomRepository(UserRepository).getUserById(id);
 };
-export const getUserByName = async (name: string): Promise<Array<User>> => {
+export const getUserByName = async (name: string): Promise<User[]> => {
   return await getCustomRepository(UserRepository).find({
     name: Like(`%${name}%`)
   });
