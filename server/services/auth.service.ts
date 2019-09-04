@@ -13,11 +13,11 @@ export const login = async (user: User) => ({
 
 export const register = async (userData: User) => {
   const newUser = await getCustomRepository(userRepository).save(userData);
-  
+
   if (newUser) {
     emailService.sendWelcomeEmail(newUser.email);
   }
-  
+
   return login(newUser);
 };
 

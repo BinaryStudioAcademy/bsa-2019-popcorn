@@ -48,13 +48,12 @@ export const sendConfirmPasswordChange = (email, token) => {
   return emailRepository.send(msg);
 };
 
-export const sendWelcomeEmail = (email) => {
+export const sendWelcomeEmail = email => {
   const msg = {
     to: email,
     from: process.env.USER_MAIL,
     subject: "Congratulation with registration",
     html: emailView.welcome()
   };
-  return emailRepository.send(msg); 
-}
-
+  return emailRepository.send(msg);
+};

@@ -49,7 +49,7 @@ class MovieSeriesReviews extends React.Component<IProps> {
 			setReaction,
 			errorWithReview
 		} = this.props;
-		
+
 		return (
 			<div className="MovieSeriesReviews">
 				{!isLoaded && !reviews ? (

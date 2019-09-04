@@ -16,13 +16,13 @@ interface IRequestBody {
 
 const sortReviewsByLikes = (a, b) => {
   const diffCountLikes = b.reaction.countLikes - a.reaction.countLikes;
-  
+
   if (!diffCountLikes) {
     return +b.analysis - +a.analysis;
   }
 
   return diffCountLikes;
-}
+};
 
 export const createReview = async (
   requestBody: IRequestBody,
@@ -49,7 +49,7 @@ export const getReviewsByMovieId = async (
       null
     );
   }
-  
+
   let reviews = await getCustomRepository(ReviewRepository).getReviewsByMovieId(
     movieId,
     next
