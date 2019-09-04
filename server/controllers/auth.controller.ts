@@ -33,7 +33,12 @@ router
     (req: Request & { user: User }, res, next) =>
       authService
         .login(req.user)
-        .then(data => res.send(data))
+        .then(data => {
+          const stringData = JSON.stringify(data);
+          res.redirect(
+            `${process.env.FRONTEND_HOST}/login/?user=${stringData}`
+          );
+        })
         .catch(next)
   )
   .post("/reset", (req, res, next) =>
@@ -54,7 +59,12 @@ router
     (req: Request & { user: User }, res, next) =>
       authService
         .login(req.user)
-        .then(data => res.send(data))
+        .then(data => {
+          const stringData = JSON.stringify(data);
+          res.redirect(
+            `${process.env.FRONTEND_HOST}/login/?user=${stringData}`
+          );
+        })
         .catch(next)
   )
   .post(
