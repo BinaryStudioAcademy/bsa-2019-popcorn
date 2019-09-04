@@ -192,7 +192,7 @@ class Survey extends PureComponent<IProps, IState> {
 						<h1>{title}</h1>
 						<p>{description}</p>
 						<p className="required-label">*required</p>
-						<img src={image} />
+						<img className="survey-image" src={image} />
 					</header>
 					{questions.map((question, i) => {
 						if (question.type === 'Multiple choice') {

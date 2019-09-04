@@ -11,7 +11,7 @@ export const uploadFile = req =>
     if (contentType && contentType.indexOf("multipart") === 0) {
       const form = new Form({
         autoFiles: true,
-        uploadDir: "public/files",
+        uploadDir: path.resolve(`${__dirname}/../../client/build/images`),
         maxFilesSize: 1048576 * 3
       });
       form.parse(req, function(err, fields, files): any {

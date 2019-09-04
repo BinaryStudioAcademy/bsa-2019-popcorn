@@ -310,7 +310,10 @@ class SurveyEditor extends Component<IProps, IState> {
 							/>
 							{this.state.surveyInfo.image && (
 								<div>
-									<img src={this.state.surveyInfo.image} />
+									<img
+										className="survey-img"
+										src={this.state.surveyInfo.image}
+									/>
 								</div>
 							)}
 						</header>
