@@ -51,8 +51,9 @@ class UserSurveysNav extends React.Component<IProps, IState> {
 	}
 
 	componentDidMount() {
-		if (window.location.pathname === '/surveys') this.props.fetchSurveys();
-		else if (
+		if (window.location.pathname === '/surveys') {
+			this.props.fetchSurveys();
+		} else if (
 			window.location.pathname ===
 			`/user-page/${this.props.userInfo.id}/surveys`
 		)

@@ -30,7 +30,9 @@ const MovieList: React.FC<IMovieListProps> = ({
 	loadMoreMovie,
 	filters
 }) => {
-	if (!movies) return <div>Any movie in list</div>;
+	if (!movies) {
+		return <div>Any movie in list</div>;
+	}
 	const movieListItems = movies.map(movie => {
 		return (
 			<MovieListItem

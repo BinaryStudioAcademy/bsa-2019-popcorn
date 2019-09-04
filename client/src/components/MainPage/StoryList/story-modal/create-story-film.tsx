@@ -44,8 +44,9 @@ const CreateStoryFilm = ({ ...props }: IProps) => {
 						placeholder="Type a text here to find movie..."
 						value={props.searchTitle}
 						onChange={e => {
-							if (e.target.value && e.target.value.trim())
+							if (e.target.value && e.target.value.trim()) {
 								props.fetchSearchToAddMovieInStory(e.target.value.trim());
+							}
 						}}
 					/>
 				</div>

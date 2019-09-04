@@ -60,14 +60,14 @@ interface IProps {
 }
 
 class getAddStoryPopupContent extends React.Component<IProps> {
+	static valid({ image_url, backgroundColor, caption, type }: INewStory) {
+		return caption || type === 'voting';
+	}
+
 	state = {
 		open: true,
 		extra: true
 	};
-
-	static valid({ image_url, backgroundColor, caption, type }: INewStory) {
-		return caption || type === 'voting';
-	}
 
 	//background picker
 	handleHideColorPicker = () => {
@@ -99,7 +99,9 @@ class getAddStoryPopupContent extends React.Component<IProps> {
 
 	toggleInput = () => {
 		this.props.displayInput(!this.props.isShownInput);
-		if (this.props.isShownInput) this.props.setCaption('', 0, 0, '');
+		if (this.props.isShownInput) {
+			this.props.setCaption('', 0, 0, '');
+		}
 	};
 
 	changeTextPosition = (position: { x: number; y: number }) => {

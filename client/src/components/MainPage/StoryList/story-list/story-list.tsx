@@ -128,7 +128,9 @@ class StoryList extends Component<IProps, IState> {
 	onMouseMove = event => {
 		const { startX, scrollLeft, isDown } = this.state;
 		const scroll: any = this.refs.scroll;
-		if (!isDown) return;
+		if (!isDown) {
+			return;
+		}
 		event.preventDefault();
 		const x = event.pageX - scroll.offsetLeft;
 		const walk = x - startX;
@@ -138,8 +140,12 @@ class StoryList extends Component<IProps, IState> {
 
 	viewerIsShown = () => {
 		const { stories } = this.props;
-		if (!stories) return;
-		if (!this.state.isShownViewer) return null;
+		if (!stories) {
+			return;
+		}
+		if (!this.state.isShownViewer) {
+			return null;
+		}
 
 		const { currentStory } = this.state;
 		const mockStories = stories.map(story => ({
@@ -205,7 +211,9 @@ class StoryList extends Component<IProps, IState> {
 						onMouseLeave={this.onMouseLeave}
 						onMouseMove={this.onMouseMove}
 						onClickCapture={event => {
-							if (this.state.class === 'active') event.stopPropagation();
+							if (this.state.class === 'active') {
+								event.stopPropagation();
+							}
 							this.setState({ isDown: false, class: '', isPopupShown: false });
 						}}
 					>

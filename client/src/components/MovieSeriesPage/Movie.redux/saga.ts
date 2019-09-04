@@ -3,7 +3,6 @@ import {
 	FINISH_FETCH_SEARCH_FILMS,
 	START_FETCH_SEARCH_FILMS
 } from '../../shared/Header/actionTypes';
-import { START_SEARCH_ELASTIC_FILMS } from '../../UserPage/UserTops/UserTops.redux/actionTypes';
 import webApi from '../../../services/webApi.service';
 import {
 	FETCH_MOVIE_BY_ID,
@@ -93,7 +92,7 @@ export function* getGenres() {
 	yield put({
 		type: SET_GENRES,
 		payload: {
-			genres: genres
+			genres
 		}
 	});
 }
@@ -106,7 +105,7 @@ export function* fetchAwards(action) {
 	yield put({
 		type: SET_AWARDS,
 		payload: {
-			awards: awards
+			awards
 		}
 	});
 }
@@ -169,7 +168,7 @@ export function* fetchMovie(action) {
 export function* setUserRate(action) {
 	const { movieId, userId, rate } = action.payload;
 	try {
-		const data = yield call(webApi, {
+		yield call(webApi, {
 			endpoint: `/api/movie/rate`,
 			method: 'POST',
 			body: {
@@ -228,7 +227,7 @@ export function* fetchSearchMovie(action) {
 			type: LOADING,
 			payload: { loading: true }
 		});
-		let movies = yield call(webApi, {
+		const movies = yield call(webApi, {
 			endpoint: `/api/movie/find?title=${action.payload.title}`,
 			method: 'GET'
 		});

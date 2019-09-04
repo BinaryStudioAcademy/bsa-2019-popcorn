@@ -25,7 +25,9 @@ const MovieListItem: React.FC<IMovieListItemProps> = ({
 		<div
 			className={'movie-item-preview'}
 			onClick={() => {
-				if (saveMovie) saveMovie(movie);
+				if (saveMovie) {
+					saveMovie(movie);
+				}
 			}}
 		>
 			<div className="movie-poster-wrp">

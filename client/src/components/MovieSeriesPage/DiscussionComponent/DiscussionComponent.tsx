@@ -59,7 +59,7 @@ class DiscussionComponent extends Component<
 		}
 	};
 	getDateString(): string {
-		let date = new Date();
+		const date = new Date();
 		return (
 			[
 				date.getFullYear(),
@@ -107,13 +107,13 @@ class DiscussionComponent extends Component<
 		const isMyMessage = id === this.props.currentUser.id;
 		name = isMyMessage ? 'Me' : name;
 		avatar = avatar || config.DEFAULT_AVATAR;
-		let newMessageItem = {
+		const newMessageItem = {
 			id: (Math.random() * (9000 - 1) + 1).toString(),
 			text,
 			createdAt,
 			user: { id, name, avatar }
 		};
-		let arr = this.state.messagesState;
+		const arr = this.state.messagesState;
 		arr.unshift(newMessageItem);
 		this.setState(
 			{
@@ -124,7 +124,9 @@ class DiscussionComponent extends Component<
 	};
 
 	scrollToTop = () => {
-		if (!this.discussionComponent.current) return;
+		if (!this.discussionComponent.current) {
+			return;
+		}
 		this.discussionComponent.current.scrollTop = 0;
 	};
 

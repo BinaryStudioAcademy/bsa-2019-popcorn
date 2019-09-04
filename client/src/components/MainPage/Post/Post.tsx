@@ -3,8 +3,8 @@ import AddComment from '../../shared/AddComment/AddComment';
 import './Post.scss';
 import { ReactComponent as SettingIcon } from '../../../assets/icons/general/settings.svg';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faHeart, faCalendarAlt } from '@fortawesome/free-regular-svg-icons';
-import { faShare, faTasks, faTrophy } from '@fortawesome/free-solid-svg-icons';
+import { faHeart } from '@fortawesome/free-regular-svg-icons';
+import { faShare } from '@fortawesome/free-solid-svg-icons';
 import Comment from '../Comment/Comment';
 import Tag from '../Tag/Tag';
 import PostEditModal from '../PostEditModal/PostEditModal';
@@ -50,6 +50,10 @@ class Post extends Component<IPostProps, IPostState> {
 		};
 	}
 
+	nestedComments = this.props.post.comments
+		? this.nestComments(this.props.post.comments)
+		: this.props.post.comments;
+
 	MouseEnterLikeButton = () => {
 		this.setState({ hover: true });
 	};
@@ -59,12 +63,13 @@ class Post extends Component<IPostProps, IPostState> {
 	};
 
 	onReactionClick = (reaction: IReactItem) => {
-		if (this.props.createReaction)
+		if (this.props.createReaction) {
 			this.props.createReaction(
 				reaction.name,
 				this.props.userId,
 				this.props.post.id
 			);
+		}
 	};
 
 	deletePost = () => {
@@ -91,9 +96,15 @@ class Post extends Component<IPostProps, IPostState> {
 	}
 	getType = () => {
 		const post = this.props.post;
-		if (post.survey) return 'survey';
-		if (post.top) return 'top';
-		if (post.event) return 'event';
+		if (post.survey) {
+			return 'survey';
+		}
+		if (post.top) {
+			return 'top';
+		}
+		if (post.event) {
+			return 'event';
+		}
 		return 'Nothing';
 	};
 	parseDescription(description) {
@@ -122,10 +133,6 @@ class Post extends Component<IPostProps, IPostState> {
 			return comment.parentId == null;
 		});
 	}
-
-	nestedComments = this.props.post.comments
-		? this.nestComments(this.props.post.comments)
-		: this.props.post.comments;
 
 	render() {
 		const {

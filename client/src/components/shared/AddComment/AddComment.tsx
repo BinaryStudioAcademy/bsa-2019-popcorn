@@ -9,13 +9,13 @@ interface IAddCommentProps {
 }
 
 class AddComment extends React.Component<IAddCommentProps, { body: string }> {
-	constructor(props: IAddCommentProps) {
-		super(props);
-	}
-
 	state = {
 		body: ''
 	};
+
+	constructor(props: IAddCommentProps) {
+		super(props);
+	}
 
 	render() {
 		/*  UI: Change this.props.replyId to userName */
@@ -40,7 +40,9 @@ class AddComment extends React.Component<IAddCommentProps, { body: string }> {
 				<button
 					className="publish-button"
 					onClick={() => {
-						if (!this.props.createComment) return;
+						if (!this.props.createComment) {
+							return;
+						}
 						this.props.createComment(this.state.body);
 						this.setState({ body: '' });
 					}}

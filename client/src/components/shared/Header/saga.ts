@@ -12,7 +12,7 @@ import {
 } from './actionTypes';
 export function* sendTokenToServer(action) {
 	try {
-		const response = yield call(webApi, {
+		yield call(webApi, {
 			method: 'PUT',
 			endpoint: '/api/notification',
 			body: {
@@ -45,7 +45,7 @@ export function* getUnreadNotifications(action) {
 export function* setNotificationIsRead(action) {
 	try {
 		const notificationId = action.payload.notificationId;
-		const response = yield call(webApi, {
+		yield call(webApi, {
 			method: 'DELETE',
 			endpoint: `/api/notification/${notificationId}`
 		});

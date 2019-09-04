@@ -53,14 +53,14 @@ const Extra = (props: IProps) => {
 		return (
 			<>
 				<div className="event-date-range">
-					<Moment format=" D MMM HH:mm " local>
+					<Moment format=" D MMM HH:mm " local={true}>
 						{String(data.start_date)}
 					</Moment>
 					{data.end_date && (
 						<span>
 							{' '}
 							-
-							<Moment format=" D MMM HH:mm " local>
+							<Moment format=" D MMM HH:mm " local={true}>
 								{String(data.end_date)}
 							</Moment>
 						</span>

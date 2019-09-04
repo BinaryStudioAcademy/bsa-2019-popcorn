@@ -48,7 +48,6 @@ class UserReviews extends React.Component<IProps> {
 	render() {
 		const {
 			reviewUserList,
-			currentUserId,
 			loading,
 			deleteReviewById,
 			setReview,

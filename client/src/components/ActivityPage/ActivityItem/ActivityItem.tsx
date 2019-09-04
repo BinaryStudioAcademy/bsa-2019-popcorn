@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import './ActivityItem.scss';
 import { Activity } from '../ActivityList/ActivityList';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faHeart, faComments, faStar } from '@fortawesome/free-solid-svg-icons';
+import { faComments, faStar } from '@fortawesome/free-solid-svg-icons';
 import Moment from 'react-moment';
 import { getIcon } from '../../MainPage/Post/PostReaction/PostReaction';
 type ActivityItemProps = {
@@ -39,7 +39,9 @@ const ActivityItem = ({
 	function setRead(activityId: string) {
 		isRead = true;
 		setMarked(isRead);
-		readNotification && readNotification(activityId);
+		if (readNotification) {
+			readNotification(activityId);
+		}
 	}
 	return (
 		<div
@@ -51,7 +53,7 @@ const ActivityItem = ({
 				<div className="activity-text">{title}</div>
 				<div className="activity-text">{body}</div>
 				<div className="activity-date">
-					<Moment format=" D MMM HH:mm " local>
+					<Moment format=" D MMM HH:mm " local={true}>
 						{String(date)}
 					</Moment>
 				</div>

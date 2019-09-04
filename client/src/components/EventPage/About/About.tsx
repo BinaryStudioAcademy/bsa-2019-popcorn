@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import Modal from 'react-responsive-modal';
-import EventMap from '../EventMap';
 import Moment from 'react-moment';
 import './About.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';

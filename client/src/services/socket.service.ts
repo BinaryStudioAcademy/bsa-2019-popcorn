@@ -1,15 +1,28 @@
-import React from 'react';
 import io from 'socket.io-client';
-import config from '../config';
 
 class SocketService {
+	static on(name: string, callback: (data: any) => any) {
+		SocketService._socket.on(name, callback);
+	}
+
+	static emit(name: string, data: any) {
+		SocketService._socket.emit(name, data);
+	}
+
+	static join(room: string) {
+		SocketService._socket.emit('createRoom', room);
+	}
+
+	static leave(room: string) {
+		SocketService._socket.emit('leaveRoom', room);
+	}
 	private static _socket;
 
 	constructor(userId: string) {
 		this._initSocket(userId);
 	}
 
-	private _initSocket(userId: string) {
+	_initSocket(userId: string) {
 		if (!SocketService._socket) {
 			const currentLocation = new URL(window.location.href);
 			SocketService._socket =
@@ -25,22 +38,6 @@ class SocketService {
 				});
 			}
 		}
-	}
-
-	static on(name: string, callback: (data: any) => any) {
-		SocketService._socket.on(name, callback);
-	}
-
-	static emit(name: string, data: any) {
-		SocketService._socket.emit(name, data);
-	}
-
-	static join(room: string) {
-		SocketService._socket.emit('createRoom', room);
-	}
-
-	static leave(room: string) {
-		SocketService._socket.emit('leaveRoom', room);
 	}
 }
 

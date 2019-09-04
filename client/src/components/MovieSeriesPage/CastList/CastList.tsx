@@ -38,7 +38,9 @@ class CastList extends React.Component<CastListProps, CastListState> {
 	onMouseMove = event => {
 		const { startX, scrollLeft, isDown } = this.state;
 		const scroll: any = this.refs.scroll;
-		if (!isDown) return;
+		if (!isDown) {
+			return;
+		}
 		event.preventDefault();
 		const x = event.pageX - scroll.offsetLeft;
 		const walk = x - startX;

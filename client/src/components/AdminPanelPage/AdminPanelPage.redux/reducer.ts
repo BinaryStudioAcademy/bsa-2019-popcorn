@@ -22,7 +22,7 @@ export default function(state = initialState, action) {
 
 			const userList: any[] = Object.assign([], state.users);
 
-			const newUserList = userList.filter((user: any) => user.id != userId);
+			const newUserList = userList.filter((user: any) => user.id !== userId);
 
 			return {
 				...state,
@@ -39,7 +39,7 @@ export default function(state = initialState, action) {
 			const movieList: any[] = Object.assign([], state.movies);
 
 			const newMovieList = movieList.filter(
-				(movie: any) => movie.id != movieId
+				(movie: any) => movie.id !== movieId
 			);
 
 			return {
@@ -72,7 +72,7 @@ export default function(state = initialState, action) {
 
 			const topList: any[] = Object.assign([], state.tops);
 
-			const newTopList = topList.filter((top: any) => top.id != topId);
+			const newTopList = topList.filter((top: any) => top.id !== topId);
 
 			return {
 				...state,
@@ -125,7 +125,7 @@ export default function(state = initialState, action) {
 			const votingList: any[] = Object.assign([], state.voting);
 
 			const newVotingList = votingList.filter(
-				(voting: any) => voting.id != votingId
+				(voting: any) => voting.id !== votingId
 			);
 
 			return {

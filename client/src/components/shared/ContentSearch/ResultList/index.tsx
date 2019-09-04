@@ -43,7 +43,9 @@ class ResultList extends React.Component<IProps, IState> {
 				<div
 					className={'show-more-button'}
 					onClick={() => {
-						if (this.props.redirect) this.setState({ redirect: true });
+						if (this.props.redirect) {
+							this.setState({ redirect: true });
+						}
 						this.setState({ amount: { ...obj } });
 					}}
 				>
@@ -60,7 +62,9 @@ class ResultList extends React.Component<IProps, IState> {
 	}
 
 	renderList(elem: { data: any; type: string }) {
-		if (!elem.data && !elem.data.length) return;
+		if (!elem.data && !elem.data.length) {
+			return;
+		}
 
 		switch (elem.type) {
 			case 'movie':
@@ -70,9 +74,13 @@ class ResultList extends React.Component<IProps, IState> {
 			case 'event':
 				return this.getView(elem.data, 'event', data =>
 					data.map(event => (
-						<NavLink to={'/events/' + event.id} className={'text-decoration'}>
+						<NavLink
+							key={event.id}
+							to={'/events/' + event.id}
+							className={'text-decoration'}
+						>
 							<Extra
-								clearExtra={data => null}
+								clearExtra={() => null}
 								data={event}
 								link={'/events/' + event.id}
 								type={'event'}
@@ -84,9 +92,13 @@ class ResultList extends React.Component<IProps, IState> {
 			case 'top':
 				return this.getView(elem.data, 'top', data =>
 					data.map(top => (
-						<NavLink to={'/tops/' + top.id} className={'text-decoration'}>
+						<NavLink
+							key={top.id}
+							to={'/tops/' + top.id}
+							className={'text-decoration'}
+						>
 							<Extra
-								clearExtra={data => null}
+								clearExtra={() => null}
 								data={top}
 								link={'/tops/' + top.id}
 								type={'top'}
@@ -98,9 +110,12 @@ class ResultList extends React.Component<IProps, IState> {
 			case 'survey':
 				return this.getView(elem.data, 'survey', data =>
 					data.map(survey => (
-						<NavLink to={`/user-page/${survey.user.id}/survey/${survey.id}`}>
+						<NavLink
+							key={survey.id}
+							to={`/user-page/${survey.user.id}/survey/${survey.id}`}
+						>
 							<Extra
-								clearExtra={data => null}
+								clearExtra={() => null}
 								data={survey}
 								link={`/user-page/${survey.user.id}/survey/${survey.id}`}
 								type={'survey'}
@@ -112,7 +127,11 @@ class ResultList extends React.Component<IProps, IState> {
 			case 'user':
 				return this.getView(elem.data, 'user', data =>
 					data.map(user => (
-						<NavLink to={`/user-page/${user.id}`} className={'text-decoration'}>
+						<NavLink
+							key={user.id}
+							to={`/user-page/${user.id}`}
+							className={'text-decoration'}
+						>
 							<div className={'user-info'}>
 								<Image
 									src={user.avatar}

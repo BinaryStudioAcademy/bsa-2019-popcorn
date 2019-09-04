@@ -8,7 +8,6 @@ import {
 	faChevronLeft,
 	faChevronRight,
 	faEllipsisH,
-	faEye,
 	faTimes
 } from '@fortawesome/free-solid-svg-icons';
 import config from '../../../config';

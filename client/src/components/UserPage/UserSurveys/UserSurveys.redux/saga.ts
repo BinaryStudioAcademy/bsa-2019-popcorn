@@ -12,7 +12,6 @@ import {
 	POST_ANSWERS
 } from './actionTypes';
 import webApi from '../../../../services/webApi.service';
-import config from '../../../../config';
 import { setArrangementInSurveys } from '../UserSurveys.service';
 import { transformDataToProps } from '../UserSurveys.service';
 
@@ -74,7 +73,9 @@ export function* addSurvey(action) {
 				...action.payload.data
 			}
 		});
-		if (data) yield put({ type: FETCH_SURVEYS });
+		if (data) {
+			yield put({ type: FETCH_SURVEYS });
+		}
 	} catch (e) {
 		console.log('survey saga create survey: ', e.message);
 	}
@@ -93,7 +94,9 @@ export function* updateSurvey(action) {
 				...action.payload.data
 			}
 		});
-		if (data) yield put({ type: FETCH_SURVEYS });
+		if (data) {
+			yield put({ type: FETCH_SURVEYS });
+		}
 	} catch (e) {
 		console.log('survey saga update survey: ', e.message);
 	}
@@ -162,7 +165,9 @@ function* recreateSurvey(action) {
 					...action.payload.data
 				}
 			});
-			if (data) yield put({ type: FETCH_SURVEYS });
+			if (data) {
+				yield put({ type: FETCH_SURVEYS });
+			}
 		}
 	} catch (e) {
 		console.log('survey saga recreate survey: ', e.message);

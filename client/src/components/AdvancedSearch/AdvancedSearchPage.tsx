@@ -77,7 +77,7 @@ const AdvancedSearchPage = ({
 	getGenres
 }: IAdvancedSearchPage) => {
 	let convertGenres = null;
-	let convertCast = null;
+	const convertCast = null;
 	if (!genres) getGenres();
 	if (genres) {
 		convertGenres = genres.map(el => el.name);

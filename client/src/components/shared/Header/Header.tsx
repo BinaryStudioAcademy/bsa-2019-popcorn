@@ -4,7 +4,6 @@ import { faChevronDown } from '@fortawesome/free-solid-svg-icons';
 import './Header.scss';
 import messageIcon from '../../../assets/icons/general/header/message-icon.svg';
 import logo from '../../../assets/icons/general/popcorn-logo.svg';
-import MovieSearch from '../../MovieList/MovieSearch/index';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import {
@@ -56,10 +55,6 @@ interface IProps {
 
 const Header = ({
 	userInfo,
-	moviesSearch,
-	fetchFilms,
-	alreadySearch,
-	setMovieSeries,
 	unauthorize,
 	getUnreadNotifications,
 	setNotificationIsRead,
@@ -67,8 +62,7 @@ const Header = ({
 	firebase,
 	firebaseToken,
 	getFirebaseToken,
-	deleteFirebaseToken,
-	history
+	deleteFirebaseToken
 }: IProps) => {
 	const MOVIES_IN_CINEMA = 'Movies in cinema';
 	const MOVIE_TOPS = 'Movie tops';

@@ -34,6 +34,10 @@ interface IState {
 }
 
 class ContentSearch extends React.Component<IProps, IState> {
+	static isEmpty(data) {
+		return !(data && data.some(elem => elem.data && elem.data.length > 0));
+	}
+
 	state = {
 		title: '',
 		type: defaultOption,
@@ -41,13 +45,11 @@ class ContentSearch extends React.Component<IProps, IState> {
 		redirectAdvanceSearch: false
 	};
 
-	static isEmpty(data) {
-		return !(data && data.some(elem => elem.data && elem.data.length > 0));
-	}
-
 	componentDidMount(): void {
 		document.addEventListener('click', (e: any) => {
-			if (!(e && e.target && e.target.classList)) return this.setModal(false);
+			if (!(e && e.target && e.target.classList)) {
+				return this.setModal(false);
+			}
 
 			const classList = e.target.classList;
 
@@ -62,7 +64,9 @@ class ContentSearch extends React.Component<IProps, IState> {
 	}
 
 	showModal(): boolean {
-		if (window.location.pathname === '/content-search') return false;
+		if (window.location.pathname === '/content-search') {
+			return false;
+		}
 		return this.state.showModal || this.props.loading || !!this.props.error;
 	}
 
@@ -110,14 +114,16 @@ class ContentSearch extends React.Component<IProps, IState> {
 					className="question-type"
 					value={type}
 					onChange={event => {
-						if (event.target.value !== 'advance movie search   ')
+						if (event.target.value !== 'advance movie search   ') {
 							return this.setState({ type: event.target.value });
-
+						}
 						this.setState({ redirectAdvanceSearch: true });
 					}}
 				>
 					{options.map(option => (
-						<option value={option}>{option}&nbsp;</option>
+						<option key={option} value={option}>
+							{option}&nbsp;
+						</option>
 					))}
 				</select>
 				<div

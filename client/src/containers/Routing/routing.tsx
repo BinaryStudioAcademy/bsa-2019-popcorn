@@ -18,7 +18,6 @@ import { confirmChanges } from '../../components/ConfirmChange/actions';
 import Spinner from '../../components/shared/Spinner/index';
 import Reset from '../../components/authorization/Reset';
 import Restore from '../../components/authorization/Restore';
-import StoryVotingCreation from '../../components/StoryVotingCreation/StoryVotingCreation';
 
 interface IValues {
 	email: string;
@@ -67,7 +66,7 @@ const Routing = ({
 		<div className="main-content">
 			<Switch>
 				<Route
-					exact
+					exact={true}
 					path="/login"
 					component={() => (
 						<Login
@@ -78,7 +77,7 @@ const Routing = ({
 					)}
 				/>
 				<Route
-					exact
+					exact={true}
 					path="/registration"
 					component={() => (
 						<Registration
@@ -89,7 +88,7 @@ const Routing = ({
 					)}
 				/>
 				<Route
-					exact
+					exact={true}
 					path="/reset"
 					component={() => (
 						<Reset
@@ -116,7 +115,7 @@ const Routing = ({
 				/>
 				<Route path="/" component={Main} />
 				{/* Not found route */}
-				<Route path="*" exact component={NotFound} />
+				<Route path="*" exact={true} component={NotFound} />
 			</Switch>
 		</div>
 	);

@@ -1,7 +1,6 @@
 import { all, takeEvery, call, put } from '@redux-saga/core/effects';
 import * as ActionType from './actionTypes';
 import webApi from '../../../services/webApi.service';
-import config from '../../../config';
 
 export function* fetchUsers(action) {
 	try {
@@ -31,7 +30,7 @@ export function* deleteUser(action) {
 	try {
 		const { userId } = action.payload;
 
-		const data = yield call(webApi, {
+		yield call(webApi, {
 			method: 'DELETE',
 			endpoint: `/api/user/${userId}`
 		});
@@ -123,7 +122,7 @@ export function* deletePost(action) {
 	try {
 		const { postId } = action.payload;
 
-		const data = yield call(webApi, {
+		yield call(webApi, {
 			method: 'DELETE',
 			endpoint: `/api/post/${postId}`
 		});
@@ -215,7 +214,7 @@ export function* deleteStory(action) {
 	try {
 		const { storyId } = action.payload;
 
-		const data = yield call(webApi, {
+		yield call(webApi, {
 			method: 'DELETE',
 			endpoint: `/api/story/${storyId}`
 		});
@@ -307,7 +306,7 @@ export function* deleteVoting(action) {
 	try {
 		const { votingId } = action.payload;
 
-		const data = yield call(webApi, {
+		yield call(webApi, {
 			method: 'DELETE',
 			endpoint: `/api/voting/${votingId}`
 		});

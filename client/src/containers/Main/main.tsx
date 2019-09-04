@@ -28,14 +28,10 @@ import {
 	subscibeToEvent
 } from '../../components/UserPage/UserEvents/actions';
 import Header from '../../components/shared/Header/Header';
-import UserTops from '../../components/UserPage/UserTops/UserTops';
 import UserSurveysNav from '../../components/UserPage/UserSurveys/UserSurveysNav';
 import SocketService from '../../services/socket.service';
 import TMovie from '../../components/MovieSeriesPage/TMovie';
-import {
-	IEventFormatClient,
-	IEventFormatDataBase
-} from '../../components/UserPage/UserEvents/UserEvents.service';
+import { IEventFormatDataBase } from '../../components/UserPage/UserEvents/UserEvents.service';
 import TopList from '../../components/TopListPage/TopList';
 import SettingsPage from '../../components/UserSettings';
 import ResultList from '../../components/shared/ContentSearch/ResultList';
@@ -107,7 +103,6 @@ const Main = ({
 	movieList,
 	fetchMovieList,
 	setMovieSeries,
-	movieSeries,
 	loadMoreMovie,
 	allEvents,
 	getAllEvents,
@@ -115,8 +110,9 @@ const Main = ({
 	getEventById,
 	subscibeToEvent
 }: IProps) => {
-	if (!isAuthorized || !localStorage.getItem('token'))
+	if (!isAuthorized || !localStorage.getItem('token')) {
 		return <Redirect to="/login" />;
+	}
 
 	new SocketService(userInfo.id);
 
@@ -137,7 +133,7 @@ const Main = ({
 				// style={{ width: 'calc(100vw - 205px)' }}
 				>
 					<Switch>
-						<Route exact path={[`/`, '/create*']} component={MainPage} />
+						<Route exact={true} path={[`/`, '/create*']} component={MainPage} />
 						<Route path={`/user-page/:id`} component={UserPage} />
 						<Route
 							path={'/settings'}
@@ -184,7 +180,7 @@ const Main = ({
 							path={`/surveys`}
 							render={() => allSurveysRender(userInfo)}
 						></Route>
-						<Route exact path={`/tops`} render={() => <TopList />} />
+						<Route exact={true} path={`/tops`} render={() => <TopList />} />
 						<Route path={`/tops/:id`} component={TopPage} />
 						<Route path={`/*`} exact component={NotFound} />
 					</Switch>
