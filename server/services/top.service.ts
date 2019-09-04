@@ -21,9 +21,8 @@ const getTopWithMovies = async (tops: any) => {
   return topWithMovies;
 };
 
-export const getTops = async (): Promise<Top[]> => 
+export const getTops = async (): Promise<Top[]> =>
   await getCustomRepository(TopRepository).find();
-  
 
 export const getExtendedTops = async (): Promise<Top[]> => {
   const tops = await getCustomRepository(TopRepository).find({
@@ -82,6 +81,7 @@ export const getTopByTitle = async (title: string): Promise<Array<Top>> => {
     tops.map(async top => {
       const movieIds = top.movieInTop.map(top => top.movieId);
       const elasticResponse = await getByIdValues(movieIds);
+      console.log(elasticResponse);
       top.movieInTop = elasticResponse.hits.hits.map(movie => movie._source);
       return top;
     })
