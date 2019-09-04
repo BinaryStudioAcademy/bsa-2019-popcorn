@@ -79,8 +79,8 @@ const CreateStoryFilm = ({ ...props }: IProps) => {
 					{
 						movie && (
 							<MovieListItem
+								key={movie.id}	
 								movie={movie}
-								key='1'
 								saveMovie={(movie: TMovie) => {
 									props.saveMovie(movie, option);
 									props.history.push('/create');
