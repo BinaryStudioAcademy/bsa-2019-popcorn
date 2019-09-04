@@ -15,6 +15,7 @@ import config from '../../../config';
 import StoryVoting from '../../StoryVoting/StoryVoting';
 import { connect } from 'react-redux';
 import { NavLink } from 'react-router-dom';
+import ChatInput from '../../ChatPage/Chat/ChatInput';
 
 interface IProps {
 	stories: Array<{
@@ -62,6 +63,7 @@ interface IProps {
 	userId: string;
 	userRole: string;
 	closeViewer: () => void;
+	chats: any;
 }
 
 interface IState {
@@ -129,6 +131,14 @@ class StoryViewer extends PureComponent<IProps, IState> {
 		}));
 	};
 
+	getChatId = id => {
+		for (const chatId in this.props.chats) {
+			if (this.props.chats[chatId].user.id === id) {
+				return chatId;
+			}
+		}
+	};
+
 	render() {
 		const { stories } = this.props;
 
@@ -165,23 +175,26 @@ class StoryViewer extends PureComponent<IProps, IState> {
 								</header>
 
 								{story.type === 'voting' && story.voting && (
-									<StoryVoting
-										backgroundColor={story.backgroundColor}
-										header={story.voting.header}
-										options={story.voting.options}
-										deltaPositionForHeader={{
-											x: story.voting.deltaPositionHeadX,
-											y: story.voting.deltaPositionHeadY
-										}}
-										deltaPositionForOptionBlock={{
-											x: story.voting.deltaPositionOptionBlockX,
-											y: story.voting.deltaPositionOptionBlockY
-										}}
-										backColor={story.voting.backColor}
-										userId={this.props.currentUser.userId}
-										inEditor={false}
-										image_url={story.voting.backImage || ''}
-									/>
+									<div>
+										<StoryVoting
+											backgroundColor={story.backgroundColor}
+											header={story.voting.header}
+											options={story.voting.options}
+											deltaPositionForHeader={{
+												x: story.voting.deltaPositionHeadX,
+												y: story.voting.deltaPositionHeadY
+											}}
+											deltaPositionForOptionBlock={{
+												x: story.voting.deltaPositionOptionBlockX,
+												y: story.voting.deltaPositionOptionBlockY
+											}}
+											backColor={story.voting.backColor}
+											userId={this.props.currentUser.userId}
+											inEditor={false}
+											image_url={story.voting.backImage || ''}
+										/>
+										<ChatInput chatId={this.getChatId(story.userInfo.userId)} />
+									</div>
 								)}
 								{story.type === 'voting' ? null : (
 									<main
@@ -217,6 +230,9 @@ class StoryViewer extends PureComponent<IProps, IState> {
 										</div>
 										<div className={'seen'}>
 											<p className={'seen-by-info'} style={{ width: '100%' }}>
+												<ChatInput
+													chatId={this.getChatId(story.userInfo.userId)}
+												/>
 												<span
 													style={{
 														display: 'flex',
@@ -264,7 +280,8 @@ class StoryViewer extends PureComponent<IProps, IState> {
 const mapStateToProps = (rootState, props) => ({
 	...props,
 	userId: rootState.profile.profileInfo.id,
-	userRole: rootState.profile.profileInfo.role
+	userRole: rootState.profile.profileInfo.role,
+	chats: rootState.chat.chats
 });
 
 export default connect(mapStateToProps)(StoryViewer);
