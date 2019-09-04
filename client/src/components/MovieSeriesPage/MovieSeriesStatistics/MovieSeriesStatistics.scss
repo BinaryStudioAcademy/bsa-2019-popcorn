@@ -1,8 +1,11 @@
+@import '../../../styles/variables.scss';
+
 .movie-series-statistics {
 	height: 600px;
+	width: 100%;
 	text {
-		font-size: 16px !important;
-		font-family: 'Inter', sans-serif !important;
+		font-size: $post-font-size !important;
+		font-family: $base-font-family !important;
 	}
 	.statistics-title {
 		text-transform: uppercase;
@@ -22,16 +25,16 @@
 		text-align: center;
 	}
 	.average-statistics-item {
-		border: 1px solid rgba(0, 0, 0, 0.11);
+		border: 1px solid $border-color;
 		box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.37);
 		border-radius: 2px;
 		margin: 10px;
-		width: 300px;
+		width: 20%;
 		font-size: 25px;
 	}
 
 	.average-statistics-item-title {
-		border-bottom: 1px solid rgba(0, 0, 0, 0.11);
+		border-bottom: 1px solid $border-color;
 		padding: 20px;
 		margin-bottom: 20px;
 	}

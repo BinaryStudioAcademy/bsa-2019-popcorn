@@ -13,7 +13,7 @@ $orange: #fb8700;
 $header-letter-spacing: 0.9px;
 
 .movie-series-page {
-	width: 80%;
+	// width: 80%;
 	margin: 2% auto 0;
 	display: flex;
 	flex-direction: column;
@@ -27,6 +27,8 @@ $header-letter-spacing: 0.9px;
 		display: grid;
 		grid-template-columns: 50px 1fr 55px;
 		grid-template-rows: auto;
+		// width: 80%;
+		margin: 0 40px 15px;
 
 		.header-movie-watch-list {
 			.watch-list-icon {
@@ -116,12 +118,13 @@ $header-letter-spacing: 0.9px;
 }
 
 .movie-series-page-tabs {
-	margin-bottom: $tab-space;
+	margin: 0 40px $tab-space;
 	position: sticky;
 	top: 0;
 	z-index: 2;
 	background-color: $white;
 	padding-bottom: 5px;
+	// width: 80%;
 
 	.movie-series-page-tab-list {
 		list-style-type: none;
@@ -149,6 +152,8 @@ $header-letter-spacing: 0.9px;
 .movie-series-page-tab-body {
 	position: relative;
 	display: grid;
-	grid-template-columns: 70% 30%;
 	grid-gap: 10px;
+	grid-template-columns: 0.7fr 0.3fr;
+	justify-content: space-around;
+	margin: 0;
 }

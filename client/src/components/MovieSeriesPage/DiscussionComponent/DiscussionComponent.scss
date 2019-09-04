@@ -41,11 +41,17 @@ a:focus {
 	justify-self: end;
 	max-height: 500px;
 	width: 100%;
+	border: 1px solid rgb(244, 248, 251);
+	box-shadow: 0 1px 4px 0 rgb(244, 248, 251);
+	padding: 10px;
+	border-radius: 4px;
+	// background: rgb(244,248,251);
 
 	.MessageContainer {
 		padding-right: 5px;
 		overflow-y: scroll;
 		padding-bottom: -20px;
+		padding: 20px;
 	}
 
 	.MessageContainer::-webkit-scrollbar {
@@ -58,18 +64,20 @@ a:focus {
 	}
 
 	.messageItem {
-		border: 1px solid $border-color;
-		border-left: 3px solid rgba($button-background, 0.4);
+		// border: 1px solid $border-color;
+		// border-left: 3px solid rgba($button-background, 0.4);
+		box-shadow: 1px 1px 4px 1px rgb(244, 248, 251);
 		padding: 10px;
 		display: flex;
 		align-items: center;
 		text-align: left;
 		margin-bottom: 20px;
 		width: 100%;
-
-		&:hover {
-			border-left: 3px solid rgba($button-background, 0.6);
-		}
+		border-radius: 4px;
+		border-left: 3px solid rgba($button-background, 0.6);
+		// &:hover {
+		// 	border-left: 3px solid rgba($button-background, 0.6);
+		// }
 
 		img {
 			align-self: flex-start;
@@ -77,13 +85,14 @@ a:focus {
 			height: auto;
 			margin-right: 10px;
 			border-radius: 50%;
+			margin: -10px -25px;
 		}
 
 		.messageBody {
 			width: 100%;
 			box-sizing: border-box;
 			font-size: $base-font-size;
-
+			// padding-right: 20px;
 			.body {
 				white-space: normal;
 			}
@@ -127,8 +136,9 @@ a:focus {
 
 		.messageInfo {
 			margin-bottom: 5px;
+
 			display: flex;
-			justify-content: space-between;
+			// justify-content: space-between;
 
 			.date {
 				color: change-color($text-base-color, $lightness: 30%, $alpha: 0.5);

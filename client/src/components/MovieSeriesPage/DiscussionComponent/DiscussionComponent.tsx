@@ -136,25 +136,6 @@ class DiscussionComponent extends Component<
 		const messages = this.state.messagesState;
 		return (
 			<div className="UserDiscussionComponent" id="scroller">
-				<div className="messageItem newMessageItem" tabIndex={0} id="anchor">
-					<div className="messageBody">
-						<div className="newMessage">
-							<textarea
-								className="newMessageInput"
-								wrap="soft"
-								ref={this.newMessage}
-								placeholder="Type a message"
-								onChange={this.inputChange}
-							></textarea>
-							<button
-								onClick={this.sendMessage}
-								disabled={this.state.inputIsEmpty}
-							>
-								<SendLogo />
-							</button>
-						</div>
-					</div>
-				</div>
 				<div className="MessageContainer" ref={this.discussionComponent}>
 					{messages.map(message => (
 						<div className="messageItem" key={message.id}>
@@ -180,6 +161,25 @@ class DiscussionComponent extends Component<
 							</div>
 						</div>
 					))}
+				</div>
+				<div className="messageItem newMessageItem" tabIndex={0} id="anchor">
+					<div className="messageBody">
+						<div className="newMessage">
+							<textarea
+								className="newMessageInput"
+								wrap="soft"
+								ref={this.newMessage}
+								placeholder="Type a message"
+								onChange={this.inputChange}
+							></textarea>
+							<button
+								onClick={this.sendMessage}
+								disabled={this.state.inputIsEmpty}
+							>
+								<SendLogo />
+							</button>
+						</div>
+					</div>
 				</div>
 			</div>
 		);
