@@ -8,6 +8,7 @@ import Image from '../shared/Image/Image';
 import config from '../../config';
 import { NavLink } from 'react-router-dom';
 import ReactTimeAgo from 'react-time-ago';
+import MovieItem from './MovieItem/MovieItem';
 
 interface IProps {
 	match: any;
@@ -34,12 +35,14 @@ interface IMovieListDetails {
 	movies: Array<IMovie>;
 }
 
-interface IMovie {
+export interface IMovie {
 	id: string;
 	title: string;
 	poster_path: string;
 	release_date: string;
 	runtime: number;
+	overview: string;
+	genres: Array<string>;
 }
 
 const UserMovieList: React.FC<IProps> = ({ ...props }) => {
@@ -66,6 +69,8 @@ const UserMovieList: React.FC<IProps> = ({ ...props }) => {
 		created_at,
 		user: { id: userId, name: userName, avatar: userAvatar }
 	} = movieListDetails.movieList;
+
+	const { movies } = movieListDetails;
 
 	return (
 		<div className="UserMovieList">
@@ -99,6 +104,11 @@ const UserMovieList: React.FC<IProps> = ({ ...props }) => {
 						</div>
 					</div>
 				</header>
+				<div className="movie-list-items">
+					{movies.map(movie => (
+						<MovieItem movie={movie} key={movie.id} />
+					))}
+				</div>
 			</div>
 		</div>
 	);
