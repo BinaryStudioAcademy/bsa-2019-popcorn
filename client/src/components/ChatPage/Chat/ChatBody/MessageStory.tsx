@@ -15,6 +15,16 @@ const MessageStory: React.FC<IProps> = ({ story, reactionType }) => {
 				return '🔥';
 			case 'claps':
 				return '👏🏻';
+			case 'stars':
+				return '🤩';
+			case 'cry':
+				return '😢';
+			case 'shock':
+				return '😳';
+			case 'angry':
+				return '😡';
+			case 'holiday':
+				return '🥳';
 			default:
 				break;
 		}

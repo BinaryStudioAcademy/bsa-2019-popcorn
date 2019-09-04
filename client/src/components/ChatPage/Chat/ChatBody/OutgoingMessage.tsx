@@ -41,42 +41,45 @@ const OutgoingMessage: React.FC<IProps> = ({
 					type="outgoing"
 				/>
 			)}
-			<div className="outgoing-message-text">
-				{message.body}
+			{message.body ? (
+				<div className="outgoing-message-text">
+					{message.body}
+					<Moment format="H:mm" local>
+						{message.created_at}
+					</Moment>
+					<div className="message-btns">
+						<button onClick={onDelete}>
+							<FontAwesomeIcon icon={faTrashAlt} />
+						</button>
+						<button onClick={onToogleModal}>
+							<FontAwesomeIcon icon={faEdit} />
+						</button>
+					</div>
+
+					<Modal
+						open={isOpenModal}
+						onClose={() => toggleModal(false)}
+						showCloseIcon={true}
+						focusTrapped={false}
+						center
+						classNames={{
+							modal: 'edit-message-modal',
+							closeButton: 'follow-modal-close'
+						}}
+					>
+						<input
+							type="text"
+							value={editedMessage || message.body}
+							onChange={e => setEditedMessage(e.target.value)}
+						/>
+						<button onClick={onUpdate}>Edit</button>
+					</Modal>
+				</div>
+			) : (
 				<Moment format="H:mm" local>
 					{message.created_at}
 				</Moment>
-				<div className="message-btns">
-					<button onClick={onDelete}>
-						<FontAwesomeIcon icon={faTrashAlt} />
-					</button>
-					<button onClick={onToogleModal}>
-						<FontAwesomeIcon icon={faEdit} />
-					</button>
-				</div>
-
-				{/* {isOpenModal && ( */}
-				<Modal
-					open={isOpenModal}
-					onClose={() => toggleModal(false)}
-					showCloseIcon={true}
-					focusTrapped={false}
-					center
-					classNames={{
-						modal: 'edit-message-modal',
-						closeButton: 'follow-modal-close'
-					}}
-				>
-					<input
-						type="text"
-						value={editedMessage || message.body}
-						onChange={e => setEditedMessage(e.target.value)}
-					/>
-					<button onClick={onUpdate}>Edit</button>
-				</Modal>
-				{/* )
-				} */}
-			</div>
+			)}
 		</div>
 	);
 };

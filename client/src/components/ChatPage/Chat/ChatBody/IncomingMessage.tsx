@@ -16,12 +16,18 @@ const IncomingMessage: React.FC<IProps> = ({ message }) => {
 					type="incoming"
 				/>
 			)}
-			<div className="incoming-message-text">
-				{message.body}
+			{message.body ? (
+				<div className="incoming-message-text">
+					{message.body}
+					<Moment format="H:mm" local>
+						{message.created_at}
+					</Moment>
+				</div>
+			) : (
 				<Moment format="H:mm" local>
 					{message.created_at}
 				</Moment>
-			</div>
+			)}
 		</div>
 	);
 };

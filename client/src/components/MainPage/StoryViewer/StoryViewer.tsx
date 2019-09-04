@@ -16,6 +16,7 @@ import StoryVoting from '../../StoryVoting/StoryVoting';
 import { connect } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 import ChatInput from '../../ChatPage/Chat/ChatInput';
+import StoryReaction from './StoryReaction';
 
 interface IProps {
 	stories: Array<{
@@ -195,6 +196,10 @@ class StoryViewer extends PureComponent<IProps, IState> {
 											inEditor={false}
 											image_url={story.voting.backImage || ''}
 										/>
+										<StoryReaction
+											chatId={this.getChatId(story.userInfo.userId)}
+											storyId={story.id}
+										/>
 										<ChatInput
 											chatId={this.getChatId(story.userInfo.userId)}
 											storyId={story.id}
@@ -235,6 +240,10 @@ class StoryViewer extends PureComponent<IProps, IState> {
 										</div>
 										<div className={'seen'}>
 											<p className={'seen-by-info'} style={{ width: '100%' }}>
+												<StoryReaction
+													chatId={this.getChatId(story.userInfo.userId)}
+													storyId={story.id}
+												/>
 												<ChatInput
 													chatId={this.getChatId(story.userInfo.userId)}
 													storyId={story.id}

@@ -14,7 +14,7 @@ export class Message {
   @PrimaryGeneratedColumn("uuid")
   id: string;
 
-  @Column()
+  @Column({ nullable: true })
   body: string;
 
   @Column({ default: false })
