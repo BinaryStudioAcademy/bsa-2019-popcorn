@@ -109,17 +109,6 @@ class PostConstructor extends React.Component<
 					: {})
 			};
 		}
-		// tslint:disable-next-line:no-shadowed-variable
-		// if (props.newPost && props.newPost.extraLink) {
-		//     const item = props.newPost.top || props.newPost.event || props.newPost.survey || {};
-		//     console.log(
-		//     this.setExtraData({
-		//         type: props.newPost.extraLink.split('/')[1].slice(0, -1),
-		//         data: item,
-		//         link: props.newPost.extraLink
-		//     })
-		// }
-
 		this.imageStateHandler = this.imageStateHandler.bind(this);
 		this.onSave = this.onSave.bind(this);
 		this.onCancel = this.onCancel.bind(this);
@@ -187,7 +176,6 @@ class PostConstructor extends React.Component<
 		} else {
 			this.props.setPost(this.state);
 		}
-		this.props.fetchPosts();
 		this.setState({
 			image_url: '',
 			description: '',

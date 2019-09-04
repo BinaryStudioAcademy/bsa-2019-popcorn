@@ -1,4 +1,9 @@
-import { ADD_NEW_COMMENT, ADD_NEW_REACTION, SET_POSTS } from './actionTypes';
+import {
+	ADD_NEW_COMMENT,
+	ADD_NEW_REACTION,
+	DELETE_POST_FROM_LIST,
+	SET_POSTS
+} from './actionTypes';
 import IComment from '../../Post/IComment';
 import findIndexInArray from '../../../../helpers/findIndexInArray';
 import IPost from '../../Post/IPost';
@@ -41,6 +46,24 @@ export default function(state = initialState, action) {
 			return {
 				...state,
 				posts: [...postsForNewReact]
+			};
+		case DELETE_POST_FROM_LIST:
+			const { id } = action.payload;
+			if (!id || !state.posts) {
+				return state;
+			}
+
+			const postsList = [...state.posts];
+
+			const indexPost = postsList.findIndex(elem => elem.id === id);
+			if (indexPost === -1) {
+				return state;
+			}
+
+			postsList.splice(indexPost, 1);
+			return {
+				...state,
+				posts: [...postsList]
 			};
 		default:
 			return state;

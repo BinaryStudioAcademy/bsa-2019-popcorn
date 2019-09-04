@@ -4,7 +4,8 @@ import {
 	CREATE_COMMENT,
 	CREATE_REACTION,
 	FETCH_POSTS,
-	DELETE_POST
+	DELETE_POST,
+	DELETE_POST_FROM_LIST
 } from './actionTypes';
 import IComment from '../../Post/IComment';
 import IReaction from '../../Post/IReaction';
@@ -50,7 +51,7 @@ export const createReaction = (
 	};
 };
 
-export const addNewReaction = (reactions: Array<IReaction>, postId: string) => {
+export const addNewReaction = (reactions: IReaction[], postId: string) => {
 	return {
 		type: ADD_NEW_REACTION,
 		payload: {
@@ -65,6 +66,14 @@ export const deletePost = (id, userId) => {
 		payload: {
 			id,
 			userId
+		}
+	};
+};
+export const deletePostFromList = (id: string) => {
+	return {
+		type: DELETE_POST_FROM_LIST,
+		payload: {
+			id
 		}
 	};
 };
