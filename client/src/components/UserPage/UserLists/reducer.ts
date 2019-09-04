@@ -12,12 +12,14 @@ interface IReducerState {
 	isLoading: boolean;
 	movieListsPreview?: Array<any>;
 	movieListDetails?: any;
+	selectedPreviewUserId?: string;
 }
 
 const initialState: IReducerState = {
 	isLoading: false,
 	movieListsPreview: undefined,
-	movieListDetails: undefined
+	movieListDetails: undefined,
+	selectedPreviewUserId: undefined
 };
 
 export default (state = initialState, action) => {
@@ -29,7 +31,8 @@ export default (state = initialState, action) => {
 			return {
 				...state,
 				isLoading: false,
-				movieListsPreview: action.payload.movieListsPreview
+				movieListsPreview: action.payload.movieListsPreview,
+				selectedPreviewUserId: action.payload.selectedPreviewUserId
 			};
 
 		case DELETE_MOVIE_LIST:

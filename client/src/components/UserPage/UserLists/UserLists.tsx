@@ -27,6 +27,7 @@ interface IProps {
 	isLoading: boolean;
 	selectedUserId: string;
 	isOwnData: boolean;
+	selectedPreviewUserId?: string;
 }
 
 const UserLists: React.FC<IProps> = ({
@@ -36,11 +37,12 @@ const UserLists: React.FC<IProps> = ({
 	deleteMovieList,
 	isLoading,
 	selectedUserId,
-	isOwnData
+	isOwnData,
+	selectedPreviewUserId
 }) => {
 	const [showCreator, setShowCreator] = useState(false);
 
-	if (!movieListsPreview) {
+	if (!movieListsPreview || selectedPreviewUserId !== selectedUserId) {
 		fetchMovieListsPreview(selectedUserId);
 		return <Spinner />;
 	}
@@ -87,7 +89,8 @@ const UserLists: React.FC<IProps> = ({
 const mapStateToProps = (rootState, props) => ({
 	...props,
 	movieListsPreview: rootState.movieList.movieListsPreview,
-	isLoading: rootState.movieList.isLoading
+	isLoading: rootState.movieList.isLoading,
+	selectedPreviewUserId: rootState.movieList.selectedPreviewUserId
 });
 
 const mapDispatchToProps = dispatch => {

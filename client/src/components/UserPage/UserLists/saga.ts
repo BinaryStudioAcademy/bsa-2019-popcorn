@@ -39,7 +39,7 @@ export function* fetchMovieListsPreview(action) {
 
 		yield put({
 			type: FETCH_MOVIE_LISTS_PREVIEW_SUCCESS,
-			payload: { movieListsPreview }
+			payload: { movieListsPreview, selectedPreviewUserId: userId }
 		});
 	} catch (e) {
 		console.log(e.message);
