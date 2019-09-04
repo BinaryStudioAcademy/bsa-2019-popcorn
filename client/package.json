@@ -54,6 +54,7 @@
 		"node-sass": "^4.12.0",
 		"onchange": "^6.0.0",
 		"qs": "^6.7.0",
+		"query-string": "^6.8.3",
 		"rc-slider": "^8.6.13",
 		"react": "^16.8.6",
 		"react-beautiful-dnd": "^11.0.5",
