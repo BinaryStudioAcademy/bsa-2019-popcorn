@@ -39,7 +39,6 @@ const addSocket = (addNewComment, addNewReaction) => {
 		comment => addNewComment && addNewComment(comment)
 	);
 	SocketService.on('new-reaction', obj => {
-		console.log('here');
 		addNewReaction && addNewReaction(obj.reactions, obj.postId);
 	});
 	wasAddedSockets = true;

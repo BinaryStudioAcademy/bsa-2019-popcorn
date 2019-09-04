@@ -1,10 +1,10 @@
 import * as movieService from "../services/movie.service";
 import * as eventService from "../services/event.service";
-import * as postService from "../services/post.service";
 import UserRepository from "../repository/user.repository";
 import { sendPushMessage } from "../services/firebase.service";
-import { saveNotificitation } from "../services/notification.service";
+import { saveNotification } from "../services/notification.service";
 import { getCustomRepository } from "typeorm";
+
 const uuid = require("uuid/v4");
 export default socket => {
   socket.on("createRoom", roomId => {
@@ -44,7 +44,7 @@ export default socket => {
           entityType: "event",
           entityId: event.id
         };
-        await saveNotificitation({
+        await saveNotification({
           ...notification,
           userId,
           isRead: false

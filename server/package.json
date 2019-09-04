@@ -6,7 +6,7 @@
   "scripts": {
     "start": "nodemon",
     "start-server": "ts-node ./",
-    "lint": "tslint -c tslint.json -p tsconfig.json --exclude **/*.d.ts"
+    "lint": "tslint -c tslint.json -p tsconfig.json"
   },
   "nodemonConfig": {
     "ignore": [

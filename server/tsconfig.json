@@ -8,11 +8,8 @@
     "emitDecoratorMetadata": true,
     "moduleResolution": "node",
     "allowSyntheticDefaultImports": true,
+    "noImplicitAny": false
   },
-  "include": [
-    "./**/*.ts"
-  ],
-  "exclude": [
-    "node_modules"
-  ]
+  "include": ["./**/*.ts"],
+  "exclude": ["node_modules"]
 }

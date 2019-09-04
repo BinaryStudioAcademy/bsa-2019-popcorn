@@ -2,7 +2,6 @@ import React from 'react';
 import { Switch, Route } from 'react-router-dom';
 import DiscussionComponent from './DiscussionComponent/DiscussionComponent';
 import FilmBasicTabComponent from './FilmBasicTabComponent/FilmBasicTabComponent';
-import MovieSeriesCastCrew from './MovieSeriesCastCrew/MovieSeriesCastCrew';
 import MovieSeriesReviews from './MovieSeriesReviews/MovieSeriesReviews';
 import MovieSeriesPosts from './MovieSeriesPosts/MovieSeriesPosts';
 import MovieSeriesAwards from './MovieSeriesAwards/MovieSeriesAwards';
@@ -64,6 +63,8 @@ interface IProps {
 	currentUser: IDiscussionUser;
 	fetchAwards: (id: any) => any;
 	awards: any;
+	fetchStatistics: (movieId: string) => void;
+	statistics: any;
 }
 
 const MovieSeriesPageTabBody: React.SFC<IProps> = ({
@@ -71,7 +72,9 @@ const MovieSeriesPageTabBody: React.SFC<IProps> = ({
 	movie,
 	currentUser,
 	fetchAwards,
-	awards
+	awards,
+	fetchStatistics,
+	statistics
 }) => {
 	return (
 		<div className={'movie-series-page-tab-body'}>
@@ -101,7 +104,12 @@ const MovieSeriesPageTabBody: React.SFC<IProps> = ({
 				/>
 				<Route
 					path={`${mainPath}/statistics`}
-					component={MovieSeriesStatistics}
+					render={() => (
+						<MovieSeriesStatistics
+							statistics={statistics}
+							fetchStatistics={() => fetchStatistics(movie.id)}
+						/>
+					)}
 				/>
 			</Switch>
 			<DiscussionComponent
