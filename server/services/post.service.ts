@@ -4,7 +4,7 @@ import SurveyRepository from "../repository/surveys.repository";
 import TopRepository from "../repository/top.repository";
 import EventRepository from "../repository/event.repository";
 import UserRepository from "../repository/user.repository";
-import { getCustomRepository } from "typeorm";
+import { getCustomRepository, Like } from "typeorm";
 import PostCommentsRepository from "../repository/postComments.repository";
 import { PostCommentsModel } from "../models/PostCommentsModel";
 import { PostReactions } from "../models/PostReactionsModel";
@@ -41,10 +41,15 @@ export const createPost = async (post: any): Promise<Post> => {
   return await getCustomRepository(PostRepository).save(post);
 };
 
-export const getPosts = async (): Promise<any[]> => {
-  const posts = await getCustomRepository(PostRepository).find({
-    relations: ["user", "top", "survey", "event"]
-  });
+export const getPosts = async (movieId: string = null): Promise<any[]> => {
+  let options = {
+    relations: ["user", "top", "survey", "event"],
+    where: {}
+  };
+  if (movieId) {
+    options.where = { description: Like(`%@${movieId}{%`) };
+  }
+  const posts = await getCustomRepository(PostRepository).find(options);
   return Promise.all(
     posts.map(async post => {
       const Post: any = { ...post };

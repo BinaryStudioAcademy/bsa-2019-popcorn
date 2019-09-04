@@ -45,7 +45,6 @@ const addSocket = (addNewComment, addNewReaction) => {
 };
 
 const PostList = (props: IProps) => {
-	// console.log(props.posts);
 	const [showPostsConstructor, setShowPostsConstructor] = useState(false);
 	const togglePostConstructor = ev => {
 		ev.preventDefault();

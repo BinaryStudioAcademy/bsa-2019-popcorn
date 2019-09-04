@@ -35,7 +35,9 @@ import {
 	GET_GENRES,
 	SET_GENRES,
 	FETCH_STATISTICS,
-	FETCH_STATISTICS_SUCCESS
+	FETCH_STATISTICS_SUCCESS,
+	FETCH_POSTS_BY_FILM_SUCCESS,
+	FETCH_POSTS_BY_FILM
 } from './actionTypes';
 import config from '../../../config';
 import { FETCH_MOVIE_REVIEWS } from '../MovieSeriesReviews/actionTypes';
@@ -349,7 +351,6 @@ export function* setReview(action) {
 
 export function* fetchStatistics(action) {
 	const { movieId } = action.payload;
-	console.log(movieId);
 	try {
 		const statistics = yield call(webApi, {
 			endpoint: `/api/movie/${movieId}/statistics`,
@@ -360,6 +361,25 @@ export function* fetchStatistics(action) {
 			type: FETCH_STATISTICS_SUCCESS,
 			payload: {
 				statistics
+			}
+		});
+	} catch (error) {
+		console.log(error);
+	}
+}
+
+export function* fetchPosts(action) {
+	const { movieId } = action.payload;
+	try {
+		const posts = yield call(webApi, {
+			endpoint: `/api/movie/${movieId}/posts`,
+			method: 'GET'
+		});
+
+		yield put({
+			type: FETCH_POSTS_BY_FILM_SUCCESS,
+			payload: {
+				posts
 			}
 		});
 	} catch (error) {
@@ -426,6 +446,10 @@ function* watchFetchGenres() {
 function* watchFetchStatistics() {
 	yield takeEvery(FETCH_STATISTICS, fetchStatistics);
 }
+
+function* watchFetchPosts() {
+	yield takeEvery(FETCH_POSTS_BY_FILM, fetchPosts);
+}
 export default function* header() {
 	yield all([
 		watchFetchFilms(),
@@ -442,6 +466,7 @@ export default function* header() {
 		watchFetchFiltredMovieList(),
 		watchLoadMoreFiltredMovie(),
 		watchFetchGenres(),
-		watchFetchStatistics()
+		watchFetchStatistics(),
+		watchFetchPosts()
 	]);
 }
