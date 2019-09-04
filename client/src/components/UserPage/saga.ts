@@ -28,7 +28,7 @@ import {
 	RESTORE_OK,
 	SET_LOGIN_ERROR,
 	SET_REGISTER_ERROR,
-	AUTH_WITH_GOOGLE
+	AUTH_WITH_SOCIAL
 } from '../authorization/actionTypes';
 import { CONFIRM_CHANGES } from '../ConfirmChange/actionTypes';
 import config from '../../config';
@@ -198,15 +198,14 @@ export function* fetchRegistration(action) {
 		});
 	}
 }
-export function* fetchGoogleAuth() {
+export function* fetchSocialAuth(action) {
 	try {
-		const res = yield call(callWebApi, {
-			method: 'GET',
-			endpoint: 'http://localhost:5000/api/auth/google'
-		});
+		const { data } = action.payload;
+		localStorage.setItem('token', data.token);
+
 		yield put({
-			type: AUTH_WITH_GOOGLE,
-			payload: { redirect_url: res.redirect_url }
+			type: LOGIN,
+			payload: { user: data.user[0] }
 		});
 	} catch (e) {
 		console.log('Something went wrong with logout');
@@ -348,8 +347,8 @@ function* watchConfirm() {
 	yield takeEvery(CONFIRM_CHANGES, confirmChanges);
 }
 
-function* watchFetchGoogleAuth() {
-	yield takeEvery(AUTH_WITH_GOOGLE, fetchGoogleAuth);
+function* watchFetchSocialAuth() {
+	yield takeEvery(AUTH_WITH_SOCIAL, fetchSocialAuth);
 }
 
 export default function* profile() {
@@ -368,6 +367,6 @@ export default function* profile() {
 		watchSendPost(),
 		watchConfirm(),
 		watchFetchLogout(),
-		watchFetchGoogleAuth()
+		watchFetchSocialAuth()
 	]);
 }
