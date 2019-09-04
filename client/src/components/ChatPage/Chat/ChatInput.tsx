@@ -9,9 +9,15 @@ interface IProps {
 	createMessage: (userId: string, chatId: string, body: any) => void;
 	chatId: string;
 	userId: string;
+	storyId?: string;
 }
 
-const ChatInput: React.FC<IProps> = ({ chatId, userId, createMessage }) => {
+const ChatInput: React.FC<IProps> = ({
+	chatId,
+	userId,
+	createMessage,
+	storyId
+}) => {
 	const [message, changeMessage] = useState('');
 	const handleKeyPress = e => {
 		if (e.key === 'Enter') sendMessage();
@@ -20,7 +26,7 @@ const ChatInput: React.FC<IProps> = ({ chatId, userId, createMessage }) => {
 	const sendMessage = () => {
 		if (message.trim() === '') return;
 		changeMessage('');
-		createMessage(userId, chatId, { body: message });
+		createMessage(userId, chatId, { body: message, storyId });
 	};
 
 	const onMessageChange = e => {

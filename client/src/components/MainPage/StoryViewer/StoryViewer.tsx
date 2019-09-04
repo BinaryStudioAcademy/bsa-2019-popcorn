@@ -19,6 +19,7 @@ import ChatInput from '../../ChatPage/Chat/ChatInput';
 
 interface IProps {
 	stories: Array<{
+		id: string;
 		image_url: string;
 		backgroundColor: string;
 		fontColor: string;
@@ -141,6 +142,7 @@ class StoryViewer extends PureComponent<IProps, IState> {
 
 	render() {
 		const { stories } = this.props;
+		console.log(stories);
 
 		return (
 			<div className="story-viewer">
@@ -193,7 +195,10 @@ class StoryViewer extends PureComponent<IProps, IState> {
 											inEditor={false}
 											image_url={story.voting.backImage || ''}
 										/>
-										<ChatInput chatId={this.getChatId(story.userInfo.userId)} />
+										<ChatInput
+											chatId={this.getChatId(story.userInfo.userId)}
+											storyId={story.id}
+										/>
 									</div>
 								)}
 								{story.type === 'voting' ? null : (
@@ -232,6 +237,7 @@ class StoryViewer extends PureComponent<IProps, IState> {
 											<p className={'seen-by-info'} style={{ width: '100%' }}>
 												<ChatInput
 													chatId={this.getChatId(story.userInfo.userId)}
+													storyId={story.id}
 												/>
 												<span
 													style={{
