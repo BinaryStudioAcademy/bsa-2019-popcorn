@@ -1,6 +1,7 @@
 import { Router, NextFunction, Request, Response } from "express";
 import * as chatService from "../services/chat.service";
 import errorHandlerMiddleware from "../middlewares/error-handler.middleware";
+import notificationMiddeware from "../middlewares/notification.middleware";
 import { User } from "../models/UserModel";
 
 const router = Router();
@@ -35,7 +36,7 @@ router
   )
   .post(
     "/:userId/:chatId",
-    errorHandlerMiddleware,
+    notificationMiddeware,
     (req: Request & { io: any }, res: Response, next: NextFunction) =>
       chatService
         .createMessage(

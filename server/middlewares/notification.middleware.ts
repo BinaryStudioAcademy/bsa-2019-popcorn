@@ -2,6 +2,7 @@ import * as eventService from "../services/event.service";
 import * as postService from "../services/post.service";
 import UserRepository from "../repository/user.repository";
 import * as followerService from "../services/follow.service";
+import ChatRepository from "../repository/chat.repository";
 import PostReactionsRepository from "../repository/postReactions.repository";
 import { sendPushMessage } from "../services/firebase.service";
 import { saveNotification } from "../services/notification.service";
@@ -29,11 +30,14 @@ async function sendNotification({
     entityType,
     entityId: entity.id
   };
-  await saveNotification({
-    ...notification,
-    userId: entity.userId,
-    isRead: false
-  });
+  if (type !== "message") {
+    await saveNotification({
+      ...notification,
+      userId: entity.userId,
+      isRead: false
+    });
+    req.io.to(entity.userId).emit("new-notification", notification);
+  }
   sendPushMessage({
     link: url,
     title,
@@ -43,8 +47,6 @@ async function sendNotification({
     entityType,
     entityId: entity.id
   });
-
-  req.io.to(entity.userId).emit("new-notification", notification);
 }
 
 export default async (req, res, next) => {
@@ -89,6 +91,30 @@ export default async (req, res, next) => {
           entityType: "follower"
         });
       }
+    }
+    if (req.url === `/${req.params.userId}/${req.params.chatId}`) {
+      const {
+        data: { user: sender }
+      } = await getCustomRepository(UserRepository).getUserById(
+        req.params.userId
+      );
+      const chat = await getCustomRepository(ChatRepository).findOne({
+        where: [{ id: req.params.chatId }],
+        relations: ["user1", "user2"]
+      });
+
+      const userId =
+        chat.user1 === req.params.userId ? chat.user2.id : chat.user1.id;
+      const title = `${sender.name} send you message`;
+      sendNotification({
+        req,
+        url: `/chat/${req.params.chatId}`,
+        type: "message",
+        title,
+        body: "",
+        entity: { ...chat, userId },
+        entityType: "message"
+      });
     }
 
     if (req.url === "/api/event/visitor") {
