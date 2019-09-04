@@ -59,7 +59,6 @@ const addSocket = (
 		deletePostFromList && deletePostFromList(postId);
 	});
 	SocketService.on('update-post', post => {
-		console.log(post);
 		if (post) {
 			updatePost && updatePost(post);
 		}

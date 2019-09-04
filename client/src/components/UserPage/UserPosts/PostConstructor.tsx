@@ -120,7 +120,6 @@ class PostConstructor extends React.Component<
 	private cropper = React.createRef<Cropper>();
 
 	setExtraData(data) {
-		console.log(data);
 		data
 			? this.setState({
 					extraLink: data.link,
@@ -223,8 +222,6 @@ class PostConstructor extends React.Component<
 	}
 
 	render() {
-		console.log(this.state);
-
 		const { movieSearchTitle } = this.state;
 		return (
 			<div className="post-constructor-modal">
