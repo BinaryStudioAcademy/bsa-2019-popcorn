@@ -14,6 +14,7 @@ import watchRouter from "./watch.controller";
 import followRouter from "./follow.controller";
 import notificationRouter from "./notification.controller";
 import confirmRouter from "./confirm.controller";
+import recommendedRouter from "./recommended.controller";
 
 // register all routes
 export default app => {
@@ -33,4 +34,5 @@ export default app => {
   app.use("/api/follow", followRouter);
   app.use("/api/notification", notificationRouter);
   app.use("/api/confirm", confirmRouter);
+  app.use("/api/recommended", recommendedRouter);
 };

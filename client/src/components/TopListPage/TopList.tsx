@@ -20,15 +20,20 @@ interface ITopLIstProps {
 		};
 	}>;
 	fetchTops: () => any;
+	passedTop?: any;
 }
 
 const TopList: React.FC<ITopLIstProps> = props => {
-	if (!props.tops) {
+	if (!props.tops && !props.passedTop) {
 		props.fetchTops();
 		return <Spinner />;
 	}
 
-	const topListItems = props.tops.map(top => <TopListItem top={top} />);
+	const topListItems = !props.passedTop ? (
+		props.tops.map(top => <TopListItem top={top} />)
+	) : (
+		<TopListItem top={props.passedTop} />
+	);
 
 	return <div className="top-list-wrapper">{topListItems}</div>;
 };
