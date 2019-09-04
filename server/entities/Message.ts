@@ -7,6 +7,7 @@ import {
 } from "typeorm";
 import { User } from "./User";
 import { Chat } from "./Chat";
+import { Story } from "./Story";
 
 @Entity()
 export class Message {
@@ -24,6 +25,15 @@ export class Message {
 
   @ManyToOne(type => User, user => user.id, { onDelete: "CASCADE" })
   user: User;
+
+  @ManyToOne(type => Story, story => story.id, {
+    onDelete: "CASCADE",
+    nullable: true
+  })
+  story: Story;
+
+  @Column({ nullable: true })
+  reactionType: string;
 
   @CreateDateColumn({ type: "timestamp" })
   created_at: Date;

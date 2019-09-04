@@ -39,12 +39,7 @@ router
     notificationMiddeware,
     (req: Request & { io: any }, res: Response, next: NextFunction) =>
       chatService
-        .createMessage(
-          req.params.chatId,
-          req.params.userId,
-          req.body.body,
-          next
-        )
+        .createMessage(req.params.chatId, req.params.userId, req.body, next)
         .then(result => {
           req.io.to(req.params.chatId).emit("new-message", result);
           res.send({ result });

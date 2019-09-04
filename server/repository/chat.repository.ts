@@ -7,6 +7,7 @@ import {
 import { Chat } from "../entities/Chat";
 import UserRepository from "./user.repository";
 import MessageRepository from "./message.repository";
+import StoryRepository from "./story.repository";
 
 @EntityRepository(Chat)
 class ChatRepository extends Repository<Chat> {
@@ -45,7 +46,7 @@ class ChatRepository extends Repository<Chat> {
   async getMessagesByChatId(chatId, next?) {
     const chat = await this.findOne({
       where: [{ id: chatId }],
-      relations: ["messages", "messages.user"]
+      relations: ["messages", "messages.user", "messages.story"]
     });
     const messages = [...chat.messages];
     messages.sort((a, b) => (a.created_at > b.created_at ? 1 : -1));
@@ -79,10 +80,15 @@ class ChatRepository extends Repository<Chat> {
     const user = await getCustomRepository(UserRepository).findOne({
       id: userId
     });
+    const story = body.storyId
+      ? await getCustomRepository(StoryRepository).findOne({ id: body.storyId })
+      : null;
     const newMessage: any = await getCustomRepository(MessageRepository).save({
       chat,
       user,
-      body
+      body: body.body,
+      reactionType: body.reactionType || null,
+      story
     });
     newMessage.user = this.formatUser(newMessage.user);
     return newMessage;
