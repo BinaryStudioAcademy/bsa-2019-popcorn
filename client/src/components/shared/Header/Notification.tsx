@@ -13,7 +13,7 @@ interface IProps {
 	unreadNotifications: Activity[];
 }
 interface IState {
-	notifications: Array<Activity>;
+	notifications: Activity[];
 	isShown: boolean;
 }
 
@@ -71,7 +71,7 @@ class Notification extends React.Component<IProps, IState> {
 
 	readNotification = (activityId: string) => {
 		const notifications = this.state.notifications;
-		let updatedNotification = notifications.filter(
+		const updatedNotification = notifications.filter(
 			notification => notification.id == activityId
 		)[0];
 		updatedNotification.isRead = true;

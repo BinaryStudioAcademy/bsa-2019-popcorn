@@ -70,7 +70,11 @@ class ResultList extends React.Component<IProps, IState> {
 			case 'event':
 				return this.getView(elem.data, 'event', data =>
 					data.map(event => (
-						<NavLink to={'/events/' + event.id} className={'text-decoration'}>
+						<NavLink
+							key={event.id}
+							to={'/events/' + event.id}
+							className={'text-decoration'}
+						>
 							<Extra
 								clearExtra={data => null}
 								data={event}
@@ -98,7 +102,10 @@ class ResultList extends React.Component<IProps, IState> {
 			case 'survey':
 				return this.getView(elem.data, 'survey', data =>
 					data.map(survey => (
-						<NavLink to={`/user-page/${survey.user.id}/survey/${survey.id}`}>
+						<NavLink
+							key={survey.id}
+							to={`/user-page/${survey.user.id}/survey/${survey.id}`}
+						>
 							<Extra
 								clearExtra={data => null}
 								data={survey}
@@ -112,7 +119,11 @@ class ResultList extends React.Component<IProps, IState> {
 			case 'user':
 				return this.getView(elem.data, 'user', data =>
 					data.map(user => (
-						<NavLink to={`/user-page/${user.id}`} className={'text-decoration'}>
+						<NavLink
+							key={user.id}
+							to={`/user-page/${user.id}`}
+							className={'text-decoration'}
+						>
 							<div className={'user-info'}>
 								<Image
 									src={user.avatar}

@@ -39,7 +39,7 @@ class Restore extends React.Component<IProps, IState> {
 		const { fetchRestorePassword, isAuthorized, restoreMessage } = this.props;
 		const { isLoading } = this.state;
 
-		if (restoreMessage)
+		if (restoreMessage) {
 			return (
 				<div className="form-wrapper">
 					<NavLink to={'/login'} className="form-hint-link">
@@ -48,6 +48,7 @@ class Restore extends React.Component<IProps, IState> {
 					<i className="icon icon-arrow-right" />
 				</div>
 			);
+		}
 
 		return (
 			<div className={'form-wrapper'}>
