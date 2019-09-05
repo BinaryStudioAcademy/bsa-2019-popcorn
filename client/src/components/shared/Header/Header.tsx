@@ -12,7 +12,8 @@ import {
 	getUnreadNotifications,
 	setNotificationIsRead,
 	getFirebaseToken,
-	deleteFirebaseToken
+	deleteFirebaseToken,
+	fetchAdvice
 } from '../Header/actions';
 import { unauthorize } from '../../authorization/actions';
 import { NavLink, Link } from 'react-router-dom';
@@ -52,6 +53,7 @@ interface IProps {
 	firebaseToken: string | null | undefined;
 	getFirebaseToken: (firebase: any) => void;
 	history: any;
+	fetchAdvice: (userId: string) => any;
 }
 
 const Header = ({
@@ -68,7 +70,7 @@ const Header = ({
 	firebaseToken,
 	getFirebaseToken,
 	deleteFirebaseToken,
-	history
+	fetchAdvice
 }: IProps) => {
 	const MOVIES_IN_CINEMA = 'Movies in cinema';
 	const MOVIE_TOPS = 'Movie tops';
@@ -119,20 +121,29 @@ const Header = ({
 				</div>
 			</button>
 
-			<button className="header-buttons hover">
-				TV
-				<FontAwesomeIcon icon={faChevronDown} />
-				<div className="modal">
-					<Link aria-current="page" className="hover" to="#">
-						{NEW_TV_SERIES}
-					</Link>
-					<Link aria-current="page" className="hover" to="#">
-						{TV_SERIES_TOPS}
-					</Link>
-					<Link aria-current="page" className="hover" to="/user-page/lists">
-						{USER_TV_SERIES_TOPS}
-					</Link>
-				</div>
+			<button
+				className="header-buttons hover"
+				onClick={() => fetchAdvice(userInfo.id)}
+			>
+				<Link
+					to={'/adviceMe'}
+					style={{ textDecoration: 'none' }}
+					className="header-buttons"
+				>
+					Advice Me
+				</Link>
+				{/*<FontAwesomeIcon icon={faChevronDown} />*/}
+				{/*<div className="modal">*/}
+				{/*	<Link aria-current="page" className="hover" to="#">*/}
+				{/*		{NEW_TV_SERIES}*/}
+				{/*	</Link>*/}
+				{/*	<Link aria-current="page" className="hover" to="#">*/}
+				{/*		{TV_SERIES_TOPS}*/}
+				{/*	</Link>*/}
+				{/*	<Link aria-current="page" className="hover" to="/user-page/lists">*/}
+				{/*		{USER_TV_SERIES_TOPS}*/}
+				{/*	</Link>*/}
+				{/*</div>*/}
 			</button>
 			<button className="header-buttons hover">
 				Ratings
@@ -207,7 +218,8 @@ const actions = {
 	getUnreadNotifications,
 	setNotificationIsRead,
 	getFirebaseToken,
-	deleteFirebaseToken
+	deleteFirebaseToken,
+	fetchAdvice
 };
 
 const mapDispatchToProps = dispatch => bindActionCreators(actions, dispatch);
