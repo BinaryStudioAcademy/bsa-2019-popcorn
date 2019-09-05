@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import PostList from '../../MainPage/PostList/PostList';
 import Spinner from '../../shared/Spinner';
+import CreateExtraBtn from "../../shared/CreateExtraBtn";
 import PostConstructor from './PostConstructor';
-import './UserPosts.scss';
 interface IProps {
 	posts?: any;
 	getUsersPosts: () => any;
@@ -36,12 +36,10 @@ const UserPosts: React.FC<IProps> = ({
 	return (
 		<div className="UserPosts">
 			{isOwnData && (
-				<button
-					className="create-post-btn hover"
-					onClick={ev => togglePostConstructor(ev)}
-				>
-					Create post
-				</button>
+				<CreateExtraBtn
+					handleClick={ev => togglePostConstructor(ev)}
+					body={'Create post'}
+				/>
 			)}
 			{showPostsConstructor && (
 				<PostConstructor

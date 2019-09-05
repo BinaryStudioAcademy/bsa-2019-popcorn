@@ -6,28 +6,6 @@
 	flex-direction: column;
 	color: $text-base-color;
 	font-family: $base-font-family;
-	margin-top: 10px;
-
-	.create-button {
-		width: 100%;
-		margin: 0;
-
-		button {
-			width: 100%;
-			background-color: $background-gray;
-			height: 40px;
-			cursor: pointer;
-			font-size: $header-medium;
-			border: none;
-			box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.37);
-			font-weight: bold;
-			color: $text-base-color;
-
-			&:hover {
-				box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.37);
-			}
-		}
-	}
 
 	a {
 		margin: 20px;
