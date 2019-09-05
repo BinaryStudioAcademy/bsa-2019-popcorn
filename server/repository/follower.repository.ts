@@ -1,8 +1,6 @@
 import {
   EntityRepository,
   Repository,
-  getCustomRepository,
-  createQueryBuilder
 } from "typeorm";
 import { Follower } from "../entities/Follower";
 

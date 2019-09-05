@@ -6,7 +6,7 @@ import FavoriteListRepository from "./favoriteList.repository";
 @EntityRepository(User)
 class UserRepository extends Repository<User> {
   async getUserById(id: string) {
-    let data: { user?: User } = {};
+    const data: { user?: User } = {};
     let error = "";
     let success = true;
     try {
@@ -21,7 +21,9 @@ class UserRepository extends Repository<User> {
         const movie = movieArray.find(
           movieItem => movieItem.id === item.movieId
         );
-        if (!movie) return;
+        if (!movie) {
+          return;
+        }
         item.movie = { id: movie.id, name: movie.title };
       });
       if (!data.user) {
@@ -35,7 +37,7 @@ class UserRepository extends Repository<User> {
   }
 
   async getUsers() {
-    let data: { users?: User[] } = {};
+    const data: { users?: User[] } = {};
     let error = "";
     let success = true;
     try {
@@ -48,7 +50,7 @@ class UserRepository extends Repository<User> {
   }
 
   async updateById(id, newData) {
-    let data: { user?: User } = {};
+    const data: { user?: User } = {};
     let error = "";
     let success = true;
     try {
@@ -72,7 +74,7 @@ class UserRepository extends Repository<User> {
   }
 
   async deleteById(id) {
-    let data = {};
+    const data = {};
     let error = "";
     let success = true;
     try {

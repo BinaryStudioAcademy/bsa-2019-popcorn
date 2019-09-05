@@ -1,6 +1,5 @@
-import { EntityRepository, Repository, getCustomRepository } from "typeorm";
+import { EntityRepository, Repository } from "typeorm";
 import { ReviewReaction } from "../entities/Review/ReviewReaction";
-import { PlainObjectToNewEntityTransformer } from "typeorm/query-builder/transformer/PlainObjectToNewEntityTransformer";
 
 @EntityRepository(ReviewReaction)
 class ReviewReactionRepository extends Repository<ReviewReaction> {

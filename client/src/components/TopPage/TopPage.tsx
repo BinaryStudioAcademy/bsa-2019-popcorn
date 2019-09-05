@@ -4,7 +4,6 @@ import { convertServerDataFormatToClient } from './TopPage.service';
 import TopPageTop from './TopPageTop/TopPageTop';
 import TopPageMovie from './TopPageMovie/TopPageMovie';
 
-import config from '../../config';
 import webApi from '../../services/webApi.service';
 
 import './TopPage.scss';

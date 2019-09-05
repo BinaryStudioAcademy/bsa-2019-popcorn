@@ -2,7 +2,6 @@ import { all, call, put, takeEvery } from 'redux-saga/effects';
 import * as ActionTypes from './actionTypes';
 import { uploadFile } from '../../../../services/file.service';
 
-import config from '../../../../config';
 import webApi from '../../../../services/webApi.service';
 
 export function* uploadImage(action) {
@@ -33,7 +32,7 @@ export function* fetchElasticSearchFilms(action) {
 		});
 
 		yield put({
-			type: ActionTypes.SET_ElASTIC_MOVIE_LIST, //FINISH_SEARCH_ELASTIC_FILMS,
+			type: ActionTypes.SET_ElASTIC_MOVIE_LIST, // FINISH_SEARCH_ELASTIC_FILMS,
 			payload: {
 				elasticSearchMovies: data
 			}

@@ -5,7 +5,6 @@ import { Post } from "../models/PostModel";
 
 export class SeedPosts1565202279038 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
-    const { SERVER_URL } = process.env;
     const postsSeed = [
       {
         title: "PeakyBlinders",

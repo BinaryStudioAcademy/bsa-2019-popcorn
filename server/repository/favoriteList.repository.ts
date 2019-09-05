@@ -5,7 +5,7 @@ import { FavoriteList } from "../entities/FavoriteList";
 class FavoriteListRepository extends Repository<FavoriteList> {
   async updateFavoriteMoviesByUserId(
     id: string,
-    favoriteMoviesIds: Array<number>,
+    favoriteMoviesIds: number[],
     next?
   ) {
     await this.createQueryBuilder("favoriteList")
@@ -13,11 +13,12 @@ class FavoriteListRepository extends Repository<FavoriteList> {
       .where("user.id = :id", { id })
       .execute();
 
-    if (favoriteMoviesIds.length > 0)
+    if (favoriteMoviesIds.length > 0) {
       await this.createQueryBuilder("favoriteList")
         .insert()
         .values(favoriteMoviesIds.map(movieId => ({ user: { id }, movieId })))
         .execute();
+    }
   }
 }
 

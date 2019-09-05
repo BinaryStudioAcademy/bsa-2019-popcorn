@@ -1,12 +1,12 @@
 import { MigrationInterface, QueryRunner, getCustomRepository } from "typeorm";
 import MovieRateRepository from "../repository/movieRate.repository";
 import UserRepository from "../repository/user.repository";
-const uuid = require("uuid/v4");
+
 export class SeedMovieRate1567392463875 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
     const movieId = 297;
     const rates = [1, 2, 3, 4, 5];
-    let movieRates = [];
+    const movieRates = [];
     const usersId = await getCustomRepository(UserRepository).find({
       select: ["id"]
     });

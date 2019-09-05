@@ -29,7 +29,9 @@ export function convertServerDataFormatToClient(top: any): ITop | null {
 	}
 
 	top.movieInTop.map(movieInTop => {
-		if (movieInTop.movie) return;
+		if (movieInTop.movie) {
+			return;
+		}
 		movieInTop.movie = movieAdapter(movieInTop.movie);
 		return movieInTop;
 	});
@@ -40,7 +42,9 @@ export function convertServerDataFormatToClient(top: any): ITop | null {
 		topImageUrl: top.topImageUrl,
 		created_at: top.created_at,
 		movieList: top.movieInTop.map(movieInTop => {
-			if (!movieInTop.movie) return;
+			if (!movieInTop.movie) {
+				return;
+			}
 			return {
 				id: movieInTop.movie.id,
 				title: movieInTop.movie.title,

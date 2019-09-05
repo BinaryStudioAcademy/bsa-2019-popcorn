@@ -8,7 +8,7 @@ import errorHandlerMiddleware from "../middlewares/error-handler.middleware";
 const router = Router();
 
 router
-  //CRUD SURVEYS
+  // CRUD SURVEYS
   .post("/", errorHandlerMiddleware, (req, res, next) =>
     surveysService
       .createSurveys(req.body, next)
@@ -45,7 +45,7 @@ router
       .then(result => res.send(result))
       .catch(next)
   )
-  //CRUD SURVEYS QUESTIONS
+  // CRUD SURVEYS QUESTIONS
 
   .get("/:id/question", errorHandlerMiddleware, (req, res, next) =>
     surveysQuestionService
@@ -72,7 +72,7 @@ router
       .catch(next)
   )
 
-  //CRUD SURVEYS QUESTIONS OPTION
+  // CRUD SURVEYS QUESTIONS OPTION
   .get("/:id/option", errorHandlerMiddleware, (req, res, next) =>
     surveysQuestionOptionService
       .getQuestionOptionByQuestionId(req.params.id, next)
@@ -92,7 +92,7 @@ router
       .catch(next)
   )
 
-  //CRUD SURVEYS QUESTIONS Answer
+  // CRUD SURVEYS QUESTIONS Answer
   .post("/answer", errorHandlerMiddleware, (req, res, next) =>
     surveysQuestionAnwerService
       .setQuestionAnswer(req.body, next)
