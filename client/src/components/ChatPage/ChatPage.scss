@@ -9,6 +9,23 @@
 		height: 43px;
 		font-size: 16px;
 		padding: 10px;
+		outline: none;
+	}
+	.save-btn {
+		height: 30px;
+		border-radius: 55px;
+		width: 80px;
+		border: none;
+		outline: none;
+		font-size: 1.1em;
+		font-weight: bold;
+		background-color: $button-background;
+		color: $white;
+		margin: 20px 20px 20px auto;
+		float: right;
+		&:hover {
+			background-color: rgb(216, 86, 0);
+		}
 	}
 }
 

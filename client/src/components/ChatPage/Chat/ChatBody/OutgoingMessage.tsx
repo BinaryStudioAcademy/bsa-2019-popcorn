@@ -72,7 +72,9 @@ const OutgoingMessage: React.FC<IProps> = ({
 							value={editedMessage || message.body}
 							onChange={e => setEditedMessage(e.target.value)}
 						/>
-						<button onClick={onUpdate}>Edit</button>
+						<button className="save-btn" onClick={onUpdate}>
+							Edit
+						</button>
 					</Modal>
 				</div>
 			) : (
