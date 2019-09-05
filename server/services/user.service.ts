@@ -1,6 +1,6 @@
 import { User } from "../models/UserModel";
 import UserRepository from "../repository/user.repository";
-import { getCustomRepository, Like } from "typeorm";
+import { getCustomRepository } from "typeorm";
 
 interface IResponse {
   data: { user?: User; users?: User[] };
@@ -21,7 +21,7 @@ export const getUserById = async (id: string): Promise<IResponse> => {
 };
 export const getUserByName = async (name: string): Promise<User[]> => {
   return await getCustomRepository(UserRepository).find({
-    name: Like(`%${name}%`)
+    where: `name ILIKE '%${name}%'` 
   });
 };
 
