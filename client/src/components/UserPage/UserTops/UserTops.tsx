@@ -53,15 +53,6 @@ const newTop = (): ITopItem => {
 };
 
 class UserTops extends React.Component<IUserTopProps, IUserTopsState> {
-	constructor(props) {
-		super(props);
-		this.state = {
-			topList: undefined,
-			isCreated: false,
-			isAction: true
-		};
-	}
-
 	static getDerivedStateFromProps(props, state) {
 		if (state.isAction && !isEqual(props.topList, state.topList)) {
 			return {
@@ -71,6 +62,17 @@ class UserTops extends React.Component<IUserTopProps, IUserTopsState> {
 		}
 		return null;
 	}
+	
+	constructor(props) {
+		super(props);
+		this.state = {
+			topList: undefined,
+			isCreated: false,
+			isAction: true
+		};
+	}
+
+
 
 	componentDidMount() {
 		this.props.fetchTops(this.props.selectedUserId);

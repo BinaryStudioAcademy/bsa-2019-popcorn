@@ -1,29 +1,6 @@
 import io from 'socket.io-client';
 
 class SocketService {
-	private static _socket;
-
-	constructor(userId: string) {
-		this._initSocket(userId);
-	}
-
-	private _initSocket(userId: string) {
-		if (!SocketService._socket) {
-			const currentLocation = new URL(window.location.href);
-			SocketService._socket =
-				process.env.NODE_ENV === 'production'
-					? io({ withCredentials: false })
-					: io(
-							`${currentLocation.protocol}//${currentLocation.hostname}:3000`,
-							{ withCredentials: false }
-					  );
-			if (SocketService._socket) {
-				SocketService._socket.on('connect', () => {
-					SocketService._socket.emit('joinRoom', userId);
-				});
-			}
-		}
-	}
 
 	static on(name: string, callback: (data: any) => any) {
 		SocketService._socket.on(name, callback);
@@ -40,6 +17,31 @@ class SocketService {
 	static leave(room: string) {
 		SocketService._socket.emit('leaveRoom', room);
 	}
+
+	private static _socket;
+
+	constructor(userId: string) {
+		this._initSocket(userId);
+	}
+
+	private _initSocket(userId: string) {
+		if (!SocketService._socket) {
+			const currentLocation = new URL(window.location.href);
+			SocketService._socket =
+				process.env.NODE_ENV === 'production'
+					? io({ withCredentials: false })
+					: io(
+						`${currentLocation.protocol}//${currentLocation.hostname}:3000`,
+						{ withCredentials: false }
+					);
+			if (SocketService._socket) {
+				SocketService._socket.on('connect', () => {
+					SocketService._socket.emit('joinRoom', userId);
+				});
+			}
+		}
+	}
+
 }
 
 export default SocketService;

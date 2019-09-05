@@ -48,7 +48,7 @@ const TopListItem: React.FC<ITopLIstItemProps> = ({ top }) => {
 				<div>
 					<ol>
 						{top.movieInTop.slice(0, 3).map(movie => (
-							<li>
+							<li key={movie.id}>
 								{movie.movie.title} ({getReleaseYear(movie)})
 							</li>
 						))}

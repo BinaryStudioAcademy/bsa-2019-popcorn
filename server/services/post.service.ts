@@ -4,7 +4,7 @@ import SurveyRepository from "../repository/surveys.repository";
 import TopRepository from "../repository/top.repository";
 import EventRepository from "../repository/event.repository";
 import UserRepository from "../repository/user.repository";
-import { getCustomRepository, Like } from "typeorm";
+import { getCustomRepository, Like, FindManyOptions } from "typeorm";
 import PostCommentsRepository from "../repository/postComments.repository";
 import { PostCommentsModel } from "../models/PostCommentsModel";
 import { PostReactions } from "../models/PostReactionsModel";
@@ -48,7 +48,7 @@ export const createPost = async (post: any): Promise<Post> => {
 };
 
 export const getPosts = async (movieId: string = null): Promise<any[]> => {
-  const options: any = {
+  const options: FindManyOptions = {
     relations: ["user", "top", "survey", "event"],
     where: {},
     order: { createdAt: "DESC" }
