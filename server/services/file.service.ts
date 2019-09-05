@@ -1,39 +1,34 @@
 import { Form } from "multiparty";
 import { upload } from "./image.service";
 const base64Img = require("base64-img");
+const path = require("path");
 
 export const uploadFile = req =>
-  new Promise<string>((resolve, reject) => {
+  new Promise<any>((resolve, reject) => {
     const contentType = req.headers["content-type"];
 
     if (contentType && contentType.indexOf("multipart") === 0) {
       const form = new Form({
         autoFiles: true,
-        uploadDir: "public/files",
+        uploadDir: path.resolve(`${__dirname}/../../client/build/images`),
         maxFilesSize: 1048576 * 3
       });
 
       form.parse(req, function(err, fields, files): any {
         if (err) return reject(err);
         if (process.env.NODE_ENV === "production") {
-          base64Img.base64(files.file[0].path, function(err, data) {
+          base64Img.base64(path.resolve(files.file[0].path), function(
+            err,
+            data
+          ) {
             upload(data)
               .then(url => resolve(url))
               .catch(e => reject(e));
           });
         } else {
           if (files.file) {
-            let imageUrl = files.file[0].path;
-            let url;
-            url =
-              imageUrl.indexOf("\\") !== -1
-                ? imageUrl.split(`\\`)
-                : imageUrl.split(`/`);
-            url.shift();
-            url = url.join("/");
-
-            url = "/" + url;
-            return resolve(url);
+            const imageUrl = path.resolve(files.file[0].path);
+            return resolve(imageUrl);
           }
         }
       });
