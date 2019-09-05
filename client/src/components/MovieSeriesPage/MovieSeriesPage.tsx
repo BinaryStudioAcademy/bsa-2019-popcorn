@@ -19,7 +19,8 @@ import {
 	setReview,
 	removeReviewSet,
 	fetchAwards,
-	fetchStatistics
+	fetchStatistics,
+	fetchPostsByFilm
 } from './Movie.redux/actions';
 
 interface IProps {
@@ -50,6 +51,8 @@ interface IProps {
 	awards: any;
 	fetchStatistics: (movieId: string) => void;
 	statistics: any;
+	fetchPostsByFilm: (movieId: string) => void;
+	posts?: Array<any>;
 }
 
 export interface IUserRate {
@@ -81,7 +84,9 @@ const MovieSeriesPage: React.SFC<IProps> = props => {
 		fetchAwards,
 		awards,
 		statistics,
-		fetchStatistics
+		fetchStatistics,
+		fetchPostsByFilm,
+		posts
 	} = props;
 	const currentMovieId = props.match.params.id;
 	const mainPath = `/movies/${currentMovieId}`;
@@ -128,6 +133,8 @@ const MovieSeriesPage: React.SFC<IProps> = props => {
 				awards={awards}
 				statistics={statistics}
 				fetchStatistics={fetchStatistics}
+				fetchPostsByFilm={fetchPostsByFilm}
+				posts={posts}
 			/>
 		</div>
 	);
@@ -144,7 +151,8 @@ const mapStateToProps = (rootState, props) => ({
 	watchListStatus: rootState.watchList.watchListStatus,
 	watchListLoading: rootState.watchList.isLoading,
 	awards: rootState.movie.awards,
-	statistics: rootState.movie.statistics
+	statistics: rootState.movie.statistics,
+	posts: rootState.movie.posts
 });
 
 const mapDispatchToProps = dispatch => {
@@ -159,7 +167,8 @@ const mapDispatchToProps = dispatch => {
 		addMovieToWatchList,
 		deleteMovieFromWatchList,
 		fetchAwards,
-		fetchStatistics
+		fetchStatistics,
+		fetchPostsByFilm
 	};
 	return bindActionCreators(actions, dispatch);
 };

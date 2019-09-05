@@ -20,10 +20,16 @@ import {
 	SET_HIDE_SPINNER,
 	SET_GENRES,
 	FETCH_STATISTICS,
-	FETCH_STATISTICS_SUCCESS
+	FETCH_STATISTICS_SUCCESS,
+	FETCH_POSTS_BY_FILM_SUCCESS
 } from './actionTypes';
 import TMovie from '../TMovie';
 import movieAdapter from '../movieAdapter';
+import {
+	ADD_NEW_COMMENT,
+	ADD_NEW_REACTION
+} from '../../MainPage/FeedBlock/FeedBlock.redux/actionTypes';
+import findIndexInArray from '../../../helpers/findIndexInArray';
 
 const initialState: {
 	moviesSearch: Array<TMovie>;
@@ -43,6 +49,7 @@ const initialState: {
 	showSpinner: boolean;
 	genres: any;
 	statistics: any;
+	posts: any;
 } = {
 	moviesSearch: [],
 	alreadySearch: false,
@@ -72,7 +79,8 @@ const initialState: {
 	},
 	showSpinner: false,
 	genres: null,
-	statistics: null
+	statistics: null,
+	posts: null
 };
 
 export default function(state = initialState, action) {
@@ -203,6 +211,40 @@ export default function(state = initialState, action) {
 				...state,
 				showSpinner: false,
 				statistics: action.payload.statistics
+			};
+		case FETCH_POSTS_BY_FILM_SUCCESS:
+			return {
+				...state,
+				showSpinner: false,
+				posts: action.payload.posts
+			};
+		case ADD_NEW_COMMENT:
+			if (!state.posts) return state;
+			const posts = state.posts || new Array();
+			const comment = action.payload.comment.comment;
+
+			const index = findIndexInArray(posts, 'id', comment.post.id);
+			if (index === -1) return state;
+			const post = posts[index];
+			if (!post.comments) post.comments = [comment];
+			else post.comments.push(comment);
+			return {
+				...state,
+				posts: [...posts]
+			};
+		case ADD_NEW_REACTION:
+			if (!state.posts) return state;
+			const postsForNewReact = state.posts || new Array();
+			const { reactions, postId } = action.payload;
+
+			const i = findIndexInArray(postsForNewReact, 'id', postId);
+			if (i === -1) return state;
+			const postForNewReact = postsForNewReact[i];
+			postForNewReact.reactions = [...reactions];
+
+			return {
+				...state,
+				posts: [...postsForNewReact]
 			};
 		default:
 			return state;
