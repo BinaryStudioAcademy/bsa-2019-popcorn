@@ -1,6 +1,7 @@
 import React from 'react';
 import '../RecommendItemEvent.scss';
 import Moment from 'react-moment';
+import config from '../../../../config';
 
 type RecommendItemProps = {
 	event: {
@@ -22,7 +23,11 @@ const RecommendItemEvent = ({
 				</div>
 			</div>
 			<div className="recommend-item-wrp">
-				<img className="recommend-item-image" src={image} alt="event" />
+				<img
+					className="recommend-item-image"
+					src={image ? image : config.DEFAULT_EVENT_IMAGE}
+					alt="event"
+				/>
 			</div>
 			<div className="recommend-item-info">
 				<div className="recommend-item-row">
@@ -75,7 +80,7 @@ const RecommendItemEvent = ({
 							return (
 								<img
 									className="recommend-item-reaction-image"
-									src={el.user.avatar}
+									src={el.user.avatar ? el.user.avatar : config.DEFAULT_AVATAR}
 									alt="author"
 								/>
 							);

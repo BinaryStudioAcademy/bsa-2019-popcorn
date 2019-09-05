@@ -1,6 +1,7 @@
 import React from 'react';
 import '../RecommendItemEvent.scss';
 import { NavLink } from 'react-router-dom';
+import config from '../../../../config';
 
 type RecommendItemProps = {
 	top: {
@@ -31,7 +32,11 @@ const RecommendItemTop = ({
 				</div>
 			</div>
 			<div className="recommend-item-wrp">
-				<img className="recommend-item-image" src={topImageUrl} alt="event" />
+				<img
+					className="recommend-item-image"
+					src={topImageUrl ? topImageUrl : config.DEFAULT_TOP_IMAGE}
+					alt="event"
+				/>
 			</div>
 			<div className="recommend-item-info">
 				<div className="recommend-item-row">

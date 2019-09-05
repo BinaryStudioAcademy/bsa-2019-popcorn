@@ -137,7 +137,11 @@ class ReviewItem extends React.Component<IProps, IState> {
 								>
 									<img
 										className="review-poster"
-										src={config.POSTER_PATH + movie.poster_path}
+										src={
+											movie.poster_path
+												? config.POSTER_PATH + movie.poster_path
+												: config.DEFAULT_MOVIE_IMAGE
+										}
 									></img>
 									<div>
 										<div>{movie.title}</div>

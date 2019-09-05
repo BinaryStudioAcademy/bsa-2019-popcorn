@@ -1,7 +1,6 @@
 import React from 'react';
 import '../RecommendItemEvent.scss';
 import ReviewItem from '../../../MovieSeriesPage/MovieSeriesReviews/ReviewItem/ReviewItem';
-import config from '../../../../config';
 
 type RecommendItemProps = {
 	review: any;
@@ -23,7 +22,7 @@ const RecommendItemReview = ({
 					<strong>Review</strong>
 				</div>
 			</div>
-			<div className="recommend-item-wrp">
+			<div style={{ height: 'auto' }} className="recommend-item-wrp">
 				<ReviewItem
 					currentUserId={currUserId}
 					review={review}
