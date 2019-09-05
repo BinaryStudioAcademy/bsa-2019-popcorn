@@ -140,7 +140,8 @@ export const saveDiscussionMessage = async (
 export const searchMovieTitles = async (title: string, next): Promise<any> => {
   const elasticData = await elasticRepository.getPropertiesByMovieTitle(title, [
     "id",
-    "title"
+    "title",
+    "release_date"
   ]);
   if (!elasticData) {
     return next({ status: 404, message: "No connect to elastic" }, null);
