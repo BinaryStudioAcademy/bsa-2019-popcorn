@@ -21,13 +21,13 @@ export const getMovieList = async (pageNum: number = 1): Promise<Movie[]> => {
     `https://api.themoviedb.org/3/movie/popular?api_key=${process.env.MOCK_API_KEY}&language=en-US&page=${pageNum}`
   )
     .then(async movies => {
-      let newMovies = [];
+      const newMovies = [];
       const startForeach = async () => {
         await asyncForEach(movies.results, async element => {
-          let movieDetails = await api(
+          const movieDetails = await api(
             `https://api.themoviedb.org/3/movie/${element.id}?api_key=${process.env.MOCK_API_KEY}&language=en-US`
           );
-          let newMovie = new Movie();
+          const newMovie = new Movie();
           newMovie.title = element.title;
           newMovie.year = Number(element.release_date.split("-")[0]);
           newMovie.duration = movieDetails.runtime ? movieDetails.runtime : 0;

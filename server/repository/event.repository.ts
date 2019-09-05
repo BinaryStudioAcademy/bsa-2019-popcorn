@@ -28,7 +28,7 @@ class EventRepository extends Repository<Event> {
       .where("event.id = :id", { id: eventId })
       .getOne();
   }
-  async getEventByTitle(title: string): Promise<Array<Event>> {
+  async getEventByTitle(title: string): Promise<Event[]> {
     return await getRepository(Event)
       .createQueryBuilder("event")
       .leftJoinAndSelect("event.eventComments", "comments")

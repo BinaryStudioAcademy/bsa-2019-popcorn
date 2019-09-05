@@ -1,4 +1,4 @@
-import { Router, NextFunction, Request, Response } from "express";
+import { Router, NextFunction, Response } from "express";
 import * as firebaseService from "../services/firebase.service";
 import * as notificationService from "../services/notification.service";
 

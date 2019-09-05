@@ -24,7 +24,7 @@ export class SeedSurveys1565789734851 implements MigrationInterface {
     survey1.user = user;
     await getCustomRepository(SurveysRepository).save(survey1);
 
-    //question 1
+    // question 1
     const surveysQuestion1 = new SurveysQuestion();
     surveysQuestion1.surveys = survey1;
     surveysQuestion1.title = "question title";
@@ -65,7 +65,7 @@ export class SeedSurveys1565789734851 implements MigrationInterface {
       surveysQuestionAnswer1
     );
 
-    //question 2
+    // question 2
     const surveysQuestion2 = new SurveysQuestion();
     surveysQuestion2.surveys = survey1;
     surveysQuestion2.title = "second question title";
@@ -81,7 +81,7 @@ export class SeedSurveys1565789734851 implements MigrationInterface {
       surveysQuestionAnswer2
     );
 
-    //question 3
+    // question 3
     const surveysQuestion3 = new SurveysQuestion();
     surveysQuestion3.surveys = survey1;
     surveysQuestion3.title = "question title";
@@ -113,7 +113,7 @@ export class SeedSurveys1565789734851 implements MigrationInterface {
       surveysQuestionAnswer3
     );
 
-    //question 4
+    // question 4
     const surveysQuestion4 = new SurveysQuestion();
     surveysQuestion4.surveys = survey1;
     surveysQuestion4.title = "very last question";

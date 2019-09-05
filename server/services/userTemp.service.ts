@@ -1,11 +1,10 @@
 import { UserTemp } from "../models/UserModelTemp";
-import { User } from "../models/UserModel";
 import UserTempRepository from "../repository/userTemp.repository";
 import UserRepository from "../repository/user.repository";
 import { getCustomRepository } from "typeorm";
 
 export const createTempUser = async (user, body, id): Promise<UserTemp> => {
-  let tempUser = new UserTemp();
+  const tempUser = new UserTemp();
   tempUser.userId = id;
   tempUser.password = body.password ? body.password : user.password;
   tempUser.email = body.email ? body.email : user.email;
@@ -16,10 +15,10 @@ export const createTempUser = async (user, body, id): Promise<UserTemp> => {
 export const updateUserByToken = async (token: string): Promise<any> => {
   const tempUser = await getCustomRepository(UserTempRepository).find({
     where: {
-      token: token
+      token
     }
   });
-  let realUser = await getCustomRepository(UserRepository).findOne(
+  const realUser = await getCustomRepository(UserRepository).findOne(
     tempUser[0].userId
   );
   realUser.email = tempUser[0].email;
