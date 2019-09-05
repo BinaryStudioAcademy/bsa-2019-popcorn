@@ -1,7 +1,7 @@
 import { Top } from "../models/TopModel";
 import TopRepository from "../repository/top.repository";
 import MovieInTopRepository from "../repository/movieInTop.repository";
-import { getCustomRepository, Like } from "typeorm";
+import { getCustomRepository } from "typeorm";
 import { getByIdValues } from "../repository/movieElastic.repository";
 
 export const getTops = async (): Promise<Top[]> =>
@@ -18,11 +18,7 @@ export const getExtendedTops = async (): Promise<Top[]> => {
   return await getMoviesInTops(tops, ["id", "title", "release_date"], 3);
 };
 
-const getMoviesInTops = async (
-  tops: any,
-  fields: string[],
-  limit: number
-) => {
+const getMoviesInTops = async (tops: any, fields: string[], limit: number) => {
   const TopsWithMovies = [...tops];
   for (const top of TopsWithMovies) {
     const movieIds = top.movieInTop.map(top => top.movieId).splice(0, limit);
@@ -59,7 +55,7 @@ export const getTopById = async (topId: string): Promise<Top> => {
 export const getTopByTitle = async (title: string): Promise<Top[]> => {
   const tops: Top[] = await getCustomRepository(TopRepository).find({
     relations: ["user", "movieInTop"],
-    where: { title: Like(`%${title}%`) }
+    where: `title ILIKE '%${title}%'`
   });
 
   return await Promise.all(

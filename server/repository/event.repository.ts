@@ -1,6 +1,5 @@
-import { EntityRepository, Repository } from "typeorm";
+import { EntityRepository, Repository, getRepository } from "typeorm";
 import { Event, EventVisitor } from "../entities/Events";
-import { getRepository } from "typeorm";
 
 @EntityRepository(Event)
 class EventRepository extends Repository<Event> {
@@ -37,7 +36,9 @@ class EventRepository extends Repository<Event> {
       .addSelect(["cuser.name", "cuser.avatar", "cuser.id"])
       .leftJoin("visitors.user", "user")
       .addSelect(["user.name", "user.avatar", "user.id"])
-      .where("event.title like :title", { title: "%" + title + "%" })
+      .where("LOWER(event.title) LIKE :title", {
+        title: "%" + title.toLowerCase() + "%"
+      })
       .getMany();
   }
 

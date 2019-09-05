@@ -5,7 +5,7 @@ import UserRepository from "../repository/user.repository";
 import { getVotingById } from "./voting.service";
 import { getMovieById } from "./movie.service";
 
-import uuid from "uuid/v4";
+import * as uuid from "uuid/v4";
 
 export const getStories = async (): Promise<Story[]> => {
   const stories = (await getCustomRepository(StoryRepository).find({

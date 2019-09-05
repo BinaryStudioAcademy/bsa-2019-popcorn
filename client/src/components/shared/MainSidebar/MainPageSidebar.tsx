@@ -1,9 +1,6 @@
 import React from 'react';
 import './MainPageSidebar.scss';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faChevronDown } from '@fortawesome/free-solid-svg-icons';
 import { NavLink } from 'react-router-dom';
-import config from '../../../config';
 
 interface IProps {
 	notifications: {
@@ -19,10 +16,6 @@ const MainPageSidebar = ({ notifications }: IProps) => {
 				<div>
 					<NavLink to={'/'}>Home</NavLink>
 				</div>
-				<div>
-					<p>Messages</p>
-				</div>
-
 				<div>
 					<NavLink to={'/events/'}>Events</NavLink>
 				</div>

@@ -14,7 +14,7 @@ import {
 } from './actionTypes';
 export function* sendTokenToServer(action) {
 	try {
-		const response = yield call(webApi, {
+		yield call(webApi, {
 			method: 'PUT',
 			endpoint: '/api/notification',
 			body: {

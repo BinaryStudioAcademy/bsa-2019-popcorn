@@ -3,17 +3,14 @@ import {
 	GET_USER_EVENTS,
 	GET_USER_EVENTS_SUCCESS,
 	START_UPLOAD_USER_EVENTS,
-	FINISH_UPLOAD_USER_EVENTS,
 	DELETE_OWN_USER_EVENT,
 	UPDATE_USER_EVENT,
 	GET_All_EVENTS,
 	GET_ALL_EVENTS_SUCCESS,
 	GET_EVENT_BY_ID_SUCCESS,
 	GET_EVENT_BY_ID,
-	SUBSCRIBE_TO_EVENT_SUCCESS,
 	SUBSCRIBE_TO_EVENT
 } from './actionsTypes';
-import config from '../../../config';
 import webApi from '../../../services/webApi.service';
 
 export function* fetchEvents(action) {

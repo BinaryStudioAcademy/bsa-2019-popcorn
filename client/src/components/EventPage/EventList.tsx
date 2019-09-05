@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import './EventPage.scss';
 import { formatToClient } from '../UserPage/UserEvents/UserEvents.service';
 import EventItem from '../UserPage/UserEvents/EventItem/EventItem';
+import Spinner from '../shared/Spinner';
 export interface IEvent {
 	title: string;
 	description: string;
@@ -28,6 +29,9 @@ const EventList: React.FC<IProps> = props => {
 			setEvents(allEvents);
 		}
 	});
+	if (!events.length) {
+		return <Spinner />;
+	}
 	return (
 		<div className="event-page">
 			<div className="event-list-container">

@@ -1,6 +1,4 @@
 import * as React from 'react';
-import { NavLink } from 'react-router-dom';
-import Spinner from '../shared/Spinner';
 
 interface IConfirmChangesProps {
 	confirm: (token: string) => any;

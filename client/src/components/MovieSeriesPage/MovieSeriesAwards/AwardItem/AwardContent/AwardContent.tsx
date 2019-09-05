@@ -14,7 +14,7 @@ const AwardContent: React.FC<IAwardContent> = ({
 	subtitle
 }) => {
 	return (
-		<div style={{ marginLeft: '15px' }}>
+		<div className="award-content">
 			<AwardTitle title={title} />
 			<div className="award-subtitle">{subtitle}</div>
 			{nominations.categories.map(el => (

@@ -23,14 +23,14 @@ class VotingOptionReactionRepository extends Repository<VotingOptionReaction> {
           null
         );
       }
-        
+
       const user = await getCustomRepository(UserRepository).findOne({
         id: userId
       });
       if (!user) {
         return next({ status: 404, message: "User is not found" }, null);
       }
-        
+
       const prevReaction = await this.findOne({ user, votingOption });
       return prevReaction
         ? await this.update(prevReaction.id, { isChosen })

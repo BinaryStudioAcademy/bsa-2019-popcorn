@@ -65,6 +65,8 @@ interface IProps {
 	awards: any;
 	fetchStatistics: (movieId: string) => void;
 	statistics: any;
+	fetchPostsByFilm: (movieId: string) => void;
+	posts?: Array<any>;
 }
 
 const MovieSeriesPageTabBody: React.SFC<IProps> = ({
@@ -74,7 +76,9 @@ const MovieSeriesPageTabBody: React.SFC<IProps> = ({
 	fetchAwards,
 	awards,
 	fetchStatistics,
-	statistics
+	statistics,
+	fetchPostsByFilm,
+	posts
 }) => {
 	return (
 		<div className={'movie-series-page-tab-body'}>
@@ -89,7 +93,15 @@ const MovieSeriesPageTabBody: React.SFC<IProps> = ({
 					render={() => <StaffCast movie={movie} />}
 				/>
 				<Route path={`${mainPath}/reviews`} component={MovieSeriesReviews} />
-				<Route path={`${mainPath}/posts`} component={MovieSeriesPosts} />
+				<Route
+					path={`${mainPath}/posts`}
+					render={() => (
+						<MovieSeriesPosts
+							posts={posts}
+							fetchPostsByFilm={() => fetchPostsByFilm(movie.id)}
+						/>
+					)}
+				/>
 				<Route
 					path={`${mainPath}/awards`}
 					render={() => {
