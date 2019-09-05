@@ -8,6 +8,7 @@ interface IAwardItem {
 	nominations: any;
 }
 const AwardItem: React.FC<IAwardItem> = ({ title, nominations }) => {
+	
 	return (
 		<div className="item-wrapper">
 			{nominations.titleAwardOutcome.split(' ')[0].toLowerCase() ===
