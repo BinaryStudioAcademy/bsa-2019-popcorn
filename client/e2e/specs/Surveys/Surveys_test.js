@@ -20,7 +20,7 @@ describe('Surveys on the Popcorn site', () => {
         wait.forSpinner();
         menu.navigateToUserPage();
         userTabs.navigateToSurveys();
-        wait.forElementsLoaded(credentials.surveyItemsPath);
+        wait.forSpinner();
     });
     
     afterEach(() => {
@@ -29,24 +29,24 @@ describe('Surveys on the Popcorn site', () => {
 
 
     it('should create survey with valid credentials', () => {
-        let title = faker.random.words();
+        surveyQty = help.countItems(pageObjects.surveyItems);
         pageActions.clickCreateSurveyButton();
-        pageActions.enterTitle(title);
+        pageActions.enterTitle(faker.random.words());
         pageActions.enterDescription(faker.lorem.paragraph());
         pageActions.uploadImage(credentials.image);
         pageActions.clickAddQuestionButton();
         pageActions.enterQuestionTitle(faker.random.words());
         pageActions.enterOption(faker.random.words());
         pageActions.clickSaveButton();
-        wait.forNewElementLoaded(credentials.surveyItemsPath, '+');
-        validate.elementIsInList(title);
+        wait.forSpinner();
+        validate.elementsQuantityChanged(surveyQty, pageObjects.surveyItems, '+')
     });
 
     it('should delete survey', () => {
         surveyQty = help.countItems(pageObjects.surveyItems);
         pageActions.clickDeleteSurveyButton();
         pageActions.clickConfirmDeleteButton();
-        wait.forNewElementLoaded(credentials.surveyItemsPath, '-');
+        wait.forSpinner();
         validate.elementsQuantityChanged(surveyQty, pageObjects.surveyItems, '-')
     });
 }); 

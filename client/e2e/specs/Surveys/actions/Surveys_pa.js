@@ -25,6 +25,7 @@ class SurveyActions {
     uploadImage(imagePath) {
         page.imageInput.waitForExist(5000);
         page.imageInput.setValue(path.resolve(imagePath));
+        page.imageInput.waitForEnabled(5000)
     }
 
     clickAddQuestionButton() {
