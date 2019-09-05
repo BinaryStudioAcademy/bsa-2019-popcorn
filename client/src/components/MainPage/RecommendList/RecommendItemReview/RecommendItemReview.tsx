@@ -1,17 +1,20 @@
 import React from 'react';
 import '../RecommendItemEvent.scss';
 import ReviewItem from '../../../MovieSeriesPage/MovieSeriesReviews/ReviewItem/ReviewItem';
+import config from '../../../../config';
 
 type RecommendItemProps = {
 	review: any;
 	currUserId: string;
 	setReaction: (reviewId: string, isLike: boolean) => object;
+	movie: any;
 };
 
 const RecommendItemReview = ({
 	review,
 	currUserId,
-	setReaction
+	setReaction,
+	movie
 }: RecommendItemProps) => {
 	return (
 		<div className="recommend-item">
@@ -26,6 +29,7 @@ const RecommendItemReview = ({
 					review={review}
 					setReaction={setReaction}
 					isRecommended={true}
+					movie={movie}
 				/>
 			</div>
 		</div>

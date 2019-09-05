@@ -71,12 +71,13 @@ const RecommendList = ({
 					<RecommendItemTop top={recommended.tops} />
 				</div>
 			) : null}
-			{recommended.reviews[0] ? (
+			{recommended.reviews ? (
 				<div>
 					<RecommendItemReview
-						review={recommended.reviews[0]}
+						review={recommended.reviews.review[0]}
 						currUserId={userId}
 						setReaction={setReaction}
+						movie={recommended.reviews.movie}
 					/>
 				</div>
 			) : null}

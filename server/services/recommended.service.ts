@@ -50,7 +50,6 @@ export const getRecommended = async (userId, next) => {
           randomReviewIds[getRandomInt(randomReviewIds.length)].id,
           next
         );
-
   let recommended = {
     reviews: review,
     tops: top,

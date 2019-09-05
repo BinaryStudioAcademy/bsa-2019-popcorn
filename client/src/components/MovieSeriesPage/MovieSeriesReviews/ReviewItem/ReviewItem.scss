@@ -41,6 +41,11 @@
 					right: 10px;
 					color: $text-secondary-color;
 					text-decoration: none;
+					display: flex;
+					.review-poster {
+						height: 30px;
+						margin-right: 5px;
+					}
 				}
 			}
 

@@ -101,10 +101,9 @@ export const getReviewById = async (userId: string, id: string, next) => {
     next
   );
   const movie = await getMovieElasticById(review[0].movieId);
-  console.log(movie.hits);
   review.movie = movie.hits.hits[0]._source;
   const reviewWithReactions = await addReactionsToReviews(userId, review);
-  return reviewWithReactions;
+  return { review: reviewWithReactions, movie: movie.hits.hits[0]._source };
 };
 
 export const deleteReviewById = async (id: string, next) => {

@@ -25,6 +25,7 @@ interface IProps {
 	setReaction: (reviewId: string, isLike: boolean) => object;
 	errorWithReview?: string;
 	isRecommended?: boolean;
+	movie?: any;
 }
 
 interface IState {
@@ -83,7 +84,9 @@ class ReviewItem extends React.Component<IProps, IState> {
 		if (userId === currentUserId) return;
 		setReaction(reviewId, isLike);
 	};
-
+	getYear = year => {
+		return year.split('-')[0];
+	};
 	public render() {
 		const {
 			review: {
@@ -98,7 +101,8 @@ class ReviewItem extends React.Component<IProps, IState> {
 			},
 			currentUserId,
 			errorWithReview,
-			isRecommended
+			isRecommended,
+			movie
 		} = this.props;
 		const { showFullReview, textBlockHeight, isBigBlock } = this.state;
 
@@ -126,12 +130,19 @@ class ReviewItem extends React.Component<IProps, IState> {
 									</Moment>
 								</div>
 							</div>
-							{isRecommended ? (
+							{isRecommended && movie ? (
 								<NavLink
 									className="to-movie-page-link"
 									to={`/movies/${movieId}`}
 								>
-									To movie page>>
+									<img
+										className="review-poster"
+										src={config.POSTER_PATH + movie.poster_path}
+									></img>
+									<div>
+										<div>{movie.title}</div>
+										<div>{this.getYear(movie.release_date)}</div>
+									</div>
 								</NavLink>
 							) : null}
 						</div>
