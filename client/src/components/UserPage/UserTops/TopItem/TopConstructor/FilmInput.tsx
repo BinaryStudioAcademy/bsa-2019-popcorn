@@ -25,8 +25,8 @@ const FilmInput: React.FC<IInputProps> = ({
 	fetchFilms,
 	last
 }) => {
-	const [title, setTitle] = useState(movie.title);
-	const [comment, setComment] = useState(movie.comment);
+	const [title, setTitle] = useState(movie.title || "");
+	const [comment, setComment] = useState(movie.comment || "");
 	useEffect(() => {
 		if (movie.title === '') { setTitle(''); }
 		if (movie.comment === '') { setComment(''); }
@@ -105,7 +105,7 @@ const FilmInput: React.FC<IInputProps> = ({
 				value={comment}
 				onChange={e => {
 					saveMovie({ ...movie, comment: e.target.value });
-					setComment(comment);
+					setComment(e.target.value);
 				}}
 				className="film-input comment-film-input"
 				placeholder="Type comment here"

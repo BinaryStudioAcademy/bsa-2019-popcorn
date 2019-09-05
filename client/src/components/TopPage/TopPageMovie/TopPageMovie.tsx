@@ -4,6 +4,7 @@ import config from '../../../config';
 import { IMovie } from '../TopPage.service';
 
 import './MovieListItem.scss';
+import { NavLink } from 'react-router-dom';
 
 interface ITopProps {
 	index: number;
@@ -29,13 +30,13 @@ const TopPageMovie: React.SFC<ITopProps> = ({ index, movie }) => {
 					/>
 				</div>
 				<div className="movie-info">
-					<div>
+					<NavLink to={`/movies/${movie.id}`} >
 						<span className="movie-title">{movie.title}</span>
 						<span className="movie-year">{` (${movie.release_date.slice(
 							0,
 							4
 						)})`}</span>
-					</div>
+					</NavLink>
 					<div className="movie-genre">{movie.genres}</div>
 					<span className="author-comment">{movie.comment}</span>
 				</div>

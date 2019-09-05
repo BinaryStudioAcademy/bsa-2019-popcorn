@@ -51,6 +51,11 @@
 			line-height: 30px;
 		}
 
+		a{
+			text-decoration: none;
+			color: $text-base-color;
+		}
+
 		.movie-title {
 			font-size: $header-medium;
 			font-weight: bold;
