@@ -66,17 +66,17 @@ class Notification extends React.Component<IProps, IState> {
 
 	toggleNotifications = () => {
 		const isShown = !this.state.isShown;
-		this.state.notifications.length !== 0 && this.setState({ isShown });
+		if (this.state.notifications.length) { this.setState({ isShown }); }
 	};
 
 	readNotification = (activityId: string) => {
 		const notifications = this.state.notifications;
-		let updatedNotification = notifications.filter(
-			notification => notification.id == activityId
+		const updatedNotification = notifications.filter(
+			notification => notification.id === activityId
 		)[0];
 		updatedNotification.isRead = true;
 		const updatedNotifications = notifications.map(notification =>
-			notification.id == activityId ? updatedNotification : notification
+			notification.id === activityId ? updatedNotification : notification
 		);
 		this.setState({ notifications: updatedNotifications });
 		this.props.setNotificationIsRead(activityId);

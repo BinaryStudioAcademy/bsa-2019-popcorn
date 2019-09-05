@@ -56,10 +56,6 @@ interface IProps {
 
 const Header = ({
 	userInfo,
-	moviesSearch,
-	fetchFilms,
-	alreadySearch,
-	setMovieSeries,
 	unauthorize,
 	getUnreadNotifications,
 	setNotificationIsRead,

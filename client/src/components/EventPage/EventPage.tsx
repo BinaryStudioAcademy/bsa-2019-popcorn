@@ -44,11 +44,12 @@ const EventPage: React.FC<IProps> = ({
 
 	function subscibe({ eventId, userId, status }) {
 		let isVisitor = false;
-		let eventVisitors = event.eventVisitors.map(visitor => {
+		const eventVisitors = event.eventVisitors.map(visitor => {
 			if (visitor.userId === userId) {
 				isVisitor = true;
 				return { ...visitor, status };
-			} else return visitor;
+			}
+			else { return visitor };
 		});
 		if (!isVisitor) {
 			eventVisitors.push({
