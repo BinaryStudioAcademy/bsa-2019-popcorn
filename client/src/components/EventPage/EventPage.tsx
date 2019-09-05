@@ -48,8 +48,9 @@ const EventPage: React.FC<IProps> = ({
 			if (visitor.userId === userId) {
 				isVisitor = true;
 				return { ...visitor, status };
+			} else {
+				return visitor;
 			}
-			else { return visitor };
 		});
 		if (!isVisitor) {
 			eventVisitors.push({
@@ -67,9 +68,8 @@ const EventPage: React.FC<IProps> = ({
 	useEffect(() => {
 		if (!event || match.params.id !== searchedEvent.id) {
 			getEventById(match.params.id);
-
 		}
-		if (event && (searchedEvent.id !== event.id)) {
+		if (event && searchedEvent.id !== event.id) {
 			setEvent(formatToClient(searchedEvent));
 		}
 		if (searchedEvent && !event) {

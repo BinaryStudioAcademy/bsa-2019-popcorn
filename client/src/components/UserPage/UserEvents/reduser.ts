@@ -48,7 +48,7 @@ export default (state = initialState, action) => {
 			return {
 				...state,
 				setSpinner: true
-			}
+			};
 		default:
 			return state;
 	}

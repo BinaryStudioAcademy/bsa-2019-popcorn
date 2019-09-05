@@ -5,10 +5,10 @@ import {
 	faArrowCircleLeft,
 	faTimesCircle
 } from '@fortawesome/free-solid-svg-icons';
-import MovieSearch from "../../../shared/MovieSearch/MovieSearch";
-import MovieListItem from "../../../MovieList/MovieListItem/MovieListItem";
-import { getGenre, getMainCast } from "../../../MovieSeriesPage/movieAdapter";
-import config from "../../../../config";
+import MovieSearch from '../../../shared/MovieSearch/MovieSearch';
+import MovieListItem from '../../../MovieList/MovieListItem/MovieListItem';
+import { getGenre, getMainCast } from '../../../MovieSeriesPage/movieAdapter';
+import config from '../../../../config';
 
 const options = ["I've watched", "I'm going to watch", 'I recommend'];
 interface IProps {
@@ -35,14 +35,14 @@ const CreateStoryFilm = ({ ...props }: IProps) => {
 		'genres'
 	];
 
-	const convertMovie = (movie) => {
+	const convertMovie = movie => {
 		return {
 			...movie,
 			poster_path: `${config.POSTER_PATH}/${movie.poster_path}`,
 			genres: getGenre(JSON.parse(movie.genres)),
 			mainCast: getMainCast(JSON.parse(movie.cast).slice(0, 3))
 		};
-	}
+	};
 
 	return (
 		<div className={'modal modal-story'}>
@@ -76,18 +76,16 @@ const CreateStoryFilm = ({ ...props }: IProps) => {
 					))}
 				</select>
 				<div className="selected-movie">
-					{
-						movie && (
-							<MovieListItem
-								key={movie.id}	
-								movie={movie}
-								saveMovie={(movie: TMovie) => {
-									props.saveMovie(movie, option);
-									props.history.push('/create');
-								}}
-							/>
-						)
-					}
+					{movie && (
+						<MovieListItem
+							key={movie.id}
+							movie={movie}
+							saveMovie={(movie: TMovie) => {
+								props.saveMovie(movie, option);
+								props.history.push('/create');
+							}}
+						/>
+					)}
 				</div>
 			</div>
 		</div>

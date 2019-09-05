@@ -39,7 +39,9 @@ const ActivityItem = ({
 	function setRead(activityId: string) {
 		isRead = true;
 		setMarked(isRead);
-		if (readNotification) { readNotification(activityId); }
+		if (readNotification) {
+			readNotification(activityId);
+		}
 	}
 	return (
 		<div
@@ -51,8 +53,7 @@ const ActivityItem = ({
 				<div className="activity-text">{title}</div>
 				<div className="activity-text">{body}</div>
 				<div className="activity-date">
-					<Moment format=" D MMM HH:mm "
-						local={true}>
+					<Moment format=" D MMM HH:mm " local={true}>
 						{String(date)}
 					</Moment>
 				</div>

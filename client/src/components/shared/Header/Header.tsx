@@ -21,6 +21,8 @@ import Image from '../Image/Image';
 import Notification from './Notification';
 import { withFirebase } from '../../Firebase';
 import { Activity } from '../../ActivityPage/ActivityList/ActivityList';
+import { hasUnreadMessages } from './header.service';
+import { fetchChats } from '../../ChatPage/ChatPage.redux/actions';
 import ContentSearch from '../ContentSearch';
 interface IProps {
 	userInfo: {
@@ -45,6 +47,10 @@ interface IProps {
 	deleteFirebaseToken: (firebaseToken: any) => void;
 	sendTokenToServer: (token: string | null) => void;
 	getUnreadNotifications: (userId: string) => void;
+	setNotificitationIsRead: (notificatonId: string) => void;
+	unredNotifications: Activity[];
+	chats: any;
+	fetchChats: (userId: string) => void;
 	setNotificationIsRead: (notificationId: string) => void;
 	unreadNotifications: Activity[];
 	firebase?: any;
@@ -53,144 +59,170 @@ interface IProps {
 	history: any;
 }
 
-const Header = ({
-	userInfo,
-	unauthorize,
-	getUnreadNotifications,
-	setNotificationIsRead,
-	unreadNotifications,
-	firebase,
-	firebaseToken,
-	getFirebaseToken,
-	deleteFirebaseToken,
-	history
-}: IProps) => {
-	const MOVIES_IN_CINEMA = 'Movies in cinema';
-	const MOVIE_TOPS = 'Movie tops';
-	const USER_MOVIE_TOPS = `${userInfo.name}'s Movie Lists`;
-	const NEW_TV_SERIES = 'New TV Series';
-	const TV_SERIES_TOPS = 'TV Series tops';
-	const USER_TV_SERIES_TOPS = `${userInfo.name}'s TV Series Lists`;
-	const POPULAR_MOVIES = 'Popular Movies';
-	const POPULAR_TV_SERIES = 'Popular TV Series';
-	const POPULAR_USERS = 'Popular Users';
-	const PROFILE = 'Profile';
-	const SETTINGS = 'Settings';
-	const LOGOUT = 'Logout';
-
-	const { avatar } = userInfo;
-	useEffect(() => {
-		if (firebaseToken === undefined) {
-			getFirebaseToken(firebase);
+class Header extends React.Component<IProps> {
+	componentDidMount() {
+		this.props.fetchChats(this.props.userInfo.id);
+		if (this.props.firebaseToken === undefined) {
+			getFirebaseToken(this.props.firebase);
 		}
-	});
-	return (
-		<div className="header">
-			<NavLink to="/" className="header-logo-link">
-				<div className="logo-wrapper">
-					<img src={logo} className="logo" alt="logo" />
-				</div>
-				<div className="title">Pop Corn</div>
-			</NavLink>
-			<button className="header-buttons hover">
-				<NavLink
-					to={'/movies'}
-					style={{ textDecoration: 'none' }}
-					className="header-buttons"
-				>
-					Movies
-				</NavLink>
-				<FontAwesomeIcon icon={faChevronDown} />
-				<div className="modal">
-					<Link aria-current="page" className="hover" to="#">
-						{MOVIES_IN_CINEMA}
-					</Link>
-					<Link aria-current="page" className="hover" to="/tops">
-						{MOVIE_TOPS}
-					</Link>
-					<Link aria-current="page" className="hover" to="/user-page/lists">
-						{USER_MOVIE_TOPS}
-					</Link>
-				</div>
-			</button>
+	}
+	render() {
+		const {
+			userInfo,
+			moviesSearch,
+			fetchFilms,
+			alreadySearch,
+			setMovieSeries,
+			unauthorize,
+			sendTokenToServer,
+			getUnreadNotifications,
+			setNotificitationIsRead,
+			unredNotifications,
+			chats,
+			setNotificationIsRead,
+			unreadNotifications,
+			firebase,
+			firebaseToken,
+			getFirebaseToken,
+			deleteFirebaseToken,
+			history
+		} = this.props;
+		const MOVIES_IN_CINEMA = 'Movies in cinema';
+		const MOVIE_TOPS = 'Movie tops';
+		const USER_MOVIE_TOPS = `${userInfo.name}'s Movie Lists`;
+		const NEW_TV_SERIES = 'New TV Series';
+		const TV_SERIES_TOPS = 'TV Series tops';
+		const USER_TV_SERIES_TOPS = `${userInfo.name}'s TV Series Lists`;
+		const POPULAR_MOVIES = 'Popular Movies';
+		const POPULAR_TV_SERIES = 'Popular TV Series';
+		const POPULAR_USERS = 'Popular Users';
+		const PROFILE = 'Profile';
+		const SETTINGS = 'Settings';
+		const LOGOUT = 'Logout';
 
-			<button className="header-buttons hover">
-				TV
-				<FontAwesomeIcon icon={faChevronDown} />
-				<div className="modal">
-					<Link aria-current="page" className="hover" to="#">
-						{NEW_TV_SERIES}
-					</Link>
-					<Link aria-current="page" className="hover" to="#">
-						{TV_SERIES_TOPS}
-					</Link>
-					<Link aria-current="page" className="hover" to="/user-page/lists">
-						{USER_TV_SERIES_TOPS}
-					</Link>
-				</div>
-			</button>
-			<button className="header-buttons hover">
-				Ratings
-				<FontAwesomeIcon icon={faChevronDown} />
-				<div className="modal">
-					<Link aria-current="page" className="hover" to="#">
-						{POPULAR_MOVIES}
-					</Link>
-					<Link aria-current="page" className="hover" to="#">
-						{POPULAR_TV_SERIES}
-					</Link>
-					<Link aria-current="page" className="hover" to="#">
-						{POPULAR_USERS}
-					</Link>
-				</div>
-			</button>
-			<ContentSearch />
-			<div className="notifications">
-				<div>
-					<img className="message-icon hover" src={messageIcon} alt="message" />
-				</div>
-				{
-					<Notification
-						userInfo={userInfo}
-						getUnreadNotifications={getUnreadNotifications}
-						setNotificationIsRead={setNotificationIsRead}
-						unreadNotifications={unreadNotifications}
-					/>
-				}
-			</div>
-			<div className="user-info header-buttons hover">
-				<Image src={avatar} defaultSrc={config.DEFAULT_AVATAR} alt="avatar" />
-				<span className="user-name">{userInfo.name}</span>
-				<div className="modal">
-					<Link
-						aria-current="page"
-						className="hover"
-						to={`/user-page/${userInfo.id}`}
+		const { avatar } = userInfo;
+
+		return (
+			<div className="header">
+				<NavLink to="/" className="header-logo-link">
+					<div className="logo-wrapper">
+						<img src={logo} className="logo" alt="logo" />
+					</div>
+					<div className="title">Pop Corn</div>
+				</NavLink>
+				<button className="header-buttons hover">
+					<NavLink
+						to={'/movies'}
+						style={{ textDecoration: 'none' }}
+						className="header-buttons"
 					>
-						{PROFILE}
-					</Link>
-					<Link aria-current="page" className="hover" to="/settings">
-						{SETTINGS}
-					</Link>
-					<a
-						onClick={() => {
-							deleteFirebaseToken(firebaseToken);
-							unauthorize();
-						}}
-					>
-						{LOGOUT}
-					</a>
+						Movies
+					</NavLink>
+					<FontAwesomeIcon icon={faChevronDown} />
+					<div className="modal">
+						<Link aria-current="page" className="hover" to="#">
+							{MOVIES_IN_CINEMA}
+						</Link>
+						<Link aria-current="page" className="hover" to="/tops">
+							{MOVIE_TOPS}
+						</Link>
+						<Link aria-current="page" className="hover" to="/user-page/lists">
+							{USER_MOVIE_TOPS}
+						</Link>
+					</div>
+				</button>
+
+				<button className="header-buttons hover">
+					TV
+					<FontAwesomeIcon icon={faChevronDown} />
+					<div className="modal">
+						<Link aria-current="page" className="hover" to="#">
+							{NEW_TV_SERIES}
+						</Link>
+						<Link aria-current="page" className="hover" to="#">
+							{TV_SERIES_TOPS}
+						</Link>
+						<Link aria-current="page" className="hover" to="/user-page/lists">
+							{USER_TV_SERIES_TOPS}
+						</Link>
+					</div>
+				</button>
+				<button className="header-buttons hover">
+					Ratings
+					<FontAwesomeIcon icon={faChevronDown} />
+					<div className="modal">
+						<Link aria-current="page" className="hover" to="#">
+							{POPULAR_MOVIES}
+						</Link>
+						<Link aria-current="page" className="hover" to="#">
+							{POPULAR_TV_SERIES}
+						</Link>
+						<Link aria-current="page" className="hover" to="#">
+							{POPULAR_USERS}
+						</Link>
+					</div>
+				</button>
+				<ContentSearch />
+				<div className="notifications">
+					<div className="notifications-message">
+						<NavLink to={'/chat'}>
+							{hasUnreadMessages(chats) && (
+								<div className="unread-message"></div>
+							)}
+							<img
+								className="message-icon hover"
+								src={messageIcon}
+								alt="message"
+							/>
+						</NavLink>
+					</div>
+					{
+						<Notification
+							userInfo={userInfo}
+							getUnreadNotifications={getUnreadNotifications}
+							setNotificationIsRead={setNotificationIsRead}
+							unreadNotifications={unreadNotifications}
+						/>
+					}
+				</div>
+				<div className="user-info header-buttons hover">
+					<Image src={avatar} defaultSrc={config.DEFAULT_AVATAR} alt="avatar" />
+					<span className="user-name">{userInfo.name}</span>
+					<div className="modal">
+						<Link
+							aria-current="page"
+							className="hover"
+							to={`/user-page/${userInfo.id}`}
+						>
+							{PROFILE}
+						</Link>
+						<Link aria-current="page" className="hover" to="/settings">
+							{SETTINGS}
+						</Link>
+						<a
+							onClick={() => {
+								deleteFirebaseToken(firebaseToken);
+								unauthorize();
+							}}
+						>
+							{LOGOUT}
+						</a>
+					</div>
 				</div>
 			</div>
-		</div>
-	);
-};
+		);
+	}
+}
+
 const HeaderWithFirebase = withFirebase(Header);
+
 const mapStateToProps = (rootState, props) => ({
 	...props,
 	userInfo: rootState.profile.profileInfo,
 	moviesSearch: rootState.movie.moviesSearch,
 	alreadySearch: rootState.movie.alreadySearch,
+	unredNotifications: rootState.notification.unredNotifications,
+	chats: rootState.chat.chats,
 	unreadNotifications: rootState.notification.unreadNotifications,
 	firebaseToken: rootState.notification.firebaseToken
 });
@@ -200,6 +232,7 @@ const actions = {
 	setMovieSeries,
 	unauthorize,
 	getUnreadNotifications,
+	fetchChats,
 	setNotificationIsRead,
 	getFirebaseToken,
 	deleteFirebaseToken

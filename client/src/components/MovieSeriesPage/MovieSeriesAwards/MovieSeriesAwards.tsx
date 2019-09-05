@@ -13,11 +13,11 @@ class MovieSeriesAwards extends Component<IMovieSeriesAwardsProps, {}> {
 	constructor(props) {
 		super(props);
 	}
-	
+
 	componentDidMount() {
 		this.props.fetchAwards(this.props.imdbId);
 	}
-	
+
 	render() {
 		return this.props.awards ? (
 			<div className="movieAwards-wrapper">
