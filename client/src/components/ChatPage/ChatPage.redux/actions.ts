@@ -32,12 +32,13 @@ export const fetchMessages = (userId, chatId) => {
 	};
 };
 
-export const createChat = (user1Id, user2Id) => {
+export const createChat = (user1Id, user2Id, newMessage?) => {
 	return {
 		type: CREATE_CHAT,
 		payload: {
 			user1Id,
-			user2Id
+			user2Id,
+			newMessage
 		}
 	};
 };

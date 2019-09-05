@@ -7,10 +7,11 @@ import { faPaperPlane } from '@fortawesome/free-solid-svg-icons';
 
 interface IProps {
 	createMessage: (userId: string, chatId: string, body: any) => void;
-	createChat: (userId1: string, chatId2: string) => void;
+	createChat: (userId1: string, chatId2: string, newMessage: any) => void;
 	chatId: string;
 	userId: string;
 	story?: any;
+	createReaction: any;
 }
 
 const ChatInput: React.FC<IProps> = ({
@@ -29,7 +30,10 @@ const ChatInput: React.FC<IProps> = ({
 		if (message.trim() === '') return;
 		changeMessage('');
 		if (!chatId) {
-			createChat(userId, story.userInfo.userId);
+			createChat(userId, story.userInfo.userId, {
+				body: message,
+				storyId: story && story.id
+			});
 			return; // to do: pass callback on creating message
 		}
 		createMessage(userId, chatId, {

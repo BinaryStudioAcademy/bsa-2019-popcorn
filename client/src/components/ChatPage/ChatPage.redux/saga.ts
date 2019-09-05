@@ -59,12 +59,20 @@ function* watchFetchMessages() {
 
 export function* createChat(action) {
 	try {
-		yield call(webApi, {
+		const newChat = yield call(webApi, {
 			method: 'POST',
 			endpoint: `/api/chat/`,
 			body: {
 				user1Id: action.payload.user1Id,
 				user2Id: action.payload.user2Id
+			}
+		});
+		yield put({
+			type: CREATE_MESSAGE,
+			payload: {
+				userId: action.payload.user1Id,
+				chatId: newChat.chatId,
+				body: { ...action.payload.newMessage }
 			}
 		});
 	} catch (e) {

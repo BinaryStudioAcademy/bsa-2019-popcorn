@@ -17,6 +17,8 @@ import { connect } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 import ChatInput from '../../ChatPage/Chat/ChatInput';
 import StoryReaction from './StoryReaction';
+import { createMessage } from '../../ChatPage/ChatPage.redux/actions';
+import { bindActionCreators } from 'redux';
 
 interface IProps {
 	stories: Array<{
@@ -66,6 +68,7 @@ interface IProps {
 	userRole: string;
 	closeViewer: () => void;
 	chats: any;
+	createMessage: (userId: string, chatId: string, body: any) => void;
 }
 
 interface IState {
@@ -143,7 +146,6 @@ class StoryViewer extends PureComponent<IProps, IState> {
 
 	render() {
 		const { stories } = this.props;
-		console.log(stories);
 
 		return (
 			<div className="story-viewer">
@@ -299,4 +301,12 @@ const mapStateToProps = (rootState, props) => ({
 	chats: rootState.chat.chats
 });
 
-export default connect(mapStateToProps)(StoryViewer);
+const actions = {
+	createMessage
+};
+const mapDispatchToProps = dispatch => bindActionCreators(actions, dispatch);
+
+export default connect(
+	mapStateToProps,
+	mapDispatchToProps
+)(StoryViewer);
