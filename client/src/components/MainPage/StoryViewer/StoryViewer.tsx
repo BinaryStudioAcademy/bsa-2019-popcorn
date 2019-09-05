@@ -200,7 +200,7 @@ class StoryViewer extends PureComponent<IProps, IState> {
 										/>
 										<StoryReaction
 											chatId={this.getChatId(story.userInfo.userId)}
-											storyId={story.id}
+											story={story}
 										/>
 										<ChatInput
 											chatId={this.getChatId(story.userInfo.userId)}
@@ -244,7 +244,7 @@ class StoryViewer extends PureComponent<IProps, IState> {
 											<p className={'seen-by-info'} style={{ width: '100%' }}>
 												<StoryReaction
 													chatId={this.getChatId(story.userInfo.userId)}
-													storyId={story.id}
+													story={story}
 												/>
 												<ChatInput
 													chatId={this.getChatId(story.userInfo.userId)}

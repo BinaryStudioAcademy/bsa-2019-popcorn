@@ -34,7 +34,7 @@ const ChatInput: React.FC<IProps> = ({
 				body: message,
 				storyId: story && story.id
 			});
-			return; // to do: pass callback on creating message
+			return;
 		}
 		createMessage(userId, chatId, {
 			body: message,
