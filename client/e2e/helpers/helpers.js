@@ -39,6 +39,11 @@ class HelpClass
         searchInput.setValue(value);
         browser.keys("\uE007"); 
     }
+
+    countItems(items) {
+        items[0].waitForDisplayed(3000);
+        return items.length;
+    }
 }
 
 module.exports = new HelpClass();
