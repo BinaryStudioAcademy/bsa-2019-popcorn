@@ -65,9 +65,15 @@ const EventPage: React.FC<IProps> = ({
 		subscibeToEvent({ eventId, userId, status });
 	}
 	useEffect(() => {
-		if (!event || match.params.id !== event.id) {
+		if (!event || match.params.id !== searchedEvent.id) {
 			getEventById(match.params.id);
-			searchedEvent && setEvent(formatToClient(searchedEvent));
+
+		}
+		if (event && (searchedEvent.id !== event.id)) {
+			setEvent(formatToClient(searchedEvent));
+		}
+		if (searchedEvent && !event) {
+			setEvent(formatToClient(searchedEvent));
 		}
 	});
 
