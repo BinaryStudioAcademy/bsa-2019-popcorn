@@ -20,7 +20,7 @@ describe('Events on the Popcorn site', () => {
         wait.forSpinner();
         menu.navigateToUserPage();
         userTabs.navigateToEvents();
-        wait.forElementsLoaded(credentials.eventItemsPath);
+        wait.forSpinner();
     });
     
     afterEach(() => {
@@ -30,6 +30,7 @@ describe('Events on the Popcorn site', () => {
 
     it('should create event with valid credentials', () => {
         let title = faker.random.words();
+        let eventQty = help.countItems(pageObjects.eventItems);
         pageActions.clickCreateEventButton();
         pageActions.enterTitle(title);
         pageActions.uploadImage(credentials.image);
@@ -38,14 +39,14 @@ describe('Events on the Popcorn site', () => {
         pageActions.enterTimeEnd(credentials.dateEnd);
         pageActions.enterLocation(faker.address.country());
         pageActions.clickSaveButton();
-        wait.forNewElementLoaded(credentials.eventItemsPath, '+');
-        validate.elementIsInList(title);
+        wait.forSpinner();
+        validate.elementsQuantityChanged(eventQty, pageObjects.eventItems, '+');
     });
 
     it('should delete event', () => {
-        eventQty = help.countItems(pageObjects.eventItems);
+        let eventQty = help.countItems(pageObjects.eventItems);
         pageActions.clickDeleteEventButton();
-        wait.forNewElementLoaded(credentials.eventItemsPath, '-');
+        wait.forSpinner();
         validate.elementsQuantityChanged(eventQty, pageObjects.eventItems, '-')
     });
 }); 
