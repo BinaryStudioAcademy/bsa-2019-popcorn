@@ -48,7 +48,7 @@ export const createPost = async (post: any): Promise<Post> => {
 };
 
 export const getPosts = async (movieId: string = null): Promise<any[]> => {
-  let options = {
+  const options: any = {
     relations: ["user", "top", "survey", "event"],
     where: {},
     order: { createdAt: "DESC" }
