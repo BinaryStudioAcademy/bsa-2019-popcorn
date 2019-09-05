@@ -1,5 +1,5 @@
 import React from 'react';
-import '../RecommendItemEvent.scss';
+import '../RecommendItem.scss';
 import ReviewItem from '../../../MovieSeriesPage/MovieSeriesReviews/ReviewItem/ReviewItem';
 
 type RecommendItemProps = {

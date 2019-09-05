@@ -19,6 +19,7 @@ export const getRecommended = async (userId, next) => {
   const topIds = await getRecommendedTops();
   const eventIds = await getRecommendedEventsIds(userId);
   const surveyIds = await getRecommendedSurveys();
+  let reviewIds = await getRecommendedReviews(userId);
   const event =
     eventIds > 0
       ? await getCustomRepository(EventRepository).getEvent(
@@ -35,7 +36,6 @@ export const getRecommended = async (userId, next) => {
           surveyIds[getRandomInt(surveyIds.length)].id
         )
       : await getCustomRepository(SurveysRepository).getNewestSurvey();
-  let reviewIds = await getRecommendedReviews(userId);
   let randomReviewIds =
     reviewIds.length > 0 ? undefined : await getRandomPopularReviews();
   const review =

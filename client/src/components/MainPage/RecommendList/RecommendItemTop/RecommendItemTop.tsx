@@ -1,5 +1,5 @@
 import React from 'react';
-import '../RecommendItemEvent.scss';
+import '../RecommendItem.scss';
 import { NavLink } from 'react-router-dom';
 import config from '../../../../config';
 

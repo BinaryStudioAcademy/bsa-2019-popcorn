@@ -1,5 +1,5 @@
 import React from 'react';
-import '../RecommendItemEvent.scss';
+import '../RecommendItem.scss';
 import config from '../../../../config';
 
 type RecommendItemProps = {

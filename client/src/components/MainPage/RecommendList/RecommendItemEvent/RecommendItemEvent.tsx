@@ -1,5 +1,5 @@
 import React from 'react';
-import '../RecommendItemEvent.scss';
+import '../RecommendItem.scss';
 import Moment from 'react-moment';
 import config from '../../../../config';
 
