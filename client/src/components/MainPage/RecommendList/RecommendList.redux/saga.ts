@@ -6,12 +6,10 @@ import webApi from '../../../../services/webApi.service';
 
 export function* fetchRecommended(action) {
 	try {
-		console.log('die');
 		const recommended = yield call(webApi, {
 			method: 'GET',
 			endpoint: `api/recommended/${action.payload}`
 		});
-		console.log(recommended);
 		yield put({
 			type: SET_RECOMMENDED,
 			payload: recommended
