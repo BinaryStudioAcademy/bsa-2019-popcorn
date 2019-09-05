@@ -38,7 +38,7 @@ class SurveysQuestionRepository extends Repository<SurveysQuestion> {
       if (!question) {
         return next({ status: 404, message: "Surveys is not found" }, null);
       }
-        
+
       return await this.findOne(id);
     } catch (err) {
       return next({ status: err.status, message: err.message }, null);

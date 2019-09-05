@@ -36,7 +36,9 @@ class EventRepository extends Repository<Event> {
       .addSelect(["cuser.name", "cuser.avatar", "cuser.id"])
       .leftJoin("visitors.user", "user")
       .addSelect(["user.name", "user.avatar", "user.id"])
-      .where("LOWER(event.title) LIKE :title", { title: "%" + title.toLowerCase() + "%" })
+      .where("LOWER(event.title) LIKE :title", {
+        title: "%" + title.toLowerCase() + "%"
+      })
       .getMany();
   }
 

@@ -28,15 +28,21 @@ const FilmInput: React.FC<IInputProps> = ({
 	const [title, setTitle] = useState(movie.title || "");
 	const [comment, setComment] = useState(movie.comment || "");
 	useEffect(() => {
-		if (movie.title === '') { setTitle(''); }
-		if (movie.comment === '') { setComment(''); }
+		if (movie.title === '') {
+			setTitle('');
+		}
+		if (movie.comment === '') {
+			setComment('');
+		}
 	});
 	const [isChosenTitle, setIsChoosenTitle] = useState(false);
 	const [isFocused, setFocused] = useState(false);
 
 	function searchFilms(newTitle: string) {
 		setTitle(newTitle);
-		if (newTitle.trim().length > 2) { fetchFilms(newTitle); }
+		if (newTitle.trim().length > 2) {
+			fetchFilms(newTitle);
+		}
 		setIsChoosenTitle(false);
 	}
 
@@ -61,8 +67,12 @@ const FilmInput: React.FC<IInputProps> = ({
 				value={title}
 				onFocus={() => setFocused(true)}
 				onBlur={() => {
-					if (title.trim() === '' && comment.trim() === '' && !last) { deleteFilmInput(movie.id); }
-					if (!last) { clearSearch(); }
+					if (title.trim() === '' && comment.trim() === '' && !last) {
+						deleteFilmInput(movie.id);
+					}
+					if (!last) {
+						clearSearch();
+					}
 				}}
 			/>
 			{!isChosenTitle && alreadySearch && isFocused ? (
@@ -85,8 +95,8 @@ const FilmInput: React.FC<IInputProps> = ({
 							);
 						})
 					) : (
-							<span>Nothing was found</span>
-						)}
+						<span>Nothing was found</span>
+					)}
 				</div>
 			) : null}
 			<span>

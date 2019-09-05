@@ -2,6 +2,7 @@ import * as eventService from "../services/event.service";
 import * as postService from "../services/post.service";
 import UserRepository from "../repository/user.repository";
 import * as followerService from "../services/follow.service";
+import ChatRepository from "../repository/chat.repository";
 import PostReactionsRepository from "../repository/postReactions.repository";
 import { sendPushMessage } from "../services/firebase.service";
 import { saveNotification } from "../services/notification.service";
@@ -17,7 +18,7 @@ async function sendNotification({
   entity,
   entityType
 }) {
-  if (req.user && entity.userId === req.user.id) {
+  if (req.user && entity.userId === req.user.id && type !== "message") {
     return;
   }
   const notification = {
@@ -31,11 +32,14 @@ async function sendNotification({
     entityType,
     entityId: entity.id
   };
-  await saveNotification({
-    ...notification,
-    userId: entity.userId,
-    isRead: false
-  });
+  if (type !== "message") {
+    await saveNotification({
+      ...notification,
+      userId: entity.userId,
+      isRead: false
+    });
+    req.io.to(entity.userId).emit("new-notification", notification);
+  }
   sendPushMessage({
     link: url,
     title,
@@ -45,8 +49,6 @@ async function sendNotification({
     entityType,
     entityId: entity.id
   });
-
-  req.io.to(entity.userId).emit("new-notification", notification);
 }
 
 export default async (req, res, next) => {
@@ -91,6 +93,25 @@ export default async (req, res, next) => {
           entityType: "follower"
         });
       }
+    }
+    if (req.url === `/${req.params.userId}/${req.params.chatId}`) {
+      const chat = await getCustomRepository(ChatRepository).findOne({
+        where: [{ id: req.params.chatId }],
+        relations: ["user1", "user2"]
+      });
+      const userId =
+        chat.user1.id === req.params.userId ? chat.user2.id : chat.user1.id;
+      const name =
+        chat.user1.id === req.params.userId ? chat.user1.name : chat.user2.name;
+      sendNotification({
+        req,
+        url: `/chat/${req.params.chatId}`,
+        type: "message",
+        title: `${name} send you message`,
+        body: "",
+        entity: { ...chat, userId },
+        entityType: "message"
+      });
     }
 
     if (req.url === "/api/event/visitor") {

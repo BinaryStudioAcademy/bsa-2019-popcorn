@@ -20,6 +20,7 @@ import FollowButton from './FollowSystem/FollowButton/FollowButton';
 import { bindActionCreators } from 'redux';
 import { updateProfile } from '../actions';
 import { NavLink } from 'react-router-dom';
+import { createChat } from '../../ChatPage/ChatPage.redux/actions';
 
 type ProfileProps = {
 	profileInfo: ISelectedProfileInfo;
@@ -41,6 +42,7 @@ type ProfileProps = {
 			location: string;
 		}
 	) => any;
+	createChat: (user1Id: string, user2Id: string) => void;
 };
 interface IProfileComponentState {
 	errorMsg?: string;
@@ -120,6 +122,9 @@ class ProfileComponent extends Component<ProfileProps, IProfileComponentState> {
 		}
 		this.props.saveCropped();
 	}
+	onMessageClick = () => {
+		this.props.createChat(this.props.userId, this.props.profileInfo.id);
+	};
 
 	render() {
 		let {
@@ -312,7 +317,8 @@ const mapStateToProps = (rootState, props) => ({
 });
 
 const actions = {
-	updateProfile
+	updateProfile,
+	createChat
 };
 
 const mapDispatchToProps = dispatch => bindActionCreators(actions, dispatch);

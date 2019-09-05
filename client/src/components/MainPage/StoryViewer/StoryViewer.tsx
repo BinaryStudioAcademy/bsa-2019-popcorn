@@ -15,9 +15,14 @@ import config from '../../../config';
 import StoryVoting from '../../StoryVoting/StoryVoting';
 import { connect } from 'react-redux';
 import { NavLink } from 'react-router-dom';
+import ChatInput from '../../ChatPage/Chat/ChatInput';
+import StoryReaction from './StoryReaction';
+import { createMessage } from '../../ChatPage/ChatPage.redux/actions';
+import { bindActionCreators } from 'redux';
 
 interface IProps {
 	stories: Array<{
+		id: string;
 		image_url: string;
 		backgroundColor: string;
 		fontColor: string;
@@ -62,6 +67,8 @@ interface IProps {
 	userId: string;
 	userRole: string;
 	closeViewer: () => void;
+	chats: any;
+	createMessage: (userId: string, chatId: string, body: any) => void;
 }
 
 interface IState {
@@ -69,6 +76,7 @@ interface IState {
 	isSeenByModalShown: boolean;
 	currentStory: number;
 	translateValue: number;
+	isReactionShown: boolean;
 }
 
 class StoryViewer extends PureComponent<IProps, IState> {
@@ -78,7 +86,8 @@ class StoryViewer extends PureComponent<IProps, IState> {
 			isModalShown: false,
 			isSeenByModalShown: false,
 			currentStory: props.currentStory,
-			translateValue: -props.currentStory * 350
+			translateValue: -props.currentStory * 350,
+			isReactionShown: false
 		};
 	}
 
@@ -129,6 +138,14 @@ class StoryViewer extends PureComponent<IProps, IState> {
 		}));
 	};
 
+	getChatId = id => {
+		for (const chatId in this.props.chats) {
+			if (this.props.chats[chatId].user.id === id) {
+				return chatId;
+			}
+		}
+	};
+
 	render() {
 		const { stories } = this.props;
 
@@ -146,7 +163,11 @@ class StoryViewer extends PureComponent<IProps, IState> {
 						}}
 					>
 						{stories.map((story, i) => (
-							<div className="story" key={i}>
+							<div
+								className="story"
+								key={i}
+								onClick={() => this.setState({ isReactionShown: false })}
+							>
 								<header>
 									<img
 										src={story.userInfo.image_url || config.DEFAULT_AVATAR}
@@ -165,23 +186,46 @@ class StoryViewer extends PureComponent<IProps, IState> {
 								</header>
 
 								{story.type === 'voting' && story.voting && (
-									<StoryVoting
-										backgroundColor={story.backgroundColor}
-										header={story.voting.header}
-										options={story.voting.options}
-										deltaPositionForHeader={{
-											x: story.voting.deltaPositionHeadX,
-											y: story.voting.deltaPositionHeadY
-										}}
-										deltaPositionForOptionBlock={{
-											x: story.voting.deltaPositionOptionBlockX,
-											y: story.voting.deltaPositionOptionBlockY
-										}}
-										backColor={story.voting.backColor}
-										userId={this.props.currentUser.userId}
-										inEditor={false}
-										image_url={story.voting.backImage || ''}
-									/>
+									<div>
+										<StoryVoting
+											backgroundColor={story.backgroundColor}
+											header={story.voting.header}
+											options={story.voting.options}
+											deltaPositionForHeader={{
+												x: story.voting.deltaPositionHeadX,
+												y: story.voting.deltaPositionHeadY
+											}}
+											deltaPositionForOptionBlock={{
+												x: story.voting.deltaPositionOptionBlockX,
+												y: story.voting.deltaPositionOptionBlockY
+											}}
+											backColor={story.voting.backColor}
+											userId={this.props.currentUser.userId}
+											inEditor={false}
+											image_url={story.voting.backImage || ''}
+										/>
+										{this.props.userId !== story.userInfo.userId && (
+											<div className="story-reaction-wrp">
+												{this.state.isReactionShown && (
+													<StoryReaction
+														chatId={this.getChatId(story.userInfo.userId)}
+														story={story}
+													/>
+												)}
+												<div
+													onClick={e => {
+														e.stopPropagation();
+														this.setState({ isReactionShown: true });
+													}}
+												>
+													<ChatInput
+														chatId={this.getChatId(story.userInfo.userId)}
+														story={story}
+													/>
+												</div>
+											</div>
+										)}
+									</div>
 								)}
 								{story.type === 'voting' ? null : (
 									<main
@@ -217,6 +261,27 @@ class StoryViewer extends PureComponent<IProps, IState> {
 										</div>
 										<div className={'seen'}>
 											<p className={'seen-by-info'} style={{ width: '100%' }}>
+												{this.props.userId !== story.userInfo.userId && (
+													<div className="story-reaction-wrp">
+														{this.state.isReactionShown && (
+															<StoryReaction
+																chatId={this.getChatId(story.userInfo.userId)}
+																story={story}
+															/>
+														)}
+														<div
+															onClick={e => {
+																e.stopPropagation();
+																this.setState({ isReactionShown: true });
+															}}
+														>
+															<ChatInput
+																chatId={this.getChatId(story.userInfo.userId)}
+																story={story}
+															/>
+														</div>
+													</div>
+												)}
 												<span
 													style={{
 														display: 'flex',
@@ -264,7 +329,16 @@ class StoryViewer extends PureComponent<IProps, IState> {
 const mapStateToProps = (rootState, props) => ({
 	...props,
 	userId: rootState.profile.profileInfo.id,
-	userRole: rootState.profile.profileInfo.role
+	userRole: rootState.profile.profileInfo.role,
+	chats: rootState.chat.chats
 });
 
-export default connect(mapStateToProps)(StoryViewer);
+const actions = {
+	createMessage
+};
+const mapDispatchToProps = dispatch => bindActionCreators(actions, dispatch);
+
+export default connect(
+	mapStateToProps,
+	mapDispatchToProps
+)(StoryViewer);

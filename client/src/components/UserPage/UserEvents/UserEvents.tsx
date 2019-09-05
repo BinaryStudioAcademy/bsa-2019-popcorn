@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import Spinner from '../../shared/Spinner/index';
+import CreateExtraBtn from "../../shared/CreateExtraBtn";
 import { getUserEvents, saveEvent, deleteEvent, updateEvent } from './actions';
 
 import {
@@ -33,7 +34,7 @@ interface IState {
 	editableEvent: null | IEventFormatClient;
 }
 
-const CREATE_EVENT_TEXT = 'Create Event';
+const CREATE_EVENT_TEXT = 'Create event';
 const BACK_TO_EVENTS_TEXT = 'Back to event';
 
 class UserEvents extends React.Component<IProps, IState> {
@@ -41,7 +42,7 @@ class UserEvents extends React.Component<IProps, IState> {
 		super(props);
 		this.state = {
 			openEventEditor: false,
-			mainButtonMessage: 'Create Event',
+			mainButtonMessage: 'Create event',
 			editableEvent: null
 		};
 	}
@@ -87,16 +88,16 @@ class UserEvents extends React.Component<IProps, IState> {
 				? ownEvents.push(formatToClient(event))
 				: subscribeEvents.push(formatToClient(event));
 		});
-		if (this.props.setSpinner) { return <Spinner /> }
+		if (this.props.setSpinner) {
+			return <Spinner />;
+		}
 		return (
 			<div className="user-events">
 				{isOwnData && (
-					<div
-						className="create-event-button hover"
-						onClick={() => this.editEvent()}
-					>
-						{openEventEditor ? BACK_TO_EVENTS_TEXT : CREATE_EVENT_TEXT}{' '}
-					</div>
+					<CreateExtraBtn
+						handleClick={() => this.editEvent()}
+						body={openEventEditor ? BACK_TO_EVENTS_TEXT : CREATE_EVENT_TEXT}
+					/>
 				)}
 				{openEventEditor ? (
 					<UserEventsEditor
@@ -106,35 +107,35 @@ class UserEvents extends React.Component<IProps, IState> {
 						id={currentUserId}
 					/>
 				) : (
-						<div>
-							{isOwnData && (
-								<div>
-									<div className="events-title">
-										<span>Your Events</span>
-									</div>
-									<div className="event-list-container">
-										{ownEvents.length === 0 ? (
-											<div className="event-show-warning">
-												No events yet. You can create
-										</div>
-										) : (
-												this.renderEventList(ownEvents, deleteEvent)
-											)}
-									</div>
+					<div>
+						{isOwnData && (
+							<div>
+								<div className="events-title">
+									<span>Your Events</span>
 								</div>
-							)}
-							<div className="events-title">
-								<span>Events interested in</span>
-							</div>
-							<div className="event-list-container">
-								{subscribeEvents.length === 0 ? (
-									<div className="event-show-warning">No events yet</div>
-								) : (
-										this.renderEventList(subscribeEvents, null)
+								<div className="event-list-container">
+									{ownEvents.length === 0 ? (
+										<div className="event-show-warning">
+											No events yet. You can create
+										</div>
+									) : (
+										this.renderEventList(ownEvents, deleteEvent)
 									)}
+								</div>
 							</div>
+						)}
+						<div className="events-title">
+							<span>Events interested in</span>
 						</div>
-					)}
+						<div className="event-list-container">
+							{subscribeEvents.length === 0 ? (
+								<div className="event-show-warning">No events yet</div>
+							) : (
+								this.renderEventList(subscribeEvents, null)
+							)}
+						</div>
+					</div>
+				)}
 			</div>
 		);
 	}
