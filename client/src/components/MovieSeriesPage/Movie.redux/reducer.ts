@@ -20,7 +20,8 @@ import {
 	SET_HIDE_SPINNER,
 	SET_GENRES,
 	FETCH_STATISTICS,
-	FETCH_STATISTICS_SUCCESS
+	FETCH_STATISTICS_SUCCESS,
+	DELETE_USER_RATE
 } from './actionTypes';
 import TMovie from '../TMovie';
 import movieAdapter from '../movieAdapter';
@@ -30,7 +31,7 @@ const initialState: {
 	alreadySearch: boolean;
 	movieList: null | Array<TMovie>;
 	movieSeries: null | TMovie;
-	userRate: null | string;
+	userRate?: any;
 	fetchedMovie: null | TMovie;
 	moviesSearchInCreating: null | Array<TMovie>;
 	moviesSearchAddMovieToStory: null | Array<TMovie>;
@@ -113,6 +114,11 @@ export default function(state = initialState, action) {
 			return {
 				...state,
 				userRate: action.payload.userRate
+			};
+		case DELETE_USER_RATE:
+			return {
+				...state,
+				userRate: { ...state.userRate, rate: 0 }
 			};
 		case FETCH_MOVIE_BY_ID_SUCCESS:
 			return {

@@ -34,7 +34,9 @@ import {
 	GET_GENRES,
 	SET_GENRES,
 	FETCH_STATISTICS,
-	FETCH_STATISTICS_SUCCESS
+	FETCH_STATISTICS_SUCCESS,
+	DELETE_USER_RATE,
+	SET_USER_RATE_SUCCESS
 } from './actionTypes';
 import { FETCH_MOVIE_REVIEWS } from '../MovieSeriesReviews/actionTypes';
 
@@ -149,6 +151,24 @@ export function* fetchUserRate(action) {
 	}
 }
 
+export function* deleteUserRate(action) {
+	const { id: rateId, movieId, userId } = action.payload.userRate;
+	try {
+		yield call(webApi, {
+			endpoint: `/api/movie/rate/${rateId}`,
+			method: 'DELETE'
+		});
+		yield put({
+			type: FETCH_MOVIE_BY_ID,
+			payload: {
+				movieId
+			}
+		});
+	} catch (error) {
+		console.log(error);
+	}
+}
+
 export function* fetchMovie(action) {
 	const { movieId } = action.payload;
 	try {
@@ -182,16 +202,16 @@ export function* setUserRate(action) {
 		});
 
 		yield put({
-			type: FETCH_MOVIE_BY_ID,
-			payload: {
-				movieId
-			}
-		});
-		yield put({
 			type: FETCH_MOVIE_USER_RATE,
 			payload: {
 				movieId,
 				userId
+			}
+		});
+		yield put({
+			type: FETCH_MOVIE_BY_ID,
+			payload: {
+				movieId
 			}
 		});
 	} catch (error) {
@@ -412,6 +432,10 @@ function* watchLoadMoreMovie() {
 	yield takeEvery(LOAD_MORE_MOVIE, loadMoreMovie);
 }
 
+function* watchDeleteUserRate() {
+	yield takeEvery(DELETE_USER_RATE, deleteUserRate);
+}
+
 function* watchLoadMoreFiltredMovie() {
 	yield takeEvery(LOAD_MORE_FILTRED_MOVIE, loadMoreFiltredMovie);
 }
@@ -447,6 +471,7 @@ export default function* header() {
 		watchFetchFiltredMovieList(),
 		watchLoadMoreFiltredMovie(),
 		watchFetchGenres(),
-		watchFetchStatistics()
+		watchFetchStatistics(),
+		watchDeleteUserRate()
 	]);
 }

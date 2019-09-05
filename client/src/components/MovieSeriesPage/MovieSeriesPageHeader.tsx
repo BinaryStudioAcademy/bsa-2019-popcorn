@@ -10,6 +10,7 @@ interface IProps {
 	movie: TMovie;
 	userRate?: IUserRate;
 	setUserRate: (userRate: object) => any;
+	deleteUserRate: (userRate: any) => object;
 	ownReview: any;
 	fetchReview: (userId: string, movieID: string) => any;
 	userId: string;
@@ -40,7 +41,8 @@ const MovieSeriesPageHeader: React.FC<IProps> = ({
 	watchListStatus,
 	addMovieToWatchList,
 	deleteMovieFromWatchList,
-	watchListLoading
+	watchListLoading,
+	deleteUserRate
 }) => {
 	const [modal, setModal] = useState(false);
 	const rate: number = userRate ? +userRate.rate : 0;
@@ -106,19 +108,22 @@ const MovieSeriesPageHeader: React.FC<IProps> = ({
 							<button className="review-button" onClick={() => onModalClick()}>
 								review
 							</button>
-							<StarRating
-								size={5}
-								default={rate}
-								setUserRate={setUserRate}
-								userRate={userRate}
-							/>
 						</div>
 					</div>
 				</div>
-				<div className="totaly-movie-rating">
-					<FontAwesomeIcon className="icon-star" icon={faStar} />
-					{Number(movie.vote_average) || 0}
-					<span className="max-rating">/5</span>
+				<div className="movie-rating-container">
+					<div className="totaly-movie-rating">
+						<FontAwesomeIcon className="icon-star" icon={faStar} />
+						{Number(movie.vote_average) || 0}
+						<span className="max-rating">/10</span>
+					</div>
+					<StarRating
+						size={10}
+						default={rate}
+						setUserRate={setUserRate}
+						userRate={userRate}
+						deleteUserRate={deleteUserRate}
+					/>
 				</div>
 			</div>
 		</header>

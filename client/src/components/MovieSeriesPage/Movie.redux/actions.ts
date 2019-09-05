@@ -17,7 +17,8 @@ import {
 	LOAD_MORE_FILTRED_MOVIE,
 	SET_FILTERS,
 	GET_GENRES,
-	FETCH_STATISTICS
+	FETCH_STATISTICS,
+	DELETE_USER_RATE
 } from './actionTypes';
 
 export const getGenres = (): any => {
@@ -25,6 +26,11 @@ export const getGenres = (): any => {
 		type: GET_GENRES
 	};
 };
+
+export const deleteUserRate = (userRate: any) => ({
+	type: DELETE_USER_RATE,
+	payload: { userRate }
+});
 
 export const fetchMovieList = (): any => {
 	return {

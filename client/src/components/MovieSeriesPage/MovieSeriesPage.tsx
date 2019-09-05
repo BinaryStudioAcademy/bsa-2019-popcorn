@@ -19,13 +19,15 @@ import {
 	setReview,
 	removeReviewSet,
 	fetchAwards,
-	fetchStatistics
+	fetchStatistics,
+	deleteUserRate
 } from './Movie.redux/actions';
 
 interface IProps {
 	fetchedMovie: any;
 	userRate: IUserRate;
 	setUserRate: (userRate: any) => object;
+	deleteUserRate: (userRate: any) => object;
 	fetchUserRate: (userId: string, movieId: string) => object;
 	fetchMovie: (movieId: string) => object;
 	fetchReview: (userId: string, movieId: string) => object;
@@ -65,6 +67,7 @@ const MovieSeriesPage: React.SFC<IProps> = props => {
 		userRate,
 		setUserRate,
 		fetchUserRate,
+		deleteUserRate,
 		fetchMovie,
 		avatar,
 		userId,
@@ -118,6 +121,7 @@ const MovieSeriesPage: React.SFC<IProps> = props => {
 				addMovieToWatchList={addMovieToWatchList}
 				deleteMovieFromWatchList={deleteMovieFromWatchList}
 				watchListLoading={watchListLoading}
+				deleteUserRate={deleteUserRate}
 			/>
 			<MovieSeriesPageTabs mainPath={mainPath} />
 			<MovieSeriesPageTabBody
@@ -159,7 +163,8 @@ const mapDispatchToProps = dispatch => {
 		addMovieToWatchList,
 		deleteMovieFromWatchList,
 		fetchAwards,
-		fetchStatistics
+		fetchStatistics,
+		deleteUserRate
 	};
 	return bindActionCreators(actions, dispatch);
 };
