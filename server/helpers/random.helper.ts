@@ -16,3 +16,17 @@ export const getUniqRandomNumber = (
   }
   return [...set];
 };
+
+export const getRandomFromArray = (arr: any[], amount) => {
+  if (arr.length < amount) {
+    return arr;
+  }
+
+  const randomNumbers: number[] = getUniqRandomNumber(
+    0,
+    arr.length - 1,
+    amount
+  );
+
+  return randomNumbers.map(randomIndex => arr[randomIndex]);
+};

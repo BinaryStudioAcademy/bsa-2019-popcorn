@@ -239,3 +239,42 @@ export const getByGTRating = async (rating: string) => {
   );
   return response.json();
 };
+
+export const getByGTRatingAndGenre = async (rating: string, genres: string) => {
+  if (!genres) {
+    return getByGTRating(rating);
+  }
+  const response = await fetch(
+    process.env.ELASTIC_API_URL + `/popcorn/_search`,
+    {
+      method: "POST",
+      body: JSON.stringify({
+        query: {
+          bool: {
+            must: [
+              {
+                range: {
+                  vote_average: {
+                    gt: rating
+                  }
+                }
+              },
+              {
+                bool: {
+                  must: [
+                    {
+                      match: {
+                        genres
+                      }
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      })
+    }
+  );
+  return response.json();
+};

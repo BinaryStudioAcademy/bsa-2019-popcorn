@@ -105,7 +105,7 @@ router
       .catch(next);
   })
   .get("/adviceMe/:userId", (req: any, res: Response, next: NextFunction) => {
-    getAdviceMovie(req.params.userId)
+    getAdviceMovie(req.params.userId, next)
       .then(movies => res.send(movies))
       .catch(next);
   });
