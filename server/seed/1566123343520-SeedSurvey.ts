@@ -6,11 +6,9 @@ import SurveyQuestionOptionRepository from "../repository/surveysQuestionOption.
 import { Surveys } from "../models/SurveysModel";
 import { SurveysQuestion } from "../models/SurveysQuestionModel";
 import { SurveysQuestionOption } from "../models/SurveysQuestionOption";
-import { SurveysQuestionAnswer } from "../entities/SurveysQuestionAnswer";
-import SurveysQuestionAnswerRepository from "../repository/surveysQuestionAnswer.repository";
 
 export class SeedSurvey1566123343520 implements MigrationInterface {
-  public async up(queryRunner: QueryRunner): Promise<any> {
+  public async up(): Promise<any> {
     const surveySeed = [
       {
         id: "32175862-ef31-483a-8655-49cb7eaea5b2",
@@ -296,8 +294,10 @@ export class SeedSurvey1566123343520 implements MigrationInterface {
       const survey = new Surveys();
       survey.title = surveyData.title;
       survey.description = surveyData.description;
-      const users = await getCustomRepository(UserRepository).find();
-      survey.user = users[Math.floor(Math.random() * users.length)];
+      const user = await getCustomRepository(UserRepository).getByEmail(
+        "test@gmail.com"
+      );
+      survey.user = user;
       const newSurvey = await getCustomRepository(SurveyRepository).save(
         survey
       );
@@ -305,5 +305,5 @@ export class SeedSurvey1566123343520 implements MigrationInterface {
     });
   }
 
-  public async down(queryRunner: QueryRunner): Promise<any> {}
+  public async down(): Promise<any> {}
 }
