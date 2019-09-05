@@ -128,6 +128,9 @@ export const getMovieRate = async (
   return { userId, movieId, rate: 0 };
 };
 
+export const deleteMovieRate = (rateId: string): Promise<any> =>
+  getCustomRepository(MovieRateRepository).delete({ id: rateId });
+
 export const saveDiscussionMessage = async (
   discussion: ExtendedDiscussion
 ): Promise<Discussion> => {

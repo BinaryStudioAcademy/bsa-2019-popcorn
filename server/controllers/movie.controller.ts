@@ -71,10 +71,16 @@ router
     "/rate/user/:userId/:movieId",
     (req: any, res: Response, next: NextFunction) => {
       return movieService
-        .getMovieRate(req.params.userId, req.params.movieId) // get movie by userId and movieId
+        .getMovieRate(req.params.userId, req.params.movieId)
         .then((response: any) => res.send(response))
         .catch(next);
     }
+  )
+  .delete("/rate/:id", (req: any, res: Response, next: NextFunction) =>
+    movieService
+      .deleteMovieRate(req.params.id)
+      .then((response: any) => res.send(response))
+      .catch(next)
   )
   .get(
     "/advanced/get-genres",
