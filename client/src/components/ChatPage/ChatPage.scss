@@ -163,6 +163,7 @@
 					z-index: 1;
 					color: $text-secondary-color;
 					margin-bottom: 5px;
+					text-align: right;
 				}
 				.story {
 					height: 177px;
@@ -170,9 +171,12 @@
 					border-radius: 20px;
 				}
 				.reaction {
-					font-size: 6em;
 					position: relative;
 					float: right;
+					svg {
+						height: 80px;
+						width: 80px;
+					}
 				}
 			}
 			.incoming-message,
@@ -201,7 +205,7 @@
 					padding-left: 20px;
 					border-left: 5px $border-color solid;
 					.reaction {
-						right: -50px;
+						right: -40px;
 						bottom: -85px;
 					}
 				}

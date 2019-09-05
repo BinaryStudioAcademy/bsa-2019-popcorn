@@ -32,7 +32,7 @@ export class SeedMessage1567286972231 implements MigrationInterface {
       "I like it, but I am not exciting"
     ];
 
-    const REACTION_TYPES = ["laugh", "fire", "claps"];
+    const REACTION_TYPES = ["popcorn", "like", "wow", "haha"];
 
     const chats = await getCustomRepository(ChatRepository).find({
       relations: ["user1", "user2"]
