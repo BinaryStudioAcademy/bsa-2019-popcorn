@@ -1,7 +1,4 @@
-import {
-  EntityRepository,
-  Repository,
-} from "typeorm";
+import { EntityRepository, Repository } from "typeorm";
 import { Follower } from "../entities/Follower";
 
 @EntityRepository(Follower)

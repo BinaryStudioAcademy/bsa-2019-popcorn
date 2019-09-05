@@ -18,7 +18,6 @@ interface IState {
 }
 
 class Notification extends React.Component<IProps, IState> {
-
 	private wrapperRef = createRef<HTMLDivElement>();
 
 	constructor(props) {
@@ -29,7 +28,7 @@ class Notification extends React.Component<IProps, IState> {
 		};
 		this.addSocketEvents();
 	}
-	
+
 	handleClickOutside = event => {
 		if (
 			this.wrapperRef.current &&
@@ -68,7 +67,9 @@ class Notification extends React.Component<IProps, IState> {
 
 	toggleNotifications = () => {
 		const isShown = !this.state.isShown;
-		if (this.state.notifications.length) { this.setState({ isShown }); }
+		if (this.state.notifications.length) {
+			this.setState({ isShown });
+		}
 	};
 
 	readNotification = (activityId: string) => {

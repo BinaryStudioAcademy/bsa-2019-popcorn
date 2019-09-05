@@ -1,7 +1,6 @@
 import io from 'socket.io-client';
 
 class SocketService {
-
 	static on(name: string, callback: (data: any) => any) {
 		SocketService._socket.on(name, callback);
 	}
@@ -31,9 +30,9 @@ class SocketService {
 				process.env.NODE_ENV === 'production'
 					? io({ withCredentials: false })
 					: io(
-						`${currentLocation.protocol}//${currentLocation.hostname}:3000`,
-						{ withCredentials: false }
-					);
+							`${currentLocation.protocol}//${currentLocation.hostname}:3000`,
+							{ withCredentials: false }
+					  );
 			if (SocketService._socket) {
 				SocketService._socket.on('connect', () => {
 					SocketService._socket.emit('joinRoom', userId);
@@ -41,7 +40,6 @@ class SocketService {
 			}
 		}
 	}
-
 }
 
 export default SocketService;

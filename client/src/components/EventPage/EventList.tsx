@@ -29,7 +29,9 @@ const EventList: React.FC<IProps> = props => {
 			setEvents(allEvents);
 		}
 	});
-	if (!events.length) { return <Spinner /> }
+	if (!events.length) {
+		return <Spinner />;
+	}
 	return (
 		<div className="event-page">
 			<div className="event-list-container">

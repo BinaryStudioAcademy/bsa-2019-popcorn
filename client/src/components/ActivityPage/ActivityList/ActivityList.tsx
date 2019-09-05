@@ -18,7 +18,9 @@ const generateActivity = (
 	activities: Activity[],
 	readNotification = undefined
 ) => {
-	if (activities.length && activities.length === 0) { return []; }
+	if (activities.length && activities.length === 0) {
+		return [];
+	}
 	const generatedActivity = activities.map(el => {
 		return (
 			<NavLink

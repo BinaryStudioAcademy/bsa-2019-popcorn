@@ -10,14 +10,14 @@ const AwardDescription: React.FC<IAwardDescription> = ({
 	nominationWinner
 }) => {
 	const generateWinnerNames = () => {
-		return nominationWinner.map((winner) => winner.name).join(', ');
+		return nominationWinner.map(winner => winner.name).join(', ');
 	};
 
 	return (
 		<div className="description-wrapper">
 			<div
 				className="nominationName"
-				dangerouslySetInnerHTML={{__html: nominationName}}
+				dangerouslySetInnerHTML={{ __html: nominationName }}
 			/>
 			<div className="nomination-winner-name">{generateWinnerNames()}</div>
 		</div>

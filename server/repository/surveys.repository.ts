@@ -1,8 +1,4 @@
-import {
-  EntityRepository,
-  getCustomRepository,
-  Repository
-} from "typeorm";
+import { EntityRepository, getCustomRepository, Repository } from "typeorm";
 import { Surveys } from "../entities/Surveys";
 import { Surveys as SurveysModel } from "../models/SurveysModel";
 import UserRepository from "./user.repository";
@@ -99,7 +95,7 @@ class SurveysRepository extends Repository<Surveys> {
       if (!user) {
         return next({ status: 404, message: "User is not found" }, null);
       }
-        
+
       return await this.find({
         where: { user },
         order: {
@@ -125,7 +121,7 @@ class SurveysRepository extends Repository<Surveys> {
       if (!updatedSurveys) {
         next({ status: 404, message: "Voiting is not found" }, null);
       }
-        
+
       return await this.update(
         { id },
         {
@@ -145,7 +141,7 @@ class SurveysRepository extends Repository<Surveys> {
       if (!surveys) {
         return next({ status: 404, message: "Voiting is not found" }, null);
       }
-        
+
       await this.delete({ id });
       return {};
     } catch (err) {

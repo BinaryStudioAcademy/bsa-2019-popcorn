@@ -76,7 +76,7 @@ export async function sendPushMessage({
     if (tokenType === "mobile") {
       message = buildMobileMessage({ title, body, icon, entityId, entityType });
     }
-      
+
     admin
       .messaging()
       .sendMulticast({ ...message, tokens: userTokens[tokenType] })
@@ -91,7 +91,7 @@ export async function storeAppInstanceToken({ token, userId, type }) {
   if (tokensStorage[userId] && tokensStorage[userId][type].includes(token)) {
     return true;
   }
-    
+
   try {
     const result = await db
       .collection(notificationTokenPath)
@@ -151,8 +151,7 @@ export async function getAppInstanceTokens(userId: string) {
   try {
     if (tokensStorage[userId]) {
       return tokensStorage[userId];
-    }
-    else {
+    } else {
       const tokensFromFirebase = await db
         .collection(notificationTokenPath)
         .doc(userId)

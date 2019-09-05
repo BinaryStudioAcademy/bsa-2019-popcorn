@@ -119,10 +119,7 @@ const ListBlock = ({ ...props }: IProps) => {
 					exact
 					path={`/create/extra/movie`}
 					component={other_props => (
-						<CreateStoryFilm
-							{...other_props}
-							saveMovie={props.saveMovie}
-						/>
+						<CreateStoryFilm {...other_props} saveMovie={props.saveMovie} />
 					)}
 				/>
 				<Route

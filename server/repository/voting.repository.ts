@@ -19,7 +19,7 @@ class VotingRepository extends Repository<Voting> {
       if (!user) {
         return next({ status: 404, message: "User is not found" }, null);
       }
-        
+
       voting.user = user;
 
       await Promise.all(
@@ -52,7 +52,7 @@ class VotingRepository extends Repository<Voting> {
       if (!voting) {
         return next({ status: 404, message: "Voting is not found" }, null);
       }
-        
+
       return await this.findOne(id);
     } catch (err) {
       return next({ status: err.status, message: err.message }, null);
@@ -65,7 +65,7 @@ class VotingRepository extends Repository<Voting> {
       if (!user) {
         return next({ status: 404, message: "User is not found" }, null);
       }
-        
+
       return await this.find({ user });
     } catch (err) {
       return next({ status: err.status, message: err.message }, null);
@@ -90,7 +90,7 @@ class VotingRepository extends Repository<Voting> {
       if (!voting) {
         return next({ status: 404, message: "Voiting is not found" }, null);
       }
-        
+
       await this.delete({ id });
       return {};
     } catch (err) {
@@ -108,7 +108,7 @@ class VotingRepository extends Repository<Voting> {
       if (!voting) {
         return next({ status: 404, message: "Voiting is not found" }, null);
       }
-        
+
       const newOption = await getCustomRepository(
         VotingOptionRepository
       ).createVotingOption(votingOption, next, voting);
