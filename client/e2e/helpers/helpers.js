@@ -14,6 +14,15 @@ class HelpClass
         movie[0].click();
     }
 
+    clickMovieInSearch(name) {
+        const movie = $$(`//div[@class="movie-search-results")]/div[contains(., '${name}')]`);
+        if (movie.length === 0) {
+            throw new Error(`"${name}" movie is not found`);
+        }
+        movie[0].scrollIntoView({block: "center"});
+        movie[0].click();
+    }
+
     loginWithDefaultUser() {
         browser.maximizeWindow();
         browser.url(credentials.appUrl);
@@ -41,8 +50,13 @@ class HelpClass
     }
 
     countItems(items) {
-        items[0].waitForDisplayed(3000);
-        return items.length;
+        if (items.length > 0) {
+            items[0].waitForDisplayed(3000);
+            return items.length;
+        } else {
+            return 0;
+        }
+        
     }
 }
 
