@@ -25,6 +25,8 @@ import { Notification } from "./Notification";
 import { NotificationToken } from "./NotificationToken";
 import { MovieList } from "./MovieList";
 import { UserTemp } from "./UserTemp";
+import { Chat } from "./Chat";
+import { Message } from "./Message";
 export default [
   User,
   Post,
@@ -53,6 +55,8 @@ export default [
   Watch,
   Notification,
   NotificationToken,
-  MovieList,
-  UserTemp
+  UserTemp,
+  Chat,
+  Message,
+  MovieList
 ];

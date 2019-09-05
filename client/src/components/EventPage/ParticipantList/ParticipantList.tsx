@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { IVisitor } from '../../UserPage/UserEvents/UserEvents.service';
+import config from '../../../config';
+import Image from '../../shared/Image/Image';
 interface IProps {
 	participants: IVisitor[];
 	status: string;
@@ -24,7 +26,11 @@ const ParticipantList: React.FC<IProps> = ({ participants, status }) => {
 			{sortedParticipantsByStatus.map(participant => (
 				<div key={participant.id}>
 					<div className="participant-avatar">
-						<img src={participant.user.avatar} alt="" />
+						<Image
+							src={participant.user.avatar}
+							defaultSrc={config.DEFAULT_AVATAR}
+							alt={participant.user.name}
+						/>
 					</div>
 					<div className="participant-name">{participant.user.name}</div>
 				</div>

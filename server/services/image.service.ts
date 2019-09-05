@@ -1,5 +1,4 @@
-
-const uuid = require("uuid/v4")
+const uuid = require("uuid/v4");
 
 const uploadToAmazon = async base64 => {
   const AWS = require("aws-sdk");
