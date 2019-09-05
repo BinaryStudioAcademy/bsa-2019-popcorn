@@ -141,6 +141,12 @@
 			.story-wrp {
 				display: block;
 				margin-bottom: 5px;
+				.reaction-comment {
+					font-size: 0.9em;
+					z-index: 1;
+					color: $text-secondary-color;
+					margin-bottom: 5px;
+				}
 				.story {
 					height: 177px;
 					width: 100px;
@@ -197,6 +203,10 @@
 				.story-wrp {
 					padding-right: 20px;
 					border-right: 5px $border-color solid;
+					.story {
+						margin: 0 0 0 auto;
+					}
+
 					.reaction {
 						left: -80px;
 						bottom: -85px;

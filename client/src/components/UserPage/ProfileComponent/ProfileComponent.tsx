@@ -241,10 +241,6 @@ class ProfileComponent extends Component<ProfileProps, IProfileComponentState> {
 							{this.props.userId !== id && (
 								<FollowButton className="follow-btn" />
 							)}
-
-							{this.props.userId !== id && (
-								<button onClick={this.onMessageClick}>Send Message</button> //todo
-							)}
 							<div className="profileRow-username">
 								<span>{name}</span>
 							</div>

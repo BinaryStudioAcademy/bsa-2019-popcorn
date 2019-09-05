@@ -32,6 +32,11 @@ const MessageStory: React.FC<IProps> = ({ story, reactionType }) => {
 
 	return (
 		<div className="story-wrp">
+			{reactionType ? (
+				<div className="reaction-comment">Reacted to your story</div>
+			) : (
+				<div className="reaction-comment">Commented on your story</div>
+			)}
 			{reactionType && <span className="reaction">{getEmoji()}</span>}
 			<div
 				className="story"
