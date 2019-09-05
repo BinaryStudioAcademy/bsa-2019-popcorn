@@ -122,7 +122,7 @@ export function* updateMessage(action) {
 		yield call(webApi, {
 			method: 'PUT',
 			endpoint: `/api/chat/${action.payload.id}`,
-			body: { body: action.payload.body }
+			body: { ...action.payload.body }
 		});
 	} catch (e) {
 		console.log('chat saga delete message:', e.message);
