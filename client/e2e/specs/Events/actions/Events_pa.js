@@ -59,11 +59,6 @@ class EventActions {
         page.deleteEventButton.waitForDisplayed(2000, false, "There is no elements to delete");
         page.deleteEventButton.click();
     }
-
-    countEventItems() {
-        page.eventItems[0].waitForDisplayed(5000);
-        return page.eventItems.length;
-    }
 }
 
 module.exports = EventActions;

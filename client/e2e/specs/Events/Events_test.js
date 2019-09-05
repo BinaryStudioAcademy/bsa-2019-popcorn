@@ -28,7 +28,7 @@ describe('Events on the Popcorn site', () => {
     });
 
 
-    xit('should create event with valid credentials', () => {
+    it('should create event with valid credentials', () => {
         let title = faker.random.words();
         pageActions.clickCreateEventButton();
         pageActions.enterTitle(title);
@@ -42,8 +42,8 @@ describe('Events on the Popcorn site', () => {
         validate.elementIsInList(title);
     });
 
-    it('should delete event', () => {
-        eventQty = pageActions.countEventItems();
+    xit('should delete event', () => {
+        eventQty = help.countItems(pageObjects.eventItems);
         pageActions.clickDeleteEventButton();
         wait.forNewElementLoaded(credentials.eventItemsPath, '-');
         validate.elementsQuantityChanged(eventQty, pageObjects.eventItems, '-')
