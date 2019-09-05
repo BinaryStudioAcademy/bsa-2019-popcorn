@@ -4,7 +4,6 @@ import { faChevronDown } from '@fortawesome/free-solid-svg-icons';
 import './Header.scss';
 import messageIcon from '../../../assets/icons/general/header/message-icon.svg';
 import logo from '../../../assets/icons/general/popcorn-logo.svg';
-import MovieSearch from '../../MovieList/MovieSearch/index';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import {
@@ -36,8 +35,8 @@ interface IProps {
 		year: Date;
 		image: string;
 		duration: string;
-		genres: Array<string>;
-		cast: Array<string>;
+		genres: string[];
+		cast: string[];
 	}>;
 	fetchFilms: (data: string) => void;
 	alreadySearch: boolean;

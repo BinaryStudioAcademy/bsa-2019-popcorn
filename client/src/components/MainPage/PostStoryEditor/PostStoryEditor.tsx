@@ -146,7 +146,6 @@ class PostStoryEditor extends React.Component<
 	render() {
 		const backgroundColor = this.props.newStory.backgroundColor;
 		const isShownInput = this.props.isShownInput;
-
 		const changeBody = (e, title) => {
 			this.props.setCaption(
 				e.target.value,
