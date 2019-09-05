@@ -1,9 +1,4 @@
-import {
-  EntityRepository,
-  Repository,
-  getCustomRepository,
-  createQueryBuilder
-} from "typeorm";
+import { EntityRepository, Repository } from "typeorm";
 import { Follower } from "../entities/Follower";
 
 @EntityRepository(Follower)

@@ -18,7 +18,9 @@ async function sendNotification({
   entity,
   entityType
 }) {
-  if (req.user && entity.userId === req.user.id) return;
+  if (req.user && entity.userId === req.user.id) {
+    return;
+  }
   const notification = {
     img: req.user.avatar,
     type,
@@ -166,16 +168,17 @@ export default async (req, res, next) => {
       const followers = await followerService.getFollowersByUserId(userId);
       const title = `${req.user.name} published new post`;
       followers.forEach(({ follower }) => {
-        if (follower.siteNotificationUpdatesFromFollowed)
+        if (follower.siteNotificationUpdatesFromFollowed) {
           sendNotification({
             req,
             url: "/",
             type: "new post from followed",
-            title: title,
+            title,
             body: "",
             entity: { ...req.body, userId: follower.id, id: "" },
             entityType: "post"
           });
+        }
       });
     }
 
@@ -184,16 +187,17 @@ export default async (req, res, next) => {
       const followers = await followerService.getFollowersByUserId(userId);
       const title = `${req.user.name} published new story`;
       followers.forEach(({ follower }) => {
-        if (follower.siteNotificationUpdatesFromFollowed)
+        if (follower.siteNotificationUpdatesFromFollowed) {
           sendNotification({
             req,
             url: "/",
             type: "new story from followed",
-            title: title,
+            title,
             body: "",
             entity: { ...req.body, userId: follower.id, id: "" },
             entityType: "story"
           });
+        }
       });
     }
   }

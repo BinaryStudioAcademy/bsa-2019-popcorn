@@ -48,6 +48,7 @@ export const transformDataToProps = (data): Array<ISurvey> => {
 			name: survey.user.name,
 			image_link: survey.user.avatar
 		},
+		image: survey.image,
 		participants: countParticipants(survey.surveysQuestion),
 		questions: survey.surveysQuestion.map(question => ({
 			index: question.index,
@@ -91,7 +92,8 @@ export const transformDataToServerFormatCreate = data => {
 		id: data.user_id,
 		surveys: {
 			title: data.title,
-			description: data.description
+			description: data.description,
+			image: data.image
 		},
 		surveysQuestion: data.questions.map(question => ({
 			index: question.index,
@@ -114,6 +116,7 @@ export const transformDataToServerFormatUpdate = data => {
 		title: data.title,
 		description: data.description,
 		type: data.type,
+		image: data.image,
 		surveysQuestion: data.questions.map(question => ({
 			index: question.index,
 			id: question.id,

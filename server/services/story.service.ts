@@ -78,6 +78,6 @@ export const updateStory = async (story: Story): Promise<Story> =>
   await getCustomRepository(StoryRepository).save(story);
 
 export const deleteStoryById = async (storyId: string): Promise<Story> => {
-  let story = await getCustomRepository(StoryRepository).findOne(storyId);
+  const story = await getCustomRepository(StoryRepository).findOne(storyId);
   return await getCustomRepository(StoryRepository).remove(story);
 };

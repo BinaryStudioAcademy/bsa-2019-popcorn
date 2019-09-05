@@ -98,7 +98,9 @@ class SurveyIndividual extends PureComponent<IProps, IState> {
 	checkForAnswers(questions: IQuesstion[]) {
 		let haveAnswers = true;
 		questions.forEach(({ answers }) => {
-			if (!answers.length) haveAnswers = false;
+			if (!answers.length) {
+				haveAnswers = false;
+			}
 		});
 		return haveAnswers;
 	}
@@ -175,7 +177,7 @@ class SurveyIndividual extends PureComponent<IProps, IState> {
 										}
 									/>
 								);
-							} else
+							} else {
 								return (
 									<SurveyLinearScale
 										key={i}
@@ -190,6 +192,7 @@ class SurveyIndividual extends PureComponent<IProps, IState> {
 										}
 									/>
 								);
+							}
 						})}
 					</form>
 				) : (

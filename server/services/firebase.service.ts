@@ -12,7 +12,7 @@ admin.initializeApp({
 
 const db = admin.firestore();
 const notificationTokenPath = "notification_token";
-let tokensStorage = {};
+const tokensStorage = {};
 
 function buildMobileMessage({ title, body, icon, entityType, entityId }) {
   const fcmMessage = {
@@ -70,10 +70,13 @@ export async function sendPushMessage({
 
   Object.keys(userTokens).forEach(tokenType => {
     let message = null;
-    if (tokenType === "web")
+    if (tokenType === "web") {
       message = buildBrowserMessage({ title, body, icon, link });
-    if (tokenType === "mobile")
+    }
+    if (tokenType === "mobile") {
       message = buildMobileMessage({ title, body, icon, entityId, entityType });
+    }
+
     admin
       .messaging()
       .sendMulticast({ ...message, tokens: userTokens[tokenType] })
@@ -85,8 +88,10 @@ export async function sendPushMessage({
 }
 
 export async function storeAppInstanceToken({ token, userId, type }) {
-  if (tokensStorage[userId] && tokensStorage[userId][type].includes(token))
+  if (tokensStorage[userId] && tokensStorage[userId][type].includes(token)) {
     return true;
+  }
+
   try {
     const result = await db
       .collection(notificationTokenPath)
@@ -144,8 +149,9 @@ export async function deleteAppInstanceToken(token: string, userId: string) {
 
 export async function getAppInstanceTokens(userId: string) {
   try {
-    if (tokensStorage[userId]) return tokensStorage[userId];
-    else {
+    if (tokensStorage[userId]) {
+      return tokensStorage[userId];
+    } else {
       const tokensFromFirebase = await db
         .collection(notificationTokenPath)
         .doc(userId)

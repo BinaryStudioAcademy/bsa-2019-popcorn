@@ -53,6 +53,16 @@ const newTop = (): ITopItem => {
 };
 
 class UserTops extends React.Component<IUserTopProps, IUserTopsState> {
+	static getDerivedStateFromProps(props, state) {
+		if (state.isAction && !isEqual(props.topList, state.topList)) {
+			return {
+				...state,
+				topList: convertServerDataFormatToClient(props.topList)
+			};
+		}
+		return null;
+	}
+
 	constructor(props) {
 		super(props);
 		this.state = {
@@ -64,16 +74,6 @@ class UserTops extends React.Component<IUserTopProps, IUserTopsState> {
 
 	componentDidMount() {
 		this.props.fetchTops(this.props.selectedUserId);
-	}
-
-	static getDerivedStateFromProps(props, state) {
-		if (state.isAction && !isEqual(props.topList, state.topList)) {
-			return {
-				...state,
-				topList: convertServerDataFormatToClient(props.topList)
-			};
-		}
-		return null;
 	}
 
 	deleteTop = (top: ITopItem) => {

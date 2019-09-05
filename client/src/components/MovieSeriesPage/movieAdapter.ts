@@ -15,7 +15,7 @@ export const getMainCast = (cast): string =>
 
 export default (movie: any): TMovie | any => {
 	if (!movie) return;
-	console.log(movie);
+
 	return {
 		id: movie.id,
 		poster_path: config.POSTER_PATH + movie.poster_path,

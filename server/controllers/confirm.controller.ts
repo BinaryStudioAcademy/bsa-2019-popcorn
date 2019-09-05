@@ -1,4 +1,4 @@
-import { Request, Router } from "express";
+import { Router } from "express";
 import * as userTempService from "../services/userTemp.service";
 
 const router = Router();

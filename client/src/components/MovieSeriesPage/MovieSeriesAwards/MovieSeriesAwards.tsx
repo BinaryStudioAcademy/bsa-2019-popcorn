@@ -13,33 +13,11 @@ class MovieSeriesAwards extends Component<IMovieSeriesAwardsProps, {}> {
 	constructor(props) {
 		super(props);
 	}
-	mockedAwards = [
-		{
-			isWinner: true,
-			title: 'Teen Choice Awards',
-			year: 2004,
-			nominationName: 'Choice Breakout Movie Star',
-			gender: 'Female',
-			winnerName: 'Lindsey Lohan'
-		},
-		{
-			isWinner: false,
-			title: 'Teen Choice Awards',
-			year: 2004,
-			nominationName: 'Choice Breakout Movie Star',
-			gender: 'Male'
-		},
-		{
-			isWinner: false,
-			title: 'Teen Choice Awards',
-			year: 2004,
-			nominationName: 'Choice Breakout Movie Star',
-			gender: 'Male'
-		}
-	];
+
 	componentDidMount() {
 		this.props.fetchAwards(this.props.imdbId);
 	}
+
 	render() {
 		return this.props.awards ? (
 			<div className="movieAwards-wrapper">

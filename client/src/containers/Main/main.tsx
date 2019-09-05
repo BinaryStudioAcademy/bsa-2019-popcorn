@@ -2,7 +2,6 @@ import React from 'react';
 import { Redirect, Route, Switch } from 'react-router-dom';
 import MainPageSidebar from '../../components/shared/MainSidebar/MainPageSidebar';
 import MovieList from '../../components/MovieList/MovieList';
-
 import NotFound from './../../components/NotFound/NotFound';
 import './MainContainer.scss';
 import MainPage from '../../components/MainPage/MainPage';
@@ -28,14 +27,10 @@ import {
 	subscibeToEvent
 } from '../../components/UserPage/UserEvents/actions';
 import Header from '../../components/shared/Header/Header';
-import UserTops from '../../components/UserPage/UserTops/UserTops';
 import UserSurveysNav from '../../components/UserPage/UserSurveys/UserSurveysNav';
 import SocketService from '../../services/socket.service';
 import TMovie from '../../components/MovieSeriesPage/TMovie';
-import {
-	IEventFormatClient,
-	IEventFormatDataBase
-} from '../../components/UserPage/UserEvents/UserEvents.service';
+import { IEventFormatDataBase } from '../../components/UserPage/UserEvents/UserEvents.service';
 import TopList from '../../components/TopListPage/TopList';
 import SettingsPage from '../../components/UserSettings';
 import ChatPage from '../../components/ChatPage/ChatPage';
@@ -117,8 +112,9 @@ const Main = ({
 	getEventById,
 	subscibeToEvent
 }: IProps) => {
-	if (!isAuthorized || !localStorage.getItem('token'))
+	if (!isAuthorized || !localStorage.getItem('token')) {
 		return <Redirect to="/login" />;
+	}
 
 	new SocketService(userInfo.id);
 

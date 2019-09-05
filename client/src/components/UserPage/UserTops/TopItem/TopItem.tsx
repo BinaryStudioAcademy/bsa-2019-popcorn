@@ -37,7 +37,7 @@ const TopItem: React.FC<ITopItemProps> = ({
 	// const [isOwnData] = useState(topItem.isOwnData);
 	const [topImageUrl, setTopImageUrl] = useState(topItem.topImageUrl);
 	useEffect(() => {
-		if (urlForTop == topItem.id) {
+		if (urlForTop === topItem.id) {
 			setTopImageUrl(uploadUrl);
 		}
 	}, [uploadUrl]);
@@ -46,9 +46,11 @@ const TopItem: React.FC<ITopItemProps> = ({
 		canEditTop(!editTop);
 	}
 
-	function saveTop(movies: Array<any>) {
+	function saveTop(movies: any[]) {
 		const moviesList = movies.filter(movie => movie.title.trim() !== '');
-		if (title.trim() === '') setTitle('New top');
+		if (title.trim() === '') {
+			setTitle('New top');
+		}
 		saveUserTop({ ...topItem, moviesList, title, topImageUrl });
 		canEditTop(false);
 	}
@@ -56,8 +58,11 @@ const TopItem: React.FC<ITopItemProps> = ({
 	function handleUploadFile(e, topId: string) {
 		const data = new FormData();
 		data.append('file', e.target.files[0]);
-		if (uploadImage) uploadImage(data, topId);
-		else console.log('no uploadImage method');
+		if (uploadImage) {
+			uploadImage(data, topId);
+		} else {
+			console.log('no uploadImage method');
+		}
 	}
 
 	return (
@@ -84,7 +89,7 @@ const TopItem: React.FC<ITopItemProps> = ({
 					onChange={e => handleUploadFile(e, topItem.id)}
 					id={`${topItem.id}image`}
 					accept=".jpg, .jpeg, .png"
-					hidden
+					hidden={true}
 				/>
 				{editTop && (
 					<label

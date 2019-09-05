@@ -1,9 +1,5 @@
 import { MigrationInterface, QueryRunner, getCustomRepository } from "typeorm";
-import SurveysRepository from "../repository/surveys.repository";
 import UserRepository from "../repository/user.repository";
-import { Surveys } from "../entities/Surveys";
-import { SurveysQuestion } from "../entities/SurveysQuestion";
-import { SurveysQuestionOption } from "../entities/SurveysQuestionOption";
 import { SurveysQuestionAnswer } from "../entities/SurveysQuestionAnswer";
 import SurveysQuestionRepository from "../repository/surveysQuestion.repository";
 import SurveysQuestionOptionRepository from "../repository/surveysQuestionOption.repository";

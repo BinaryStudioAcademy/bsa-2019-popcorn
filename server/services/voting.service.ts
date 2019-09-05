@@ -8,12 +8,6 @@ import { getVotingOptionByVotingId } from "./votingOption.service";
 
 const uuid = require("uuid/v4");
 
-interface IRequestBody {
-  userId: string;
-  voting: Voting;
-  votingOptions: Array<VotingOption>;
-}
-
 export const createVoting = async ({
   header,
   userId,

@@ -19,20 +19,20 @@ a:focus {
 #anchor {
 	overflow-anchor: auto;
 }
-.UserDiscussionComponent::-webkit-scrollbar {
+.user-discussion-component::-webkit-scrollbar {
 	-webkit-appearance: none;
 }
 
-.UserDiscussionComponent::-webkit-scrollbar:vertical {
+.user-discussion-component::-webkit-scrollbar:vertical {
 	width: 11px;
 }
 
-.UserDiscussionComponent::-webkit-scrollbar-thumb {
+.user-discussion-component::-webkit-scrollbar-thumb {
 	border-radius: 8px;
 	background-color: rgba(0, 0, 0, 0.5);
 }
 
-.UserDiscussionComponent {
+.user-discussion-component {
 	display: flex;
 	flex-direction: column;
 	justify-content: flex-start;
@@ -41,51 +41,69 @@ a:focus {
 	justify-self: end;
 	max-height: 500px;
 	width: 100%;
-
-	.MessageContainer {
+	border: 1px solid rgb(244, 248, 251);
+	box-shadow: 0 1px 4px 0 rgb(244, 248, 251);
+	padding: 10px;
+	border-radius: 4px;
+	.message-container {
 		padding-right: 5px;
 		overflow-y: scroll;
-		padding-bottom: -20px;
+		padding: 20px 28px 0px 20px;
+		margin-bottom: 20px;
 	}
 
-	.MessageContainer::-webkit-scrollbar {
+	.message-container::-webkit-scrollbar {
 		width: 4px;
 	}
 
-	.MessageContainer::-webkit-scrollbar-thumb {
+	.message-container::-webkit-scrollbar-thumb {
 		background: $border-color;
 		border-radius: 10px;
 	}
+	.message-item-reverse {
+		padding-right: 20px;
+		flex-direction: row-reverse;
+		.message-body {
+			margin-left: 0px !important;
+			.message-info {
+				text-align: end;
+				margin-right: 35px;
+			}
+			.body {
+				margin-right: 30px;
+			}
+		}
+	}
 
-	.messageItem {
-		border: 1px solid $border-color;
-		border-left: 3px solid rgba($button-background, 0.4);
-		padding: 10px;
+	.message-item {
+		box-shadow: 1px 1px 4px 1px rgb(244, 248, 251);
+		padding: 5px;
 		display: flex;
 		align-items: center;
 		text-align: left;
-		margin-bottom: 20px;
+		margin-bottom: 15px;
 		width: 100%;
-
-		&:hover {
-			border-left: 3px solid rgba($button-background, 0.6);
-		}
-
+		border-radius: 4px;
+		padding-left: 10px;
 		img {
+			box-shadow: 1px 1px 4px 1px #f4f8fb;
 			align-self: flex-start;
 			width: 35px;
 			height: auto;
 			margin-right: 10px;
 			border-radius: 50%;
+			margin: -5px -25px;
 		}
 
-		.messageBody {
+		.message-body {
 			width: 100%;
 			box-sizing: border-box;
 			font-size: $base-font-size;
-
+			padding-bottom: 10px;
+			margin-left: 35px;
 			.body {
 				white-space: normal;
+				word-break: break-all;
 			}
 
 			.name {
@@ -93,7 +111,7 @@ a:focus {
 				letter-spacing: $base-letter-spacing;
 			}
 
-			.newMessage {
+			.new-message {
 				display: flex;
 				align-items: center;
 				padding: 2% 2%;
@@ -125,34 +143,32 @@ a:focus {
 			}
 		}
 
-		.messageInfo {
+		.message-info {
 			margin-bottom: 5px;
-			display: flex;
-			justify-content: space-between;
-
 			.date {
 				color: change-color($text-base-color, $lightness: 30%, $alpha: 0.5);
 				font-size: $message-font-size;
 			}
 		}
 
-		.newMessageInput {
+		.new-message-input {
 			&::placeholder {
 				color: $input-placeholder-color;
 			}
 			box-sizing: border-box;
 			width: 80%;
-			height: 100%;
+			height: 50px;
 			margin-top: 5px;
 		}
 	}
 
-	.newMessageItem {
+	.new-message-item {
 		box-shadow: 2px 2px 2px $input-shadow-color;
 		box-sizing: border-box;
 		border: 1px solid $border-color;
-		&:hover {
-			border: 1px solid $border-focus-color;
+		.message-body {
+			padding-bottom: 0px;
+			margin-left: 0px;
 		}
 		outline: none;
 	}

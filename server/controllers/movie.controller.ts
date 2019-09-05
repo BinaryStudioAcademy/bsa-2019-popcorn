@@ -2,6 +2,7 @@ import { Router, NextFunction, Request, Response } from "express";
 import * as movieService from "../services/movie.service";
 import { Movie } from "../models/MovieModel";
 import errorHandlerMiddleware from "../middlewares/error-handler.middleware";
+import * as postService from "../services/post.service";
 
 const router = Router();
 
@@ -43,6 +44,12 @@ router
         .catch(next);
     }
   )
+  .get("/:movieId/posts", (req: any, res: Response, next: NextFunction) => {
+    return postService
+      .getPosts(req.params.movieId)
+      .then((response: any) => res.send(response))
+      .catch(next);
+  })
   .post("/", (req: Request, res: Response, next: NextFunction) =>
     movieService
       .createMovie(req.body)

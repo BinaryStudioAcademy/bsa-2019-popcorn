@@ -1,4 +1,4 @@
-import { EntityRepository, Repository, getCustomRepository } from "typeorm";
+import { EntityRepository, Repository } from "typeorm";
 import { UserTemp } from "../entities/UserTemp";
 
 @EntityRepository(UserTemp)
