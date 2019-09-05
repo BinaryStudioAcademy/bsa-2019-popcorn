@@ -1,5 +1,5 @@
 import React from 'react';
-import { faStar, faStarHalfAlt } from '@fortawesome/free-solid-svg-icons';
+import { faStar } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import './StarRating.scss';
 
@@ -8,11 +8,13 @@ interface IProps {
 	default: number;
 	setUserRate: (newUserRate: any) => any;
 	userRate: any;
+	deleteUserRate: (userRate: any) => object;
 }
 
 interface IState {
 	currentValue: number;
 	showStarRate: boolean;
+	hover: boolean;
 }
 
 class StarRating extends React.Component<IProps, IState> {
@@ -21,18 +23,23 @@ class StarRating extends React.Component<IProps, IState> {
 
 		this.state = {
 			currentValue: this.props.default,
-			showStarRate: false
+			showStarRate: false,
+			hover: false
 		};
 	}
 
 	solidStar = (key: number, type: boolean): any => (
 		<span
-			className="star-container"
-			onMouseOver={() =>
-				this.setState({ ...this.state, currentValue: key + 1 })
-			}
+			key={key}
+			onMouseEnter={() => {
+				this.setState({ ...this.state, currentValue: key + 1 });
+			}}
 			onClick={() => {
-				this.setState({ ...this.state, showStarRate: false });
+				this.setState({
+					...this.state,
+					showStarRate: false,
+					currentValue: key + 1
+				});
 				this.props.setUserRate({
 					userId: this.props.userRate.userId,
 					movieId: this.props.userRate.movieId,
@@ -49,7 +56,7 @@ class StarRating extends React.Component<IProps, IState> {
 	);
 
 	renderStars() {
-		const count = [...(Array(5).keys() as any)];
+		const count = [...(Array(this.props.size).keys() as any)];
 		const result = count.map(element => {
 			return element < this.state.currentValue
 				? this.solidStar(element, true)
@@ -58,32 +65,66 @@ class StarRating extends React.Component<IProps, IState> {
 		return result;
 	}
 
-	render() {
-		const { rate } = this.props.userRate;
-		return (
-			<>
-				<div
-					className="stars-button"
-					title={`Your rating: ${rate}`}
-					onClick={() =>
-						this.setState({
-							...this.state,
-							showStarRate: !this.state.showStarRate,
-							currentValue: rate
-						})
-					}
-				>
-					<FontAwesomeIcon icon={faStarHalfAlt} />
-				</div>
+	onCLickToRate = ev => {
+		ev.preventDefault();
+		this.setState({
+			...this.state,
+			showStarRate: !this.state.showStarRate,
+			currentValue: this.props.userRate.rate
+		});
+	};
 
+	render() {
+		return (
+			<div
+				className="StarRating"
+				onMouseEnter={() => this.setState({ ...this.state, hover: true })}
+				onMouseLeave={() =>
+					this.setState({
+						...this.state,
+						hover: false,
+						currentValue: this.props.userRate.rate,
+						showStarRate: false
+					})
+				}
+			>
 				<div
-					className={`star-rating ${
-						this.state.showStarRate ? 'show-rating' : 'hide-rating'
-					}`}
+					className="star-user-rating-container"
+					onClick={ev => this.onCLickToRate(ev)}
 				>
-					{this.renderStars()}
+					<FontAwesomeIcon icon={faStar} />
+					<div className="user-rating-value">
+						{this.state.currentValue ? (
+							<span className="rating-value">
+								{this.state.currentValue}
+								<span className="label-you">you</span>
+							</span>
+						) : (
+							<span className="label-rate-this">Rate this</span>
+						)}
+					</div>
 				</div>
-			</>
+				{this.state.showStarRate && this.state.hover && (
+					<div className="stars-container">
+						<span
+							onClick={ev => {
+								ev.preventDefault();
+								if (this.props.userRate.rate !== 0) {
+									this.props.deleteUserRate(this.props.userRate);
+								}
+								this.setState({
+									...this.state,
+									currentValue: 0,
+									showStarRate: false
+								});
+							}}
+						>
+							DELETE
+						</span>
+						{this.renderStars()}
+					</div>
+				)}
+			</div>
 		);
 	}
 }
