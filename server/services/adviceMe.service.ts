@@ -8,7 +8,7 @@ import { getCustomRepository } from "typeorm";
 import UserRepository from "../repository/user.repository";
 import { getWatched } from "./watch.service";
 
-const minimalRating = "7";
+const minimalRating = "6";
 const amount = 3;
 
 export const getAdviceMovie = async (userId: string, next) => {
@@ -20,7 +20,8 @@ export const getAdviceMovie = async (userId: string, next) => {
     return elem2.movie.vote_average - elem1.movie.vote_average;
   });
 
-  return list.length > 3
+  console.log(list.length);
+  return list.length >= 3
     ? await getMoviesFromList(list, minimalRating)
     : await getRandomMovie(amount);
 };

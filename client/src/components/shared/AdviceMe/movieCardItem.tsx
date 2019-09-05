@@ -1,6 +1,5 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './movieCardItem.scss';
-import { ReactComponent as DurationIcon } from '../../../assets/icons/general/movie/duration-icon.svg';
 import config from '../../../config';
 import Image from '../../shared/Image/Image';
 import TMovie from '../../MovieSeriesPage/TMovie';
@@ -11,8 +10,6 @@ import {
 	deleteMovieFromWatchList,
 	fetchWatchListStatus
 } from '../../UserPage/UserWatchList/actions';
-import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux';
 import { IUserRate } from '../../MovieSeriesPage/MovieSeriesPage';
 import Spinner from '../Spinner';
 import {
@@ -22,6 +19,8 @@ import {
 	setReview,
 	setUserRate
 } from '../../MovieSeriesPage/Movie.redux/actions';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
 
 interface IMovieListItemProps {
 	movie: TMovie;
@@ -54,14 +53,57 @@ interface IMovieListItemProps {
 	profileInfo: any;
 }
 
+interface IState {
+	showFullReview: boolean;
+	textBlockHeight: string;
+	isBigBlock: boolean;
+}
+
+// let rendered = false;
+// const render = (divRef, setText, text) => {
+//     if(rendered){
+//         return;
+//     }
+//     const styles = getComputedStyle(divRef.current);
+//     const height = parseInt(styles.height as string);
+//     if (height > 90) {
+//         setText({
+//             ...text,
+//             textBlockHeight: `not-auto`,
+//             isBigBlock: true
+//         });
+//     }
+//     rendered = true;
+// };
+
 const MovieCardItem: React.FC<IMovieListItemProps> = props => {
+	const [text, setText] = useState<IState>({
+		showFullReview: false,
+		textBlockHeight: 'auto',
+		isBigBlock: false
+	});
+
 	const { movie } = props;
 	const duration = getFilmDuration(movie.runtime);
+
+	const divRef = React.createRef();
+
+	// render(divRef, setText, text);
 
 	if (!props.userRate) {
 		props.fetchUserRate(props.profileInfo.id, movie.id);
 		return <Spinner />;
 	}
+
+	const handleClickShowMore = () => {
+		setText({
+			...text,
+			showFullReview: !text.showFullReview,
+			textBlockHeight: text.showFullReview ? 'not-auto' : 'auto'
+		});
+	};
+
+	const { showFullReview, textBlockHeight, isBigBlock } = text;
 	return (
 		<div
 			className={'movie-card-item'}
@@ -95,17 +137,34 @@ const MovieCardItem: React.FC<IMovieListItemProps> = props => {
 				/>
 			</div>
 			<div className="movie-info">
-				<div>
-					<span className="movie-genre">{movie.genres}</span>
-					{duration && (
-						<span className="movie-duration">
-							<DurationIcon />
-							{duration}
-						</span>
-					)}
+				<div className="description">
+					<div
+						ref={divRef as any}
+						className={`review-item-text ${
+							isBigBlock ? 'review-item-text-big' : null
+						} ${showFullReview ? 'review-item-text-big-show-full' : null}`}
+					>
+						{movie.overview}
+						{textBlockHeight !== 'auto' && !showFullReview ? (
+							<div
+								className="read-more-gradient"
+								onClick={() => handleClickShowMore()}
+							/>
+						) : null}
+					</div>
 				</div>
-				<div className="movie-cast">
-					<b>Main cast:</b> {movie.mainCast}
+				<div>
+					<div className="movie-cast">
+						<b>Main cast:</b> {movie.mainCast}
+					</div>
+					<div className={'videoWrapper'}>
+						<iframe
+							className="video"
+							src={movie.video}
+							title={movie.video}
+							frameBorder={0}
+						/>
+					</div>
 				</div>
 			</div>
 		</div>
