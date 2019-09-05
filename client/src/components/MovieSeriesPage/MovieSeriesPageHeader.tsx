@@ -119,7 +119,6 @@ const MovieSeriesPageHeader: React.FC<IProps> = ({
 					</div>
 					<StarRating
 						size={10}
-						default={rate}
 						setUserRate={setUserRate}
 						userRate={userRate}
 						deleteUserRate={deleteUserRate}

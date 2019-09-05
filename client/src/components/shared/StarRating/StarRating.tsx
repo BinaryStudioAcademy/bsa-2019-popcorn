@@ -1,11 +1,14 @@
 import React from 'react';
-import { faStar } from '@fortawesome/free-solid-svg-icons';
+import {
+	faStar as regularStar,
+	faTimesCircle
+} from '@fortawesome/free-regular-svg-icons';
+import { faStar as solidStar } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import './StarRating.scss';
 
 interface IProps {
 	size: number;
-	default: number;
 	setUserRate: (newUserRate: any) => any;
 	userRate: any;
 	deleteUserRate: (userRate: any) => object;
@@ -22,7 +25,7 @@ class StarRating extends React.Component<IProps, IState> {
 		super(props);
 
 		this.state = {
-			currentValue: this.props.default,
+			currentValue: this.props.userRate.rate,
 			showStarRate: false,
 			hover: false
 		};
@@ -31,6 +34,7 @@ class StarRating extends React.Component<IProps, IState> {
 	solidStar = (key: number, type: boolean): any => (
 		<span
 			key={key}
+			className="star-item"
 			onMouseEnter={() => {
 				this.setState({ ...this.state, currentValue: key + 1 });
 			}}
@@ -48,8 +52,8 @@ class StarRating extends React.Component<IProps, IState> {
 			}}
 		>
 			<FontAwesomeIcon
-				icon={faStar}
-				className={type ? 'yellowStar' : 'greyStar'}
+				icon={type ? solidStar : regularStar}
+				className="rating-star-color"
 				key={key}
 			/>
 		</span>
@@ -69,8 +73,7 @@ class StarRating extends React.Component<IProps, IState> {
 		ev.preventDefault();
 		this.setState({
 			...this.state,
-			showStarRate: !this.state.showStarRate,
-			currentValue: this.props.userRate.rate
+			showStarRate: !this.state.showStarRate
 		});
 	};
 
@@ -78,6 +81,7 @@ class StarRating extends React.Component<IProps, IState> {
 		return (
 			<div
 				className="StarRating"
+				onClick={ev => this.onCLickToRate(ev)}
 				onMouseEnter={() => this.setState({ ...this.state, hover: true })}
 				onMouseLeave={() =>
 					this.setState({
@@ -88,25 +92,29 @@ class StarRating extends React.Component<IProps, IState> {
 					})
 				}
 			>
-				<div
-					className="star-user-rating-container"
-					onClick={ev => this.onCLickToRate(ev)}
-				>
-					<FontAwesomeIcon icon={faStar} />
+				<div className="star-user-rating-container">
+					<FontAwesomeIcon
+						className="star-icon"
+						icon={this.state.currentValue ? solidStar : regularStar}
+					/>
 					<div className="user-rating-value">
 						{this.state.currentValue ? (
 							<span className="rating-value">
 								{this.state.currentValue}
-								<span className="label-you">you</span>
+								<span className="label-you">Your rating</span>
 							</span>
 						) : (
-							<span className="label-rate-this">Rate this</span>
+							<span className="label-rate-this">Rate This</span>
 						)}
 					</div>
 				</div>
 				{this.state.showStarRate && this.state.hover && (
 					<div className="stars-container">
 						<span
+							className="delete-button"
+							onMouseEnter={() => {
+								this.setState({ ...this.state, currentValue: 0 });
+							}}
 							onClick={ev => {
 								ev.preventDefault();
 								if (this.props.userRate.rate !== 0) {
@@ -119,7 +127,7 @@ class StarRating extends React.Component<IProps, IState> {
 								});
 							}}
 						>
-							DELETE
+							<FontAwesomeIcon icon={faTimesCircle} />
 						</span>
 						{this.renderStars()}
 					</div>
