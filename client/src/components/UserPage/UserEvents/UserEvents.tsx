@@ -24,6 +24,7 @@ interface IProps {
 	saveEvent: (event: any) => void;
 	updateEvent: (event: any) => void;
 	currentProfileUserId: string;
+	setSpinner: boolean;
 }
 
 interface IState {
@@ -78,10 +79,6 @@ class UserEvents extends React.Component<IProps, IState> {
 	render() {
 		const { userEvents, currentUserId, deleteEvent, isOwnData } = this.props;
 		const { openEventEditor, editableEvent } = this.state;
-		if (!userEvents) {
-			return <Spinner />;
-		}
-
 		const ownEvents: IEventFormatClient[] = [];
 		const subscribeEvents: IEventFormatClient[] = [];
 
@@ -90,6 +87,7 @@ class UserEvents extends React.Component<IProps, IState> {
 				? ownEvents.push(formatToClient(event))
 				: subscribeEvents.push(formatToClient(event));
 		});
+		if (this.props.setSpinner) { return <Spinner /> }
 		return (
 			<div className="user-events">
 				{isOwnData && (
@@ -108,35 +106,35 @@ class UserEvents extends React.Component<IProps, IState> {
 						id={currentUserId}
 					/>
 				) : (
-					<div>
-						{isOwnData && (
-							<div>
-								<div className="events-title">
-									<span>Your Events</span>
-								</div>
-								<div className="event-list-container">
-									{ownEvents.length === 0 ? (
-										<div className="event-show-warning">
-											No events yet. You can create
+						<div>
+							{isOwnData && (
+								<div>
+									<div className="events-title">
+										<span>Your Events</span>
+									</div>
+									<div className="event-list-container">
+										{ownEvents.length === 0 ? (
+											<div className="event-show-warning">
+												No events yet. You can create
 										</div>
-									) : (
-										this.renderEventList(ownEvents, deleteEvent)
-									)}
+										) : (
+												this.renderEventList(ownEvents, deleteEvent)
+											)}
+									</div>
 								</div>
-							</div>
-						)}
-						<div className="events-title">
-							<span>Events interested in</span>
-						</div>
-						<div className="event-list-container">
-							{subscribeEvents.length === 0 ? (
-								<div className="event-show-warning">No events yet</div>
-							) : (
-								this.renderEventList(subscribeEvents, null)
 							)}
+							<div className="events-title">
+								<span>Events interested in</span>
+							</div>
+							<div className="event-list-container">
+								{subscribeEvents.length === 0 ? (
+									<div className="event-show-warning">No events yet</div>
+								) : (
+										this.renderEventList(subscribeEvents, null)
+									)}
+							</div>
 						</div>
-					</div>
-				)}
+					)}
 			</div>
 		);
 	}
@@ -149,7 +147,8 @@ const mapStateToProps = (state, props) => {
 		currentProfileUserId:
 			state.profile.selectedProfileInfo && state.profile.selectedProfileInfo.id,
 		currentUserRole: state.profile.profileInfo.role,
-		userEvents: state.events.userEvents
+		userEvents: state.events.userEvents,
+		setSpinner: state.events.setSpinner
 	};
 };
 

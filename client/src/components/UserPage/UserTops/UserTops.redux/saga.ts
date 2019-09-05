@@ -135,7 +135,7 @@ export function* deleteTop(action) {
 	try {
 		const { topId } = action.payload;
 
-		const data = yield call(webApi, {
+		yield call(webApi, {
 			method: 'DELETE',
 			endpoint: `/api/top/${topId}`
 		});
