@@ -12,7 +12,10 @@ export const uploadFile = req =>
     if (contentType && contentType.indexOf("multipart") === 0) {
       const form = new Form({
         autoFiles: true,
-        uploadDir: path.resolve(`${__dirname}/../../client/build/images`),
+        uploadDir:
+          process.env.NODE_ENV === "production"
+            ? path.resolve(`${__dirname}/../../client/build/images`)
+            : "public/files",
         maxFilesSize: 1048576 * 3
       });
       form.parse(req, function(err, fields, files): any {
@@ -28,8 +31,17 @@ export const uploadFile = req =>
           });
         } else {
           if (files.file) {
-            const imageUrl = path.resolve(files.file[0].path);
-            return resolve(imageUrl);
+            let imageUrl = files.file[0].path;
+            let url;
+            url =
+              imageUrl.indexOf("\\") !== -1
+                ? imageUrl.split(`\\`)
+                : imageUrl.split(`/`);
+            url.shift();
+            url = url.join("/");
+
+            url = "/" + url;
+            return resolve(url);
           }
         }
       });
