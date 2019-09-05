@@ -20,7 +20,7 @@ const initialState: IStateTops = {
 export default function(state = initialState, action) {
 	switch (action.type) {
 		case ActionTypes.SET_TOP_IMAGE: {
-			let { uploadUrl, topId } = action.payload;
+			const { uploadUrl, topId } = action.payload;
 			return {
 				...state,
 				uploadUrl,
@@ -28,7 +28,7 @@ export default function(state = initialState, action) {
 			};
 		}
 		case ActionTypes.SET_ElASTIC_MOVIE_LIST: {
-			let { elasticSearchMovies } = action.payload;
+			const { elasticSearchMovies } = action.payload;
 			return {
 				...state,
 				elasticSearchMovies,
@@ -52,7 +52,7 @@ export default function(state = initialState, action) {
 			const topList = Object.assign([], state.topList);
 
 			const updatedTopList = topList.map((top: any) => {
-				if (top.id == updatedTop.id) {
+				if (top.id === updatedTop.id) {
 					return updatedTop;
 				}
 				return top;
@@ -66,7 +66,7 @@ export default function(state = initialState, action) {
 		case ActionTypes.DELETE_TOP_SUCCESS: {
 			const topId = action.payload.topId;
 			const topList = Object.assign([], state.topList);
-			const newTopList = topList.filter((top: any) => top.id != topId);
+			const newTopList = topList.filter((top: any) => top.id !== topId);
 
 			return {
 				...state,
