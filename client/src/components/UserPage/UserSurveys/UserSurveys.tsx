@@ -46,7 +46,7 @@ interface IProps {
 	mainPath: string;
 	updateInfo: (ISurvey) => void;
 	deleteSurvey: (ISurvey) => void;
-	surveys: Array<ISurvey>;
+	surveys: ISurvey[];
 	isOwnData: boolean;
 	location?: {
 		state?: {
@@ -60,7 +60,7 @@ interface IProps {
 
 interface IState {
 	deletedSurvey: number;
-	surveys: Array<ISurvey>;
+	surveys: ISurvey[];
 }
 
 class UserSurveys extends React.Component<IProps, IState> {

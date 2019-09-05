@@ -11,7 +11,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 
 interface IMovieListProps {
-	movies: Array<TMovie>;
+	movies: TMovie[];
 	setMovieSeries?: (movie: any) => any;
 	saveMovie?: (movie: TMovie) => any;
 	twoColumns?: boolean;

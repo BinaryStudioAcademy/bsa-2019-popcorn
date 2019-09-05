@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import {
@@ -8,15 +8,14 @@ import {
 	deleteSelectedData
 } from './../../shared/MovieSearch/actions';
 import './../../shared/MovieSearch/MovieSearch.scss';
-import Spinner from './../../shared/Spinner';
 
 interface IProps {
-	searchData?: Array<IMovieTitle>;
+	searchData?: IMovieTitle[];
 	isLoading?: boolean;
 	deleteSearchData: () => object;
 	onSelectMovie: (movie: any) => any;
-	elasticProperties: Array<string>;
-	fetchMovieProperties: (movieId: string, properties: Array<string>) => object;
+	elasticProperties: string[];
+	fetchMovieProperties: (movieId: string, properties: string[]) => object;
 	selectMovie: any;
 	deleteSelectedData: () => object;
 	searchTitle: (inputData: string) => object;

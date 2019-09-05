@@ -13,7 +13,7 @@ interface IProps {
 	unreadNotifications: Activity[];
 }
 interface IState {
-	notifications: Array<Activity>;
+	notifications: Activity[];
 	isShown: boolean;
 }
 

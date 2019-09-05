@@ -33,15 +33,15 @@ interface IStoryListItem {
 		deltaPositionOptionBlockY: number;
 		header: string;
 		id: string;
-		options: Array<{
+		options: {
 			body: string;
 			voted: number;
-		}>;
+		}[];
 	};
 }
 interface IProps {
 	scrollStep: number;
-	stories: null | Array<IStoryListItem>;
+	stories: null | IStoryListItem[];
 	fetchStories: () => any;
 	avatar: null | string;
 	newStory: INewStory;
@@ -60,7 +60,7 @@ interface IProps {
 
 interface IStoryListProps {
 	scrollStep: number;
-	stories: null | Array<IStoryListItem>;
+	stories: null | IStoryListItem[];
 	fetchStories: () => any;
 	avatar: null | string;
 }

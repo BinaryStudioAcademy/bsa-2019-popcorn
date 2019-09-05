@@ -14,7 +14,7 @@ import WatchItem from './WatchItem/WatchItem';
 import MovieSearch from '../../shared/MovieSearch/MovieSearch';
 
 interface IProps {
-	watchList: Array<IWatchItem>;
+	watchList: IWatchItem[];
 	fetchWatchList: (userId: string) => object;
 	saveWatchItem: (movie: any) => object;
 	moveToWatched: (watchId: string) => object;
@@ -46,14 +46,14 @@ const UserWatchList: React.FC<IProps> = ({
 		return <Spinner />;
 	}
 
-	const watchedList: Array<IWatchItem> = [];
-	const toWatchList: Array<IWatchItem> = [];
+	const watchedList: IWatchItem[] = [];
+	const toWatchList: IWatchItem[] = [];
 
 	for (const item of watchList) {
 		item.status === 'watched' ? watchedList.push(item) : toWatchList.push(item);
 	}
 
-	const renderWatchList = (list: Array<IWatchItem>) =>
+	const renderWatchList = (list: IWatchItem[]) =>
 		list.map(item => (
 			<WatchItem
 				deleteWatchItem={deleteWatchItem}

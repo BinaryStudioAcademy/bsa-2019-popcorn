@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Bar, ResponsiveBar } from '@nivo/bar';
+import { ResponsiveBar } from '@nivo/bar';
 import Spinner from '../../shared/Spinner';
 import './MovieSeriesStatistics.scss';
 
@@ -15,8 +15,9 @@ const MovieSeriesStatistics: React.FC<IProps> = ({
 	useEffect(() => {
 		fetchStatistics();
 	}, []);
-	if (!statistics) return <Spinner />;
-	console.log(statistics);
+	if (!statistics) {
+		return <Spinner />;
+	}
 	const averageStatistics = statistics.averageStatistics;
 	return (
 		<div className="movie-series-statistics">

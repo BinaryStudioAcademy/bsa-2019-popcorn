@@ -4,7 +4,7 @@ import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import './StorySeenByModal.scss';
 
 interface IProps {
-	users: Array<{ name: string; image_url: string }>;
+	users: { name: string; image_url: string }[];
 	closeModal: () => void;
 }
 

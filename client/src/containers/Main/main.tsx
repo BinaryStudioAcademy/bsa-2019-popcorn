@@ -53,7 +53,7 @@ type userInfo = {
 interface IProps {
 	isAuthorized: boolean;
 	userInfo: userInfo;
-	movieList: null | Array<TMovie>;
+	movieList: null | TMovie[];
 	fetchMovieList: () => any;
 	setMovieSeries: (movie: any) => any;
 	movieSeries: null | TMovie;

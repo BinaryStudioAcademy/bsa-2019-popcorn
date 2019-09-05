@@ -14,12 +14,12 @@ interface IAdvancedMovieSearchProps {
 
 type AdvancedMovieSearchState = {
 	nameValue: string;
-	genresValues: Array<string>;
-	ratingValues: Array<number>;
+	genresValues: string[];
+	ratingValues: number[];
 	yearValues: { startDate: string; endDate: string };
-	crewValues: Array<string>;
+	crewValues: string[];
 	castValues: string;
-	durationValues: Array<number>;
+	durationValues: number[];
 	descriptionValue: string;
 };
 

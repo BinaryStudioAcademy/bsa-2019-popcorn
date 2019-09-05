@@ -27,16 +27,16 @@ interface IStoryListItem {
 		deltaPositionOptionBlockY: number;
 		header: string;
 		id: string;
-		options: Array<{
+		options: {
 			body: string;
 			voted: number;
-		}>;
+		}[];
 		image_url?: string;
 	};
 }
 
 interface IStoryListItemsProps {
-	storyListItems: Array<IStoryListItem>;
+	storyListItems: IStoryListItem[];
 	openViewer: (number) => void;
 }
 

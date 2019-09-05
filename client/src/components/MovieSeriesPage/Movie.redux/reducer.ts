@@ -26,19 +26,19 @@ import TMovie from '../TMovie';
 import movieAdapter from '../movieAdapter';
 
 const initialState: {
-	moviesSearch: Array<TMovie>;
+	moviesSearch: TMovie[];
 	alreadySearch: boolean;
-	movieList: null | Array<TMovie>;
+	movieList: null | TMovie[];
 	movieSeries: null | TMovie;
 	userRate: null | string;
 	fetchedMovie: null | TMovie;
-	moviesSearchInCreating: null | Array<TMovie>;
-	moviesSearchAddMovieToStory: null | Array<TMovie>;
+	moviesSearchInCreating: null | TMovie[];
+	moviesSearchAddMovieToStory: null | TMovie[];
 	searchTitle: string;
 	isLoading: boolean;
 	ownReview: any;
 	awards: any;
-	movieSearchInAdvancedSearch: null | Array<TMovie>;
+	movieSearchInAdvancedSearch: null | TMovie[];
 	filters: any;
 	showSpinner: boolean;
 	genres: any;

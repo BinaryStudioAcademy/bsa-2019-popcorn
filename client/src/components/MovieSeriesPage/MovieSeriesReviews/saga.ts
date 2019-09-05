@@ -55,7 +55,7 @@ export function* fetchUserReviews(action) {
 export function* deleteRevievById(action) {
 	const { reviewId } = action.payload;
 	try {
-		const response = yield call(webApi, {
+		yield call(webApi, {
 			endpoint: `/api/review/${reviewId}`,
 			method: 'DELETE'
 		});

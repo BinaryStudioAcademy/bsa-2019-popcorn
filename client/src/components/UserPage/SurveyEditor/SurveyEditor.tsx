@@ -52,7 +52,7 @@ interface ISurvey {
 		image_link: string;
 	};
 	participants: number;
-	questions: Array<IQuestion>;
+	questions: IQuestion[];
 }
 
 interface IProps {

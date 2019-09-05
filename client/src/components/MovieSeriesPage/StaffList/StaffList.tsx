@@ -4,7 +4,7 @@ import './StaffList.scss';
 import { StaffItemInfo } from './StaffType';
 
 type StaffListProps = {
-	crew: Array<StaffItemInfo>;
+	crew: StaffItemInfo[];
 };
 
 const generateStaffArray = (

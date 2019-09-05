@@ -12,7 +12,7 @@ interface ITopLIstProps {
 		title: string;
 		topImageUrl: string;
 		created_at: Date;
-		movieInTop: Array<any>;
+		movieInTop: any[];
 		user: {
 			id: string;
 			avatar: string;

@@ -46,7 +46,7 @@ class MovieSeriesReviews extends React.Component<IProps> {
 			reviews,
 			currentUserId,
 			isLoaded,
-			setReaction,
+			setReaction: actionSetReaction,
 			errorWithReview
 		} = this.props;
 
@@ -65,7 +65,7 @@ class MovieSeriesReviews extends React.Component<IProps> {
 										review={item}
 										key={item.id}
 										currentUserId={currentUserId}
-										setReaction={setReaction}
+										setReaction={actionSetReaction}
 										errorWithReview={errorWithReview}
 									/>
 								);

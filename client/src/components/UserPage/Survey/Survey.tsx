@@ -55,9 +55,9 @@ interface IState {
 	answers: Array<
 		| {
 				questionId: string;
-				options: Array<{
+				options: {
 					id: string;
-				}>;
+				}[];
 				value?: string;
 		  }
 		| any

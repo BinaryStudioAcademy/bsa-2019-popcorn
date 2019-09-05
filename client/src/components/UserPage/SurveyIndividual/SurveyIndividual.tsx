@@ -35,14 +35,14 @@ interface IQuesstion {
 	type: string;
 	image_link?: string;
 	required: boolean;
-	options?: Array<IOption>;
-	answers: Array<IAnswer>;
+	options?: IOption[];
+	answers: IAnswer[];
 }
 
 interface IProps {
 	surveyInfo: {
 		participants: number;
-		questions: Array<IQuesstion>;
+		questions: IQuesstion[];
 	};
 }
 

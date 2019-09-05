@@ -15,7 +15,7 @@ export type Activity = {
 };
 
 const generateActivity = (
-	activities: Array<Activity>,
+	activities: Activity[],
 	readNotification = undefined
 ) => {
 	if (activities.length && activities.length === 0) {

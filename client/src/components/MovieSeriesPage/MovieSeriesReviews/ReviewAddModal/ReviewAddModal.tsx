@@ -47,7 +47,9 @@ class ReviewAddModal extends React.Component<IProps, IState> {
 	}
 
 	keydownHandler = (e: KeyboardEvent) => {
-		if (e.keyCode === 13 && e.ctrlKey) this.onSubmitModal();
+		if (e.keyCode === 13 && e.ctrlKey) {
+			this.onSubmitModal();
+		}
 	};
 
 	componentDidMount = () => {
@@ -61,7 +63,7 @@ class ReviewAddModal extends React.Component<IProps, IState> {
 
 	onSubmitModal = () => {
 		const { textArea, usePut } = this.state;
-		const { movieId, userId, setReview, setModal } = this.props;
+		const { movieId, userId, setReview } = this.props;
 		if (!textArea.trim()) {
 			this.setState({ ...this.state, showError: true });
 			return;
@@ -113,7 +115,7 @@ class ReviewAddModal extends React.Component<IProps, IState> {
 									}
 									placeholder="Write here..."
 									className="review-text-area"
-								></textarea>
+								/>
 							</div>
 							<div className="review-buttons">
 								<div

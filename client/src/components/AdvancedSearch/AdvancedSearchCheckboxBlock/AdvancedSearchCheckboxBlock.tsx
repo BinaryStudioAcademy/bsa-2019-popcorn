@@ -2,7 +2,7 @@ import React from 'react';
 import './AdvancedSearchCheckboxBlock.scss';
 
 type AdvancedSearchvaluesProps = {
-	values: Array<string>;
+	values: string[];
 	checkboxHandler: (genre: string) => void;
 	header: string;
 	onCastSearch?: (search: string) => void;
@@ -10,7 +10,7 @@ type AdvancedSearchvaluesProps = {
 
 type AdvancedSearchCheckboxBlockState = {
 	valuesSearchValue: string;
-	avaliableValues: Array<string>;
+	avaliableValues: string[];
 };
 
 class AdvancedSearchCheckboxBlock extends React.Component<
@@ -37,7 +37,7 @@ class AdvancedSearchCheckboxBlock extends React.Component<
 		});
 	};
 
-	generateValuesCheckbox = (values: Array<string>) => {
+	generateValuesCheckbox = (values: string[]) => {
 		const valuesArray = values.map(el => {
 			return (
 				<label className="container-checkbox">

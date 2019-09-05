@@ -16,7 +16,7 @@ export const deleteSearchData = () => ({
 
 export const fetchMovieProperties = (
 	movieId: string,
-	properties: Array<string>
+	properties: string[]
 ) => ({
 	type: FETCH_MOVIE_PROPERTIES,
 	payload: { movieId, properties }

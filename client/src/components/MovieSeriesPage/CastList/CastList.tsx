@@ -4,7 +4,7 @@ import './CastList.scss';
 import { CastItemInfo } from './CastType';
 
 type CastListProps = {
-	cast: Array<CastItemInfo>;
+	cast: CastItemInfo[];
 };
 
 type CastListState = {

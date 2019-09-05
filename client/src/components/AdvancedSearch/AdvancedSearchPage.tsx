@@ -23,7 +23,7 @@ type userInfo = {
 
 interface IAdvancedSearchPage {
 	userInfo: userInfo;
-	movieList: null | Array<TMovie>;
+	movieList: null | TMovie[];
 	fetchFiltredMovies: (filters: any) => any;
 	setMovieSeries: (movie: any) => any;
 	loadMoreFiltredMovie: (size: number, from: number, filters: any) => any;

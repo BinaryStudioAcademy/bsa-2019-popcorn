@@ -10,7 +10,7 @@ interface IInputProps {
 	deleteFilmInput: (movieId: number) => void;
 	alreadySearch: boolean;
 	fetchFilms: (title: string) => void;
-	movieList: Array<any>; //movies from elastic search
+	movieList: any[];
 	clearSearch: () => void;
 	saveMovie: (movie: IMovie, newId?: string) => void;
 	last?: boolean;

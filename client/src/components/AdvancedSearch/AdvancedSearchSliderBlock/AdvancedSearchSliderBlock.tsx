@@ -16,7 +16,7 @@ const railStyle = {
 };
 
 type AdvancedSearchSliderBlockProps = {
-	rangeHandler: (val?: Array<string>) => void;
+	rangeHandler: (val?: string[]) => void;
 	header: string;
 	min: number;
 	max: number;

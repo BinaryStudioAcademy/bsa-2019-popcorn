@@ -1,4 +1,4 @@
-import React, { ReactElement } from 'react';
+import React from 'react';
 import './ReviewItem.scss';
 import { IReview } from '../MovieSeriesReviews';
 import Moment from 'react-moment';
@@ -78,7 +78,9 @@ class ReviewItem extends React.Component<IProps, IState> {
 			},
 			currentUserId
 		} = this.props;
-		if (userId === currentUserId) return;
+		if (userId === currentUserId) {
+			return;
+		}
 		setReaction(reviewId, isLike);
 	};
 
@@ -117,7 +119,7 @@ class ReviewItem extends React.Component<IProps, IState> {
 									{user.id === currentUserId ? 'You' : user.name}
 								</div>
 								<div className="profile-review-date">
-									<Moment format=" D MMM HH:mm " local>
+									<Moment format=" D MMM HH:mm " local={true}>
 										{String(created_at)}
 									</Moment>
 								</div>
@@ -136,7 +138,7 @@ class ReviewItem extends React.Component<IProps, IState> {
 							<div
 								className="read-more-gradient"
 								onClick={() => this.handleClickShowMore()}
-							></div>
+							/>
 						) : null}
 					</div>
 					<div className="review-footer">
@@ -158,7 +160,7 @@ class ReviewItem extends React.Component<IProps, IState> {
 									)}
 								</span>
 								<span className="likes-count">
-									{countLikes == 0 ? null : countLikes}
+									{Number(countLikes) == 0 ? null : countLikes}
 								</span>
 							</div>
 							<div className="review-dislikes">
@@ -181,7 +183,7 @@ class ReviewItem extends React.Component<IProps, IState> {
 									)}
 								</span>
 								<span className="dislikes-count">
-									{countDislikes == 0 ? null : countDislikes}
+									{Number(countDislikes) == 0 ? null : countDislikes}
 								</span>
 							</div>
 							<span className="error-block">

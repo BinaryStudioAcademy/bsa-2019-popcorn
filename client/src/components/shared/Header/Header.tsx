@@ -35,8 +35,8 @@ interface IProps {
 		year: Date;
 		image: string;
 		duration: string;
-		genres: Array<string>;
-		cast: Array<string>;
+		genres: string[];
+		cast: string[];
 	}>;
 	fetchFilms: (data: string) => void;
 	alreadySearch: boolean;

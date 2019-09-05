@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import './UserLists.scss';
 import MovieListCreator from './MovieListCreator/MovieListCreator';
 import { connect } from 'react-redux';

@@ -37,7 +37,7 @@ interface IProps {
 	history: {
 		push: (path: string) => void;
 	};
-	movies: null | Array<TMovie>;
+	movies: null | TMovie[];
 	fetchSearch: (title: string) => any;
 	title: string;
 	resetSearch: () => any;

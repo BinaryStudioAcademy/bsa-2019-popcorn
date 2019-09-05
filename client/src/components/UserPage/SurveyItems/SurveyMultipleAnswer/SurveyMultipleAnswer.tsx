@@ -34,7 +34,7 @@ interface IProps {
 	};
 	setAnswer?: (data: IAnswer) => void;
 	disable?: boolean;
-	answers?: Array<IReadyAnswer>;
+	answers?: IReadyAnswer[];
 }
 
 const SurveyCheckboxes = (props: IProps) => {
