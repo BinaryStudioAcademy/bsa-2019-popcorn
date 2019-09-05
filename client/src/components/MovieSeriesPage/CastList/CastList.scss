@@ -15,6 +15,12 @@
 	margin-bottom: 1em;
 	font-weight: 600;
 	text-transform: uppercase;
+	text-align: center;
+
+	span {
+		color: $text-base-color;
+		font-weight: 600;	
+	}
 }
 
 .cast-items-container {
