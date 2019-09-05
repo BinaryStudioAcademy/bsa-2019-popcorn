@@ -13,11 +13,14 @@ interface IProps {
 	unreadNotifications: Activity[];
 }
 interface IState {
-	notifications: Array<Activity>;
+	notifications: Activity[];
 	isShown: boolean;
 }
 
 class Notification extends React.Component<IProps, IState> {
+
+	private wrapperRef = createRef<HTMLDivElement>();
+
 	constructor(props) {
 		super(props);
 		this.state = {
@@ -26,8 +29,7 @@ class Notification extends React.Component<IProps, IState> {
 		};
 		this.addSocketEvents();
 	}
-	private wrapperRef = createRef<HTMLDivElement>();
-
+	
 	handleClickOutside = event => {
 		if (
 			this.wrapperRef.current &&
