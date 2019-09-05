@@ -67,7 +67,9 @@ class LinearScale extends Component<IProps, IQuestion> {
 		const values = Array(9)
 			.fill(0)
 			.map((e, i) => i + 2);
-		if (!options) return;
+		if (!options) {
+			return;
+		}
 
 		return (
 			<div className="question-body linear-scale">
