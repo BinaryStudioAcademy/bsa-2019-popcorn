@@ -35,7 +35,6 @@ const RecommendList = ({
 
 	if (recommended && recommended.events) {
 		recommended.events = formatToClient(recommended.events);
-		console.log(recommended.tops);
 	}
 
 	return recommended ? (
