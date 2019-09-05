@@ -49,13 +49,12 @@ const TopListItem: React.FC<ITopLIstItemProps> = ({ top }) => {
 					<ol>
 						{top.movieInTop.slice(0, 3).map(movie => (
 							<li key={movie.id}>
-								{movie.movie.title} ({getReleaseYear(movie)})
+								<NavLink to={`movies/${movie.movie.id}`}>
+									{movie.movie.title} ({getReleaseYear(movie)})
+								</NavLink>
 							</li>
 						))}
 					</ol>
-					{/* <NavLink to={`/tops/${top.id}`}>
-						<div className="add-info">{getAdditionalInfo()}</div>
-					</NavLink> */}
 				</div>
 			</div>
 			<div className="top-secondary-section">
