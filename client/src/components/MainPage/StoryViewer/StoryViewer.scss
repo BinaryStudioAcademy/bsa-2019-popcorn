@@ -15,6 +15,34 @@
 	font-family: $base-font-family;
 	z-index: 20;
 
+	.story-voting-wrp + .story-reaction-wrp {
+		bottom: 0;
+		margin-left: 10px;
+	}
+
+	.story-reaction-wrp {
+		position: absolute;
+		width: 350px;
+		bottom: 0;
+		margin-left: 0;
+		.chat-input {
+			input {
+				background-color: transparent;
+				border: 1px solid $border-color;
+				outline: none;
+				width: 300px;
+				margin-bottom: 10px;
+				height: 30px;
+				border-radius: 10px;
+				padding: 0 10px;
+			}
+			.story-reactions {
+				position: relative;
+			}
+			width: 100%;
+		}
+	}
+
 	.svg-inline--fa {
 		font-size: 24px;
 	}

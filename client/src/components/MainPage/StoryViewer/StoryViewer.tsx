@@ -76,6 +76,7 @@ interface IState {
 	isSeenByModalShown: boolean;
 	currentStory: number;
 	translateValue: number;
+	isReactionShown: boolean;
 }
 
 class StoryViewer extends PureComponent<IProps, IState> {
@@ -85,7 +86,8 @@ class StoryViewer extends PureComponent<IProps, IState> {
 			isModalShown: false,
 			isSeenByModalShown: false,
 			currentStory: props.currentStory,
-			translateValue: -props.currentStory * 350
+			translateValue: -props.currentStory * 350,
+			isReactionShown: false
 		};
 	}
 
@@ -161,7 +163,11 @@ class StoryViewer extends PureComponent<IProps, IState> {
 						}}
 					>
 						{stories.map((story, i) => (
-							<div className="story" key={i}>
+							<div
+								className="story"
+								key={i}
+								onClick={() => this.setState({ isReactionShown: false })}
+							>
 								<header>
 									<img
 										src={story.userInfo.image_url || config.DEFAULT_AVATAR}
@@ -198,14 +204,27 @@ class StoryViewer extends PureComponent<IProps, IState> {
 											inEditor={false}
 											image_url={story.voting.backImage || ''}
 										/>
-										<StoryReaction
-											chatId={this.getChatId(story.userInfo.userId)}
-											story={story}
-										/>
-										<ChatInput
-											chatId={this.getChatId(story.userInfo.userId)}
-											story={story}
-										/>
+										{this.props.userId !== story.userInfo.userId && (
+											<div className="story-reaction-wrp">
+												{this.state.isReactionShown && (
+													<StoryReaction
+														chatId={this.getChatId(story.userInfo.userId)}
+														story={story}
+													/>
+												)}
+												<div
+													onClick={e => {
+														e.stopPropagation();
+														this.setState({ isReactionShown: true });
+													}}
+												>
+													<ChatInput
+														chatId={this.getChatId(story.userInfo.userId)}
+														story={story}
+													/>
+												</div>
+											</div>
+										)}
 									</div>
 								)}
 								{story.type === 'voting' ? null : (
@@ -242,14 +261,27 @@ class StoryViewer extends PureComponent<IProps, IState> {
 										</div>
 										<div className={'seen'}>
 											<p className={'seen-by-info'} style={{ width: '100%' }}>
-												<StoryReaction
-													chatId={this.getChatId(story.userInfo.userId)}
-													story={story}
-												/>
-												<ChatInput
-													chatId={this.getChatId(story.userInfo.userId)}
-													story={story}
-												/>
+												{this.props.userId !== story.userInfo.userId && (
+													<div className="story-reaction-wrp">
+														{this.state.isReactionShown && (
+															<StoryReaction
+																chatId={this.getChatId(story.userInfo.userId)}
+																story={story}
+															/>
+														)}
+														<div
+															onClick={e => {
+																e.stopPropagation();
+																this.setState({ isReactionShown: true });
+															}}
+														>
+															<ChatInput
+																chatId={this.getChatId(story.userInfo.userId)}
+																story={story}
+															/>
+														</div>
+													</div>
+												)}
 												<span
 													style={{
 														display: 'flex',
