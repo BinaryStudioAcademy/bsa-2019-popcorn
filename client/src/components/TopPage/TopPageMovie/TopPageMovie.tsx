@@ -18,16 +18,17 @@ const TopPageMovie: React.SFC<ITopProps> = ({ index, movie }) => {
 	return (
 		<div className="movie-list-container" key={index}>
 			<div className="movie-key">
-				<span className="movie-key-value">{index}</span>
+				<span className="movie-key-value">{index}.</span>
 			</div>
 			<div className="movie-item">
 				<div className="movie-poster-wrp">
-					<Image
+					<NavLink to={`/movies/${movie.id}`} >	<Image
 						src={movie.poster_path}
 						defaultSrc={config.DEFAULT_MOVIE_IMAGE}
 						alt="movie-poster"
 						className="movie-poster"
 					/>
+					</NavLink>
 				</div>
 				<div className="movie-info">
 					<NavLink to={`/movies/${movie.id}`} >
