@@ -42,7 +42,7 @@ describe('Events on the Popcorn site', () => {
         validate.elementIsInList(title);
     });
 
-    xit('should delete event', () => {
+    it('should delete event', () => {
         eventQty = help.countItems(pageObjects.eventItems);
         pageActions.clickDeleteEventButton();
         wait.forNewElementLoaded(credentials.eventItemsPath, '-');
