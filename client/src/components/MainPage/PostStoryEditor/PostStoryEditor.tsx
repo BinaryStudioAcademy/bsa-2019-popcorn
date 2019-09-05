@@ -35,7 +35,7 @@ interface IPostStoryEditorProps {
 		activity: null | { id: string; name: string }
 	) => any;
 	cursorPosition: { start: number; end: number };
-	movies: null | Array<TMovie>;
+	movies: null | TMovie[];
 	fetchSearch?: (title: string) => any;
 	title?: string;
 	resetSearch?: () => any;

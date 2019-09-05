@@ -1,13 +1,13 @@
 import TMovie from './TMovie';
 import config from '../../config';
 
-const getGenre = (genres): string =>
+export const getGenre = (genres): string =>
 	genres
 		.filter(genre => genre)
 		.map(genre => (genre ? genre.name : ''))
 		.join(', ');
 
-const getMainCast = (cast): string =>
+export const getMainCast = (cast): string =>
 	cast
 		.filter(actor => actor)
 		.map(actor => (actor ? actor.name : ''))
@@ -15,7 +15,7 @@ const getMainCast = (cast): string =>
 
 export default (movie: any): TMovie | any => {
 	if (!movie) return;
-	console.log(movie);
+	
 	return {
 		id: movie.id,
 		poster_path: config.POSTER_PATH + movie.poster_path,

@@ -6,8 +6,7 @@ import {
 	DELETE_MOVIE_LIST,
 	SAVE_MOVIE_LIST_SUCCESS,
 	FETCH_MOVIE_LIST_DETAILS,
-	FETCH_MOVIE_LIST_DETAILS_SUCCESS,
-	FETCH_MOVIE_LIST_DETAILS_FAILURE
+	FETCH_MOVIE_LIST_DETAILS_SUCCESS
 } from './actionTypes';
 import webApi from '../../../services/webApi.service';
 
@@ -48,9 +47,8 @@ export function* fetchMovieListsPreview(action) {
 
 export function* deleteMovieList(action) {
 	const { movieListId } = action.payload;
-	console.log(movieListId);
 	try {
-		const movieListsPreview = yield call(webApi, {
+		yield call(webApi, {
 			method: 'DELETE',
 			endpoint: `/api/movie-list/${movieListId}`
 		});

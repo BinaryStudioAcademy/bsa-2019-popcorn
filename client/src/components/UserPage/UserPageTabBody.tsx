@@ -35,7 +35,7 @@ interface IProps {
 	uploadUrl?: string;
 	cancelAvatar: () => any;
 	setAvatar: (url: string, id: string) => any;
-	userPosts?: any; //todo
+	userPosts?: any; // todo
 	getUsersPosts: (id: string) => any;
 	selectedProfileInfo: ISelectedProfileInfo;
 	croppedSaved: boolean;

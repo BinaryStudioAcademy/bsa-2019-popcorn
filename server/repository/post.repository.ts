@@ -26,5 +26,5 @@ function getPost() {
     .addSelect(["cuser.name", "cuser.avatar", "cuser.id"])
     .leftJoin("reactions.user", "ruser")
     .addSelect(["ruser.name", "ruser.avatar", "ruser.id"])
-    .orderBy("post.createdAt", "DESC", "NULLS LAST"); //choose sort
+    .orderBy("post.createdAt", "DESC", "NULLS LAST"); // choose sort
 }

@@ -4,7 +4,6 @@ import {
   Column,
   JoinTable,
   ManyToOne,
-  ManyToMany,
   JoinColumn,
   OneToMany
 } from "typeorm";
@@ -28,6 +27,7 @@ export class Post {
   description: string;
 
   @Column()
+  // tslint:disable-next-line:variable-name
   image_url: string;
 
   @Column({ nullable: true })
@@ -54,8 +54,7 @@ export class Post {
   @JoinColumn()
   top: Top;
 
-  @ManyToMany(type => PostComments, post_comments => post_comments.post.id)
-  @Column({ nullable: true })
+  @Column()
   createdAt: Date;
 
   @OneToMany(type => PostComments, post_comments => post_comments.post)

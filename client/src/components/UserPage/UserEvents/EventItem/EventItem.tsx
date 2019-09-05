@@ -108,7 +108,7 @@ const EventItem: React.FC<IProps> = ({
 												deleteEvent(id, currentUserId);
 											}}
 										>
-											<CloseIcon className="delete-button-svg" />
+											Delete
 										</button>
 									</div>
 								))}

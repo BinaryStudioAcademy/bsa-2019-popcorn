@@ -14,7 +14,7 @@ class SurveysRepository extends Repository<Surveys> {
   async createSurveys(
     id: string,
     surveys: SurveysModel,
-    surveysQuestion: Array<SurveysQuestion>,
+    surveysQuestion: SurveysQuestion[],
     next?
   ) {
     try {
@@ -77,7 +77,9 @@ class SurveysRepository extends Repository<Surveys> {
           ]
         }
       );
-      if (!surveys) return { status: 404, message: "Surveys is not found" };
+      if (!surveys) {
+        return { status: 404, message: "Surveys is not found" };
+      }
       return surveys;
     } catch (err) {
       return next({ status: err.status, message: err.message }, null);
@@ -94,8 +96,10 @@ class SurveysRepository extends Repository<Surveys> {
   async getSurveysByUserId(id: string, next?) {
     try {
       const user = await getCustomRepository(UserRepository).findOne(id);
-      if (!user)
+      if (!user) {
         return next({ status: 404, message: "User is not found" }, null);
+      }
+        
       return await this.find({
         where: { user },
         order: {
@@ -118,9 +122,10 @@ class SurveysRepository extends Repository<Surveys> {
   async updateSurveysById(id: string, surveys: SurveysModel, next?) {
     try {
       const updatedSurveys = await this.getSurveysById(id, next);
-      if (!updatedSurveys)
+      if (!updatedSurveys) {
         next({ status: 404, message: "Voiting is not found" }, null);
-
+      }
+        
       return await this.update(
         { id },
         {
@@ -137,8 +142,10 @@ class SurveysRepository extends Repository<Surveys> {
   async deleteSurveysById(id: string, next?) {
     try {
       const surveys = await this.getSurveysById(id, next);
-      if (!surveys)
+      if (!surveys) {
         return next({ status: 404, message: "Voiting is not found" }, null);
+      }
+        
       await this.delete({ id });
       return {};
     } catch (err) {

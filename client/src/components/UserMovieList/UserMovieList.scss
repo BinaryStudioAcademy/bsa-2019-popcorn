@@ -78,8 +78,7 @@
 		}
 		.movie-list-items {
 			display: grid;
-			grid-template-columns: repeat(auto-fill, minmax(450px, 1fr));
-			grid-gap: 1.1em;
+			grid-gap: 20px;
 		}
 	}
 }

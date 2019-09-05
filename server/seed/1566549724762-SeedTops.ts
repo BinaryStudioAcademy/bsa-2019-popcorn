@@ -2,7 +2,6 @@ import UserRepository from "../repository/user.repository";
 import TopRepository from "../repository/top.repository";
 import { MovieInTop } from "../models/MovieInTopModel";
 import MovieInTopRepository from "../repository/movieInTop.repository";
-import { getMovieById } from "../services/movie.service";
 import { Top } from "../models/TopModel";
 import { getCustomRepository, MigrationInterface, QueryRunner } from "typeorm";
 

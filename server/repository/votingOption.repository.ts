@@ -9,7 +9,9 @@ import { Voting } from "../models/VotingModel";
 class VotingOptionRepository extends Repository<VotingOption> {
   async createVotingOption(votingOption: VotingOption, next?, voting?: Voting) {
     try {
-      if (voting) votingOption.voting = voting;
+      if (voting) {
+        votingOption.voting = voting;
+      }
       return await this.save(votingOption);
     } catch (err) {
       return next({ status: err.status, message: err.message }, null);

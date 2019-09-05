@@ -11,12 +11,29 @@ import ReactTimeAgo from 'react-time-ago';
 import MovieItem from './MovieItem/MovieItem';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faLock } from '@fortawesome/free-solid-svg-icons';
+import {
+	fetchWatchListIds,
+	addMovieToWatchList,
+	deleteMovieFromWatchList
+} from '../UserPage/UserWatchList/actions';
 
 interface IProps {
 	match: any;
 	fetchMovieListDetails: (movieListId: string) => object;
 	isLoading: boolean;
 	movieListDetails: IMovieListDetails;
+	fetchWatchListIds: () => object;
+	watchListIds: IWatchListId[];
+	addMovieToWatchList: (movieId) => object;
+	deleteMovieFromWatchList: (watchId: string) => object;
+	watchListLoading?: boolean;
+	loadingOnMovie: string;
+}
+
+export interface IWatchListId {
+	id: string;
+	movieId: string;
+	status: string;
 }
 
 interface IMovieListDetails {
@@ -26,7 +43,7 @@ interface IMovieListDetails {
 		description: string;
 		isPrivate: boolean;
 		imageUrl: string;
-		moviesId: Array<string>;
+		moviesId: string[];
 		createdAt: Date;
 		user: {
 			id: string;
@@ -34,7 +51,7 @@ interface IMovieListDetails {
 			avatar: string;
 		};
 	};
-	movies: Array<IMovie>;
+	movies: IMovie[];
 }
 
 export interface IMovie {
@@ -45,6 +62,7 @@ export interface IMovie {
 	runtime: number;
 	overview: string;
 	genres: string[];
+	watchInfo?: IWatchListId;
 }
 
 const UserMovieList: React.FC<IProps> = ({ ...props }) => {
@@ -53,7 +71,13 @@ const UserMovieList: React.FC<IProps> = ({ ...props }) => {
 			params: { id: movieListId }
 		},
 		movieListDetails,
-		fetchMovieListDetails
+		fetchMovieListDetails,
+		fetchWatchListIds,
+		watchListIds,
+		addMovieToWatchList,
+		deleteMovieFromWatchList,
+		watchListLoading,
+		loadingOnMovie
 	} = props;
 
 	if (!movieListDetails || movieListDetails.movieList.id !== movieListId) {
@@ -61,8 +85,12 @@ const UserMovieList: React.FC<IProps> = ({ ...props }) => {
 		return <Spinner />;
 	}
 
+	if (!watchListIds) {
+		fetchWatchListIds();
+		return <Spinner />;
+	}
+
 	const {
-		id,
 		title,
 		description,
 		isPrivate,
@@ -71,7 +99,15 @@ const UserMovieList: React.FC<IProps> = ({ ...props }) => {
 		user: { id: userId, name: userName, avatar: userAvatar }
 	} = movieListDetails.movieList;
 
-	const { movies } = movieListDetails;
+	let { movies } = movieListDetails;
+	if (watchListIds) {
+		movies = movies.map(movie => {
+			movie.watchInfo = watchListIds.find(
+				watch => String(watch.movieId) === String(movie.id)
+			);
+			return movie;
+		});
+	}
 
 	return (
 		<div className="UserMovieList">
@@ -112,7 +148,14 @@ const UserMovieList: React.FC<IProps> = ({ ...props }) => {
 				</header>
 				<div className="movie-list-items">
 					{movies.map(movie => (
-						<MovieItem movie={movie} key={movie.id} />
+						<MovieItem
+							addMovieToWatchList={addMovieToWatchList}
+							movie={movie}
+							key={movie.id}
+							deleteMovieFromWatchList={deleteMovieFromWatchList}
+							watchListLoading={watchListLoading}
+							loadingOnMovie={loadingOnMovie}
+						/>
 					))}
 				</div>
 			</div>
@@ -122,12 +165,18 @@ const UserMovieList: React.FC<IProps> = ({ ...props }) => {
 
 const mapStateToProps = (rootState, props) => ({
 	...props,
-	movieListDetails: rootState.movieList.movieListDetails
+	movieListDetails: rootState.movieList.movieListDetails,
+	watchListIds: rootState.watchList.watchListIds,
+	watchListLoading: rootState.watchList.isLoading,
+	loadingOnMovie: rootState.watchList.loadingOnMovie
 });
 
 const mapDispatchToProps = dispatch => {
 	const actions = {
-		fetchMovieListDetails
+		fetchMovieListDetails,
+		fetchWatchListIds,
+		addMovieToWatchList,
+		deleteMovieFromWatchList
 	};
 	return bindActionCreators(actions, dispatch);
 };
