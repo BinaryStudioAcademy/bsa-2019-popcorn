@@ -1,7 +1,8 @@
-import { Router, NextFunction, Request, Response } from "express";
+import { NextFunction, Request, Response, Router } from "express";
 import * as movieService from "../services/movie.service";
 import { Movie } from "../models/MovieModel";
 import errorHandlerMiddleware from "../middlewares/error-handler.middleware";
+import { getAdviceMovie } from "../services/adviceMe.service";
 
 const router = Router();
 
@@ -101,6 +102,11 @@ router
     return movieService
       .getMovieAwards(req.params.imdbId) // get movie by userId and movieId
       .then((response: any) => res.send(response))
+      .catch(next);
+  })
+  .get("/adviceMe/:userId", (req: any, res: Response, next: NextFunction) => {
+    getAdviceMovie(req.params.userId)
+      .then(movies => res.send(movies))
       .catch(next);
   });
 
