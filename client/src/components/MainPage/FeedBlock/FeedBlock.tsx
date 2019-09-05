@@ -44,7 +44,6 @@ const FeedBlock = (props: IProps) => {
 				</div>
 				<div>
 					<RecommendList />
-					<TopList />
 				</div>
 			</div>
 		</div>

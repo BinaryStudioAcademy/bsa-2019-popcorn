@@ -1,5 +1,8 @@
 import React from 'react';
-import RecommendItem from '../RecommendItem/RecommendItem';
+import RecommendItemEvent from './RecommendItemEvent/RecommendItemEvent';
+import RecommendItemTop from './RecommendItemTop/RecommendItemTop';
+import RecommendItemSurvey from './RecommendItemSurvey/RecommendItemSurvey';
+import RecommendItemReview from './RecommendItemReview/RecommendItemReview';
 import './RecommendList.scss';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
@@ -8,7 +11,7 @@ import { faStar } from '@fortawesome/free-solid-svg-icons';
 import { fetchRecommended } from './RecommendList.redux/actions';
 import ReviewItem from '../../MovieSeriesPage/MovieSeriesReviews/ReviewItem/ReviewItem';
 import { NavLink } from 'react-router-dom';
-import TopList from '../../TopListPage/TopList';
+import TopListItem from '../../TopListPage/TopListItem';
 import EventItem from '../../UserPage/UserEvents/EventItem/EventItem';
 import { formatToClient } from '../../UserPage/UserEvents/UserEvents.service';
 import { setReaction } from '../../MovieSeriesPage/MovieSeriesReviews/actions';
@@ -18,27 +21,6 @@ type RecommendList = {
 	fetchRecommended: (userId: string) => any;
 	userId: string;
 	setReaction: (reviewId: string, isLike: boolean) => object;
-};
-
-function getRandomInt(max) {
-	return Math.floor(Math.random() * Math.floor(max));
-}
-
-const transformTops = tops => {
-	let newTops = tops.map(el => {
-		return {
-			id: el.id,
-			title: el.title,
-			topImageUrl: el.topImageUrl,
-			created_at: el.created_at,
-			user: {
-				id: el.userId,
-				avatar: el.avatar,
-				name: el.name
-			}
-		};
-	});
-	return newTops;
 };
 
 const RecommendList = ({
@@ -51,7 +33,7 @@ const RecommendList = ({
 		fetchRecommended(userId);
 	}
 
-	if (recommended) {
+	if (recommended && recommended.events) {
 		recommended.events = formatToClient(recommended.events);
 		console.log(recommended.tops);
 	}
@@ -62,34 +44,36 @@ const RecommendList = ({
 				<FontAwesomeIcon icon={faStar} />
 				<span>Recommended </span>
 			</div>
-			<div>
-				<div>Recommended survey : </div>
-				<NavLink
-					className="survey-link"
-					style={{ textDecoration: 'none' }}
-					to={`/survey-page/${recommended.surveys[1].id}`}
-				>
-					<div className="survey-list-item">
-						<span>{recommended.surveys[1].title}</span>
-					</div>
-				</NavLink>
-			</div>
-			<div>
-				<div>Recommended event:</div>
-				<EventItem event={recommended.events} isOwnEvent={false} />
-			</div>
-			<div>
-				<div>Recommended top:</div>
-				<TopList passedTop={recommended.tops} />
-			</div>
-			<div>
-				<div>Recommended review:</div>
-				<ReviewItem
-					currentUserId={userId}
-					review={recommended.reviews[0]}
-					setReaction={setReaction}
-				/>
-			</div>
+			{recommended.surveys ? (
+				<div>
+					<NavLink
+						className="survey-link"
+						style={{ textDecoration: 'none' }}
+						to={`/survey-page/${recommended.surveys[0].id}`}
+					>
+						<RecommendItemSurvey survey={recommended.surveys[0]} />
+					</NavLink>
+				</div>
+			) : null}
+			{recommended.events ? (
+				<div>
+					<RecommendItemEvent event={recommended.events} />
+				</div>
+			) : null}
+			{recommended.tops ? (
+				<div>
+					<RecommendItemTop top={recommended.tops} />
+				</div>
+			) : null}
+			{recommended.reviews ? (
+				<div>
+					<RecommendItemReview
+						review={recommended.reviews[0]}
+						currUserId={userId}
+						setReaction={setReaction}
+					/>
+				</div>
+			) : null}
 		</div>
 	) : null;
 };

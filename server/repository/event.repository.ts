@@ -16,6 +16,19 @@ class EventRepository extends Repository<Event> {
       .getMany();
   }
 
+  async getRandomEvent(): Promise<Event> {
+    return await getRepository(Event)
+      .createQueryBuilder("event")
+      .leftJoinAndSelect("event.eventComments", "comments")
+      .leftJoinAndSelect("event.eventVisitors", "visitors")
+      .leftJoin("comments.user", "cuser")
+      .addSelect(["cuser.name", "cuser.avatar", "cuser.id"])
+      .leftJoin("visitors.user", "user")
+      .addSelect(["user.name", "user.avatar", "user.id"])
+      .orderBy("RANDOM()")
+      .getOne();
+  }
+
   async getEvent(eventId: string): Promise<Event> {
     return await getRepository(Event)
       .createQueryBuilder("event")

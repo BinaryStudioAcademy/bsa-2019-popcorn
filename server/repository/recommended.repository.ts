@@ -20,7 +20,7 @@ export const getRecommendedTops = async () => {
                 (SELECT COUNT("followerId") AS fc,"follower"."userId" 
                 FROM "follower"  
                 GROUP BY "follower"."userId") t INNER JOIN "top" ON "t"."userId"="top"."userId" 
-            WHERE fc>5`);
+            WHERE fc>20`);
   return tops;
 };
 
