@@ -37,7 +37,7 @@ const TopItem: React.FC<ITopItemProps> = ({
 	// const [isOwnData] = useState(topItem.isOwnData);
 	const [topImageUrl, setTopImageUrl] = useState(topItem.topImageUrl);
 	useEffect(() => {
-		if (urlForTop == topItem.id) {
+		if (urlForTop === topItem.id) {
 			setTopImageUrl(uploadUrl);
 		}
 	}, [uploadUrl]);
@@ -46,7 +46,7 @@ const TopItem: React.FC<ITopItemProps> = ({
 		canEditTop(!editTop);
 	}
 
-	function saveTop(movies: Array<any>) {
+	function saveTop(movies: any[]) {
 		const moviesList = movies.filter(movie => movie.title.trim() !== '');
 		if (title.trim() === '') setTitle('New top');
 		saveUserTop({ ...topItem, moviesList, title, topImageUrl });

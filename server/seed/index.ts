@@ -8,8 +8,6 @@ import { SeedVoting1565848454004 } from "./1565848454004-SeedVoting";
 import { SeedSurveyAnswers1565963322768 } from "./1565963322768-SeedSurveyAnswers";
 import { SeedAdmin1566138938621 } from "./1566138938621-SeedAdmin";
 import { SeedEvents1566428038388 } from "./1566428038388-SeedEvents";
-import { SeedTops1566326006466 } from "./1566326006466-SeedTops";
-import { SeedMovieInTop1566326020135 } from "./1566326020135-SeedMovieInTop";
 import { SeedReviews1566319951202 } from "./1566319951202-SeedReviews";
 import { SeedTops1566549724762 } from "./1566549724762-SeedTops";
 import { SeedFollowers1566665184861 } from "./1566665184861-SeedFollowers";
@@ -28,8 +26,6 @@ export default [
   SeedAdmin1566138938621,
   SeedEvents1566428038388,
   SeedSurveyAnswers1565963322768,
-  // SeedTops1566326006466,
-  // SeedMovieInTop1566326020135,
   SeedReviews1566319951202,
   SeedTops1566549724762,
   SeedFollowers1566665184861,

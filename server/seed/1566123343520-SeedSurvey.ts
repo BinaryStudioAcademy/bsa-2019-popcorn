@@ -1,4 +1,4 @@
-import { MigrationInterface, QueryRunner, getCustomRepository } from "typeorm";
+import { MigrationInterface, getCustomRepository } from "typeorm";
 import UserRepository from "../repository/user.repository";
 import SurveyRepository from "../repository/surveys.repository";
 import SurveyQuestionRepository from "../repository/surveysQuestion.repository";

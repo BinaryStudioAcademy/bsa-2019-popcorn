@@ -10,7 +10,7 @@ import {
 
 interface IReducerState {
 	isLoading: boolean;
-	movieListsPreview?: Array<any>;
+	movieListsPreview?: any[];
 	movieListDetails?: any;
 	selectedPreviewUserId?: string;
 }

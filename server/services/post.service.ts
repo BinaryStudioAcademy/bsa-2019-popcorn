@@ -12,7 +12,9 @@ import PostReactionsRepository from "../repository/postReactions.repository";
 import uuid from "uuid/v4";
 
 const getExtra = async (post: any) => {
-  if (!post.extraType) return post;
+  if (!post.extraType) {
+    return post;
+  }
   switch (post.extraType) {
     case "survey":
       post.survey = await getCustomRepository(SurveyRepository).findOne(
