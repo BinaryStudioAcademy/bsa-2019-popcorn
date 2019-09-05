@@ -21,7 +21,7 @@ export function* fetchMovieReviews(action) {
 			endpoint: `/api/review/movie/${movieId}`,
 			method: 'GET'
 		});
-		
+
 		yield put({
 			type: FETCH_MOVIE_REVIEWS_SUCCESS,
 			payload: {

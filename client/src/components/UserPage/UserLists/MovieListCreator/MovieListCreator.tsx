@@ -5,27 +5,34 @@ import ImageLoader from './ImageLoader/ImageLoader';
 import MovieSearch from '../../../shared/MovieSearch/MovieSearch';
 import { NavLink } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTimesCircle } from '@fortawesome/free-solid-svg-icons';
+import { faTimesCircle, faTimes } from '@fortawesome/free-solid-svg-icons';
+import config from '../../../../config';
+import Image from '../../../shared/Image/Image';
 
 interface IProps {
 	saveMovieList: (movieList: INewMovieList) => object;
+	setShowCreator: (openCreator: boolean) => void;
 }
 
-const MovieListCreator: React.FC<IProps> = ({ saveMovieList }) => {
+const MovieListCreator: React.FC<IProps> = ({
+	saveMovieList,
+	setShowCreator
+}) => {
 	const [title, setTitle] = useState(''),
 		[description, setDescription] = useState(''),
 		[imageUrl, setImageUrl] = useState(''),
-		[moviesDetails, setMoviesDetails]: Array<any> = useState([]),
+		[moviesDetails, setMoviesDetails]: any[] = useState([]),
 		[isPrivate, setIsPrivate] = useState(false),
 		[isDropDownOpen, setIsDropDownOpen] = useState(false);
 
 	const onSelectMovie = movie => {
 		const index = moviesDetails.findIndex(item => item.id === movie.id);
 		if (index === -1) {
-			setMoviesDetails([movie, ...moviesDetails]);
+			setMoviesDetails([...moviesDetails, movie]);
 		}
 	};
-	const elasticProperties = ['id', 'title'];
+
+	const elasticProperties = ['id', 'title', 'poster_path', 'release_date'];
 
 	const onSaveMovieList = () => {
 		if (!title || moviesDetails.length == 0) {
@@ -35,11 +42,12 @@ const MovieListCreator: React.FC<IProps> = ({ saveMovieList }) => {
 		const movieList = {
 			title,
 			description,
-			image_url: imageUrl,
+			imageUrl,
 			moviesId: moviesDetails.map(movie => movie.id),
 			isPrivate
 		};
 		saveMovieList(movieList);
+		setShowCreator(false);
 	};
 
 	const onDeleteMovieLabel = movieId => {
@@ -81,47 +89,6 @@ const MovieListCreator: React.FC<IProps> = ({ saveMovieList }) => {
 					/>
 				</div>
 				<div className="form-item">
-					<label className="item-label item-label-image">Image:</label>
-					<div className="item-right-content-container">
-						{imageUrl === '' ? (
-							<ImageLoader setImageUrl={setImageUrl} isIcon={false} />
-						) : (
-							<div
-								className="image-preview-container"
-								onClick={() => setImageUrl('')}
-							>
-								<img className="cover" src={imageUrl} alt="movie-list-image" />
-							</div>
-						)}
-					</div>
-				</div>
-				<div className="form-item">
-					<label className="item-label item-label-search">Movies: </label>
-					<div className="item-right-content-container">
-						<div className="movie-search-container">
-							<MovieSearch
-								elasticProperties={elasticProperties}
-								onSelectMovie={onSelectMovie}
-							/>
-						</div>
-						<div className="movie-list-preview-container">
-							{moviesDetails.map(movie => (
-								<div key={movie.id} className="movie-preview-item">
-									<NavLink className="link-to-movie" to={'/movies/' + movie.id}>
-										{movie.title}
-									</NavLink>
-									<div
-										className="delete-movie"
-										onClick={() => onDeleteMovieLabel(movie.id)}
-									>
-										<FontAwesomeIcon className="icon" icon={faTimesCircle} />
-									</div>
-								</div>
-							))}
-						</div>
-					</div>
-				</div>
-				<div className="form-item">
 					<label className="item-label">Privacy: </label>
 					<div className="item-right-content-container">
 						<div
@@ -146,9 +113,78 @@ const MovieListCreator: React.FC<IProps> = ({ saveMovieList }) => {
 						</div>
 					</div>
 				</div>
+				<div className="form-item">
+					<label className="item-label item-label-image">Image:</label>
+					<div className="item-right-content-container">
+						{imageUrl === '' ? (
+							<ImageLoader
+								setImageUrl={setImageUrl}
+								isIcon={false}
+								aspectRatio={1}
+							/>
+						) : (
+							<div
+								className="image-preview-container"
+								onClick={() => setImageUrl('')}
+							>
+								<img className="cover" src={imageUrl} alt="movie-list-image" />
+							</div>
+						)}
+					</div>
+				</div>
+				<div className="form-item">
+					<label className="item-label item-label-search">Movies: </label>
+					<div className="item-right-content-container">
+						<div className="movie-search-container">
+							<MovieSearch
+								elasticProperties={elasticProperties}
+								onSelectMovie={onSelectMovie}
+							/>
+						</div>
+					</div>
+				</div>
 			</div>
+			<div className="movie-list-preview-container">
+				{moviesDetails.map(movie => (
+					<div key={movie.id} className="movie-preview-item">
+						<div className="preview-image-container">
+							<Image
+								src={`${config.POSTER_PATH}/${movie.poster_path}`}
+								defaultSrc={config.DEFAULT_MOVIE_IMAGE}
+								alt="poster"
+							/>
+							<div
+								className="preview-delete-movie"
+								onClick={() => onDeleteMovieLabel(movie.id)}
+							>
+								<FontAwesomeIcon
+									className="preview-delete-icon"
+									icon={faTimes}
+									title="Click to delete from the list"
+								/>
+							</div>
+						</div>
+						<div className="preview-main">
+							<div className="preview-movie-title">
+								{movie.title}
+								<span className="preview-movie-date">
+									{movie.release_date
+										? ' (' + movie.release_date.slice(0, 4) + ')'
+										: null}
+								</span>
+							</div>
+						</div>
+					</div>
+				))}
+			</div>
+
 			<div className="movie-list-creator-buttons">
-				<button className="movie-creator-cancel-button">cancel</button>
+				<button
+					className="movie-creator-cancel-button"
+					onClick={() => setShowCreator(false)}
+				>
+					cancel
+				</button>
 				<button className="movie-creator-save-button" onClick={onSaveMovieList}>
 					save
 				</button>

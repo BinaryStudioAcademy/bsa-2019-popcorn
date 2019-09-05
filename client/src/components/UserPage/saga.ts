@@ -1,17 +1,18 @@
 import { all, call, put, takeEvery } from 'redux-saga/effects';
 import {
 	FINISH_UPLOAD_AVATAR,
+	GET_SELECTED_USER_INFO,
+	SEND_POST,
 	SET_AVATAR,
+	SET_SELECTED_USER,
 	SET_TEMP_AVATAR,
 	SET_USER_POSTS,
 	START_UPLOAD_AVATAR,
-	USER_POSTS,
-	SEND_POST,
-	GET_SELECTED_USER_INFO,
-	SET_SELECTED_USER,
-	UPDATE_PROFILE
+	UPDATE_PROFILE,
+	USER_POSTS
 } from './actionTypes';
 import { uploadFile } from '../../services/file.service';
+import callWebApi from './../../services/webApi.service';
 import axios from 'axios';
 import {
 	FETCH_LOGIN,
@@ -26,10 +27,10 @@ import {
 	RESTORE_ERROR,
 	RESTORE_OK,
 	SET_LOGIN_ERROR,
-	SET_REGISTER_ERROR
+	SET_REGISTER_ERROR,
+	AUTH_WITH_SOCIAL
 } from '../authorization/actionTypes';
 import { CONFIRM_CHANGES } from '../ConfirmChange/actionTypes';
-import config from '../../config';
 import webApi from '../../services/webApi.service';
 
 export function* getSelectedUser(action) {
@@ -196,6 +197,19 @@ export function* fetchRegistration(action) {
 		});
 	}
 }
+export function* fetchSocialAuth(action) {
+	try {
+		const { data } = action.payload;
+		localStorage.setItem('token', data.token);
+
+		yield put({
+			type: LOGIN,
+			payload: { user: data.user[0] }
+		});
+	} catch (e) {
+		console.log('Something went wrong with logout');
+	}
+}
 
 export function* fetchPosts(action) {
 	try {
@@ -216,12 +230,37 @@ export function* fetchPosts(action) {
 	}
 }
 
-export function* sendPost(post) {
+export function* sendPost(action) {
+	const {
+		id,
+		image_url,
+		description,
+		title,
+		userId,
+		extraLink,
+		extraTitle,
+		extraType,
+		extraData
+	} = action.payload.data;
+	const post = id
+		? {
+				id,
+				image_url,
+				description,
+				title,
+				userId,
+				extraLink,
+				extraTitle,
+				survey: extraType === 'survey' ? { id: extraData.id } : {},
+				top: extraType === 'top' ? { id: extraData.id } : {},
+				event: extraType === 'event' ? { id: extraData.id } : {}
+		  }
+		: action.payload.data;
 	try {
 		yield call(webApi, {
-			method: 'POST',
-			endpoint: '/api/post/',
-			body: { ...post.payload.data }
+			method: id ? 'PUT' : 'POST',
+			endpoint: '/api/post',
+			body: { ...post }
 		});
 
 		yield put({
@@ -332,6 +371,10 @@ function* watchConfirm() {
 	yield takeEvery(CONFIRM_CHANGES, confirmChanges);
 }
 
+function* watchFetchSocialAuth() {
+	yield takeEvery(AUTH_WITH_SOCIAL, fetchSocialAuth);
+}
+
 export default function* profile() {
 	yield all([
 		watchGetSelectedUser(),
@@ -346,6 +389,8 @@ export default function* profile() {
 		watchFetchLogout(),
 		watchUpdateProfile(),
 		watchSendPost(),
-		watchConfirm()
+		watchConfirm(),
+		watchFetchLogout(),
+		watchFetchSocialAuth()
 	]);
 }

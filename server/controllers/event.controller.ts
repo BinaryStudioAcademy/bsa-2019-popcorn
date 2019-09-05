@@ -1,7 +1,6 @@
-import { Router, NextFunction, Request, Response } from "express";
+import { Router, NextFunction, Response } from "express";
 import * as eventService from "../services/event.service";
 import { Event, EventComment, EventVisitor } from "../models/Events";
-import { Event as EventEntity } from "../entities/Events";
 
 const router = Router();
 
@@ -43,7 +42,7 @@ router
       .then((response: Event[]) => res.send(response))
       .catch(next)
   )
-  //comments
+  // comments
   .post("/comment", (req: any, res: Response, next: NextFunction) =>
     eventService
       .createComment(req.body)
@@ -68,7 +67,7 @@ router
       .then((response: EventComment[]) => res.send(response))
       .catch(next)
   )
-  //visitors
+  // visitors
   .post("/visitor", (req: any, res: Response, next: NextFunction) =>
     eventService
       .createVisitor(req.body)

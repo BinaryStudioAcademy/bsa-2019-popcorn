@@ -62,10 +62,6 @@ class UserTops extends React.Component<IUserTopProps, IUserTopsState> {
 		};
 	}
 
-	componentDidMount() {
-		this.props.fetchTops(this.props.selectedUserId);
-	}
-
 	static getDerivedStateFromProps(props, state) {
 		if (state.isAction && !isEqual(props.topList, state.topList)) {
 			return {
@@ -74,6 +70,10 @@ class UserTops extends React.Component<IUserTopProps, IUserTopsState> {
 			};
 		}
 		return null;
+	}
+
+	componentDidMount() {
+		this.props.fetchTops(this.props.selectedUserId);
 	}
 
 	deleteTop = (top: ITopItem) => {

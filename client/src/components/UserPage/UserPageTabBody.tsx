@@ -35,7 +35,7 @@ interface IProps {
 	uploadUrl?: string;
 	cancelAvatar: () => any;
 	setAvatar: (url: string, id: string) => any;
-	userPosts?: any; //todo
+	userPosts?: any; // todo
 	getUsersPosts: (id: string) => any;
 	selectedProfileInfo: ISelectedProfileInfo;
 	croppedSaved: boolean;
@@ -132,7 +132,15 @@ const UserPageTabs: React.SFC<IProps> = ({
 						/>
 					)}
 				/>
-				<Route path={`${mainPath}/lists`} component={UserLists} />
+				<Route
+					path={`${mainPath}/lists`}
+					component={() => (
+						<UserLists
+							selectedUserId={selectedProfileInfo.id}
+							isOwnData={isOwnData}
+						/>
+					)}
+				/>
 				<Route
 					path={`${mainPath}/watch-list`}
 					component={() => (

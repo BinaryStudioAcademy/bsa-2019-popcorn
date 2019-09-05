@@ -6,21 +6,21 @@ const router = Router();
 
 router
 
-  .get("/:userId", (req, res, next) =>
+  .get("/:userId", errorHandlerMiddleware, (req, res, next) =>
     movieListService
-      .getListsByUserId(req.params.userId)
-      .then(result => res.send(result))
-      .catch(next)
-  )
-  .get("/", errorHandlerMiddleware, (req, res, next) =>
-    movieListService
-      .getOwnUserLists(req.user.id)
+      .getListsByUserId(req.params.userId, req.user.id)
       .then(result => res.send(result))
       .catch(next)
   )
   .get("/details/:id", (req, res, next) =>
     movieListService
       .getMovieListDetails(req.params.id)
+      .then(result => res.send(result))
+      .catch(next)
+  )
+  .get("/", (req, res, next) =>
+    movieListService
+      .getAllMovieLists()
       .then(result => res.send(result))
       .catch(next)
   )

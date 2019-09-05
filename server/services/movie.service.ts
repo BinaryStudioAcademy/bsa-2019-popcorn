@@ -1,5 +1,4 @@
 import { Movie } from "../models/MovieModel";
-import { MovieRate } from "../models/movieRateModel";
 import MovieRepository, {
   getMovieVideoLinkById,
   getCredits,
@@ -16,9 +15,14 @@ import { ExtendedDiscussion, Discussion } from "models/DiscussionModel";
 export const getMovies = async ({ size, from }): Promise<any[]> => {
   let data = await elasticRepository.get(size, from);
 
-  data = data.hits.hits;
+  try {
+    data = data.hits.hits;
 
-  return data.map(movie => movie._source);
+    return data.map(movie => movie._source);
+  } catch (e) {
+    console.log(e);
+    return [];
+  }
 };
 
 export const getFiltredMovies = async (
@@ -31,18 +35,18 @@ export const getFiltredMovies = async (
 };
 
 export const getMoviesGenres = async (): Promise<any[]> => {
-  let genres = await getGenres();
+  const genres = await getGenres();
   return genres.genres;
 };
 
 export const getMovieAwards = async (imdbId: any): Promise<any> => {
-  let awardList = await getAwards(imdbId);
+  const awardList = await getAwards(imdbId);
   return awardList.data.movies[0].awards;
 };
 
 export const getMovieById = async (movieId: string): Promise<any> => {
   const data = await elasticRepository.getById(movieId);
-  let movie = data.hits.hits[0]._source;
+  const movie = data.hits.hits[0]._source;
 
   const messages = await getCustomRepository(DiscussionRepository).getMessages(
     movieId
@@ -83,12 +87,14 @@ export const getByTitle = async (title: string): Promise<Movie[]> => {
 
   data = data.hits.hits;
   const movies = data.map(movie => movie._source);
-  let moviesSet = new Map();
+  const moviesSet = new Map();
   movies.forEach(movie => {
     moviesSet.set(movie.id, movie);
   });
-  let response = [];
-  for (let movie of moviesSet.values()) response.push(movie);
+  const response = [];
+  for (const movie of moviesSet.values()) {
+    response.push(movie);
+  }
   return response;
 };
 
@@ -116,7 +122,9 @@ export const getMovieRate = async (
     userId,
     movieId
   });
-  if (data) return data;
+  if (data) {
+    return data;
+  }
   return { userId, movieId, rate: 0 };
 };
 

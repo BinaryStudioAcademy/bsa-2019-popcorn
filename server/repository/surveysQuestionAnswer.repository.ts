@@ -5,7 +5,6 @@ import SurveyQuestionOption from "./surveysQuestionOption.repository";
 import SurveyQuestion from "./surveysQuestion.repository";
 import { SurveysQuestionAnswer } from "../models/SurveysQuestionAnswer";
 import { SurveysQuestionAnswer as SurveysQuestionAnswerEntity } from "../entities/SurveysQuestionAnswer";
-import SurveysOptionRepository from "./surveysQuestion.repository";
 
 @EntityRepository(SurveysQuestionAnswerEntity)
 class SurveysQuestionAnswerRepository extends Repository<

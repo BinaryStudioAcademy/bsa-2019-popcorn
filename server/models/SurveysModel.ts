@@ -10,4 +10,5 @@ export class Surveys {
   surveysQuestion: SurveysQuestion[];
   created_at: Date;
   updated_at: Date;
+  image: string;
 }

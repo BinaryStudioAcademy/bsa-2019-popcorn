@@ -32,7 +32,7 @@ const Extra = (props: IProps) => {
 	const getTopBody = data => {
 		const movieForShow = [...data.movieInTop].slice(0, 3);
 		return (
-			<>
+			<div>
 				<div className="extra-title">
 					<FontAwesomeIcon icon={faTrophy} className="extra-icon" />
 					<span>{data.title}</span>
@@ -41,12 +41,12 @@ const Extra = (props: IProps) => {
 					<div className="extra-description">
 						{movieForShow.map((movieTop, i) => (
 							<p key={movieTop.id} className="movie-top-item">
-								{i + 1}. {movieTop.movie.title}
+								{i + 1}. {movieTop.title}
 							</p>
 						))}
 					</div>
 				)}
-			</>
+			</div>
 		);
 	};
 	const getEventBody = data => {

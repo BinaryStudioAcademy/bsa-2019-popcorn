@@ -109,7 +109,7 @@ export const getById = async (id: string) => {
       body: JSON.stringify({
         query: {
           match: {
-            id: id
+            id
           }
         }
       })
@@ -155,7 +155,7 @@ export const getByIdValues = async idValues => {
 
 export const getPropertiesByMovieTitle = async (
   title: string,
-  properties: Array<string>
+  properties: string[]
 ) => {
   const response = await fetch(
     process.env.ELASTIC_API_URL + "/popcorn/_search",
@@ -178,7 +178,7 @@ export const getPropertiesByMovieTitle = async (
 
 export const getPropertiesByMovieId = async (
   id: string,
-  properties: Array<string>
+  properties: string[]
 ) => {
   const response = await fetch(
     process.env.ELASTIC_API_URL + "/popcorn/_search",

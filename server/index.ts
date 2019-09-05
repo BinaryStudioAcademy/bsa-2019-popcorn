@@ -19,6 +19,7 @@ import socketHandlers from "./socket/handlers";
 
 const cors = require("cors");
 const http = require("http");
+
 const app = express();
 
 app.use(cors());

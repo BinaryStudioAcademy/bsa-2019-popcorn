@@ -71,14 +71,6 @@ $color: black;
 		}
 	}
 
-	.movie-add-wrp {
-		padding: 10px;
-
-		.edit-form {
-			padding: 0;
-		}
-	}
-
 	.modal-data-search-show {
 		transform: scaleY(1) !important;
 	}
@@ -192,7 +184,7 @@ $color: black;
 		letter-spacing: 0.4px;
 		color: #122737;
 		display: flex;
-		padding: 15px;
+		padding: 10px 15px;
 	}
 }
 

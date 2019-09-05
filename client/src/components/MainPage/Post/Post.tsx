@@ -12,8 +12,7 @@ import PostContent from '../PostContent/PostContent';
 import config from '../../../config';
 import Reactions from '../Reactions/Reactions';
 import PostReaction from './PostReaction/PostReaction';
-import { NavLink } from 'react-router-dom';
-import { Link } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 import IPost from './IPost';
 import IComment from './IComment';
 import IReaction from './IReaction';
@@ -30,6 +29,7 @@ type IPostProps = {
 	createReaction?: (type: string, userId: string, postId: string) => any;
 	addNewReaction?: (reaction: IReaction) => any;
 	deletePost: (id: string, userId: string) => any;
+	setShowPostsConstructor: any;
 };
 
 interface IReactItem {
@@ -91,9 +91,15 @@ class Post extends Component<IPostProps, IPostState> {
 
 	isModalShown() {
 		return this.state.isModalShown ? (
-			<PostEditModal isOwn={this.isOwnPost()} deletePost={this.deletePost} />
+			<PostEditModal
+				isOwn={this.isOwnPost()}
+				deletePost={this.deletePost}
+				editPost={() => this.props.setShowPostsConstructor(this.props.post)}
+				toggleModal={() => this.toggleModal()}
+			/>
 		) : null;
 	}
+
 	getType = () => {
 		const post = this.props.post;
 		if (post.survey) {
@@ -107,6 +113,7 @@ class Post extends Component<IPostProps, IPostState> {
 		}
 		return 'Nothing';
 	};
+
 	parseDescription(description) {
 		const arr = description.split('@');
 		const res = arr.map(str =>
@@ -117,6 +124,7 @@ class Post extends Component<IPostProps, IPostState> {
 		);
 		return <JsxParser components={{ Link }} jsx={`<p>${res.join('')}</p>`} />;
 	}
+
 	nestComments(commentList) {
 		const commentMap = {};
 		commentList.forEach(comment => (commentMap[comment.id] = comment));

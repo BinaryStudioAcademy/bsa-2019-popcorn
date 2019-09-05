@@ -14,7 +14,9 @@
 		"no-console": false,
 		"quotemark": false,
 		"member-access": false,
-		"prefer-for-of": false
+		"prefer-for-of": false,
+		"no-string-literal": false,
+		"variable-name": false
 	},
 	"defaultSeverity": "warning"
 }

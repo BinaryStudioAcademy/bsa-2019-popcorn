@@ -34,6 +34,7 @@ import TMovie from '../../components/MovieSeriesPage/TMovie';
 import { IEventFormatDataBase } from '../../components/UserPage/UserEvents/UserEvents.service';
 import TopList from '../../components/TopListPage/TopList';
 import SettingsPage from '../../components/UserSettings';
+import UserMovieList from '../../components/UserMovieList/UserMovieList';
 import ResultList from '../../components/shared/ContentSearch/ResultList';
 
 const { notifications } = {
@@ -182,6 +183,7 @@ const Main = ({
 						></Route>
 						<Route exact={true} path={`/tops`} render={() => <TopList />} />
 						<Route path={`/tops/:id`} component={TopPage} />
+						<Route path={`/movie-list/:id`} component={UserMovieList} />
 						<Route path={`/*`} exact component={NotFound} />
 					</Switch>
 				</div>
