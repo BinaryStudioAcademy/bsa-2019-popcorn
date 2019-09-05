@@ -43,31 +43,31 @@ class ChatBody extends React.Component<IProps, IState> {
 		const { messages, userId } = this.props;
 		return (
 			<ScrollToBottom className="chat-body" followButtonClassName="to-bottom">
-				{messages.map(message => {
+				{messages.map((message, i) => {
 					const date = new Date(message.created_at);
 					const currentDate = `${date.getDate()}.${date.getMonth()}.${date.getFullYear()}`;
 					if (currentDate !== tmpDate) {
 						tmpDate = currentDate;
 						if (message.user.id === userId) {
 							return (
-								<div className="break-line-wrp">
+								<div key={i} className="break-line-wrp">
 									<BreakLine date={date} />
-									<OutgoingMessage message={message} />
+									<OutgoingMessage key={message.id} message={message} />
 								</div>
 							);
 						} else {
 							return (
-								<div className="break-line-wrp">
+								<div key={i} className="break-line-wrp">
 									<BreakLine date={date} />
-									<IncomingMessage message={message} />
+									<IncomingMessage key={message.id} message={message} />
 								</div>
 							);
 						}
 					} else {
 						if (message.user.id === userId) {
-							return <OutgoingMessage message={message} />;
+							return <OutgoingMessage key={message.id} message={message} />;
 						} else {
-							return <IncomingMessage message={message} />;
+							return <IncomingMessage key={message.id} message={message} />;
 						}
 					}
 				})}
