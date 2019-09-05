@@ -18,6 +18,12 @@ router
       .then(result => res.send(result))
       .catch(next)
   )
+  .get("/", (req, res, next) =>
+    movieListService
+      .getAllMovieLists()
+      .then(result => res.send(result))
+      .catch(next)
+  )
   .post("/", errorHandlerMiddleware, (req, res, next) =>
     movieListService
       .saveMovieList(req.user.id, req.body)
