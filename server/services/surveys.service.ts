@@ -26,6 +26,10 @@ export const getSurveysById = async (id: string, next): Promise<Surveys> => {
   return await getCustomRepository(SurveysRepository).getSurveysById(id, next);
 };
 
+export const getSurveysByTitle = async (title: string): Promise<Surveys[]> => {
+  return await getCustomRepository(SurveysRepository).getSurveysByTitle(title);
+};
+
 export const deleteSurveysById = async (id: string, next): Promise<{}> => {
   return await getCustomRepository(SurveysRepository).deleteSurveysById(
     id,

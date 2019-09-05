@@ -1,7 +1,21 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import PostList from '../../MainPage/PostList/PostList';
 
-const MovieSeriesPosts: React.FC = () => {
-	return <div className="MovieSeriesPosts">MovieSeriesPosts</div>;
+interface IProps {
+	fetchPostsByFilm: () => void;
+	posts?: Array<any>;
+}
+
+const MovieSeriesPosts: React.FC<IProps> = ({ fetchPostsByFilm, posts }) => {
+	useEffect(() => {
+		fetchPostsByFilm();
+	}, []);
+	return (
+		<div className="MovieSeriesPosts">
+			{' '}
+			<PostList posts={posts} />{' '}
+		</div>
+	);
 };
 
 export default MovieSeriesPosts;

@@ -3,7 +3,6 @@ import { Surveys } from "./SurveysModel";
 import { Top } from "./TopModel";
 import { Event } from "./Events";
 
-import { PostCommentsModel as PostComment } from "./PostCommentsModel.js";
 export class Post {
   id: string;
   title: string;

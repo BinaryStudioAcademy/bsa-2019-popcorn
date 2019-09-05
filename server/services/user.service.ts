@@ -19,6 +19,11 @@ export const getUsers = async (): Promise<IResponse> => {
 export const getUserById = async (id: string): Promise<IResponse> => {
   return await getCustomRepository(UserRepository).getUserById(id);
 };
+export const getUserByName = async (name: string): Promise<User[]> => {
+  return await getCustomRepository(UserRepository).find({
+    where: `name ILIKE '%${name}%'` 
+  });
+};
 
 export const updateById = async (id: string, body: any): Promise<IResponse> => {
   return await getCustomRepository(UserRepository).updateById(id, body);
@@ -29,8 +34,10 @@ export const deleteById = async (
   user: User,
   next
 ): Promise<IResponse> => {
-  if (id !== user.id)
+  if (id !== user.id) {
     return next({ status: 401, message: "Permision denied." }, null);
+  }
+    
   return await getCustomRepository(UserRepository).deleteById(id);
 };
 
@@ -48,8 +55,10 @@ export const updateEmail = async (
   email: string,
   next
 ) => {
-  if (userId !== user.id)
+  if (userId !== user.id) {
     return next({ status: 401, message: "Permision denied." }, null);
+  }
+    
   const userByEmail = await getByEmail(email);
   if (userByEmail) {
     return next({ status: 401, message: "Email is already taken." }, null);
@@ -66,8 +75,10 @@ export const updatePassword = async (
   password: string,
   next
 ) => {
-  if (userId !== user.id)
+  if (userId !== user.id) {
     return next({ status: 401, message: "Permision denied." }, null);
+  }
+    
   if (password.length < 6) {
     return next(
       { status: 401, message: "Password shoud contain min 6 symbols" },
@@ -96,10 +107,14 @@ export const updateNotificationSettings = async (
   newSettings: IUserNotificationSettings,
   next
 ) => {
-  if (userId !== user.id)
+  if (userId !== user.id) {
     return next({ status: 401, message: "Permision denied." }, null);
+  }
+    
   const newData = { ...user, ...newSettings };
-  if (newData.favoriteLists) delete newData.favoriteLists;
+  if (newData.favoriteLists) {
+    delete newData.favoriteLists;
+  }
   return await getCustomRepository(UserRepository).updateById(userId, newData);
 };
 
@@ -124,9 +139,13 @@ export const updatePrivacySettings = async (
   newSettings: IUserPrivacySettings,
   next
 ) => {
-  if (userId !== user.id)
+  if (userId !== user.id) {
     return next({ status: 401, message: "Permision denied." }, null);
+  }
+    
   const newData = { ...user, ...newSettings };
-  if (newData.favoriteLists) delete newData.favoriteLists;
+  if (newData.favoriteLists) {
+    delete newData.favoriteLists;
+  }
   return await getCustomRepository(UserRepository).updateById(userId, newData);
 };

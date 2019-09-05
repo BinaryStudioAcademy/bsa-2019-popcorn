@@ -1,5 +1,4 @@
 import { User } from "./UserModel";
-import { SurveysQuestion } from "./SurveysQuestionModel";
 
 export class Surveys {
   id: string;

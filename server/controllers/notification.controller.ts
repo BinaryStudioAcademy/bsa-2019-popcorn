@@ -1,4 +1,4 @@
-import { Router, NextFunction, Request, Response } from "express";
+import { Router, NextFunction, Response } from "express";
 import * as firebaseService from "../services/firebase.service";
 import * as notificationService from "../services/notification.service";
 
@@ -23,7 +23,15 @@ router
   )
   .delete("/:id", (req: any, res: Response, next: NextFunction) =>
     notificationService
-      .setNotificitationIsRead(req.params.id)
+      .setNotificationIsRead(req.params.id)
+      .then(response => {
+        res.send(response);
+      })
+      .catch(next)
+  )
+  .delete("/token/:id", (req: any, res: Response, next: NextFunction) =>
+    firebaseService
+      .deleteAppInstanceToken(req.params.id, req.user.id)
       .then(response => {
         res.send(response);
       })

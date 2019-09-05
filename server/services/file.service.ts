@@ -2,6 +2,7 @@ import { Form } from "multiparty";
 import { upload } from "./image.service";
 const base64Img = require("base64-img");
 const path = require("path");
+const fs = require("fs");
 
 export const uploadFile = req =>
   new Promise<any>((resolve, reject) => {
@@ -13,7 +14,6 @@ export const uploadFile = req =>
         uploadDir: path.resolve(`${__dirname}/../../client/build/images`),
         maxFilesSize: 1048576 * 3
       });
-
       form.parse(req, function(err, fields, files): any {
         if (err) return reject(err);
         if (process.env.NODE_ENV === "production") {
@@ -38,7 +38,7 @@ export const uploadFile = req =>
         buffer.push(chunk);
       });
 
-      req.once("end", function() {
+      req.once("end", () => {
         const concat = Buffer.concat(buffer);
         req.body = JSON.parse(concat.toString("utf8"));
 
@@ -46,5 +46,7 @@ export const uploadFile = req =>
           .then(url => resolve(url))
           .catch(e => reject(e));
       });
-    } else reject(new Error("Bad request"));
+    } else {
+      reject(new Error("Bad request"));
+    }
   });

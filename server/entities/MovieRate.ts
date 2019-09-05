@@ -1,4 +1,5 @@
-import { Entity, PrimaryGeneratedColumn, Column } from "typeorm";
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from "typeorm";
+import { User } from "./User";
 
 @Entity()
 export class MovieRate {
@@ -7,6 +8,9 @@ export class MovieRate {
 
   @Column()
   userId: string;
+
+  @ManyToOne(type => User, user => user.id)
+  user: User;
 
   @Column()
   movieId: string;

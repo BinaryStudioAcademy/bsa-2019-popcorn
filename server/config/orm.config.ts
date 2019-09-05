@@ -14,7 +14,7 @@ const url =
   DATABASE_URL ||
   `postgresql://${DB_USERNAME}:${DB_PASSWORD}@${DB_HOST}/${DB_NAME}`;
 
-const db_config: ConnectionOptions = {
+const dbConfig: ConnectionOptions = {
   type: "postgres",
   url,
   synchronize: true,
@@ -23,4 +23,4 @@ const db_config: ConnectionOptions = {
   migrations
 };
 
-export default db_config;
+export default dbConfig;

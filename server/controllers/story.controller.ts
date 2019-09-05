@@ -7,7 +7,7 @@ const router = Router();
 router
   .get("/", (req: Request, res: Response, next: NextFunction) =>
     StoryService.getStories()
-      .then((response: Array<Story>) => res.send(response))
+      .then((response: Story[]) => res.send(response))
       .catch(next)
   )
   .get("/:id", (req: any, res: Response, next: NextFunction) =>

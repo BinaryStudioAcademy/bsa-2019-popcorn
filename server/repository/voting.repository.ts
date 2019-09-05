@@ -11,13 +11,15 @@ class VotingRepository extends Repository<Voting> {
   async createVoting(
     id: string,
     voting: Voting,
-    votingOptions: Array<VotingOption>,
+    votingOptions: VotingOption[],
     next?
   ) {
     try {
       const user = await getCustomRepository(UserRepository).findOne(id);
-      if (!user)
+      if (!user) {
         return next({ status: 404, message: "User is not found" }, null);
+      }
+        
       voting.user = user;
 
       await Promise.all(
@@ -47,8 +49,10 @@ class VotingRepository extends Repository<Voting> {
   async getVotingById(id: string, next?) {
     try {
       const voting = await this.findOne(id);
-      if (!voting)
+      if (!voting) {
         return next({ status: 404, message: "Voting is not found" }, null);
+      }
+        
       return await this.findOne(id);
     } catch (err) {
       return next({ status: err.status, message: err.message }, null);
@@ -58,8 +62,10 @@ class VotingRepository extends Repository<Voting> {
   async getVotingByUserId(id: string, next?) {
     try {
       const user = await getCustomRepository(UserRepository).findOne(id);
-      if (!user)
+      if (!user) {
         return next({ status: 404, message: "User is not found" }, null);
+      }
+        
       return await this.find({ user });
     } catch (err) {
       return next({ status: err.status, message: err.message }, null);
@@ -81,8 +87,10 @@ class VotingRepository extends Repository<Voting> {
   async deleteVotingById(id: string, next?) {
     try {
       const voting = await this.getVotingById(id, next);
-      if (!voting)
+      if (!voting) {
         return next({ status: 404, message: "Voiting is not found" }, null);
+      }
+        
       await this.delete({ id });
       return {};
     } catch (err) {
@@ -97,8 +105,10 @@ class VotingRepository extends Repository<Voting> {
   ) {
     try {
       const voting = await this.getVotingById(id, next);
-      if (!voting)
+      if (!voting) {
         return next({ status: 404, message: "Voiting is not found" }, null);
+      }
+        
       const newOption = await getCustomRepository(
         VotingOptionRepository
       ).createVotingOption(votingOption, next, voting);

@@ -7,21 +7,26 @@ import {
 	ADD_MOVIE_TO_WATCH_LIST_SUCCESS,
 	DELETE_MOVIE_FROM_WATCH_LIST_SUCCESS,
 	DELETE_MOVIE_FROM_WATCH_LIST,
-	ADD_MOVIE_TO_WATCH_LIST
+	ADD_MOVIE_TO_WATCH_LIST,
+	FETCH_WATCH_LIST_IDS_SUCCESS
 } from './actionTypes';
 import movieAdapter from '../../MovieSeriesPage/movieAdapter';
 import config from '../../../config';
 
 interface IReducer {
-	watchList?: Array<any>;
+	watchList?: any[];
 	watchListStatus?: string;
 	isLoading?: boolean;
+	watchListIds?: any[];
+	loadingOnMovie?: string;
 }
 
 const initialState: IReducer = {
 	watchList: undefined,
 	watchListStatus: undefined,
-	isLoading: undefined
+	isLoading: undefined,
+	watchListIds: undefined,
+	loadingOnMovie: undefined
 };
 
 export default (state = initialState, action) => {
@@ -31,6 +36,7 @@ export default (state = initialState, action) => {
 				...state,
 				watchList: formatWatchList(action.payload.watchList)
 			};
+
 		case SAVE_WATCH_ITEM_SUCCESS:
 			const newMovie = formatMovieProp(action.payload);
 			if (!newMovie) return { ...state };
@@ -39,6 +45,13 @@ export default (state = initialState, action) => {
 				watchList: [newMovie, ...state.watchList],
 				watchListStatus: undefined
 			};
+
+		case FETCH_WATCH_LIST_IDS_SUCCESS:
+			return {
+				...state,
+				watchListIds: action.payload.watchListIds
+			};
+
 		case MOVE_WATCH_ITEM_TO_WATCHED:
 			const prevWatchList = [...state.watchList];
 			const putItem = prevWatchList.find(
@@ -52,8 +65,15 @@ export default (state = initialState, action) => {
 			return {
 				...state,
 				watchList: [...prevWatchList],
-				watchListStatus: undefined
+				watchListStatus: undefined,
+				watchListIds: [
+					...prevWatchList.map(watch => {
+						watch.movieId = watch.movie.id;
+						return watch;
+					})
+				]
 			};
+
 		case DELETE_WATCH_ITEM:
 			const watchList = [...state.watchList];
 			return {
@@ -61,44 +81,67 @@ export default (state = initialState, action) => {
 				watchList: watchList.filter(
 					watch => watch.id !== action.payload.watchId
 				),
-				watchListStatus: undefined
+				watchListStatus: undefined,
+				watchListIds: [...state.watchListIds].filter(
+					watch => watch.id !== action.payload.watchId
+				)
 			};
+
 		case FETCH_WATCH_LIST_STATUS_SUCCESS:
 			return {
 				...state,
 				watchListStatus: action.payload.watchListStatus
 			};
+
 		case ADD_MOVIE_TO_WATCH_LIST:
 			return {
 				...state,
-				isLoading: true
+				isLoading: true,
+				loadingOnMovie: action.payload.movieId
 			};
+
 		case ADD_MOVIE_TO_WATCH_LIST_SUCCESS:
+			const newWatchListIds = state.watchListIds
+				? [...state.watchListIds, action.payload]
+				: undefined;
 			return {
 				...state,
 				watchListStatus: action.payload,
 				watchList: undefined,
-				isLoading: false
+				isLoading: false,
+				watchListIds: newWatchListIds,
+				loadingOnMovie: undefined
 			};
+
 		case DELETE_MOVIE_FROM_WATCH_LIST:
 			return {
 				...state,
-				isLoading: true
+				isLoading: true,
+				loadingOnMovie: action.payload.movieId
 			};
+
 		case DELETE_MOVIE_FROM_WATCH_LIST_SUCCESS:
 			return {
 				...state,
 				watchListStatus: action.payload.watchListStatus,
 				watchList: undefined,
-				isLoading: false
+				isLoading: false,
+				loadingOnMovie: undefined,
+				watchListIds: state.watchListIds
+					? [...state.watchListIds].filter(
+							watch =>
+								String(watch.movieId) !==
+								String(action.payload.watchListStatus.movieId)
+					  )
+					: undefined
 			};
+
 		default:
 			return state;
 	}
 };
 
 const formatWatchList = watchList => {
-	// BUG WITH ELASTIC FUNCTION
 	const tmpList = watchList.map(watch => {
 		if (watch.movie) {
 			const movie = movieAdapter(watch.movie);
@@ -116,7 +159,6 @@ const formatMovieProp = movieProp => {
 		id: movie.id,
 		poster_path: config.POSTER_PATH + movie.poster_path,
 		title: movie.title,
-		genres: 'Action, Drama, Horror',
 		runtime: movie.runtime,
 		release_date: movie.release_date || null
 	};

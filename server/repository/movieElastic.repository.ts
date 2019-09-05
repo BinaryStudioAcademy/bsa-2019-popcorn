@@ -109,7 +109,7 @@ export const getById = async (id: string) => {
       body: JSON.stringify({
         query: {
           match: {
-            id: id
+            id
           }
         }
       })
@@ -155,7 +155,7 @@ export const getByIdValues = async idValues => {
 
 export const getPropertiesByMovieTitle = async (
   title: string,
-  properties: Array<string>
+  properties: string[]
 ) => {
   const response = await fetch(
     process.env.ELASTIC_API_URL + "/popcorn/_search",
@@ -178,7 +178,7 @@ export const getPropertiesByMovieTitle = async (
 
 export const getPropertiesByMovieId = async (
   id: string,
-  properties: Array<string>
+  properties: string[]
 ) => {
   const response = await fetch(
     process.env.ELASTIC_API_URL + "/popcorn/_search",
@@ -193,6 +193,27 @@ export const getPropertiesByMovieId = async (
             id
           }
         }
+      })
+    }
+  );
+  return response.json();
+};
+
+export const getPropertiesByIdValues = async (idValues, properties) => {
+  const response = await fetch(
+    process.env.ELASTIC_API_URL + `/popcorn/_search`,
+    {
+      method: "POST",
+      body: JSON.stringify({
+        _source: {
+          includes: [...properties]
+        },
+        query: {
+          terms: {
+            id: [...idValues]
+          }
+        },
+        size: idValues.length
       })
     }
   );

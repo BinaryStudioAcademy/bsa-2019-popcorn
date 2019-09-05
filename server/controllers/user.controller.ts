@@ -4,7 +4,6 @@ import * as userTempService from "../services/userTemp.service";
 import * as emailService from "../services/email.service";
 import jwtMiddleware from "../middlewares/jwt.middleware";
 import { User } from "../models/UserModel";
-import { UserTemp } from "../models/UserModelTemp";
 
 const router = Router();
 

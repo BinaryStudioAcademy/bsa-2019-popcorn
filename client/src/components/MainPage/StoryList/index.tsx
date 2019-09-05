@@ -23,7 +23,6 @@ import IVoting from './IVoting';
 import TMovie from '../../MovieSeriesPage/TMovie';
 import {
 	fetchSearch,
-	fetchSearchToAddMovieInStory,
 	resetSearch
 } from '../../MovieSeriesPage/Movie.redux/actions';
 import CreateStoryFilm from './story-modal/create-story-film';
@@ -81,9 +80,6 @@ interface IProps {
 	title: string;
 	resetSearch: () => any;
 	saveMovie: (movie: TMovie, movieOption?: string) => any;
-	fetchSearchToAddMovieInStory: (title: string) => any;
-	searchTitle: string;
-	moviesSearchAddMovieToStory: null | Array<TMovie>;
 	isLoading: boolean;
 	photoSaved: boolean;
 	saveCroppedImage: () => void;
@@ -125,11 +121,7 @@ const ListBlock = ({ ...props }: IProps) => {
 					component={other_props => (
 						<CreateStoryFilm
 							{...other_props}
-							fetchSearchToAddMovieInStory={props.fetchSearchToAddMovieInStory}
-							moviesSearchAddMovieToStory={props.moviesSearchAddMovieToStory}
-							searchTitle={props.searchTitle}
 							saveMovie={props.saveMovie}
-							isLoading={props.isLoading}
 						/>
 					)}
 				/>
@@ -166,8 +158,6 @@ const mapStateToProps = (rootState, props) => ({
 	title: rootState.story.title,
 	cursorPosition: rootState.story.cursorPosition,
 	movies: rootState.movie.moviesSearchInCreating,
-	moviesSearchAddMovieToStory: rootState.movie.moviesSearchAddMovieToStory,
-	searchTitle: rootState.movie.searchTitle,
 	isLoading: rootState.movie.isLoading,
 	photoSaved: rootState.story.photoSaved
 });
@@ -183,7 +173,6 @@ const actions = {
 	fetchSearch,
 	resetSearch,
 	saveMovie,
-	fetchSearchToAddMovieInStory,
 	saveCroppedImage
 };
 const mapDispatchToProps = dispatch => bindActionCreators(actions, dispatch);

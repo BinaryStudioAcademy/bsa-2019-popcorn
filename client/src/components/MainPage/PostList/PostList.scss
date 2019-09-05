@@ -15,10 +15,13 @@
 	margin-bottom: 30px;
 	display: flex;
 	align-items: center;
-
-	svg {
-		fill: $button-background;
+	// justify-content: center;
+	cursor: pointer;
+	.feedAddPost {
 		margin-right: 10px;
-		height: 25px;
+		.feedAddPostIcon {
+			font-size: 30px;
+			color: $button-background;
+		}
 	}
 }
