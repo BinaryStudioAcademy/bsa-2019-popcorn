@@ -1,47 +1,16 @@
-.stars-button {
-	width: 30px;
-	height: 30px;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	border-radius: 50%;
-	cursor: pointer;
-	margin: 0 10px 0 10px;
-	border: 2px solid #fb8700;
-	background-color: white;
-	opacity: 1;
-
-	&:hover {
-		opacity: 0.8;
+.StarRating {
+	border: 1px solid red;
+	position: relative;
+	.star-user-rating-container {
+		display: flex;
 	}
-
-	svg {
-		font-size: 0.9em;
-		color: inherit;
-	}
-}
-
-.star-rating.hide-rating {
-	transform: translateY(-10px);
-	transition: transform 0.2s ease, opacity 0.2s ease;
-	opacity: 0;
-}
-
-.star-rating.show-rating {
-	display: block;
-	transform: translateX(0px);
-	transition: transform 0.2s ease, opacity 0.2s ease;
-	opacity: 1;
-}
-
-.star-container {
-	width: 25px;
-	height: 25px;
-	display: inline-block;
-
-	.svg-inline--fa.yellowStar,
-	.svg-inline--fa.greyStar {
-		width: 25px !important;
-		height: 25px !important;
+	.stars-container {
+		position: absolute;
+		background-color: green;
+		border: 2px solid red;
+		top: 0;
+		right: 50px;
+		width: 400px;
+		padding: 30px;
 	}
 }
