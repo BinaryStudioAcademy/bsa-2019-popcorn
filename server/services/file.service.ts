@@ -3,6 +3,7 @@ import { upload } from "./image.service";
 const base64Img = require("base64-img");
 const path = require("path");
 const fs = require("fs");
+const uuid = require("uuid/v4");
 
 export const uploadFile = req =>
   new Promise<any>((resolve, reject) => {
@@ -41,10 +42,18 @@ export const uploadFile = req =>
       req.once("end", () => {
         const concat = Buffer.concat(buffer);
         req.body = JSON.parse(concat.toString("utf8"));
-
-        upload(req.body.base)
-          .then(url => resolve(url))
-          .catch(e => reject(e));
+        if (process.env.NODE_ENV === "production") {
+          upload(req.body.base)
+            .then(url => resolve(url))
+            .catch(e => reject(e));
+        } else {
+          const format = req.body.format.split("/").pop();
+          const name = `public/files/${uuid()}.${format}`;
+          fs.writeFile(name, req.body.base, "base64", err => {
+            if (err) return reject(err);
+            return resolve(name);
+          });
+        }
       });
     } else {
       reject(new Error("Bad request"));
