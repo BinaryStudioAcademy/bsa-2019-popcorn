@@ -11,6 +11,7 @@ import {
 } from '../ChatPage.redux/actions';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import { orderBy } from 'lodash';
 
 interface IProps {
 	chats: any;
@@ -47,8 +48,10 @@ class ChatList extends React.Component<IProps> {
 		}
 	}
 
+	sortChats = chats => orderBy(chats, ['lastMessage.created_at'], ['desc']);
+
 	render() {
-		const { chats } = this.props;
+		const chats = this.sortChats(this.props.chats);
 		return (
 			<div>
 				{Object.keys(chats).map(key => (
