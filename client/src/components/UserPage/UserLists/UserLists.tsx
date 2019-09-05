@@ -9,6 +9,7 @@ import {
 	deleteMovieList
 } from './actions';
 import Spinner from '../../shared/Spinner';
+import CreateExtraBtn from '../../shared/CreateExtraBtn';
 import MovieListPreviewItem from './MovieListPreviewItem/MovieListPreviewItem';
 
 export interface INewMovieList {
@@ -72,12 +73,10 @@ const UserLists: React.FC<IProps> = ({
 	return (
 		<div className="UserLists">
 			{isOwnData && (
-				<button
-					className="create-movie-list-button"
-					onClick={() => setShowCreator(true)}
-				>
-					Create movie list
-				</button>
+				<CreateExtraBtn
+					handleClick={() => setShowCreator(true)}
+					body={'Create movie list'}
+				/>
 			)}
 			{movieListsPreview.length ? (
 				<div className="movie-list-preview-container">

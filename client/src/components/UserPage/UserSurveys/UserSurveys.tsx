@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 import { isEqual } from 'lodash';
 import { NavLink } from 'react-router-dom';
+import CreateExtraBtn from "../../shared/CreateExtraBtn";
 import './UserSurveys.scss';
 
 interface ISurvey {
@@ -185,8 +186,11 @@ class UserSurveys extends React.Component<IProps, IState> {
 				)}
 				<div className="userSurveys">
 					{isOwnData || window.location.pathname === '/surveys' ? (
-						<NavLink to={`${mainPath}/create`} className="create-button">
-							<button>Create survey</button>
+						<NavLink to={`${mainPath}/create`}>
+							<CreateExtraBtn
+								handleClick={() => {}}
+								body={'Create survey'}
+							/>
 						</NavLink>
 					) : null}
 					<div className="survey-list">
