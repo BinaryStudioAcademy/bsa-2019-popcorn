@@ -5,7 +5,9 @@ import ImageLoader from './ImageLoader/ImageLoader';
 import MovieSearch from '../../../shared/MovieSearch/MovieSearch';
 import { NavLink } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTimesCircle } from '@fortawesome/free-solid-svg-icons';
+import { faTimesCircle, faTimes } from '@fortawesome/free-solid-svg-icons';
+import config from '../../../../config';
+import Image from '../../../shared/Image/Image';
 
 interface IProps {
 	saveMovieList: (movieList: INewMovieList) => object;
@@ -26,11 +28,11 @@ const MovieListCreator: React.FC<IProps> = ({
 	const onSelectMovie = movie => {
 		const index = moviesDetails.findIndex(item => item.id === movie.id);
 		if (index === -1) {
-			setMoviesDetails([movie, ...moviesDetails]);
+			setMoviesDetails([...moviesDetails, movie]);
 		}
 	};
 
-	const elasticProperties = ['id', 'title'];
+	const elasticProperties = ['id', 'title', 'poster_path', 'release_date'];
 
 	const onSaveMovieList = () => {
 		if (!title || moviesDetails.length == 0) {
@@ -87,6 +89,31 @@ const MovieListCreator: React.FC<IProps> = ({
 					/>
 				</div>
 				<div className="form-item">
+					<label className="item-label">Privacy: </label>
+					<div className="item-right-content-container">
+						<div
+							className={isDropDownOpen ? 'dropdown active' : 'dropdown'}
+							onClick={() => setIsDropDownOpen(!isDropDownOpen)}
+						>
+							<div className="dropdown__text">{DROPDOWN_LABEL}</div>
+							<div className="dropdown__items">
+								<div
+									onClick={() => setIsPrivate(false)}
+									className="dropdown__item"
+								>
+									Public
+								</div>
+								<div
+									onClick={() => setIsPrivate(true)}
+									className="dropdown__item"
+								>
+									Private
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div className="form-item">
 					<label className="item-label item-label-image">Image:</label>
 					<div className="item-right-content-container">
 						{imageUrl === '' ? (
@@ -114,49 +141,43 @@ const MovieListCreator: React.FC<IProps> = ({
 								onSelectMovie={onSelectMovie}
 							/>
 						</div>
-						<div className="movie-list-preview-container">
-							{moviesDetails.map(movie => (
-								<div key={movie.id} className="movie-preview-item">
-									<NavLink className="link-to-movie" to={'/movies/' + movie.id}>
-										{movie.title}
-									</NavLink>
-									<div
-										className="delete-movie"
-										onClick={() => onDeleteMovieLabel(movie.id)}
-									>
-										<FontAwesomeIcon className="icon" icon={faTimesCircle} />
-									</div>
-								</div>
-							))}
-						</div>
-					</div>
-				</div>
-				<div className="form-item">
-					<label className="item-label">Privacy: </label>
-					<div className="item-right-content-container">
-						<div
-							className={isDropDownOpen ? 'dropdown active' : 'dropdown'}
-							onClick={() => setIsDropDownOpen(!isDropDownOpen)}
-						>
-							<div className="dropdown__text">{DROPDOWN_LABEL}</div>
-							<div className="dropdown__items">
-								<div
-									onClick={() => setIsPrivate(false)}
-									className="dropdown__item"
-								>
-									Public
-								</div>
-								<div
-									onClick={() => setIsPrivate(true)}
-									className="dropdown__item"
-								>
-									Private
-								</div>
-							</div>
-						</div>
 					</div>
 				</div>
 			</div>
+			<div className="movie-list-preview-container">
+				{moviesDetails.map(movie => (
+					<div key={movie.id} className="movie-preview-item">
+						<div className="preview-image-container">
+							<Image
+								src={`${config.POSTER_PATH}/${movie.poster_path}`}
+								defaultSrc={config.DEFAULT_MOVIE_IMAGE}
+								alt="poster"
+							/>
+							<div
+								className="preview-delete-movie"
+								onClick={() => onDeleteMovieLabel(movie.id)}
+							>
+								<FontAwesomeIcon
+									className="preview-delete-icon"
+									icon={faTimes}
+									title="Click to delete from the list"
+								/>
+							</div>
+						</div>
+						<div className="preview-main">
+							<div className="preview-movie-title">
+								{movie.title}
+								<span className="preview-movie-date">
+									{movie.release_date
+										? ' (' + movie.release_date.slice(0, 4) + ')'
+										: null}
+								</span>
+							</div>
+						</div>
+					</div>
+				))}
+			</div>
+
 			<div className="movie-list-creator-buttons">
 				<button
 					className="movie-creator-cancel-button"
