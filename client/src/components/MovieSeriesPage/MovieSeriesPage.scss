@@ -21,11 +21,10 @@ $header-letter-spacing: 0.9px;
 }
 
 .movie-series-page-header {
+	margin-bottom: 15px;
 	.header-movie-title-rating {
-		margin-bottom: 15px;
-		text-align: left;
 		display: grid;
-		grid-template-columns: 50px 1fr 250px;
+		grid-template-columns: 50px 1fr 205px;
 		grid-template-rows: auto;
 
 		.header-movie-watch-list {
@@ -102,10 +101,34 @@ $header-letter-spacing: 0.9px;
 		}
 
 		.movie-rating-container {
-			display: flex;
+			display: grid;
+			grid-template-columns: 110px 95px;
 
 			.totaly-movie-rating {
-				font-size: 22px;
+				display: flex;
+				align-items: center;
+				justify-content: flex-end;
+				font-size: 20px;
+				padding: 10px;
+
+				.icon-star {
+					font-size: 20px;
+					margin-right: 5px;
+				}
+
+				position: relative;
+				.max-rating {
+					margin-top: 5px;
+					&::after {
+						content: '';
+						position: absolute;
+						width: 2px;
+						height: 30px;
+						background-color: $border-color;
+						top: 10px;
+						right: 0px;
+					}
+				}
 			}
 		}
 
