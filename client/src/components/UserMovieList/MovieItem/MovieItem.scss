@@ -18,28 +18,35 @@
 		.watch-list-icon {
 			position: absolute;
 			top: 0;
-			left: -5px;
-			background: url('/images/sprite/sprite-icons.png') no-repeat;
+			left: 5px;
+			background: url('/images/sprite/sprite-watch-list.png') no-repeat;
 			filter: grayscale(100%);
-			margin-left: 10px;
-			height: 50px;
-			width: 40px;
-			background-position-x: -10px;
+			height: 38px;
+			width: 32px;
+			background-position-x: 0px;
 			transition: filter 0.2s linear;
 			cursor: pointer;
 			&.add-to-watch-list {
-				background-position-y: -67px;
+				background-position-x: -48px;
 			}
 			&.watched {
-				background-position-y: -10px;
+				background-position-x: -6px;
 				cursor: default;
 				filter: none;
 			}
 			&.to-watch {
-				background-position-y: -10px;
+				background-position-x: -6px;
 			}
 			&.loading-now {
-				background: url('/images/gifs/mini-spinner.gif') no-repeat center -1px;
+				background-position-x: -90px;
+				cursor: default;
+				.loading-now-spinner {
+					width: 32px;
+					height: 32px;
+					background: url('/images/gifs/mini-spinner.gif') no-repeat center
+						center;
+					transform: scale(0.6, 0.6);
+				}
 			}
 
 			&.add-to-watch-list:hover,

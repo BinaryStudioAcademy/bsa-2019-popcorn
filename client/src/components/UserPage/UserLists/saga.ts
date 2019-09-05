@@ -47,9 +47,8 @@ export function* fetchMovieListsPreview(action) {
 
 export function* deleteMovieList(action) {
 	const { movieListId } = action.payload;
-	
 	try {
-		const movieListsPreview = yield call(webApi, {
+		yield call(webApi, {
 			method: 'DELETE',
 			endpoint: `/api/movie-list/${movieListId}`
 		});
