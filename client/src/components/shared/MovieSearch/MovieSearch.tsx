@@ -10,19 +10,20 @@ import {
 import './MovieSearch.scss';
 
 interface IProps {
-	searchData?: Array<IMovieTitle>;
+	searchData?: IMovieTitle[];
 	searchTitle: (inputData: string) => object;
 	isLoading?: boolean;
 	deleteSearchData: () => object;
 	onSelectMovie: (movie: any) => any;
-	elasticProperties: Array<string>;
-	fetchMovieProperties: (movieId: string, properties: Array<string>) => object;
+	elasticProperties: string[];
+	fetchMovieProperties: (movieId: string, properties: string[]) => object;
 	selectMovie: any;
 	deleteSelectedData: () => object;
 }
 interface IMovieTitle {
 	id: string;
 	title: string;
+	release_date?: string;
 }
 
 let timerId;
@@ -70,18 +71,26 @@ const MovieSearch: React.FC<IProps> = ({
 				<div
 					key={item.id}
 					className="movie-search-label"
-					onClick={() => onClickMovieItem(item.id, item.title)}
+					onClick={() =>
+						onClickMovieItem(item.id, item.title, item.release_date)
+					}
 				>
 					{' '}
 					{item.title}
+					<span className="movie-search-release-date">
+						{item.release_date
+							? '(' + item.release_date.slice(0, 4) + ')'
+							: null}
+					</span>
 				</div>
 			))
 		);
 	};
 
-	const onClickMovieItem = (movieId, title) => {
-		elasticProperties.join(',') === 'id,title'
-			? onSelectMovie({ id: movieId, title })
+	const onClickMovieItem = (movieId, title, release_date) => {
+		elasticProperties.join(',') === 'id,title' ||
+		elasticProperties.join(',') === 'id,title,release_date'
+			? onSelectMovie({ id: movieId, title, release_date })
 			: actionFetchMovieProperties(movieId, elasticProperties);
 		setInputData('');
 		setFocus(false);
