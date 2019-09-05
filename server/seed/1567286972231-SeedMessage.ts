@@ -58,6 +58,7 @@ export class SeedMessage1567286972231 implements MigrationInterface {
           message.story = stories[Math.floor(Math.random() * stories.length)];
           message.reactionType =
             REACTION_TYPES[Math.floor(Math.random() * REACTION_TYPES.length)];
+          message.body = null;
         }
         await getCustomRepository(MessageRepository).save(message);
       }

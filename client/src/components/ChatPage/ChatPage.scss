@@ -140,10 +140,16 @@
 			}
 			.story-wrp {
 				display: block;
+				margin-bottom: 5px;
 				.story {
 					height: 177px;
 					width: 100px;
 					border-radius: 20px;
+				}
+				.reaction {
+					font-size: 6em;
+					position: relative;
+					float: right;
 				}
 			}
 			.incoming-message,
@@ -168,6 +174,14 @@
 			.incoming-message {
 				color: white;
 				margin-right: 50%;
+				.story-wrp {
+					padding-left: 20px;
+					border-left: 5px $border-color solid;
+					.reaction {
+						right: -50px;
+						bottom: -85px;
+					}
+				}
 				.incoming-message-text {
 					border-radius: 20px;
 					padding: 10px;
@@ -180,6 +194,14 @@
 			.outgoing-message {
 				float: right;
 				margin-left: 50%;
+				.story-wrp {
+					padding-right: 20px;
+					border-right: 5px $border-color solid;
+					.reaction {
+						left: -80px;
+						bottom: -85px;
+					}
+				}
 				.outgoing-message-text {
 					position: relative;
 					background-color: $background-gray;
