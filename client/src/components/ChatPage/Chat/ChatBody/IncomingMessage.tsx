@@ -3,7 +3,7 @@ import Moment from 'react-moment';
 import MessageStory from './MessageStory';
 
 interface IProps {
-	message: any; //todo
+	message: any;
 }
 
 const IncomingMessage: React.FC<IProps> = ({ message }) => {

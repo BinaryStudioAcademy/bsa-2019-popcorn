@@ -2,7 +2,7 @@ import React from 'react';
 import Moment from 'react-moment';
 
 interface IProps {
-	chat: any; //todo
+	chat: any;
 	unreadMessagesCount: any;
 }
 

@@ -13,7 +13,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
 interface IProps {
-	chats: any; //todo
+	chats: any;
 	addMessage: (any) => void;
 	deleteMessageStore: (chatId, messageId) => void;
 	updateMessageStore: (chatId, message) => void;

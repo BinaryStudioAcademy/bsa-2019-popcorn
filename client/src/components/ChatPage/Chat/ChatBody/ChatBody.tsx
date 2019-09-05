@@ -8,7 +8,7 @@ import { bindActionCreators } from 'redux';
 import { readMessages } from '../../ChatPage.redux/actions';
 
 interface IProps {
-	messages: any; //todo
+	messages: any;
 	userId: string;
 	chatId: string;
 	readMessages: (chatId: string, userId: string) => void;

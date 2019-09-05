@@ -49,7 +49,7 @@ interface IProps {
 	getUnreadNotifications: (userId: string) => void;
 	setNotificitationIsRead: (notificatonId: string) => void;
 	unredNotifications: Activity[];
-	chats: any; //todo
+	chats: any;
 	fetchChats: (userId: string) => void;
 	setNotificationIsRead: (notificationId: string) => void;
 	unreadNotifications: Activity[];

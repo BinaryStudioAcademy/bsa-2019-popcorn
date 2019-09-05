@@ -9,7 +9,7 @@ import Modal from 'react-responsive-modal';
 import MessageStory from './MessageStory';
 
 interface IProps {
-	message: any; //todo
+	message: any;
 	deleteMessage: (id: string) => void;
 	updateMessage: (id: string, body: string) => void;
 }

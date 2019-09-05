@@ -13,7 +13,7 @@ interface IProps {
 		};
 	};
 	fetchMessages: (userId: string, chatId: string) => void;
-	chat: any; //todo
+	chat: any;
 	userId: string;
 	isLoadingMessages: boolean;
 }
