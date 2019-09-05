@@ -49,7 +49,9 @@ const MovieSearch: React.FC<IProps> = ({
 	}
 
 	const onInputChange = e => {
-		if (timerId) clearTimeout(timerId);
+		if (timerId) {
+			clearTimeout(timerId);
+		}
 		const inputData = e.target.value;
 		if (inputData.trim().length !== 0) {
 			setTimerOn(true);

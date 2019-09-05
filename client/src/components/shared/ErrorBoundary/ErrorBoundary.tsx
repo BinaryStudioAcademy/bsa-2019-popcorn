@@ -3,17 +3,13 @@ import { NavLink } from 'react-router-dom';
 import Modal from '@material-ui/core/Modal';
 import './ErrorBoundary.scss';
 
-interface IProps {
-	// erorrBody: string;
-}
-
 interface IState {
 	error: Error | null;
 	errorInfo: ErrorInfo | null;
 	hasError: boolean;
 }
 
-class ErrorBoundary extends PureComponent<IProps, IState> {
+class ErrorBoundary extends PureComponent<{}, IState> {
 	constructor(props) {
 		super(props);
 		this.state = { error: null, errorInfo: null, hasError: false };

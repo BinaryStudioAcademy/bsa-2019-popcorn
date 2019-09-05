@@ -1,5 +1,6 @@
 import { Form } from "multiparty";
 import { upload } from "./image.service";
+const base64Img = require("base64-img");
 const path = require("path");
 const fs = require("fs");
 
@@ -13,17 +14,23 @@ export const uploadFile = req =>
         uploadDir: path.resolve(`${__dirname}/../../client/build/images`),
         maxFilesSize: 1048576 * 3
       });
-      form.parse(req, (err, fields, files) => {
-        if (err) {
-          return reject(err);
+      form.parse(req, function(err, fields, files): any {
+        if (err) return reject(err);
+        if (process.env.NODE_ENV === "production") {
+          base64Img.base64(path.resolve(files.file[0].path), function(
+            err,
+            data
+          ) {
+            upload(data)
+              .then(url => resolve(url))
+              .catch(e => reject(e));
+          });
+        } else {
+          if (files.file) {
+            const imageUrl = path.resolve(files.file[0].path);
+            return resolve(imageUrl);
+          }
         }
-
-        const file = Buffer.from(
-          fs.readFileSync(path.resolve(files.file[0].path))
-        ).toString("base64");
-        upload(file)
-          .then(url => resolve(url))
-          .catch(e => reject(e));
       });
     } else if (contentType && contentType === "octet-stream") {
       const buffer = [];
