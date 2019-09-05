@@ -3,6 +3,7 @@ import './UserTops.scss';
 
 import { isEqual } from 'lodash';
 import Spinner from '../../shared/Spinner';
+import CreateExtraBtn from "../../shared/CreateExtraBtn";
 import TopItem from './TopItem/TopItem';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -53,6 +54,16 @@ const newTop = (): ITopItem => {
 };
 
 class UserTops extends React.Component<IUserTopProps, IUserTopsState> {
+	static getDerivedStateFromProps(props, state) {
+		if (state.isAction && !isEqual(props.topList, state.topList)) {
+			return {
+				...state,
+				topList: convertServerDataFormatToClient(props.topList)
+			};
+		}
+		return null;
+	}
+
 	constructor(props) {
 		super(props);
 		this.state = {
@@ -64,16 +75,6 @@ class UserTops extends React.Component<IUserTopProps, IUserTopsState> {
 
 	componentDidMount() {
 		this.props.fetchTops(this.props.selectedUserId);
-	}
-
-	static getDerivedStateFromProps(props, state) {
-		if (state.isAction && !isEqual(props.topList, state.topList)) {
-			return {
-				...state,
-				topList: convertServerDataFormatToClient(props.topList)
-			};
-		}
-		return null;
 	}
 
 	deleteTop = (top: ITopItem) => {
@@ -142,9 +143,10 @@ class UserTops extends React.Component<IUserTopProps, IUserTopsState> {
 					</button>
 				)}
 				{this.props.isOwnData && (
-					<div className="create-top-button hover" onClick={this.createTop}>
-						Create Top
-					</div>
+					<CreateExtraBtn
+						handleClick={this.createTop}
+						body={'Create top'}
+					/>
 				)}
 
 				{topList.map((topItem: ITopItem) => (

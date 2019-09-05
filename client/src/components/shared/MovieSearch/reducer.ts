@@ -5,13 +5,7 @@ import {
 	FETCH_MOVIE_PROPERTIES_SUCCESS,
 	DELETE_SELECTED_MOVIE
 } from './actionTypes';
-import movieAdapter from '../../MovieSeriesPage/movieAdapter';
 
-interface IState {
-	searchData?: Array<IMovieTitles>;
-	isLoading?: boolean;
-	selectMovie?: any;
-}
 interface IMovieTitles {
 	id: string;
 	title: string;

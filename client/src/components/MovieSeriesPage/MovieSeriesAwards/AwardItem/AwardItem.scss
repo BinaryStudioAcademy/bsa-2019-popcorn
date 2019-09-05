@@ -1,10 +1,13 @@
+$award-icon-size: 80px;
+
 .item-wrapper {
-	display: flex;
+	display: grid;
+	grid-template-columns: $award-icon-size auto;
 	align-items: center;
 	margin-bottom: 10px;
 
 	.award-icon {
-		height: 80px;
-		width: 80px;
+		height: $award-icon-size;
+		width: $award-icon-size;
 	}
 }

@@ -48,7 +48,7 @@ class CastList extends React.Component<CastListProps, CastListState> {
 	render() {
 		return (
 			<div className={'cast-list'}>
-				<div className={'cast-list-header cross-line'}>
+				<div className={'cast-list-header'}>
 					<span>Main cast</span>
 				</div>
 				<div

@@ -5,7 +5,6 @@ import { SurveysQuestion } from "../models/SurveysQuestionModel";
 import SurveysRepository from "./surveys.repository";
 import SurveysQuestionOptionRepository from "./surveysQuestionOption.repository";
 import { Surveys } from "../models/SurveysModel";
-import SurveysQuestionAnswerRepository from "./surveysQuestionAnswer.repository";
 
 @EntityRepository(SurveysQuestionEntity)
 class SurveysQuestionRepository extends Repository<SurveysQuestion> {
@@ -15,7 +14,9 @@ class SurveysQuestionRepository extends Repository<SurveysQuestion> {
     surveys?: Surveys
   ) {
     try {
-      if (surveys) surveysQuestion.surveys = surveys;
+      if (surveys) {
+        surveysQuestion.surveys = surveys;
+      }
 
       await Promise.all(
         surveysQuestion.surveysQuestionOption.map(option =>
@@ -34,8 +35,10 @@ class SurveysQuestionRepository extends Repository<SurveysQuestion> {
   async getSurveysQuestionById(id: string, next?) {
     try {
       const question = await this.findOne(id);
-      if (!question)
+      if (!question) {
         return next({ status: 404, message: "Surveys is not found" }, null);
+      }
+
       return await this.findOne(id);
     } catch (err) {
       return next({ status: err.status, message: err.message }, null);

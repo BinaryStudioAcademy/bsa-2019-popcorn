@@ -26,6 +26,8 @@ interface IProps {
 	watchListIds: IWatchListId[];
 	addMovieToWatchList: (movieId) => object;
 	deleteMovieFromWatchList: (watchId: string) => object;
+	watchListLoading?: boolean;
+	loadingOnMovie: string;
 }
 
 export interface IWatchListId {
@@ -73,7 +75,9 @@ const UserMovieList: React.FC<IProps> = ({ ...props }) => {
 		fetchWatchListIds,
 		watchListIds,
 		addMovieToWatchList,
-		deleteMovieFromWatchList
+		deleteMovieFromWatchList,
+		watchListLoading,
+		loadingOnMovie
 	} = props;
 
 	if (!movieListDetails || movieListDetails.movieList.id !== movieListId) {
@@ -149,6 +153,8 @@ const UserMovieList: React.FC<IProps> = ({ ...props }) => {
 							movie={movie}
 							key={movie.id}
 							deleteMovieFromWatchList={deleteMovieFromWatchList}
+							watchListLoading={watchListLoading}
+							loadingOnMovie={loadingOnMovie}
 						/>
 					))}
 				</div>
@@ -160,7 +166,9 @@ const UserMovieList: React.FC<IProps> = ({ ...props }) => {
 const mapStateToProps = (rootState, props) => ({
 	...props,
 	movieListDetails: rootState.movieList.movieListDetails,
-	watchListIds: rootState.watchList.watchListIds
+	watchListIds: rootState.watchList.watchListIds,
+	watchListLoading: rootState.watchList.isLoading,
+	loadingOnMovie: rootState.watchList.loadingOnMovie
 });
 
 const mapDispatchToProps = dispatch => {

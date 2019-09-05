@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import Spinner from '../../shared/Spinner/index';
+import CreateExtraBtn from "../../shared/CreateExtraBtn";
 import { getUserEvents, saveEvent, deleteEvent, updateEvent } from './actions';
 
 import {
@@ -24,6 +25,7 @@ interface IProps {
 	saveEvent: (event: any) => void;
 	updateEvent: (event: any) => void;
 	currentProfileUserId: string;
+	setSpinner: boolean;
 }
 
 interface IState {
@@ -32,7 +34,7 @@ interface IState {
 	editableEvent: null | IEventFormatClient;
 }
 
-const CREATE_EVENT_TEXT = 'Create Event';
+const CREATE_EVENT_TEXT = 'Create event';
 const BACK_TO_EVENTS_TEXT = 'Back to event';
 
 class UserEvents extends React.Component<IProps, IState> {
@@ -40,7 +42,7 @@ class UserEvents extends React.Component<IProps, IState> {
 		super(props);
 		this.state = {
 			openEventEditor: false,
-			mainButtonMessage: 'Create Event',
+			mainButtonMessage: 'Create event',
 			editableEvent: null
 		};
 	}
@@ -78,10 +80,6 @@ class UserEvents extends React.Component<IProps, IState> {
 	render() {
 		const { userEvents, currentUserId, deleteEvent, isOwnData } = this.props;
 		const { openEventEditor, editableEvent } = this.state;
-		if (!userEvents) {
-			return <Spinner />;
-		}
-
 		const ownEvents: IEventFormatClient[] = [];
 		const subscribeEvents: IEventFormatClient[] = [];
 
@@ -90,15 +88,16 @@ class UserEvents extends React.Component<IProps, IState> {
 				? ownEvents.push(formatToClient(event))
 				: subscribeEvents.push(formatToClient(event));
 		});
+		if (this.props.setSpinner) {
+			return <Spinner />;
+		}
 		return (
 			<div className="user-events">
 				{isOwnData && (
-					<div
-						className="create-event-button hover"
-						onClick={() => this.editEvent()}
-					>
-						{openEventEditor ? BACK_TO_EVENTS_TEXT : CREATE_EVENT_TEXT}{' '}
-					</div>
+					<CreateExtraBtn
+						handleClick={() => this.editEvent()}
+						body={openEventEditor ? BACK_TO_EVENTS_TEXT : CREATE_EVENT_TEXT}
+					/>
 				)}
 				{openEventEditor ? (
 					<UserEventsEditor
@@ -149,7 +148,8 @@ const mapStateToProps = (state, props) => {
 		currentProfileUserId:
 			state.profile.selectedProfileInfo && state.profile.selectedProfileInfo.id,
 		currentUserRole: state.profile.profileInfo.role,
-		userEvents: state.events.userEvents
+		userEvents: state.events.userEvents,
+		setSpinner: state.events.setSpinner
 	};
 };
 

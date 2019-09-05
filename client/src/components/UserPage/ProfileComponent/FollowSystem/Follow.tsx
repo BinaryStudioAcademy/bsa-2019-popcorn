@@ -20,7 +20,7 @@ interface IFollowProps {
 	fetchFollowers: (userId: string) => any;
 	clearFollows: (userId: string) => any;
 	fetchFollowings: (userId: string) => any;
-	followSystem: any; //todo
+	followSystem: any;
 }
 
 const Follow: React.FC<IFollowProps> = props => {

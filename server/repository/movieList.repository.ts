@@ -19,6 +19,14 @@ class MovieListRepository extends Repository<MovieList> {
       .addSelect(["user.id", "user.name", "user.avatar"])
       .where("movie_list.id = :movieListId", { movieListId })
       .getOne();
+
+  getAll = () =>
+    this.createQueryBuilder("movie_list")
+      .addOrderBy("movie_list.createdAt", "DESC")
+      .leftJoin("movie_list.user", "user")
+      .addSelect(["user.id", "user.name", "user.avatar"])
+      .where("movie_list.isPrivate = :isPrivate", { isPrivate: false })
+      .getMany();
 }
 
 export default MovieListRepository;

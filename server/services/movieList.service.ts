@@ -73,3 +73,6 @@ export const getMovieListDetails = async (movieListId: string) => {
 
   return { movieList, movies: moviesWithGenres };
 };
+
+export const getAllMovieLists = () =>
+  getCustomRepository(MovieListRepository).getAll();

@@ -10,7 +10,7 @@ interface IInputProps {
 	deleteFilmInput: (movieId: number) => void;
 	alreadySearch: boolean;
 	fetchFilms: (title: string) => void;
-	movieList: Array<any>; //movies from elastic search
+	movieList: any[];
 	clearSearch: () => void;
 	saveMovie: (movie: IMovie, newId?: string) => void;
 	last?: boolean;
@@ -25,24 +25,31 @@ const FilmInput: React.FC<IInputProps> = ({
 	fetchFilms,
 	last
 }) => {
-	const [title, setTitle] = useState(movie.title);
-	const [comment, setComment] = useState(movie.comment);
+	const [title, setTitle] = useState(movie.title || "");
+	const [comment, setComment] = useState(movie.comment || "");
 	useEffect(() => {
-		if (movie.title === '') setTitle('');
-		if (movie.comment === '') setComment('');
+		if (movie.title === '') {
+			setTitle('');
+		}
+		if (movie.comment === '') {
+			setComment('');
+		}
 	});
 	const [isChosenTitle, setIsChoosenTitle] = useState(false);
 	const [isFocused, setFocused] = useState(false);
-	function searchFilms(title: string) {
-		setTitle(title);
-		if (title.trim().length > 2) fetchFilms(title);
+
+	function searchFilms(newTitle: string) {
+		setTitle(newTitle);
+		if (newTitle.trim().length > 2) {
+			fetchFilms(newTitle);
+		}
 		setIsChoosenTitle(false);
 	}
 
-	function changeTitle({ newId, title }) {
-		setTitle(title);
+	function changeTitle({ newId, newTitle }) {
+		setTitle(newTitle);
 		setIsChoosenTitle(true);
-		saveMovie({ ...movie, title, comment }, newId);
+		saveMovie({ ...movie, title: newTitle, comment }, newId);
 		clearSearch();
 	}
 
@@ -50,8 +57,7 @@ const FilmInput: React.FC<IInputProps> = ({
 		<div key={movie.id} className="film-input-item ">
 			<input
 				onChange={e => {
-					const title = e.target.value;
-					saveMovie({ ...movie, title, comment });
+					saveMovie({ ...movie, title: e.target.value, comment });
 					searchFilms(e.target.value);
 				}}
 				maxLength={140}
@@ -61,9 +67,12 @@ const FilmInput: React.FC<IInputProps> = ({
 				value={title}
 				onFocus={() => setFocused(true)}
 				onBlur={() => {
-					if (title.trim() === '' && comment.trim() === '' && !last)
+					if (title.trim() === '' && comment.trim() === '' && !last) {
 						deleteFilmInput(movie.id);
-					if (!last) clearSearch();
+					}
+					if (!last) {
+						clearSearch();
+					}
 				}}
 			/>
 			{!isChosenTitle && alreadySearch && isFocused ? (
@@ -77,7 +86,7 @@ const FilmInput: React.FC<IInputProps> = ({
 									onClick={() => {
 										changeTitle({
 											newId: searchedMovie.id,
-											title: searchedMovie.title
+											newTitle: searchedMovie.title
 										});
 									}}
 								>
@@ -105,13 +114,12 @@ const FilmInput: React.FC<IInputProps> = ({
 				disabled={title.trim() === '' && comment.trim() === ''}
 				value={comment}
 				onChange={e => {
-					const comment = e.target.value;
-					saveMovie({ ...movie, comment });
-					setComment(comment);
+					saveMovie({ ...movie, comment: e.target.value });
+					setComment(e.target.value);
 				}}
 				className="film-input comment-film-input"
 				placeholder="Type comment here"
-			></textarea>
+			/>
 		</div>
 	);
 };

@@ -5,7 +5,7 @@ import UserRepository from "../repository/user.repository";
 import { getVotingById } from "./voting.service";
 import { getMovieById } from "./movie.service";
 
-import uuid from "uuid/v4";
+import * as uuid from "uuid/v4";
 
 export const getStories = async (): Promise<Story[]> => {
   const stories = (await getCustomRepository(StoryRepository).find({
@@ -78,6 +78,6 @@ export const updateStory = async (story: Story): Promise<Story> =>
   await getCustomRepository(StoryRepository).save(story);
 
 export const deleteStoryById = async (storyId: string): Promise<Story> => {
-  let story = await getCustomRepository(StoryRepository).findOne(storyId);
+  const story = await getCustomRepository(StoryRepository).findOne(storyId);
   return await getCustomRepository(StoryRepository).remove(story);
 };

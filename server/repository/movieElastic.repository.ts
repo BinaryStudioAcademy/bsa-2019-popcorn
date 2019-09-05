@@ -109,7 +109,7 @@ export const getById = async (id: string) => {
       body: JSON.stringify({
         query: {
           match: {
-            id: id
+            id
           }
         }
       })

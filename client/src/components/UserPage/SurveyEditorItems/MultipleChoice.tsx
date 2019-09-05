@@ -74,8 +74,10 @@ class MultipleChoice extends Component<IProps, IQuestion> {
 
 	changeInput = (event, id) => {
 		let { options } = this.state;
-		if (!options) return;
-		let value = event.target.value;
+		if (!options) {
+			return;
+		}
+		const value = event.target.value;
 
 		options = options.map((option, i) => {
 			if (id === option.id) {

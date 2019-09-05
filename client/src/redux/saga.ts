@@ -15,6 +15,7 @@ import watchListSaga from '../components/UserPage/UserWatchList/saga';
 import searchMovieSaga from '../components/shared/MovieSearch/saga';
 import notificationSaga from '../components/shared/Header/saga';
 import recommendedSaga from '../components/MainPage/RecommendList/RecommendList.redux/saga';
+import chatSaga from '../components/ChatPage/ChatPage.redux/saga';
 import contentSearchSaga from '../components/shared/ContentSearch/redux/saga';
 import movieListSaga from '../components/UserPage/UserLists/saga';
 export default function* rootSaga() {
@@ -35,6 +36,7 @@ export default function* rootSaga() {
 		searchMovieSaga(),
 		notificationSaga(),
 		recommendedSaga(),
+		chatSaga(),
 		contentSearchSaga(),
 		movieListSaga()
 	]);

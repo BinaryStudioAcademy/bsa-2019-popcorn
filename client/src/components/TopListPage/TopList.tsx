@@ -28,7 +28,7 @@ const TopList: React.FC<ITopLIstProps> = props => {
 		props.fetchTops();
 		return <Spinner />;
 	}
-
+    
 	const topListItems = !props.passedTop ? (
 		props.tops.map(top => <TopListItem top={top} />)
 	) : (

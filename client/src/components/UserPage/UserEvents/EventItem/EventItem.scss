@@ -3,11 +3,11 @@
 	background: #fff;
 	border: 1px solid rgba(0, 0, 0, 0.11);
 	box-sizing: border-box;
-	box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.37);
 	margin-top: 10px;
+	margin-bottom: 30px;
 
 	&:last-child {
-		margin-bottom: 30px;
+		margin-bottom: 0;
 	}
 
 	.event-wrapper {
@@ -20,7 +20,6 @@
 
 			.event-image-wrapper {
 				font-size: 0;
-				box-shadow: 0 1px 4px black;
 				width: 100%;
 
 				img {
@@ -41,7 +40,8 @@
 				}
 
 				.event-description {
-					margin-bottom: 10px;
+					margin: 10px 0;
+					color: rgba(18, 39, 55, 0.7);
 				}
 
 				.event-location {
@@ -103,27 +103,19 @@
 						background-color: white;
 						cursor: pointer;
 						border-radius: 3px;
-						box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.2);
 						transition: box-shadow 0.3s ease, border-color 0.4s ease;
-
-						&:hover {
-							box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.12);
-							border-color: rgba(0, 0, 0, 0.05);
-						}
-					}
-
-					.edit-button {
 						padding: 0 10px;
 						margin-right: 10px;
 						color: #00000099;
 						font-size: 15px;
+
+						&:hover {
+							border-color: rgba(0, 0, 0, 0.05);
+						}
 					}
 
 					.delete-button {
-						font-size: 0;
-						.delete-button-svg {
-							opacity: 0.6;
-						}
+						border: none;
 					}
 				}
 			}

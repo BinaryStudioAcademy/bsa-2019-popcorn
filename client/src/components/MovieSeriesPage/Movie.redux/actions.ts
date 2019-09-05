@@ -17,7 +17,8 @@ import {
 	LOAD_MORE_FILTRED_MOVIE,
 	SET_FILTERS,
 	GET_GENRES,
-	FETCH_STATISTICS
+	FETCH_STATISTICS,
+	FETCH_POSTS_BY_FILM
 } from './actionTypes';
 
 export const getGenres = (): any => {
@@ -190,6 +191,15 @@ export const removeReviewSet = () => {
 export const fetchStatistics = (movieId: string) => {
 	return {
 		type: FETCH_STATISTICS,
+		payload: {
+			movieId
+		}
+	};
+};
+
+export const fetchPostsByFilm = (movieId: string) => {
+	return {
+		type: FETCH_POSTS_BY_FILM,
 		payload: {
 			movieId
 		}

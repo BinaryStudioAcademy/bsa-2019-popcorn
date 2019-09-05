@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import FilmInput from './FilmInput';
 import { IMovie } from '../../UserTops.service';
@@ -33,14 +33,14 @@ const DragDrop: React.FC<IDragDropProps> = ({
 		<div>
 			<DragDropContext onDragEnd={onDragEnd}>
 				<Droppable className="user-tops" droppableId="droppable">
-					{(provided, snapshot) => (
+					{(providedDroppable, snapshotDroppable) => (
 						<div
-							{...provided.droppableProps}
-							ref={provided.innerRef}
-							style={getListStyle(snapshot.isDraggingOver)}
+							{...providedDroppable.droppableProps}
+							ref={providedDroppable.innerRef}
+							style={getListStyle(snapshotDroppable.isDraggingOver)}
 						>
 							{moviesList.map((movie, index) => {
-								if (index !== moviesList.length - 1)
+								if (index !== moviesList.length - 1) {
 									return (
 										<Draggable
 											className="film-input-item"
@@ -71,8 +71,9 @@ const DragDrop: React.FC<IDragDropProps> = ({
 											)}
 										</Draggable>
 									);
+								}
 							})}
-							{provided.placeholder}
+							{providedDroppable.placeholder}
 						</div>
 					)}
 				</Droppable>

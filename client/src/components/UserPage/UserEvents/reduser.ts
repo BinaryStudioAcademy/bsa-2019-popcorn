@@ -2,13 +2,17 @@ import {
 	GET_USER_EVENTS_SUCCESS,
 	FINISH_UPLOAD_USER_EVENTS,
 	GET_ALL_EVENTS_SUCCESS,
-	GET_EVENT_BY_ID_SUCCESS
+	GET_EVENT_BY_ID_SUCCESS,
+	DELETE_OWN_USER_EVENT,
+	GET_USER_EVENTS,
+	UPDATE_USER_EVENT
 } from './actionsTypes';
 
 const initialState = {
 	userEvents: [],
 	allEvents: [],
-	searchedEvent: null
+	searchedEvent: null,
+	setSpinner: true
 };
 
 export default (state = initialState, action) => {
@@ -16,7 +20,8 @@ export default (state = initialState, action) => {
 		case GET_USER_EVENTS_SUCCESS:
 			return {
 				...state,
-				userEvents: action.payload.userEvents
+				userEvents: action.payload.userEvents,
+				setSpinner: false
 			};
 		case FINISH_UPLOAD_USER_EVENTS:
 			const newEvent = action.payload.newEvent;
@@ -33,6 +38,16 @@ export default (state = initialState, action) => {
 			return {
 				...state,
 				searchedEvent: action.payload.searchedEvent
+			};
+		case GET_USER_EVENTS:
+			return {
+				...state,
+				setSpinner: true
+			};
+		case UPDATE_USER_EVENT:
+			return {
+				...state,
+				setSpinner: true
 			};
 		default:
 			return state;

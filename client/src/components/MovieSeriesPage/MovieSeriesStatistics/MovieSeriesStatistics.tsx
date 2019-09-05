@@ -16,8 +16,14 @@ const MovieSeriesStatistics: React.FC<IProps> = ({
 		fetchStatistics();
 	}, []);
 	if (!statistics) return <Spinner />;
-	console.log(statistics);
 	const averageStatistics = statistics.averageStatistics;
+	let averageAll = '';
+	if (averageStatistics.length !== 0)
+		averageAll = (
+			(+averageStatistics[0].average * averageStatistics[0].count +
+				+averageStatistics[1].average * averageStatistics[1].count) /
+			(+averageStatistics[0].count + +averageStatistics[1].count)
+		).toFixed(2);
 	return (
 		<div className="movie-series-statistics">
 			{statistics.statisticsByRate.length !== 0 && (
@@ -27,7 +33,6 @@ const MovieSeriesStatistics: React.FC<IProps> = ({
 						data={statistics.statisticsByRate}
 						keys={['users']}
 						indexBy={'rate'}
-						// groupMode="grouped"
 						enableGridY={false}
 						margin={{ right: 50, bottom: 300, left: 50 }}
 						padding={0.1}
@@ -58,13 +63,9 @@ const MovieSeriesStatistics: React.FC<IProps> = ({
 						<div className="average-statistics-item">
 							<div className="average-statistics-item-title">All</div>
 							<div className="average-statistics-item-content">
-								<div className="item-content-average">
-									{(+averageStatistics[0].average +
-										+averageStatistics[0].average) /
-										2}
-								</div>
+								<div className="item-content-average">{averageAll}</div>
 								<div className="item-content-count">
-									{+averageStatistics[0].count + +averageStatistics[0].count}
+									{+averageStatistics[0].count + +averageStatistics[1].count}
 								</div>
 							</div>
 						</div>

@@ -148,7 +148,9 @@ export default function(state = initialState, action) {
 			const comment = action.payload.comment.comment;
 
 			const index = findIndexInArray(posts, 'id', comment.post.id);
-			if (index === -1) return state;
+			if (index === -1) {
+				return state;
+			}
 			const post = posts[index];
 			if (!post.comments) post.comments = [comment];
 			else post.comments.push(comment);
@@ -162,7 +164,9 @@ export default function(state = initialState, action) {
 			const { reactions, postId } = action.payload;
 
 			const i = findIndexInArray(postsForNewReact, 'id', postId);
-			if (i === -1) return state;
+			if (i === -1) {
+				return state;
+			}
 			const postForNewReact = postsForNewReact[i];
 			postForNewReact.reactions = [...reactions];
 

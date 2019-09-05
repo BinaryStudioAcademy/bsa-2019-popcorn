@@ -1,10 +1,7 @@
-import { getCustomRepository, getRepository } from "typeorm";
+import { getCustomRepository } from "typeorm";
 import { Review } from "../models/Review/ReviewModel";
 import ReviewRepository from "../repository/review.repository";
-import {
-  getById as getMovieElasticById,
-  getByIdValues as getMovieElasticByIdValues
-} from "../repository/movieElastic.repository";
+import { getById as getMovieElasticById } from "../repository/movieElastic.repository";
 import UserRepository from "../repository/user.repository";
 import ReviewReactionRepository from "../repository/reviewReaction.repository";
 
@@ -42,7 +39,7 @@ export const getReviewsByMovieId = async (
   userId: string,
   next
 ): Promise<any> => {
-  let movie = await getMovieElasticById(movieId);
+  const movie = await getMovieElasticById(movieId);
   if (!movie) {
     return next(
       { status: 404, message: `Movie with id ${movieId} does not exist` },

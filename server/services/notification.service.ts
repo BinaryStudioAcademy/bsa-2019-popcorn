@@ -14,7 +14,9 @@ export const saveNotification = async (
 export const setNotificationIsRead = async (
   notificationId: string
 ): Promise<any> => {
-  let notification = await getCustomRepository(NotificationRepository).findOne({
+  const notification = await getCustomRepository(
+    NotificationRepository
+  ).findOne({
     id: notificationId
   });
   notification.isRead = true;

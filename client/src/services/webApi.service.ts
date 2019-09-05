@@ -12,9 +12,11 @@ interface IRequestInit {
 
 export default async (args: IRequestInit) => {
 	try {
-		let res: Response = await fetch(getUrl(args), getArgs(args));
+		const res: Response = await fetch(getUrl(args), getArgs(args));
 
-		if (args.parse === undefined || args.parse) return await res.json();
+		if (args.parse === undefined || args.parse) {
+			return await res.json();
+		}
 
 		return res;
 	} catch (err) {
@@ -53,10 +55,4 @@ const getArgs = (args: IRequestInit): object => {
 		headers,
 		...(args.method === 'GET' ? {} : { body })
 	};
-};
-
-const handlerError = (res: Response) => {
-	if (!res.ok) {
-		throw res.status || 'Something went wrong with request!';
-	}
 };
