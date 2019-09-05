@@ -8,7 +8,8 @@ import {
 	CREATE_MESSAGE,
 	DELETE_MESSAGE,
 	UPDATE_MESSAGE,
-	READ_MESSAGES
+	READ_MESSAGES,
+	SET_CHAT
 } from './actionTypes';
 import webApi from '../../../services/webApi.service';
 
@@ -59,7 +60,7 @@ function* watchFetchMessages() {
 
 export function* createChat(action) {
 	try {
-		const newChat = yield call(webApi, {
+		const chat = yield call(webApi, {
 			method: 'POST',
 			endpoint: `/api/chat/`,
 			body: {
@@ -68,13 +69,22 @@ export function* createChat(action) {
 			}
 		});
 		yield put({
-			type: CREATE_MESSAGE,
+			type: SET_CHAT,
 			payload: {
-				userId: action.payload.user1Id,
-				chatId: newChat.chatId,
-				body: { ...action.payload.newMessage }
+				chat
 			}
 		});
+
+		if (action.payload.newMessage) {
+			yield put({
+				type: CREATE_MESSAGE,
+				payload: {
+					userId: action.payload.user1Id,
+					chatId: chat.chatId,
+					body: { ...action.payload.newMessage }
+				}
+			});
+		}
 	} catch (e) {
 		console.log('chat saga create chat:', e.message);
 	}

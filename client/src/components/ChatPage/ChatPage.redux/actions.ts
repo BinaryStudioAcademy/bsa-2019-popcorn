@@ -10,7 +10,8 @@ import {
 	UPDATE_MESSAGE_STORE,
 	READ_MESSAGES,
 	ADD_UNREAD_MESSAGE,
-	READ_MESSAGES_STORE
+	READ_MESSAGES_STORE,
+	SET_CHAT
 } from './actionTypes';
 
 export const fetchChats = userId => {
@@ -39,6 +40,15 @@ export const createChat = (user1Id, user2Id, newMessage?) => {
 			user1Id,
 			user2Id,
 			newMessage
+		}
+	};
+};
+
+export const setChat = chat => {
+	return {
+		type: SET_CHAT,
+		payload: {
+			chat
 		}
 	};
 };
