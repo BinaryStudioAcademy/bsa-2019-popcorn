@@ -27,13 +27,13 @@ const About: React.SFC<IProps> = ({ event }) => {
 				<FontAwesomeIcon className="icon" icon={faClock} />
 				<span>
 					{
-						<Moment format=" D MMM HH:mm " local>
+						<Moment format=" D MMM HH:mm " local={true}>
 							{String(event.dateRange.startDate)}
 						</Moment>
 					}{' '}
 					-
 					{
-						<Moment format=" D MMM HH:mm " local>
+						<Moment format=" D MMM HH:mm " local={true}>
 							{String(event.dateRange.endDate)}
 						</Moment>
 					}

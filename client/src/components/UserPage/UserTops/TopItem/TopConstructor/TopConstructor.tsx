@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import './TopConstructor.scss';
 import DragDrop from './DragDrop';
 import { IMovie } from '../../UserTops.service';
@@ -43,7 +43,7 @@ const TopConstructor: React.FC<ITopConstructorProps> = ({
 	}
 
 	function saveMovie(updatedMovie: IMovie, newId: number = updatedMovie.id) {
-		let updatedMovies = movies.map(movie =>
+		const updatedMovies = movies.map(movie =>
 			movie.id === updatedMovie.id ? { ...updatedMovie, id: newId } : movie
 		);
 		if (

@@ -56,9 +56,3 @@ const getArgs = (args: IRequestInit): object => {
 		...(args.method === 'GET' ? {} : { body })
 	};
 };
-
-const handlerError = (res: Response) => {
-	if (!res.ok) {
-		throw res.status || 'Something went wrong with request!';
-	}
-};
