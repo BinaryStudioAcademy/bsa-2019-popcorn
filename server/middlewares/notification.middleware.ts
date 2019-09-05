@@ -18,7 +18,7 @@ async function sendNotification({
   entity,
   entityType
 }) {
-  if (req.user && entity.userId === req.user.id) {
+  if (req.user && entity.userId === req.user.id && type !== "message") {
     return;
   }
   const notification = {
@@ -95,24 +95,19 @@ export default async (req, res, next) => {
       }
     }
     if (req.url === `/${req.params.userId}/${req.params.chatId}`) {
-      const {
-        data: { user: sender }
-      } = await getCustomRepository(UserRepository).getUserById(
-        req.params.userId
-      );
       const chat = await getCustomRepository(ChatRepository).findOne({
         where: [{ id: req.params.chatId }],
         relations: ["user1", "user2"]
       });
-
       const userId =
-        chat.user1 === req.params.userId ? chat.user2.id : chat.user1.id;
-      const title = `${sender.name} send you message`;
+        chat.user1.id === req.params.userId ? chat.user2.id : chat.user1.id;
+      const name =
+        chat.user1.id === req.params.userId ? chat.user1.name : chat.user2.name;
       sendNotification({
         req,
         url: `/chat/${req.params.chatId}`,
         type: "message",
-        title,
+        title: `${name} send you message`,
         body: "",
         entity: { ...chat, userId },
         entityType: "message"
