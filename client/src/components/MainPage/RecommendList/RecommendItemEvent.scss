@@ -25,6 +25,10 @@
 		cursor: pointer;
 	}
 
+	.recommend-item-description {
+		color: $text-secondary-color;
+	}
+
 	.recommend-item-header {
 		display: flex;
 		flex-direction: row;

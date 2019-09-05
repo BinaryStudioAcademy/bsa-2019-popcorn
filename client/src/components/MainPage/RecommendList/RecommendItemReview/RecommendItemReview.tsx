@@ -1,7 +1,5 @@
 import React from 'react';
 import '../RecommendItemEvent.scss';
-import { NavLink } from 'react-router-dom';
-import config from '../../../../config';
 import ReviewItem from '../../../MovieSeriesPage/MovieSeriesReviews/ReviewItem/ReviewItem';
 
 type RecommendItemProps = {
@@ -23,17 +21,11 @@ const RecommendItemReview = ({
 				</div>
 			</div>
 			<div className="recommend-item-wrp">
-				<img
-					className="recommend-item-image"
-					src={review.image ? review.image : config.DEFAULT_SURVEY_IMAGE}
-					alt="event"
-				/>
-			</div>
-			<div className="recommend-item-wrp">
 				<ReviewItem
 					currentUserId={currUserId}
 					review={review}
 					setReaction={setReaction}
+					isRecommended={true}
 				/>
 			</div>
 		</div>

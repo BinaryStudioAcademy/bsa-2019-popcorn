@@ -63,6 +63,27 @@ class SurveysRepository extends Repository<Surveys> {
     }
   }
 
+  async getNewestSurvey(next?) {
+    try {
+      const a = await this.findOne({
+        order: {
+          created_at: "DESC"
+        },
+        relations: [
+          "surveysQuestion",
+          "surveysQuestion.surveysQuestionOption",
+          "surveysQuestion.surveysQuestionAnswer",
+          "surveysQuestion.surveysQuestionAnswer.user",
+          "surveysQuestion.surveysQuestionAnswer.surveysQuestionOption",
+          "user"
+        ]
+      });
+      return a;
+    } catch (err) {
+      return next({ status: err.status, message: err.message }, null);
+    }
+  }
+
   async getSurveysById(id: string, next?) {
     try {
       const surveys = await this.findOne(

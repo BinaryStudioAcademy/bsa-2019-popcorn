@@ -13,10 +13,9 @@
 		.review-item-header {
 			display: flex;
 			justify-content: space-between;
-
+			position: relative;
 			.review-item-header-profile {
 				display: flex;
-
 				.profile-avatar {
 					font-size: 0;
 					img {
@@ -36,6 +35,12 @@
 						font-size: 1.3em;
 						margin-bottom: 3px;
 					}
+				}
+				.to-movie-page-link {
+					position: absolute;
+					right: 10px;
+					color: $text-secondary-color;
+					text-decoration: none;
 				}
 			}
 

@@ -17,12 +17,14 @@ import {
 	faThumbsDown as dislikeNoFill,
 	faThumbsUp as likeNoFill
 } from '@fortawesome/free-regular-svg-icons';
+import { NavLink } from 'react-router-dom';
 
 interface IProps {
 	review: IReview;
 	currentUserId: string;
 	setReaction: (reviewId: string, isLike: boolean) => object;
 	errorWithReview?: string;
+	isRecommended?: boolean;
 }
 
 interface IState {
@@ -91,10 +93,12 @@ class ReviewItem extends React.Component<IProps, IState> {
 				created_at,
 				analysis,
 				reaction: { countDislikes, countLikes, userLike },
-				user: { id: userId }
+				user: { id: userId },
+				movieId
 			},
 			currentUserId,
-			errorWithReview
+			errorWithReview,
+			isRecommended
 		} = this.props;
 		const { showFullReview, textBlockHeight, isBigBlock } = this.state;
 
@@ -122,6 +126,14 @@ class ReviewItem extends React.Component<IProps, IState> {
 									</Moment>
 								</div>
 							</div>
+							{isRecommended ? (
+								<NavLink
+									className="to-movie-page-link"
+									to={`/movies/${movieId}`}
+								>
+									To movie page>>
+								</NavLink>
+							) : null}
 						</div>
 					</div>
 					<div

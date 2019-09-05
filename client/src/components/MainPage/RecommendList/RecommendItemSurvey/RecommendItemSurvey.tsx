@@ -7,11 +7,12 @@ type RecommendItemProps = {
 		id: string;
 		title: string;
 		image: string;
+		description: string;
 	};
 };
 
 const RecommendItemSurvey = ({
-	survey: { id, title, image }
+	survey: { id, title, image, description }
 }: RecommendItemProps) => {
 	return (
 		<div className="recommend-item">
@@ -30,6 +31,9 @@ const RecommendItemSurvey = ({
 			<div className="recommend-item-info">
 				<div className="recommend-item-row">
 					<div className="recommend-item-name">{title}</div>
+				</div>
+				<div className="recommend-item-row">
+					<div className="recommend-item-description">{description}</div>
 				</div>
 			</div>
 		</div>

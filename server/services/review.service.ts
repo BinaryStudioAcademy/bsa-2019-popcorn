@@ -96,9 +96,13 @@ export const updateReviewById = async (
 };
 
 export const getReviewById = async (userId: string, id: string, next) => {
-  const review: Review = await getCustomRepository(
-    ReviewRepository
-  ).getReviewById(id, next);
+  const review = await getCustomRepository(ReviewRepository).getReviewById(
+    id,
+    next
+  );
+  const movie = await getMovieElasticById(review[0].movieId);
+  console.log(movie.hits);
+  review.movie = movie.hits.hits[0]._source;
   const reviewWithReactions = await addReactionsToReviews(userId, review);
   return reviewWithReactions;
 };

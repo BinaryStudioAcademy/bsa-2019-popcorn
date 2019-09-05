@@ -1,14 +1,4 @@
-import {
-  EntityRepository,
-  Repository,
-  getCustomRepository,
-  createQueryBuilder,
-  getConnection,
-  getRepository,
-  EntityManager,
-  getManager
-} from "typeorm";
-import { Follower } from "../entities/Follower";
+import { getRepository } from "typeorm";
 import { Top } from "../entities/Top";
 import { Event } from "../entities/Events/Event";
 import { Surveys } from "../entities/Surveys";
@@ -42,10 +32,8 @@ export const getRecommendedEventsIds = async id => {
 };
 
 export const getRecommendedSurveys = async () => {
-  const surveys = await getRepository(Surveys).query(`SELECT *
-    FROM "surveys"
-    WHERE "id" IN 
-        (SELECT DISTINCT "surveys"."id"
+  const surveys = await getRepository(Surveys)
+    .query(`SELECT DISTINCT "surveys"."id"
         FROM "surveys" INNER JOIN 
             ( SELECT * 
             FROM "surveys_question" INNER JOIN
@@ -57,7 +45,7 @@ export const getRecommendedSurveys = async () => {
                 ) t 
              GROUP BY "surveysQuestionId"
         ) f ON "f"."surveysQuestionId"="surveys_question"."id") g ON "g"."surveysId"="surveys"."id"
-            WHERE "count">10)`);
+            WHERE "count">10`);
   return surveys;
 };
 
@@ -78,7 +66,7 @@ export const getRecommendedReviews = async id => {
 };
 
 export const getRandomPopularReviews = async () => {
-  const reviews = await getRepository(Review).query(`SELECT * 
+  const reviews = await getRepository(Review).query(`SELECT "id" 
     FROM "review" INNER JOIN (
         SELECT COUNT("isLike") AS likeCount, "reviewId"
         FROM "review_reaction"

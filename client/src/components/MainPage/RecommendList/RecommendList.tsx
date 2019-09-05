@@ -49,15 +49,21 @@ const RecommendList = ({
 					<NavLink
 						className="survey-link"
 						style={{ textDecoration: 'none' }}
-						to={`/survey-page/${recommended.surveys[0].id}`}
+						to={`/survey-page/${recommended.surveys.id}`}
 					>
-						<RecommendItemSurvey survey={recommended.surveys[0]} />
+						<RecommendItemSurvey survey={recommended.surveys} />
 					</NavLink>
 				</div>
 			) : null}
 			{recommended.events ? (
 				<div>
-					<RecommendItemEvent event={recommended.events} />
+					<NavLink
+						className="survey-link"
+						style={{ textDecoration: 'none' }}
+						to={`/events/${recommended.events.id}`}
+					>
+						<RecommendItemEvent event={recommended.events} />
+					</NavLink>
 				</div>
 			) : null}
 			{recommended.tops ? (
@@ -65,7 +71,7 @@ const RecommendList = ({
 					<RecommendItemTop top={recommended.tops} />
 				</div>
 			) : null}
-			{recommended.reviews ? (
+			{recommended.reviews[0] ? (
 				<div>
 					<RecommendItemReview
 						review={recommended.reviews[0]}
