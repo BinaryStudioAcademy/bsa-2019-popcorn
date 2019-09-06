@@ -262,7 +262,9 @@ class ProfileComponent extends Component<ProfileProps, IProfileComponentState> {
 								<FollowButton className="follow-btn" />
 							)}
 							{this.props.userId !== id && (
-								<button onClick={this.onChatClick}>Chat</button>
+								<button className="chat-btn" onClick={this.onChatClick}>
+									Send message
+								</button>
 							)}
 							<div className="profileRow-username">
 								<span>{name}</span>
