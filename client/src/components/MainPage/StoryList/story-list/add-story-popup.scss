@@ -108,38 +108,31 @@ $border-radius: 5px;
 		}
 	}
 
-	.btn {
-		font-size: 18px;
-		font-weight: 600;
-		line-height: 22px;
-
-		position: absolute;
-		bottom: 20px;
-		left: 93px;
-
+	.share-btn {
 		min-width: 174px;
 		height: $btn-height;
-		margin: 0;
+		display: block;
+		margin: 0 auto;
 		padding: 0;
-
+		border: none;
+		border-radius: 15px;
+		background-color: #ff6501;
 		cursor: pointer;
 		transition: all 0.4s;
 		text-align: center;
 		text-decoration: none;
 		letter-spacing: 0.4px;
-
+		font-size: 18px;
+		font-weight: 600;
+		line-height: 22px;
 		color: #fff;
-		border: none;
-		border-radius: 15px;
-		background-color: #ff6501;
 
-		justify-content: center;
-	}
-	.btn:hover {
-		background-color: rgb(216, 86, 0);
-	}
-	.btn:disabled {
-		background-color: #efd69a;
+		&:hover {
+			background-color: rgb(216, 86, 0);
+		}
+		&:disabled {
+			background-color: #efd69a;
+		}
 	}
 
 	.upload-image-wrp {

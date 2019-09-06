@@ -8,7 +8,9 @@ import {
 	GET_FIREBASE_TOKEN,
 	GET_FIREBASE_TOKEN_SUCCESS,
 	DELETE_FIREBASE_TOKEN,
-	SET_FIREBASE_TOKEN_UNDEFINED
+	SET_FIREBASE_TOKEN_UNDEFINED,
+	FETCH_ADVICE,
+	SET_ADVICE
 } from './actionTypes';
 export function* sendTokenToServer(action) {
 	try {
@@ -95,6 +97,18 @@ export function* deleteFirebaseToken(action) {
 	}
 }
 
+export function* fetchAdvice(action) {
+	try {
+		const movieAdvice = yield call(webApi, {
+			method: 'GET',
+			endpoint: `/api/movie/adviceMe/${action.payload.id}`
+		});
+
+		yield put({ type: SET_ADVICE, payload: { movieAdvice } });
+	} catch (e) {
+		console.log('fetchAdvice', e, e.message);
+	}
+}
 function* watchSendTokenToServer() {
 	yield takeEvery(SEND_TOKEN_TO_SERVER, sendTokenToServer);
 }
@@ -110,13 +124,16 @@ function* watchGetFirebaseToken() {
 function* watchDeleteFirebaseToken() {
 	yield takeEvery(DELETE_FIREBASE_TOKEN, deleteFirebaseToken);
 }
-
+function* watchFetchAdvice() {
+	yield takeEvery(FETCH_ADVICE, fetchAdvice);
+}
 export default function* notification() {
 	yield all([
 		watchSendTokenToServer(),
 		watchGetUnreadNotifications(),
 		watchSetNotificationIsRead(),
 		watchGetFirebaseToken(),
-		watchDeleteFirebaseToken()
+		watchDeleteFirebaseToken(),
+		watchFetchAdvice()
 	]);
 }

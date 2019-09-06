@@ -28,6 +28,10 @@ export const getAllUserWatch = async (userId: string, next) => {
   return result;
 };
 
+export const getWatched = async (userId: string, next) => {
+  const watchList = await getAllUserWatch(userId, next);
+  return watchList.filter(elem => elem.status === "watched");
+};
 export const getMoviesIdWatchList = (userId: string, next) =>
   getCustomRepository(WatchRepository).getByUserId(userId, next);
 

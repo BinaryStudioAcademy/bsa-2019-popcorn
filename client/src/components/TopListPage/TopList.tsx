@@ -30,7 +30,7 @@ const TopList: React.FC<ITopLIstProps> = props => {
 	}
     
 	const topListItems = !props.passedTop ? (
-		props.tops.map(top => <TopListItem top={top} />)
+		props.tops.map(top => <TopListItem key={top.id} top={top} />)
 	) : (
 		<TopListItem top={props.passedTop} />
 	);

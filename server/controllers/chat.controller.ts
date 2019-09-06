@@ -66,7 +66,7 @@ router
     errorHandlerMiddleware,
     (req: Request & { io: any }, res: Response, next: NextFunction) =>
       chatService
-        .updateMessage(req.params.id, req.body.body, next)
+        .updateMessage(req.params.id, req.body, next)
         .then(result => {
           req.io.to(result.chatId).emit("update-message", result);
           res.send({ result });

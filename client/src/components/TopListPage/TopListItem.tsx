@@ -60,7 +60,11 @@ const TopListItem: React.FC<ITopLIstItemProps> = ({ top }) => {
 			<div className="top-secondary-section">
 				<NavLink to={`/user-page/${top.user.id}`}>
 					<div className="user-info">
-						<Image src={top.user.avatar} alt="user" defaultSrc={config.DEFAULT_AVATAR} />
+						<Image
+							src={top.user.avatar}
+							alt="user"
+							defaultSrc={config.DEFAULT_AVATAR}
+						/>
 						<span className="user-name">{top.user.name}</span>
 					</div>
 				</NavLink>

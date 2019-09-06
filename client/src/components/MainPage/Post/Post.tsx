@@ -236,7 +236,7 @@ class Post extends Component<IPostProps, IPostState> {
 						))}
 				</div>
 				{comments ? (
-					<div>
+					<div className="comments-wrp">
 						{comments.map(comment => (
 							<Comment key={comment.id} commentItem={comment} />
 						))}

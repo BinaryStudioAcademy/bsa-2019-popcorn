@@ -79,6 +79,22 @@ h2 {
 		top: 20px;
 		width: 100px;
 	}
+	.chat-btn {
+		position: absolute;
+		right: 0;
+		top: 80px;
+		width: 100px;
+		background-color: $orange;
+		border: none;
+		outline: none;
+		width: 100px;
+		height: 43px;
+		color: white;
+		font-weight: bold;
+		font-size: $header-medium;
+		border-radius: 4px;
+		cursor: pointer;
+	}
 	.profileRow {
 		letter-spacing: $base-letter-spacing;
 		display: flex;
