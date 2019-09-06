@@ -8,21 +8,17 @@ import {
 	UPDATE_MESSAGE_STORE,
 	READ_MESSAGES,
 	ADD_UNREAD_MESSAGE,
-	READ_MESSAGES_STORE
+	READ_MESSAGES_STORE,
+	SET_CHAT
 } from './actionTypes';
 import chat from './saga';
 
 const initialState: {
 	chats: any;
-	// unreadMessages: Array<{
-	// 	chatId: string,
-	// 	unreadMessagesCount: number
-	// }>;
 	isLoadingList: boolean;
 	isLoadingMessages: boolean;
 } = {
 	chats: {},
-	// unreadMessages: [],
 	isLoadingList: false,
 	isLoadingMessages: false
 };
@@ -41,12 +37,20 @@ export default function(state = initialState, action) {
 				},
 				isLoadingList: false
 			};
+		case SET_CHAT:
+			return {
+				...state,
+				chats: {
+					...state.chats,
+					[action.payload.chat.id]: action.payload.chat.chat
+				},
+				isLoadingList: false
+			};
 		case FETCH_MESSAGES:
 			return {
 				...state,
 				isLoadingMessages: true
 			};
-
 		case SET_MESSAGES:
 			return {
 				...state,

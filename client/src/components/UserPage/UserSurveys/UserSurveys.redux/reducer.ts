@@ -1,4 +1,11 @@
-import { SET_SURVEYS, SET_SURVEY_BYID, ADD_SURVEY, FETCH_SURVEYS, FETCH_USER_SURVEYS, DELETE_SURVEY } from './actionTypes';
+import {
+	SET_SURVEYS,
+	SET_SURVEY_BYID,
+	ADD_SURVEY,
+	FETCH_SURVEYS,
+	FETCH_USER_SURVEYS,
+	DELETE_SURVEY
+} from './actionTypes';
 
 const initialState = {
 	surveys: [],
@@ -6,7 +13,7 @@ const initialState = {
 	loading: true
 };
 
-export default function (state = initialState, action) {
+export default function(state = initialState, action) {
 	switch (action.type) {
 		case SET_SURVEYS:
 			return {

@@ -3,7 +3,7 @@ import './UserTops.scss';
 
 import { isEqual } from 'lodash';
 import Spinner from '../../shared/Spinner';
-import CreateExtraBtn from "../../shared/CreateExtraBtn";
+import CreateExtraBtn from '../../shared/CreateExtraBtn';
 import TopItem from './TopItem/TopItem';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -143,10 +143,7 @@ class UserTops extends React.Component<IUserTopProps, IUserTopsState> {
 					</button>
 				)}
 				{this.props.isOwnData && (
-					<CreateExtraBtn
-						handleClick={this.createTop}
-						body={'Create top'}
-					/>
+					<CreateExtraBtn handleClick={this.createTop} body={'Create top'} />
 				)}
 
 				{topList.map((topItem: ITopItem) => (

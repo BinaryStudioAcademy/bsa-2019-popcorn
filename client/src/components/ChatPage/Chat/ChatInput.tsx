@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { createMessage, createChat } from '../ChatPage.redux/actions';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPaperPlane } from '@fortawesome/free-solid-svg-icons';
+import { readMessages } from '../ChatPage.redux/actions';
 
 interface IProps {
 	createMessage: (userId: string, chatId: string, body: any) => void;
@@ -12,6 +13,7 @@ interface IProps {
 	userId: string;
 	story?: any;
 	createReaction: any;
+	readMessages: (chatId: string, userId: string) => void;
 }
 
 const ChatInput: React.FC<IProps> = ({
@@ -19,6 +21,7 @@ const ChatInput: React.FC<IProps> = ({
 	userId,
 	createMessage,
 	createChat,
+	readMessages,
 	story
 }) => {
 	const [message, changeMessage] = useState('');
@@ -42,6 +45,10 @@ const ChatInput: React.FC<IProps> = ({
 		});
 	};
 
+	const onInputClick = () => {
+		readMessages(chatId, userId);
+	};
+
 	const onMessageChange = e => {
 		changeMessage(e.target.value);
 	};
@@ -53,6 +60,7 @@ const ChatInput: React.FC<IProps> = ({
 				onKeyPress={handleKeyPress}
 				value={message}
 				onChange={onMessageChange}
+				onClick={onInputClick}
 			/>
 			<button onClick={sendMessage} className="send-btn">
 				<FontAwesomeIcon icon={faPaperPlane} />
@@ -68,7 +76,8 @@ const mapStateToProps = (rootState, props) => ({
 
 const actions = {
 	createMessage,
-	createChat
+	createChat,
+	readMessages
 };
 const mapDispatchToProps = dispatch => bindActionCreators(actions, dispatch);
 

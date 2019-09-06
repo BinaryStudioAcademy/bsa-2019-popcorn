@@ -11,7 +11,7 @@ import MessageStory from './MessageStory';
 interface IProps {
 	message: any;
 	deleteMessage: (id: string) => void;
-	updateMessage: (id: string, body: string) => void;
+	updateMessage: (id: string, body: { body: string }) => void;
 }
 
 const OutgoingMessage: React.FC<IProps> = ({
@@ -26,7 +26,7 @@ const OutgoingMessage: React.FC<IProps> = ({
 		toggleModal(!isOpenModal);
 	};
 	const onUpdate = () => {
-		updateMessage(message.id, editedMessage);
+		updateMessage(message.id, { body: editedMessage });
 		setEditedMessage('');
 		toggleModal(false);
 	};
@@ -72,7 +72,9 @@ const OutgoingMessage: React.FC<IProps> = ({
 							value={editedMessage || message.body}
 							onChange={e => setEditedMessage(e.target.value)}
 						/>
-						<button onClick={onUpdate}>Edit</button>
+						<button className="save-btn" onClick={onUpdate}>
+							Edit
+						</button>
 					</Modal>
 				</div>
 			) : (

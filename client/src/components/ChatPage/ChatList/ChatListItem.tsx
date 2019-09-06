@@ -1,5 +1,6 @@
 import React from 'react';
 import Moment from 'react-moment';
+import { NavLink } from 'react-router-dom';
 
 interface IProps {
 	chat: any;
@@ -12,7 +13,9 @@ const ChatListItem: React.FC<IProps> = ({ chat, unreadMessagesCount }) => {
 			<img className="avatar" src={chat.user.avatar} alt="avatar" />
 			<div className="chat-list-item-info">
 				<div className="info-header">
-					<div className="user-name">{chat.user.name}</div>
+					<NavLink to={`/user-page/${chat.user.id}`}>
+						<div className="user-name">{chat.user.name}</div>
+					</NavLink>
 					{chat.lastMessage && (
 						<div className="last-date">
 							<Moment format="D.MM.YY" local>

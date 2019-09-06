@@ -67,12 +67,20 @@ class ChatRepository extends Repository<Chat> {
       where: [{ user1, user2 }, { user1: user2, user2: user1 }]
     });
     if (!chat) {
-      await this.save({ user1, user2 });
+      const { id } = await this.save({ user1, user2 });
+
+      const newChat: any = await this.findOne({
+        where: [{ id }],
+        relations: ["user1", "user2", "messages", "messages.user"]
+      });
+
+      const formattedChat: any = {};
+      formattedChat.id = newChat.id;
+      formattedChat.unreadMessagesCount = 0;
+      formattedChat.user = this.formatUser(user2);
+      return { chat: formattedChat };
     }
-    const newChat = await this.findOne({
-      where: [{ user1, user2 }, { user1: user2, user2: user1 }]
-    });
-    return { chatId: newChat.id };
+    return { chatId: chat.id };
   }
 
   async createMessage(chatId, userId, body, next?) {
@@ -114,10 +122,10 @@ class ChatRepository extends Repository<Chat> {
       where: [{ id }],
       relations: ["chat", "user"]
     });
-    await getCustomRepository(MessageRepository).update(id, { body });
+    await getCustomRepository(MessageRepository).update(id, { ...body });
     const message: any = await getCustomRepository(MessageRepository).findOne({
       where: [{ id }],
-      relations: ["user"]
+      relations: ["user", "story"]
     });
     message.user = this.formatUser(message.user);
     return { userId, chatId, message };

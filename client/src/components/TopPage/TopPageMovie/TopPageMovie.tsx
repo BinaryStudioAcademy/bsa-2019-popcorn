@@ -22,16 +22,18 @@ const TopPageMovie: React.SFC<ITopProps> = ({ index, movie }) => {
 			</div>
 			<div className="movie-item">
 				<div className="movie-poster-wrp">
-					<NavLink to={`/movies/${movie.id}`} >	<Image
-						src={movie.poster_path}
-						defaultSrc={config.DEFAULT_MOVIE_IMAGE}
-						alt="movie-poster"
-						className="movie-poster"
-					/>
+					<NavLink to={`/movies/${movie.id}`}>
+						{' '}
+						<Image
+							src={movie.poster_path}
+							defaultSrc={config.DEFAULT_MOVIE_IMAGE}
+							alt="movie-poster"
+							className="movie-poster"
+						/>
 					</NavLink>
 				</div>
 				<div className="movie-info">
-					<NavLink to={`/movies/${movie.id}`} >
+					<NavLink to={`/movies/${movie.id}`}>
 						<span className="movie-title">{movie.title}</span>
 						<span className="movie-year">{` (${movie.release_date.slice(
 							0,

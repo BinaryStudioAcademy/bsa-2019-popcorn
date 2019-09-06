@@ -6,6 +6,7 @@ import { Switch, Route } from 'react-router';
 import Chat from './Chat/Chat';
 import ChatList from './ChatList/ChatList';
 import './ChatPage.scss';
+import Spinner from '../shared/Spinner';
 
 interface IProps {
 	fetchChats: (userId) => void;
@@ -20,7 +21,7 @@ class ChatPage extends React.Component<IProps> {
 	}
 
 	render() {
-		if (this.props.isLoadingList) return <div>Loading...</div>;
+		if (this.props.isLoadingList) return <Spinner />;
 
 		return (
 			<div className="chat-wrp">
