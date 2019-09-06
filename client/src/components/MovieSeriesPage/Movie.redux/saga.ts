@@ -367,7 +367,7 @@ export function* setReview(action) {
 
 		yield put({
 			type: FETCH_MOVIE_REVIEWS,
-			payload: movieId
+			payload: { movieId }
 		});
 	} catch (error) {
 		console.log(error);
