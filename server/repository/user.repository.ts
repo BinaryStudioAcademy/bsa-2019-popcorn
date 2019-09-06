@@ -6,7 +6,7 @@ import FavoriteListRepository from "./favoriteList.repository";
 @EntityRepository(User)
 class UserRepository extends Repository<User> {
   async getUserById(id: string) {
-    let data: { user?: User } = {};
+    const data: { user?: User } = {};
     let error = "";
     let success = true;
     try {
@@ -21,10 +21,14 @@ class UserRepository extends Repository<User> {
         const movie = movieArray.find(
           movieItem => movieItem.id === item.movieId
         );
-        if (!movie) return;
+        if (!movie) {
+          return;
+        }
         item.movie = { id: movie.id, name: movie.title };
       });
-      if (!data.user) throw new Error(`User with ${id} id is not found`);
+      if (!data.user) {
+        throw new Error(`User with ${id} id is not found`);
+      }
     } catch (err) {
       error = err.message;
       success = false;
@@ -33,7 +37,7 @@ class UserRepository extends Repository<User> {
   }
 
   async getUsers() {
-    let data: { users?: User[] } = {};
+    const data: { users?: User[] } = {};
     let error = "";
     let success = true;
     try {
@@ -46,7 +50,7 @@ class UserRepository extends Repository<User> {
   }
 
   async updateById(id, newData) {
-    let data: { user?: User } = {};
+    const data: { user?: User } = {};
     let error = "";
     let success = true;
     try {
@@ -58,8 +62,10 @@ class UserRepository extends Repository<User> {
       delete newData.favoriteMovieIds;
       await this.update({ id }, newData);
 
-      data.user = await this.findOne({ where: { id } });
-      if (!data.user) throw new Error(`User with ${id} id is not found`);
+      data.user = (await this.getUserById(id)).data.user;
+      if (!data.user) {
+        throw new Error(`User with ${id} id is not found`);
+      }
     } catch (err) {
       error = err.message;
       success = false;
@@ -68,12 +74,14 @@ class UserRepository extends Repository<User> {
   }
 
   async deleteById(id) {
-    let data = {};
+    const data = {};
     let error = "";
     let success = true;
     try {
       const user = await this.findOne({ where: { id } });
-      if (!user) throw new Error(`User with ${id} id is not found`);
+      if (!user) {
+        throw new Error(`User with ${id} id is not found`);
+      }
       await this.delete({ id });
     } catch (err) {
       error = err.message;

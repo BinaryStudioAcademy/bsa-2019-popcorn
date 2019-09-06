@@ -3,6 +3,7 @@ import './UserTops.scss';
 
 import { isEqual } from 'lodash';
 import Spinner from '../../shared/Spinner';
+import CreateExtraBtn from '../../shared/CreateExtraBtn';
 import TopItem from './TopItem/TopItem';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -14,6 +15,7 @@ import {
 	deleteTop
 } from './UserTops.redux/actions';
 import { ITopItem, convertServerDataFormatToClient } from './UserTops.service';
+
 export interface IUserTopsState {
 	topList: any;
 	isCreated: boolean;
@@ -27,7 +29,8 @@ interface IUserTopProps {
 	deleteTop: (topId: string) => any;
 	uploadImage: (data: FormData, topId: string) => void;
 	userId: string;
-	userRole: string;
+	selectedUserId: string;
+	isOwnData: boolean;
 	uploadUrl: string;
 	urlForTop: string;
 	location?: {
@@ -40,66 +43,27 @@ interface IUserTopProps {
 	};
 }
 
-// add user info to each top
-// const topItemsMock: ITopItem[] = [
-// 	{
-// 		id: '1',
-// 		title: 'My Top 1',
-// 		topImageUrl: '',
-// 		moviesList: [
-// 			{ title: 'The Avengers', id: '1', comment: 'Nice' },
-// 			{ title: 'Spider-Man', id: '2', comment: 'Nice' },
-// 			{ title: 'Batman', id: '3', comment: 'Nice' }
-// 		],
-// 		isOwnTop: true
-// 	},
-// 	{
-// 		id: '2',
-// 		title: 'My Top 2',
-// 		topImageUrl: '',
-// 		moviesList: [
-// 			{ title: 'The Avengers', id: '1', comment: 'Nice' },
-// 			{ title: 'Spider-Man', id: '2', comment: 'Nice' },
-// 			{ title: 'Batman', id: '3', comment: 'Nice' }
-// 		],
-// 		isOwnTop: true
-// 	},
-// 	{
-// 		id: '3',
-// 		title: 'My Top 3',
-// 		topImageUrl: '',
-// 		moviesList: [
-// 			{ title: 'The Avengers', id: '1', comment: 'Nice' },
-// 			{ title: 'Spider-Man', id: '2', comment: 'Nice' },
-// 			{ title: 'Batman', id: '3', comment: 'Nice' }
-// 		],
-// 		isOwnTop: true
-// 	},
-// 	{
-// 		id: '4',
-// 		title: "Somebody's Top",
-// 		topImageUrl: 'https://www.w3schools.com/images/colorpicker.gif',
-// 		moviesList: [
-// 			{ title: 'The Avengers', id: '1', comment: 'Nice' },
-// 			{ title: 'Spider-Man', id: '2', comment: 'Nice' },
-// 			{ title: 'Batman', id: '3', comment: 'Nice' }
-// 		],
-// 		isOwnTop: false
-// 	}
-// ];
-
 const newTop = (): ITopItem => {
 	return {
 		id: Date.now().toString(),
 		title: '',
 		moviesList: [],
 		topImageUrl: '',
-		isOwnTop: true,
 		isNewTop: true
 	};
 };
 
 class UserTops extends React.Component<IUserTopProps, IUserTopsState> {
+	static getDerivedStateFromProps(props, state) {
+		if (state.isAction && !isEqual(props.topList, state.topList)) {
+			return {
+				...state,
+				topList: convertServerDataFormatToClient(props.topList)
+			};
+		}
+		return null;
+	}
+
 	constructor(props) {
 		super(props);
 		this.state = {
@@ -110,17 +74,7 @@ class UserTops extends React.Component<IUserTopProps, IUserTopsState> {
 	}
 
 	componentDidMount() {
-		this.props.fetchTops(this.props.userId);
-	}
-
-	static getDerivedStateFromProps(props, state) {
-		if (state.isAction && !isEqual(props.topList, state.topList)) {
-			return {
-				...state,
-				topList: convertServerDataFormatToClient(props.topList)
-			};
-		}
-		return null;
+		this.props.fetchTops(this.props.selectedUserId);
 	}
 
 	deleteTop = (top: ITopItem) => {
@@ -165,16 +119,6 @@ class UserTops extends React.Component<IUserTopProps, IUserTopsState> {
 		}
 	};
 
-	isOwnTop(top) {
-		const { userId, userRole } = this.props;
-		if (top.user) {
-			// delete this check when top will have user info
-			return userRole === 'admin' || userId === top.user.userId;
-		} else {
-			return true;
-		}
-	}
-
 	render() {
 		const url_callback =
 			this.props.location &&
@@ -198,27 +142,22 @@ class UserTops extends React.Component<IUserTopProps, IUserTopsState> {
 						Back to story
 					</button>
 				)}
-				<div className="create-top-button hover" onClick={this.createTop}>
-					Create Top
-				</div>
-				{topList.map(
-					(topItem: ITopItem) =>
-						((this.isOwnTop(topItem) &&
-							window.location.pathname ==
-								'/user-page/' + this.props.userId + '/tops') ||
-							window.location.pathname == '/tops/') && (
-							<TopItem
-								key={topItem.id}
-								saveUserTop={this.saveUserTop}
-								topItem={topItem}
-								isOwnTop={this.isOwnTop(topItem)}
-								deleteTop={this.deleteTop}
-								uploadUrl={this.props.uploadUrl}
-								urlForTop={this.props.urlForTop}
-								uploadImage={this.props.uploadImage}
-							/>
-						)
+				{this.props.isOwnData && (
+					<CreateExtraBtn handleClick={this.createTop} body={'Create top'} />
 				)}
+
+				{topList.map((topItem: ITopItem) => (
+					<TopItem
+						key={topItem.id}
+						saveUserTop={this.saveUserTop}
+						topItem={topItem}
+						isOwnData={this.props.isOwnData}
+						deleteTop={this.deleteTop}
+						uploadUrl={this.props.uploadUrl}
+						urlForTop={this.props.urlForTop}
+						uploadImage={this.props.uploadImage}
+					/>
+				))}
 			</div>
 		);
 	}
@@ -227,7 +166,6 @@ class UserTops extends React.Component<IUserTopProps, IUserTopsState> {
 const mapStateToProps = (rootState, props) => ({
 	...props,
 	userId: rootState.profile.profileInfo.id,
-	userRole: rootState.profile.profileInfo.role,
 	uploadUrl: rootState.userTops.uploadUrl,
 	urlForTop: rootState.userTops.urlForTop,
 	topList: rootState.userTops.topList

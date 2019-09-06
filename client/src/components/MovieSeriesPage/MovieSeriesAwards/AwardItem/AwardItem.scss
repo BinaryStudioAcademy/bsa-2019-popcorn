@@ -1,10 +1,16 @@
-.item-wrapper {
-	display: flex;
-	align-items: center;
-	margin-bottom: 10px;
+$award-icon-size: 80px;
 
-	.award-icon {
-		height: 80px;
-		width: 80px;
-	}
+.movieAwards-wrapper {
+	.item-wrapper {
+		display: grid;
+		grid-template-columns: $award-icon-size auto;
+		align-items: center;
+		margin-bottom: 10px;
+	
+		.award-icon {
+			height: $award-icon-size;
+			width: $award-icon-size;
+		}
+	}	
 }
+

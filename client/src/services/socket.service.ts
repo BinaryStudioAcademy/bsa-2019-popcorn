@@ -1,8 +1,22 @@
-import React from 'react';
 import io from 'socket.io-client';
-import config from '../config';
 
 class SocketService {
+	static on(name: string, callback: (data: any) => any) {
+		SocketService._socket.on(name, callback);
+	}
+
+	static emit(name: string, data: any) {
+		SocketService._socket.emit(name, data);
+	}
+
+	static join(room: string) {
+		SocketService._socket.emit('createRoom', room);
+	}
+
+	static leave(room: string) {
+		SocketService._socket.emit('leaveRoom', room);
+	}
+
 	private static _socket;
 
 	constructor(userId: string) {
@@ -25,22 +39,6 @@ class SocketService {
 				});
 			}
 		}
-	}
-
-	static on(name: string, callback: (data: any) => any) {
-		SocketService._socket.on(name, callback);
-	}
-
-	static emit(name: string, data: any) {
-		SocketService._socket.emit(name, data);
-	}
-
-	static join(room: string) {
-		SocketService._socket.emit('createRoom', room);
-	}
-
-	static leave(room: string) {
-		SocketService._socket.emit('leaveRoom', room);
 	}
 }
 

@@ -1,17 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import PostList from '../../MainPage/PostList/PostList';
 import Spinner from '../../shared/Spinner';
+import CreateExtraBtn from '../../shared/CreateExtraBtn';
 import PostConstructor from './PostConstructor';
-import { connect } from 'react-redux';
-import * as actions from '../../UserPage/actions';
-import './UserPosts.scss';
 interface IProps {
 	posts?: any;
 	getUsersPosts: () => any;
 	userId: string;
 	croppedSaved: boolean;
 	saveCropped: () => void;
-	currentUserId: string;
+	isOwnData: boolean;
 }
 const userPostStyle = {
 	marginRight: '0px',
@@ -24,7 +22,7 @@ const UserPosts: React.FC<IProps> = ({
 	userId,
 	croppedSaved,
 	saveCropped,
-	currentUserId
+	isOwnData
 }) => {
 	const [showPostsConstructor, setShowPostsConstructor] = useState(false);
 	if (!posts) {
@@ -37,13 +35,11 @@ const UserPosts: React.FC<IProps> = ({
 	};
 	return (
 		<div className="UserPosts">
-			{currentUserId === userId && (
-				<button
-					className="create-post-btn hover"
-					onClick={ev => togglePostConstructor(ev)}
-				>
-					Create post
-				</button>
+			{isOwnData && (
+				<CreateExtraBtn
+					handleClick={ev => togglePostConstructor(ev)}
+					body={'Create post'}
+				/>
 			)}
 			{showPostsConstructor && (
 				<PostConstructor

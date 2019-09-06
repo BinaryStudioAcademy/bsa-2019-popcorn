@@ -1,13 +1,11 @@
 import { Event, EventComment, EventVisitor } from "../models/Events";
 import {
-  Event as EventEntity,
   EventComment as CommentEntity,
   EventVisitor as VisitorEntity
 } from "../entities/Events";
 
 import EventRepository from "../repository/event.repository";
 import { getRepository, getCustomRepository } from "typeorm";
-import { User } from "models/UserModel";
 
 export const getAllEvents = async (): Promise<any[]> =>
   await getCustomRepository(EventRepository).getAllEvents();
@@ -20,6 +18,9 @@ export const getEventsByUserId = async (userId: string): Promise<any[]> => {
 
 export const getEventById = async (eventId: string): Promise<Event> =>
   await getCustomRepository(EventRepository).getEvent(eventId);
+
+export const getEventByTitle = async (title: string): Promise<Event[]> =>
+  await getCustomRepository(EventRepository).getEventByTitle(title);
 
 export const createEvent = async (event: any): Promise<Event> => {
   const responseEvent = await getCustomRepository(EventRepository).save(event);
@@ -45,7 +46,7 @@ export const deleteEventById = async (eventId: number): Promise<Event> => {
   return await getCustomRepository(EventRepository).remove(event);
 };
 
-//comments
+// comments
 
 export const getCommentsByEventId = async (
   eventId: string
@@ -71,7 +72,7 @@ export const deleteCommentById = async (
   return await getRepository(CommentEntity).remove(comment);
 };
 
-//visitors
+// visitors
 
 export const getVisitorsByEventId = async (
   eventId: string

@@ -1,6 +1,5 @@
-import { EntityRepository, Repository } from "typeorm";
+import { EntityRepository, Repository, getRepository } from "typeorm";
 import { Event, EventVisitor } from "../entities/Events";
-import { getRepository } from "typeorm";
 
 @EntityRepository(Event)
 class EventRepository extends Repository<Event> {
@@ -16,6 +15,19 @@ class EventRepository extends Repository<Event> {
       .getMany();
   }
 
+  async getRandomEvent(): Promise<Event> {
+    return await getRepository(Event)
+      .createQueryBuilder("event")
+      .leftJoinAndSelect("event.eventComments", "comments")
+      .leftJoinAndSelect("event.eventVisitors", "visitors")
+      .leftJoin("comments.user", "cuser")
+      .addSelect(["cuser.name", "cuser.avatar", "cuser.id"])
+      .leftJoin("visitors.user", "user")
+      .addSelect(["user.name", "user.avatar", "user.id"])
+      .orderBy("RANDOM()")
+      .getOne();
+  }
+
   async getEvent(eventId: string): Promise<Event> {
     return await getRepository(Event)
       .createQueryBuilder("event")
@@ -27,6 +39,20 @@ class EventRepository extends Repository<Event> {
       .addSelect(["user.name", "user.avatar", "user.id"])
       .where("event.id = :id", { id: eventId })
       .getOne();
+  }
+  async getEventByTitle(title: string): Promise<Event[]> {
+    return await getRepository(Event)
+      .createQueryBuilder("event")
+      .leftJoinAndSelect("event.eventComments", "comments")
+      .leftJoinAndSelect("event.eventVisitors", "visitors")
+      .leftJoin("comments.user", "cuser")
+      .addSelect(["cuser.name", "cuser.avatar", "cuser.id"])
+      .leftJoin("visitors.user", "user")
+      .addSelect(["user.name", "user.avatar", "user.id"])
+      .where("LOWER(event.title) LIKE :title", {
+        title: "%" + title.toLowerCase() + "%"
+      })
+      .getMany();
   }
 
   async getEventsByVisitorId(userId: string): Promise<EventVisitor[]> {

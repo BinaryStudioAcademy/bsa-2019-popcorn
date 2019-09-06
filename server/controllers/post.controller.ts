@@ -23,16 +23,31 @@ router
       .then((posts: Post[]) => res.send(posts))
       .catch(next)
   )
-  .post("/", (req, res, next) =>
+  .post("/", (req: Request & { io: any }, res, next) =>
     postService
       .createPost(req.body)
-      .then(response => res.send(response))
+      .then(post => {
+        res.send(post);
+        req.io.emit("new-post", post);
+      })
       .catch(next)
   )
-  .delete("/:id", (req, res, next) =>
+  .put("/", (req: Request & { io: any }, res, next) =>
+    postService
+      .updateById(req.body)
+      .then(post => {
+        res.send(post);
+        req.io.emit("update-post", post);
+      })
+      .catch(next)
+  )
+  .delete("/:id", (req: Request & { io: any }, res, next) =>
     postService
       .deletePostById(req.params.id)
-      .then((response: Post) => res.send(response))
+      .then(() => {
+        res.sendStatus(200);
+        req.io.emit("delete-post", req.params.id);
+      })
       .catch(next)
   )
   .post("/comment", (req: Request & { io: any }, res, next) => {

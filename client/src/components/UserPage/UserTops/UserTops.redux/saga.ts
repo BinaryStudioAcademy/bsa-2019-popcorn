@@ -2,21 +2,16 @@ import { all, call, put, takeEvery } from 'redux-saga/effects';
 import * as ActionTypes from './actionTypes';
 import { uploadFile } from '../../../../services/file.service';
 
-import config from '../../../../config';
 import webApi from '../../../../services/webApi.service';
 
 export function* uploadImage(action) {
 	try {
 		const data = yield call(uploadFile, action.payload.data);
-		let url;
-		if (data.imageUrl.indexOf('/') !== -1) url = data.imageUrl.split(`/`);
-		else url = data.imageUrl.split(`\\`);
-		url.shift();
 
 		yield put({
 			type: ActionTypes.SET_TOP_IMAGE,
 			payload: {
-				uploadUrl: '/' + url.join('/'),
+				uploadUrl: data.imageUrl,
 				topId: action.payload.topId
 			}
 		});
@@ -37,7 +32,7 @@ export function* fetchElasticSearchFilms(action) {
 		});
 
 		yield put({
-			type: ActionTypes.SET_ElASTIC_MOVIE_LIST, //FINISH_SEARCH_ELASTIC_FILMS,
+			type: ActionTypes.SET_ElASTIC_MOVIE_LIST, // FINISH_SEARCH_ELASTIC_FILMS,
 			payload: {
 				elasticSearchMovies: data
 			}
@@ -140,7 +135,7 @@ export function* deleteTop(action) {
 	try {
 		const { topId } = action.payload;
 
-		const data = yield call(webApi, {
+		yield call(webApi, {
 			method: 'DELETE',
 			endpoint: `/api/top/${topId}`
 		});

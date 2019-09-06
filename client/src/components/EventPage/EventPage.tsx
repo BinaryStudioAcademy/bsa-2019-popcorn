@@ -44,11 +44,13 @@ const EventPage: React.FC<IProps> = ({
 
 	function subscibe({ eventId, userId, status }) {
 		let isVisitor = false;
-		let eventVisitors = event.eventVisitors.map(visitor => {
+		const eventVisitors = event.eventVisitors.map(visitor => {
 			if (visitor.userId === userId) {
 				isVisitor = true;
 				return { ...visitor, status };
-			} else return visitor;
+			} else {
+				return visitor;
+			}
 		});
 		if (!isVisitor) {
 			eventVisitors.push({
@@ -64,9 +66,14 @@ const EventPage: React.FC<IProps> = ({
 		subscibeToEvent({ eventId, userId, status });
 	}
 	useEffect(() => {
-		if (!event || match.params.id !== event.id) {
+		if (!event || match.params.id !== searchedEvent.id) {
 			getEventById(match.params.id);
-			searchedEvent && setEvent(formatToClient(searchedEvent));
+		}
+		if (event && searchedEvent.id !== event.id) {
+			setEvent(formatToClient(searchedEvent));
+		}
+		if (searchedEvent && !event) {
+			setEvent(formatToClient(searchedEvent));
 		}
 	});
 

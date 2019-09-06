@@ -9,10 +9,10 @@ import ImageUploader from '../../MainPage/ImageUploader/ImageUploader';
 import ChooseExtra from './PostExtra/choose-extra';
 import Extra from '././PostExtra/extra';
 import {
-	faPaperclip,
 	faCheckCircle,
-	faTimesCircle,
-	faTimes
+	faPlus,
+	faTimes,
+	faTimesCircle
 } from '@fortawesome/free-solid-svg-icons';
 
 import { setPost } from '../actions';
@@ -20,8 +20,9 @@ import { fetchPosts } from '../../MainPage/FeedBlock/FeedBlock.redux/actions';
 import { getUsersPosts } from '../../UserPage/actions';
 import Cropper from 'react-cropper';
 import { uploadFile } from '../../../services/file.service';
-import config from '../../../config';
-import Image from '../../shared/Image/Image';
+import MovieSearch from './MovieSearch';
+import IReaction from '../../MainPage/Post/IReaction';
+import IComment from '../../MainPage/Post/IComment';
 
 interface IPostConstructorProps {
 	userId: string;
@@ -33,9 +34,11 @@ interface IPostConstructorProps {
 	croppedSaved: boolean;
 	saveCropped: () => void;
 	togglePostConstructor: (ev) => void;
+	newPost?: INewPost | null;
 }
 
-interface IPostConstructorState {
+export interface INewPost {
+	id?: string;
 	image_url: string;
 	description: string;
 	title: string;
@@ -44,18 +47,41 @@ interface IPostConstructorState {
 	extraTitle: string;
 	modalExtra: boolean;
 	croppedSaved: boolean;
-	reactions: Array<any>;
-	comments: Array<any>;
+	reactions: IReaction[];
+	comments: IComment[];
 	extraData: any;
 	extraType: string;
+	movieSearchTitle: null | string;
+	createdAt: string;
+	top?: any;
+	event?: any;
+	survey?: any;
 }
 
 class PostConstructor extends React.Component<
 	IPostConstructorProps,
-	IPostConstructorState
+	INewPost & { event?: any; top?: any; survey?: any }
 > {
+	static findMovie(str: string) {
+		let find = str.match(/\$(.+)(.*?)(\s*?)/g);
+		if (find && find[0]) {
+			find = find[0].split(' ');
+			if (find) {
+				return find[0].slice(1);
+			}
+		}
+		return '';
+	}
+
 	constructor(props: IPostConstructorProps) {
 		super(props);
+
+		let item = { title: '' };
+		if (props.newPost) {
+			item = props.newPost.top ||
+				props.newPost.event ||
+				props.newPost.survey || { title: '' };
+			}
 		this.state = {
 			image_url: '',
 			description: '',
@@ -63,12 +89,25 @@ class PostConstructor extends React.Component<
 			userId: this.props.userId,
 			extraLink: '',
 			extraTitle: '',
-			extraData: {},
+			extraData: null,
 			extraType: '',
 			modalExtra: false,
 			croppedSaved: false,
 			reactions: [],
-			comments: []
+			comments: [],
+			movieSearchTitle: null,
+			createdAt: '',
+			...(props.newPost
+				? {
+						...props.newPost,
+						extraLink: props.newPost.extraLink,
+						extraTitle: item.title,
+						extraData: item,
+						extraType:
+							props.newPost.extraLink &&
+							props.newPost.extraLink.split('/')[1].slice(0, -1)
+					}
+				: {})
 		};
 		this.imageStateHandler = this.imageStateHandler.bind(this);
 		this.onSave = this.onSave.bind(this);
@@ -110,13 +149,15 @@ class PostConstructor extends React.Component<
 	}
 
 	onChangeData(value: string, keyword: string) {
+		const title = PostConstructor.findMovie(value);
 		this.setState({
 			...this.state,
-			[keyword]: value
+			[keyword]: value,
+			movieSearchTitle: title || null
 		});
 	}
 
-	onSave() {
+	onSave(ev) {
 		if (this.state.description.trim() === '') return;
 		const { extraType, extraData } = this.state;
 		if (extraType === 'top') {
@@ -134,7 +175,6 @@ class PostConstructor extends React.Component<
 		} else {
 			this.props.setPost(this.state);
 		}
-		this.props.fetchPosts();
 		this.setState({
 			image_url: '',
 			description: '',
@@ -142,6 +182,7 @@ class PostConstructor extends React.Component<
 			extraTitle: '',
 			croppedSaved: false
 		});
+		this.props.togglePostConstructor(ev);
 	}
 
 	onCancel() {
@@ -149,6 +190,7 @@ class PostConstructor extends React.Component<
 			image_url: ''
 		});
 	}
+
 	onSaveCropped() {
 		if (this.cropper.current) {
 			const dataUrl = this.cropper.current.getCroppedCanvas().toBlob(blob => {
@@ -156,36 +198,37 @@ class PostConstructor extends React.Component<
 				data.append('file', blob);
 				uploadFile(data)
 					.then(({ imageUrl }) => {
-						if (imageUrl.indexOf('\\') !== -1) {
-							let url = imageUrl.split(`\\`);
-							url.shift();
-							url = url.join('/');
-
-							url = '/' + url;
-
-							this.imageStateHandler(url, true);
-						} else {
-							let url = imageUrl.split(`/`);
-							url.shift();
-							url = url.join('/');
-
-							url = '/' + url;
-
-							this.imageStateHandler(url, true);
-						}
+						this.imageStateHandler(imageUrl, true);
 					})
 					.catch(error => {});
 			});
 		}
 	}
 
+	preparseDescription(description) {
+		const arr = description.split('@');
+		const res = arr.map(str => str.replace(/(.+)\{(.+)\}/, '$2'));
+		return res.join('');
+	}
+
+	addMovieCaption(movie, movieSearchTitle) {
+		const { description } = this.state;
+		const caption = `@${movie.id}{${movie.title}}`;
+		const newDescription = description.replace(`$${movieSearchTitle}`, caption);
+		this.setState({
+			description: newDescription,
+			movieSearchTitle: null
+		});
+	}
+
 	render() {
+		const { movieSearchTitle } = this.state;
 		return (
 			<div className="post-constructor-modal">
 				<div
 					className="overlay"
 					onClick={ev => this.props.togglePostConstructor(ev)}
-				></div>
+				/>
 				<div className="postconstr-wrp">
 					<p
 						className="close-modal"
@@ -215,42 +258,62 @@ class PostConstructor extends React.Component<
 								</span>
 							</div>
 						)}
-						<div className="image-list-wrapper">
-							<div className="card-wrapper">
-								<button className="button-image">
-									<ImageUploader
-										isIcon={true}
-										imageHandler={uploadFile}
-										imageStateHandler={this.imageStateHandler}
-									/>
-								</button>
-							</div>
-							{this.state.image_url && this.state.croppedSaved && (
+						{this.state.image_url && this.state.croppedSaved && (
+							<div className="image-list-wrapper">
 								<div className="post-img-wrapper">
 									<img className="post-img" src={this.state.image_url} />
 								</div>
-							)}
-						</div>
+								<div className="card-wrapper">
+									<button className="button-image">
+										<ImageUploader
+											icon={faPlus}
+											isIcon={true}
+											imageHandler={uploadFile}
+											imageStateHandler={this.imageStateHandler}
+										/>
+									</button>
+								</div>
+							</div>
+						)}
 						{this.state.extraLink && (
 							<Extra
 								link={this.state.extraLink}
-								data={this.state.extraData}
+								data={
+									this.state.extraData ||
+									this.state.event ||
+									this.state.top ||
+									this.state.survey ||
+									{}
+								}
 								type={this.state.extraType}
 								clearExtra={this.setExtraData}
 							/>
 						)}
 						<textarea
 							placeholder="Create new post..."
-							value={this.state.description}
+							value={this.preparseDescription(this.state.description)}
 							onChange={e => this.onChangeData(e.target.value, 'description')}
 						/>
+						{movieSearchTitle && (
+							<div style={{ width: '100%' }}>
+								<MovieSearch
+									inputData={movieSearchTitle}
+									onSelectMovie={movie =>
+										this.addMovieCaption(movie, movieSearchTitle)
+									}
+									elasticProperties={['id', 'title']}
+								/>
+							</div>
+						)}
+
 						<ChooseExtra
+							imageStateHandler={this.imageStateHandler}
 							toggleModal={this.toggleModal}
 							setExtra={this.setExtraData}
 						/>
 					</div>
 					<div className="save-wrp">
-						<button className="save-btn" onClick={this.onSave}>
+						<button className="save-btn" onClick={ev => this.onSave(ev)}>
 							Share
 						</button>
 					</div>

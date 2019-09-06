@@ -5,20 +5,41 @@ import UserRepository from "../repository/user.repository";
 import { getVotingById } from "./voting.service";
 import { getMovieById } from "./movie.service";
 
-const uuid = require("uuid/v4");
+import * as uuid from "uuid/v4";
+import { getSurveysById } from "./surveys.service";
+import { getEventById } from "./event.service";
+import { getTopById } from "./top.service";
 
-export const getStories = async (): Promise<Array<Story>> => {
+export const getStories = async (): Promise<Story[]> => {
+  let activity;
   const stories = (await getCustomRepository(StoryRepository).find({
     relations: ["user"]
   })).reverse();
   return Promise.all(
     stories.map(async item => {
-      let story: any = { ...item };
+      const story: any = { ...item };
       switch (story.type) {
         case "voting":
           story.voting = await getVotingById(story.activityId);
+          break;
+        case "survey":
+          activity = await getSurveysById(story.activityId, () => {});
+          story.activity = activity.title;
+          break;
+        case "event":
+          activity = await getEventById(story.activityId);
+          story.activity = activity.title;
+          break;
+        case "top":
+          activity = await getTopById(story.activityId);
+          story.activity = activity.title;
+          break;
+        default:
+          break;
       }
-      if (story.movieId) story.movie = await getMovieById(story.movieId);
+      if (story.movieId) {
+        story.movie = await getMovieById(story.movieId);
+      }
 
       return story;
     })
@@ -42,7 +63,7 @@ export const createStory = async ({
   textPositionX,
   textPositionY
 }): Promise<any> => {
-  let story: any = new Story();
+  const story: any = new Story();
   story.id = uuid();
   story.user = await getCustomRepository(UserRepository).findOne({
     id: userId
@@ -65,7 +86,9 @@ export const createStory = async ({
   } else if (type) {
     story.activity = activity.name;
   }
-  if (movieId) story.movie = await getMovieById(movieId);
+  if (movieId) {
+    story.movie = await getMovieById(movieId);
+  }
 
   return story;
 };
@@ -74,6 +97,6 @@ export const updateStory = async (story: Story): Promise<Story> =>
   await getCustomRepository(StoryRepository).save(story);
 
 export const deleteStoryById = async (storyId: string): Promise<Story> => {
-  let story = await getCustomRepository(StoryRepository).findOne(storyId);
+  const story = await getCustomRepository(StoryRepository).findOne(storyId);
   return await getCustomRepository(StoryRepository).remove(story);
 };

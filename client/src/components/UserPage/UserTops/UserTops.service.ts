@@ -3,7 +3,6 @@ export interface ITopItem {
 	title: string;
 	topImageUrl: string;
 	moviesList: IMovie[];
-	isOwnTop: boolean;
 	isNewTop?: boolean;
 }
 
@@ -25,12 +24,11 @@ export function convertServerDataFormatToClient(
 			id: top.id,
 			title: top.title,
 			topImageUrl: top.topImageUrl,
-			moviesList: top.movieInTop.map(movieInTop => ({
-				id: movieInTop.movie.id,
-				title: movieInTop.movie.title,
-				comment: movieInTop.comment
-			})),
-			isOwnTop: true
+			moviesList: top.movieInTop.map(movie => ({
+				id: movie.id,
+				title: movie.title,
+				comment: movie.comment
+			}))
 		};
 	});
 

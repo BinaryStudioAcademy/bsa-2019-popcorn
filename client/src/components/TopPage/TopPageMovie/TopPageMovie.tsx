@@ -4,6 +4,7 @@ import config from '../../../config';
 import { IMovie } from '../TopPage.service';
 
 import './MovieListItem.scss';
+import { NavLink } from 'react-router-dom';
 
 interface ITopProps {
 	index: number;
@@ -11,29 +12,34 @@ interface ITopProps {
 }
 
 const TopPageMovie: React.SFC<ITopProps> = ({ index, movie }) => {
-	if (!movie) return <div />;
+	if (!movie) {
+		return <div />;
+	}
 	return (
 		<div className="movie-list-container" key={index}>
 			<div className="movie-key">
-				<span className="movie-key-value">{index}</span>
+				<span className="movie-key-value">{index}.</span>
 			</div>
 			<div className="movie-item">
 				<div className="movie-poster-wrp">
-					<Image
-						src={movie.poster_path}
-						defaultSrc={config.DEFAULT_MOVIE_IMAGE}
-						alt="movie-poster"
-						className="movie-poster"
-					/>
+					<NavLink to={`/movies/${movie.id}`}>
+						{' '}
+						<Image
+							src={movie.poster_path}
+							defaultSrc={config.DEFAULT_MOVIE_IMAGE}
+							alt="movie-poster"
+							className="movie-poster"
+						/>
+					</NavLink>
 				</div>
 				<div className="movie-info">
-					<div>
+					<NavLink to={`/movies/${movie.id}`}>
 						<span className="movie-title">{movie.title}</span>
 						<span className="movie-year">{` (${movie.release_date.slice(
 							0,
 							4
 						)})`}</span>
-					</div>
+					</NavLink>
 					<div className="movie-genre">{movie.genres}</div>
 					<span className="author-comment">{movie.comment}</span>
 				</div>

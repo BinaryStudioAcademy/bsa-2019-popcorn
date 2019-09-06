@@ -16,7 +16,10 @@ import {
 	FETCH_FILTRED_MOVIES,
 	LOAD_MORE_FILTRED_MOVIE,
 	SET_FILTERS,
-	GET_GENRES
+	GET_GENRES,
+	FETCH_STATISTICS,
+	DELETE_USER_RATE,
+	FETCH_POSTS_BY_FILM
 } from './actionTypes';
 
 export const getGenres = (): any => {
@@ -24,6 +27,11 @@ export const getGenres = (): any => {
 		type: GET_GENRES
 	};
 };
+
+export const deleteUserRate = (userRate: any) => ({
+	type: DELETE_USER_RATE,
+	payload: { userRate }
+});
 
 export const fetchMovieList = (): any => {
 	return {
@@ -183,5 +191,23 @@ export const setReview = (
 export const removeReviewSet = () => {
 	return {
 		type: REMOVE_REVIEW_SET
+	};
+};
+
+export const fetchStatistics = (movieId: string) => {
+	return {
+		type: FETCH_STATISTICS,
+		payload: {
+			movieId
+		}
+	};
+};
+
+export const fetchPostsByFilm = (movieId: string) => {
+	return {
+		type: FETCH_POSTS_BY_FILM,
+		payload: {
+			movieId
+		}
 	};
 };

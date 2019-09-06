@@ -13,6 +13,11 @@ import reviewRouter from "./review.controller";
 import watchRouter from "./watch.controller";
 import followRouter from "./follow.controller";
 import notificationRouter from "./notification.controller";
+import searchRouter from "./search.controller";
+import movieListRouter from "./movieList.controller";
+import confirmRouter from "./confirm.controller";
+import recommendedRouter from "./recommended.controller";
+import chatRouter from "./chat.controller";
 
 // register all routes
 export default app => {
@@ -31,4 +36,9 @@ export default app => {
   app.use("/api/watch", watchRouter);
   app.use("/api/follow", followRouter);
   app.use("/api/notification", notificationRouter);
+  app.use("/api/search", searchRouter);
+  app.use("/api/movie-list", movieListRouter);
+  app.use("/api/confirm", confirmRouter);
+  app.use("/api/recommended", recommendedRouter);
+  app.use("/api/chat", chatRouter);
 };

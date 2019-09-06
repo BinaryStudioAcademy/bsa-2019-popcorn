@@ -55,6 +55,11 @@
 			color: $text-secondary-color;
 			background-color: $background-gray;
 
+			.movie-search-release-date {
+				font-size: 0.8em;
+				font-weight: 300;
+			}
+
 			&:hover {
 				color: $text-base-color;
 				background-color: #c8c8c8;

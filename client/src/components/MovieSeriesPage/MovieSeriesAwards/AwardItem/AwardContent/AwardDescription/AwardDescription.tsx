@@ -10,18 +10,15 @@ const AwardDescription: React.FC<IAwardDescription> = ({
 	nominationWinner
 }) => {
 	const generateWinnerNames = () => {
-		let namesStr = '';
-		nominationWinner.map((el, index) => {
-			if (index === nominationWinner.length - 1) {
-				namesStr = namesStr + el.name;
-			} else namesStr = namesStr + el.name + ', ';
-		});
-		return namesStr;
+		return nominationWinner.map(winner => winner.name).join(', ');
 	};
+
 	return (
 		<div className="description-wrapper">
-			<div className="nominationName">{`${nominationName}`}</div>
-			<div className="hyphen">{nominationWinner.length !== 0 ? '—' : ''}</div>
+			<div
+				className="nominationName"
+				dangerouslySetInnerHTML={{ __html: nominationName }}
+			/>
 			<div className="nomination-winner-name">{generateWinnerNames()}</div>
 		</div>
 	);

@@ -12,7 +12,9 @@ export const getAllUserWatch = async (userId: string, next) => {
     userId,
     next
   );
-  if (watches && watches.length === 0) return [];
+  if (watches && watches.length === 0) {
+    return [];
+  }
   const movieIdArray = watches.map(watch => watch.movieId);
   const elasticResponse = await elasticGetByIdArray(movieIdArray);
   const movieArray = elasticResponse.hits.hits.map(movie => movie._source);
@@ -21,11 +23,17 @@ export const getAllUserWatch = async (userId: string, next) => {
       movieItem => String(movieItem.id) === watch.movieId
     );
     watch.movie = movie;
-    watch.movieId = undefined;
     return watch;
   });
   return result;
 };
+
+export const getWatched = async (userId: string, next) => {
+  const watchList = await getAllUserWatch(userId, next);
+  return watchList.filter(elem => elem.status === "watched");
+};
+export const getMoviesIdWatchList = (userId: string, next) =>
+  getCustomRepository(WatchRepository).getByUserId(userId, next);
 
 export const saveNewUserWatch = (userId: string, watch: IWatch, next) => {
   const { status } = watch;

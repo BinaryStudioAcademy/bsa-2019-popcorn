@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import PostList from '../PostList/PostList';
 import RecommendList from '../RecommendList/RecommendList';
 import './FeedBlock.scss';
@@ -25,7 +25,7 @@ interface IProps {
 	fetchStories: () => any;
 	createComment: (userId: string, text: string, postId: string) => any;
 	addNewComment: (comment: IComment) => any;
-	addNewReaction?: (reactions: Array<IReaction>, postId: string) => any;
+	addNewReaction?: (reactions: IReaction[], postId: string) => any;
 }
 
 const FeedBlock = (props: IProps) => {
@@ -44,7 +44,6 @@ const FeedBlock = (props: IProps) => {
 				</div>
 				<div>
 					<RecommendList />
-					<TopList />
 				</div>
 			</div>
 		</div>

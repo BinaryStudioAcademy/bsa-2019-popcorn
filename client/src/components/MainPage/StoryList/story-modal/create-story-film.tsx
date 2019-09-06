@@ -1,29 +1,48 @@
 import React, { useState } from 'react';
 import TMovie from '../../../MovieSeriesPage/TMovie';
-import MovieList from '../../../MovieList/MovieList';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
 	faArrowCircleLeft,
 	faTimesCircle
 } from '@fortawesome/free-solid-svg-icons';
-import Spinner from '../../../shared/Spinner';
+import MovieSearch from '../../../shared/MovieSearch/MovieSearch';
+import MovieListItem from '../../../MovieList/MovieListItem/MovieListItem';
+import { getGenre, getMainCast } from '../../../MovieSeriesPage/movieAdapter';
+import config from '../../../../config';
 
 const options = ["I've watched", "I'm going to watch", 'I recommend'];
 interface IProps {
-	fetchSearchToAddMovieInStory: (title: string) => any;
-	searchTitle: string;
-	moviesSearchAddMovieToStory: null | Array<TMovie>;
 	saveMovie: (movie: TMovie, movieOption?: string) => any;
 	history: {
 		push: (path: string) => void;
 	};
-	isLoading: boolean;
 }
 const CreateStoryFilm = ({ ...props }: IProps) => {
 	const [option, setOption] = useState(options[0]);
 
 	const close = () => props.history.push('/');
 	const back = () => props.history.push('/create/extra');
+
+	const [movie, setMovie] = useState();
+
+	const elasticProperties = [
+		'id',
+		'title',
+		'runtime',
+		'poster_path',
+		'release_date',
+		'cast',
+		'genres'
+	];
+
+	const convertMovie = movie => {
+		return {
+			...movie,
+			poster_path: `${config.POSTER_PATH}/${movie.poster_path}`,
+			genres: getGenre(JSON.parse(movie.genres)),
+			mainCast: getMainCast(JSON.parse(movie.cast).slice(0, 3))
+		};
+	};
 
 	return (
 		<div className={'modal modal-story'}>
@@ -40,13 +59,9 @@ const CreateStoryFilm = ({ ...props }: IProps) => {
 			</div>
 			<div className={'movie-add-wrp'}>
 				<div className={'edit-form'}>
-					<textarea
-						placeholder="Type a text here to find movie..."
-						value={props.searchTitle}
-						onChange={e => {
-							if (e.target.value && e.target.value.trim())
-								props.fetchSearchToAddMovieInStory(e.target.value.trim());
-						}}
+					<MovieSearch
+						onSelectMovie={movie => setMovie(convertMovie(movie))}
+						elasticProperties={elasticProperties}
 					/>
 				</div>
 				<select
@@ -60,21 +75,18 @@ const CreateStoryFilm = ({ ...props }: IProps) => {
 						<option value={option}>{option}</option>
 					))}
 				</select>
-			</div>
-			{props.isLoading && <Spinner />}
-			<div style={{ height: '380px', overflowY: 'scroll' }}>
-				{props.moviesSearchAddMovieToStory &&
-					(props.moviesSearchAddMovieToStory.length !== 0 ? (
-						<MovieList
-							movies={props.moviesSearchAddMovieToStory}
+				<div className="selected-movie">
+					{movie && (
+						<MovieListItem
+							key={movie.id}
+							movie={movie}
 							saveMovie={(movie: TMovie) => {
 								props.saveMovie(movie, option);
 								props.history.push('/create');
 							}}
 						/>
-					) : (
-						<div>Not found</div>
-					))}
+					)}
+				</div>
 			</div>
 		</div>
 	);

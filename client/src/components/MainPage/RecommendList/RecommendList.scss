@@ -3,6 +3,27 @@
 .recommend-list {
 	grid-area: recommend-list;
 	margin-left: 20px;
+	.survey-link {
+		text-decoration: none;
+		color: $text-base-color;
+		.survey-list-item {
+			width: 100%;
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.37);
+			padding: 20px;
+			&:hover {
+				box-shadow: 1px 3px 5px 1px rgba(0, 0, 0, 0.37);
+			}
+			span {
+				width: 70%;
+				text-overflow: ellipsis;
+				overflow: hidden;
+				text-decoration: none;
+			}
+		}
+	}
 }
 .recommend-heading {
 	font-family: $base-font-family;

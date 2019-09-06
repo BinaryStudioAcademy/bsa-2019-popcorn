@@ -18,13 +18,17 @@ import {
 	fetchReviewByMovieUserId as fetchReview,
 	setReview,
 	removeReviewSet,
-	fetchAwards
+	fetchAwards,
+	fetchStatistics,
+	deleteUserRate,
+	fetchPostsByFilm
 } from './Movie.redux/actions';
 
 interface IProps {
 	fetchedMovie: any;
 	userRate: IUserRate;
 	setUserRate: (userRate: any) => object;
+	deleteUserRate: (userRate: any) => object;
 	fetchUserRate: (userId: string, movieId: string) => object;
 	fetchMovie: (movieId: string) => object;
 	fetchReview: (userId: string, movieId: string) => object;
@@ -47,6 +51,10 @@ interface IProps {
 	watchListLoading?: boolean;
 	fetchAwards: (id: any) => any;
 	awards: any;
+	fetchStatistics: (movieId: string) => void;
+	statistics: any;
+	fetchPostsByFilm: (movieId: string) => void;
+	posts?: Array<any>;
 }
 
 export interface IUserRate {
@@ -62,6 +70,7 @@ const MovieSeriesPage: React.SFC<IProps> = props => {
 		userRate,
 		setUserRate,
 		fetchUserRate,
+		deleteUserRate,
 		fetchMovie,
 		avatar,
 		userId,
@@ -76,7 +85,11 @@ const MovieSeriesPage: React.SFC<IProps> = props => {
 		deleteMovieFromWatchList,
 		watchListLoading,
 		fetchAwards,
-		awards
+		awards,
+		statistics,
+		fetchStatistics,
+		fetchPostsByFilm,
+		posts
 	} = props;
 	const currentMovieId = props.match.params.id;
 	const mainPath = `/movies/${currentMovieId}`;
@@ -113,6 +126,7 @@ const MovieSeriesPage: React.SFC<IProps> = props => {
 				addMovieToWatchList={addMovieToWatchList}
 				deleteMovieFromWatchList={deleteMovieFromWatchList}
 				watchListLoading={watchListLoading}
+				deleteUserRate={deleteUserRate}
 			/>
 			<MovieSeriesPageTabs mainPath={mainPath} />
 			<MovieSeriesPageTabBody
@@ -121,6 +135,10 @@ const MovieSeriesPage: React.SFC<IProps> = props => {
 				currentUser={{ avatar, id: userId, name: username }}
 				fetchAwards={fetchAwards}
 				awards={awards}
+				statistics={statistics}
+				fetchStatistics={fetchStatistics}
+				fetchPostsByFilm={fetchPostsByFilm}
+				posts={posts}
 			/>
 		</div>
 	);
@@ -136,7 +154,9 @@ const mapStateToProps = (rootState, props) => ({
 	ownReview: rootState.movie.ownReview,
 	watchListStatus: rootState.watchList.watchListStatus,
 	watchListLoading: rootState.watchList.isLoading,
-	awards: rootState.movie.awards
+	awards: rootState.movie.awards,
+	statistics: rootState.movie.statistics,
+	posts: rootState.movie.posts
 });
 
 const mapDispatchToProps = dispatch => {
@@ -150,7 +170,10 @@ const mapDispatchToProps = dispatch => {
 		fetchWatchListStatus,
 		addMovieToWatchList,
 		deleteMovieFromWatchList,
-		fetchAwards
+		fetchAwards,
+		fetchStatistics,
+		deleteUserRate,
+		fetchPostsByFilm
 	};
 	return bindActionCreators(actions, dispatch);
 };

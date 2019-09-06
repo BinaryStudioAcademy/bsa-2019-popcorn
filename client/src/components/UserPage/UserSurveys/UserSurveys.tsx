@@ -3,8 +3,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 import { isEqual } from 'lodash';
 import { NavLink } from 'react-router-dom';
+import CreateExtraBtn from '../../shared/CreateExtraBtn';
 import './UserSurveys.scss';
-import { connect } from 'react-redux';
+import Spinner from '../../shared/Spinner';
 
 interface ISurvey {
 	id: string;
@@ -48,8 +49,7 @@ interface IProps {
 	updateInfo: (ISurvey) => void;
 	deleteSurvey: (ISurvey) => void;
 	surveys: Array<ISurvey>;
-	userId: string;
-	userRole: string;
+	isOwnData: boolean;
 	location?: {
 		state?: {
 			url_callback?: string;
@@ -58,7 +58,7 @@ interface IProps {
 	history?: {
 		push: (path: string) => any;
 	};
-	selectedProfileId: string;
+	loading: boolean;
 }
 
 interface IState {
@@ -166,15 +166,9 @@ class UserSurveys extends React.Component<IProps, IState> {
 		);
 	};
 
-	isOwnSurvey(survey) {
-		const { userId, userRole } = this.props;
-		const { user_id } = survey;
-		return userRole === 'admin' || userId === user_id;
-	}
-
 	render() {
 		const { surveys } = this.state;
-		const { mainPath } = this.props;
+		const { mainPath, isOwnData } = this.props;
 
 		const url_callback =
 			this.props.location &&
@@ -184,7 +178,9 @@ class UserSurveys extends React.Component<IProps, IState> {
 			url_callback
 				? this.props.history && this.props.history.push(url_callback)
 				: null;
-
+		if (this.props.loading) {
+			return <Spinner />;
+		}
 		return (
 			<div>
 				{url_callback && (
@@ -193,28 +189,27 @@ class UserSurveys extends React.Component<IProps, IState> {
 					</button>
 				)}
 				<div className="userSurveys">
-					{this.props.selectedProfileId === this.props.userId ||
-					window.location.pathname === '/surveys' ? (
-						<NavLink to={`${mainPath}/create`} className="create-button">
-							<button>Create survey</button>
+					{isOwnData || window.location.pathname === '/surveys' ? (
+						<NavLink to={`${mainPath}/create`}>
+							<CreateExtraBtn handleClick={() => {}} body={'Create survey'} />
 						</NavLink>
 					) : null}
 					<div className="survey-list">
 						{surveys.map((survey, i) => {
-							// add "if (this.isOwnSurvey(survey))" check when it will survey list with surveys of all users
+							// add "if (isOwnData)" check when it will survey list with surveys of all users
 							return (
 								<NavLink
 									key={i}
 									exact={!i}
 									to={
-										this.isOwnSurvey(survey)
+										isOwnData
 											? `${mainPath}/${survey.id}`
 											: `/survey-page/${survey.id}`
 									}
 								>
 									<div className="survey-list-item">
 										<span>{survey.title}</span>
-										{this.isOwnSurvey(survey) ? (
+										{isOwnData ? (
 											<p className="buttons">
 												{this.typeSurveyBttn(survey)}
 												<button
@@ -239,13 +234,4 @@ class UserSurveys extends React.Component<IProps, IState> {
 	}
 }
 
-const mapStateToProps = (rootState, props) => ({
-	...props,
-	userId: rootState.profile.profileInfo.id,
-	userRole: rootState.profile.profileInfo.role,
-	selectedProfileId: rootState.profile.selectedProfileInfo
-		? rootState.profile.selectedProfileInfo.id
-		: null
-});
-
-export default connect(mapStateToProps)(UserSurveys);
+export default UserSurveys;

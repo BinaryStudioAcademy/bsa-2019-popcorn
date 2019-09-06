@@ -3,13 +3,25 @@
 .header {
 	font-family: $base-font-family;
 	display: grid;
-	grid-template-columns: 250px 70px 40px 70px 380px 56px 110px;
+	grid-template-columns: 250px 70px 80px 70px 380px 56px 110px;
 	grid-gap: 10px;
 	height: 72px;
 	justify-content: space-around;
 	align-items: center;
 	border: 1px solid $border-color;
 	box-shadow: 0px 0px 10px $input-shadow-color;
+	.notifications-message {
+		position: relative;
+		.unread-message {
+			position: absolute;
+			right: 0;
+			top: -2px;
+			width: 10px;
+			height: 10px;
+			background-color: $orange;
+			border-radius: 5px;
+		}
+	}
 
 	.notification-header {
 		background: white;

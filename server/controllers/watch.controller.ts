@@ -8,7 +8,13 @@ router
 
   .get("/", errorHandlerMiddleware, (req, res, next) =>
     watchService
-      .getAllUserWatch(req.user.id, next)
+      .getMoviesIdWatchList(req.user.id, next)
+      .then(result => res.send(result))
+      .catch(next)
+  )
+  .get("/user/:id", errorHandlerMiddleware, (req, res, next) =>
+    watchService
+      .getAllUserWatch(req.params.id, next)
       .then(result => res.send(result))
       .catch(next)
   )

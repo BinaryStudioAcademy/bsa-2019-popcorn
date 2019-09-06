@@ -8,13 +8,15 @@ import { SeedVoting1565848454004 } from "./1565848454004-SeedVoting";
 import { SeedSurveyAnswers1565963322768 } from "./1565963322768-SeedSurveyAnswers";
 import { SeedAdmin1566138938621 } from "./1566138938621-SeedAdmin";
 import { SeedEvents1566428038388 } from "./1566428038388-SeedEvents";
-import { SeedTops1566326006466 } from "./1566326006466-SeedTops";
-import { SeedMovieInTop1566326020135 } from "./1566326020135-SeedMovieInTop";
 import { SeedReviews1566319951202 } from "./1566319951202-SeedReviews";
 import { SeedTops1566549724762 } from "./1566549724762-SeedTops";
 import { SeedFollowers1566665184861 } from "./1566665184861-SeedFollowers";
 import { SeedReviewReaction1566744047867 } from "./1566744047867-SeedReviewReaction";
 import { SeedFavoriteList1566841720412 } from "./1566841720412-SeedFavoriteList";
+import { SeedChat1567284688344 } from "./1567284688344-SeedChat";
+import { SeedMessage1567286972231 } from "./1567286972231-SeedMessage";
+import { SeedMovieRate1567392463875 } from "./1567392463875-SeedMovieRate";
+import { SeedMovieList1567632579430 } from "./1567632579430-SeedMovieList";
 
 export default [
   SeedUsers1565158741121,
@@ -23,17 +25,19 @@ export default [
   SeedPostComments1565823065222,
   // SeedPostReaction1565847243749,
   SeedVoting1565848454004,
-  SeedSurveyAnswers1565963322768,
   SeedSurvey1566123343520,
   SeedAdmin1566138938621,
   SeedEvents1566428038388,
-  // SeedTops1566326006466,
-  // SeedMovieInTop1566326020135,
+  SeedSurveyAnswers1565963322768,
   SeedReviews1566319951202,
   SeedTops1566549724762,
   SeedFollowers1566665184861,
   SeedReviewReaction1566744047867,
-  SeedFavoriteList1566841720412
+  SeedFavoriteList1566841720412,
+  SeedChat1567284688344,
+  SeedMessage1567286972231,
+  SeedMovieRate1567392463875,
+  SeedMovieList1567632579430
 ];
 //to create new migration run in this folder: typeorm migration:create -n <name>
 // then import this migration hear and export in array below

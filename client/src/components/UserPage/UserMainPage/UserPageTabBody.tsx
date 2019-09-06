@@ -1,6 +1,5 @@
 import React from 'react';
 import { Switch, Route } from 'react-router-dom';
-import UserProfile from '../UserProfile/UserProfile';
 import UserPosts from '../UserPosts/UserPosts';
 import UserReviews from '../UserReviews/UserReviews';
 import UserEvents from '../UserEvents/UserEvents';

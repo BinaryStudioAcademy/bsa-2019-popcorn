@@ -1,13 +1,13 @@
 import TMovie from './TMovie';
 import config from '../../config';
 
-const getGenre = (genres): string =>
+export const getGenre = (genres): string =>
 	genres
 		.filter(genre => genre)
 		.map(genre => (genre ? genre.name : ''))
 		.join(', ');
 
-const getMainCast = (cast): string =>
+export const getMainCast = (cast): string =>
 	cast
 		.filter(actor => actor)
 		.map(actor => (actor ? actor.name : ''))
@@ -15,6 +15,7 @@ const getMainCast = (cast): string =>
 
 export default (movie: any): TMovie | any => {
 	if (!movie) return;
+
 	return {
 		id: movie.id,
 		poster_path: config.POSTER_PATH + movie.poster_path,
@@ -29,8 +30,8 @@ export default (movie: any): TMovie | any => {
 		hasVideo: !!movie.video_link,
 		messages: movie.messages,
 		imdb_id: movie.imdb_id,
-		cast: JSON.parse(movie.cast),
-		mainCast: getMainCast(JSON.parse(movie.cast).slice(0, 3)),
+		cast: JSON.parse(movie.cast || '[]'),
+		mainCast: getMainCast(JSON.parse(movie.cast || '[]').slice(0, 3)),
 		crew: movie.crew
 	};
 };

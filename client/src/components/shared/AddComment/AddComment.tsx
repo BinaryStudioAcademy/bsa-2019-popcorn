@@ -1,7 +1,7 @@
 import React from 'react';
 import './AddComment.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCommentAlt } from '@fortawesome/free-regular-svg-icons';
+import { faPaperPlane } from '@fortawesome/free-solid-svg-icons';
 
 interface IAddCommentProps {
 	replyId?: string;
@@ -15,6 +15,14 @@ class AddComment extends React.Component<IAddCommentProps, { body: string }> {
 
 	state = {
 		body: ''
+	};
+
+	onPublish = () => {
+		if (!this.props.createComment) {
+			return;
+		}
+		this.props.createComment(this.state.body);
+		this.setState({ body: '' });
 	};
 
 	render() {
@@ -36,16 +44,12 @@ class AddComment extends React.Component<IAddCommentProps, { body: string }> {
 					}
 					value={this.state.body}
 					onChange={e => this.setState({ body: e.target.value })}
-				/>
-				<button
-					className="publish-button"
-					onClick={() => {
-						if (!this.props.createComment) return;
-						this.props.createComment(this.state.body);
-						this.setState({ body: '' });
+					onKeyPress={e => {
+						if (e.key === 'Enter') this.onPublish();
 					}}
-				>
-					<FontAwesomeIcon icon={faCommentAlt} />
+				/>
+				<button className="publish-button" onClick={this.onPublish}>
+					<FontAwesomeIcon icon={faPaperPlane} />
 				</button>
 			</div>
 		);

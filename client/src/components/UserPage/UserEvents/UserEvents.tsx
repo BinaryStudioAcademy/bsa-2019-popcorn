@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import Spinner from '../../shared/Spinner/index';
+import CreateExtraBtn from '../../shared/CreateExtraBtn';
 import { getUserEvents, saveEvent, deleteEvent, updateEvent } from './actions';
 
 import {
@@ -19,9 +20,12 @@ interface IProps {
 	deleteEvent: (id: string, currentUserId: string) => any;
 	currentUserId: string;
 	currentUserRole: string;
+	selectedUserId: string;
+	isOwnData: boolean;
 	saveEvent: (event: any) => void;
 	updateEvent: (event: any) => void;
 	currentProfileUserId: string;
+	setSpinner: boolean;
 }
 
 interface IState {
@@ -30,7 +34,7 @@ interface IState {
 	editableEvent: null | IEventFormatClient;
 }
 
-const CREATE_EVENT_TEXT = 'Create Event';
+const CREATE_EVENT_TEXT = 'Create event';
 const BACK_TO_EVENTS_TEXT = 'Back to event';
 
 class UserEvents extends React.Component<IProps, IState> {
@@ -38,14 +42,14 @@ class UserEvents extends React.Component<IProps, IState> {
 		super(props);
 		this.state = {
 			openEventEditor: false,
-			mainButtonMessage: 'Create Event',
+			mainButtonMessage: 'Create event',
 			editableEvent: null
 		};
 	}
 
 	componentDidMount() {
-		const { currentUserId } = this.props;
-		this.props.getUserEvents(currentUserId);
+		const { currentProfileUserId } = this.props;
+		this.props.getUserEvents(currentProfileUserId);
 	}
 
 	editEvent = (editableEvent: null | IEventFormatClient = null) => {
@@ -62,14 +66,6 @@ class UserEvents extends React.Component<IProps, IState> {
 		}
 	};
 
-	isOwnEvent = event => {
-		const { userId } = event;
-		return (
-			this.props.currentUserId === userId ||
-			this.props.currentUserRole === 'admin'
-		);
-	};
-
 	renderEventList = (eventList: IEventFormatClient[], deleteEventAction: any) =>
 		eventList.map(event => (
 			<EventItem
@@ -77,22 +73,13 @@ class UserEvents extends React.Component<IProps, IState> {
 				key={event.id}
 				deleteEvent={deleteEventAction}
 				editEvent={this.editEvent}
-				isOwnEvent={this.isOwnEvent(event)}
+				isOwnEvent={this.props.isOwnData}
 			/>
 		));
 
 	render() {
-		const {
-			userEvents,
-			currentUserId,
-			deleteEvent,
-			currentProfileUserId
-		} = this.props;
+		const { userEvents, currentUserId, deleteEvent, isOwnData } = this.props;
 		const { openEventEditor, editableEvent } = this.state;
-		if (!userEvents) {
-			return <Spinner />;
-		}
-
 		const ownEvents: IEventFormatClient[] = [];
 		const subscribeEvents: IEventFormatClient[] = [];
 
@@ -101,16 +88,17 @@ class UserEvents extends React.Component<IProps, IState> {
 				? ownEvents.push(formatToClient(event))
 				: subscribeEvents.push(formatToClient(event));
 		});
+		if (this.props.setSpinner) {
+			return <Spinner />;
+		}
 		return (
 			<div className="user-events">
-				{/* {currentProfileUserId === currentUserId ? ( */}
-				<div
-					className="create-event-button hover"
-					onClick={() => this.editEvent()}
-				>
-					{openEventEditor ? BACK_TO_EVENTS_TEXT : CREATE_EVENT_TEXT}{' '}
-				</div>
-				{/* // ) : null} */}
+				{isOwnData && (
+					<CreateExtraBtn
+						handleClick={() => this.editEvent()}
+						body={openEventEditor ? BACK_TO_EVENTS_TEXT : CREATE_EVENT_TEXT}
+					/>
+				)}
 				{openEventEditor ? (
 					<UserEventsEditor
 						closeEditor={this.editEvent}
@@ -120,20 +108,24 @@ class UserEvents extends React.Component<IProps, IState> {
 					/>
 				) : (
 					<div>
-						<div className="events-title">
-							<span>Your Events</span>
-						</div>
-						<div className="event-list-container">
-							{ownEvents.length === 0 ? (
-								<div className="event-show-warning">
-									No events yet. You can create
+						{isOwnData && (
+							<div>
+								<div className="events-title">
+									<span>Your Events</span>
 								</div>
-							) : (
-								this.renderEventList(ownEvents, deleteEvent)
-							)}
-						</div>
+								<div className="event-list-container">
+									{ownEvents.length === 0 ? (
+										<div className="event-show-warning">
+											No events yet. You can create
+										</div>
+									) : (
+										this.renderEventList(ownEvents, deleteEvent)
+									)}
+								</div>
+							</div>
+						)}
 						<div className="events-title">
-							<span>Events interested you</span>
+							<span>Events interested in</span>
 						</div>
 						<div className="event-list-container">
 							{subscribeEvents.length === 0 ? (
@@ -156,7 +148,8 @@ const mapStateToProps = (state, props) => {
 		currentProfileUserId:
 			state.profile.selectedProfileInfo && state.profile.selectedProfileInfo.id,
 		currentUserRole: state.profile.profileInfo.role,
-		userEvents: state.events.userEvents
+		userEvents: state.events.userEvents,
+		setSpinner: state.events.setSpinner
 	};
 };
 

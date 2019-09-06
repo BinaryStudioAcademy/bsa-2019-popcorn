@@ -9,7 +9,7 @@ import { ITopItem } from '../UserTops.service';
 
 interface ITopItemProps {
 	topItem: ITopItem;
-	isOwnTop: boolean;
+	isOwnData: boolean;
 	deleteTop: (topItem: ITopItem) => void;
 	saveUserTop: (topItem: ITopItem) => void;
 	uploadImage: (data: any, titleId: string) => void;
@@ -23,7 +23,7 @@ interface ITopItemProps {
 const TopItem: React.FC<ITopItemProps> = ({
 	saveUserTop,
 	topItem,
-	isOwnTop,
+	isOwnData,
 	deleteTop,
 	uploadImage,
 	uploadUrl,
@@ -32,12 +32,12 @@ const TopItem: React.FC<ITopItemProps> = ({
 }) => {
 	const [editTop, canEditTop] = useState(topItem.isNewTop || false);
 	const [title, setTitle] = useState(topItem.title);
-	// const [isOwnTop] = useState(topItem.isOwnTop);
+	// const [isOwnData] = useState(topItem.isOwnData);
 	// const [topImageUrl, setTopImageUrl] = useState(topItem.topImageUrl);
-	// const [isOwnTop] = useState(topItem.isOwnTop);
+	// const [isOwnData] = useState(topItem.isOwnData);
 	const [topImageUrl, setTopImageUrl] = useState(topItem.topImageUrl);
 	useEffect(() => {
-		if (urlForTop == topItem.id) {
+		if (urlForTop === topItem.id) {
 			setTopImageUrl(uploadUrl);
 		}
 	}, [uploadUrl]);
@@ -46,9 +46,11 @@ const TopItem: React.FC<ITopItemProps> = ({
 		canEditTop(!editTop);
 	}
 
-	function saveTop(movies: Array<any>) {
+	function saveTop(movies: any[]) {
 		const moviesList = movies.filter(movie => movie.title.trim() !== '');
-		if (title.trim() === '') setTitle('New top');
+		if (title.trim() === '') {
+			setTitle('New top');
+		}
 		saveUserTop({ ...topItem, moviesList, title, topImageUrl });
 		canEditTop(false);
 	}
@@ -56,8 +58,11 @@ const TopItem: React.FC<ITopItemProps> = ({
 	function handleUploadFile(e, topId: string) {
 		const data = new FormData();
 		data.append('file', e.target.files[0]);
-		if (uploadImage) uploadImage(data, topId);
-		else console.log('no uploadImage method');
+		if (uploadImage) {
+			uploadImage(data, topId);
+		} else {
+			console.log('no uploadImage method');
+		}
 	}
 
 	return (
@@ -84,7 +89,7 @@ const TopItem: React.FC<ITopItemProps> = ({
 					onChange={e => handleUploadFile(e, topItem.id)}
 					id={`${topItem.id}image`}
 					accept=".jpg, .jpeg, .png"
-					hidden
+					hidden={true}
 				/>
 				{editTop && (
 					<label
@@ -94,12 +99,12 @@ const TopItem: React.FC<ITopItemProps> = ({
 						<FontAwesomeIcon icon={faImage} className="fontAwesomeIcon" />
 					</label>
 				)}
-				{isOwnTop && (
+				{isOwnData && (
 					<div className="edit-top hover" onClick={toogleEdit}>
 						Edit
 					</div>
 				)}
-				{isOwnTop && (
+				{isOwnData && (
 					<div className="delete-top hover" onClick={() => deleteTop(topItem)}>
 						<CloseIcon className="close-icon" />
 					</div>

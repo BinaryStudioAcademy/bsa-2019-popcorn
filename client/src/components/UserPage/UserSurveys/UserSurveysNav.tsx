@@ -35,6 +35,8 @@ interface IProps {
 		name: string;
 		image_link: string;
 	};
+	isOwnData: boolean;
+	loading: boolean;
 }
 
 interface IState {
@@ -98,7 +100,7 @@ class UserSurveysNav extends React.Component<IProps, IState> {
 	};
 
 	render() {
-		const { mainPath, userInfo } = this.props;
+		const { mainPath, userInfo, isOwnData, loading } = this.props;
 		if (!this.state.surveys) return <Spinner />;
 		return (
 			<Switch>
@@ -107,11 +109,13 @@ class UserSurveysNav extends React.Component<IProps, IState> {
 					path={mainPath}
 					render={routeProps => (
 						<UserSurveys
+							loading={loading}
 							{...routeProps}
 							updateInfo={this.updateInfo}
 							surveys={this.state.surveys}
 							mainPath={mainPath}
 							deleteSurvey={this.deleteSurvey}
+							isOwnData={isOwnData}
 						/>
 					)}
 				/>
@@ -152,6 +156,7 @@ class UserSurveysNav extends React.Component<IProps, IState> {
 const mapStateToProps = (rootState, props) => ({
 	...props,
 	surveys: rootState.survey.surveys,
+	loading: rootState.survey.loading,
 	userId: rootState.profile.selectedProfileInfo
 		? rootState.profile.selectedProfileInfo.id
 		: null

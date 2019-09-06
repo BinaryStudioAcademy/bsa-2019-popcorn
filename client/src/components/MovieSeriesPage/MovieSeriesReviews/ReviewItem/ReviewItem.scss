@@ -4,25 +4,23 @@
 	width: 100%;
 	box-sizing: border-box;
 	margin-bottom: 15px;
-	border: 1px solid $border-color;
-	box-shadow: 0px 0px 2px 3px $input-shadow-color;
-	border-radius: 20px;
+	box-shadow: 0 0 15px 0 rgba(0, 0, 0, 0.2);
+	font-size: $base-font-size;
 
 	.review-item {
-		padding: 15px;
+		padding: 15px 20px;
 
 		.review-item-header {
 			display: flex;
 			justify-content: space-between;
-
+			position: relative;
 			.review-item-header-profile {
 				display: flex;
-
 				.profile-avatar {
 					font-size: 0;
 					img {
-						width: 70px;
-						height: 70px;
+						width: 30px;
+						height: 30px;
 						border-radius: 50%;
 					}
 				}
@@ -33,23 +31,36 @@
 					flex-direction: column;
 
 					.profile-name {
-						font-weight: 700;
+						font-weight: 600;
 						font-size: 1.3em;
 						margin-bottom: 3px;
+					}
+				}
+				.to-movie-page-link {
+					position: absolute;
+					right: 10px;
+					color: $text-secondary-color;
+					text-decoration: none;
+					display: flex;
+					.review-poster {
+						height: 30px;
+						margin-right: 5px;
 					}
 				}
 			}
 
 			.profile-review-date {
 				color: $text-secondary-color;
+				font-size: $secondary-info-font-size;
 			}
 		}
 
 		.review-item-text {
-			margin-top: 15px;
+			margin-top: 20px;
 			overflow: hidden;
 			position: relative;
 			text-align: justify;
+			line-height: 1.6em;
 
 			.read-more-gradient {
 				width: 100%;
@@ -79,7 +90,7 @@
 			.review-reaction {
 				display: grid;
 				grid-template-columns: 54px 54px 200px;
-				margin-top: 9px;
+				margin-top: 15px;
 				margin-left: 5px;
 				color: #122737ec;
 

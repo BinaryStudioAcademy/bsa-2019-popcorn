@@ -4,11 +4,17 @@ import {
 	SEND_TOKEN_TO_SERVER,
 	GET_UNREAD_NOTIFICATIONS_SUCCESS,
 	GET_UNREAD_NOTIFICATIONS,
-	SET_NOTIFICITATION_IS_READ
+	SET_NOTIFICATION_IS_READ,
+	GET_FIREBASE_TOKEN,
+	GET_FIREBASE_TOKEN_SUCCESS,
+	DELETE_FIREBASE_TOKEN,
+	SET_FIREBASE_TOKEN_UNDEFINED,
+	FETCH_ADVICE,
+	SET_ADVICE
 } from './actionTypes';
 export function* sendTokenToServer(action) {
 	try {
-		const response = yield call(webApi, {
+		yield call(webApi, {
 			method: 'PUT',
 			endpoint: '/api/notification',
 			body: {
@@ -24,21 +30,21 @@ export function* sendTokenToServer(action) {
 export function* getUnreadNotifications(action) {
 	try {
 		const userId = action.payload.userId;
-		const unredNotifications = yield call(webApi, {
+		const unreadNotifications = yield call(webApi, {
 			method: 'GET',
 			endpoint: `/api/notification/${userId}`
 		});
 
 		yield put({
 			type: GET_UNREAD_NOTIFICATIONS_SUCCESS,
-			payload: { unredNotifications }
+			payload: { unreadNotifications }
 		});
 	} catch (e) {
 		console.log('notification saga getUnreadNotifications: ', e.message);
 	}
 }
 
-export function* setNotificitationIsRead(action) {
+export function* setNotificationIsRead(action) {
 	try {
 		const notificationId = action.payload.notificationId;
 		const response = yield call(webApi, {
@@ -46,23 +52,88 @@ export function* setNotificitationIsRead(action) {
 			endpoint: `/api/notification/${notificationId}`
 		});
 	} catch (e) {
-		console.log('notification saga setNotificitationIsRead: ', e.message);
+		console.log('notification saga setNotificationIsRead: ', e.message);
 	}
 }
 
+export function* getFirebaseToken(action) {
+	try {
+		const firebase = action.payload.firebase;
+		const firebaseToken = yield firebase.messaging.getToken();
+		yield put({
+			type: GET_FIREBASE_TOKEN_SUCCESS,
+			payload: { firebaseToken }
+		});
+		yield put({
+			type: SEND_TOKEN_TO_SERVER,
+			payload: { token: firebaseToken }
+		});
+	} catch (e) {
+		yield put({
+			type: GET_FIREBASE_TOKEN_SUCCESS,
+			payload: { firebaseToken: null }
+		});
+		console.log('notification saga getFirebaseToken: ', e.message);
+	}
+}
+
+export function* deleteFirebaseToken(action) {
+	try {
+		if (action.payload && action.payload.firebaseToken) {
+			yield call(webApi, {
+				method: 'DELETE',
+				endpoint: `/api/notification/token/${action.payload.firebaseToken}`
+			});
+			yield put({
+				type: SET_FIREBASE_TOKEN_UNDEFINED
+			});
+		}
+	} catch (e) {
+		yield put({
+			type: GET_FIREBASE_TOKEN_SUCCESS,
+			payload: { firebaseToken: null }
+		});
+		console.log('notification saga getFirebaseToken: ', e.message);
+	}
+}
+
+export function* fetchAdvice(action) {
+	try {
+		const movieAdvice = yield call(webApi, {
+			method: 'GET',
+			endpoint: `/api/movie/adviceMe/${action.payload.id}`
+		});
+
+		yield put({ type: SET_ADVICE, payload: { movieAdvice } });
+	} catch (e) {
+		console.log('fetchAdvice', e, e.message);
+	}
+}
 function* watchSendTokenToServer() {
 	yield takeEvery(SEND_TOKEN_TO_SERVER, sendTokenToServer);
 }
 function* watchGetUnreadNotifications() {
 	yield takeEvery(GET_UNREAD_NOTIFICATIONS, getUnreadNotifications);
 }
-function* watchSetNotificitationIsRead() {
-	yield takeEvery(SET_NOTIFICITATION_IS_READ, setNotificitationIsRead);
+function* watchSetNotificationIsRead() {
+	yield takeEvery(SET_NOTIFICATION_IS_READ, setNotificationIsRead);
+}
+function* watchGetFirebaseToken() {
+	yield takeEvery(GET_FIREBASE_TOKEN, getFirebaseToken);
+}
+function* watchDeleteFirebaseToken() {
+	yield takeEvery(DELETE_FIREBASE_TOKEN, deleteFirebaseToken);
+}
+function* watchFetchAdvice() {
+	yield takeEvery(FETCH_ADVICE, fetchAdvice);
 }
 export default function* notification() {
 	yield all([
 		watchSendTokenToServer(),
 		watchGetUnreadNotifications(),
-		watchSetNotificitationIsRead()
+		watchSetNotificationIsRead(),
+		watchGetFirebaseToken(),
+		watchDeleteFirebaseToken(),
+		watchFetchAdvice()
 	]);
 }

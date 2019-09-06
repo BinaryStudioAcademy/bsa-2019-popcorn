@@ -23,7 +23,7 @@ class ReviewRepository extends Repository<Review> {
   async getReviewsByMovieId(movieId: string, next) {
     try {
       return await this.find({
-        where: { movieId: movieId },
+        where: { movieId },
         relations: ["user"],
         order: { created_at: "DESC" }
         // select: { text: true, movieId: true, user: { id: true } }
@@ -36,7 +36,7 @@ class ReviewRepository extends Repository<Review> {
   async getReviewByMovieIdUserId(userId: string, movieId: string, next) {
     try {
       const data = await this.findOne({
-        where: { movieId: movieId, user: { id: userId } },
+        where: { movieId, user: { id: userId } },
         relations: ["user"]
         // select: { text: true, movieId: true, user: { id: true } }
       });
@@ -67,7 +67,7 @@ class ReviewRepository extends Repository<Review> {
   async getReviewById(id: string, next) {
     try {
       const data = await this.find({
-        where: { id: id },
+        where: { id },
         relations: ["user"]
       });
       if (!data) {

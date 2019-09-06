@@ -1,10 +1,7 @@
-import { getCustomRepository, getRepository } from "typeorm";
+import { getCustomRepository } from "typeorm";
 import { Review } from "../models/Review/ReviewModel";
 import ReviewRepository from "../repository/review.repository";
-import {
-  getById as getMovieElasticById,
-  getByIdValues as getMovieElasticByIdValues
-} from "../repository/movieElastic.repository";
+import { getById as getMovieElasticById } from "../repository/movieElastic.repository";
 import UserRepository from "../repository/user.repository";
 import ReviewReactionRepository from "../repository/reviewReaction.repository";
 
@@ -13,6 +10,16 @@ interface IRequestBody {
   movieId: string;
   text: string;
 }
+
+const sortReviewsByLikes = (a, b) => {
+  const diffCountLikes = b.reaction.countLikes - a.reaction.countLikes;
+
+  if (!diffCountLikes) {
+    return +b.analysis - +a.analysis;
+  }
+
+  return diffCountLikes;
+};
 
 export const createReview = async (
   requestBody: IRequestBody,
@@ -32,21 +39,23 @@ export const getReviewsByMovieId = async (
   userId: string,
   next
 ): Promise<any> => {
-  let movie = await getMovieElasticById(movieId);
+  const movie = await getMovieElasticById(movieId);
   if (!movie) {
     return next(
       { status: 404, message: `Movie with id ${movieId} does not exist` },
       null
     );
   }
-  movie = movie.hits.hits[0]._source;
+
   let reviews = await getCustomRepository(ReviewRepository).getReviewsByMovieId(
     movieId,
     next
   );
 
   reviews = await addReactionsToReviews(userId, reviews);
-  return { reviews, movie };
+  reviews.sort(sortReviewsByLikes);
+
+  return reviews;
 };
 
 const addReactionsToReviews = async (userId: string, reviews: any) =>
@@ -83,8 +92,15 @@ export const updateReviewById = async (
   );
 };
 
-export const getReviewById = async (id: string, next) => {
-  return await getCustomRepository(ReviewRepository).getReviewById(id, next);
+export const getReviewById = async (userId: string, id: string, next) => {
+  const review = await getCustomRepository(ReviewRepository).getReviewById(
+    id,
+    next
+  );
+  const movie = await getMovieElasticById(review[0].movieId);
+  review.movie = movie.hits.hits[0]._source;
+  const reviewWithReactions = await addReactionsToReviews(userId, review);
+  return { review: reviewWithReactions, movie: movie.hits.hits[0]._source };
 };
 
 export const deleteReviewById = async (id: string, next) => {

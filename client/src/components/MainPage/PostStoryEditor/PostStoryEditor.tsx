@@ -35,7 +35,7 @@ interface IPostStoryEditorProps {
 		activity: null | { id: string; name: string }
 	) => any;
 	cursorPosition: { start: number; end: number };
-	movies: null | Array<TMovie>;
+	movies: null | TMovie[];
 	fetchSearch?: (title: string) => any;
 	title?: string;
 	resetSearch?: () => any;
@@ -111,23 +111,7 @@ class PostStoryEditor extends React.Component<
 				data.append('file', blob);
 				uploadFile(data)
 					.then(({ imageUrl }) => {
-						if (imageUrl.indexOf('\\') !== -1) {
-							let url = imageUrl.split(`\\`);
-							url.shift();
-							url = url.join('/');
-
-							url = '/' + url;
-
-							this.imageStateHandler(url);
-						} else {
-							let url = imageUrl.split(`/`);
-							url.shift();
-							url = url.join('/');
-
-							url = '/' + url;
-
-							this.imageStateHandler(url);
-						}
+						this.imageStateHandler(imageUrl);
 					})
 					.catch(error => {
 						this.setState({ isUploading: false, errorMsg: error.message });
@@ -162,7 +146,6 @@ class PostStoryEditor extends React.Component<
 	render() {
 		const backgroundColor = this.props.newStory.backgroundColor;
 		const isShownInput = this.props.isShownInput;
-
 		const changeBody = (e, title) => {
 			this.props.setCaption(
 				e.target.value,

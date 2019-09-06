@@ -11,6 +11,8 @@ import SurveyCheckboxes from '../SurveyItems/SurveyMultipleAnswer/SurveyMultiple
 import SurveyShortAnswer from '../SurveyItems/SurveyShortAnswer/SurveyShortAnswer';
 import SurveyLinearScale from '../SurveyItems/SurveyLinearScale/SurveyLinearScale';
 import '../Survey/Survey.scss';
+import ImageUploader from '../../MainPage/ImageUploader/ImageUploader';
+import { uploadFile } from '../../../services/file.service';
 
 interface IQuestion {
 	index: number;
@@ -43,6 +45,7 @@ interface ISurvey {
 	title: string;
 	type: string;
 	description: string;
+	image: string;
 	user_id: string;
 	user: {
 		name: string;
@@ -93,13 +96,16 @@ class SurveyEditor extends Component<IProps, IState> {
 		if (newQuestion.title.trim() === '')
 			newQuestion.title = 'Untitled question';
 		newQuestion.options = newQuestion.options.map((option, i) => {
-			if (option.value.trim() === '')
+			if (option.value.trim() === '') {
 				return { ...option, value: `Option ${i + 1}`, index: 0 };
+			}
 			return option;
 		});
 
 		const questions = this.state.surveyInfo.questions.map(question => {
-			if (question.id === newQuestion.id) return newQuestion;
+			if (question.id === newQuestion.id) {
+				return newQuestion;
+			}
 			return question;
 		});
 
@@ -107,7 +113,7 @@ class SurveyEditor extends Component<IProps, IState> {
 	};
 
 	onChangeTitle = event => {
-		let title = event.target.value;
+		const title = event.target.value;
 		this.setState({
 			surveyInfo: {
 				...this.state.surveyInfo,
@@ -240,9 +246,13 @@ class SurveyEditor extends Component<IProps, IState> {
 		let question = surveyInfo.questions[currentElement];
 
 		if (currentElement === -1) {
-			if (surveyInfo.title.trim() === '') surveyInfo.title = 'New survey';
+			if (surveyInfo.title.trim() === '') {
+				surveyInfo.title = 'New survey';
+			}
 		} else {
-			if (!question) return;
+			if (!question) {
+				return;
+			}
 			surveyInfo = this.validateQuestion(surveyInfo.questions[currentElement]);
 		}
 		this.setState({ surveyInfo, currentElement: i });
@@ -293,6 +303,26 @@ class SurveyEditor extends Component<IProps, IState> {
 								value={description}
 								maxLength={255}
 							/>
+							<ImageUploader
+								imageHandler={uploadFile}
+								imageStateHandler={image => {
+									this.setState({
+										...this.state,
+										surveyInfo: {
+											...this.state.surveyInfo,
+											image: image
+										}
+									});
+								}}
+							/>
+							{this.state.surveyInfo.image && (
+								<div>
+									<img
+										className="survey-img"
+										src={this.state.surveyInfo.image}
+									/>
+								</div>
+							)}
 						</header>
 					)}
 					{this.state.currentElement !== -1 && (

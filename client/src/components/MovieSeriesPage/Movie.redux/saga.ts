@@ -3,39 +3,43 @@ import {
 	FINISH_FETCH_SEARCH_FILMS,
 	START_FETCH_SEARCH_FILMS
 } from '../../shared/Header/actionTypes';
-import { START_SEARCH_ELASTIC_FILMS } from '../../UserPage/UserTops/UserTops.redux/actionTypes';
 import webApi from '../../../services/webApi.service';
 import {
+	FETCH_FILTRED_MOVIES,
 	FETCH_MOVIE_BY_ID,
 	FETCH_MOVIE_BY_ID_SUCCESS,
 	FETCH_MOVIE_LIST,
 	FETCH_MOVIE_USER_RATE,
 	FETCH_MOVIE_USER_RATE_SUCCESS,
-	FETCH_SEARCH,
-	FETCH_SEARCH_TO_ADD_MOVIE,
-	LOAD_MORE_MOVIE,
-	LOADING,
-	SET_LOAD_MORE_MOVIE,
-	SET_MOVIE_LIST,
-	SET_SEARCH_MOVIE,
-	SET_SEARCH_MOVIE_TO_ADD,
-	SET_USER_RATE,
 	FETCH_REVIEW_BY_USER_MOVIE_ID,
 	FETCH_REVIEW_BY_USER_MOVIE_ID_SUCCESS,
-	SET_REVIEW,
-	SET_REVIEW_SUCCESS,
-	SET_AWARDS,
+	FETCH_SEARCH,
+	FETCH_SEARCH_TO_ADD_MOVIE,
 	GET_AWARDS,
-	FETCH_FILTRED_MOVIES,
+	LOAD_MORE_FILTRED_MOVIE,
+	LOAD_MORE_MOVIE,
+	LOADING,
+	SET_AWARDS,
 	SET_FILTRED_MOVIE_LIST,
 	SET_LOAD_MORE_FILTRED_MOVIE,
-	LOAD_MORE_FILTRED_MOVIE,
+	SET_LOAD_MORE_MOVIE,
+	SET_MOVIE_LIST,
+	SET_REVIEW,
+	SET_REVIEW_SUCCESS,
+	SET_SEARCH_MOVIE,
+	SET_SEARCH_MOVIE_TO_ADD,
 	SET_SHOW_SPINNER,
+	SET_USER_RATE,
 	SET_HIDE_SPINNER,
 	GET_GENRES,
-	SET_GENRES
+	SET_GENRES,
+	FETCH_STATISTICS,
+	FETCH_STATISTICS_SUCCESS,
+	DELETE_USER_RATE,
+	SET_USER_RATE_SUCCESS,
+	FETCH_POSTS_BY_FILM_SUCCESS,
+	FETCH_POSTS_BY_FILM
 } from './actionTypes';
-import config from '../../../config';
 import { FETCH_MOVIE_REVIEWS } from '../MovieSeriesReviews/actionTypes';
 
 export function* fetchFilms(action) {
@@ -111,10 +115,14 @@ export function* fetchAwards(action) {
 
 export function* fetchMovieList() {
 	try {
-		const data = yield call(webApi, {
-			endpoint: '/api/movie',
-			method: 'GET'
+		let data = yield call(webApi, {
+			endpoint: `/api/movie`,
+			method: 'GET',
+			parse: false
 		});
+
+		data = yield call(data.json.bind(data));
+
 		yield put({
 			type: SET_MOVIE_LIST,
 			payload: {
@@ -122,7 +130,7 @@ export function* fetchMovieList() {
 			}
 		});
 	} catch (e) {
-		console.log('movie saga fetchMovieList:', e.message);
+		console.log('movie saga fetchMovieList:', e);
 	}
 }
 
@@ -138,6 +146,24 @@ export function* fetchUserRate(action) {
 			type: FETCH_MOVIE_USER_RATE_SUCCESS,
 			payload: {
 				userRate: data
+			}
+		});
+	} catch (error) {
+		console.log(error);
+	}
+}
+
+export function* deleteUserRate(action) {
+	const { id: rateId, movieId } = action.payload.userRate;
+	try {
+		yield call(webApi, {
+			endpoint: `/api/movie/rate/${rateId}`,
+			method: 'DELETE'
+		});
+		yield put({
+			type: FETCH_MOVIE_BY_ID,
+			payload: {
+				movieId
 			}
 		});
 	} catch (error) {
@@ -178,16 +204,16 @@ export function* setUserRate(action) {
 		});
 
 		yield put({
-			type: FETCH_MOVIE_BY_ID,
-			payload: {
-				movieId
-			}
-		});
-		yield put({
 			type: FETCH_MOVIE_USER_RATE,
 			payload: {
 				movieId,
 				userId
+			}
+		});
+		yield put({
+			type: FETCH_MOVIE_BY_ID,
+			payload: {
+				movieId
 			}
 		});
 	} catch (error) {
@@ -248,12 +274,15 @@ export function* fetchSearchMovie(action) {
 
 export function* loadMoreMovie(action) {
 	const { size, from } = action.payload;
-	console.log('hidden1');
 	try {
-		const data = yield call(webApi, {
+		let data = yield call(webApi, {
 			endpoint: `/api/movie?from=${from}&size=${size}`,
-			method: 'GET'
+			method: 'GET',
+			parse: false
 		});
+
+		data = yield data.json();
+
 		yield put({
 			type: SET_LOAD_MORE_MOVIE,
 			payload: {
@@ -338,7 +367,45 @@ export function* setReview(action) {
 
 		yield put({
 			type: FETCH_MOVIE_REVIEWS,
-			payload: movieId
+			payload: { movieId }
+		});
+	} catch (error) {
+		console.log(error);
+	}
+}
+
+export function* fetchStatistics(action) {
+	const { movieId } = action.payload;
+	try {
+		const statistics = yield call(webApi, {
+			endpoint: `/api/movie/${movieId}/statistics`,
+			method: 'GET'
+		});
+
+		yield put({
+			type: FETCH_STATISTICS_SUCCESS,
+			payload: {
+				statistics
+			}
+		});
+	} catch (error) {
+		console.log(error);
+	}
+}
+
+export function* fetchPosts(action) {
+	const { movieId } = action.payload;
+	try {
+		const posts = yield call(webApi, {
+			endpoint: `/api/movie/${movieId}/posts`,
+			method: 'GET'
+		});
+
+		yield put({
+			type: FETCH_POSTS_BY_FILM_SUCCESS,
+			payload: {
+				posts
+			}
 		});
 	} catch (error) {
 		console.log(error);
@@ -385,6 +452,10 @@ function* watchLoadMoreMovie() {
 	yield takeEvery(LOAD_MORE_MOVIE, loadMoreMovie);
 }
 
+function* watchDeleteUserRate() {
+	yield takeEvery(DELETE_USER_RATE, deleteUserRate);
+}
+
 function* watchLoadMoreFiltredMovie() {
 	yield takeEvery(LOAD_MORE_FILTRED_MOVIE, loadMoreFiltredMovie);
 }
@@ -401,6 +472,13 @@ function* watchFetchGenres() {
 	yield takeEvery(GET_GENRES, getGenres);
 }
 
+function* watchFetchStatistics() {
+	yield takeEvery(FETCH_STATISTICS, fetchStatistics);
+}
+
+function* watchFetchPosts() {
+	yield takeEvery(FETCH_POSTS_BY_FILM, fetchPosts);
+}
 export default function* header() {
 	yield all([
 		watchFetchFilms(),
@@ -416,6 +494,9 @@ export default function* header() {
 		watchFetchAwards(),
 		watchFetchFiltredMovieList(),
 		watchLoadMoreFiltredMovie(),
-		watchFetchGenres()
+		watchFetchGenres(),
+		watchFetchStatistics(),
+		watchDeleteUserRate(),
+		watchFetchPosts()
 	]);
 }

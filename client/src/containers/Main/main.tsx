@@ -2,7 +2,6 @@ import React from 'react';
 import { Redirect, Route, Switch } from 'react-router-dom';
 import MainPageSidebar from '../../components/shared/MainSidebar/MainPageSidebar';
 import MovieList from '../../components/MovieList/MovieList';
-
 import NotFound from './../../components/NotFound/NotFound';
 import './MainContainer.scss';
 import MainPage from '../../components/MainPage/MainPage';
@@ -28,16 +27,17 @@ import {
 	subscibeToEvent
 } from '../../components/UserPage/UserEvents/actions';
 import Header from '../../components/shared/Header/Header';
-import UserTops from '../../components/UserPage/UserTops/UserTops';
 import UserSurveysNav from '../../components/UserPage/UserSurveys/UserSurveysNav';
 import SocketService from '../../services/socket.service';
 import TMovie from '../../components/MovieSeriesPage/TMovie';
-import {
-	IEventFormatClient,
-	IEventFormatDataBase
-} from '../../components/UserPage/UserEvents/UserEvents.service';
+import { IEventFormatDataBase } from '../../components/UserPage/UserEvents/UserEvents.service';
 import TopList from '../../components/TopListPage/TopList';
 import SettingsPage from '../../components/UserSettings';
+import ChatPage from '../../components/ChatPage/ChatPage';
+import UserMovieList from '../../components/UserMovieList/UserMovieList';
+import ResultList from '../../components/shared/ContentSearch/ResultList';
+import Collections from '../../components/Collections/Collections';
+import AdviceMe from '../../components/shared/AdviceMe';
 
 const { notifications } = {
 	notifications: {
@@ -114,8 +114,9 @@ const Main = ({
 	getEventById,
 	subscibeToEvent
 }: IProps) => {
-	if (!isAuthorized || !localStorage.getItem('token'))
+	if (!isAuthorized || !localStorage.getItem('token')) {
 		return <Redirect to="/login" />;
+	}
 
 	new SocketService(userInfo.id);
 
@@ -142,6 +143,7 @@ const Main = ({
 							path={'/settings'}
 							render={() => <SettingsPage mainPath={'/settings'} />}
 						/>
+						<Route path={'/content-search'} component={ResultList} />
 						<Route
 							path={`/events/:id`}
 							render={props =>
@@ -181,9 +183,13 @@ const Main = ({
 						<Route
 							path={`/surveys`}
 							render={() => allSurveysRender(userInfo)}
-						></Route>
+						/>
 						<Route exact path={`/tops`} render={() => <TopList />} />
 						<Route path={`/tops/:id`} component={TopPage} />
+						<Route path={`/chat`} component={ChatPage} />
+						<Route path={`/movie-list/:id`} component={UserMovieList} />
+						<Route path={`/collections`} component={Collections} />
+						<Route path={'/adviceMe'} component={AdviceMe} />
 						<Route path={`/*`} exact component={NotFound} />
 					</Switch>
 				</div>

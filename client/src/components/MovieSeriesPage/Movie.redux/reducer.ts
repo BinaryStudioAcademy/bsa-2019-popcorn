@@ -18,17 +18,26 @@ import {
 	SET_FILTERS,
 	SET_SHOW_SPINNER,
 	SET_HIDE_SPINNER,
-	SET_GENRES
+	SET_GENRES,
+	FETCH_STATISTICS,
+	FETCH_STATISTICS_SUCCESS,
+	DELETE_USER_RATE,
+	FETCH_POSTS_BY_FILM_SUCCESS
 } from './actionTypes';
 import TMovie from '../TMovie';
 import movieAdapter from '../movieAdapter';
+import {
+	ADD_NEW_COMMENT,
+	ADD_NEW_REACTION
+} from '../../MainPage/FeedBlock/FeedBlock.redux/actionTypes';
+import findIndexInArray from '../../../helpers/findIndexInArray';
 
 const initialState: {
 	moviesSearch: Array<TMovie>;
 	alreadySearch: boolean;
 	movieList: null | Array<TMovie>;
 	movieSeries: null | TMovie;
-	userRate: null | string;
+	userRate?: any;
 	fetchedMovie: null | TMovie;
 	moviesSearchInCreating: null | Array<TMovie>;
 	moviesSearchAddMovieToStory: null | Array<TMovie>;
@@ -40,6 +49,8 @@ const initialState: {
 	filters: any;
 	showSpinner: boolean;
 	genres: any;
+	statistics: any;
+	posts: any;
 } = {
 	moviesSearch: [],
 	alreadySearch: false,
@@ -68,7 +79,9 @@ const initialState: {
 		durationValues: []
 	},
 	showSpinner: false,
-	genres: null
+	genres: null,
+	statistics: null,
+	posts: null
 };
 
 export default function(state = initialState, action) {
@@ -109,6 +122,11 @@ export default function(state = initialState, action) {
 			return {
 				...state,
 				userRate: action.payload.userRate
+			};
+		case DELETE_USER_RATE:
+			return {
+				...state,
+				userRate: { ...state.userRate, rate: 0 }
 			};
 		case FETCH_MOVIE_BY_ID_SUCCESS:
 			return {
@@ -188,6 +206,51 @@ export default function(state = initialState, action) {
 			return {
 				...state,
 				ownReview: null
+			};
+		case FETCH_STATISTICS:
+			return {
+				...state,
+				showSpinner: true
+			};
+		case FETCH_STATISTICS_SUCCESS:
+			return {
+				...state,
+				showSpinner: false,
+				statistics: action.payload.statistics
+			};
+		case FETCH_POSTS_BY_FILM_SUCCESS:
+			return {
+				...state,
+				showSpinner: false,
+				posts: action.payload.posts
+			};
+		case ADD_NEW_COMMENT:
+			if (!state.posts) return state;
+			const posts = state.posts || new Array();
+			const comment = action.payload.comment.comment;
+
+			const index = findIndexInArray(posts, 'id', comment.post.id);
+			if (index === -1) return state;
+			const post = posts[index];
+			if (!post.comments) post.comments = [comment];
+			else post.comments.push(comment);
+			return {
+				...state,
+				posts: [...posts]
+			};
+		case ADD_NEW_REACTION:
+			if (!state.posts) return state;
+			const postsForNewReact = state.posts || new Array();
+			const { reactions, postId } = action.payload;
+
+			const i = findIndexInArray(postsForNewReact, 'id', postId);
+			if (i === -1) return state;
+			const postForNewReact = postsForNewReact[i];
+			postForNewReact.reactions = [...reactions];
+
+			return {
+				...state,
+				posts: [...postsForNewReact]
 			};
 		default:
 			return state;

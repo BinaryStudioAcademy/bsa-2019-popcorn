@@ -30,11 +30,12 @@ interface IProps {
 		location: string;
 		aboutMe: string;
 		avatar: string;
+		role: string;
 	};
 	uploadUrl?: string;
 	cancelAvatar: () => any;
 	setAvatar: (url: string, id: string) => any;
-	userPosts?: any; //todo
+	userPosts?: any; // todo
 	getUsersPosts: (id: string) => any;
 	selectedProfileInfo: ISelectedProfileInfo;
 	croppedSaved: boolean;
@@ -54,6 +55,9 @@ const UserPageTabs: React.SFC<IProps> = ({
 	croppedSaved,
 	saveCropped
 }) => {
+	const isOwnData =
+		profileInfo.id === selectedProfileInfo.id || profileInfo.role === 'admin';
+
 	return selectedProfileInfo ? (
 		<div className={'user-tab-body'}>
 			<Switch>
@@ -69,6 +73,7 @@ const UserPageTabs: React.SFC<IProps> = ({
 							setAvatar={setAvatar}
 							croppedSaved={croppedSaved}
 							saveCropped={saveCropped}
+							isOwnData={isOwnData}
 						/>
 					)}
 				/>
@@ -76,8 +81,8 @@ const UserPageTabs: React.SFC<IProps> = ({
 					path={`${mainPath}/posts`}
 					component={() => (
 						<UserPosts
-							currentUserId={profileInfo.id}
 							userId={selectedProfileInfo.id}
+							isOwnData={isOwnData}
 							posts={userPosts}
 							saveCropped={saveCropped}
 							croppedSaved={croppedSaved}
@@ -85,8 +90,24 @@ const UserPageTabs: React.SFC<IProps> = ({
 						/>
 					)}
 				/>
-				<Route path={`${mainPath}/reviews`} component={UserReviews} />
-				<Route path={`${mainPath}/events`} component={UserEvents} />
+				<Route
+					path={`${mainPath}/reviews`}
+					component={() => (
+						<UserReviews
+							selectedUserId={selectedProfileInfo.id}
+							isOwnData={isOwnData}
+						/>
+					)}
+				/>
+				<Route
+					path={`${mainPath}/events`}
+					component={() => (
+						<UserEvents
+							selectedUserId={selectedProfileInfo.id}
+							isOwnData={isOwnData}
+						/>
+					)}
+				/>
 				<Route
 					path={`${mainPath}/surveys`}
 					render={props => (
@@ -97,13 +118,38 @@ const UserPageTabs: React.SFC<IProps> = ({
 								name: selectedProfileInfo.name,
 								image_link: selectedProfileInfo.avatar
 							}}
+							isOwnData={isOwnData}
 							mainPath={`${mainPath}/surveys`}
 						/>
 					)}
 				/>
-				<Route path={`${mainPath}/tops`} component={UserTops} />
-				<Route path={`${mainPath}/lists`} component={UserLists} />
-				<Route path={`${mainPath}/watch-list`} component={UserWatchList} />
+				<Route
+					path={`${mainPath}/tops`}
+					component={() => (
+						<UserTops
+							selectedUserId={selectedProfileInfo.id}
+							isOwnData={isOwnData}
+						/>
+					)}
+				/>
+				<Route
+					path={`${mainPath}/lists`}
+					component={() => (
+						<UserLists
+							selectedUserId={selectedProfileInfo.id}
+							isOwnData={isOwnData}
+						/>
+					)}
+				/>
+				<Route
+					path={`${mainPath}/watch-list`}
+					component={() => (
+						<UserWatchList
+							selectedUserId={selectedProfileInfo.id}
+							isOwnData={isOwnData}
+						/>
+					)}
+				/>
 			</Switch>
 		</div>
 	) : null;

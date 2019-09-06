@@ -1,7 +1,17 @@
-import { GET_UNREAD_NOTIFICATIONS_SUCCESS } from './actionTypes';
+import {
+	GET_UNREAD_NOTIFICATIONS_SUCCESS,
+	GET_FIREBASE_TOKEN_SUCCESS,
+	SET_FIREBASE_TOKEN_UNDEFINED,
+	FETCH_ADVICE,
+	SET_ADVICE
+} from './actionTypes';
+import movieAdapter from '../../MovieSeriesPage/movieAdapter';
 
 const initialState = {
-	unredNotifications: []
+	unreadNotifications: [],
+	firebaseToken: undefined,
+	loading: false,
+	movieAdvice: null
 };
 
 export default (state = initialState, action) => {
@@ -9,7 +19,29 @@ export default (state = initialState, action) => {
 		case GET_UNREAD_NOTIFICATIONS_SUCCESS:
 			return {
 				...state,
-				unredNotifications: action.payload.unredNotifications
+				unreadNotifications: action.payload.unreadNotifications
+			};
+		case GET_FIREBASE_TOKEN_SUCCESS:
+			return {
+				...state,
+				firebaseToken: action.payload.firebaseToken
+			};
+		case SET_FIREBASE_TOKEN_UNDEFINED:
+			return {
+				...state,
+				firebaseToken: undefined
+			};
+		case FETCH_ADVICE:
+			return {
+				...state,
+				loading: true,
+				movieAdvice: []
+			};
+		case SET_ADVICE:
+			return {
+				...state,
+				loading: false,
+				movieAdvice: (action.payload.movieAdvice || []).map(movieAdapter)
 			};
 		default:
 			return state;

@@ -1,8 +1,7 @@
-import { EntityRepository, Repository } from "typeorm";
+import { EntityRepository, getCustomRepository, Repository } from "typeorm";
 import { Surveys } from "../entities/Surveys";
 import { Surveys as SurveysModel } from "../models/SurveysModel";
 import UserRepository from "./user.repository";
-import { getCustomRepository } from "typeorm";
 import { SurveysQuestion } from "../models/SurveysQuestionModel";
 import SurveysQuestionRepository from "./surveysQuestion.repository";
 
@@ -11,7 +10,7 @@ class SurveysRepository extends Repository<Surveys> {
   async createSurveys(
     id: string,
     surveys: SurveysModel,
-    surveysQuestion: Array<SurveysQuestion>,
+    surveysQuestion: SurveysQuestion[],
     next?
   ) {
     try {
@@ -59,6 +58,27 @@ class SurveysRepository extends Repository<Surveys> {
     }
   }
 
+  async getNewestSurvey(next?) {
+    try {
+      const a = await this.findOne({
+        order: {
+          created_at: "DESC"
+        },
+        relations: [
+          "surveysQuestion",
+          "surveysQuestion.surveysQuestionOption",
+          "surveysQuestion.surveysQuestionAnswer",
+          "surveysQuestion.surveysQuestionAnswer.user",
+          "surveysQuestion.surveysQuestionAnswer.surveysQuestionOption",
+          "user"
+        ]
+      });
+      return a;
+    } catch (err) {
+      return next({ status: err.status, message: err.message }, null);
+    }
+  }
+
   async getSurveysById(id: string, next?) {
     try {
       const surveys = await this.findOne(
@@ -74,18 +94,29 @@ class SurveysRepository extends Repository<Surveys> {
           ]
         }
       );
-      if (!surveys) return { status: 404, message: "Surveys is not found" };
+      if (!surveys) {
+        return { status: 404, message: "Surveys is not found" };
+      }
       return surveys;
     } catch (err) {
       return next({ status: err.status, message: err.message }, null);
     }
   }
 
+  async getSurveysByTitle(title: string) {
+    return await this.find({
+      relations: ["user"],
+      where: `title ILIKE '%${title}%'`
+    });
+  }
+
   async getSurveysByUserId(id: string, next?) {
     try {
       const user = await getCustomRepository(UserRepository).findOne(id);
-      if (!user)
+      if (!user) {
         return next({ status: 404, message: "User is not found" }, null);
+      }
+
       return await this.find({
         where: { user },
         order: {
@@ -108,8 +139,9 @@ class SurveysRepository extends Repository<Surveys> {
   async updateSurveysById(id: string, surveys: SurveysModel, next?) {
     try {
       const updatedSurveys = await this.getSurveysById(id, next);
-      if (!updatedSurveys)
+      if (!updatedSurveys) {
         next({ status: 404, message: "Voiting is not found" }, null);
+      }
 
       return await this.update(
         { id },
@@ -127,8 +159,10 @@ class SurveysRepository extends Repository<Surveys> {
   async deleteSurveysById(id: string, next?) {
     try {
       const surveys = await this.getSurveysById(id, next);
-      if (!surveys)
+      if (!surveys) {
         return next({ status: 404, message: "Voiting is not found" }, null);
+      }
+
       await this.delete({ id });
       return {};
     } catch (err) {

@@ -1,0 +1,122 @@
+@import '../../../styles/variables';
+
+.movie-card-wrp {
+	display: flex;
+	justify-content: space-between;
+
+	.movie-card-item {
+		width: 30%;
+		border: 1px $border-color solid;
+		margin: 10px;
+		//height: 100px;
+		display: flex;
+		flex-direction: column;
+
+		.header-review-own-rating-container {
+			display: none !important;
+		}
+
+		.header-movie-title-rating {
+			display: grid;
+			grid-template-columns: 50px 1fr 130px !important;
+
+			.StarRating {
+				display: none !important;
+			}
+
+			.movie-rating-container {
+				display: grid;
+				grid-template-columns: 110px 0;
+				.max-rating {
+					&::after {
+						display: none;
+					}
+				}
+			}
+		}
+
+		.movie-poster-wrp {
+			height: 210px;
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			justify-content: center;
+
+			.movie-poster {
+				max-height: 100%;
+				max-width: 100%;
+			}
+		}
+
+		.movie-info {
+			text-align: left;
+			width: 90%;
+			flex-direction: column;
+			padding: 5px 10px;
+			box-sizing: border-box;
+			color: $text-base-color;
+			flex: 1;
+			display: flex;
+			justify-content: space-between;
+			margin: 0 auto;
+			* {
+				line-height: 25px;
+				font-size: 0.8em;
+			}
+
+			.video {
+				height: 200px;
+				width: 100%;
+			}
+
+			.videoWrapper {
+				padding: 0;
+				background-color: inherit;
+				grid-column: auto;
+			}
+
+			.description {
+				display: flex;
+				flex-direction: column;
+				justify-content: space-between;
+			}
+
+			.movie-title {
+				font-size: $header-medium;
+				font-weight: bold;
+				text-transform: uppercase;
+			}
+
+			.movie-link {
+				text-decoration: none;
+				border-bottom: none !important;
+				color: $text-base-color;
+			}
+
+			.movie-genre,
+			.movie-duration {
+				font-size: $base-font-size;
+				font-weight: bold;
+
+				svg {
+					height: 18px;
+					margin-right: 5px;
+				}
+			}
+
+			.movie-duration {
+				svg {
+					margin-left: 15px;
+					height: 15px;
+				}
+			}
+
+			.movie-cast {
+				font-size: $base-font-size;
+				overflow: hidden;
+				white-space: nowrap;
+				text-overflow: ellipsis;
+			}
+		}
+	}
+}

@@ -1,0 +1,78 @@
+@import '../../../../styles/variables.scss';
+
+.movie-list-preview {
+	position: relative;
+	display: grid;
+	grid-template-columns: 20% 1fr;
+	grid-gap: 30px;
+	padding: 20px;
+	cursor: pointer;
+
+	background-color: #fff;
+	box-shadow: 0 0 5px -2px rgba(0, 0, 0, 0.438);
+
+	.movie-list-preview-main {
+		display: flex;
+		flex-direction: column;
+		justify-content: space-between;
+		height: 100%;
+	}
+
+	.preview-title {
+		display: flex;
+		align-items: center;
+		padding-right: 22px;
+		line-height: 22px;
+		font-weight: 600;
+		font-size: 1.2em;
+		padding-bottom: 1.5px;
+		border-bottom: 1px solid $border-focus-color;
+
+		.lock-icon {
+			margin-left: 7px;
+			color: rgba(0, 0, 0, 0.363);
+			font-size: 14px;
+		}
+	}
+
+	.preview-description {
+		margin-top: 10px;
+		color: $text-secondary-color;
+	}
+
+	.preview-count-movies {
+		margin-top: 10px;
+		font-weight: 200;
+		color: $text-secondary-color;
+		text-align: right;
+		margin-bottom: -6px;
+		margin-right: -6px;
+		font-size: 0.9em;
+	}
+
+	.image-container {
+		font-size: 0;
+		img {
+			width: 100%;
+		}
+	}
+	.button-absolute-position {
+		position: absolute;
+		top: 10px;
+		right: 10px;
+		transition: all 0.3s ease-in-out;
+		.preview-delete-button {
+			width: 22px;
+			padding: 5px;
+			height: 22px;
+			border-radius: 5px;
+			color: white;
+			background-color: rgba(0, 0, 0, 0.726);
+			cursor: pointer;
+			transition: opacity 0.2s ease-in-out;
+			&:hover {
+				opacity: 0.7;
+			}
+		}
+	}
+}

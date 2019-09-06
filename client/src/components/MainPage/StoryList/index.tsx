@@ -23,7 +23,6 @@ import IVoting from './IVoting';
 import TMovie from '../../MovieSeriesPage/TMovie';
 import {
 	fetchSearch,
-	fetchSearchToAddMovieInStory,
 	resetSearch
 } from '../../MovieSeriesPage/Movie.redux/actions';
 import CreateStoryFilm from './story-modal/create-story-film';
@@ -43,6 +42,7 @@ interface IStoryListItem {
 		any;
 	};
 	type: string;
+	activity: null | string;
 	voting?: {
 		backColor: string;
 		backImage: string;
@@ -67,8 +67,6 @@ interface IProps {
 	newStory: INewStory;
 	cursorPosition: { start: number; end: number };
 	setCaption: (caption: string) => any;
-	top: { id: string; name: string; any };
-	survey: { id: string; name: string; any };
 	saveImage: (url: string) => any;
 	changeActivity: (
 		type: string,
@@ -83,26 +81,10 @@ interface IProps {
 	title: string;
 	resetSearch: () => any;
 	saveMovie: (movie: TMovie, movieOption?: string) => any;
-	fetchSearchToAddMovieInStory: (title: string) => any;
-	searchTitle: string;
-	moviesSearchAddMovieToStory: null | Array<TMovie>;
 	isLoading: boolean;
 	photoSaved: boolean;
 	saveCroppedImage: () => void;
 }
-
-const mock = {
-	tops: [
-		{ id: '1', name: 'Top 1' },
-		{ id: '2', name: 'Top 2' },
-		{ id: '3', name: 'Top 3' }
-	],
-	surveys: [
-		{ id: '1', name: 'Surveys 1' },
-		{ id: '2', name: 'Surveys 2' },
-		{ id: '3', name: 'Surveys 3' }
-	]
-};
 
 const ListBlock = ({ ...props }: IProps) => {
 	return (
@@ -138,14 +120,7 @@ const ListBlock = ({ ...props }: IProps) => {
 					exact
 					path={`/create/extra/movie`}
 					component={other_props => (
-						<CreateStoryFilm
-							{...other_props}
-							fetchSearchToAddMovieInStory={props.fetchSearchToAddMovieInStory}
-							moviesSearchAddMovieToStory={props.moviesSearchAddMovieToStory}
-							searchTitle={props.searchTitle}
-							saveMovie={props.saveMovie}
-							isLoading={props.isLoading}
-						/>
+						<CreateStoryFilm {...other_props} saveMovie={props.saveMovie} />
 					)}
 				/>
 				<Route
@@ -162,8 +137,6 @@ const ListBlock = ({ ...props }: IProps) => {
 					component={anotherProps => (
 						<ChooseExtraOption
 							{...anotherProps}
-							top={props.top}
-							survey={props.survey}
 							changeActivity={props.changeActivity}
 							option={props.newStory.activity}
 						/>
@@ -182,11 +155,7 @@ const mapStateToProps = (rootState, props) => ({
 	newStory: rootState.story.newStory,
 	title: rootState.story.title,
 	cursorPosition: rootState.story.cursorPosition,
-	top: mock.tops,
-	survey: mock.surveys,
 	movies: rootState.movie.moviesSearchInCreating,
-	moviesSearchAddMovieToStory: rootState.movie.moviesSearchAddMovieToStory,
-	searchTitle: rootState.movie.searchTitle,
 	isLoading: rootState.movie.isLoading,
 	photoSaved: rootState.story.photoSaved
 });
@@ -202,7 +171,6 @@ const actions = {
 	fetchSearch,
 	resetSearch,
 	saveMovie,
-	fetchSearchToAddMovieInStory,
 	saveCroppedImage
 };
 const mapDispatchToProps = dispatch => bindActionCreators(actions, dispatch);

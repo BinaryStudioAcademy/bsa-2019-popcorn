@@ -1,5 +1,7 @@
 import { Request, Router } from "express";
 import * as userService from "../services/user.service";
+import * as userTempService from "../services/userTemp.service";
+import * as emailService from "../services/email.service";
 import jwtMiddleware from "../middlewares/jwt.middleware";
 import { User } from "../models/UserModel";
 
@@ -31,21 +33,21 @@ router
   .put(
     "/password/:id",
     jwtMiddleware,
-    (req: Request & { user: User }, res, next) =>
-      userService
-        .updatePassword(req.params.id, req.user, req.body.password, next)
+    (req: Request & { user: User }, res, next) => {
+      emailService.sendConfirmPasswordChange(req.user.email, req.body.token);
+      userTempService
+        .createTempUser(req.user, req.body, req.params.id)
         .then(data => res.send(data))
-        .catch(next)
+        .catch(next);
+    }
   )
-  .put(
-    "/email/:id",
-    jwtMiddleware,
-    (req: Request & { user: User }, res, next) =>
-      userService
-        .updateEmail(req.params.id, req.user, req.body.email, next)
-        .then(data => res.send(data))
-        .catch(next)
-  )
+  .put("/email/:id", (req: Request & { user: User }, res, next) => {
+    emailService.sendConfirmEmailChange(req.body.email, req.body.token);
+    userTempService
+      .createTempUser(req.user, req.body, req.params.id)
+      .then(data => res.send(data))
+      .catch(next);
+  })
   .delete("/:id", jwtMiddleware, (req: Request & { user: User }, res, next) =>
     userService
       .deleteById(req.params.id, req.user, next)

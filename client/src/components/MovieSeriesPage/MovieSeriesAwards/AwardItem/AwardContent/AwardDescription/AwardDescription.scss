@@ -1,19 +1,17 @@
 @import '../../../../../../styles/variables.scss';
+
 .description-wrapper {
 	display: flex;
 	font-family: $base-font-family;
 	font-size: $base-font-size;
 	letter-spacing: $base-letter-spacing;
+	flex-direction: column;
+	margin-top: 5px;
 }
 .achievement {
 	font-weight: bold;
 	color: $text-base-color;
 }
-.nominationName {
+.nomination-winner-name {
 	color: $text-secondary-color;
-	margin-right: 0.5em;
-}
-.hyphen {
-	color: $text-secondary-color;
-	margin-right: 0.5em;
 }

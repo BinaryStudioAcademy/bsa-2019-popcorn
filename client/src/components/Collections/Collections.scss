@@ -1,0 +1,19 @@
+@import '../../styles/variables.scss';
+
+.Collections {
+	width: 100%;
+	.movie-list-preview-container {
+		display: block;
+		margin: 20px auto;
+		padding: 30px;
+		max-width: 1200px;
+	}
+
+	.movie-list-empty {
+		width: 100%;
+		margin-top: 30px;
+		text-align: center;
+		font-size: $header-medium;
+		color: $text-secondary-color;
+	}
+}

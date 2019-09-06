@@ -1,11 +1,11 @@
-.item-wrapper > svg {
+.post-reaction-icon {
 	width: 40px;
 	height: 40px;
 	border-radius: 50%;
 	cursor: pointer;
-	transition: all 0.2s ease-in-out;
-}
+	transition: transform 0.2s ease-in-out;
 
-.item-wrapper > svg:hover {
-	transform: scale(1.4);
+	&:hover {
+		transform: scale(1.4) translateY(-10px);
+	}
 }
