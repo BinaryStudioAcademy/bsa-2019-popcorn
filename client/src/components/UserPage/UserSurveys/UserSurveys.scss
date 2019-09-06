@@ -7,15 +7,15 @@
 	color: $text-base-color;
 	font-family: $base-font-family;
 
-	a {
-		margin: 20px;
-		text-decoration: none;
-		color: $text-base-color;
-		font-size: $header-medium;
-	}
-
 	.survey-list {
 		margin-top: 20px;
+
+		a {
+			margin: 20px;
+			text-decoration: none;
+			color: $text-base-color;
+			font-size: $header-medium;
+		}
 
 		.survey-list-item {
 			width: 100%;
