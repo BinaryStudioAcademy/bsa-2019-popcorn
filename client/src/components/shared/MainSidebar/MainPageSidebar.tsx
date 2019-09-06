@@ -20,7 +20,7 @@ const MainPageSidebar = ({ notifications }: IProps) => {
 					<NavLink to={'/events/'}>Events</NavLink>
 				</div>
 				<div>
-					<p>Collections</p>
+					<NavLink to={'/collections/'}>Collections</NavLink>
 				</div>
 				<div>
 					<NavLink to={'/surveys'}>Surveys</NavLink>

@@ -36,6 +36,7 @@ import SettingsPage from '../../components/UserSettings';
 import ChatPage from '../../components/ChatPage/ChatPage';
 import UserMovieList from '../../components/UserMovieList/UserMovieList';
 import ResultList from '../../components/shared/ContentSearch/ResultList';
+import Collections from '../../components/Collections/Collections';
 
 const { notifications } = {
 	notifications: {
@@ -186,6 +187,7 @@ const Main = ({
 						<Route path={`/tops/:id`} component={TopPage} />
 						<Route path={`/chat`} component={ChatPage} />
 						<Route path={`/movie-list/:id`} component={UserMovieList} />
+						<Route path={`/collections`} component={Collections} />
 						<Route path={`/*`} exact component={NotFound} />
 					</Switch>
 				</div>
