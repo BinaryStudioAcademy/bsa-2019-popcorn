@@ -2,7 +2,8 @@ import {
 	SAVE_MOVIE_LIST,
 	FETCH_MOVIE_LISTS_PREVIEW,
 	DELETE_MOVIE_LIST,
-	FETCH_MOVIE_LIST_DETAILS
+	FETCH_MOVIE_LIST_DETAILS,
+	FETCH_ALL_MOVIE_LISTS
 } from './actionTypes';
 
 export const saveMovieList = (movieList: any) => ({
@@ -23,4 +24,8 @@ export const deleteMovieList = (movieListId: string) => ({
 export const fetchMovieListDetails = (movieListId: string) => ({
 	type: FETCH_MOVIE_LIST_DETAILS,
 	payload: { movieListId }
+});
+
+export const fetchAllMovieLists = () => ({
+	type: FETCH_ALL_MOVIE_LISTS
 });

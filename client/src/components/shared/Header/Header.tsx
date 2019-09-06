@@ -133,47 +133,47 @@ class Header extends React.Component<IProps> {
 						</Link>
 					</div>
 				</button>
-			<button
-				className="header-buttons hover"
-				onClick={() => fetchAdvice(userInfo.id)}
-			>
-				<Link
-					to={'/adviceMe'}
-					style={{ textDecoration: 'none' }}
-					className="header-buttons"
+				<button
+					className="header-buttons hover"
+					onClick={() => fetchAdvice(userInfo.id)}
 				>
-					Advice Me
-				</Link>
-				{/*<FontAwesomeIcon icon={faChevronDown} />*/}
-				{/*<div className="modal">*/}
-				{/*	<Link aria-current="page" className="hover" to="#">*/}
-				{/*		{NEW_TV_SERIES}*/}
-				{/*	</Link>*/}
-				{/*	<Link aria-current="page" className="hover" to="#">*/}
-				{/*		{TV_SERIES_TOPS}*/}
-				{/*	</Link>*/}
-				{/*	<Link aria-current="page" className="hover" to="/user-page/lists">*/}
-				{/*		{USER_TV_SERIES_TOPS}*/}
-				{/*	</Link>*/}
-				{/*</div>*/}
-			</button>
-			<button className="header-buttons hover">
-				Ratings
-				<FontAwesomeIcon icon={faChevronDown} />
-				<div className="modal">
-					<Link aria-current="page" className="hover" to="#">
-						{POPULAR_MOVIES}
+					<Link
+						to={'/adviceMe'}
+						style={{ textDecoration: 'none' }}
+						className="header-buttons"
+					>
+						Advice Me
 					</Link>
-					<Link aria-current="page" className="hover" to="#">
-						{POPULAR_TV_SERIES}
-					</Link>
-					<Link aria-current="page" className="hover" to="#">
-						{POPULAR_USERS}
-					</Link>
-				</div>
-			</button>
-			<ContentSearch />
-			<div className="notifications">
+					{/*<FontAwesomeIcon icon={faChevronDown} />*/}
+					{/*<div className="modal">*/}
+					{/*	<Link aria-current="page" className="hover" to="#">*/}
+					{/*		{NEW_TV_SERIES}*/}
+					{/*	</Link>*/}
+					{/*	<Link aria-current="page" className="hover" to="#">*/}
+					{/*		{TV_SERIES_TOPS}*/}
+					{/*	</Link>*/}
+					{/*	<Link aria-current="page" className="hover" to="/user-page/lists">*/}
+					{/*		{USER_TV_SERIES_TOPS}*/}
+					{/*	</Link>*/}
+					{/*</div>*/}
+				</button>
+				<button className="header-buttons hover">
+					Ratings
+					<FontAwesomeIcon icon={faChevronDown} />
+					<div className="modal">
+						<Link aria-current="page" className="hover" to="#">
+							{POPULAR_MOVIES}
+						</Link>
+						<Link aria-current="page" className="hover" to="#">
+							{POPULAR_TV_SERIES}
+						</Link>
+						<Link aria-current="page" className="hover" to="#">
+							{POPULAR_USERS}
+						</Link>
+					</div>
+				</button>
+				<ContentSearch />
+				<div className="notifications">
 					<div className="notifications-message">
 						<NavLink to={'/chat'}>
 							{hasUnreadMessages(chats) && (
