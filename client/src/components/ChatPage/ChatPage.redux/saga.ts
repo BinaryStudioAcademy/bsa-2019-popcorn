@@ -80,7 +80,7 @@ export function* createChat(action) {
 				type: CREATE_MESSAGE,
 				payload: {
 					userId: action.payload.user1Id,
-					chatId: chat.chatId,
+					chatId: chat.chat.id,
 					body: { ...action.payload.newMessage }
 				}
 			});
