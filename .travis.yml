@@ -45,6 +45,6 @@ script:
   - CI=false npm run build
   - cd ..
   - aws s3 cp s3://popcorn-bucket/envs/.env server/.env
-  - zip -r latest * >/demo-4/null
+  - zip -r latest * >/dev/null
   - mkdir -p dpl_cd_upload
   - mv latest.zip dpl_cd_upload/latest.zip
