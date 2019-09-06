@@ -135,14 +135,12 @@ class ReviewItem extends React.Component<IProps, IState> {
 									className="to-movie-page-link"
 									to={`/movies/${movieId}`}
 								>
-									<img
+									<Image
 										className="review-poster"
-										src={
-											movie.poster_path
-												? config.POSTER_PATH + movie.poster_path
-												: config.DEFAULT_MOVIE_IMAGE
-										}
-									></img>
+										src={config.POSTER_PATH + movie.poster_path}
+										defaultSrc={config.DEFAULT_MOVIE_IMAGE}
+										alt="poster"
+									/>
 									<div>
 										<div>{movie.title}</div>
 										<div>{this.getYear(movie.release_date)}</div>

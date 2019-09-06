@@ -1,6 +1,7 @@
 import React from 'react';
 import '../RecommendItem.scss';
 import config from '../../../../config';
+import Image from '../../../shared/Image/Image';
 
 type RecommendItemProps = {
 	survey: {
@@ -22,9 +23,10 @@ const RecommendItemSurvey = ({
 				</div>
 			</div>
 			<div className="recommend-item-wrp">
-				<img
+				<Image
 					className="recommend-item-image"
-					src={image ? image : config.DEFAULT_SURVEY_IMAGE}
+					src={image}
+					defaultSrc={config.DEFAULT_SURVEY_IMAGE}
 					alt="event"
 				/>
 			</div>

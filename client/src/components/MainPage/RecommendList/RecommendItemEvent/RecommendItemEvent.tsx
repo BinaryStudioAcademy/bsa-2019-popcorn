@@ -2,6 +2,7 @@ import React from 'react';
 import '../RecommendItem.scss';
 import Moment from 'react-moment';
 import config from '../../../../config';
+import Image from '../../../shared/Image/Image';
 
 type RecommendItemProps = {
 	event: {
@@ -23,9 +24,10 @@ const RecommendItemEvent = ({
 				</div>
 			</div>
 			<div className="recommend-item-wrp">
-				<img
+				<Image
 					className="recommend-item-image"
-					src={image ? image : config.DEFAULT_EVENT_IMAGE}
+					src={image}
+					defaultSrc={config.DEFAULT_EVENT_IMAGE}
 					alt="event"
 				/>
 			</div>
