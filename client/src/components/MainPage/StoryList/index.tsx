@@ -42,6 +42,7 @@ interface IStoryListItem {
 		any;
 	};
 	type: string;
+	activity: null | string;
 	voting?: {
 		backColor: string;
 		backImage: string;
