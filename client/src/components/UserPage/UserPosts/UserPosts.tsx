@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import PostList from '../../MainPage/PostList/PostList';
 import Spinner from '../../shared/Spinner';
-import CreateExtraBtn from "../../shared/CreateExtraBtn";
+import CreateExtraBtn from '../../shared/CreateExtraBtn';
 import PostConstructor from './PostConstructor';
 interface IProps {
 	posts?: any;

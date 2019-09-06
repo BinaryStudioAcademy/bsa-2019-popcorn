@@ -19,7 +19,7 @@ import Follow from './FollowSystem/Follow';
 import FollowButton from './FollowSystem/FollowButton/FollowButton';
 import { bindActionCreators } from 'redux';
 import { updateProfile } from '../actions';
-import { NavLink } from 'react-router-dom';
+import { NavLink, Redirect } from 'react-router-dom';
 import { createChat } from '../../ChatPage/ChatPage.redux/actions';
 
 type ProfileProps = {
@@ -43,10 +43,12 @@ type ProfileProps = {
 		}
 	) => any;
 	createChat: (user1Id: string, user2Id: string) => void;
+	chats: any;
 };
 interface IProfileComponentState {
 	errorMsg?: string;
 	isEditing: boolean;
+	isRedirectWaiting: boolean;
 }
 
 class ProfileComponent extends Component<ProfileProps, IProfileComponentState> {
@@ -54,7 +56,8 @@ class ProfileComponent extends Component<ProfileProps, IProfileComponentState> {
 		super(props);
 		this.state = {
 			errorMsg: '',
-			isEditing: false
+			isEditing: false,
+			isRedirectWaiting: false
 		};
 	}
 	private cropper = React.createRef<Cropper>();
@@ -122,8 +125,19 @@ class ProfileComponent extends Component<ProfileProps, IProfileComponentState> {
 		}
 		this.props.saveCropped();
 	}
-	onMessageClick = () => {
-		this.props.createChat(this.props.userId, this.props.profileInfo.id);
+	findChat = () => {
+		for (const chatId in this.props.chats) {
+			if (this.props.chats[chatId].user.id === this.props.profileInfo.id) {
+				return this.props.chats[chatId];
+			}
+		}
+	};
+
+	onChatClick = () => {
+		this.setState({ isRedirectWaiting: true });
+		if (!this.findChat()) {
+			this.props.createChat(this.props.userId, this.props.profileInfo.id);
+		}
 	};
 
 	render() {
@@ -153,6 +167,12 @@ class ProfileComponent extends Component<ProfileProps, IProfileComponentState> {
 			croppedSaved,
 			isOwnData
 		} = this.props;
+
+		const chat = this.findChat();
+
+		if (this.state.isRedirectWaiting && chat) {
+			return <Redirect to={`/chat/${chat.id}`} />;
+		}
 		return (
 			<div className={'UserProfileComponent'}>
 				{this.state.errorMsg && (
@@ -241,6 +261,11 @@ class ProfileComponent extends Component<ProfileProps, IProfileComponentState> {
 							{this.props.userId !== id && (
 								<FollowButton className="follow-btn" />
 							)}
+							{this.props.userId !== id && (
+								<button className="chat-btn" onClick={this.onChatClick}>
+									Send message
+								</button>
+							)}
 							<div className="profileRow-username">
 								<span>{name}</span>
 							</div>
@@ -313,7 +338,8 @@ class ProfileComponent extends Component<ProfileProps, IProfileComponentState> {
 
 const mapStateToProps = (rootState, props) => ({
 	...props,
-	userId: rootState.profile.profileInfo.id
+	userId: rootState.profile.profileInfo.id,
+	chats: rootState.chat.chats
 });
 
 const actions = {

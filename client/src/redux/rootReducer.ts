@@ -13,6 +13,7 @@ import followReducer from '../components/UserPage/ProfileComponent/FollowSystem/
 import watchListReducer from '../components/UserPage/UserWatchList/reducer';
 import searchMovieReducer from '../components/shared/MovieSearch/reducer';
 import notificationReducer from '../components/shared/Header/reducer';
+import recommendedReducer from '../components/MainPage/RecommendList/RecommendList.redux/reducer';
 import chatReducer from '../components/ChatPage/ChatPage.redux/reducer';
 import contentSearchReducer from '../components/shared/ContentSearch/redux/reducer';
 import movieListReducer from '../components/UserPage/UserLists/reducer';
@@ -35,6 +36,7 @@ export default combineReducers({
 	watchList: watchListReducer,
 	searchMovie: searchMovieReducer,
 	notification: notificationReducer,
+	recommended: recommendedReducer,
 	chat: chatReducer,
 	contentSearch: contentSearchReducer,
 	movieList: movieListReducer

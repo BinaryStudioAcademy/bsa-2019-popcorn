@@ -3,6 +3,13 @@
 .comment-item {
 	padding: 0.3em 1em;
 	font-size: $post-font-size;
+	display: flex;
+	align-items: center;
+	img {
+		width: 30px;
+		height: 30px;
+		margin-right: 5px;
+	}
 	.comment-date {
 		margin-top: 4px;
 		text-transform: uppercase;

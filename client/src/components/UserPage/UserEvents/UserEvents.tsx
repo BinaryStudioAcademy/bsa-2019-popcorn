@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import Spinner from '../../shared/Spinner/index';
-import CreateExtraBtn from "../../shared/CreateExtraBtn";
+import CreateExtraBtn from '../../shared/CreateExtraBtn';
 import { getUserEvents, saveEvent, deleteEvent, updateEvent } from './actions';
 
 import {

@@ -148,7 +148,6 @@ class StoryViewer extends PureComponent<IProps, IState> {
 
 	render() {
 		const { stories } = this.props;
-
 		return (
 			<div className="story-viewer">
 				<p className="left-arrow" onClick={this.goToPrevStory}>
@@ -285,12 +284,13 @@ class StoryViewer extends PureComponent<IProps, IState> {
 												<span
 													style={{
 														display: 'flex',
-														justifyContent: 'SPACE-BETWEEN',
+														justifyContent: 'center',
 														padding: '0 15px',
-														width: '100%'
+														width: '100%',
+														wordWrap: 'break-word'
 													}}
 												>
-													{story.type && (
+													{story.type && story.activity && (
 														<NavLink
 															to={'/' + story.type + 's/' + story.activityId}
 														>

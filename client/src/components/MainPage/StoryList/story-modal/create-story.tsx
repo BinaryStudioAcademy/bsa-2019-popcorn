@@ -195,7 +195,7 @@ class getAddStoryPopupContent extends React.Component<IProps> {
 						<FontAwesomeIcon icon={faTimes} />
 					</button>
 					<button
-						className={'btn'}
+						className={'share-btn'}
 						disabled={disabled}
 						onClick={() => {
 							this.props.createStory(

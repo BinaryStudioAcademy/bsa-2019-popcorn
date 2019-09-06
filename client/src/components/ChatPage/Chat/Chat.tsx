@@ -5,6 +5,7 @@ import { fetchMessages, readMessages } from '../ChatPage.redux/actions';
 import ChatHeader from './ChatHeader';
 import ChatBody from './ChatBody/ChatBody';
 import ChatInput from './ChatInput';
+import Spinner from '../../shared/Spinner';
 
 interface IProps {
 	match: {
@@ -21,13 +22,13 @@ interface IProps {
 class Chat extends React.Component<IProps> {
 	render() {
 		if (!this.props.chat) {
-			return <div>Loading...</div>;
+			return <Spinner />;
 		}
 		if (!this.props.chat.messages && !this.props.isLoadingMessages) {
 			this.props.fetchMessages(this.props.userId, this.props.match.params.id);
 		}
 
-		if (!this.props.chat.messages) return <div>Loading...</div>;
+		if (!this.props.chat.messages) return <Spinner />;
 
 		return (
 			<div>
