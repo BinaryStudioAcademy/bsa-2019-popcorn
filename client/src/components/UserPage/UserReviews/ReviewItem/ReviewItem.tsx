@@ -143,7 +143,7 @@ class ReviewItem extends React.Component<IProps> {
 										className="delete-button"
 										onClick={() => deleteReview(reviewId)}
 									>
-										<CloseIcon className="delete-button-svg" />
+										Delete
 									</button>
 								</div>
 							)}
