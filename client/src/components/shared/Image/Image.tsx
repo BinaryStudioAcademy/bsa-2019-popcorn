@@ -17,7 +17,7 @@ class Image extends React.Component<IProps, IState> {
 		super(props);
 
 		this.state = {
-			src: props.src,
+			src: props.src ? props.src : props.defaultSrc,
 			errored: false
 		};
 	}
@@ -32,8 +32,8 @@ class Image extends React.Component<IProps, IState> {
 	};
 
 	render() {
-		const { errored } = this.state;
-		const { className, alt, src, defaultSrc } = this.props;
+		const { errored, src } = this.state;
+		const { className, alt, defaultSrc } = this.props;
 
 		return (
 			<img

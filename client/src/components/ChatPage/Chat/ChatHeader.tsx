@@ -1,5 +1,7 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
+import Image from '../../shared/Image/Image';
+import config from '../../../config';
 
 interface IProps {
 	user: {
@@ -12,7 +14,12 @@ interface IProps {
 const ChatHeader: React.FC<IProps> = ({ user }) => {
 	return (
 		<div className="chat-header">
-			<img className="header-avatar" src={user.avatar} alt="avatar" />
+			<Image
+				className="header-avatar"
+				src={user.avatar}
+				defaultSrc={config.DEFAULT_AVATAR}
+				alt="author"
+			/>
 			<NavLink to={`/user-page/${user.id}`}>
 				<div className="user-name">{user.name}</div>
 			</NavLink>

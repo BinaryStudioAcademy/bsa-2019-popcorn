@@ -1,6 +1,8 @@
 import React from 'react';
 import Moment from 'react-moment';
 import { NavLink } from 'react-router-dom';
+import Image from '../../shared/Image/Image';
+import config from '../../../config';
 
 interface IProps {
 	chat: any;
@@ -10,7 +12,12 @@ interface IProps {
 const ChatListItem: React.FC<IProps> = ({ chat, unreadMessagesCount }) => {
 	return (
 		<div className="chat-list-item">
-			<img className="avatar" src={chat.user.avatar} alt="avatar" />
+			<Image
+				className="avatar"
+				src={chat.user.avatar}
+				defaultSrc={config.DEFAULT_AVATAR}
+				alt="author"
+			/>
 			<div className="chat-list-item-info">
 				<div className="info-header">
 					<NavLink to={`/user-page/${chat.user.id}`}>

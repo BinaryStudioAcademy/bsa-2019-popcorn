@@ -4,7 +4,7 @@
 	width: 100%;
 	box-sizing: border-box;
 	margin-bottom: 15px;
-	box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2);
+	box-shadow: 0 0 15px 0 rgba(0, 0, 0, 0.2);
 	font-size: $base-font-size;
 
 	.review-item {
@@ -13,10 +13,9 @@
 		.review-item-header {
 			display: flex;
 			justify-content: space-between;
-
+			position: relative;
 			.review-item-header-profile {
 				display: flex;
-
 				.profile-avatar {
 					font-size: 0;
 					img {
@@ -35,6 +34,17 @@
 						font-weight: 600;
 						font-size: 1.3em;
 						margin-bottom: 3px;
+					}
+				}
+				.to-movie-page-link {
+					position: absolute;
+					right: 10px;
+					color: $text-secondary-color;
+					text-decoration: none;
+					display: flex;
+					.review-poster {
+						height: 30px;
+						margin-right: 5px;
 					}
 				}
 			}
