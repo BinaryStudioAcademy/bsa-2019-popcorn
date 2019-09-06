@@ -82,9 +82,11 @@ export default (state = initialState, action) => {
 					watch => watch.id !== action.payload.watchId
 				),
 				watchListStatus: undefined,
-				watchListIds: [...state.watchListIds].filter(
-					watch => watch.id !== action.payload.watchId
-				)
+				watchListIds: state.watchListIds
+					? [...state.watchListIds].filter(
+							watch => watch.id !== action.payload.watchId
+					  )
+					: undefined
 			};
 
 		case FETCH_WATCH_LIST_STATUS_SUCCESS:

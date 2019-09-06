@@ -9,7 +9,7 @@ import PostCommentsRepository from "../repository/postComments.repository";
 import { PostCommentsModel } from "../models/PostCommentsModel";
 import { PostReactions } from "../models/PostReactionsModel";
 import PostReactionsRepository from "../repository/postReactions.repository";
-import uuid from "uuid/v4";
+import * as uuid from "uuid/v4";
 
 const getExtra = async (post: any) => {
   if (!post.extraType) {

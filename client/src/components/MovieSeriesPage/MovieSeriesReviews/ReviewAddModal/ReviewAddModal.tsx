@@ -98,7 +98,7 @@ class ReviewAddModal extends React.Component<IProps, IState> {
 										</div>
 										<div>
 											<FontAwesomeIcon className="icon-star" icon={faStar} />
-											{movie.vote_average ? movie.vote_average : 0}
+											{Number(movie.vote_average) ? movie.vote_average : 0}
 										</div>
 									</div>
 								</div>

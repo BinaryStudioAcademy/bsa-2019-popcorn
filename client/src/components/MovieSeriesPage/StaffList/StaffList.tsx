@@ -42,7 +42,7 @@ const StaffList = ({ crew }: StaffListProps) => {
 	let groupedStaff = generateStaffArray(crew);
 	return (
 		<div className={'staff-list'}>
-			<div className={'staff-list-header cross-line'}>
+			<div className={'staff-list-header'}>
 				<span>Crew</span>
 			</div>
 			<div className={'staff-items-container'}>

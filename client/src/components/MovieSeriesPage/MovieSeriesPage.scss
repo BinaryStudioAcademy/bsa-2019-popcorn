@@ -21,11 +21,10 @@ $header-letter-spacing: 0.9px;
 }
 
 .movie-series-page-header {
+	margin-bottom: 15px;
 	.header-movie-title-rating {
-		margin-bottom: 15px;
-		text-align: left;
 		display: grid;
-		grid-template-columns: 50px 1fr 55px;
+		grid-template-columns: 50px 1fr 205px;
 		grid-template-rows: auto;
 
 		.header-movie-watch-list {
@@ -100,8 +99,37 @@ $header-letter-spacing: 0.9px;
 				}
 			}
 		}
-		.totaly-movie-rating {
-			font-size: 22px;
+
+		.movie-rating-container {
+			display: grid;
+			grid-template-columns: 110px 95px;
+
+			.totaly-movie-rating {
+				display: flex;
+				align-items: flex-start;
+				justify-content: flex-end;
+				font-size: 20px;
+				padding: 10px;
+
+				.icon-star {
+					font-size: 20px;
+					margin-right: 5px;
+				}
+
+				position: relative;
+				.max-rating {
+					margin-top: 7px;
+					&::after {
+						content: '';
+						position: absolute;
+						width: 2px;
+						height: 30px;
+						background-color: $border-color;
+						top: 5px;
+						right: 0px;
+					}
+				}
+			}
 		}
 
 		.icon-star {
@@ -125,13 +153,15 @@ $header-letter-spacing: 0.9px;
 
 	.movie-series-page-tab-list {
 		list-style-type: none;
-		display: flex;
-		justify-content: space-between;
+		display: grid;
+		grid-template-columns: repeat(6, 12%);
 		margin-top: $tab-list-space-top;
 
 		.movie-series-page-tab {
 			padding: $tab-space;
 			text-decoration: none;
+			display: flex;
+			justify-content: center;
 			color: $text-secondary-color;
 			letter-spacing: $base-letter-spacing;
 			font-weight: 600;
