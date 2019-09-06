@@ -56,6 +56,5 @@ export const getRecommended = async (userId, next) => {
     events: event,
     surveys: survey
   };
-
   return recommended;
 };
