@@ -1,13 +1,16 @@
 $award-icon-size: 80px;
 
-.item-wrapper {
-	display: grid;
-	grid-template-columns: $award-icon-size auto;
-	align-items: center;
-	margin-bottom: 10px;
-
-	.award-icon {
-		height: $award-icon-size;
-		width: $award-icon-size;
-	}
+.movieAwards-wrapper {
+	.item-wrapper {
+		display: grid;
+		grid-template-columns: $award-icon-size auto;
+		align-items: center;
+		margin-bottom: 10px;
+	
+		.award-icon {
+			height: $award-icon-size;
+			width: $award-icon-size;
+		}
+	}	
 }
+
