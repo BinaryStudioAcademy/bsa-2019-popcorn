@@ -81,34 +81,34 @@ class PostConstructor extends React.Component<
 			item = props.newPost.top ||
 				props.newPost.event ||
 				props.newPost.survey || { title: '' };
-			this.state = {
-				image_url: '',
-				description: '',
-				title: 'test title',
-				userId: this.props.userId,
-				extraLink: '',
-				extraTitle: '',
-				extraData: null,
-				extraType: '',
-				modalExtra: false,
-				croppedSaved: false,
-				reactions: [],
-				comments: [],
-				movieSearchTitle: null,
-				createdAt: '',
-				...(props.newPost
-					? {
-							...props.newPost,
-							extraLink: props.newPost.extraLink,
-							extraTitle: item.title,
-							extraData: item,
-							extraType:
-								props.newPost.extraLink &&
-								props.newPost.extraLink.split('/')[1].slice(0, -1)
-					  }
-					: {})
-			};
-		}
+			}
+		this.state = {
+			image_url: '',
+			description: '',
+			title: 'test title',
+			userId: this.props.userId,
+			extraLink: '',
+			extraTitle: '',
+			extraData: null,
+			extraType: '',
+			modalExtra: false,
+			croppedSaved: false,
+			reactions: [],
+			comments: [],
+			movieSearchTitle: null,
+			createdAt: '',
+			...(props.newPost
+				? {
+						...props.newPost,
+						extraLink: props.newPost.extraLink,
+						extraTitle: item.title,
+						extraData: item,
+						extraType:
+							props.newPost.extraLink &&
+							props.newPost.extraLink.split('/')[1].slice(0, -1)
+					}
+				: {})
+		};
 		this.imageStateHandler = this.imageStateHandler.bind(this);
 		this.onSave = this.onSave.bind(this);
 		this.onCancel = this.onCancel.bind(this);
