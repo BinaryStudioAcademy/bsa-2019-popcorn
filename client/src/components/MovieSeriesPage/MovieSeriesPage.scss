@@ -106,7 +106,7 @@ $header-letter-spacing: 0.9px;
 
 			.totaly-movie-rating {
 				display: flex;
-				align-items: center;
+				align-items: flex-start;
 				justify-content: flex-end;
 				font-size: 20px;
 				padding: 10px;
@@ -118,14 +118,14 @@ $header-letter-spacing: 0.9px;
 
 				position: relative;
 				.max-rating {
-					margin-top: 5px;
+					margin-top: 7px;
 					&::after {
 						content: '';
 						position: absolute;
 						width: 2px;
 						height: 30px;
 						background-color: $border-color;
-						top: 10px;
+						top: 5px;
 						right: 0px;
 					}
 				}

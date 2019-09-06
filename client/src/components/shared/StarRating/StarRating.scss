@@ -7,6 +7,7 @@ $text-button-color: rgba(12, 81, 146, 1);
 	align-items: center;
 	position: relative;
 	padding: 10px;
+	padding-top: 0;
 	padding-right: 0;
 	color: $text-button-color;
 	cursor: pointer;
@@ -28,7 +29,7 @@ $text-button-color: rgba(12, 81, 146, 1);
 					position: absolute;
 					font-size: 10px;
 					opacity: 1;
-					top: 4px;
+					top: 0px;
 					right: -3px;
 					color: $text-secondary-color;
 				}
@@ -43,7 +44,6 @@ $text-button-color: rgba(12, 81, 146, 1);
 			margin-left: 5px;
 			font-size: 12px;
 			font-weight: 500;
-			transition: opacity 2s ease;
 		}
 
 		.star-icon {
@@ -58,7 +58,7 @@ $text-button-color: rgba(12, 81, 146, 1);
 		height: 40px;
 		background-color: $background-gray;
 		border: 1px solid $border-color;
-		top: 5px;
+		top: 0px;
 		right: 95px;
 		width: 265px;
 		cursor: default;

@@ -1,6 +1,7 @@
 import React, { useState, ObjectHTMLAttributes } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faStar } from '@fortawesome/free-solid-svg-icons';
+import { faStar as regularStar } from '@fortawesome/free-regular-svg-icons';
+import { faStar as solidStar } from '@fortawesome/free-solid-svg-icons';
 import StarRating from '../shared/StarRating/StarRating';
 import { IUserRate } from './MovieSeriesPage';
 import ReviewAddModal from '../MovieSeriesPage/MovieSeriesReviews/ReviewAddModal/ReviewAddModal';
@@ -112,8 +113,18 @@ const MovieSeriesPageHeader: React.FC<IProps> = ({
 					</div>
 				</div>
 				<div className="movie-rating-container">
-					<div className="totaly-movie-rating">
-						<FontAwesomeIcon className="icon-star" icon={faStar} />
+					<div
+						className="totaly-movie-rating"
+						title={
+							Number(movie.vote_average)
+								? `Average Rating: ${movie.vote_average}`
+								: 'No one has rated yet'
+						}
+					>
+						<FontAwesomeIcon
+							className="icon-star"
+							icon={Number(movie.vote_average) ? solidStar : regularStar}
+						/>
 						{Number(movie.vote_average) || 0}
 						<span className="max-rating">/10</span>
 					</div>

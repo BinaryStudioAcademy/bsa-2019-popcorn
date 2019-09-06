@@ -38,6 +38,7 @@ class StarRating extends React.Component<IProps, IState> {
 			onMouseEnter={() => {
 				this.setState({ ...this.state, currentValue: key + 1 });
 			}}
+			title={`Click to rate: ${key + 1}`}
 			onClick={() => {
 				this.setState({
 					...this.state,
@@ -78,6 +79,10 @@ class StarRating extends React.Component<IProps, IState> {
 	};
 
 	render() {
+		const { hover, currentValue, showStarRate } = this.state;
+
+		const { userRate, deleteUserRate } = this.props;
+
 		return (
 			<div
 				className="StarRating"
@@ -87,7 +92,7 @@ class StarRating extends React.Component<IProps, IState> {
 					this.setState({
 						...this.state,
 						hover: false,
-						currentValue: this.props.userRate.rate,
+						currentValue: userRate.rate,
 						showStarRate: false
 					})
 				}
@@ -95,12 +100,12 @@ class StarRating extends React.Component<IProps, IState> {
 				<div className="star-user-rating-container">
 					<FontAwesomeIcon
 						className="star-icon"
-						icon={this.state.currentValue ? solidStar : regularStar}
+						icon={currentValue ? solidStar : regularStar}
 					/>
 					<div className="user-rating-value">
-						{this.state.currentValue ? (
+						{currentValue ? (
 							<span className="rating-value">
-								{this.state.currentValue}
+								{currentValue}
 								<span className="label-you">Your rating</span>
 							</span>
 						) : (
@@ -108,17 +113,18 @@ class StarRating extends React.Component<IProps, IState> {
 						)}
 					</div>
 				</div>
-				{this.state.showStarRate && this.state.hover && (
+				{showStarRate && hover && (
 					<div className="stars-container">
 						<span
 							className="delete-button"
+							title="Click to delete your rating"
 							onMouseEnter={() => {
 								this.setState({ ...this.state, currentValue: 0 });
 							}}
 							onClick={ev => {
 								ev.preventDefault();
-								if (this.props.userRate.rate !== 0) {
-									this.props.deleteUserRate(this.props.userRate);
+								if (userRate.rate !== 0) {
+									deleteUserRate(userRate);
 								}
 								this.setState({
 									...this.state,
