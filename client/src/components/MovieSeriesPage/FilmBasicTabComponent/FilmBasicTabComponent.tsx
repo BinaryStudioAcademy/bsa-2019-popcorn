@@ -27,7 +27,7 @@ const rateBlock = (rateString: string): ReactElement[] => {
 	const rate = parseFloat(rateString);
 	const res: any = [];
 
-	for (let i = 0; i < 5; i++) {
+	for (let i = 0; i < 10; i++) {
 		i < rate ? res.push(solidStar(i, true)) : res.push(solidStar(i, false));
 	}
 	return res;
