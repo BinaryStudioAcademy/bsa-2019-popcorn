@@ -5,7 +5,7 @@ node_js:
 
 branches:
   only:
-    - dev
+    - demo-4
 
 before_install:
   - pip install --user awscli
@@ -25,7 +25,7 @@ deploy:
     skip_cleanup: true
     on: &2
       repo: BinaryStudioAcademy/bsa-2019-popcorn
-      branch: dev
+      branch: demo-4
     bucket: popcorn-bucket
     region: eu-central-1
   - provider: codedeploy
@@ -45,6 +45,6 @@ script:
   - CI=false npm run build
   - cd ..
   - aws s3 cp s3://popcorn-bucket/envs/.env server/.env
-  - zip -r latest * >/dev/null
+  - zip -r latest * >/demo-4/null
   - mkdir -p dpl_cd_upload
   - mv latest.zip dpl_cd_upload/latest.zip
