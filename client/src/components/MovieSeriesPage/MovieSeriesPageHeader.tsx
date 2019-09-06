@@ -54,31 +54,35 @@ const MovieSeriesPageHeader: React.FC<IProps> = ({
 	};
 
 	const renderWatchIcon = () => {
-		const { status, id: watchId } = watchListStatus;
-		if (watchListLoading) {
-			return <div className={`watch-list-icon loading-now`} />;
+		// const { status, id: watchId } = watchListStatus;
+		// if (watchListLoading) {
+		// 	return <div className={`watch-list-icon loading-now`} />;
+		// }
+		// if (status === 'to_watch') {
+		// 	return (
+		{
+			/*<div*/
 		}
-		if (status === 'to_watch') {
-			return (
-				<div
-					className={`watch-list-icon to-watch`}
-					onClick={() => deleteMovieFromWatchList(watchId, movieId)}
-					title="Click to remove from watch list"
-				/>
-			);
-		}
-		return status === 'watched' ? (
-			<div
-				className={`watch-list-icon watched`}
-				title="You have already watched this movie"
-			/>
-		) : (
+		// className={`watch-list-icon to-watch`}
+		// onClick={() => deleteMovieFromWatchList(watchId, movieId)}
+		// title="Click to remove from watch list"
+		// />
+		// );
+		// }
+		// return status === 'watched' ? (
+		// 	<div
+		// 		className={`watch-list-icon watched`}
+		// 		title="You have already watched this movie"
+		// 	/>
+		// ) : (
+		return (
 			<div
 				className={`watch-list-icon add-to-watch-list`}
 				onClick={() => addMovieToWatchList(movieId)}
 				title="add to watch list"
 			/>
 		);
+		// );
 	};
 
 	return (
