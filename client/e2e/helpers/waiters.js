@@ -12,17 +12,6 @@ class CustomWaits {
         }, 5000, `Nothing is changed`)
     };
 
-    forElementsLoaded(itemsPath) {
-        try {
-            browser.waitUntil(() => {
-                return $$(`${itemsPath}`).length > 0
-            }, 5000, `There is no elements loaded ${$$(`${itemsPath}`).length}`)
-        }
-        catch(err) {
-            return true;
-        }
-    }
-
     untilLoading() {
         const loadingElement = $('//span[contains(., "Loading...")]');
         loadingElement.waitForDisplayed(2000);
