@@ -23,7 +23,6 @@ export const getAllUserWatch = async (userId: string, next) => {
       movieItem => String(movieItem.id) === watch.movieId
     );
     watch.movie = movie;
-    watch.movieId = undefined;
     return watch;
   });
   return result;

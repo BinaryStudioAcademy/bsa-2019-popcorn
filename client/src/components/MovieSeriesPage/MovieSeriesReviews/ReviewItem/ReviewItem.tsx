@@ -17,12 +17,15 @@ import {
 	faThumbsDown as dislikeNoFill,
 	faThumbsUp as likeNoFill
 } from '@fortawesome/free-regular-svg-icons';
+import { NavLink } from 'react-router-dom';
 
 interface IProps {
 	review: IReview;
 	currentUserId: string;
 	setReaction: (reviewId: string, isLike: boolean) => object;
 	errorWithReview?: string;
+	isRecommended?: boolean;
+	movie?: any;
 }
 
 interface IState {
@@ -81,7 +84,9 @@ class ReviewItem extends React.Component<IProps, IState> {
 		if (userId === currentUserId) return;
 		setReaction(reviewId, isLike);
 	};
-
+	getYear = year => {
+		return year.split('-')[0];
+	};
 	public render() {
 		const {
 			review: {
@@ -91,10 +96,13 @@ class ReviewItem extends React.Component<IProps, IState> {
 				created_at,
 				analysis,
 				reaction: { countDislikes, countLikes, userLike },
-				user: { id: userId }
+				user: { id: userId },
+				movieId
 			},
 			currentUserId,
-			errorWithReview
+			errorWithReview,
+			isRecommended,
+			movie
 		} = this.props;
 		const { showFullReview, textBlockHeight, isBigBlock } = this.state;
 
@@ -122,6 +130,23 @@ class ReviewItem extends React.Component<IProps, IState> {
 									</Moment>
 								</div>
 							</div>
+							{isRecommended && movie ? (
+								<NavLink
+									className="to-movie-page-link"
+									to={`/movies/${movieId}`}
+								>
+									<Image
+										className="review-poster"
+										src={config.POSTER_PATH + movie.poster_path}
+										defaultSrc={config.DEFAULT_MOVIE_IMAGE}
+										alt="poster"
+									/>
+									<div>
+										<div>{movie.title}</div>
+										<div>{this.getYear(movie.release_date)}</div>
+									</div>
+								</NavLink>
+							) : null}
 						</div>
 					</div>
 					<div
