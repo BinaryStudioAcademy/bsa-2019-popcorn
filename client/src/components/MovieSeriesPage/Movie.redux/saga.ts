@@ -154,7 +154,7 @@ export function* fetchUserRate(action) {
 }
 
 export function* deleteUserRate(action) {
-	const { id: rateId, movieId, userId } = action.payload.userRate;
+	const { id: rateId, movieId } = action.payload.userRate;
 	try {
 		yield call(webApi, {
 			endpoint: `/api/movie/rate/${rateId}`,
