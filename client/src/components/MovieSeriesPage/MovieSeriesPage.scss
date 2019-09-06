@@ -153,13 +153,15 @@ $header-letter-spacing: 0.9px;
 
 	.movie-series-page-tab-list {
 		list-style-type: none;
-		display: flex;
-		justify-content: space-between;
+		display: grid;
+		grid-template-columns: 12% 12% 12% 12% 12% 12%;
 		margin-top: $tab-list-space-top;
 
 		.movie-series-page-tab {
 			padding: $tab-space;
 			text-decoration: none;
+			display: flex;
+			justify-content: center;
 			color: $text-secondary-color;
 			letter-spacing: $base-letter-spacing;
 			font-weight: 600;
