@@ -43,11 +43,15 @@
 		border-radius: 20px;
 		margin-bottom: 10px;
 		span {
-			font-size: 2.5em;
 			margin-right: 10px;
 			cursor: pointer;
-			&:hover {
-				text-shadow: 2px 2px 2px rgb(88, 88, 88);
+			svg {
+				width: 40px;
+				height: 40px;
+				transition: all linear 0.2s;
+				&:hover {
+					transform: scale(1.2);
+				}
 			}
 		}
 	}
