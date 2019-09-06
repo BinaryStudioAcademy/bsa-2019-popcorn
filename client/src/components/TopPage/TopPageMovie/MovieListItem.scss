@@ -1,60 +1,71 @@
-@import '../../../styles/variables';
+@import "../../../styles/variables";
 
 .movie-list-container {
-	display: grid;
-	grid-template-columns: 20px auto;
-	grid-gap: 10px;
-	margin: 10px 0;
+  display: grid;
+  grid-template-columns: 20px auto;
+  grid-gap: 10px;
+  margin: 10px 0;
 
-	.movie-key {
-		display: flex;
-		justify-content: center;
-		align-items: center;
+  .movie-key {
+    display: flex;
+    justify-content: center;
+    align-items: center;
 
-		.movie-key-value {
-			font-size: 20px;
-			color: $text-secondary-color;
-		}
-	}
+    .movie-key-value {
+      font-size: 20px;
+      color: $text-secondary-color;
+    }
+  }
 }
 
 .movie-item {
-	border: 1px $border-color solid;
-	margin: 0;
-	display: flex;
-	flex-direction: row;
+  margin: 0;
+  display: flex;
+  padding: 10px;
+  border: none;
+  flex-direction: row;
 
-	.movie-poster-wrp {
-		width: 10%;
-		display: flex;
-		flex-direction: column;
-		align-items: center;
-		justify-content: center;
+  .movie-poster-wrp {
+    width: 10%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    a {
+      width: 100%;
+      img {
+        border-radius: 10px;
+      }
+    }
+  }
 
-		.movie-poster {
-			max-height: 100%;
-			max-width: 100%;
-		}
-	}
+  .movie-info {
+    text-align: left;
+    width: 90%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 5px 20px;
+    box-sizing: border-box;
+    color: $text-base-color;
 
-	.movie-info {
-		text-align: left;
-		width: 90%;
-		display: flex;
-		flex-direction: column;
-		justify-content: space-around;
-		padding: 5px 10px;
-		box-sizing: border-box;
-		color: $text-base-color;
+    * {
+      line-height: 30px;
+    }
 
-		* {
-			line-height: 30px;
-		}
+    a {
+      text-decoration: none;
+      color: $text-base-color;
+    }
 
-		.movie-title {
-			font-size: $header-medium;
-			font-weight: bold;
-			text-transform: uppercase;
-		}
-	}
+    .author-comment {
+      margin-bottom: 20px;
+    }
+
+    .movie-title {
+      font-size: $header-medium;
+      font-weight: bold;
+      text-transform: uppercase;
+    }
+  }
 }

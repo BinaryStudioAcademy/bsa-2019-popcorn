@@ -28,7 +28,7 @@ const TopList: React.FC<ITopLIstProps> = props => {
 		return <Spinner />;
 	}
 
-	const topListItems = props.tops.map(top => <TopListItem top={top} />);
+	const topListItems = props.tops.map(top => <TopListItem key={top.id} top={top} />);
 
 	return <div className="top-list-wrapper">{topListItems}</div>;
 };

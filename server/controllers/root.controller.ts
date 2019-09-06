@@ -16,6 +16,7 @@ import notificationRouter from "./notification.controller";
 import searchRouter from "./search.controller";
 import movieListRouter from "./movieList.controller";
 import confirmRouter from "./confirm.controller";
+import chatRouter from "./chat.controller";
 
 // register all routes
 export default app => {
@@ -37,4 +38,5 @@ export default app => {
   app.use("/api/search", searchRouter);
   app.use("/api/movie-list", movieListRouter);
   app.use("/api/confirm", confirmRouter);
+  app.use("/api/chat", chatRouter);
 };
