@@ -17,6 +17,14 @@ class AddComment extends React.Component<IAddCommentProps, { body: string }> {
 		body: ''
 	};
 
+	onPublish = () => {
+		if (!this.props.createComment) {
+			return;
+		}
+		this.props.createComment(this.state.body);
+		this.setState({ body: '' });
+	};
+
 	render() {
 		/*  UI: Change this.props.replyId to userName */
 		return (
@@ -36,15 +44,11 @@ class AddComment extends React.Component<IAddCommentProps, { body: string }> {
 					}
 					value={this.state.body}
 					onChange={e => this.setState({ body: e.target.value })}
-				/>
-				<button
-					className="publish-button"
-					onClick={() => {
-						if (!this.props.createComment) return;
-						this.props.createComment(this.state.body);
-						this.setState({ body: '' });
+					onKeyPress={e => {
+						if (e.key === 'Enter') this.onPublish();
 					}}
-				>
+				/>
+				<button className="publish-button" onClick={this.onPublish}>
 					<FontAwesomeIcon icon={faPaperPlane} />
 				</button>
 			</div>
