@@ -5,7 +5,9 @@ import {
 	SAVE_MOVIE_LIST_SUCCESS,
 	SAVE_MOVIE_LIST,
 	FETCH_MOVIE_LIST_DETAILS,
-	FETCH_MOVIE_LIST_DETAILS_SUCCESS
+	FETCH_MOVIE_LIST_DETAILS_SUCCESS,
+	FETCH_ALL_MOVIE_LISTS,
+	FETCH_ALL_MOVIE_LISTS_SUCCESS
 } from './actionTypes';
 
 interface IReducerState {
@@ -13,13 +15,15 @@ interface IReducerState {
 	movieListsPreview?: any[];
 	movieListDetails?: any;
 	selectedPreviewUserId?: string;
+	allMovieLists?: any[];
 }
 
 const initialState: IReducerState = {
 	isLoading: false,
 	movieListsPreview: undefined,
 	movieListDetails: undefined,
-	selectedPreviewUserId: undefined
+	selectedPreviewUserId: undefined,
+	allMovieLists: undefined
 };
 
 export default (state = initialState, action) => {
@@ -42,7 +46,8 @@ export default (state = initialState, action) => {
 				...state,
 				movieListsPreview: prevMovieList.filter(
 					movieList => movieList.id !== movieListId
-				)
+				),
+				allMovieLists: undefined
 			};
 
 		case SAVE_MOVIE_LIST:
@@ -58,7 +63,8 @@ export default (state = initialState, action) => {
 					action.payload.newMovieList,
 					...state.movieListsPreview
 				],
-				isLoading: false
+				isLoading: false,
+				allMovieLists: undefined
 			};
 
 		case FETCH_MOVIE_LIST_DETAILS:
@@ -72,6 +78,25 @@ export default (state = initialState, action) => {
 				...state,
 				isLoading: false,
 				movieListDetails: action.payload.movieListDetails
+			};
+
+		case FETCH_ALL_MOVIE_LISTS:
+			return {
+				...state,
+				isLoading: true
+			};
+
+		case FETCH_ALL_MOVIE_LISTS_SUCCESS:
+			return {
+				...state,
+				isLoading: false,
+				allMovieLists: action.payload.allMovieLists
+			};
+
+		case FETCH_ALL_MOVIE_LISTS_SUCCESS:
+			return {
+				...state,
+				allMovieLists: action.payload
 			};
 
 		default:

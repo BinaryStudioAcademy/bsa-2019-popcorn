@@ -4,9 +4,8 @@
 	width: 100%;
 	box-sizing: border-box;
 	margin-bottom: 15px;
-	border: 1px solid $border-color;
-	box-shadow: 0px 0px 2px 3px $input-shadow-color;
-	border-radius: 20px;
+	box-shadow: 0 0 15px 0 rgba(0, 0, 0, 0.2);
+	font-size: $base-font-size;
 
 	.review-user-item {
 		padding: 20px;
@@ -70,6 +69,7 @@
 			overflow: hidden;
 			position: relative;
 			text-align: justify;
+			line-height: 1.6em;
 
 			.read-more-gradient {
 				width: 100%;
