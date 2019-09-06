@@ -14,6 +14,7 @@
 	grid-template-columns: repeat(auto-fill, minmax(40px, 1fr));
 	grid-gap: 10px;
 	align-items: center;
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
 
 	.item-wrapper {
 		margin-bottom: 0;
