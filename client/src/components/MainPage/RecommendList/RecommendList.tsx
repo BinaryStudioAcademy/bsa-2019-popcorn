@@ -11,8 +11,6 @@ import { faStar } from '@fortawesome/free-solid-svg-icons';
 import { fetchRecommended } from './RecommendList.redux/actions';
 import ReviewItem from '../../MovieSeriesPage/MovieSeriesReviews/ReviewItem/ReviewItem';
 import { NavLink } from 'react-router-dom';
-import TopListItem from '../../TopListPage/TopListItem';
-import EventItem from '../../UserPage/UserEvents/EventItem/EventItem';
 import { formatToClient } from '../../UserPage/UserEvents/UserEvents.service';
 import { setReaction } from '../../MovieSeriesPage/MovieSeriesReviews/actions';
 
@@ -33,7 +31,7 @@ const RecommendList = ({
 		fetchRecommended(userId);
 	}
 
-	if (recommended && recommended.events) {
+	if (recommended && !recommended.events.dateRange) {
 		recommended.events = formatToClient(recommended.events);
 	}
 
