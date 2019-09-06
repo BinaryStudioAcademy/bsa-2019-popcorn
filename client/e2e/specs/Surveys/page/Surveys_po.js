@@ -1,7 +1,7 @@
 class SurveyPage {
 
     get surveyItems () {return $$(`div.survey-list-item`)};
-    get createSurveyButton () {return $('//button[contains(., "Create survey")]')};
+    get createSurveyButton () {return $('//div[contains(@class, "create-item-button") and contains(., "Create survey")]')};
     get titleInput () {return $('textarea.survey-title')};
     get descriptionInput () {return $('textarea.survey-description')};
     get imageInput () {return $('input.upload-image')};

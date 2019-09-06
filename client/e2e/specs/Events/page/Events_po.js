@@ -1,7 +1,7 @@
 class EventPage {
 
     get eventItems () {return $$(`//div[@class="event-title"]`)};
-    get createEventButton () {return $('//div[contains(@class, "button") and contains(., "Create Event")]')}; // $('div.create-event-button')
+    get createEventButton () {return $('//div[contains(@class, "create-item-button") and contains(., "Create event")]')}; // $('div.create-event-button')
     get titleInput () {return $('//span[contains(., "Title")]/../input')};
     get imageInput () {return $('input.upload-image')};
     get detailsInput () {return $('//span[contains(., "Details")]/../textarea')};
