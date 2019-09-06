@@ -5,7 +5,7 @@ import UserRepository from "../repository/user.repository";
 export class SeedMovieRate1567392463875 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
     const movieId = 297;
-    const rates = [1, 2, 3, 4, 5];
+    const rates = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
     const movieRates = [];
     const usersId = await getCustomRepository(UserRepository).find({
       select: ["id"]

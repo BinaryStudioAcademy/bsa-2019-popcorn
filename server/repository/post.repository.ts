@@ -9,6 +9,7 @@ class PostRepository extends Repository<Post> {
   async getPostsByUserId(userId: string): Promise<Post[]> {
     return await getPost()
       .where("post.userId = :id", { id: userId })
+      .addOrderBy("post.createdAt", "DESC")
       .getMany();
   }
 }

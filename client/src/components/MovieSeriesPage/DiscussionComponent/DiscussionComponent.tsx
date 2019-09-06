@@ -175,6 +175,9 @@ class DiscussionComponent extends Component<
 								ref={this.newMessage}
 								placeholder="Type a message"
 								onChange={this.inputChange}
+								onKeyPress={e => {
+									if (e.key === 'Enter') this.sendMessage();
+								}}
 							></textarea>
 							<button
 								onClick={this.sendMessage}

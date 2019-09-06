@@ -90,7 +90,8 @@ export const getPostById = async (postId: string): Promise<Post> =>
 export const getPostsByUserId = async (userId: string): Promise<Post[]> =>
   await getCustomRepository(PostRepository).find({
     relations: ["user", "top", "survey", "event"],
-    where: { user: { id: userId } }
+    where: { user: { id: userId } },
+    order: { createdAt: "DESC" }
   });
 
 export const createComment = async ({ userId, postId, text }) => {
