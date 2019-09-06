@@ -6,8 +6,12 @@ import { getVotingById } from "./voting.service";
 import { getMovieById } from "./movie.service";
 
 import * as uuid from "uuid/v4";
+import { getSurveysById } from "./surveys.service";
+import { getEventById } from "./event.service";
+import { getTopById } from "./top.service";
 
 export const getStories = async (): Promise<Story[]> => {
+  let activity;
   const stories = (await getCustomRepository(StoryRepository).find({
     relations: ["user"]
   })).reverse();
@@ -17,6 +21,21 @@ export const getStories = async (): Promise<Story[]> => {
       switch (story.type) {
         case "voting":
           story.voting = await getVotingById(story.activityId);
+          break;
+        case "survey":
+          activity = await getSurveysById(story.activityId, () => {});
+          story.activity = activity.title;
+          break;
+        case "event":
+          activity = await getEventById(story.activityId);
+          story.activity = activity.title;
+          break;
+        case "top":
+          activity = await getTopById(story.activityId);
+          story.activity = activity.title;
+          break;
+        default:
+          break;
       }
       if (story.movieId) {
         story.movie = await getMovieById(story.movieId);
