@@ -1,12 +1,17 @@
 import {
 	GET_UNREAD_NOTIFICATIONS_SUCCESS,
 	GET_FIREBASE_TOKEN_SUCCESS,
-	SET_FIREBASE_TOKEN_UNDEFINED
+	SET_FIREBASE_TOKEN_UNDEFINED,
+	FETCH_ADVICE,
+	SET_ADVICE
 } from './actionTypes';
+import movieAdapter from '../../MovieSeriesPage/movieAdapter';
 
 const initialState = {
 	unreadNotifications: [],
-	firebaseToken: undefined
+	firebaseToken: undefined,
+	loading: false,
+	movieAdvice: null
 };
 
 export default (state = initialState, action) => {
@@ -25,6 +30,18 @@ export default (state = initialState, action) => {
 			return {
 				...state,
 				firebaseToken: undefined
+			};
+		case FETCH_ADVICE:
+			return {
+				...state,
+				loading: true,
+				movieAdvice: []
+			};
+		case SET_ADVICE:
+			return {
+				...state,
+				loading: false,
+				movieAdvice: (action.payload.movieAdvice || []).map(movieAdapter)
 			};
 		default:
 			return state;

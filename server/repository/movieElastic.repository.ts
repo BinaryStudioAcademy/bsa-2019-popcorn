@@ -219,3 +219,62 @@ export const getPropertiesByIdValues = async (idValues, properties) => {
   );
   return response.json();
 };
+
+// rating = "7"
+export const getByGTRating = async (rating: string) => {
+  const response = await fetch(
+    process.env.ELASTIC_API_URL + `/popcorn/_search`,
+    {
+      method: "POST",
+      body: JSON.stringify({
+        query: {
+          range: {
+            vote_average: {
+              gt: rating
+            }
+          }
+        }
+      })
+    }
+  );
+  return response.json();
+};
+
+export const getByGTRatingAndGenre = async (rating: string, genres: string) => {
+  if (!genres) {
+    return getByGTRating(rating);
+  }
+  const response = await fetch(
+    process.env.ELASTIC_API_URL + `/popcorn/_search`,
+    {
+      method: "POST",
+      body: JSON.stringify({
+        query: {
+          bool: {
+            must: [
+              {
+                range: {
+                  vote_average: {
+                    gt: rating
+                  }
+                }
+              },
+              {
+                bool: {
+                  must: [
+                    {
+                      match: {
+                        genres
+                      }
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      })
+    }
+  );
+  return response.json();
+};

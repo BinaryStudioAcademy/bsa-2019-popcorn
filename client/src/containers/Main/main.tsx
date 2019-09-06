@@ -36,6 +36,7 @@ import SettingsPage from '../../components/UserSettings';
 import ChatPage from '../../components/ChatPage/ChatPage';
 import UserMovieList from '../../components/UserMovieList/UserMovieList';
 import ResultList from '../../components/shared/ContentSearch/ResultList';
+import AdviceMe from '../../components/shared/AdviceMe';
 
 const { notifications } = {
 	notifications: {
@@ -181,11 +182,12 @@ const Main = ({
 						<Route
 							path={`/surveys`}
 							render={() => allSurveysRender(userInfo)}
-						></Route>
+						/>
 						<Route exact path={`/tops`} render={() => <TopList />} />
 						<Route path={`/tops/:id`} component={TopPage} />
 						<Route path={`/chat`} component={ChatPage} />
 						<Route path={`/movie-list/:id`} component={UserMovieList} />
+						<Route path={'/adviceMe'} component={AdviceMe} />
 						<Route path={`/*`} exact component={NotFound} />
 					</Switch>
 				</div>

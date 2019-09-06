@@ -4,7 +4,8 @@ import {
 	GET_UNREAD_NOTIFICATIONS,
 	SET_NOTIFICATION_IS_READ,
 	GET_FIREBASE_TOKEN,
-	DELETE_FIREBASE_TOKEN
+	DELETE_FIREBASE_TOKEN,
+	FETCH_ADVICE
 } from './actionTypes';
 
 export const fetchFilms = (text: string) => {
@@ -55,6 +56,15 @@ export const deleteFirebaseToken = (firebaseToken: string) => {
 		type: DELETE_FIREBASE_TOKEN,
 		payload: {
 			firebaseToken
+		}
+	};
+};
+
+export const fetchAdvice = (userId: string) => {
+	return {
+		type: FETCH_ADVICE,
+		payload: {
+			id: userId
 		}
 	};
 };

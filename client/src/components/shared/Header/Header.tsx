@@ -11,7 +11,8 @@ import {
 	getUnreadNotifications,
 	setNotificationIsRead,
 	getFirebaseToken,
-	deleteFirebaseToken
+	deleteFirebaseToken,
+	fetchAdvice
 } from '../Header/actions';
 import { unauthorize } from '../../authorization/actions';
 import { NavLink, Link } from 'react-router-dom';
@@ -57,6 +58,7 @@ interface IProps {
 	firebaseToken: string | null | undefined;
 	getFirebaseToken: (firebase: any) => void;
 	history: any;
+	fetchAdvice: (userId: string) => any;
 }
 
 class Header extends React.Component<IProps> {
@@ -131,39 +133,47 @@ class Header extends React.Component<IProps> {
 						</Link>
 					</div>
 				</button>
-
-				<button className="header-buttons hover">
-					TV
-					<FontAwesomeIcon icon={faChevronDown} />
-					<div className="modal">
-						<Link aria-current="page" className="hover" to="#">
-							{NEW_TV_SERIES}
-						</Link>
-						<Link aria-current="page" className="hover" to="#">
-							{TV_SERIES_TOPS}
-						</Link>
-						<Link aria-current="page" className="hover" to="/user-page/lists">
-							{USER_TV_SERIES_TOPS}
-						</Link>
-					</div>
-				</button>
-				<button className="header-buttons hover">
-					Ratings
-					<FontAwesomeIcon icon={faChevronDown} />
-					<div className="modal">
-						<Link aria-current="page" className="hover" to="#">
-							{POPULAR_MOVIES}
-						</Link>
-						<Link aria-current="page" className="hover" to="#">
-							{POPULAR_TV_SERIES}
-						</Link>
-						<Link aria-current="page" className="hover" to="#">
-							{POPULAR_USERS}
-						</Link>
-					</div>
-				</button>
-				<ContentSearch />
-				<div className="notifications">
+			<button
+				className="header-buttons hover"
+				onClick={() => fetchAdvice(userInfo.id)}
+			>
+				<Link
+					to={'/adviceMe'}
+					style={{ textDecoration: 'none' }}
+					className="header-buttons"
+				>
+					Advice Me
+				</Link>
+				{/*<FontAwesomeIcon icon={faChevronDown} />*/}
+				{/*<div className="modal">*/}
+				{/*	<Link aria-current="page" className="hover" to="#">*/}
+				{/*		{NEW_TV_SERIES}*/}
+				{/*	</Link>*/}
+				{/*	<Link aria-current="page" className="hover" to="#">*/}
+				{/*		{TV_SERIES_TOPS}*/}
+				{/*	</Link>*/}
+				{/*	<Link aria-current="page" className="hover" to="/user-page/lists">*/}
+				{/*		{USER_TV_SERIES_TOPS}*/}
+				{/*	</Link>*/}
+				{/*</div>*/}
+			</button>
+			<button className="header-buttons hover">
+				Ratings
+				<FontAwesomeIcon icon={faChevronDown} />
+				<div className="modal">
+					<Link aria-current="page" className="hover" to="#">
+						{POPULAR_MOVIES}
+					</Link>
+					<Link aria-current="page" className="hover" to="#">
+						{POPULAR_TV_SERIES}
+					</Link>
+					<Link aria-current="page" className="hover" to="#">
+						{POPULAR_USERS}
+					</Link>
+				</div>
+			</button>
+			<ContentSearch />
+			<div className="notifications">
 					<div className="notifications-message">
 						<NavLink to={'/chat'}>
 							{hasUnreadMessages(chats) && (
@@ -235,7 +245,8 @@ const actions = {
 	fetchChats,
 	setNotificationIsRead,
 	getFirebaseToken,
-	deleteFirebaseToken
+	deleteFirebaseToken,
+	fetchAdvice
 };
 
 const mapDispatchToProps = dispatch => bindActionCreators(actions, dispatch);
