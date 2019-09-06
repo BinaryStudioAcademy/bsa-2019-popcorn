@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, ObjectHTMLAttributes } from 'react';
 import './movieCardItem.scss';
 import config from '../../../config';
 import Image from '../../shared/Image/Image';
@@ -17,7 +17,8 @@ import {
 	fetchUserRate,
 	removeReviewSet,
 	setReview,
-	setUserRate
+	setUserRate,
+	deleteUserRate
 } from '../../MovieSeriesPage/Movie.redux/actions';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
@@ -51,6 +52,7 @@ interface IMovieListItemProps {
 	deleteMovieFromWatchList: (watchId: string, movieId: string) => object;
 	watchListLoading?: boolean;
 	profileInfo: any;
+	deleteUserRate: (rateId: string) => object;
 }
 
 interface IState {
@@ -95,6 +97,11 @@ const MovieCardItem: React.FC<IMovieListItemProps> = props => {
 		return <Spinner />;
 	}
 
+	if (!props.watchListStatus) {
+		props.fetchWatchListStatus(movie.id);
+		return <Spinner />;
+	}
+
 	const handleClickShowMore = () => {
 		setText({
 			...text,
@@ -127,6 +134,7 @@ const MovieCardItem: React.FC<IMovieListItemProps> = props => {
 				addMovieToWatchList={props.addMovieToWatchList}
 				deleteMovieFromWatchList={deleteMovieFromWatchList}
 				watchListLoading={props.watchListLoading}
+				deleteUserRate={props.deleteUserRate}
 			/>
 			<div className={'movie-poster-wrp'}>
 				<Image
@@ -195,7 +203,8 @@ const mapDispatchToProps = dispatch => {
 		removeReviewSet,
 		fetchWatchListStatus,
 		addMovieToWatchList,
-		deleteMovieFromWatchList
+		deleteMovieFromWatchList,
+		deleteUserRate
 	};
 	return bindActionCreators(actions, dispatch);
 };

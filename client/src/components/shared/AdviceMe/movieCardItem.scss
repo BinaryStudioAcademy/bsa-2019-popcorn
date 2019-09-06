@@ -16,6 +16,25 @@
 			display: none !important;
 		}
 
+		.header-movie-title-rating {
+			display: grid;
+			grid-template-columns: 50px 1fr 130px !important;
+
+			.StarRating {
+				display: none !important;
+			}
+
+			.movie-rating-container {
+				display: grid;
+				grid-template-columns: 110px 0;
+				.max-rating {
+					&::after {
+						display: none;
+					}
+				}
+			}
+		}
+
 		.movie-poster-wrp {
 			height: 210px;
 			display: flex;
