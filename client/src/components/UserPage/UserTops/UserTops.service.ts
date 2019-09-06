@@ -24,10 +24,10 @@ export function convertServerDataFormatToClient(
 			id: top.id,
 			title: top.title,
 			topImageUrl: top.topImageUrl,
-			moviesList: top.movieInTop.map(movieInTop => ({
-				id: movieInTop.movie.id,
-				title: movieInTop.movie.title,
-				comment: movieInTop.comment
+			moviesList: top.movieInTop.map(movie => ({
+				id: movie.id,
+				title: movie.title,
+				comment: movie.comment
 			}))
 		};
 	});

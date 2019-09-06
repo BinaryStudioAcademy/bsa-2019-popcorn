@@ -18,6 +18,7 @@ import {
 	SET_FILTERS,
 	GET_GENRES,
 	FETCH_STATISTICS,
+	DELETE_USER_RATE,
 	FETCH_POSTS_BY_FILM
 } from './actionTypes';
 
@@ -26,6 +27,11 @@ export const getGenres = (): any => {
 		type: GET_GENRES
 	};
 };
+
+export const deleteUserRate = (userRate: any) => ({
+	type: DELETE_USER_RATE,
+	payload: { userRate }
+});
 
 export const fetchMovieList = (): any => {
 	return {

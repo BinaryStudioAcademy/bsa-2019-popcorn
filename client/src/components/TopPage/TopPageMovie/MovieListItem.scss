@@ -19,9 +19,10 @@
 }
 
 .movie-item {
-	border: 1px $border-color solid;
 	margin: 0;
 	display: flex;
+	padding: 10px;
+	border: none;
 	flex-direction: row;
 
 	.movie-poster-wrp {
@@ -30,10 +31,11 @@
 		flex-direction: column;
 		align-items: center;
 		justify-content: center;
-
-		.movie-poster {
-			max-height: 100%;
-			max-width: 100%;
+		a {
+			width: 100%;
+			img {
+				border-radius: 10px;
+			}
 		}
 	}
 
@@ -42,13 +44,22 @@
 		width: 90%;
 		display: flex;
 		flex-direction: column;
-		justify-content: space-around;
-		padding: 5px 10px;
+		justify-content: space-between;
+		padding: 5px 20px;
 		box-sizing: border-box;
 		color: $text-base-color;
 
 		* {
 			line-height: 30px;
+		}
+
+		a {
+			text-decoration: none;
+			color: $text-base-color;
+		}
+
+		.author-comment {
+			margin-bottom: 20px;
 		}
 
 		.movie-title {

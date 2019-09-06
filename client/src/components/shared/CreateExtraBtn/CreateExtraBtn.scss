@@ -1,8 +1,6 @@
 @import '../../../styles/variables.scss';
 
-.create-post-btn {
-	width: 100%;
-	outline: none;
+.create-item-button {
 	border: 1px solid $border-color;
 	box-shadow: 0px 0px 11px $input-shadow-color;
 	color: $text-secondary-color;
@@ -17,6 +15,7 @@
 	height: 45px;
 	margin: 20px 0px;
 	cursor: pointer;
+
 	&:hover {
 		background-color: darken($white, 10);
 		color: darken($text-secondary-color, 10);
