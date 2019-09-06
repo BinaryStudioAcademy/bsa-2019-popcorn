@@ -46,7 +46,8 @@ export default (state = initialState, action) => {
 				...state,
 				movieListsPreview: prevMovieList.filter(
 					movieList => movieList.id !== movieListId
-				)
+				),
+				allMovieLists: undefined
 			};
 
 		case SAVE_MOVIE_LIST:
@@ -62,7 +63,8 @@ export default (state = initialState, action) => {
 					action.payload.newMovieList,
 					...state.movieListsPreview
 				],
-				isLoading: false
+				isLoading: false,
+				allMovieLists: undefined
 			};
 
 		case FETCH_MOVIE_LIST_DETAILS:
@@ -82,6 +84,13 @@ export default (state = initialState, action) => {
 			return {
 				...state,
 				isLoading: true
+			};
+
+		case FETCH_ALL_MOVIE_LISTS_SUCCESS:
+			return {
+				...state,
+				isLoading: false,
+				allMovieLists: action.payload.allMovieLists
 			};
 
 		case FETCH_ALL_MOVIE_LISTS_SUCCESS:

@@ -7,7 +7,8 @@ import {
 	SAVE_MOVIE_LIST_SUCCESS,
 	FETCH_MOVIE_LIST_DETAILS,
 	FETCH_MOVIE_LIST_DETAILS_SUCCESS,
-	FETCH_ALL_MOVIE_LISTS
+	FETCH_ALL_MOVIE_LISTS,
+	FETCH_ALL_MOVIE_LISTS_SUCCESS
 } from './actionTypes';
 import webApi from '../../../services/webApi.service';
 
@@ -83,7 +84,7 @@ export function* fetchAllMovieLists() {
 		});
 
 		yield put({
-			type: FETCH_ALL_MOVIE_LISTS,
+			type: FETCH_ALL_MOVIE_LISTS_SUCCESS,
 			payload: { allMovieLists }
 		});
 	} catch (e) {
