@@ -1,13 +1,9 @@
 @import '../../../styles/variables.scss';
 
 .advanced-movie-search {
-	display: flex;
-	flex-direction: column;
 	border-right: 1px solid $border-color;
 	margin-right: 20px;
-	max-width: 300px;
-	position: sticky;
-	top: 0;
+	width: 300px;
 }
 
 .advanced-movie-search-block {

@@ -38,6 +38,7 @@ import UserMovieList from '../../components/UserMovieList/UserMovieList';
 import ResultList from '../../components/shared/ContentSearch/ResultList';
 import Collections from '../../components/Collections/Collections';
 import AdviceMe from '../../components/shared/AdviceMe';
+import uuid from 'uuid/v4';
 
 const { notifications } = {
 	notifications: {
@@ -122,7 +123,7 @@ const Main = ({
 
 	return (
 		<div className={'main-wrap'}>
-			{isAuthorized ? <Header userInfo={userInfo} /> : null}
+			{isAuthorized ? <Header key={uuid()} userInfo={userInfo} /> : null}
 			<div
 				className={
 					window.location.pathname === '/advanced-search'

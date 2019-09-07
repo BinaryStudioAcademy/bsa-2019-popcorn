@@ -50,6 +50,12 @@ class AdvancedMovieSearch extends React.Component<
 		this.handleCastChange = this.handleCastChange.bind(this);
 		this.handleDurationChange = this.handleDurationChange.bind(this);
 		this.handleNameChange = this.handleNameChange.bind(this);
+		this.triggerChange = this.triggerChange.bind(this);
+	}
+	timer;
+
+	componentWillMount() {
+		this.timer = null;
 	}
 
 	handleGenreChange = genre => {
@@ -72,6 +78,7 @@ class AdvancedMovieSearch extends React.Component<
 	};
 
 	handleRatingChange = val => {
+		clearTimeout(this.timer);
 		this.setState(
 			{
 				...this.state,
@@ -107,12 +114,13 @@ class AdvancedMovieSearch extends React.Component<
 			},
 			() => {
 				this.props.setFilters(this.state);
-				this.props.fetchFiltredMovies(this.state);
+				this.timer = setTimeout(this.triggerChange, 1000);
 			}
 		);
 	};
 
 	handleDescriptionChange = val => {
+		clearTimeout(this.timer);
 		this.setState(
 			{
 				...this.state,
@@ -120,12 +128,13 @@ class AdvancedMovieSearch extends React.Component<
 			},
 			() => {
 				this.props.setFilters(this.state);
-				this.props.fetchFiltredMovies(this.state);
+				this.timer = setTimeout(this.triggerChange, 1000);
 			}
 		);
 	};
 
 	handleNameChange = val => {
+		clearTimeout(this.timer);
 		this.setState(
 			{
 				...this.state,
@@ -133,7 +142,7 @@ class AdvancedMovieSearch extends React.Component<
 			},
 			() => {
 				this.props.setFilters(this.state);
-				this.props.fetchFiltredMovies(this.state);
+				this.timer = setTimeout(this.triggerChange, 1000);
 			}
 		);
 	};
@@ -153,6 +162,7 @@ class AdvancedMovieSearch extends React.Component<
 	};
 
 	handleCastChange = val => {
+		clearTimeout(this.timer);
 		this.setState(
 			{
 				...this.state,
@@ -160,12 +170,13 @@ class AdvancedMovieSearch extends React.Component<
 			},
 			() => {
 				this.props.setFilters(this.state);
-				this.props.fetchFiltredMovies(this.state);
+				this.timer = setTimeout(this.triggerChange, 1000);
 			}
 		);
 	};
 
 	handleDurationChange = val => {
+		clearTimeout(this.timer);
 		this.setState(
 			{
 				...this.state,
@@ -173,9 +184,13 @@ class AdvancedMovieSearch extends React.Component<
 			},
 			() => {
 				this.props.setFilters(this.state);
-				this.props.fetchFiltredMovies(this.state);
+				this.timer = setTimeout(this.triggerChange, 1000);
 			}
 		);
+	};
+
+	triggerChange = () => {
+		this.props.fetchFiltredMovies(this.state);
 	};
 	render() {
 		return (
