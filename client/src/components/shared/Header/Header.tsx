@@ -228,7 +228,6 @@ const HeaderWithFirebase = withFirebase(Header);
 
 const mapStateToProps = (rootState, props) => ({
 	...props,
-	userInfo: rootState.profile.profileInfo,
 	moviesSearch: rootState.movie.moviesSearch,
 	alreadySearch: rootState.movie.alreadySearch,
 	unredNotifications: rootState.notification.unredNotifications,
