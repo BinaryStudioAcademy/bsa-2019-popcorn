@@ -11,12 +11,12 @@ class AssertHelper {
 
     elementIsInList(name) {
         const element = $$(`//div[contains(., "${name}")]`);
-        assert.isAtLeast(element.length, 1, `${name} element is not found`);
+        assert.isAtLeast(element.length, 1, `Target element is not found`);
     }
 
     elementsQuantityChanged(basicQty, items, sign) {
         const actualQty = items.length;
-        assert.strictEqual(actualQty, basicQty + +(sign+1))
+        assert.strictEqual(actualQty, basicQty + +(sign+1), `Quantity is not changed`)
     };
 }
 
