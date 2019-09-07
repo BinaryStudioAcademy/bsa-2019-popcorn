@@ -46,9 +46,6 @@ const MovieSeriesPageHeader: React.FC<IProps> = ({
 	deleteUserRate
 }) => {
 	const [modal, setModal] = useState(false);
-	const rate: number = userRate ? +userRate.rate : 0;
-
-	console.log(ownReview);
 
 	const onModalClick = () => {
 		setModal(true);
