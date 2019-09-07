@@ -62,7 +62,7 @@ class ReviewAddModal extends React.Component<IProps, IState> {
 
 	onSubmitModal = () => {
 		const { textArea, usePut } = this.state;
-		const { movieId, userId, setReview, setModal } = this.props;
+		const { movieId, userId, setReview } = this.props;
 		if (!textArea.trim()) {
 			this.setState({ ...this.state, showError: true });
 			return;

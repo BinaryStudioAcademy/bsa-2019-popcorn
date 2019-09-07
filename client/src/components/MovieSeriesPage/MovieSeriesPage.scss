@@ -72,30 +72,31 @@ $header-letter-spacing: 0.9px;
 
 			.header-genres-review-own-rating {
 				display: flex;
-
-				.header-review-own-rating-container {
-					display: flex;
-					.review-button {
-						display: block;
-						padding: 2px 7px;
-						border-radius: 25px;
-						margin-left: 10px;
-						border: 2px solid $orange;
-						background-color: white;
-						cursor: pointer;
-						font-style: italic;
-						letter-spacing: $base-letter-spacing;
-
-						&:hover {
-							opacity: 0.8;
-						}
-					}
-				}
-
 				.header-genres {
 					color: $text-secondary-color;
 					margin-top: 5px;
 					margin-left: 2px;
+				}
+			}
+		}
+		.header-review-own-rating-container {
+			display: flex;
+			justify-content: flex-end;
+			align-items: flex-end;
+			.review-button {
+				display: block;
+				background-color: white;
+				border: none;
+				margin-right: 5px;
+				font-size: 12px;
+				opacity: 1;
+				font-weight: 500;
+				cursor: pointer;
+				color: rgba(12, 81, 146, 1);
+				border-bottom: 1px solid white;
+
+				&:hover {
+					border-bottom: 1px solid $orange;
 				}
 			}
 		}
@@ -106,10 +107,10 @@ $header-letter-spacing: 0.9px;
 
 			.totaly-movie-rating {
 				display: flex;
-				align-items: flex-start;
+				align-items: center;
 				justify-content: flex-end;
 				font-size: 20px;
-				padding: 10px;
+				padding-right: 10px;
 
 				.icon-star {
 					font-size: 20px;
@@ -125,7 +126,7 @@ $header-letter-spacing: 0.9px;
 						width: 2px;
 						height: 30px;
 						background-color: $border-color;
-						top: 5px;
+						top: 0px;
 						right: 0px;
 					}
 				}
