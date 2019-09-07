@@ -46,7 +46,6 @@ const MovieSeriesPageHeader: React.FC<IProps> = ({
 	deleteUserRate
 }) => {
 	const [modal, setModal] = useState(false);
-	const rate: number = userRate ? +userRate.rate : 0;
 
 	const onModalClick = () => {
 		setModal(true);
@@ -105,11 +104,6 @@ const MovieSeriesPageHeader: React.FC<IProps> = ({
 					</span>
 					<div className="header-genres-review-own-rating">
 						<span className="header-genres">{movie.genres}</span>
-						<div className="header-review-own-rating-container">
-							<button className="review-button" onClick={() => onModalClick()}>
-								review
-							</button>
-						</div>
 					</div>
 				</div>
 				<div className="movie-rating-container">
@@ -134,6 +128,12 @@ const MovieSeriesPageHeader: React.FC<IProps> = ({
 						userRate={userRate}
 						deleteUserRate={deleteUserRate}
 					/>
+					<div />
+					<div className="header-review-own-rating-container">
+						<div className="review-button" onClick={() => onModalClick()}>
+							Write Review
+						</div>
+					</div>
 				</div>
 			</div>
 		</header>
