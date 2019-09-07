@@ -1,37 +1,12 @@
 import React, { ReactElement } from 'react';
 import PropTypes from 'prop-types';
 import './FilmBasicTabComponent.scss';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faStar } from '@fortawesome/free-solid-svg-icons';
 import TMovie from '../TMovie';
 import getFilmDuration from '../../../helpers/getFilmDuration';
 
 interface IProps {
 	movie: TMovie;
 }
-
-const starStyle = {
-	width: '1em',
-	height: '1em'
-};
-const solidStar = (key: number, type: boolean): any => (
-	<FontAwesomeIcon
-		icon={faStar}
-		className={type ? 'yellowStar' : 'greyStar'}
-		style={starStyle}
-		key={key}
-	/>
-);
-
-const rateBlock = (rateString: string): ReactElement[] => {
-	const rate = parseFloat(rateString);
-	const res: any = [];
-
-	for (let i = 0; i < 10; i++) {
-		i < rate ? res.push(solidStar(i, true)) : res.push(solidStar(i, false));
-	}
-	return res;
-};
 
 const descriptionItem = (
 	title: string,
@@ -50,7 +25,6 @@ const FilmBasicTab = (props: IProps) => {
 		genres,
 		runtime: duration,
 		overview: description,
-		vote_average,
 		budget,
 		poster_path,
 		video,
@@ -77,10 +51,6 @@ const FilmBasicTab = (props: IProps) => {
 		{
 			label: 'Description',
 			value: description
-		},
-		{
-			label: 'Rating',
-			value: rateBlock(vote_average)
 		},
 		{
 			label: 'Budget',
