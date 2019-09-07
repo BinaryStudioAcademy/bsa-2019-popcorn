@@ -178,9 +178,10 @@ exports.config = {
      * @param {Object} config wdio configuration object
      * @param {Array.<Object>} capabilities list of capabilities details
      */
-    // onPrepare: function (config, capabilities) {
-    //     require('./bootstrap.js')();
-    // },
+    onPrepare: function (config, capabilities) {
+        //require('./teardown_deleteUser.js')();
+        require('./bootstrap_createUser.js')();
+    },
     /**
      * Gets executed just before initialising the webdriver session and test framework. It allows you
      * to manipulate configurations depending on the capability or spec.
@@ -275,9 +276,9 @@ exports.config = {
      * @param {Array.<Object>} capabilities list of capabilities details
      * @param {<Object>} results object containing test results
      */
-    // onComplete: function(exitCode, config, capabilities, results) {
-    //     require('./teardown.js')();
-    // },
+    onComplete: function(exitCode, config, capabilities, results) {
+        require('./teardown_deleteUser.js')();
+    },
     /**
      * Gets executed when a refresh happens.
      * @param {String} oldSessionId session ID of the old session
