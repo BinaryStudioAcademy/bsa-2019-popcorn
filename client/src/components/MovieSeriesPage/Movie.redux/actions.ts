@@ -2,9 +2,7 @@ import {
 	FETCH_MOVIE_LIST,
 	SET_MOVIE_SERIES,
 	CLEAR_ElASTIC_MOVIE_LIST,
-	FETCH_MOVIE_USER_RATE,
 	FETCH_MOVIE_BY_ID,
-	SET_USER_RATE,
 	FETCH_SEARCH,
 	RESET_SEARCH_MOVIE,
 	FETCH_SEARCH_TO_ADD_MOVIE,
@@ -18,7 +16,6 @@ import {
 	SET_FILTERS,
 	GET_GENRES,
 	FETCH_STATISTICS,
-	DELETE_USER_RATE,
 	FETCH_POSTS_BY_FILM
 } from './actionTypes';
 
@@ -27,11 +24,6 @@ export const getGenres = (): any => {
 		type: GET_GENRES
 	};
 };
-
-export const deleteUserRate = (userRate: any) => ({
-	type: DELETE_USER_RATE,
-	payload: { userRate }
-});
 
 export const fetchMovieList = (): any => {
 	return {
@@ -69,16 +61,6 @@ export const clearSearch = (): object => {
 	};
 };
 
-export const fetchUserRate = (userId: string, movieId: string): object => {
-	return {
-		type: FETCH_MOVIE_USER_RATE,
-		payload: {
-			userId,
-			movieId
-		}
-	};
-};
-
 export const fetchSearch = (title: string): any => {
 	return {
 		type: FETCH_SEARCH,
@@ -102,18 +84,6 @@ export const setFilters = (filters: any): object => {
 		type: SET_FILTERS,
 		payload: {
 			filters
-		}
-	};
-};
-
-export const setUserRate = (userRate: any): object => {
-	const { userId, movieId, rate } = userRate;
-	return {
-		type: SET_USER_RATE,
-		payload: {
-			userId,
-			movieId,
-			rate
 		}
 	};
 };

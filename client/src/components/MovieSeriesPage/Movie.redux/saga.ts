@@ -9,8 +9,6 @@ import {
 	FETCH_MOVIE_BY_ID,
 	FETCH_MOVIE_BY_ID_SUCCESS,
 	FETCH_MOVIE_LIST,
-	FETCH_MOVIE_USER_RATE,
-	FETCH_MOVIE_USER_RATE_SUCCESS,
 	FETCH_REVIEW_BY_USER_MOVIE_ID,
 	FETCH_REVIEW_BY_USER_MOVIE_ID_SUCCESS,
 	FETCH_SEARCH,
@@ -29,14 +27,11 @@ import {
 	SET_SEARCH_MOVIE,
 	SET_SEARCH_MOVIE_TO_ADD,
 	SET_SHOW_SPINNER,
-	SET_USER_RATE,
 	SET_HIDE_SPINNER,
 	GET_GENRES,
 	SET_GENRES,
 	FETCH_STATISTICS,
 	FETCH_STATISTICS_SUCCESS,
-	DELETE_USER_RATE,
-	SET_USER_RATE_SUCCESS,
 	FETCH_POSTS_BY_FILM_SUCCESS,
 	FETCH_POSTS_BY_FILM
 } from './actionTypes';
@@ -134,43 +129,6 @@ export function* fetchMovieList() {
 	}
 }
 
-export function* fetchUserRate(action) {
-	const { userId, movieId } = action.payload;
-	try {
-		const data = yield call(webApi, {
-			endpoint: `/api/movie/rate/user/${userId}/${movieId}`,
-			method: 'GET'
-		});
-
-		yield put({
-			type: FETCH_MOVIE_USER_RATE_SUCCESS,
-			payload: {
-				userRate: data
-			}
-		});
-	} catch (error) {
-		console.log(error);
-	}
-}
-
-export function* deleteUserRate(action) {
-	const { id: rateId, movieId } = action.payload.userRate;
-	try {
-		yield call(webApi, {
-			endpoint: `/api/movie/rate/${rateId}`,
-			method: 'DELETE'
-		});
-		yield put({
-			type: FETCH_MOVIE_BY_ID,
-			payload: {
-				movieId
-			}
-		});
-	} catch (error) {
-		console.log(error);
-	}
-}
-
 export function* fetchMovie(action) {
 	const { movieId } = action.payload;
 	try {
@@ -183,37 +141,6 @@ export function* fetchMovie(action) {
 			type: FETCH_MOVIE_BY_ID_SUCCESS,
 			payload: {
 				fetchedMovie: data
-			}
-		});
-	} catch (error) {
-		console.log(error);
-	}
-}
-
-export function* setUserRate(action) {
-	const { movieId, userId, rate } = action.payload;
-	try {
-		const data = yield call(webApi, {
-			endpoint: `/api/movie/rate`,
-			method: 'POST',
-			body: {
-				userId,
-				movieId,
-				rate
-			}
-		});
-
-		yield put({
-			type: FETCH_MOVIE_USER_RATE,
-			payload: {
-				movieId,
-				userId
-			}
-		});
-		yield put({
-			type: FETCH_MOVIE_BY_ID,
-			payload: {
-				movieId
 			}
 		});
 	} catch (error) {
@@ -432,10 +359,6 @@ function* watchFetchSearchMovie() {
 	yield takeEvery(FETCH_SEARCH_TO_ADD_MOVIE, fetchSearchMovie);
 }
 
-function* watchFetchUserRate() {
-	yield takeEvery(FETCH_MOVIE_USER_RATE, fetchUserRate);
-}
-
 function* watchFetchMovie() {
 	yield takeEvery(FETCH_MOVIE_BY_ID, fetchMovie);
 }
@@ -444,16 +367,8 @@ function* watchFetchAwards() {
 	yield takeEvery(GET_AWARDS, fetchAwards);
 }
 
-function* watchSetUserRate() {
-	yield takeEvery(SET_USER_RATE, setUserRate);
-}
-
 function* watchLoadMoreMovie() {
 	yield takeEvery(LOAD_MORE_MOVIE, loadMoreMovie);
-}
-
-function* watchDeleteUserRate() {
-	yield takeEvery(DELETE_USER_RATE, deleteUserRate);
 }
 
 function* watchLoadMoreFiltredMovie() {
@@ -483,9 +398,7 @@ export default function* header() {
 	yield all([
 		watchFetchFilms(),
 		watchFetchMovieList(),
-		watchFetchUserRate(),
 		watchFetchMovie(),
-		watchSetUserRate(),
 		watchFetchSearch(),
 		watchFetchSearchMovie(),
 		watchLoadMoreMovie(),
@@ -496,7 +409,6 @@ export default function* header() {
 		watchLoadMoreFiltredMovie(),
 		watchFetchGenres(),
 		watchFetchStatistics(),
-		watchDeleteUserRate(),
 		watchFetchPosts()
 	]);
 }

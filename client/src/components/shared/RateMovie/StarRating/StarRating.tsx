@@ -9,9 +9,11 @@ import './StarRating.scss';
 
 interface IProps {
 	size: number;
-	setUserRate: (newUserRate: any) => any;
+	saveUserRate: (newUserRate: any) => any;
 	userRate: any;
 	deleteUserRate: (userRate: any) => object;
+	currentUserId: string;
+	movieId: string;
 }
 
 interface IState {
@@ -24,8 +26,11 @@ class StarRating extends React.Component<IProps, IState> {
 	constructor(props: IProps) {
 		super(props);
 
+		const { userRate } = this.props;
+		const currentRate = userRate && userRate.rate;
+
 		this.state = {
-			currentValue: this.props.userRate.rate,
+			currentValue: currentRate || 0,
 			showStarRate: false,
 			hover: false
 		};
@@ -45,9 +50,9 @@ class StarRating extends React.Component<IProps, IState> {
 					showStarRate: false,
 					currentValue: key + 1
 				});
-				this.props.setUserRate({
-					userId: this.props.userRate.userId,
-					movieId: this.props.userRate.movieId,
+				this.props.saveUserRate({
+					userId: this.props.currentUserId,
+					movieId: this.props.movieId,
 					rate: this.state.currentValue
 				});
 			}}
@@ -78,24 +83,39 @@ class StarRating extends React.Component<IProps, IState> {
 		});
 	};
 
+	onMouseLeaveRateButton = () => {
+		const { userRate } = this.props;
+		const currentRate = userRate && userRate.rate;
+		this.setState({
+			...this.state,
+			hover: false,
+			currentValue: currentRate || 0,
+			showStarRate: false
+		});
+	};
+
+	onClickDeleteButton = ev => {
+		ev.preventDefault();
+		const { deleteUserRate, userRate } = this.props;
+		if (userRate) {
+			deleteUserRate(userRate);
+		}
+		this.setState({
+			...this.state,
+			currentValue: 0,
+			showStarRate: false
+		});
+	};
+
 	render() {
 		const { hover, currentValue, showStarRate } = this.state;
-
-		const { userRate, deleteUserRate } = this.props;
 
 		return (
 			<div
 				className="StarRating"
 				onClick={ev => this.onCLickToRate(ev)}
 				onMouseEnter={() => this.setState({ ...this.state, hover: true })}
-				onMouseLeave={() =>
-					this.setState({
-						...this.state,
-						hover: false,
-						currentValue: userRate.rate,
-						showStarRate: false
-					})
-				}
+				onMouseLeave={() => this.onMouseLeaveRateButton()}
 			>
 				<div className="star-user-rating-container">
 					<FontAwesomeIcon
@@ -121,17 +141,7 @@ class StarRating extends React.Component<IProps, IState> {
 							onMouseEnter={() => {
 								this.setState({ ...this.state, currentValue: 0 });
 							}}
-							onClick={ev => {
-								ev.preventDefault();
-								if (userRate.rate !== 0) {
-									deleteUserRate(userRate);
-								}
-								this.setState({
-									...this.state,
-									currentValue: 0,
-									showStarRate: false
-								});
-							}}
+							onClick={ev => this.onClickDeleteButton(ev)}
 						>
 							<FontAwesomeIcon icon={faTimesCircle} />
 						</span>
