@@ -83,26 +83,39 @@ class StarRating extends React.Component<IProps, IState> {
 		});
 	};
 
+	onMouseLeaveRateButton = () => {
+		const { userRate } = this.props;
+		const currentRate = userRate && userRate.rate;
+		this.setState({
+			...this.state,
+			hover: false,
+			currentValue: currentRate || 0,
+			showStarRate: false
+		});
+	};
+
+	onClickDeleteButton = ev => {
+		ev.preventDefault();
+		const { deleteUserRate, userRate } = this.props;
+		if (userRate) {
+			deleteUserRate(userRate);
+		}
+		this.setState({
+			...this.state,
+			currentValue: 0,
+			showStarRate: false
+		});
+	};
+
 	render() {
 		const { hover, currentValue, showStarRate } = this.state;
-
-		const { userRate, deleteUserRate } = this.props;
 
 		return (
 			<div
 				className="StarRating"
 				onClick={ev => this.onCLickToRate(ev)}
 				onMouseEnter={() => this.setState({ ...this.state, hover: true })}
-				onMouseLeave={() => {
-					const { userRate } = this.props;
-					const currentRate = userRate && userRate.rate;
-					this.setState({
-						...this.state,
-						hover: false,
-						currentValue: currentRate || 0,
-						showStarRate: false
-					});
-				}}
+				onMouseLeave={() => this.onMouseLeaveRateButton()}
 			>
 				<div className="star-user-rating-container">
 					<FontAwesomeIcon
@@ -128,17 +141,7 @@ class StarRating extends React.Component<IProps, IState> {
 							onMouseEnter={() => {
 								this.setState({ ...this.state, currentValue: 0 });
 							}}
-							onClick={ev => {
-								ev.preventDefault();
-								if (userRate) {
-									deleteUserRate(userRate);
-								}
-								this.setState({
-									...this.state,
-									currentValue: 0,
-									showStarRate: false
-								});
-							}}
+							onClick={ev => this.onClickDeleteButton(ev)}
 						>
 							<FontAwesomeIcon icon={faTimesCircle} />
 						</span>
