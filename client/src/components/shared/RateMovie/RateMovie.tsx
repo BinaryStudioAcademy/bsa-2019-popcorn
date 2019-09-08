@@ -38,16 +38,14 @@ const RateMovie: React.FC<IProps> = ({
 	);
 
 	return (
-		<div className="kek">
-			<StarRating
-				deleteUserRate={deleteUserRate}
-				saveUserRate={saveUserRate}
-				size={10}
-				userRate={userRate}
-				currentUserId={currentUserId}
-				movieId={movieId}
-			/>
-		</div>
+		<StarRating
+			deleteUserRate={deleteUserRate}
+			saveUserRate={saveUserRate}
+			size={10}
+			userRate={userRate}
+			currentUserId={currentUserId}
+			movieId={movieId}
+		/>
 	);
 };
 
