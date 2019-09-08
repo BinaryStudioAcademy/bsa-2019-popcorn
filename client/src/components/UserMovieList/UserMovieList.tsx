@@ -15,20 +15,8 @@ import { faLock } from '@fortawesome/free-solid-svg-icons';
 interface IProps {
 	match: any;
 	fetchMovieListDetails: (movieListId: string) => object;
-	isLoading: boolean;
 	movieListDetails: IMovieListDetails;
 	fetchWatchListIds: () => object;
-	watchListIds: IWatchListId[];
-	addMovieToWatchList: (movieId) => object;
-	deleteMovieFromWatchList: (watchId: string) => object;
-	watchListLoading?: boolean;
-	loadingOnMovie: string;
-}
-
-export interface IWatchListId {
-	id: string;
-	movieId: string;
-	status: string;
 }
 
 interface IMovieListDetails {
