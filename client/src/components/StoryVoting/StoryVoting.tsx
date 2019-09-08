@@ -193,10 +193,9 @@ class StoryVoting extends React.Component<StoryVotingProps, StoryVotingState> {
 		return (
 			<div className="story-voting-wrp">
 				<div
-					className="story-voting"
-					id="voting-preview"
+					className={'story-voting voting-preview'}
 					style={{
-						backgroundColor: backgroundColor,
+						backgroundColor,
 						backgroundImage: `url(${this.props.backImage ||
 							this.props.backgroundImage})`
 					}}
@@ -250,9 +249,9 @@ class StoryVoting extends React.Component<StoryVotingProps, StoryVotingState> {
 }
 
 const mapStateToProps = (rootState, props) => ({
-	...props,
-	fontColor: rootState.story.newStory.fontColor,
-	backgroundImage: rootState.story.newStory.image_url
+	...props
+	// fontColor: rootState.story.newStory.fontColor,
+	// backgroundImage: rootState.story.newStory.image_url
 });
 
 export default connect(mapStateToProps)(StoryVoting);

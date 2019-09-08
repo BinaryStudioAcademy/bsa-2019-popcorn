@@ -36,7 +36,7 @@ interface IStoryListItem {
 }
 
 interface IStoryListItemsProps {
-	storyListItems: Array<IStoryListItem>;
+	storyListItems: IStoryListItem[];
 	openViewer: (number) => void;
 }
 
@@ -47,7 +47,7 @@ class StoryListContent extends Component<IStoryListItemsProps> {
 
 	render() {
 		const { storyListItems } = this.props;
-		const storyList = storyListItems.map((item, i) => {
+		return storyListItems.map((item, i) => {
 			if (item.type === 'voting' && item.voting) {
 				const voting = item.voting;
 				const avatar = item.user.avatar;
@@ -102,7 +102,6 @@ class StoryListContent extends Component<IStoryListItemsProps> {
 				/>
 			);
 		});
-		return storyList;
 	}
 }
 
