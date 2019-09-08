@@ -1,6 +1,7 @@
 import { getCustomRepository, MigrationInterface, QueryRunner } from "typeorm";
 import UserRepository from "../repository/user.repository";
 import { User } from "../models/UserModel";
+import SettingsRepository from "../repository/settings.repository";
 
 export class SeedUsers1565158741121 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
@@ -88,16 +89,24 @@ export class SeedUsers1565158741121 implements MigrationInterface {
       }
     ];
     usersSeed.map(async userData => {
-      const user = new User();
-      user.name = userData.name;
-      user.password = userData.password;
-      user.email = userData.email;
-      user.location = userData.location;
-      user.aboutMe = userData.aboutMe;
-      user.avatar = userData.avatar;
-      user.male = userData.male || null;
-      user.female = userData.female || null;
-      await getCustomRepository(UserRepository).save(user);
+      try {
+        const user = new User();
+        user.name = userData.name;
+        user.settings = await getCustomRepository(
+          SettingsRepository
+        ).createByPassword(userData.password);
+        user.email = userData.email;
+        user.location = userData.location;
+        user.aboutMe = userData.aboutMe;
+        user.avatar = userData.avatar;
+        user.male = userData.male || null;
+        user.female = userData.female || null;
+        await getCustomRepository(UserRepository).save({
+          ...user
+        });
+      } catch (e) {
+        console.log("error", e.message);
+      }
     });
   }
 

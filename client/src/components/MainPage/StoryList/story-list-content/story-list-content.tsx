@@ -50,10 +50,7 @@ class StoryListContent extends Component<IStoryListItemsProps> {
 		return storyListItems.map((item, i) => {
 			if (item.type === 'voting' && item.voting) {
 				const voting = item.voting;
-				const avatar = item.user.avatar;
-				// if (item.id === "2b032067-ba0b-4bfb-a2a2-e3da73e351ab") {
-				//     console.log(item);
-				// }
+				const avatar = item.user && item.user.avatar;
 				return (
 					<div
 						key={item.id}

@@ -1,6 +1,7 @@
 import { User } from "../models/UserModel";
 import UserRepository from "../repository/user.repository";
 import { getCustomRepository } from "typeorm";
+import SettingsRepository from "../repository/settings.repository";
 
 interface IResponse {
   data: { user?: User; users?: User[] };
@@ -8,8 +9,14 @@ interface IResponse {
   error: string;
 }
 
-export const createUser = async (user: User): Promise<User> => {
-  return await getCustomRepository(UserRepository).save(user);
+export const createUser = async (
+  user: User,
+  password: string
+): Promise<User> => {
+  const settings = await getCustomRepository(
+    SettingsRepository
+  ).createByPassword(password);
+  return await getCustomRepository(UserRepository).save({ ...user, settings });
 };
 
 export const getUsers = async (): Promise<IResponse> => {
@@ -42,7 +49,10 @@ export const deleteById = async (
 };
 
 export const getByEmail = async (email): Promise<User> => {
-  return await getCustomRepository(UserRepository).findOne({ email });
+  return await getCustomRepository(UserRepository).findOne({
+    where: { email },
+    relations: ["settings"]
+  });
 };
 
 export const getByUserName = async (name): Promise<User> => {

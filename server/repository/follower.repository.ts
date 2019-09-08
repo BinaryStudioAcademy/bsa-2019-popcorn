@@ -17,7 +17,7 @@ class FollowerRepository extends Repository<Follower> {
     try {
       return await this.find({
         where: { user: { id: userId } },
-        relations: ["follower"]
+        relations: ["follower", "user.settings"]
       });
     } catch (err) {
       return next({ status: err.status, message: err.message }, null);

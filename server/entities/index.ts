@@ -27,6 +27,7 @@ import { MovieList } from "./MovieList";
 import { UserTemp } from "./UserTemp";
 import { Chat } from "./Chat";
 import { Message } from "./Message";
+import { Settings } from "./Settings";
 export default [
   User,
   Post,
@@ -58,5 +59,6 @@ export default [
   UserTemp,
   Chat,
   Message,
-  MovieList
+  MovieList,
+  Settings
 ];

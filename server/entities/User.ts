@@ -1,12 +1,21 @@
-import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from "typeorm";
+import {
+  Column,
+  Entity,
+  ManyToMany,
+  ManyToOne,
+  OneToMany,
+  OneToOne,
+  PrimaryGeneratedColumn
+} from "typeorm";
 import { Top } from "./Top";
 import { Story } from "./Story";
 import { Surveys } from "./Surveys";
 import { SurveysQuestionAnswer } from "./SurveysQuestionAnswer";
-import { Voting } from "../entities/Voting";
-import { VotingOptionReaction } from "../entities/VotingOptionReaction";
+import { Voting } from "./Voting";
+import { VotingOptionReaction } from "./VotingOptionReaction";
 import { Follower } from "./Follower";
 import { FavoriteList } from "./FavoriteList";
+import { Settings } from "./Settings";
 
 @Entity()
 export class User {
@@ -23,9 +32,6 @@ export class User {
   role: string;
 
   @Column({ nullable: true })
-  password: string;
-
-  @Column({ nullable: true })
   location: string;
 
   @Column({ nullable: true })
@@ -36,57 +42,6 @@ export class User {
 
   @Column({ nullable: true })
   female: boolean;
-
-  @Column({ default: true })
-  emailNotificationNews: boolean;
-
-  @Column({ default: true })
-  emailNotificationUpdatesFromFollowed: boolean;
-
-  @Column({ default: true })
-  emailNotificationComments: boolean;
-
-  @Column({ default: true })
-  emailNotificationEvents: boolean;
-
-  @Column({ default: true })
-  siteNotificationUpdatesFromFollowed: boolean;
-
-  @Column({ default: true })
-  siteNotificationComments: boolean;
-
-  @Column({ default: true })
-  siteNotificationEvents: boolean;
-
-  @Column({ default: "All" })
-  privacyProfileInfo: string;
-
-  @Column({ default: "All" })
-  privacyMyPosts: string;
-
-  @Column({ default: "All" })
-  privacyStories: string;
-
-  @Column({ default: "All" })
-  privacyEvents: string;
-
-  @Column({ default: "All" })
-  privacySurveys: string;
-
-  @Column({ default: "All" })
-  privacyTops: string;
-
-  @Column({ default: "All" })
-  privacyCollections: string;
-
-  @Column({ default: "All" })
-  privacyWatchlist: string;
-
-  @Column({ default: "All" })
-  privacyReviews: string;
-
-  @Column({ default: "All" })
-  privacyMessages: string;
 
   @OneToMany(type => Voting, voting => voting.user, { onDelete: "CASCADE" })
   votings: Voting[];
@@ -117,9 +72,6 @@ export class User {
   )
   surveysQuestionAnswer: SurveysQuestionAnswer[];
 
-  @Column({ default: "", nullable: true })
-  reset_token: string;
-
   @OneToMany(type => Follower, follower => follower.user, {
     onDelete: "CASCADE"
   })
@@ -127,4 +79,7 @@ export class User {
 
   @OneToMany(type => FavoriteList, favoriteList => favoriteList.user)
   favoriteLists: FavoriteList[];
+
+  @OneToMany(type => Settings, setting => setting.id)
+  settings: Settings;
 }

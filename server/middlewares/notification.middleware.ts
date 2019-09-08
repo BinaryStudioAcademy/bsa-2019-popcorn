@@ -7,6 +7,7 @@ import PostReactionsRepository from "../repository/postReactions.repository";
 import { sendPushMessage } from "../services/firebase.service";
 import { saveNotification } from "../services/notification.service";
 import { getCustomRepository } from "typeorm";
+
 const uuid = require("uuid/v4");
 
 async function sendNotification({
@@ -56,9 +57,12 @@ export default async (req, res, next) => {
     if (req.url === "/api/post/comment") {
       const post = await postService.getPostById(req.body.postId);
       const user = await getCustomRepository(UserRepository).findOne({
-        id: post.userId
+        where: {
+          id: post.userId
+        },
+        relations: ["settings"]
       });
-      if (user.siteNotificationComments) {
+      if (user.settings.siteNotificationComments) {
         const url = "/";
         const title = `${req.user.name} comment your post`;
         sendNotification({
@@ -118,9 +122,10 @@ export default async (req, res, next) => {
       const event = await eventService.getEventById(req.body.eventId);
       const title = `${req.user.name} ${req.body.status} to your event`;
       const user = await getCustomRepository(UserRepository).findOne({
-        id: event.userId
+        where: { id: event.userId },
+        relations: ["settings"]
       });
-      if (user.siteNotificationEvents) {
+      if (user.settings.siteNotificationEvents) {
         sendNotification({
           req,
           url: `/events/${req.body.eventId}/${
@@ -163,7 +168,7 @@ export default async (req, res, next) => {
       const followers = await followerService.getFollowersByUserId(userId);
       const title = `${req.user.name} published new post`;
       followers.forEach(({ follower }) => {
-        if (follower.siteNotificationUpdatesFromFollowed) {
+        if (follower.settings.siteNotificationUpdatesFromFollowed) {
           sendNotification({
             req,
             url: "/",
@@ -182,7 +187,7 @@ export default async (req, res, next) => {
       const followers = await followerService.getFollowersByUserId(userId);
       const title = `${req.user.name} published new story`;
       followers.forEach(({ follower }) => {
-        if (follower.siteNotificationUpdatesFromFollowed) {
+        if (follower.settings.siteNotificationUpdatesFromFollowed) {
           sendNotification({
             req,
             url: "/",

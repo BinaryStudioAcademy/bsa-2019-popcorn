@@ -1,9 +1,9 @@
 import { Form } from "multiparty";
 import { upload } from "./image.service";
-const base64Img = require("base64-img");
-const path = require("path");
-const fs = require("fs");
-const uuid = require("uuid/v4");
+import * as base64Img from "base64-img";
+import * as path from "path";
+import * as fs from "fs";
+import * as uuid from "uuid";
 
 export const uploadFile = req =>
   new Promise<any>((resolve, reject) => {
@@ -18,22 +18,21 @@ export const uploadFile = req =>
             : "public/files",
         maxFilesSize: 1048576 * 3
       });
-      form.parse(req, function(err, fields, files): any {
-        if (err) return reject(err);
+
+      form.parse(req, (err, fields, files): any => {
+        if (err) {
+          return reject(err);
+        }
         if (process.env.NODE_ENV === "production") {
-          base64Img.base64(path.resolve(files.file[0].path), function(
-            err,
-            data
-          ) {
+          base64Img.base64(path.resolve(files.file[0].path), (error, data) => {
             upload(data)
               .then(url => resolve(url))
               .catch(e => reject(e));
           });
         } else {
           if (files.file) {
-            let imageUrl = files.file[0].path;
-            let url;
-            url =
+            const imageUrl = files.file[0].path;
+            let url =
               imageUrl.indexOf("\\") !== -1
                 ? imageUrl.split(`\\`)
                 : imageUrl.split(`/`);
@@ -62,7 +61,9 @@ export const uploadFile = req =>
           const format = req.body.format.split("/").pop();
           const name = `public/files/${uuid()}.${format}`;
           fs.writeFile(name, req.body.base, "base64", err => {
-            if (err) return reject(err);
+            if (err) {
+              return reject(err);
+            }
             return resolve(name);
           });
         }

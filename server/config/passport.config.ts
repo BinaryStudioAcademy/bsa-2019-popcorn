@@ -21,7 +21,7 @@ passport.use(
     { usernameField: "email" },
     async (email, password, done) => {
       try {
-        const user = await userService.getByEmail(email);
+        const user: User = await userService.getByEmail(email);
         if (!user) {
           return done(
             { status: 401, message: "Incorrect email or password." },
@@ -29,7 +29,7 @@ passport.use(
           );
         }
 
-        return password === user.password
+        return password === user.settings.password
           ? done(null, user)
           : done(
               { status: 401, message: "Incorrect email or password." },
@@ -104,11 +104,10 @@ passport.use(
           const user = new User();
           user.name = name;
           user.email = email;
-          user.reset_token = "";
           user.avatar = avatar;
           user.aboutMe = "";
           user.location = "";
-          const newUser = await userService.createUser(user);
+          const newUser = await userService.createUser(user, "");
           return done(null, newUser);
         }
         return done(null, user);
@@ -136,10 +135,9 @@ passport.use(
           const user = new User();
           user.name = name;
           user.email = email || name;
-          user.reset_token = "";
           user.aboutMe = "";
           user.location = "";
-          const newUser = await userService.createUser(user);
+          const newUser = await userService.createUser(user, "");
           return done(null, newUser);
         }
         return done(null, user);

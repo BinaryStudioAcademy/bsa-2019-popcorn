@@ -2,6 +2,7 @@ import { UserTemp } from "../models/UserModelTemp";
 import UserTempRepository from "../repository/userTemp.repository";
 import UserRepository from "../repository/user.repository";
 import { getCustomRepository } from "typeorm";
+import SettingsRepository from "../repository/settings.repository";
 
 export const createTempUser = async (user, body, id): Promise<UserTemp> => {
   const tempUser = new UserTemp();
@@ -22,7 +23,9 @@ export const updateUserByToken = async (token: string): Promise<any> => {
     tempUser[0].userId
   );
   realUser.email = tempUser[0].email;
-  realUser.password = tempUser[0].password;
+  realUser.settings = await getCustomRepository(
+    SettingsRepository
+  ).createByPassword(tempUser[0].password);
   await getCustomRepository(UserTempRepository).remove(tempUser);
   return await getCustomRepository(UserRepository).save(realUser);
 };

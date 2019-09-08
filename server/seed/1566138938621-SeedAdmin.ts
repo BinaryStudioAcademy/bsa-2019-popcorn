@@ -1,6 +1,7 @@
 import { MigrationInterface, QueryRunner, getCustomRepository } from "typeorm";
 import UserRepository from "../repository/user.repository";
 import { User } from "../models/UserModel";
+import SettingsRepository from "../repository/settings.repository";
 
 export class SeedAdmin1566138938621 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
@@ -17,7 +18,9 @@ export class SeedAdmin1566138938621 implements MigrationInterface {
 
     const user = new User();
     user.name = adminSeed.name;
-    user.password = adminSeed.password;
+    user.settings = await getCustomRepository(
+      SettingsRepository
+    ).createByPassword(adminSeed.password);
     user.email = adminSeed.email;
     user.role = adminSeed.role;
     user.location = adminSeed.location;

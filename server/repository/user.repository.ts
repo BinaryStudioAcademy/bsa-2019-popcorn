@@ -2,6 +2,7 @@ import { EntityRepository, Repository, getCustomRepository } from "typeorm";
 import { User } from "../entities/User";
 import { getByIdValues } from "../repository/movieElastic.repository";
 import FavoriteListRepository from "./favoriteList.repository";
+import SettingsRepository from "./settings.repository";
 
 @EntityRepository(User)
 class UserRepository extends Repository<User> {
@@ -12,7 +13,7 @@ class UserRepository extends Repository<User> {
     try {
       data.user = await this.findOne({
         where: { id },
-        relations: ["favoriteLists"]
+        relations: ["favoriteLists", "settings"]
       });
       const movieIds = data.user.favoriteLists.map(movie => movie.movieId);
       const elasticResponse = await getByIdValues(movieIds);
@@ -95,7 +96,7 @@ class UserRepository extends Repository<User> {
   }
 
   async getByToken(token) {
-    return this.findOne({ reset_token: token });
+    return getCustomRepository(SettingsRepository).getByToken(token);
   }
 }
 

@@ -5,7 +5,7 @@ import { sendPushMessage } from "../services/firebase.service";
 import { saveNotification } from "../services/notification.service";
 import { getCustomRepository } from "typeorm";
 
-const uuid = require("uuid/v4");
+import * as uuid from "uuid/v4";
 export default socket => {
   socket.on("createRoom", roomId => {
     socket.join(roomId);
@@ -26,12 +26,13 @@ export default socket => {
       const title = `${messageInfo.user.name} left message in your event`;
       const userId = event.userId;
       const user = await getCustomRepository(UserRepository).findOne({
-        id: userId
+        where: { id: userId },
+        relations: ["settings"]
       });
       if (
         userId !== messageInfo.user.id &&
-        user.siteNotificationEvents &&
-        user.siteNotificationComments
+        user.settings.siteNotificationEvents &&
+        user.settings.siteNotificationComments
       ) {
         const notification = {
           img: messageInfo.user.avatar,
