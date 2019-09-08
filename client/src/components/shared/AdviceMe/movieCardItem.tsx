@@ -10,15 +10,11 @@ import {
 	deleteMovieFromWatchList,
 	fetchWatchListStatus
 } from '../../UserPage/UserWatchList/actions';
-import { IUserRate } from '../../MovieSeriesPage/MovieSeriesPage';
 import Spinner from '../Spinner';
 import {
 	fetchReviewByMovieUserId,
-	fetchUserRate,
 	removeReviewSet,
-	setReview,
-	setUserRate,
-	deleteUserRate
+	setReview
 } from '../../MovieSeriesPage/Movie.redux/actions';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
@@ -29,9 +25,6 @@ interface IMovieListItemProps {
 	setMovieSeries?: (movie: any) => any;
 	saveMovie?: (movie: TMovie) => any;
 	fetchedMovie: any;
-	userRate: IUserRate;
-	setUserRate: (userRate: any) => object;
-	fetchUserRate: (userId: string, movieId: string) => object;
 	fetchMovie: (movieId: string) => object;
 	fetchReview: (userId: string, movieId: string) => object;
 	setReview: (
@@ -52,7 +45,6 @@ interface IMovieListItemProps {
 	deleteMovieFromWatchList: (watchId: string, movieId: string) => object;
 	watchListLoading?: boolean;
 	profileInfo: any;
-	deleteUserRate: (rateId: string) => object;
 }
 
 interface IState {
@@ -92,11 +84,6 @@ const MovieCardItem: React.FC<IMovieListItemProps> = props => {
 
 	// render(divRef, setText, text);
 
-	if (!props.userRate) {
-		props.fetchUserRate(props.profileInfo.id, movie.id);
-		return <Spinner />;
-	}
-
 	if (!props.watchListStatus) {
 		props.fetchWatchListStatus(movie.id);
 		return <Spinner />;
@@ -122,8 +109,6 @@ const MovieCardItem: React.FC<IMovieListItemProps> = props => {
 		>
 			<MovieSeriesPageHeader
 				movie={movie}
-				userRate={props.userRate}
-				setUserRate={rateObj => props.setUserRate(rateObj)}
 				ownReview={props.ownReview}
 				fetchReview={props.fetchReview}
 				userId={props.profileInfo.userId}
@@ -134,7 +119,6 @@ const MovieCardItem: React.FC<IMovieListItemProps> = props => {
 				addMovieToWatchList={props.addMovieToWatchList}
 				deleteMovieFromWatchList={deleteMovieFromWatchList}
 				watchListLoading={props.watchListLoading}
-				deleteUserRate={props.deleteUserRate}
 			/>
 			<div className={'movie-poster-wrp'}>
 				<Image
@@ -181,7 +165,6 @@ const MovieCardItem: React.FC<IMovieListItemProps> = props => {
 
 const mapStateToProps = (rootState, props) => ({
 	...props,
-	userRate: rootState.movie.userRate,
 	fetchedMovie: rootState.movie.fetchedMovie,
 	avatar: rootState.profile.profileInfo && rootState.profile.profileInfo.avatar,
 	userId: rootState.profile.profileInfo && rootState.profile.profileInfo.id,
@@ -196,15 +179,12 @@ const mapStateToProps = (rootState, props) => ({
 
 const mapDispatchToProps = dispatch => {
 	const actions = {
-		fetchUserRate,
-		setUserRate,
 		fetchReview: fetchReviewByMovieUserId,
 		setReview,
 		removeReviewSet,
 		fetchWatchListStatus,
 		addMovieToWatchList,
-		deleteMovieFromWatchList,
-		deleteUserRate
+		deleteMovieFromWatchList
 	};
 	return bindActionCreators(actions, dispatch);
 };

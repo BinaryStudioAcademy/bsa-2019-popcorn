@@ -9,9 +9,11 @@ import './StarRating.scss';
 
 interface IProps {
 	size: number;
-	setUserRate: (newUserRate: any) => any;
+	saveUserRate: (newUserRate: any) => any;
 	userRate: any;
 	deleteUserRate: (userRate: any) => object;
+	currentUserId: string;
+	movieId: string;
 }
 
 interface IState {
@@ -24,8 +26,11 @@ class StarRating extends React.Component<IProps, IState> {
 	constructor(props: IProps) {
 		super(props);
 
+		const { userRate } = this.props;
+		const currentRate = userRate && userRate.rate;
+
 		this.state = {
-			currentValue: this.props.userRate.rate,
+			currentValue: currentRate || 0,
 			showStarRate: false,
 			hover: false
 		};
@@ -45,9 +50,9 @@ class StarRating extends React.Component<IProps, IState> {
 					showStarRate: false,
 					currentValue: key + 1
 				});
-				this.props.setUserRate({
-					userId: this.props.userRate.userId,
-					movieId: this.props.userRate.movieId,
+				this.props.saveUserRate({
+					userId: this.props.currentUserId,
+					movieId: this.props.movieId,
 					rate: this.state.currentValue
 				});
 			}}
@@ -88,14 +93,16 @@ class StarRating extends React.Component<IProps, IState> {
 				className="StarRating"
 				onClick={ev => this.onCLickToRate(ev)}
 				onMouseEnter={() => this.setState({ ...this.state, hover: true })}
-				onMouseLeave={() =>
+				onMouseLeave={() => {
+					const { userRate } = this.props;
+					const currentRate = userRate && userRate.rate;
 					this.setState({
 						...this.state,
 						hover: false,
-						currentValue: userRate.rate,
+						currentValue: currentRate || 0,
 						showStarRate: false
-					})
-				}
+					});
+				}}
 			>
 				<div className="star-user-rating-container">
 					<FontAwesomeIcon
@@ -123,7 +130,7 @@ class StarRating extends React.Component<IProps, IState> {
 							}}
 							onClick={ev => {
 								ev.preventDefault();
-								if (userRate.rate !== 0) {
+								if (userRate) {
 									deleteUserRate(userRate);
 								}
 								this.setState({

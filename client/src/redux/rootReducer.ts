@@ -17,6 +17,7 @@ import recommendedReducer from '../components/MainPage/RecommendList/RecommendLi
 import chatReducer from '../components/ChatPage/ChatPage.redux/reducer';
 import contentSearchReducer from '../components/shared/ContentSearch/redux/reducer';
 import movieListReducer from '../components/UserPage/UserLists/reducer';
+import movieRateReducer from '../components/shared/RateMovie/reducer';
 
 const reducers = {};
 
@@ -39,5 +40,6 @@ export default combineReducers({
 	recommended: recommendedReducer,
 	chat: chatReducer,
 	contentSearch: contentSearchReducer,
-	movieList: movieListReducer
+	movieList: movieListReducer,
+	movieRate: movieRateReducer
 });
