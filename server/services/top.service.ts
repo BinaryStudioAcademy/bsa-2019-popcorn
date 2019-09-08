@@ -43,7 +43,7 @@ export const getTopById = async (topId: string): Promise<Top> => {
     relations: ["user", "movieInTop"],
     where: { id: topId }
   });
-
+  if (!top) return top;
   const topsWithMovies = await getMoviesInTops(
     [top],
     ["id", "title", "release_date", "poster_path"],
