@@ -72,7 +72,9 @@ const OutgoingMessage: React.FC<IProps> = ({
 							value={editedMessage || message.body}
 							onChange={e => setEditedMessage(e.target.value)}
 							onKeyPress={e => {
-								if (e.key === 'Enter') onUpdate();
+								if (e.key === 'Enter') {
+									onUpdate();
+								}
 							}}
 						/>
 						<button className="save-btn" onClick={onUpdate}>

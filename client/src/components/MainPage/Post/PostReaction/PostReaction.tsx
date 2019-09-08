@@ -7,7 +7,6 @@ import { ReactComponent as AngryIcon } from '../../../../assets/icons/reactions/
 import { ReactComponent as HahaIcon } from '../../../../assets/icons/reactions/haha.svg';
 import { ReactComponent as WowIcon } from '../../../../assets/icons/reactions/wow.svg';
 import { ReactComponent as SadIcon } from '../../../../assets/icons/reactions/sad.svg';
-import IReaction from '../IReaction';
 
 interface IReactItemProps {
 	name: string;

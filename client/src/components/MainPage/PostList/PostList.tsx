@@ -47,7 +47,9 @@ const addSocket = (
 	updatePost,
 	addNewPost
 ) => {
-	if (wasAddedSockets) return;
+	if (wasAddedSockets) {
+		return;
+	}
 	SocketService.on(
 		'new-comment',
 		comment => addNewComment && addNewComment(comment)

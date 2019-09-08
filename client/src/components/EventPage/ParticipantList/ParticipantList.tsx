@@ -10,7 +10,9 @@ interface IProps {
 const ParticipantList: React.FC<IProps> = ({ participants, status }) => {
 	const [users, setUsers] = useState(participants);
 	useEffect(() => {
-		if (users !== participants) setUsers(participants);
+		if (users !== participants) {
+			setUsers(participants);
+		}
 	});
 
 	const sortedParticipantsByStatus = participants.filter(

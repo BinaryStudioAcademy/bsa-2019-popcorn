@@ -1,6 +1,5 @@
 import React from 'react';
 import './ImageUploader.scss';
-import config from '../../../config';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCamera } from '@fortawesome/free-solid-svg-icons';
 
@@ -48,7 +47,7 @@ class ImageUploader extends React.Component<
 		const data = new FormData();
 		data.append('file', target.files[0]);
 
-		if (this.props.imageHandler)
+		if (this.props.imageHandler) {
 			this.props
 				.imageHandler(data)
 				.then(({ imageUrl }) => {
@@ -68,6 +67,7 @@ class ImageUploader extends React.Component<
 				.catch(error => {
 					this.setState({ isUploading: false, errorMsg: error.message });
 				});
+		}
 		target.value = '';
 	}
 

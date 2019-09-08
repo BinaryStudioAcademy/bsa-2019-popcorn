@@ -59,6 +59,9 @@ class PostStoryEditor extends React.Component<
 	IPostStoryEditorProps,
 	IPostStoryEditorState
 > {
+	private textarea = React.createRef<HTMLTextAreaElement>();
+	private cropper = React.createRef<Cropper>();
+	
 	constructor(props: IPostStoryEditorProps) {
 		super(props);
 		this.state = {
@@ -76,9 +79,6 @@ class PostStoryEditor extends React.Component<
 		this.imageStateHandler = this.imageStateHandler.bind(this);
 		this.handleDragText = this.handleDragText.bind(this);
 	}
-
-	private textarea = React.createRef<HTMLTextAreaElement>();
-	private cropper = React.createRef<Cropper>();
 
 	onToggleCheckbox() {
 		// this.setState({
@@ -106,7 +106,7 @@ class PostStoryEditor extends React.Component<
 	onSave() {
 		this.props.saveAfterCrop();
 		if (this.cropper.current) {
-			const dataUrl = this.cropper.current.getCroppedCanvas().toBlob(blob => {
+			this.cropper.current.getCroppedCanvas().toBlob(blob => {
 				const data = new FormData();
 				data.append('file', blob);
 				uploadFile(data)
@@ -128,13 +128,14 @@ class PostStoryEditor extends React.Component<
 		let find = str.match(/\$(.+)(.*?)(\s*?)/g);
 		if (find && find[0]) {
 			find = find[0].split(' ');
-			if (find) return find[0].slice(1);
+			if (find) {
+				return find[0].slice(1);
+			}
 		}
 		return '';
 	}
 
 	handleDragText(e, ui) {
-		const { x, y } = this.props.newStory.textPosition;
 		const newX = ui.x;
 		const newY = ui.y;
 		this.props.setTextPosition({

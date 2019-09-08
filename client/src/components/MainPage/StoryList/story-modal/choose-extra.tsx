@@ -17,11 +17,16 @@ class ChooseExtra extends React.Component {
 	};
 
 	render() {
-		if (!this.state.open) return <Redirect to={'/'} />;
-		if (!this.state.back) return <Redirect to={'/create'} />;
-		if (this.state.option)
+		if (!this.state.open) {
+			return <Redirect to={'/'} />;
+		}
+		if (!this.state.back) {
+			return <Redirect to={'/create'} />;
+		}
+		if (this.state.option) {
 			return <Redirect to={'/create/extra/' + this.state.option} />;
-
+		}
+		
 		const close = () => this.setState({ open: false });
 		const back = () => this.setState({ back: false });
 		const setOption = option => this.setState({ option });
