@@ -29,8 +29,10 @@ const MovieListItem: React.FC<IMovieListItemProps> = ({
 			<div
 				className="movie-item"
 				onClick={e => {
-					e.preventDefault();
-					if (saveMovie) saveMovie(movie);
+					if (saveMovie) {
+						e.preventDefault();
+						saveMovie(movie);
+					}
 				}}
 			>
 				<div className="movie-poster-wrp">
