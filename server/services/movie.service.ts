@@ -128,6 +128,9 @@ export const getMovieRate = async (
   return { userId, movieId, rate: 0 };
 };
 
+export const getAllUserRates = (userId: string) =>
+  getCustomRepository(MovieRateRepository).find({ where: { userId } });
+
 export const deleteMovieRate = (rateId: string): Promise<any> =>
   getCustomRepository(MovieRateRepository).delete({ id: rateId });
 
