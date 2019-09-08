@@ -46,6 +46,10 @@ export function* saveEvent(action) {
 				id: action.payload.event.userId
 			}
 		});
+
+		yield put({
+			type: GET_All_EVENTS,
+		});
 	} catch (e) {
 		console.log('Error create event', e.message);
 	}
