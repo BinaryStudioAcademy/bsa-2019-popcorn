@@ -20,6 +20,7 @@ import StoryReaction from './StoryReaction';
 import { createMessage } from '../../ChatPage/ChatPage.redux/actions';
 import { bindActionCreators } from 'redux';
 import WatchListIcon from '../../shared/WatchListIcon/WatchListIcon';
+import RateMovie from '../../shared/RateMovie/RateMovie';
 
 interface IProps {
 	stories: Array<{
@@ -299,6 +300,9 @@ class StoryViewer extends PureComponent<IProps, IState> {
 														<NavLink to={'/movies/' + story.movie.id}>
 															{story.movie.title}
 														</NavLink>
+													)}
+													{story.movieId && story.movie && (
+														<RateMovie movieId={story.movie.id}/>
 													)}
 												</span>
 											</p>

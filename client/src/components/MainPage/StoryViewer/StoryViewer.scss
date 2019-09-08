@@ -14,6 +14,27 @@
 	color: $white;
 	font-family: $base-font-family;
 	z-index: 20;
+	.star-user-rating-container {
+		margin-right: 20px;
+	}
+	.label-rate-this {
+		display: none;
+	}
+	.StarRating {
+		width: 60px;
+		height: 30px !important;
+	}
+	.label-you {
+		display: none;
+	} 
+	.stars-container {
+		width: 350px !important;
+		top: -40px !important;
+		left: -290px !important;
+		.delete-button {
+			padding: 5px !important;
+		}
+	}
 	.WatchListIcon {
 		position: relative;
 		float: left;
