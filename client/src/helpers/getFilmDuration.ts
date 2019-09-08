@@ -6,5 +6,6 @@ export default function(runtime: number) {
 	const hours = Math.floor(runtime / 60);
 	const mm = minutes < 10 ? `0${minutes}` : minutes;
 	const hh = hours < 10 ? `0${hours}` : hours;
+	return `${hours}h ${minutes}min`;
 	return `${hh}:${mm}`;
 }

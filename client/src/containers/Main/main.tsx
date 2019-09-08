@@ -82,7 +82,6 @@ const MovieListRender = (
 		<MovieList
 			movies={movieList}
 			setMovieSeries={setMovieSeries}
-			twoColumns={true}
 			loadMoreMovie={loadMoreMovie}
 		/>
 	);

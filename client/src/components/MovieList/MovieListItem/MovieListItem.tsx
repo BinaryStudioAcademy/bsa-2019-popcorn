@@ -20,61 +20,59 @@ const MovieListItem: React.FC<IMovieListItemProps> = ({
 	saveMovie
 }) => {
 	const duration = getFilmDuration(movie.runtime);
-
 	return (
-		<div
-			className="movie-item"
-			onClick={() => {
-				if (saveMovie) saveMovie(movie);
-			}}
+		<NavLink
+			to={`/movies/${movie.id}`}
+			className="movie-link"
+			onClick={() => setMovieSeries && setMovieSeries(movie)} 
 		>
-			<div className="movie-poster-wrp">
-				<Image
-					src={movie.poster_path}
-					defaultSrc={config.DEFAULT_MOVIE_IMAGE}
-					alt="movie-poster"
-					className="movie-poster"
-				/>
-			</div>
-			<div className="movie-info">
-				{!saveMovie && (
-					<NavLink
-						to={`/movies/${movie.id}`}
-						className="movie-link"
-						onClick={() => setMovieSeries && setMovieSeries(movie)}
-					>
-						<div className="movie-title">
-							{movie.title}{' '}
-							{movie.release_date
-								? '(' + movie.release_date.slice(0, 4) + ')'
-								: null}
+			<div
+				className="movie-item"
+				onClick={e => {
+					e.preventDefault();
+					if (saveMovie) saveMovie(movie);
+				}}
+			>
+				<div className="movie-poster-wrp">
+					<Image
+						src={movie.poster_path}
+						defaultSrc={config.DEFAULT_MOVIE_IMAGE}
+						alt="movie-poster"
+						className="movie-poster"
+					/>
+				</div>
+				<div className="movie-info">
+					{!saveMovie && (	
+							<div className='movie-header'>
+								<span className="movie-title">
+									{movie.title}{' '}
+								</span>
+								<span className="movie-year">
+									{movie.release_date
+										? '' + movie.release_date.slice(0, 4) + ''
+										: null}
+								</span>
+							</div>	
+					)}
+					{saveMovie && (
+						<div className={'movie-link'}>
+							<div className="movie-title">
+								{movie.title}{' '}
+								{movie.release_date
+									? '(' + movie.release_date.slice(0, 4) + ')'
+									: null}
+							</div>
 						</div>
-					</NavLink>
-				)}
-				{saveMovie && (
-					<div className={'movie-link'}>
-						<div className="movie-title">
-							{movie.title}{' '}
-							{movie.release_date
-								? '(' + movie.release_date.slice(0, 4) + ')'
-								: null}
-						</div>
-					</div>
-				)}
-				<div>
-					<span className="movie-genre">{movie.genres}</span>
+					)}
+					<div className="movie-genre">{movie.genres}</div>
 					{duration && (
-						<span className="movie-duration">
-							<DurationIcon />
+						<div className="movie-duration">
 							{duration}
-						</span>
+						</div>
 					)}
 				</div>
-				<div className="movie-cast">
-					<b>Main cast:</b> {movie.mainCast}
-				</div>
 			</div>
-		</div>
+		</NavLink>
 	);
 };
 
