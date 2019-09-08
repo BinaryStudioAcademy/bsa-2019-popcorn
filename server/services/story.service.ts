@@ -24,15 +24,15 @@ export const getStories = async (): Promise<Story[]> => {
           break;
         case "survey":
           activity = await getSurveysById(story.activityId, () => {});
-          story.activity = activity.title;
+          story.activity = activity && activity.title;
           break;
         case "event":
           activity = await getEventById(story.activityId);
-          story.activity = activity.title;
+          story.activity = activity && activity.title;
           break;
         case "top":
           activity = await getTopById(story.activityId);
-          story.activity = activity.title;
+          story.activity = activity && activity.title;
           break;
         default:
           break;
