@@ -51,6 +51,9 @@ class StoryListContent extends Component<IStoryListItemsProps> {
 			if (item.type === 'voting' && item.voting) {
 				const voting = item.voting;
 				const avatar = item.user.avatar;
+				// if (item.id === "2b032067-ba0b-4bfb-a2a2-e3da73e351ab") {
+				//     console.log(item);
+				// }
 				return (
 					<div
 						key={item.id}
@@ -65,6 +68,7 @@ class StoryListContent extends Component<IStoryListItemsProps> {
 							src={avatar || config.DEFAULT_AVATAR}
 						/>
 						<StoryVoting
+							id={item.id}
 							backImage={item.image_url}
 							backgroundColor={item.backgroundColor}
 							header={voting.header}
@@ -80,7 +84,7 @@ class StoryListContent extends Component<IStoryListItemsProps> {
 							backColor={voting.backColor}
 							userId={item.user.id}
 							inEditor={false}
-							image_url={voting.backImage || ''}
+							image_url={item.image_url || voting.backImage || ''}
 						/>
 						{/* /	<div className="story-name">{item.caption}</div> */}
 					</div>

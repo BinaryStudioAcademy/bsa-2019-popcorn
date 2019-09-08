@@ -7,6 +7,7 @@ import { Redirect } from 'react-router';
 import { connect } from 'react-redux';
 
 type StoryVotingProps = {
+	id: string;
 	header: string;
 	options: Array<{
 		body: string;
@@ -175,17 +176,10 @@ class StoryVoting extends React.Component<StoryVotingProps, StoryVotingState> {
 
 	render() {
 		const positions = this.calculatePositions();
-		const rgba =
-			typeof this.props.backColor === 'string'
-				? this.props.backColor
-				: `rgba(${this.props.backColor.r},${this.props.backColor.b},${this.props.backColor.g},${this.props.backColor.a})`;
 
-		const backgroundStyle = {
-			backgroundImage: `url(${this.props.image_url})`,
-			backgroundColor: rgba
-		};
-
-		if (this.state.redirect) return <Redirect to={'/create'} />;
+		if (this.state.redirect) {
+			return <Redirect to={'/create'} />;
+		}
 
 		const setRedirect = () => this.setState({ redirect: true });
 		const backgroundColor = this.props.backgroundColor;
@@ -197,7 +191,8 @@ class StoryVoting extends React.Component<StoryVotingProps, StoryVotingState> {
 					style={{
 						backgroundColor,
 						backgroundImage: `url(${this.props.backImage ||
-							this.props.backgroundImage})`
+							this.props.backgroundImage ||
+							this.props.image_url})`
 					}}
 				>
 					<Draggable
