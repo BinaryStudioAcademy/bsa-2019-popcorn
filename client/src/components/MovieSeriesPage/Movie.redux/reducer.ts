@@ -37,7 +37,6 @@ const initialState: {
 	alreadySearch: boolean;
 	movieList: null | Array<TMovie>;
 	movieSeries: null | TMovie;
-	userRate?: any;
 	fetchedMovie: null | TMovie;
 	moviesSearchInCreating: null | Array<TMovie>;
 	moviesSearchAddMovieToStory: null | Array<TMovie>;
@@ -60,7 +59,6 @@ const initialState: {
 	moviesSearchAddMovieToStory: null,
 	isLoading: false,
 	searchTitle: '',
-	userRate: null,
 	fetchedMovie: null,
 	ownReview: null,
 	awards: null,
@@ -117,16 +115,6 @@ export default function(state = initialState, action) {
 			return {
 				...state,
 				awards: action.payload.awards
-			};
-		case FETCH_MOVIE_USER_RATE_SUCCESS:
-			return {
-				...state,
-				userRate: action.payload.userRate
-			};
-		case DELETE_USER_RATE:
-			return {
-				...state,
-				userRate: { ...state.userRate, rate: 0 }
 			};
 		case FETCH_MOVIE_BY_ID_SUCCESS:
 			return {
