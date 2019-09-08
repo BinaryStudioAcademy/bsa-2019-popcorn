@@ -19,6 +19,7 @@ import ChatInput from '../../ChatPage/Chat/ChatInput';
 import StoryReaction from './StoryReaction';
 import { createMessage } from '../../ChatPage/ChatPage.redux/actions';
 import { bindActionCreators } from 'redux';
+import WatchListIcon from '../../shared/WatchListIcon/WatchListIcon';
 
 interface IProps {
 	stories: Array<{
@@ -298,9 +299,12 @@ class StoryViewer extends PureComponent<IProps, IState> {
 														</NavLink>
 													)}
 													{story.movieId && story.movie && (
-														<NavLink to={'/movies/' + story.movie.id}>
-															{story.movie.title}
-														</NavLink>
+														<div className="movie-activity-container">
+															<WatchListIcon movieId={story.movie.id} />
+															<NavLink to={'/movies/' + story.movie.id}>
+																{story.movie.title}
+															</NavLink>
+														</div>
 													)}
 												</span>
 											</p>
