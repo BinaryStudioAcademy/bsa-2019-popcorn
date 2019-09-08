@@ -9,7 +9,6 @@ import { connect } from 'react-redux';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar } from '@fortawesome/free-solid-svg-icons';
 import { fetchRecommended } from './RecommendList.redux/actions';
-import ReviewItem from '../../MovieSeriesPage/MovieSeriesReviews/ReviewItem/ReviewItem';
 import { NavLink } from 'react-router-dom';
 import { formatToClient } from '../../UserPage/UserEvents/UserEvents.service';
 import { setReaction } from '../../MovieSeriesPage/MovieSeriesReviews/actions';

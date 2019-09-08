@@ -9,17 +9,16 @@ interface IAdvancedMovieSearchProps {
 	fetchFiltredMovies: (filters: any) => any;
 	setFilters: (filters: any) => any;
 	genres: any;
-	casts: any;
 }
 
 type AdvancedMovieSearchState = {
 	nameValue: string;
-	genresValues: Array<string>;
-	ratingValues: Array<number>;
+	genresValues: string[];
+	ratingValues: number[];
 	yearValues: { startDate: string; endDate: string };
-	crewValues: Array<string>;
+	crewValues: string[];
 	castValues: string;
-	durationValues: Array<number>;
+	durationValues: number[];
 	descriptionValue: string;
 };
 
@@ -52,7 +51,7 @@ class AdvancedMovieSearch extends React.Component<
 		this.handleNameChange = this.handleNameChange.bind(this);
 		this.triggerChange = this.triggerChange.bind(this);
 	}
-	timer;
+	private timer;
 
 	componentWillMount() {
 		this.timer = null;
@@ -92,14 +91,14 @@ class AdvancedMovieSearch extends React.Component<
 	};
 
 	convert(newDate) {
-		let year = newDate.getFullYear();
-		let mnth = ('0' + (newDate.getMonth() + 1)).slice(-2);
-		let day = ('0' + newDate.getDate()).slice(-2);
+		const year = newDate.getFullYear();
+		const mnth = ('0' + (newDate.getMonth() + 1)).slice(-2);
+		const day = ('0' + newDate.getDate()).slice(-2);
 		return [year, mnth, day].join('-');
 	}
 
 	handleYearChange = val => {
-		let convertedVal = {
+		const convertedVal = {
 			startDate: val.startDate
 				? this.convert(val.startDate)
 				: this.state.yearValues.startDate,

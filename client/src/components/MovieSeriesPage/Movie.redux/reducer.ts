@@ -42,7 +42,7 @@ const initialState: {
 	isLoading: boolean;
 	ownReview: any;
 	awards: any;
-	movieSearchInAdvancedSearch: null | Array<TMovie>;
+	movieSearchInAdvancedSearch: null | TMovie[];
 	filters: any;
 	showSpinner: boolean;
 	genres: any;

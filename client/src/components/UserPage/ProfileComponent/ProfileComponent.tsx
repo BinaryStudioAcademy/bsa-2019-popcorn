@@ -115,12 +115,14 @@ class ProfileComponent extends Component<ProfileProps, IProfileComponentState> {
 	}
 	handleSaveCropped() {
 		if (this.cropper.current) {
-			const dataUrl = this.cropper.current.getCroppedCanvas().toBlob(blob => {
+			this.cropper.current.getCroppedCanvas().toBlob(blob => {
 				const data = new FormData();
 				data.append('file', blob);
-				if (this.props.uploadAvatar)
+				if (this.props.uploadAvatar) {
 					this.props.uploadAvatar(data, this.props.profileInfo.id);
-				else console.log('no uploadAvatar method');
+				} else {
+					console.log('no uploadAvatar method');
+				}
 			});
 		}
 		this.props.saveCropped();
@@ -160,13 +162,7 @@ class ProfileComponent extends Component<ProfileProps, IProfileComponentState> {
 		}
 
 		const { isEditing } = this.state;
-		const {
-			uploadUrl,
-			cancelAvatar,
-			setAvatar,
-			croppedSaved,
-			isOwnData
-		} = this.props;
+		const { uploadUrl, cancelAvatar, setAvatar, isOwnData } = this.props;
 
 		const chat = this.findChat();
 

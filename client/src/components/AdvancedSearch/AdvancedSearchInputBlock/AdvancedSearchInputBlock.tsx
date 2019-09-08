@@ -1,5 +1,4 @@
 import React from 'react';
-import ReactPlayer from 'react-player';
 import './AdvancedSearchInputBlock.scss';
 
 type AdvancedSearchInputBlockProps = {
@@ -39,7 +38,7 @@ class AdvancedSearchInputBlock extends React.Component<
 					onChange={this.handleInputChange}
 					className="search-input"
 					placeholder={`Search for a ${this.props.header}`}
-				></input>
+				/>
 			</div>
 		);
 	}
