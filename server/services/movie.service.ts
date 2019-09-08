@@ -106,10 +106,13 @@ export const saveMovieRate = async (newRate: any) => {
   });
   if (rateInDB) {
     rateInDB.rate = newRate.rate;
-    return await getCustomRepository(MovieRateRepository).update(
+    await getCustomRepository(MovieRateRepository).update(
       { id: rateInDB.id },
       { ...rateInDB }
     );
+    return getCustomRepository(MovieRateRepository).findOne({
+      id: rateInDB.id
+    });
   }
   return await getCustomRepository(MovieRateRepository).save(newRate);
 };
