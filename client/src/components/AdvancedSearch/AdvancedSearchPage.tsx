@@ -58,7 +58,6 @@ const MovieListRender = (
 		<MovieList
 			movies={movieList}
 			setMovieSeries={setMovieSeries}
-			twoColumns={true}
 			loadMoreMovie={loadMoreFiltredMovie}
 			filters={filters}
 		/>
