@@ -2,6 +2,9 @@
 
 .mapboxgl-canvas-container {
 	text-align: center;
+	* {
+		outline: none;
+	}
 }
 
 .mapboxgl-canvas {
