@@ -1,27 +1,19 @@
-import { EntityRepository, Repository } from "typeorm";
-import { getCustomRepository } from "typeorm";
+import { EntityRepository, getCustomRepository, Repository } from "typeorm";
 import UserRepository from "./user.repository";
 import { VotingOptionReaction } from "../models/VotingOptionReaction";
 import { VotingOptionReaction as VotingOptionReactionEntity } from "../entities/VotingOptionReaction";
-import VotingOptionRepository from "./votingOption.repository";
+import VotingRepository from "./voting.repository";
+import * as uuid from "uuid/v4";
 
 @EntityRepository(VotingOptionReactionEntity)
 class VotingOptionReactionRepository extends Repository<VotingOptionReaction> {
-  async setVotingReaction(
-    optionId: string,
-    userId: string,
-    isChosen: boolean,
-    next?
-  ) {
+  async setVotingReaction(votingId: string, userId: string, next?) {
     try {
-      const votingOption = await getCustomRepository(
-        VotingOptionRepository
-      ).findOne({ id: optionId });
-      if (!votingOption) {
-        return next(
-          { status: 404, message: "Voting Option is not found" },
-          null
-        );
+      const voting = await getCustomRepository(VotingRepository).findOne({
+        id: votingId
+      });
+      if (!voting) {
+        return next({ status: 404, message: "Voting  is not found" }, null);
       }
 
       const user = await getCustomRepository(UserRepository).findOne({
@@ -31,10 +23,13 @@ class VotingOptionReactionRepository extends Repository<VotingOptionReaction> {
         return next({ status: 404, message: "User is not found" }, null);
       }
 
-      const prevReaction = await this.findOne({ user, votingOption });
-      return prevReaction
-        ? await this.update(prevReaction.id, { isChosen })
-        : await this.save({ isChosen, votingOption, user });
+      await this.createQueryBuilder()
+        .where({ user, votingOption: { id: voting.id } })
+        .delete();
+      this.create({ id: uuid(), votingOption: { id: voting.id }, user });
+      return await getCustomRepository(VotingRepository).getVotingById(
+        votingId
+      );
     } catch (err) {
       return next({ status: err.status, message: err.message }, null);
     }

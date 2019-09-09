@@ -7,9 +7,6 @@ export class VotingOptionReaction {
   @PrimaryGeneratedColumn("uuid")
   id: string;
 
-  @Column({ default: false })
-  isChosen: boolean;
-
   @ManyToOne(type => VotingOption, { onDelete: "CASCADE" })
   votingOption: VotingOption;
 
