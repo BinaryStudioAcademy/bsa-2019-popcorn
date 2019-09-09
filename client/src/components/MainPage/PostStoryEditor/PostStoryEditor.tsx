@@ -144,9 +144,6 @@ class PostStoryEditor extends React.Component<
 		});
 	}
 
-	private textarea = React.createRef<HTMLTextAreaElement>();
-	private cropper = React.createRef<Cropper>();
-
 	render() {
 		const backgroundColor = this.props.newStory.backgroundColor;
 		const isShownInput = this.props.isShownInput;
