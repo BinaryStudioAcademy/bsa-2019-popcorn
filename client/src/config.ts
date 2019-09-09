@@ -9,7 +9,8 @@ const config = {
 		'https://www.goldderby.com/wp-content/uploads/2017/12/Oscar-statuette-trophy-atmo.png',
 	DEFAULT_MOVIELIST_IMAGE: '/images/default/movielist-default.png',
 	POSTER_PATH: 'https://image.tmdb.org/t/p/w500',
-	DEFAULT_SURVEY_IMAGE: '/images/default/survey-default.png'
+	DEFAULT_SURVEY_IMAGE: '/images/default/survey-default.png',
+	DEFAULT_CREW_CAST_IMAGE: '/images/default/crew-cast-default.png'
 };
 const firebaseConfig = {
 	apiKey: 'AIzaSyDBZq6hgJwMbJEi3u6GSTRi4QFphjnl32Q',
