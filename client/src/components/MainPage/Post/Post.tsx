@@ -146,7 +146,7 @@ class Post extends Component<IPostProps, IPostState> {
 		const { reactions } = this.props.post;
 		return (
 			<div className="post-item-reaction-text">
-				{reactions.length ?
+				{reactions && reactions.length ?
 					<span>
 						<strong>{reactions.length} </strong>
 						&nbsp;
