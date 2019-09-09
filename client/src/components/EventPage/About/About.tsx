@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import Modal from 'react-responsive-modal';
-import EventMap from '../EventMap';
 import Moment from 'react-moment';
 import './About.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -15,8 +14,6 @@ import MapComponent from '../../UserPage/UserEvents/EventMap/Map';
 interface IProps {
 	event: IEventFormatClient;
 }
-
-const MAP_API_KEY = 'AIzaSyD29w9W3OSEnII5bBNqhSxSSIWjrdgBdto';
 
 const About: React.SFC<IProps> = ({ event }) => {
 	const [locationMap, setLocationMap] = useState(false);

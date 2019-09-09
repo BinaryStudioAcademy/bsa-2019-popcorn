@@ -6,7 +6,6 @@ import {
 	SET_POSTS,
 	UPDATE_POST
 } from './actionTypes';
-import IComment from '../../Post/IComment';
 import findIndexInArray from '../../../../helpers/findIndexInArray';
 import IPost from '../../Post/IPost';
 
@@ -22,12 +21,16 @@ export default function(state = initialState, action) {
 				posts: action.payload.posts
 			};
 		case ADD_NEW_COMMENT:
-			if (!state.posts) return state;
+			if (!state.posts) {
+				return state;
+			}
 			const posts = [...state.posts];
 			const comment = action.payload.comment.comment;
 
 			const index = findIndexInArray(posts, 'id', comment.post.id);
-			if (index === -1) return state;
+			if (index === -1) {
+				return state;
+			}
 			const post = posts[index];
 			if (!post.comments) post.comments = [comment];
 			else post.comments.push(comment);

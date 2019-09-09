@@ -10,7 +10,7 @@ import Spinner from '../shared/Spinner';
 
 interface IProps {
 	fetchChats: (userId) => void;
-	chats: any; //to do
+	chats: any; // to do
 	userId: string;
 	isLoadingList: boolean;
 }
@@ -21,7 +21,9 @@ class ChatPage extends React.Component<IProps> {
 	}
 
 	render() {
-		if (this.props.isLoadingList) return <Spinner />;
+		if (this.props.isLoadingList) {
+			return <Spinner />;
+		}
 
 		return (
 			<div className="chat-wrp">

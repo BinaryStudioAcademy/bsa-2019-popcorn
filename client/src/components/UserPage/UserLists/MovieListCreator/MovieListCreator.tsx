@@ -3,9 +3,8 @@ import './MovieListCreator.scss';
 import { INewMovieList } from '../UserLists';
 import ImageLoader from './ImageLoader/ImageLoader';
 import MovieSearch from '../../../shared/MovieSearch/MovieSearch';
-import { NavLink } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTimesCircle, faTimes } from '@fortawesome/free-solid-svg-icons';
+import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import config from '../../../../config';
 import Image from '../../../shared/Image/Image';
 
@@ -35,7 +34,7 @@ const MovieListCreator: React.FC<IProps> = ({
 	const elasticProperties = ['id', 'title', 'poster_path', 'release_date'];
 
 	const onSaveMovieList = () => {
-		if (!title || moviesDetails.length == 0) {
+		if (!title || moviesDetails.length === 0) {
 			// show error
 			return;
 		}

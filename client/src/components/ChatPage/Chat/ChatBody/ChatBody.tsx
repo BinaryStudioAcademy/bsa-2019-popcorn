@@ -20,14 +20,6 @@ interface IState {
 }
 
 class ChatBody extends React.Component<IProps, IState> {
-	constructor(props) {
-		super(props);
-		this.state = {
-			chatId: '',
-			messages: []
-		};
-	}
-
 	static getDerivedStateFromProps(nextProps, prevState) {
 		if (nextProps.chatId !== prevState.chatId) {
 			nextProps.readMessages(nextProps.chatId, nextProps.userId);
@@ -38,6 +30,15 @@ class ChatBody extends React.Component<IProps, IState> {
 		}
 		return null;
 	}
+
+	constructor(props) {
+		super(props);
+		this.state = {
+			chatId: '',
+			messages: []
+		};
+	}
+
 	render() {
 		let tmpDate = '';
 		const { messages, userId } = this.props;
