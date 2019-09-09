@@ -50,8 +50,8 @@ const RecommendItemTop = ({
 				className="recommend-item-row top-preview"
 			>
 				<ol>
-					{movieInTop.slice(0, 3).map(movie => (
-						<li>
+					{movieInTop.slice(0, 3).map((movie, index) => (
+						<li key={index}>
 							{movie.movie.title} ({getReleaseYear(movie)})
 						</li>
 					))}

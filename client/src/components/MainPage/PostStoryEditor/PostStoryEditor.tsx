@@ -77,9 +77,6 @@ class PostStoryEditor extends React.Component<
 		this.handleDragText = this.handleDragText.bind(this);
 	}
 
-	private textarea = React.createRef<HTMLTextAreaElement>();
-	private cropper = React.createRef<Cropper>();
-
 	onToggleCheckbox() {
 		// this.setState({
 		// 	...this.state,
@@ -106,7 +103,7 @@ class PostStoryEditor extends React.Component<
 	onSave() {
 		this.props.saveAfterCrop();
 		if (this.cropper.current) {
-			const dataUrl = this.cropper.current.getCroppedCanvas().toBlob(blob => {
+			this.cropper.current.getCroppedCanvas().toBlob(blob => {
 				const data = new FormData();
 				data.append('file', blob);
 				uploadFile(data)
@@ -143,6 +140,9 @@ class PostStoryEditor extends React.Component<
 		});
 	}
 
+	private textarea = React.createRef<HTMLTextAreaElement>();
+	private cropper = React.createRef<Cropper>();
+
 	render() {
 		const backgroundColor = this.props.newStory.backgroundColor;
 		const isShownInput = this.props.isShownInput;
@@ -156,6 +156,7 @@ class PostStoryEditor extends React.Component<
 				title
 			);
 		};
+
 		return (
 			<div className={'edit-form'}>
 				{this.state.errorMsg && (

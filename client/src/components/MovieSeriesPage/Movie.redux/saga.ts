@@ -90,7 +90,7 @@ export function* getGenres() {
 	yield put({
 		type: SET_GENRES,
 		payload: {
-			genres: genres
+			genres
 		}
 	});
 }
@@ -103,7 +103,7 @@ export function* fetchAwards(action) {
 	yield put({
 		type: SET_AWARDS,
 		payload: {
-			awards: awards
+			awards
 		}
 	});
 }

@@ -37,7 +37,7 @@ const RecommendItemEvent = ({ event }: RecommendItemProps) => {
 					<div>
 						<span className="recommend-item-date">
 							{console.log(event.dateRange.startDate)}
-							<Moment format=" D MMM HH:mm " local>
+							<Moment format=" D MMM HH:mm " local={true}>
 								{String(event.dateRange.startDate)}
 							</Moment>{' '}
 							<svg
@@ -49,7 +49,7 @@ const RecommendItemEvent = ({ event }: RecommendItemProps) => {
 							>
 								<path d="M1 0V11" stroke="black" strokeOpacity="0.11" />
 							</svg>
-							<Moment format=" D MMM HH:mm " local>
+							<Moment format=" D MMM HH:mm " local={true}>
 								{String(event.dateRange.endDate)}
 							</Moment>
 						</span>
@@ -83,6 +83,7 @@ const RecommendItemEvent = ({ event }: RecommendItemProps) => {
 									className="recommend-item-reaction-image"
 									src={el.user.avatar ? el.user.avatar : config.DEFAULT_AVATAR}
 									alt="author"
+									key={index}
 								/>
 							);
 						})}

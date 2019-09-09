@@ -17,8 +17,9 @@ const AwardContent: React.FC<IAwardContent> = ({
 		<div className="award-content">
 			<AwardTitle title={title} />
 			<div className="award-subtitle">{subtitle}</div>
-			{nominations.categories.map(el => (
+			{nominations.categories.map((el, index) => (
 				<AwardDescription
+					key={index}
 					nominationName={el.category}
 					nominationWinner={el.names}
 				/>

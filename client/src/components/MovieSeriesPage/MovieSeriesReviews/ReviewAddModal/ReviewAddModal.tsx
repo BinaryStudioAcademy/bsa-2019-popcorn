@@ -3,7 +3,7 @@ import Spinner from '../../../shared/Spinner';
 import './ReviewAddModal.scss';
 import MovieItem from '../../../MovieList/MovieListItem/MovieListItem';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTimes, faStar } from '@fortawesome/free-solid-svg-icons';
+import { faStar } from '@fortawesome/free-solid-svg-icons';
 import { Redirect } from 'react-router';
 import TMovie from '../../../MovieSeriesPage/TMovie';
 import { ReactComponent as DurationIcon } from '../../../../assets/icons/general/movie/duration-icon.svg';
@@ -114,7 +114,7 @@ class ReviewAddModal extends React.Component<IProps, IState> {
 									}
 									placeholder="Write here..."
 									className="review-text-area"
-								></textarea>
+								/>
 							</div>
 							<div className="review-buttons">
 								<div
