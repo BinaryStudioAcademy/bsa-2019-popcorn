@@ -9,6 +9,7 @@ import PostCommentsRepository from "../repository/postComments.repository";
 import { PostCommentsModel } from "../models/PostCommentsModel";
 import { PostReactions } from "../models/PostReactionsModel";
 import PostReactionsRepository from "../repository/postReactions.repository";
+import * as topService from "../services/top.service";
 import * as uuid from "uuid/v4";
 
 const getExtra = async (post: any) => {
@@ -37,14 +38,25 @@ const getExtra = async (post: any) => {
   return post;
 };
 
+const getMovieInTop = async (topId: string) => {
+  const top = await topService.getTopById(topId);
+  return top.movieInTop;
+}
+
 export const createPost = async (post: any): Promise<Post> => {
   post = await getExtra(post);
   post.createdAt = new Date();
   await getCustomRepository(PostRepository).save(post);
-  return await getCustomRepository(PostRepository).findOne({
+
+  const createdPost: any = await getCustomRepository(PostRepository).findOne({
     where: { id: post.id },
     relations: ["user", "top", "survey", "event"]
   });
+  if (createdPost.top) {
+    createdPost.top.movieInTop = await getMovieInTop(post.top.id);
+  }
+  
+  return createdPost;
 };
 
 export const getPosts = async (movieId: string = null): Promise<any[]> => {
@@ -56,12 +68,19 @@ export const getPosts = async (movieId: string = null): Promise<any[]> => {
   if (movieId) {
     options.where = { description: Like(`%@${movieId}{%`) };
   }
+  
   const posts = await getCustomRepository(PostRepository).find(options);
-  return Promise.all(
+  
+  return await Promise.all(
     posts.map(async post => {
       const allPost: any = { ...post };
+      
+      if (allPost.top) {
+         allPost.top.movieInTop = await getMovieInTop(post.top.id);
+      }
       allPost.comments = await getComments(post);
       allPost.reactions = await getReactions(post);
+
       return allPost;
     })
   );
@@ -76,10 +95,16 @@ export const updateById = async (post: any): Promise<any> => {
     { id: post.id },
     { ...post }
   );
-  return await getCustomRepository(PostRepository).findOne({
+  
+  const updatedPost: any = await getCustomRepository(PostRepository).findOne({
     where: { id: post.id },
     relations: ["user", "top", "survey", "event"]
   });
+  if (updatedPost.top) {
+    updatedPost.top.movieInTop = await getMovieInTop(post.top.id);
+  }
+
+  return updatedPost;
 };
 export const getPostById = async (postId: string): Promise<Post> =>
   await getCustomRepository(PostRepository).findOne({
