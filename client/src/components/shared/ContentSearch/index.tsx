@@ -2,7 +2,7 @@ import React from 'react';
 import './style.scss';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { fetchData } from './redux/actions';
+import { fetchData, reset } from './redux/actions';
 import { Redirect } from 'react-router-dom';
 import ResultList from './ResultList';
 import { ReactComponent as SearchIcon } from '../../../assets/icons/general/search-icon.dbb24f09.svg';
@@ -16,7 +16,12 @@ const options = [
 	'advance movie search   '
 ];
 const defaultOption = options[0];
-const whiteList = ['content-search', 'question-type', 'search-input'];
+const whiteList = [
+	'content-search',
+	'question-type',
+	'search-input',
+	'search-icon'
+];
 
 interface IProps {
 	fetchData: (title: string, type: string) => any;
@@ -24,6 +29,7 @@ interface IProps {
 	loading: boolean;
 	error: string;
 	history: any;
+	reset: () => any;
 }
 
 interface IState {
@@ -66,6 +72,29 @@ class ContentSearch extends React.Component<IProps, IState> {
 		return this.state.showModal || this.props.loading || !!this.props.error;
 	}
 
+	onChange(e) {
+		const TimeOut = 2000;
+		const title = e.target.value;
+		this.setState({ title });
+
+		setTimeout(() => {
+			if (this.props.loading || this.state.title !== title) {
+				return;
+			}
+
+			if (this.state.title) {
+				this.props.fetchData(this.state.title, this.state.type);
+				this.setModal(true);
+			} else {
+				this.reset();
+			}
+		}, TimeOut);
+	}
+
+	reset() {
+		this.setState({ title: '', showModal: false });
+		this.props.reset();
+	}
 	render() {
 		const { title, type, redirectAdvanceSearch } = this.state;
 		if (redirectAdvanceSearch) {
@@ -73,6 +102,7 @@ class ContentSearch extends React.Component<IProps, IState> {
 			return <Redirect to={'/advanced-search'} />;
 		}
 
+		// tslint:disable-next-line:no-shadowed-variable
 		const { fetchData, data } = this.props;
 
 		return (
@@ -94,7 +124,7 @@ class ContentSearch extends React.Component<IProps, IState> {
 						placeholder="Search"
 						value={title}
 						className="search-input"
-						onChange={e => this.setState({ title: e.target.value })}
+						onChange={e => this.onChange(e)}
 						onKeyPress={e => {
 							if (e.which === 13 && title.trim()) {
 								fetchData(title, type);
@@ -110,9 +140,11 @@ class ContentSearch extends React.Component<IProps, IState> {
 					className="question-type"
 					value={type}
 					onChange={event => {
-						if (event.target.value !== 'advance movie search   ')
+						if (event.target.value !== 'advance movie search   ') {
 							return this.setState({ type: event.target.value });
+						}
 
+						this.reset();
 						this.setState({ redirectAdvanceSearch: true });
 					}}
 				>
@@ -141,7 +173,8 @@ const mapStateToProps = (rootState, props) => ({
 });
 
 const actions = {
-	fetchData
+	fetchData,
+	reset
 };
 
 const mapDispatchToProps = dispatch => bindActionCreators(actions, dispatch);
