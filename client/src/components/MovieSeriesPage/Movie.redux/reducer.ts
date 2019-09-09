@@ -6,7 +6,6 @@ import {
 	SET_MOVIE_SERIES,
 	SET_SEARCH_MOVIE,
 	SET_SEARCH_MOVIE_TO_ADD,
-	FETCH_MOVIE_USER_RATE_SUCCESS,
 	FETCH_MOVIE_BY_ID_SUCCESS,
 	SET_LOAD_MORE_MOVIE,
 	FETCH_REVIEW_BY_USER_MOVIE_ID_SUCCESS,
@@ -21,7 +20,6 @@ import {
 	SET_GENRES,
 	FETCH_STATISTICS,
 	FETCH_STATISTICS_SUCCESS,
-	DELETE_USER_RATE,
 	FETCH_POSTS_BY_FILM_SUCCESS
 } from './actionTypes';
 import TMovie from '../TMovie';
@@ -37,7 +35,6 @@ const initialState: {
 	alreadySearch: boolean;
 	movieList: null | Array<TMovie>;
 	movieSeries: null | TMovie;
-	userRate?: any;
 	fetchedMovie: null | TMovie;
 	moviesSearchInCreating: null | Array<TMovie>;
 	moviesSearchAddMovieToStory: null | Array<TMovie>;
@@ -60,7 +57,6 @@ const initialState: {
 	moviesSearchAddMovieToStory: null,
 	isLoading: false,
 	searchTitle: '',
-	userRate: null,
 	fetchedMovie: null,
 	ownReview: null,
 	awards: null,
@@ -117,16 +113,6 @@ export default function(state = initialState, action) {
 			return {
 				...state,
 				awards: action.payload.awards
-			};
-		case FETCH_MOVIE_USER_RATE_SUCCESS:
-			return {
-				...state,
-				userRate: action.payload.userRate
-			};
-		case DELETE_USER_RATE:
-			return {
-				...state,
-				userRate: { ...state.userRate, rate: 0 }
 			};
 		case FETCH_MOVIE_BY_ID_SUCCESS:
 			return {

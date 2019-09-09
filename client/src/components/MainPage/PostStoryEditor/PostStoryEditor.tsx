@@ -175,6 +175,7 @@ class PostStoryEditor extends React.Component<
 				>
 					{this.props.newStory.image_url && (
 						<div>
+							{this.props.newStory.image_url.includes('tmdb.org') && this.onSave()}
 							{!this.props.photoSaved && (
 								<Cropper
 									className="cropper"

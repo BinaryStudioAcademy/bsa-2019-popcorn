@@ -18,6 +18,7 @@ import recommendedSaga from '../components/MainPage/RecommendList/RecommendList.
 import chatSaga from '../components/ChatPage/ChatPage.redux/saga';
 import contentSearchSaga from '../components/shared/ContentSearch/redux/saga';
 import movieListSaga from '../components/UserPage/UserLists/saga';
+import movieRateSaga from '../components/shared/RateMovie/saga';
 export default function* rootSaga() {
 	yield all([
 		headerSaga(),
@@ -38,6 +39,7 @@ export default function* rootSaga() {
 		recommendedSaga(),
 		chatSaga(),
 		contentSearchSaga(),
-		movieListSaga()
+		movieListSaga(),
+		movieRateSaga()
 	]);
 }

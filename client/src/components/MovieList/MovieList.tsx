@@ -20,7 +20,7 @@ interface IMovieListProps {
 }
 
 const filter = { from: 50, size: 50 };
-const filter1 = { from: 0, size: 14 };
+const filter1 = { from: 0, size: 15 };
 
 const MovieList: React.FC<IMovieListProps> = ({
 	movies,
