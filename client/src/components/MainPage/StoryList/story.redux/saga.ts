@@ -93,7 +93,7 @@ export function* sendVotingReaction(action) {
 	const { userId, votingId, optionId } = action.payload;
 	try {
 		yield call(webApi, {
-			endpoint: `/options/react/${votingId}`,
+			endpoint: `/api/voting/options/react/${votingId}`,
 			method: 'PUT',
 			body: {
 				userId,

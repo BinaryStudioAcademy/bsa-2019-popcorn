@@ -13,8 +13,12 @@ interface IStoryListItemProps {
 	fontColor: string;
 	textPositionX?: number;
 	textPositionY?: number;
+	saveVotingReaction: (
+		userId: string,
+		votingId: string,
+		optionId: string
+	) => any;
 }
-
 class StoryListItem extends Component<IStoryListItemProps> {
 	render() {
 		const { imageUrl, name, avatar, backgroundColor } = this.props;

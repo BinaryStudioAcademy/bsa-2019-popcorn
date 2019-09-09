@@ -172,9 +172,11 @@ export const saveVotingReaction = (
 	};
 };
 
-export const setVoting = (voting: any) => ({
-	type: SET_VOTING_REACTION_BY_SOCKET,
-	payload: {
-		voting
-	}
-});
+export const setVoting = (voting: any) => {
+	return {
+		type: SET_VOTING_REACTION_BY_SOCKET,
+		payload: {
+			voting
+		}
+	};
+};

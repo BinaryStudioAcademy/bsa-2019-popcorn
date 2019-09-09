@@ -21,6 +21,7 @@ import { createMessage } from '../../ChatPage/ChatPage.redux/actions';
 import { bindActionCreators } from 'redux';
 import WatchListIcon from '../../shared/WatchListIcon/WatchListIcon';
 import RateMovie from '../../shared/RateMovie/RateMovie';
+import { saveVotingReaction } from '../StoryList/story.redux/actions';
 
 interface IProps {
 	stories: Array<{
@@ -71,6 +72,11 @@ interface IProps {
 	closeViewer: () => void;
 	chats: any;
 	createMessage: (userId: string, chatId: string, body: any) => void;
+	saveVotingReaction: (
+		userId: string,
+		votingId: string,
+		optionId: string
+	) => any;
 }
 
 interface IState {
@@ -189,6 +195,14 @@ class StoryViewer extends PureComponent<IProps, IState> {
 								{story.type === 'voting' && story.voting && (
 									<div>
 										<StoryVoting
+											saveVotingReaction={optionId => {
+												const id = story.voting ? story.voting.id : '';
+												this.props.saveVotingReaction(
+													this.props.userId,
+													id,
+													optionId
+												);
+											}}
 											backgroundColor={story.backgroundColor}
 											header={story.voting.header}
 											options={story.voting.options}
@@ -283,9 +297,7 @@ class StoryViewer extends PureComponent<IProps, IState> {
 														</div>
 													</div>
 												)}
-												<span
-													className="movie-activity-container"
-												>
+												<span className="movie-activity-container">
 													{story.type && story.activity && (
 														<NavLink
 															to={'/' + story.type + 's/' + story.activityId}
@@ -302,7 +314,7 @@ class StoryViewer extends PureComponent<IProps, IState> {
 														</NavLink>
 													)}
 													{story.movieId && story.movie && (
-														<RateMovie movieId={story.movie.id}/>
+														<RateMovie movieId={story.movie.id} />
 													)}
 												</span>
 											</p>
@@ -336,7 +348,8 @@ const mapStateToProps = (rootState, props) => ({
 });
 
 const actions = {
-	createMessage
+	createMessage,
+	saveVotingReaction
 };
 const mapDispatchToProps = dispatch => bindActionCreators(actions, dispatch);
 

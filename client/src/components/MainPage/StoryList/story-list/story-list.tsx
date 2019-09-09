@@ -57,6 +57,11 @@ interface IProps {
 	createVoting: (voting: IVoting) => any;
 	addStory: (story: any) => any;
 	setVoting: (voting: IVoting) => any;
+	saveVotingReaction: (
+		userId: string,
+		votingId: string,
+		optionId: string
+	) => any;
 }
 
 interface IState {

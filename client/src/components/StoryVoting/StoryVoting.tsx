@@ -33,6 +33,8 @@ type StoryVotingProps = {
 	createVoting?: (voting: IVoting) => any;
 	inEditor: boolean;
 	fontColor: string;
+	saveVotingReaction?: (optionId: string) => any;
+	id?: string;
 };
 
 type StoryVotingState = {
@@ -111,33 +113,38 @@ class StoryVoting extends React.Component<StoryVotingProps, StoryVotingState> {
 
 	createStoryVotingOptions() {
 		const allVotes = StoryVoting.calculateAllVotes();
+
 		return this.props.options.map((el, index) => {
-			if (index === 0)
+			if (index === 0) {
 				return (
 					<StoryVotingOption
 						allVotesCount={allVotes}
 						radius={firstRadius}
 						storyVotingOptionInfo={el}
 						key={index}
+						saveVotingReaction={this.props.saveVotingReaction}
 					/>
 				);
-			else if (index === this.props.options.length - 1)
+			} else if (index === this.props.options.length - 1) {
 				return (
 					<StoryVotingOption
 						allVotesCount={allVotes}
 						radius={lastRadius}
 						storyVotingOptionInfo={el}
 						key={index}
+						saveVotingReaction={this.props.saveVotingReaction}
 					/>
 				);
-			else
+			} else {
 				return (
 					<StoryVotingOption
 						allVotesCount={allVotes}
 						storyVotingOptionInfo={el}
 						key={index}
+						saveVotingReaction={this.props.saveVotingReaction}
 					/>
 				);
+			}
 		});
 	}
 
