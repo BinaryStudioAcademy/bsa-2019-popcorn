@@ -53,29 +53,37 @@
 		}
 	}
 
-	.btn {
-		float: right;
-		height: 43px;
-		border-radius: 55px;
-		width: 100px;
-		border: none;
-		outline: none;
-		font-size: $header-medium;
-		font-weight: bold;
-		&.save-btn {
-			background-color: $button-background;
-			color: $white;
-			box-shadow: 0px 5px 12px $button-shadow-color;
-			&:hover {
-				background-color: rgb(216, 86, 0);
-			}
+	.profile-buttons {
+		display: flex;
+
+		& :last-child {
+			margin-left: 10px;
 		}
 
-		&.cancel-btn {
-			color: $text-secondary-color;
-			&:hover {
-				background-color: $background-gray;
-				color: rgba($text-base-color, 0.7);
+		.btn {
+			cursor: pointer;
+			height: 43px;
+			border-radius: 55px;
+			width: 100px;
+			border: none;
+			outline: none;
+			font-size: $header-medium;
+			font-weight: bold;
+			&.save-btn {
+				background-color: $button-background;
+				color: $white;
+				box-shadow: 0px 5px 12px $button-shadow-color;
+				&:hover {
+					background-color: rgb(216, 86, 0);
+				}
+			}
+
+			&.cancel-btn {
+				color: $text-secondary-color;
+				&:hover {
+					background-color: $background-gray;
+					color: rgba($text-base-color, 0.7);
+				}
 			}
 		}
 	}
