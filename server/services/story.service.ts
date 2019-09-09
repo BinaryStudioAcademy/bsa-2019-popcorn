@@ -13,7 +13,10 @@ import { getTopById } from "./top.service";
 export const getStories = async (): Promise<Story[]> => {
   let activity;
   const stories = (await getCustomRepository(StoryRepository).find({
-    relations: ["user"]
+    relations: ["user"],
+    order: {
+      created_at: 'ASC'
+    }
   })).reverse();
   return Promise.all(
     stories.map(async item => {
