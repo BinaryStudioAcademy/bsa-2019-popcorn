@@ -13,7 +13,9 @@ import {
 	DISPLAY_PICKER,
 	DISPLAY_FONT_PICKER,
 	DISPLAY_INPUT,
-	SET_TEXT_POSITION_NEWSTORY
+	SET_TEXT_POSITION_NEWSTORY,
+	SAVE_VOTING_REACTION,
+	SET_VOTING_REACTION_BY_SOCKET
 } from './actionTypes';
 import INewStory from '../INewStory';
 import IVoting from '../IVoting';
@@ -154,3 +156,25 @@ export const saveMovie = (movie: TMovie, movieOption = '') => {
 		}
 	};
 };
+
+export const saveVotingReaction = (
+	userId: string,
+	votingId: string,
+	optionId: string
+) => {
+	return {
+		type: SAVE_VOTING_REACTION,
+		payload: {
+			userId,
+			votingId,
+			optionId
+		}
+	};
+};
+
+export const setVoting = (voting: any) => ({
+	type: SET_VOTING_REACTION_BY_SOCKET,
+	payload: {
+		voting
+	}
+});

@@ -2,17 +2,18 @@ import {
 	ADD_STORY,
 	CHANGE_ACTIVITY,
 	CHANGE_IMAGE,
-	RESET_NEW_STORY,
-	SAVE_MOVIE,
-	SET_CAPTION_NEWSTORY,
-	SET_STORIES,
-	SAVE_CROPPED_IMAGE,
-	SET_BACKGROUNG_NEWSTORY,
-	SET_FONTCOLOR_NEWSTORY,
-	DISPLAY_PICKER,
 	DISPLAY_FONT_PICKER,
 	DISPLAY_INPUT,
-	SET_TEXT_POSITION_NEWSTORY
+	DISPLAY_PICKER,
+	RESET_NEW_STORY,
+	SAVE_CROPPED_IMAGE,
+	SAVE_MOVIE,
+	SET_BACKGROUNG_NEWSTORY,
+	SET_CAPTION_NEWSTORY,
+	SET_FONTCOLOR_NEWSTORY,
+	SET_STORIES,
+	SET_TEXT_POSITION_NEWSTORY,
+	SET_VOTING_REACTION_BY_SOCKET
 } from './actionTypes';
 import INewStory from '../INewStory';
 import replaceFilmSearch from '../../../../helpers/replaceFilmSearch';
@@ -164,6 +165,27 @@ export default function(state = initialState, action) {
 					),
 					movieOption: action.payload.movieOption || ''
 				}
+			};
+		case SET_VOTING_REACTION_BY_SOCKET:
+			const { voting } = action.payload;
+
+			if (!state.stories || !voting) {
+				return state;
+			}
+
+			const index = state.stories.indexOf(
+				story => story.voting && story.voting.id === voting.id
+			);
+
+			if (index === -1) {
+				return state;
+			}
+
+			state.stories[index].voting = voting;
+
+			return {
+				...state,
+				stories: [...state.stories]
 			};
 		default:
 			return state;

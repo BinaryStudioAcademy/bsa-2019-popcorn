@@ -7,7 +7,12 @@ import * as uuid from "uuid/v4";
 
 @EntityRepository(VotingOptionReactionEntity)
 class VotingOptionReactionRepository extends Repository<VotingOptionReaction> {
-  async setVotingReaction(votingId: string, userId: string, next?) {
+  async setVotingReaction(
+    votingId: string,
+    userId: string,
+    optionId: string,
+    next?
+  ) {
     try {
       const voting = await getCustomRepository(VotingRepository).findOne({
         id: votingId
@@ -26,7 +31,7 @@ class VotingOptionReactionRepository extends Repository<VotingOptionReaction> {
       await this.createQueryBuilder()
         .where({ user, votingOption: { id: voting.id } })
         .delete();
-      this.create({ id: uuid(), votingOption: { id: voting.id }, user });
+      this.create({ id: uuid(), votingOption: { id: optionId }, user });
       return await getCustomRepository(VotingRepository).getVotingById(
         votingId
       );

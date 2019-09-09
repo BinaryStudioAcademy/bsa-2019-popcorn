@@ -8,7 +8,8 @@ import {
 	saveImage,
 	saveMovie,
 	setCaption,
-	saveCroppedImage
+	saveCroppedImage,
+	setVoting
 } from './story.redux/actions';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
@@ -84,6 +85,7 @@ interface IProps {
 	isLoading: boolean;
 	photoSaved: boolean;
 	saveCroppedImage: () => void;
+	setVoting: (voting: IVoting) => any;
 }
 
 const ListBlock = ({ ...props }: IProps) => {
@@ -161,6 +163,7 @@ const mapStateToProps = (rootState, props) => ({
 });
 
 const actions = {
+	setVoting,
 	fetchStories,
 	setCaption,
 	saveImage,

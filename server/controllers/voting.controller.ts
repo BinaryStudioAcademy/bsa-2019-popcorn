@@ -53,13 +53,13 @@ router
       .catch(next)
   )
   .put(
-    "/options/:votingId/react",
+    "/options/react/:votingId",
     errorHandlerMiddleware,
     (req: Request & { io: any }, res, next) =>
       votingOptionService
-        .setVotingReaction(req.params.votingId, req.body, next) // req.body: {userId: string}
+        .setVotingReaction(req.params.votingId, req.body, next) // req.body: {userId: string, optionId}
         .then(voting => {
-          req.io.emit("voting-reaction", voting);
+          req.io.emit("new-voting-reaction", voting);
           res.send(voting);
         })
         .catch(next)
