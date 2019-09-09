@@ -18,8 +18,8 @@ router
   .post("/", (req: Request & { io: any }, res: Response, next: NextFunction) =>
     StoryService.createStory(req.body)
       .then((response: Story) => {
-        req.io.emit("new-story", response);
         res.send(response);
+        req.io.emit("new-story", response);
       })
       .catch(next)
   )
