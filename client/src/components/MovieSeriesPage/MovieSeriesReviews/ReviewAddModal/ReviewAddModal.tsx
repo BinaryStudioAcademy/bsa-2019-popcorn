@@ -8,8 +8,10 @@ import { Redirect } from 'react-router';
 import TMovie from '../../../MovieSeriesPage/TMovie';
 import { ReactComponent as DurationIcon } from '../../../../assets/icons/general/movie/duration-icon.svg';
 import { ReactComponent as CloseIcon } from '../../../../assets/icons/general/closeIcon.svg';
+import Image from '../../../shared/Image/Image';
 
 import getFilmDuration from '../../../../helpers/getFilmDuration';
+import config from '../../../../config';
 
 interface IProps {
 	ownReview: any;
@@ -89,7 +91,12 @@ class ReviewAddModal extends React.Component<IProps, IState> {
 							</div>
 							<div className="movie-review-body">
 								<div className="movie-item-for-review">
-									<img className="movie-poster" src={movie.poster_path} />
+									<Image
+										className="movie-poster"
+										src={movie.poster_path}
+										defaultSrc={config.DEFAULT_MOVIE_IMAGE}
+										alt="movie-poster"
+									/>
 									<div className="create-review-movie-title">{movie.title}</div>
 									<div className="movie-secondary-info">
 										<div className="create-review-duration">
