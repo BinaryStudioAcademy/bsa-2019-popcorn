@@ -1,0 +1,23 @@
+@import '../../../styles/variables.scss';
+
+.social-button {
+  height: 45px;
+  display: flex;
+  align-items: center;
+  border: 1px solid $border-color;
+  box-shadow: 1px 1px 5px -2px rgba(0, 0, 0, 0.274);
+  border-radius: 5px;
+  font-size: 14px;
+  margin-bottom: 10px;
+  letter-spacing: 0.4px;
+  color: rgba(0, 0, 0, 0.7);
+  font-weight: 500;
+  &:hover {
+    color: rgba(0, 0, 0, 0.8);
+    background-color: $background-gray;
+  }
+  svg {
+    height: 20px;
+    margin: 0 10px;
+  }
+}

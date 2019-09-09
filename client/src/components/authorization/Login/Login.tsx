@@ -4,12 +4,10 @@ import { NavLink, Redirect } from 'react-router-dom';
 import * as Yup from 'yup';
 import logo from '../../../assets/icons/general/popcorn-logo.svg';
 import './style.scss';
-import {
-	FacebookLoginButton,
-	GoogleLoginButton
-} from 'react-social-login-buttons';
 import * as queryString from 'query-string';
 import config from './../../../config';
+import GoogleButton from '../../shared/SocialButtons/GoogleButton';
+import FacebookButton from '../../shared/SocialButtons/FacebookButton';
 interface IValues {
 	email: string;
 	password: string;
@@ -154,10 +152,10 @@ class Login extends React.Component<IProps, IState, IValues> {
 				{this.linkToRegistration()}
 				<div style={{ marginTop: 20 }}>
 					<a href={`${config.API_URL}/api/auth/google`}>
-						<GoogleLoginButton />
+						<GoogleButton/>
 					</a>
 					<a href={`${config.API_URL}/api/auth/facebook`}>
-						<FacebookLoginButton />
+						<FacebookButton/>
 					</a>
 				</div>
 			</div>

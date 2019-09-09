@@ -310,7 +310,16 @@ class ProfileComponent extends Component<ProfileProps, IProfileComponentState> {
 															to={'/movies/' + item.movie.id}
 															key={item.movie.id}
 														>
-															<p>{item.movie.name}</p>
+															<p>
+																{item.movie.name}
+																<span className="release-date">
+																	{item.movie.release_date
+																		? ' (' +
+																		  item.movie.release_date.slice(0, 4) +
+																		  ')'
+																		: null}
+																</span>
+															</p>
 														</NavLink>
 													)
 												);

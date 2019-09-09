@@ -88,9 +88,6 @@ class Header extends React.Component<IProps> {
 		const PROFILE = 'Profile';
 		const SETTINGS = 'Settings';
 		const LOGOUT = 'Logout';
-
-		const { avatar } = userInfo;
-
 		return (
 			<div className="header">
 				<NavLink to="/" className="header-logo-link">
@@ -183,7 +180,10 @@ class Header extends React.Component<IProps> {
 					}
 				</div>
 				<div className="user-info header-buttons hover">
-					<Image src={avatar} defaultSrc={config.DEFAULT_AVATAR} alt="avatar" />
+					<img
+						src={userInfo.avatar ? userInfo.avatar : config.DEFAULT_AVATAR}
+						alt="avatar"
+					/>
 					<span className="user-name">{userInfo.name}</span>
 					<div className="modal">
 						<Link

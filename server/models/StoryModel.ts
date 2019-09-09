@@ -13,4 +13,5 @@ export class Story {
   fontColor: string;
   textPositionX: number;
   textPositionY: number;
+  created_at: Date;
 }
