@@ -52,7 +52,9 @@ body {
 
 .form-label {
 	display: block;
-
+	position: relative;
+	z-index: -1;
+	overflow: hide;
 	margin-bottom: 13px;
 }
 
