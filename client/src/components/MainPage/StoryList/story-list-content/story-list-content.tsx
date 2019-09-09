@@ -6,6 +6,7 @@ import config from '../../../../config';
 interface IStoryListItem {
 	id: string;
 	caption: string;
+	created_at: Date;
 	image_url: string;
 	backgroundColor: string;
 	fontColor?: string;

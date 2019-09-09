@@ -3,7 +3,8 @@ import {
   PrimaryGeneratedColumn,
   Column,
   ManyToOne,
-  JoinColumn
+  JoinColumn,
+  CreateDateColumn
 } from "typeorm";
 import { User } from "./User";
 
@@ -45,4 +46,7 @@ export class Story {
 
   @Column({ nullable: true })
   movieOption: string;
+
+  @CreateDateColumn({ type: "timestamp" })
+  created_at: Date;
 }
