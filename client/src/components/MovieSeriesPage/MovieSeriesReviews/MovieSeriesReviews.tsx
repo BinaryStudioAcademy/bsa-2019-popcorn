@@ -100,7 +100,7 @@ class MovieSeriesReviews extends React.Component<IProps, IState> {
 								removeReviewSet={removeReviewSet}
 							/>
 						)}
-						<div className="review-button" onClick={this.onModalClick}>
+						<div className="create-item-button" onClick={this.onModalClick}>
 							Write Review
 						</div>
 						{!reviews.length ? (
