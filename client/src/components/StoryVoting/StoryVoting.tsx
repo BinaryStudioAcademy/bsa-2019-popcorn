@@ -10,7 +10,7 @@ type StoryVotingProps = {
 	header: string;
 	options: Array<{
 		body: string;
-		voted: number;
+		votingOptionReactions: any[];
 	}>;
 	deltaPositionForHeader: {
 		x: number;
@@ -46,12 +46,6 @@ type StoryVotingState = {
 const firstRadius = '28px 0 0 28px';
 
 const lastRadius = '0 28px 28px 0';
-
-const storyVotingOptionsMock = [
-	{ text: 'Yes', voted: 5 },
-	{ text: 'No', voted: 6 },
-	{ text: 'Maybe', voted: 10 }
-];
 
 class StoryVoting extends React.Component<StoryVotingProps, StoryVotingState> {
 	constructor(props) {
@@ -148,7 +142,7 @@ class StoryVoting extends React.Component<StoryVotingProps, StoryVotingState> {
 	}
 
 	static calculateAllVotes() {
-		return storyVotingOptionsMock.reduce((a, b) => a + (b['voted'] || 0), 0);
+		return 0;
 	}
 
 	onSave = () => {
