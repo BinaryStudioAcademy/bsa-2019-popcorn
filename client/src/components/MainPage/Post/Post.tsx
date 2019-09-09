@@ -156,8 +156,6 @@ class Post extends Component<IPostProps, IPostState> {
 		} = this.props.post;
 		const createComment = this.props.createComment;
 
-		const linkType = extraLink ? extraLink.split('/')[1] : extraLink;
-
 		const reactionsShow = this.state.hover ? (
 			<Reactions
 				onReactionClick={this.onReactionClick}

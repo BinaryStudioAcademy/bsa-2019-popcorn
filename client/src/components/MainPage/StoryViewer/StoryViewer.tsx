@@ -170,11 +170,15 @@ class StoryViewer extends PureComponent<IProps, IState> {
 								onClick={() => this.setState({ isReactionShown: false })}
 							>
 								<header>
-									<img
-										src={story.userInfo.image_url || config.DEFAULT_AVATAR}
-										alt=""
-									/>
-									<span className="username">{story.userInfo.name}</span>
+									<NavLink className="user-link" to={`/user-page/${story.userInfo.userId}`}>
+										<img
+											src={story.userInfo.image_url || config.DEFAULT_AVATAR}
+											alt=""
+										/>
+									</NavLink>
+									<NavLink className="user-link" to={`/user-page/${story.userInfo.userId}`}>
+										<span className="username">{story.userInfo.name}</span>
+									</NavLink>
 									<TimeAgo date={story.created_at} timeStyle="twitter" />
 									{story.movieOption && (
 										<span style={{ marginLeft: '5px' }}>
@@ -302,7 +306,7 @@ class StoryViewer extends PureComponent<IProps, IState> {
 														</NavLink>
 													)}
 													{story.movieId && story.movie && (
-														<RateMovie movieId={story.movie.id}/>
+														<RateMovie movieId={story.movie.id} />
 													)}
 												</span>
 											</p>

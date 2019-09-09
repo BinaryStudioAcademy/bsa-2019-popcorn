@@ -5,6 +5,11 @@
 	font-size: $post-font-size;
 	display: flex;
 	align-items: center;
+	.user-link {
+		text-decoration: none;
+		color: $text-base-color;
+		display: inline;
+	}
 	img {
 		width: 30px;
 		height: 30px;
