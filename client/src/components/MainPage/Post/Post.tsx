@@ -3,8 +3,7 @@ import AddComment from '../../shared/AddComment/AddComment';
 import './Post.scss';
 import { ReactComponent as SettingIcon } from '../../../assets/icons/general/settings.svg';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faHeart } from '@fortawesome/free-regular-svg-icons';
-import { faShare } from '@fortawesome/free-solid-svg-icons';
+import { faGrinBeam } from '@fortawesome/free-regular-svg-icons';
 import Comment from '../Comment/Comment';
 import Tag from '../Tag/Tag';
 import PostEditModal from '../PostEditModal/PostEditModal';
@@ -19,6 +18,7 @@ import IReaction from './IReaction';
 import Image from '../../shared/Image/Image';
 import Extra from './../../UserPage/UserPosts/PostExtra/extra';
 import JsxParser from 'react-jsx-parser';
+import Moment from 'react-moment';
 
 type IPostProps = {
 	post: IPost;
@@ -142,11 +142,26 @@ class Post extends Component<IPostProps, IPostState> {
 		? this.nestComments(this.props.post.comments)
 		: this.props.post.comments;
 
+	getReactionText() {
+		const { reactions } = this.props.post;
+		return (
+			<div className="post-item-reaction-text">
+				{reactions.length ?
+					<span>
+						<strong>{reactions.length} </strong>
+						&nbsp;
+					{reactions.length !== 1 ? 'reaction' : 'reactions'}
+					</span>
+					: <div>React</div>
+				}
+			</div>)
+	}
+
 	render() {
 		const {
 			id,
 			user,
-			created_At,
+			createdAt,
 			image_url,
 			extraLink,
 			description,
@@ -178,14 +193,16 @@ class Post extends Component<IPostProps, IPostState> {
 						)}
 						<div className="post-item-info">
 							<div className="post-item-author-name">{user.name}</div>
-							{created_At && (
-								<div className="post-item-post-time">{created_At}</div>
-							)}
+							<Moment className="post-date" format=" D MMM HH:mm " local>
+								{String(createdAt)}
+							</Moment>
 						</div>
+
 					</Link>
-					<button className="post-item-settings" onClick={this.toggleModal}>
+
+					{this.isOwnPost() && <button className="post-item-settings" onClick={this.toggleModal}>
 						<SettingIcon />
-					</button>
+					</button>}
 					{this.isModalShown()}
 				</div>
 				{image_url && (
@@ -203,7 +220,7 @@ class Post extends Component<IPostProps, IPostState> {
 					>
 						<Extra
 							readyPost={true}
-							clearExtra={() => {}}
+							clearExtra={() => { }}
 							link={extraLink}
 							type={this.getType()}
 							data={this.props.post[this.getType()]}
@@ -218,16 +235,10 @@ class Post extends Component<IPostProps, IPostState> {
 							onMouseEnter={this.MouseEnterLikeButton}
 							onMouseLeave={this.MouseLeaveLikeButton}
 						>
-							<FontAwesomeIcon icon={faHeart} />
+							<FontAwesomeIcon icon={faGrinBeam} />
 						</button>
-						<div className="post-item-reaction-text">
-							Appreciated by&nbsp;<strong>Doug Walker </strong>
-							and <strong>13 others</strong>
-						</div>
+						{this.getReactionText()}
 					</div>
-					<button className="">
-						<FontAwesomeIcon icon={faShare} />
-					</button>
 				</div>
 				<div className="reaction-list">
 					{this.props.post.reactions &&
@@ -240,7 +251,7 @@ class Post extends Component<IPostProps, IPostState> {
 							/>
 						))}
 				</div>
-				{comments ? (
+				{comments && comments.length ? (
 					<div className="comments-wrp">
 						{comments.map(comment => (
 							<Comment key={comment.id} commentItem={comment} />
