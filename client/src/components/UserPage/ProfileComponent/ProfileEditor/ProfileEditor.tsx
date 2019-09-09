@@ -164,7 +164,7 @@ class ProfileEditor extends Component<
 								)
 							);
 						})}
-						<div style={{ width: '100%' }}>
+						<div style={{ width: '100%', marginTop: '15px' }}>
 							<MovieSearch
 								onSelectMovie={movie => this.onAddFavoriteMovie(movie)}
 								elasticProperties={['id', 'title', 'release_date']}
@@ -172,13 +172,17 @@ class ProfileEditor extends Component<
 						</div>
 					</div>
 				</div>
-
-				<button className="btn save-btn" onClick={this.onEditSave}>
-					Save
-				</button>
-				<button className="btn cancel-btn" onClick={this.onEditCancel}>
-					Cancel
-				</button>
+				<div className="profileRow">
+					<div className="field" />
+					<div className="content profile-buttons">
+						<button className="btn cancel-btn" onClick={this.onEditCancel}>
+							Cancel
+						</button>
+						<button className="btn save-btn" onClick={this.onEditSave}>
+							Save
+						</button>
+					</div>
+				</div>
 			</div>
 		);
 	}
