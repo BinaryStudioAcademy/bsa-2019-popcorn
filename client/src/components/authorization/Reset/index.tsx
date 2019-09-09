@@ -2,7 +2,6 @@ import React from 'react';
 import { ErrorMessage, Field, Form, Formik } from 'formik';
 import * as Yup from 'yup';
 import { NavLink, Redirect } from 'react-router-dom';
-import { fetchResetPassword } from '../actions';
 
 interface Values {
 	name: string;

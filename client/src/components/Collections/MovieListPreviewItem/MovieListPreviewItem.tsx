@@ -16,7 +16,9 @@ const MovieListPreviewItem: React.FC<IProps> = ({ moviePreview }) => {
 
 	const moviesLength = moviePreview.moviesId.length;
 
-	if (redirect) return <Redirect to={`/movie-list/${moviePreview.id}`} />;
+	if (redirect) {
+		return <Redirect to={`/movie-list/${moviePreview.id}`} />;
+	}
 
 	return (
 		<div className="movie-list-preview" onClick={() => setRedirect(true)}>

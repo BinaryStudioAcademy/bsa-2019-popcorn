@@ -59,6 +59,9 @@ class PostStoryEditor extends React.Component<
 	IPostStoryEditorProps,
 	IPostStoryEditorState
 > {
+	private textarea = React.createRef<HTMLTextAreaElement>();
+	private cropper = React.createRef<Cropper>();
+	
 	constructor(props: IPostStoryEditorProps) {
 		super(props);
 		this.state = {
@@ -125,13 +128,14 @@ class PostStoryEditor extends React.Component<
 		let find = str.match(/\$(.+)(.*?)(\s*?)/g);
 		if (find && find[0]) {
 			find = find[0].split(' ');
-			if (find) return find[0].slice(1);
+			if (find) {
+				return find[0].slice(1);
+			}
 		}
 		return '';
 	}
 
 	handleDragText(e, ui) {
-		const { x, y } = this.props.newStory.textPosition;
 		const newX = ui.x;
 		const newY = ui.y;
 		this.props.setTextPosition({
@@ -139,9 +143,6 @@ class PostStoryEditor extends React.Component<
 			y: newY
 		});
 	}
-
-	private textarea = React.createRef<HTMLTextAreaElement>();
-	private cropper = React.createRef<Cropper>();
 
 	render() {
 		const backgroundColor = this.props.newStory.backgroundColor;

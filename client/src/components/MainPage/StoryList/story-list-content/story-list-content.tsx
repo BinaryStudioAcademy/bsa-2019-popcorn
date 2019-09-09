@@ -37,7 +37,7 @@ interface IStoryListItem {
 }
 
 interface IStoryListItemsProps {
-	storyListItems: Array<IStoryListItem>;
+	storyListItems: IStoryListItem[];
 	openViewer: (number) => void;
 }
 

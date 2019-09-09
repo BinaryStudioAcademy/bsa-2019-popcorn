@@ -2,14 +2,9 @@ import React from 'react';
 import { IEventFormatClient } from '../UserEvents.service';
 import './EventItem.scss';
 import Moment from 'react-moment';
-import { ReactComponent as CloseIcon } from '../../../../assets/icons/general/closeIcon.svg';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { NavLink } from 'react-router-dom';
-import {
-	faMapMarkerAlt,
-	faVideo,
-	faUsers
-} from '@fortawesome/free-solid-svg-icons';
+import { faUsers } from '@fortawesome/free-solid-svg-icons';
 import Image from '../../../shared/Image/Image';
 import config from '../../../../config';
 
@@ -31,10 +26,8 @@ const EventItem: React.FC<IProps> = ({
 		userId: currentUserId,
 		title,
 		description,
-		location,
 		image,
 		dateRange,
-		movieId,
 		eventVisitors
 	} = event;
 

@@ -41,7 +41,7 @@ const Extra = (props: IProps) => {
 					<div className="extra-description">
 						{movieForShow.map((movieTop, i) => (
 							<p key={movieTop.id} className="movie-top-item">
-								{i + 1}. {movieTop.title}
+								{i + 1}. {movieTop.movie ? movieTop.movie.title : movieTop.title}
 							</p>
 						))}
 					</div>

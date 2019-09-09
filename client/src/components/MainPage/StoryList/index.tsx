@@ -62,7 +62,7 @@ interface IStoryListItem {
 
 interface IProps {
 	scrollStep: number;
-	stories: null | Array<IStoryListItem>;
+	stories: null | IStoryListItem[];
 	fetchStories: () => any;
 	avatar: null | string;
 	newStory: INewStory;
@@ -77,7 +77,7 @@ interface IProps {
 	userId: string;
 	createVoting: (voting: IVoting) => any;
 	addStory: (story: any) => any;
-	movies: null | Array<TMovie>;
+	movies: null | TMovie[];
 	fetchSearch: (title: string) => any;
 	title: string;
 	resetSearch: () => any;

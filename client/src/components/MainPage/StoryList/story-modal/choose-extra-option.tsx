@@ -67,9 +67,13 @@ class ChooseExtraOption extends React.Component<IProps, IState> {
 
 		const options = this.props[option];
 
-		if (!this.state.open) return <Redirect to={'/'} />;
-		if (!this.state.back || !option) return <Redirect to={'/create/extra'} />;
-		if (!this.state.create)
+		if (!this.state.open) {
+			return <Redirect to={'/'} />;
+		}
+		if (!this.state.back || !option) {
+			return <Redirect to={'/create/extra'} />;
+		}
+		if (!this.state.create) {
 			return (
 				<Redirect
 					to={{
@@ -78,7 +82,8 @@ class ChooseExtraOption extends React.Component<IProps, IState> {
 					}}
 				/>
 			);
-
+		}
+		
 		const close = () => this.setState({ open: false });
 		const back = () => this.setState({ back: false });
 		const create = () => this.setState({ create: false });

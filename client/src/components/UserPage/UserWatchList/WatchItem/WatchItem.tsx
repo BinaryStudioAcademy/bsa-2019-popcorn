@@ -4,11 +4,8 @@ import './WatchItem.scss';
 import Image from '../../../shared/Image/Image';
 import config from '../../../../config';
 import { NavLink } from 'react-router-dom';
-import { ReactComponent as DurationIcon } from '../../../../assets/icons/general/movie/duration-icon.svg';
-import getFilmDuration from '../../../../helpers/getFilmDuration';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTimes, faStar } from '@fortawesome/free-solid-svg-icons';
-import { ReactComponent as CloseIcon } from '../../../../assets/icons/general/closeIcon.svg';
+import { faTimes } from '@fortawesome/free-solid-svg-icons';
 
 interface IProps {
 	watchItem: IWatchItem;

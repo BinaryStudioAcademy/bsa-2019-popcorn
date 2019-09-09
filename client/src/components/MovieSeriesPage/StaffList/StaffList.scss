@@ -27,7 +27,8 @@
 .staff-items-container {
 	padding: 1em;
 	display: grid;
-	grid-template-columns: repeat(auto-fit, 120px);
+	grid-template-columns: repeat(auto-fit, 115px);
+	justify-items: center;
 	justify-content: center;
 }
 

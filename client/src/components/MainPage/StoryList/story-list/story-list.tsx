@@ -10,7 +10,6 @@ import { Redirect } from 'react-router';
 import SocketService from '../../../../services/socket.service';
 import INewStory from '../INewStory';
 import IVoting from '../IVoting';
-import TMovie from '../../../MovieSeriesPage/TMovie';
 
 interface IStoryListItem {
 	id: string;
@@ -43,7 +42,7 @@ interface IStoryListItem {
 }
 interface IProps {
 	scrollStep: number;
-	stories: null | Array<IStoryListItem>;
+	stories: null | IStoryListItem[];
 	fetchStories: () => any;
 	avatar: null | string;
 	newStory: INewStory;
@@ -58,13 +57,6 @@ interface IProps {
 	userId: string;
 	createVoting: (voting: IVoting) => any;
 	addStory: (story: any) => any;
-}
-
-interface IStoryListProps {
-	scrollStep: number;
-	stories: null | Array<IStoryListItem>;
-	fetchStories: () => any;
-	avatar: null | string;
 }
 
 interface IState {
@@ -140,8 +132,12 @@ class StoryList extends Component<IProps, IState> {
 
 	viewerIsShown = () => {
 		const { stories } = this.props;
-		if (!stories) return;
-		if (!this.state.isShownViewer) return null;
+		if (!stories) {
+			return;
+		}
+		if (!this.state.isShownViewer) {
+			return null;
+		}
 
 		const { currentStory } = this.state;
 		const mockStories = stories.map(story => ({
@@ -207,7 +203,9 @@ class StoryList extends Component<IProps, IState> {
 						onMouseLeave={this.onMouseLeave}
 						onMouseMove={this.onMouseMove}
 						onClickCapture={event => {
-							if (this.state.class === 'active') event.stopPropagation();
+							if (this.state.class === 'active') {
+								event.stopPropagation();
+							}
 							this.setState({ isDown: false, class: '', isPopupShown: false });
 						}}
 					>
