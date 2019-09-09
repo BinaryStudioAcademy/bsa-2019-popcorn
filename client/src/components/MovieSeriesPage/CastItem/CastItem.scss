@@ -11,19 +11,27 @@
 	border-radius: 10px;
 	width: calc(130px / 4 * 3 + 0.5em);
 	text-align: center;
+	margin-right: 20px;
 }
 
 .cast-item-name {
-	text-align: center;
+	display: flex;
+	justify-content: center;
+	align-items: center;
 	color: $text-base-color;
 	border-bottom: 1px solid $border-color;
+	min-height: 30px;
 }
 .cast-item-role {
 	color: $text-secondary-color;
 }
-.cast-item-image {
-	width: 100%;
+.cast-item-image-wrp {
+	background-color: #e4e4e4;
+	.cast-item-image {
+		width: 100%;
+	}
 }
+
 .cast-item-image-wrp {
 	width: calc(130px / 4 * 3);
 	height: 130px;
