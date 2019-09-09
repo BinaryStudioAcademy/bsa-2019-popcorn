@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Bar, ResponsiveBar } from '@nivo/bar';
+import { ResponsiveBar } from '@nivo/bar';
 import Spinner from '../../shared/Spinner';
 import './MovieSeriesStatistics.scss';
 

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronDown } from '@fortawesome/free-solid-svg-icons';
 import './Header.scss';
@@ -71,30 +71,17 @@ class Header extends React.Component<IProps> {
 	render() {
 		const {
 			userInfo,
-			moviesSearch,
-			fetchFilms,
-			alreadySearch,
-			setMovieSeries,
 			unauthorize,
-			sendTokenToServer,
 			getUnreadNotifications,
-			setNotificitationIsRead,
-			unredNotifications,
 			chats,
 			setNotificationIsRead,
 			unreadNotifications,
-			firebase,
 			firebaseToken,
-			getFirebaseToken,
 			deleteFirebaseToken,
-			history
 		} = this.props;
 		const MOVIES_IN_CINEMA = 'Movies in cinema';
 		const MOVIE_TOPS = 'Movie tops';
 		const USER_MOVIE_TOPS = `${userInfo.name}'s Movie Lists`;
-		const NEW_TV_SERIES = 'New TV Series';
-		const TV_SERIES_TOPS = 'TV Series tops';
-		const USER_TV_SERIES_TOPS = `${userInfo.name}'s TV Series Lists`;
 		const POPULAR_MOVIES = 'Popular Movies';
 		const POPULAR_TV_SERIES = 'Popular TV Series';
 		const POPULAR_USERS = 'Popular Users';
