@@ -128,9 +128,6 @@ class Header extends React.Component<IProps> {
 						<Link aria-current="page" className="hover" to="/tops">
 							{MOVIE_TOPS}
 						</Link>
-						<Link aria-current="page" className="hover" to="/user-page/lists">
-							{USER_MOVIE_TOPS}
-						</Link>
 					</div>
 				</button>
 				<button
