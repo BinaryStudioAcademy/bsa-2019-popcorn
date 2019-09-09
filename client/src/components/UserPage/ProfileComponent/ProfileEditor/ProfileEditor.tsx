@@ -12,7 +12,9 @@ interface IProfileEditorProps {
 		name: string;
 		location: string;
 		aboutMe: string;
-		favoriteLists: Array<{ movie: { id: number; name: string } }>;
+		favoriteLists: Array<{
+			movie: { id: number; name: string; release_date: string };
+		}>;
 	};
 	onEditCancel: () => void;
 	onEditSave: (any) => void;
@@ -23,7 +25,7 @@ interface IProfileEditorState {
 	name: string;
 	location: string;
 	aboutMe: string;
-	favoriteMovies: Array<{ id: number; name: string }>;
+	favoriteMovies: Array<{ id: number; name: string; release_date: string }>;
 }
 
 class ProfileEditor extends Component<
@@ -72,7 +74,11 @@ class ProfileEditor extends Component<
 	};
 
 	onAddFavoriteMovie = movie => {
-		const newMovie = { id: movie.id, name: movie.title };
+		const newMovie = {
+			id: movie.id,
+			name: movie.title,
+			release_date: movie.release_date
+		};
 
 		const newMovies = [...this.state.favoriteMovies, newMovie];
 		this.setState({ favoriteMovies: newMovies });
@@ -139,6 +145,11 @@ class ProfileEditor extends Component<
 									<NavLink key={item.id} to={'/movies/' + item.id}>
 										<p>
 											{item.name}
+											<span className="release-date">
+												{item.release_date
+													? ' (' + item.release_date.slice(0, 4) + ')'
+													: null}
+											</span>
 											<button
 												className="delete-movie"
 												onClick={e => this.onDeleteFavoriteMovie(e, item.id)}
@@ -156,7 +167,7 @@ class ProfileEditor extends Component<
 						<div style={{ width: '100%' }}>
 							<MovieSearch
 								onSelectMovie={movie => this.onAddFavoriteMovie(movie)}
-								elasticProperties={['id', 'title']}
+								elasticProperties={['id', 'title', 'release_date']}
 							/>
 						</div>
 					</div>
