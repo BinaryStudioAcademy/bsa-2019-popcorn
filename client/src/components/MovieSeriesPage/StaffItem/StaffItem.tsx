@@ -20,7 +20,7 @@ const StaffItem = ({
 							? `https://image.tmdb.org/t/p/w600_and_h900_bestv2/${profile_path}`
 							: config.DEFAULT_AVATAR
 					}
-				></img>
+				/>
 			</div>
 			<div className="staff-item-name">{name}</div>
 			<div className="staff-item-role">{job}</div>

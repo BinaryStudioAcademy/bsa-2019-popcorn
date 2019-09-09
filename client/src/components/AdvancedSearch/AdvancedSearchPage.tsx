@@ -58,7 +58,6 @@ const MovieListRender = (
 		<MovieList
 			movies={movieList}
 			setMovieSeries={setMovieSeries}
-			twoColumns={true}
 			loadMoreMovie={loadMoreFiltredMovie}
 			filters={filters}
 		/>
@@ -77,7 +76,6 @@ const AdvancedSearchPage = ({
 	getGenres
 }: IAdvancedSearchPage) => {
 	let convertGenres = null;
-	const convertCast = null;
 	if (!genres) {
 		getGenres();
 	}
@@ -90,7 +88,6 @@ const AdvancedSearchPage = ({
 				fetchFiltredMovies={fetchFiltredMovies}
 				setFilters={setFilters}
 				genres={convertGenres}
-				casts={convertCast}
 			/>
 			{showSpinner ? (
 				<Spinner />

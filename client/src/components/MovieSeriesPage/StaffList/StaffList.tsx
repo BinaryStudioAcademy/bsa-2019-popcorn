@@ -4,7 +4,7 @@ import './StaffList.scss';
 import { StaffItemInfo } from './StaffType';
 
 type StaffListProps = {
-	crew: Array<StaffItemInfo>;
+	crew: StaffItemInfo[];
 };
 
 const generateStaffArray = (
@@ -22,7 +22,7 @@ const generateStaffArray = (
 		'Costume Design',
 		'Director of Photography'
 	];
-	let neededStaff: Array<{
+	const neededStaff: Array<{
 		name: string;
 		job: string;
 		profile_path: string;
@@ -39,7 +39,7 @@ const generateStaffArray = (
 };
 
 const StaffList = ({ crew }: StaffListProps) => {
-	let groupedStaff = generateStaffArray(crew);
+	const groupedStaff = generateStaffArray(crew);
 	return (
 		<div className={'staff-list'}>
 			<div className={'staff-list-header'}>

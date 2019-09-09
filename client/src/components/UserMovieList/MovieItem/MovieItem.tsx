@@ -1,25 +1,16 @@
 import React from 'react';
-import { IMovie, IWatchListId } from '../UserMovieList';
+import { IMovie } from '../UserMovieList';
 import './MovieItem.scss';
 import Image from '../../shared/Image/Image';
 import config from '../../../config';
 import { NavLink } from 'react-router-dom';
+import WatchListIcon from '../../shared/WatchListIcon/WatchListIcon';
 
 interface IProps {
 	movie: IMovie;
-	addMovieToWatchList: (watchId: string) => object;
-	deleteMovieFromWatchList: (watchId: string, movieId: string) => object;
-	watchListLoading?: boolean;
-	loadingOnMovie?: string;
 }
 
-const MovieItem: React.FC<IProps> = ({
-	movie,
-	addMovieToWatchList,
-	deleteMovieFromWatchList,
-	watchListLoading,
-	loadingOnMovie
-}) => {
+const MovieItem: React.FC<IProps> = ({ movie }) => {
 	const {
 		id,
 		title,
@@ -27,59 +18,8 @@ const MovieItem: React.FC<IProps> = ({
 		release_date,
 		runtime,
 		overview,
-		genres,
-		watchInfo
+		genres
 	} = movie;
-
-	const renderWatchItemElement = () => {
-		if (watchListLoading && String(loadingOnMovie) === String(id)) {
-			return (
-				<div
-					className={`watch-list-icon loading-now`}
-					onClick={ev => ev.preventDefault()}
-				>
-					<div className="loading-now-spinner"></div>
-				</div>
-			);
-		}
-		if (!watchInfo) {
-			return (
-				<div
-					className={`watch-list-icon add-to-watch-list`}
-					onClick={ev => {
-						ev.preventDefault();
-						addMovieToWatchList(id);
-					}}
-					title="add to watch list"
-				/>
-			);
-		}
-		const { status, id: watchId } = watchInfo!;
-
-		if (status === 'to_watch') {
-			return (
-				<div
-					className={`watch-list-icon to-watch`}
-					onClick={ev => {
-						ev.preventDefault();
-						deleteMovieFromWatchList(watchId, id);
-					}}
-					title="Click to remove from watch list"
-				/>
-			);
-		}
-		if (status === 'watched') {
-			return (
-				<div
-					className={`watch-list-icon watched`}
-					onClick={ev => {
-						ev.preventDefault();
-					}}
-					title="You have already watched this movie"
-				/>
-			);
-		}
-	};
 
 	return (
 		<div className="MovieItem">
@@ -89,7 +29,7 @@ const MovieItem: React.FC<IProps> = ({
 					defaultSrc={config.DEFAULT_MOVIE_IMAGE}
 					alt="movie-poster"
 				/>
-				{renderWatchItemElement()}
+				<WatchListIcon movieId={movie.id} />
 			</NavLink>
 			<div className="movie-item-main">
 				<NavLink to={`/movies/${id}`} className="movie-item-title">

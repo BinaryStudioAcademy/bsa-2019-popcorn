@@ -61,13 +61,7 @@ const About: React.SFC<IProps> = ({ event }) => {
 						modal: 'modal-window'
 					}}
 				>
-					<MapComponent currentLocation={event.location} />
-					{/* <EventMap
-						googleMapURL={`https://maps.googleapis.com/maps/api/js?key=${MAP_API_KEY}`}
-						loadingElement={<div className="map-loading-elem" />}
-						containerElement={<div className="map-container" />}
-						mapElement={<div className="map-elem" />}
-					/> */}
+					<MapComponent currentLocation={event.location} readOnly={true}/>
 					<button
 						className="modal-btn-close"
 						onClick={() => setLocationMap(prevLocationMap => !prevLocationMap)}

@@ -152,7 +152,7 @@ class StoryVoting extends React.Component<StoryVotingProps, StoryVotingState> {
 	}
 
 	onSave = () => {
-		const { header, userId, backColor, image_url, options } = this.props;
+		const { header, userId, image_url, options } = this.props;
 		const { deltaPositionHead, deltaPositionOptionBlock } = this.state;
 		const rgba =
 			typeof this.props.backColor === 'string'
@@ -179,11 +179,6 @@ class StoryVoting extends React.Component<StoryVotingProps, StoryVotingState> {
 			typeof this.props.backColor === 'string'
 				? this.props.backColor
 				: `rgba(${this.props.backColor.r},${this.props.backColor.b},${this.props.backColor.g},${this.props.backColor.a})`;
-
-		const backgroundStyle = {
-			backgroundImage: `url(${this.props.image_url})`,
-			backgroundColor: rgba
-		};
 
 		if (this.state.redirect) return <Redirect to={'/create'} />;
 

@@ -84,6 +84,12 @@ router
         .catch(next);
     }
   )
+  .get("/rate/user/all", errorHandlerMiddleware, (req, res, next) =>
+    movieService
+      .getAllUserRates(req.user.id)
+      .then(response => res.send(response))
+      .catch(next)
+  )
   .delete("/rate/:id", (req: any, res: Response, next: NextFunction) =>
     movieService
       .deleteMovieRate(req.params.id)

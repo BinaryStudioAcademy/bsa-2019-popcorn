@@ -9,7 +9,6 @@ interface IAdvancedMovieSearchProps {
 	fetchFiltredMovies: (filters: any) => any;
 	setFilters: (filters: any) => any;
 	genres: any;
-	casts: any;
 }
 
 type AdvancedMovieSearchState = {
@@ -52,7 +51,7 @@ class AdvancedMovieSearch extends React.Component<
 		this.handleNameChange = this.handleNameChange.bind(this);
 		this.triggerChange = this.triggerChange.bind(this);
 	}
-	timer;
+	private timer;
 
 	componentWillMount() {
 		this.timer = null;

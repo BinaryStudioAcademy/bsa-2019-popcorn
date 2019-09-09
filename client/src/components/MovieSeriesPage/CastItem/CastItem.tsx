@@ -20,7 +20,7 @@ const CastItem = ({
 							? `https://image.tmdb.org/t/p/w600_and_h900_bestv2/${profile_path}`
 							: config.DEFAULT_AVATAR
 					}
-				></img>
+				/>
 			</div>
 			<div className="cast-item-name">{name}</div>
 			<div className="cast-item-role">{character}</div>

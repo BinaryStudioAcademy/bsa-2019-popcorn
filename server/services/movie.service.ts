@@ -106,10 +106,13 @@ export const saveMovieRate = async (newRate: any) => {
   });
   if (rateInDB) {
     rateInDB.rate = newRate.rate;
-    return await getCustomRepository(MovieRateRepository).update(
+    await getCustomRepository(MovieRateRepository).update(
       { id: rateInDB.id },
       { ...rateInDB }
     );
+    return getCustomRepository(MovieRateRepository).findOne({
+      id: rateInDB.id
+    });
   }
   return await getCustomRepository(MovieRateRepository).save(newRate);
 };
@@ -127,6 +130,9 @@ export const getMovieRate = async (
   }
   return { userId, movieId, rate: 0 };
 };
+
+export const getAllUserRates = (userId: string) =>
+  getCustomRepository(MovieRateRepository).find({ where: { userId } });
 
 export const deleteMovieRate = (rateId: string): Promise<any> =>
   getCustomRepository(MovieRateRepository).delete({ id: rateId });

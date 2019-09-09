@@ -38,9 +38,9 @@ class AdvancedSearchCheckboxBlock extends React.Component<
 	};
 
 	generateValuesCheckbox = (values: string[]) => {
-		const valuesArray = values.map((el, i) => {
+		const valuesArray = values.map((el, index) => {
 			return (
-				<label className="container-checkbox" key={i}>
+				<label key={index} className="container-checkbox">
 					{el}
 					<input
 						onChange={() => {
@@ -49,7 +49,7 @@ class AdvancedSearchCheckboxBlock extends React.Component<
 						type="checkbox"
 						value={el}
 					/>
-					<span className="checkmark-checkbox"></span>
+					<span className="checkmark-checkbox" />
 				</label>
 			);
 		});

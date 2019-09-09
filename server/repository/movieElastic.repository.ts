@@ -17,7 +17,7 @@ export const get = async (size = 50, from = 0) => {
   return response.json();
 };
 
-export const getFiltred = async (size = 14, from = 0, filters) => {
+export const getFiltred = async (size = 15, from = 0, filters) => {
   const response = await fetch(
     process.env.ELASTIC_API_URL + `/popcorn/_search`,
     {

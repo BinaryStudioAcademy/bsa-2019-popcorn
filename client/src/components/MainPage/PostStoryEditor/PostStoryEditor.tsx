@@ -144,6 +144,9 @@ class PostStoryEditor extends React.Component<
 		});
 	}
 
+	private textarea = React.createRef<HTMLTextAreaElement>();
+	private cropper = React.createRef<Cropper>();
+
 	render() {
 		const backgroundColor = this.props.newStory.backgroundColor;
 		const isShownInput = this.props.isShownInput;
@@ -157,6 +160,7 @@ class PostStoryEditor extends React.Component<
 				title
 			);
 		};
+
 		return (
 			<div className={'edit-form'}>
 				{this.state.errorMsg && (
@@ -176,6 +180,7 @@ class PostStoryEditor extends React.Component<
 				>
 					{this.props.newStory.image_url && (
 						<div>
+							{this.props.newStory.image_url.includes('tmdb.org') && this.onSave()}
 							{!this.props.photoSaved && (
 								<Cropper
 									className="cropper"

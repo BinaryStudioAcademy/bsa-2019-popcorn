@@ -3,13 +3,15 @@ import Spinner from '../../../shared/Spinner';
 import './ReviewAddModal.scss';
 import MovieItem from '../../../MovieList/MovieListItem/MovieListItem';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTimes, faStar } from '@fortawesome/free-solid-svg-icons';
+import { faStar } from '@fortawesome/free-solid-svg-icons';
 import { Redirect } from 'react-router';
 import TMovie from '../../../MovieSeriesPage/TMovie';
 import { ReactComponent as DurationIcon } from '../../../../assets/icons/general/movie/duration-icon.svg';
 import { ReactComponent as CloseIcon } from '../../../../assets/icons/general/closeIcon.svg';
+import Image from '../../../shared/Image/Image';
 
 import getFilmDuration from '../../../../helpers/getFilmDuration';
+import config from '../../../../config';
 
 interface IProps {
 	ownReview: any;
@@ -89,7 +91,12 @@ class ReviewAddModal extends React.Component<IProps, IState> {
 							</div>
 							<div className="movie-review-body">
 								<div className="movie-item-for-review">
-									<img className="movie-poster" src={movie.poster_path} />
+									<Image
+										className="movie-poster"
+										src={movie.poster_path}
+										defaultSrc={config.DEFAULT_MOVIE_IMAGE}
+										alt="movie-poster"
+									/>
 									<div className="create-review-movie-title">{movie.title}</div>
 									<div className="movie-secondary-info">
 										<div className="create-review-duration">
@@ -114,7 +121,7 @@ class ReviewAddModal extends React.Component<IProps, IState> {
 									}
 									placeholder="Write here..."
 									className="review-text-area"
-								></textarea>
+								/>
 							</div>
 							<div className="review-buttons">
 								<div

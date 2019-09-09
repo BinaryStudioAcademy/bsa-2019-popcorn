@@ -4,7 +4,7 @@ import './CastList.scss';
 import { CastItemInfo } from './CastType';
 
 type CastListProps = {
-	cast: Array<CastItemInfo>;
+	cast: CastItemInfo[];
 };
 
 type CastListState = {
@@ -38,7 +38,9 @@ class CastList extends React.Component<CastListProps, CastListState> {
 	onMouseMove = event => {
 		const { startX, scrollLeft, isDown } = this.state;
 		const scroll: any = this.refs.scroll;
-		if (!isDown) return;
+		if (!isDown) {
+			return;
+		}
 		event.preventDefault();
 		const x = event.pageX - scroll.offsetLeft;
 		const walk = x - startX;
@@ -58,7 +60,9 @@ class CastList extends React.Component<CastListProps, CastListState> {
 					onMouseLeave={this.onMouseLeave}
 					onMouseMove={this.onMouseMove}
 					onClickCapture={event => {
-						if (this.state.class === 'active') event.stopPropagation();
+						if (this.state.class === 'active') {
+							event.stopPropagation();
+						}
 						this.setState({ isDown: false, class: '' });
 					}}
 				>

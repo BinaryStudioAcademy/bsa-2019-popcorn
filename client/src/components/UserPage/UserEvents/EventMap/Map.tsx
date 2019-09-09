@@ -67,6 +67,7 @@ export interface IProps {
 	// tslint:disable-next-line:no-any
 	onLocationChanged?: (newCord: { lat: number; lng: number }) => void;
 	currentLocation?: { lat: number | undefined; lng: number | undefined } | null;
+	readOnly?: boolean;
 }
 
 class MapComponent extends React.Component<IProps, IState> {
@@ -113,6 +114,9 @@ class MapComponent extends React.Component<IProps, IState> {
 	};
 
 	private onMapClick = (map: any, event: any) => {
+		if (this.props.readOnly) {
+			return;
+		}
 		if (event) {
 			if (this.props.onLocationChanged)
 				this.props.onLocationChanged(event.lngLat);
