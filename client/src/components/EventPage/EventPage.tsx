@@ -77,7 +77,9 @@ const EventPage: React.FC<IProps> = ({
 		}
 	});
 
-	if (!event || match.params.id !== event.id) return <Spinner />;
+	if (!event || match.params.id !== event.id) {
+		return <Spinner />;
+	}
 	return (
 		<div className="event-page">
 			<EventPageHeader

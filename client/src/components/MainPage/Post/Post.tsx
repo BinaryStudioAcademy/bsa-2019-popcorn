@@ -59,12 +59,13 @@ class Post extends Component<IPostProps, IPostState> {
 	};
 
 	onReactionClick = (reaction: IReactItem) => {
-		if (this.props.createReaction)
+		if (this.props.createReaction) {
 			this.props.createReaction(
 				reaction.name,
 				this.props.userId,
 				this.props.post.id
 			);
+		}
 	};
 
 	deletePost = () => {
@@ -97,9 +98,15 @@ class Post extends Component<IPostProps, IPostState> {
 
 	getType = () => {
 		const post = this.props.post;
-		if (post.survey) return 'survey';
-		if (post.top) return 'top';
-		if (post.event) return 'event';
+		if (post.survey) {
+			return 'survey';
+		}
+		else if (post.top) {
+			return 'top';
+		}
+		else if (post.event) {
+			return 'event';
+		}
 		return 'Nothing';
 	};
 

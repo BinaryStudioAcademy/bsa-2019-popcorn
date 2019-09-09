@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import './add-story-item.scss';
 import { ReactComponent as PlusIcon } from '../../../../assets/icons/storyList/plus-icon.svg';
-interface AddStoryItemProps {
+interface IAddStoryItemProps {
 	avatar: string;
 	onOpenPopupClick: () => void;
 }
-class AddStoryItem extends Component<AddStoryItemProps> {
+class AddStoryItem extends Component<IAddStoryItemProps> {
 	render() {
 		const { avatar, onOpenPopupClick } = this.props;
 		return (
@@ -15,7 +15,7 @@ class AddStoryItem extends Component<AddStoryItemProps> {
 						alt="user-avatar"
 						src={avatar}
 						className="avatar avatar-story"
-					></img>
+					/>
 					<button className="button-story">
 						<PlusIcon className="plus" />
 					</button>
