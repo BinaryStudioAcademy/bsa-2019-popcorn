@@ -4,6 +4,7 @@ import AddComment from '../../shared/AddComment/AddComment';
 import IComment from '../Post/IComment';
 import config from '../../../config';
 import Image from '../../shared/Image/Image';
+import { NavLink } from 'react-router-dom';
 
 type ICommentProps = {
 	commentItem: IComment;
@@ -28,9 +29,6 @@ class Comment extends Component<ICommentProps, ICommentState> {
 	}
 	render() {
 		const comment = this.props.commentItem;
-		// const nestedComments = (comment.children || []).map(comment => {
-		// 	return <Comment commentItem={comment} />;
-		// });
 		return (
 			<div key={comment.id}>
 				<div
@@ -39,25 +37,28 @@ class Comment extends Component<ICommentProps, ICommentState> {
 							? 'comment-item comment-item-reply'
 							: 'comment-item'
 					}
-				>
-					{comment.user && (
+
+				>{comment.user && (
+					<NavLink className="user-link" to={`/user-page/${comment.user.id}`}>
 						<Image
 							src={comment.user.avatar}
 							className="post-item-avatar"
 							defaultSrc={config.DEFAULT_AVATAR}
 							alt="author"
 						/>
-					)}
+					</NavLink>
+				)}
+
 					<p className="comment-text">
-						<strong>{comment.user.name}</strong>
+						<NavLink className="user-link" to={`/user-page/${comment.user.id}`}>
+							<strong>{comment.user.name}</strong>
+						</NavLink>
 						{comment.parentId && <i> {comment.parentId}, </i>} {comment.text}
 					</p>
+
 					<p className="comment-date">{comment.commentDate} </p>
-					{/*<button onClick={this.toggleCommentModal}>Reply</button>*/}
-					{/*{this.isCommentModalShown(comment.id)}*/}
-				</div>
-				{/*{nestedComments}*/}
-			</div>
+				</div >
+			</div >
 		);
 	}
 }

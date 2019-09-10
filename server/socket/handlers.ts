@@ -16,8 +16,9 @@ export default socket => {
 
   socket.on("send-message-to-discussion", async messageInfo => {
     const entityIdName = messageInfo.entityIdName;
+    messageInfo.createdAt = new Date();
     if (entityIdName === "movieId") {
-      const discussion = await movieService.saveDiscussionMessage(messageInfo);
+      await movieService.saveDiscussionMessage(messageInfo);
     }
     if (entityIdName === "eventId") {
       const discussion = await eventService.createComment(messageInfo);

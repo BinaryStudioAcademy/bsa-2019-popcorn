@@ -176,6 +176,12 @@
 			'story';
 		width: 100%;
 
+		.user-link {
+			text-decoration: none;
+			display: inherit;
+			color: inherit;
+		}
+
 		header {
 			grid-area: header;
 			display: flex;

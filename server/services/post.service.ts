@@ -55,11 +55,11 @@ export const createPost = async (post: any): Promise<Post> => {
   if (createdPost.top) {
     createdPost.top.movieInTop = await getMovieInTop(post.top.id);
   }
-  
+
   return createdPost;
 };
 
-export const getPosts = async (movieId: string = null): Promise<any[]> => {
+export const getPosts = async (movieId: string = null, userId: string = null): Promise<any[]> => {
   const options: FindManyOptions = {
     relations: ["user", "top", "survey", "event"],
     where: {},
@@ -68,15 +68,18 @@ export const getPosts = async (movieId: string = null): Promise<any[]> => {
   if (movieId) {
     options.where = { description: Like(`%@${movieId}{%`) };
   }
-  
+  if (userId) {
+    options.where = { user: { id: userId } };
+  }
+
   const posts = await getCustomRepository(PostRepository).find(options);
-  
+
   return await Promise.all(
     posts.map(async post => {
       const allPost: any = { ...post };
-      
+
       if (allPost.top) {
-         allPost.top.movieInTop = await getMovieInTop(post.top.id);
+        allPost.top.movieInTop = await getMovieInTop(post.top.id);
       }
       allPost.comments = await getComments(post);
       allPost.reactions = await getReactions(post);
@@ -95,14 +98,16 @@ export const updateById = async (post: any): Promise<any> => {
     { id: post.id },
     { ...post }
   );
-  
+
   const updatedPost: any = await getCustomRepository(PostRepository).findOne({
     where: { id: post.id },
     relations: ["user", "top", "survey", "event"]
   });
   if (updatedPost.top) {
-    updatedPost.top.movieInTop = await getMovieInTop(post.top.id);
+    updatedPost.top.movieInTop = await getMovieInTop(updatedPost.top.id);
   }
+  updatedPost.comments = await getComments(updatedPost);
+  updatedPost.reactions = await getReactions(updatedPost);
 
   return updatedPost;
 };
