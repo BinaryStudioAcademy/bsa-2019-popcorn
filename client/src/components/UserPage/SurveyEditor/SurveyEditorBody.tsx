@@ -75,7 +75,7 @@ const SurveyEditorBody: React.FC<IProps> = (props: IProps) => {
 					View responses
 					<FontAwesomeIcon icon={faChevronDown} />
 				</NavLink>
-				<div className="modal">
+				<div className="menu-modal">
 				<NavLink
 					to={`${mainPath}/responses/statistics`}
 					className="user-tab"
