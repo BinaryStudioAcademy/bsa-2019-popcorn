@@ -11,12 +11,14 @@ import { getGenre, getMainCast } from '../../../MovieSeriesPage/movieAdapter';
 import config from '../../../../config';
 
 const options = ["I've watched", "I'm going to watch", 'I recommend'];
+
 interface IProps {
 	saveMovie: (movie: TMovie, movieOption?: string) => any;
 	history: {
 		push: (path: string) => void;
 	};
 }
+
 const CreateStoryFilm = ({ ...props }: IProps) => {
 	const [option, setOption] = useState(options[0]);
 
@@ -40,7 +42,9 @@ const CreateStoryFilm = ({ ...props }: IProps) => {
 			...movie,
 			poster_path: `${config.POSTER_PATH}/${movie.poster_path}`,
 			genres: getGenre(JSON.parse(movie.genres)),
-			mainCast: getMainCast(JSON.parse(movie.cast).slice(0, 3))
+			mainCast: movie.cast
+				? getMainCast(JSON.parse(movie.cast).slice(0, 3))
+				: ''
 		};
 	};
 
@@ -60,7 +64,9 @@ const CreateStoryFilm = ({ ...props }: IProps) => {
 			<div className={'movie-add-wrp'}>
 				<div className={'edit-form'}>
 					<MovieSearch
-						onSelectMovie={movie => setMovie(convertMovie(movie))}
+						onSelectMovie={movie => {
+							setMovie(convertMovie(movie));
+						}}
 						elasticProperties={elasticProperties}
 					/>
 				</div>
