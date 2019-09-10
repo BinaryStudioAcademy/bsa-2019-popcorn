@@ -17,6 +17,7 @@ import { SeedChat1567284688344 } from "./1567284688344-SeedChat";
 import { SeedMessage1567286972231 } from "./1567286972231-SeedMessage";
 import { SeedMovieRate1567392463875 } from "./1567392463875-SeedMovieRate";
 import { SeedMovieList1567632579430 } from "./1567632579430-SeedMovieList";
+import { Fix1568132364606 } from "./1568132364606-Fix";
 
 export default [
   SeedUsers1565158741121,
@@ -37,7 +38,8 @@ export default [
   SeedChat1567284688344,
   SeedMessage1567286972231,
   SeedMovieRate1567392463875,
-  SeedMovieList1567632579430
+  SeedMovieList1567632579430,
+  Fix1568132364606
 ];
 //to create new migration run in this folder: typeorm migration:create -n <name>
 // then import this migration hear and export in array below
