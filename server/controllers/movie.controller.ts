@@ -2,7 +2,7 @@ import { NextFunction, Request, Response, Router } from "express";
 import * as movieService from "../services/movie.service";
 import { Movie } from "../models/MovieModel";
 import errorHandlerMiddleware from "../middlewares/error-handler.middleware";
-import { getAdviceMovie } from "../services/adviceMe.service";
+import { getAdviceMeList } from "../services/adviceMe.service";
 import * as postService from "../services/post.service";
 
 const router = Router();
@@ -124,7 +124,7 @@ router
       .catch(next);
   })
   .get("/adviceMe/:userId", (req: any, res: Response, next: NextFunction) => {
-    getAdviceMovie(req.params.userId, next)
+    getAdviceMeList(req.params.userId, next)
       .then(movies => res.send(movies))
       .catch(next);
   });
