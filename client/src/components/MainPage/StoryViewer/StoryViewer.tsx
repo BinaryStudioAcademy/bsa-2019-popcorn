@@ -302,7 +302,10 @@ class StoryViewer extends PureComponent<IProps, IState> {
 														</div>
 													</div>
 												)}
-												<span className="movie-activity-container">
+												{story.type && story.activity &&
+												<span
+													className="movie-activity-container"
+												>
 													{story.type && story.activity && (
 														<NavLink
 															to={'/' + story.type + 's/' + story.activityId}
@@ -322,6 +325,7 @@ class StoryViewer extends PureComponent<IProps, IState> {
 														<RateMovie movieId={story.movie.id} />
 													)}
 												</span>
+												}
 											</p>
 										</div>
 									</main>
