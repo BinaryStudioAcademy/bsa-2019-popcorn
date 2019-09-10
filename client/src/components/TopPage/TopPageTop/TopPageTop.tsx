@@ -5,6 +5,7 @@ import config from '../../../config';
 import { ITop } from '../TopPage.service';
 
 import './TopPageTop.scss';
+import { NavLink } from 'react-router-dom';
 
 interface ITopProps {
 	top: ITop;
@@ -23,15 +24,20 @@ const TopPageTop: React.SFC<ITopProps> = ({ top }) => {
 			</div>
 			<div className="top-info">
 				<span className="top-title">{top.title}</span>
-				<div className="top-author">
-					<Image
-						src={top.user.avatar}
-						defaultSrc={config.DEFAULT_AVATAR}
-						alt="user-avatar"
-						className="top-user-avatar"
-					/>
-					<span className="top-author-name">{top.user.name}</span>
-				</div>
+				<NavLink
+					className="user-info-container"
+					to={`/user-page/${top.user.id}`}
+				>
+					<div className="top-author">
+						<Image
+							src={top.user.avatar}
+							defaultSrc={config.DEFAULT_AVATAR}
+							alt="user-avatar"
+							className="top-user-avatar"
+						/>
+						<span className="top-author-name">{top.user.name}</span>
+					</div>
+				</NavLink>
 				<span className="top-created-at">
 					<Moment format=" D MMM YYYY " local>
 						{String(top.created_at)}

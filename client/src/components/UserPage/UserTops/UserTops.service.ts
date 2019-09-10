@@ -4,12 +4,14 @@ export interface ITopItem {
 	topImageUrl: string;
 	moviesList: IMovie[];
 	isNewTop?: boolean;
+	created_at: Date;
 }
 
 export interface IMovie {
 	id: number;
 	title: string;
 	comment: string;
+	release_date?: string;
 }
 
 export function convertServerDataFormatToClient(
@@ -21,13 +23,15 @@ export function convertServerDataFormatToClient(
 
 	const clientDataFormat: ITopItem[] = serverData.map(top => {
 		return {
+			...top,
 			id: top.id,
 			title: top.title,
 			topImageUrl: top.topImageUrl,
 			moviesList: top.movieInTop.map(movie => ({
 				id: movie.id,
 				title: movie.title,
-				comment: movie.comment
+				comment: movie.comment,
+				release_date: movie.release_date
 			}))
 		};
 	});
