@@ -1,11 +1,12 @@
 import React from 'react';
 import './MovieListItem.scss';
-import { ReactComponent as DurationIcon } from '../../../assets/icons/general/movie/duration-icon.svg';
 import { NavLink } from 'react-router-dom';
 import config from '../../../config';
 import Image from '../../shared/Image/Image';
 import TMovie from '../../MovieSeriesPage/TMovie';
 import getFilmDuration from '../../../helpers/getFilmDuration';
+import WatchListIcon from '../../shared/WatchListIcon/WatchListIcon';
+import RateMovie from '../../shared/RateMovie/RateMovie';
 
 interface IMovieListItemProps {
 	movie: TMovie;
@@ -24,7 +25,7 @@ const MovieListItem: React.FC<IMovieListItemProps> = ({
 		<NavLink
 			to={`/movies/${movie.id}`}
 			className="movie-link"
-			onClick={() => setMovieSeries && setMovieSeries(movie)} 
+			onClick={() => setMovieSeries && setMovieSeries(movie)}
 		>
 			<div
 				className="movie-item"
@@ -42,19 +43,18 @@ const MovieListItem: React.FC<IMovieListItemProps> = ({
 						alt="movie-poster"
 						className="movie-poster"
 					/>
+					<WatchListIcon movieId={movie.id} />
 				</div>
 				<div className="movie-info">
-					{!saveMovie && (	
-							<div className='movie-header'>
-								<span className="movie-title">
-									{movie.title}{' '}
-								</span>
-								<span className="movie-year">
-									{movie.release_date
-										? '' + movie.release_date.slice(0, 4) + ''
-										: null}
-								</span>
-							</div>	
+					{!saveMovie && (
+						<div className="movie-header">
+							<span className="movie-title">{movie.title} </span>
+							<span className="movie-year">
+								{movie.release_date
+									? '(' + movie.release_date.slice(0, 4) + ')'
+									: null}
+							</span>
+						</div>
 					)}
 					{saveMovie && (
 						<div className={'movie-link'}>
@@ -67,11 +67,10 @@ const MovieListItem: React.FC<IMovieListItemProps> = ({
 						</div>
 					)}
 					<div className="movie-genre">{movie.genres}</div>
-					{duration && (
-						<div className="movie-duration">
-							{duration}
-						</div>
-					)}
+					<div className="movie-footer">
+						{duration && <div className="movie-duration">{duration}</div>}
+						<RateMovie movieId={movie.id} />
+					</div>
 				</div>
 			</div>
 		</NavLink>
