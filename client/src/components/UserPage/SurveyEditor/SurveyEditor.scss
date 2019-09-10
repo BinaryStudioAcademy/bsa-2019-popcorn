@@ -27,7 +27,7 @@ $user-tab-list-space-top: $user-tab-space + $user-tab-active-line;
 	color: #d93025;
 }
 
-.modal {
+.menu-modal {
 	font-family: $base-font-family;
 	background: #f7f8f9;
 	border: 1px solid $border-color;
@@ -68,7 +68,7 @@ $user-tab-list-space-top: $user-tab-space + $user-tab-active-line;
 .survey-editor {
 	position: relative;
 
-	a:hover +  .modal {
+	a:hover +  .menu-modal {
 		transform: scaleY(1);
 	}
 
