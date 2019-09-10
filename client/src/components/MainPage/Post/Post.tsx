@@ -150,7 +150,7 @@ class Post extends Component<IPostProps, IPostState> {
 					<span>
 						<strong>{reactions.length} </strong>
 						&nbsp;
-					{reactions.length !== 1 ? 'reaction' : 'reactions'}
+					{reactions.length === 1 ? 'reaction' : 'reactions'}
 					</span>
 					: <div>React</div>
 				}
