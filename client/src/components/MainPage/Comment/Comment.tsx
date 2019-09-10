@@ -29,9 +29,6 @@ class Comment extends Component<ICommentProps, ICommentState> {
 	}
 	render() {
 		const comment = this.props.commentItem;
-		// const nestedComments = (comment.children || []).map(comment => {
-		// 	return <Comment commentItem={comment} />;
-		// });
 		return (
 			<div key={comment.id}>
 				<div
@@ -60,10 +57,7 @@ class Comment extends Component<ICommentProps, ICommentState> {
 					</p>
 
 					<p className="comment-date">{comment.commentDate} </p>
-					{/*<button onClick={this.toggleCommentModal}>Reply</button>*/}
-					{/*{this.isCommentModalShown(comment.id)}*/}
 				</div >
-				{/*{nestedComments}*/}
 			</div >
 		);
 	}

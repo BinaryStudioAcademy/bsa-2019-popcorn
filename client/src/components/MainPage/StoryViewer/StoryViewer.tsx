@@ -21,6 +21,7 @@ import { bindActionCreators } from 'redux';
 import WatchListIcon from '../../shared/WatchListIcon/WatchListIcon';
 import RateMovie from '../../shared/RateMovie/RateMovie';
 import Moment from 'react-moment';
+import Image from '../../shared/Image/Image';
 
 interface IProps {
 	stories: Array<{
@@ -171,10 +172,10 @@ class StoryViewer extends PureComponent<IProps, IState> {
 							>
 								<header>
 									<NavLink className="user-link" to={`/user-page/${story.userInfo.userId}`}>
-										<img
-											src={story.userInfo.image_url || config.DEFAULT_AVATAR}
-											alt=""
-										/>
+										<Image
+											src={story.userInfo.image_url}
+											defaultSrc={config.DEFAULT_AVATAR}
+											alt={story.userInfo.name} />
 									</NavLink>
 									<NavLink className="user-link" to={`/user-page/${story.userInfo.userId}`}>
 										<span className="username">{story.userInfo.name}</span>
