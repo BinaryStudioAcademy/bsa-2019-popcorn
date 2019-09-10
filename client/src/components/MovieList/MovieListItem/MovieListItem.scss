@@ -36,7 +36,7 @@
 			}
 			.movie-header {
 				display: flex;
-				justify-content: flex-start;
+
 				.movie-title {
 					text-transform: none;
 					font-weight: 600;
@@ -47,13 +47,31 @@
 					white-space: nowrap;
 				}
 				.movie-year {
-					background-color: rgba($border-color, 0.1);
-					font-weight: 400;
-					margin-left: 10px;
-					border-radius: 10px;
-					padding: 0 5px;
-					font-size: 0.9em;
-					height: 30px;
+					line-height: 33px;
+					font-weight: 300;
+					margin-left: 5px;
+					font-size: 0.8em;
+				}
+			}
+			.movie-footer {
+				display: flex;
+				.StarRating {
+					margin-left: 5px;
+					margin-top: -6px;
+					position: relative;
+					width: 24px;
+					height: 24px;
+					padding-left: 0;
+					.user-rating-value {
+						position: static;
+						display: none;
+					}
+				}
+				.stars-container {
+					margin: 0;
+					padding: 0;
+					right: 24px;
+					top: -6px;
 				}
 			}
 		}
@@ -109,13 +127,6 @@
 			svg {
 				height: 18px;
 				margin-right: 5px;
-			}
-		}
-
-		.movie-duration {
-			svg {
-				margin-left: 15px;
-				height: 15px;
 			}
 		}
 
