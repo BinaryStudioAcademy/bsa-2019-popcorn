@@ -122,7 +122,7 @@ class ReviewItem extends React.Component<IProps, IState> {
 							</div>
 							<div className="profile-name-wrapper">
 								<div className="profile-name">
-									{user.id === currentUserId ? 'You' : user.name}
+									{user.name}
 								</div>
 								<div className="profile-review-date">
 									<Moment format=" D MMM HH:mm " local>

@@ -99,6 +99,8 @@
 			color: $text-secondary-color;
 			.movie-poster {
 				height: 170px;
+				display: block;
+				margin: 0 auto 5px;
 			}
 			.create-review-duration {
 				font-size: $base-font-size;

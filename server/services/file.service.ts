@@ -21,7 +21,7 @@ export const uploadFile = req =>
       form.parse(req, function(err, fields, files): any {
         if (err) return reject(err);
         if (process.env.NODE_ENV === "production") {
-          base64Img.base64(path.resolve(files.file[0].path), data => {
+          base64Img.base64(path.resolve(files.file[0].path), (err, data) => {
             upload(data)
               .then(url => resolve(url))
               .catch(e => reject(e));

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar as regularStar } from '@fortawesome/free-regular-svg-icons';
-import { faStar as solidStar } from '@fortawesome/free-solid-svg-icons';
+import { faStar as solidStar, faEdit } from '@fortawesome/free-solid-svg-icons';
 import RateMovie from '../shared/RateMovie/RateMovie';
 import ReviewAddModal from '../MovieSeriesPage/MovieSeriesReviews/ReviewAddModal/ReviewAddModal';
 import TMovie from '../MovieSeriesPage/TMovie';
@@ -118,7 +118,10 @@ const MovieSeriesPageHeader: React.FC<IProps> = ({
 					<RateMovie movieId={movie.id} />
 					<div />
 					<div className="header-review-own-rating-container">
-						<div className="review-button" onClick={() => onModalClick()}>
+						<div className="review-button" onClick={onModalClick}>
+						<FontAwesomeIcon
+							icon={faEdit}
+						/>
 							Write Review
 						</div>
 					</div>
