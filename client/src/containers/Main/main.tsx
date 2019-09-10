@@ -37,7 +37,7 @@ import ChatPage from '../../components/ChatPage/ChatPage';
 import UserMovieList from '../../components/UserMovieList/UserMovieList';
 import ResultList from '../../components/shared/ContentSearch/ResultList';
 import Collections from '../../components/Collections/Collections';
-import AdviceMe from '../../components/shared/AdviceMe';
+import AdviceMe from '../../components/shared/AdviceMe/AdviceMe';
 
 const { notifications } = {
 	notifications: {

@@ -1,0 +1,15 @@
+.AdviceMe {
+	width: 100%;
+	.advice-me-container {
+		width: 90%;
+		margin: 0 auto;
+		display: grid;
+		grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+		grid-gap: 30px;
+
+		///
+		min-height: 500px;
+		border: 1px solid red;
+		///
+	}
+}
