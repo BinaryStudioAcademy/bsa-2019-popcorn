@@ -20,6 +20,7 @@ const generateIcon = type => {
 				/>
 			);
 		case 'review':
+		case 'follower':
 			return (
 				<FontAwesomeIcon
 					className="activity-icon activity-icon-review"
