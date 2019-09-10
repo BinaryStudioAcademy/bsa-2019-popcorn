@@ -7,9 +7,25 @@ import { User } from "../models/UserModel";
 import { getCustomRepository } from "typeorm";
 import UserRepository from "../repository/user.repository";
 import { getWatched } from "./watch.service";
+import { getMovieVideoLinkById } from "../repository/movie.repository";
 
 const minimalRating = "6";
 const amount = 3;
+
+export const getAdviceMeList = async (userId: string, next) => {
+  const movies = await getAdviceMovie(userId, next);
+
+  return addVideoLinkToMovies(movies);
+};
+
+const addVideoLinkToMovies = async (movies: any) =>
+  Promise.all(
+    movies.map(async movie => {
+      const video_link = await getMovieVideoLinkById(movie.id);
+      movie.video_link = video_link;
+      return movie;
+    })
+  );
 
 export const getAdviceMovie = async (userId: string, next) => {
   const user: User = await getCustomRepository(UserRepository).findOne(userId);
@@ -20,7 +36,6 @@ export const getAdviceMovie = async (userId: string, next) => {
     return elem2.movie.vote_average - elem1.movie.vote_average;
   });
 
-  console.log(list.length);
   return list.length >= 3
     ? await getMoviesFromList(list, minimalRating)
     : await getRandomMovie(amount);
