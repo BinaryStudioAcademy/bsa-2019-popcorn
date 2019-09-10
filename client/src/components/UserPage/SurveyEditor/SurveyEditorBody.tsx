@@ -1,8 +1,11 @@
 import React from 'react';
 import SurveyEditor from './SurveyEditor';
-import { NavLink, Route, Switch } from 'react-router-dom';
+import { NavLink, Route, Switch, Link } from 'react-router-dom';
 import SurveyReplies from '../SurveyReplies/SurveyReplies';
-
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faArrowLeft, faChevronDown } from '@fortawesome/free-solid-svg-icons';
+import SurveyStatistics from '../SurveyStatistics/SurveyStatistics';
+import SurveyIndividual from '../SurveyIndividual/SurveyIndividual';
 interface ISurvey {
 	id: string;
 	created_at: Date;
@@ -57,22 +60,37 @@ const SurveyEditorBody: React.FC<IProps> = (props: IProps) => {
 		<div>
 			<header className="nav-header">
 				<NavLink to={redirPath} className="user-tab">
-					Go back
+					<FontAwesomeIcon icon={faArrowLeft} />
 				</NavLink>
 				<NavLink
 					to={`${mainPath}/questions`}
-					className="user-tab"
 					activeClassName="user-tab-active"
 				>
 					Questions
 				</NavLink>
 				<NavLink
 					to={`${mainPath}/responses/`}
+					activeClassName="user-tab-active"
+				>
+					View responses
+					<FontAwesomeIcon icon={faChevronDown} />
+				</NavLink>
+				<div className="modal">
+				<NavLink
+					to={`${mainPath}/responses/statistics`}
 					className="user-tab"
 					activeClassName="user-tab-active"
 				>
-					Responses
+					Statistics
 				</NavLink>
+				<NavLink
+					to={`${mainPath}/responses/individual`}
+					className="user-tab"
+					activeClassName="user-tab-active"
+				>
+					Individual
+				</NavLink>
+					</div>
 			</header>
 			<Switch>
 				<Route
@@ -96,12 +114,16 @@ const SurveyEditorBody: React.FC<IProps> = (props: IProps) => {
 				/>
 				<Route
 					path={`${mainPath}/responses/`}
-					render={() => (
-						<SurveyReplies
-							mainPath={`${mainPath}/responses`}
-							surveyInfo={surveyInfo}
-						/>
-					)}
+					render={() => <SurveyStatistics questions={surveyInfo.questions}/>}
+				/>
+					<Route
+					exact
+					path={`${mainPath}/responses/statistics`}
+					render={() => <SurveyStatistics questions={surveyInfo.questions} />}
+				/>
+				<Route
+					path={`${mainPath}/responses/individual`}
+					render={() => <SurveyIndividual surveyInfo={surveyInfo} />}
 				/>
 			</Switch>
 		</div>
