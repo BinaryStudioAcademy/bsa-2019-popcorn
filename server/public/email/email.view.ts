@@ -1,3 +1,66 @@
+const btnLinkHtml = (href, text) =>  `
+	<a
+		style='
+			display: inline-block;
+			box-sizing: border-box;
+			padding: 10px 20px;  
+			border-radius: 4px;
+			outline: none;
+			background-color: #ff6501;
+			text-align: center;
+			letter-spacing: 0.4px;
+			line-height: 22px;
+			font-size: 18px;
+			font-weight: 600;
+			text-decoration: none;
+			color: #fff;
+		'
+		href='${href}'
+	>
+		${text}
+	</a>
+`;
+
+export const confirmEmailChange = (token, confirmUrl) => {
+	return `
+		<div
+			style='
+				text-align: center;	
+			'
+		>
+			<p
+				style='
+					font-size: 16px;
+					color: #000;
+				'
+			>
+				You requested for a email change, please click the button to confirm it.
+			</p>
+			${btnLinkHtml(confirmUrl(token), 'Confirm')}
+		</div>
+	`;
+};
+
+export const confirmPasswordChange = (token, confirmUrl) => {
+	return `
+		<div
+			style='
+				text-align: center;	
+			'
+		>
+			<p
+				style='
+					font-size: 16px;
+					color: #000;
+				'
+			>
+				You requested for a password change, please click the button to confirm it.
+			</p>
+			${btnLinkHtml(confirmUrl(token), 'Confirm')}
+		</div>
+	`;
+};
+
 export const welcome = () => {
   return `
 		<div
@@ -82,28 +145,13 @@ export const welcome = () => {
 					<li><a href='${process.env.FRONTEND_HOST}/surveys'>Surveys</a></li>
 				</ul>
 
-				<a
-					href='${process.env.FRONTEND_HOST}'
-					style='cursor: pointer; text-decoration: none;'>
-					<button 
-						style='
-							display: block;
-							margin: 0 auto;
-							box-sizing: border-box;
-							padding: 10px 20px;  
-							border: none;
-							border-radius: 4px;
-							outline: none;
-							background-color: #ff6501;
-							text-align: center;
-							letter-spacing: 0.4px;
-							line-height: 22px;
-							font-size: 18px;
-							font-weight: 600;
-							color: #fff;
-						'
-					>Let's go</button>
-				</a>
+				<div
+					style='
+						text-align: center;	
+					'
+				>
+					${btnLinkHtml(process.env.FRONTEND_HOST, "Let's go")}
+				</div>
 			</main>
 			
 			<footer
