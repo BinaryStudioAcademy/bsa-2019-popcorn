@@ -44,15 +44,15 @@ interface IProps {
 }
 
 interface IState {
-	modal: boolean
+	modal: boolean;
 }
 
 class MovieSeriesReviews extends React.Component<IProps, IState> {
 	constructor(props) {
-		super(props)
+		super(props);
 		this.state = {
 			modal: false
-		}
+		};
 	}
 	componentDidMount() {
 		this.props.fetchMovieReviews(this.props.movieId);
@@ -62,7 +62,7 @@ class MovieSeriesReviews extends React.Component<IProps, IState> {
 		this.setState({
 			modal: isOpen
 		});
-	}
+	};
 
 	onModalClick = () => {
 		this.setModal(true);
@@ -82,6 +82,14 @@ class MovieSeriesReviews extends React.Component<IProps, IState> {
 			userId,
 			removeReviewSet
 		} = this.props;
+
+		reviews &&
+			reviews.forEach((review, i) => {
+				if (review.user.id === this.props.currentUserId) {
+					reviews.splice(i, 1);
+					reviews.unshift(review);
+				}
+			});
 
 		return (
 			<div className="MovieSeriesReviews">
