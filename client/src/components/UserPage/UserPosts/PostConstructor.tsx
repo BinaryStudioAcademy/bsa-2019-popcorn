@@ -205,12 +205,6 @@ class PostConstructor extends React.Component<
 		}
 	}
 
-	preparseDescription(description) {
-		const arr = description.split('@');
-		const res = arr.map(str => str.replace(/(.+)\{(.+)\}/, '$2'));
-		return res.join('');
-	}
-
 	addMovieCaption(movie, movieSearchTitle) {
 		const { description } = this.state;
 		const caption = `@${movie.id}{${movie.title}}`;
@@ -291,7 +285,7 @@ class PostConstructor extends React.Component<
 						)}
 						<textarea
 							placeholder="Create new post..."
-							value={this.preparseDescription(this.state.description)}
+							value={this.state.description}
 							onChange={e => this.onChangeData(e.target.value, 'description')}
 						/>
 						{movieSearchTitle && (
