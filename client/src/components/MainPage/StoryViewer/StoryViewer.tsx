@@ -188,9 +188,6 @@ class StoryViewer extends PureComponent<IProps, IState> {
 											{story.movieOption}
 										</span>
 									)}
-									<p className="ellipsis" onClick={this.toogleModal}>
-										<FontAwesomeIcon icon={faEllipsisH} />
-									</p>
 								</header>
 
 								{story.type === 'voting' && story.voting && (
