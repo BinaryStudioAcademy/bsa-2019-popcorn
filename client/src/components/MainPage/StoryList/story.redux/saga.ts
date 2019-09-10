@@ -1,15 +1,14 @@
 import { all, call, put, takeEvery } from 'redux-saga/effects';
 import {
-	ADD_STORY,
 	CHANGE_ACTIVITY,
 	CREATE_STORY,
 	CREATE_VOTING,
-	RESET_NEW_STORY,
 	FETCH_STORIES,
+	RESET_NEW_STORY,
+	SAVE_VOTING_REACTION,
 	SET_STORIES
 } from './actionTypes';
 import webApi from '../../../../services/webApi.service';
-import config from '../../../../config';
 
 export function* fetchStories(action) {
 	try {
@@ -90,6 +89,22 @@ export function* createVoting(action) {
 	}
 }
 
+export function* sendVotingReaction(action) {
+	const { userId, votingId, optionId } = action.payload;
+	try {
+		yield call(webApi, {
+			endpoint: `/api/voting/options/react/${votingId}`,
+			method: 'PUT',
+			body: {
+				userId,
+				optionId
+			}
+		});
+	} catch (e) {
+		console.log(e);
+	}
+}
+
 function* watchFetchStories() {
 	yield takeEvery(FETCH_STORIES, fetchStories);
 }
@@ -102,6 +117,15 @@ function* watchCreateVoting() {
 	yield takeEvery(CREATE_VOTING, createVoting);
 }
 
+function* watchSendVoteReaction() {
+	yield takeEvery(SAVE_VOTING_REACTION, sendVotingReaction);
+}
+
 export default function* story() {
-	yield all([watchFetchStories(), watchCreateStory(), watchCreateVoting()]);
+	yield all([
+		watchFetchStories(),
+		watchCreateStory(),
+		watchCreateVoting(),
+		watchSendVoteReaction()
+	]);
 }

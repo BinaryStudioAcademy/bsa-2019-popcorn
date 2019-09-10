@@ -10,7 +10,7 @@ type StoryVotingProps = {
 	header: string;
 	options: Array<{
 		body: string;
-		voted: number;
+		votingOptionReactions: any[];
 	}>;
 	deltaPositionForHeader: {
 		x: number;
@@ -33,6 +33,8 @@ type StoryVotingProps = {
 	createVoting?: (voting: IVoting) => any;
 	inEditor: boolean;
 	fontColor: string;
+	saveVotingReaction?: (optionId: string) => any;
+	id?: string;
 };
 
 type StoryVotingState = {
@@ -46,12 +48,6 @@ type StoryVotingState = {
 const firstRadius = '28px 0 0 28px';
 
 const lastRadius = '0 28px 28px 0';
-
-const storyVotingOptionsMock = [
-	{ text: 'Yes', voted: 5 },
-	{ text: 'No', voted: 6 },
-	{ text: 'Maybe', voted: 10 }
-];
 
 class StoryVoting extends React.Component<StoryVotingProps, StoryVotingState> {
 	constructor(props) {
@@ -116,39 +112,48 @@ class StoryVoting extends React.Component<StoryVotingProps, StoryVotingState> {
 	}
 
 	createStoryVotingOptions() {
-		const allVotes = StoryVoting.calculateAllVotes();
+		const allVotes = this.calculateAllVotes();
+
 		return this.props.options.map((el, index) => {
-			if (index === 0)
+			if (index === 0) {
 				return (
 					<StoryVotingOption
 						allVotesCount={allVotes}
 						radius={firstRadius}
 						storyVotingOptionInfo={el}
 						key={index}
+						saveVotingReaction={this.props.saveVotingReaction}
 					/>
 				);
-			else if (index === this.props.options.length - 1)
+			} else if (index === this.props.options.length - 1) {
 				return (
 					<StoryVotingOption
 						allVotesCount={allVotes}
 						radius={lastRadius}
 						storyVotingOptionInfo={el}
 						key={index}
+						saveVotingReaction={this.props.saveVotingReaction}
 					/>
 				);
-			else
+			} else {
 				return (
 					<StoryVotingOption
 						allVotesCount={allVotes}
 						storyVotingOptionInfo={el}
 						key={index}
+						saveVotingReaction={this.props.saveVotingReaction}
 					/>
 				);
+			}
 		});
 	}
 
-	static calculateAllVotes() {
-		return storyVotingOptionsMock.reduce((a, b) => a + (b['voted'] || 0), 0);
+	calculateAllVotes() {
+		let count = 0;
+		this.props.options.map(option => {
+			count += option ? option.votingOptionReactions.length : 0;
+		});
+		return count;
 	}
 
 	onSave = () => {
