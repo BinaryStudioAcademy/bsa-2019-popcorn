@@ -1,6 +1,7 @@
 import {
 	CONTENT_SEARCH_FETCH_DATA,
-	CONTENT_SEARCH_SET_DATA
+	CONTENT_SEARCH_SET_DATA,
+	RESET_SEARCH_DATA
 } from './actionTypes';
 import movieAdapter from '../../../MovieSeriesPage/movieAdapter';
 
@@ -37,6 +38,11 @@ export default function(state = initialState, action) {
 				loading: true,
 				data: [],
 				error: ''
+			};
+		case RESET_SEARCH_DATA:
+			return {
+				...state,
+				data: []
 			};
 	}
 	return state;

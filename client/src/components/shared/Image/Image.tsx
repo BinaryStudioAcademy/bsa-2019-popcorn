@@ -34,7 +34,6 @@ class Image extends React.Component<IProps, IState> {
 	render() {
 		const { errored, src } = this.state;
 		const { className, alt, defaultSrc } = this.props;
-
 		return (
 			<img
 				src={errored ? defaultSrc : src}

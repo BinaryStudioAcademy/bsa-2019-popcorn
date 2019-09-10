@@ -15,6 +15,7 @@ interface IStoryListItem {
 	id: string;
 	caption: string;
 	image_url: string;
+	created_at: Date;
 	backgroundColor: string;
 	user: {
 		avatar: string;
@@ -156,7 +157,7 @@ class StoryList extends Component<IProps, IState> {
 				name: story.user.name,
 				image_url: story.user.avatar
 			},
-			created_at: new Date(2019, 7, 13, 22)
+			created_at: story.created_at
 		}));
 
 		return (

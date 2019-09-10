@@ -32,6 +32,7 @@ import CreateStoryFilm from './story-modal/create-story-film';
 interface IStoryListItem {
 	id: string;
 	caption: string;
+	created_at: Date;
 	image_url: string;
 	backgroundColor: string;
 	fontColor?: string;

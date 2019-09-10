@@ -1,5 +1,4 @@
 import React, { PureComponent } from 'react';
-import TimeAgo from 'react-time-ago';
 import StoryViewerModal from '../StoryViewerModal/StoryViewerModal';
 import StorySeenByModal from '../StorySeenByModal/StorySeenByModal';
 import './StoryViewer.scss';
@@ -22,6 +21,8 @@ import { bindActionCreators } from 'redux';
 import WatchListIcon from '../../shared/WatchListIcon/WatchListIcon';
 import RateMovie from '../../shared/RateMovie/RateMovie';
 import { saveVotingReaction } from '../StoryList/story.redux/actions';
+import Moment from 'react-moment';
+
 
 interface IProps {
 	stories: Array<{
@@ -181,7 +182,9 @@ class StoryViewer extends PureComponent<IProps, IState> {
 										alt=""
 									/>
 									<span className="username">{story.userInfo.name}</span>
-									<TimeAgo date={story.created_at} timeStyle="twitter" />
+									<Moment format="D MMM" local>
+										{String(story.created_at)}
+									</Moment>
 									{story.movieOption && (
 										<span style={{ marginLeft: '5px' }}>
 											{story.movieOption}

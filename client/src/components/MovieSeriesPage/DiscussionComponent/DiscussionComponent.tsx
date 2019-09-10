@@ -104,7 +104,7 @@ class DiscussionComponent extends Component<
 
 	addMessage = ({ user: { id, name, avatar }, text, createdAt }) => {
 		const isMyMessage = id === this.props.currentUser.id;
-		name = isMyMessage ? 'Me' : name;
+		
 		avatar = avatar || config.DEFAULT_AVATAR;
 		let newMessageItem = {
 			id: (Math.random() * (9000 - 1) + 1).toString(),
@@ -152,7 +152,7 @@ class DiscussionComponent extends Component<
 								<div className="message-body">
 									<div className="message-info">
 										<div className="name">
-											{isMyMessage ? 'Me ' : message.user.name}
+											{message.user.name}
 										</div>
 										<div className="date">
 											<Moment format=" D MMM HH:mm " local>

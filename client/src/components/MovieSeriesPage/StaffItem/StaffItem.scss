@@ -9,20 +9,27 @@
 	letter-spacing: $base-letter-spacing;
 	padding: 0.5em;
 	border-radius: 10px;
-	width: 80px;
+	width: 97px;
 	text-align: center;
 }
 
 .staff-item-name {
-	text-align: center;
+	display: flex;
+	justify-content: center;
+	align-items: center;
 	color: $text-base-color;
 	border-bottom: 1px solid $border-color;
+	min-height: 30px;
 }
 .staff-item-role {
 	color: $text-secondary-color;
 }
-.staff-item-image {
-	width: 100%;
+
+.staff-item-image-wrp {
+	background-color: #e4e4e4;
+	.staff-item-image {
+		width: 100%;
+	}
 }
 .staff-item-image-wrp {
 	width: calc(110px / 4 * 3);

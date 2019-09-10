@@ -35,7 +35,8 @@ const initialState = {
 	loading: false,
 	error: null,
 	selectedProfileInfo: null,
-	croppedSaved: false
+	croppedSaved: false,
+	userAvatar: ''
 };
 
 const ok_message = 'Check your email';
