@@ -27,15 +27,62 @@ $user-tab-list-space-top: $user-tab-space + $user-tab-active-line;
 	color: #d93025;
 }
 
+.menu-modal {
+	font-family: $base-font-family;
+	background: #f7f8f9;
+	border: 1px solid $border-color;
+	box-shadow: 2px 1px 8px $input-shadow-color;
+	border-radius: 3px;
+	position: absolute;
+	z-index: 10;
+	transform: scaleY(0);
+	transform-origin: 0 0;
+	transition: 0.5s ease-in-out;
+	text-align: left;
+	cursor: default;
+	font-size: $base-font-size;
+	line-height: 15px;
+	width: 150px;
+	padding: 0 10px 10px 10px;
+	right: 13%;
+	top: 40px;
+	.hover {
+		color: inherit;
+	}
+	&:hover {
+		transform: scale(1);
+	}
+	a {
+		text-decoration: none;
+		display: block;
+		padding-top: 15px;
+		line-height: 20px;
+		font-size: 14px !important;
+
+		&:hover {
+			cursor: pointer;
+			color: $text-base-color
+		}
+	}
+}
 .survey-editor {
-	.question-container {
-		pointer-events: none;
+	position: relative;
+
+	a:hover +  .menu-modal {
+		transform: scaleY(1);
 	}
 
 	.nav-header {
 		display: flex;
 		justify-content: space-around;
 		margin: 20px;
+		a {
+			line-height: 100%;
+			padding: 10px;
+		}
+		svg {
+			margin-left: 10px;
+		}
 	}
 
 	.user-tab {
@@ -47,7 +94,6 @@ $user-tab-list-space-top: $user-tab-space + $user-tab-active-line;
 	}
 
 	.user-tab-active {
-		border-top: $user-tab-active-line solid $orange;
 		border-radius: 2px;
 		color: $text-base-color;
 		font-size: $header-medium;
@@ -55,10 +101,13 @@ $user-tab-list-space-top: $user-tab-space + $user-tab-active-line;
 
 	a {
 		text-decoration: none;
-		color: $text-base-color;
+		color: $text-secondary-color;
 		font-weight: 600;
 		font-size: $header-medium;
 		width: fit-content;
+		&:hover {
+			color: $text-base-color;
+		}
 	}
 
 	.preview {

@@ -8,9 +8,9 @@ interface ITop {
 	id: string;
 	title: string;
 	topImageUrl: string;
-	created_at: Date;
+	created_at?: Date;
 	movieInTop: Array<any>;
-	user: {
+	user?: {
 		id: string;
 		avatar: string;
 		name: string;
@@ -22,7 +22,7 @@ interface ITopLIstItemProps {
 }
 
 const TopListItem: React.FC<ITopLIstItemProps> = ({ top }) => {
-	const getReleaseYear = movie => movie.movie.release_date.split('-')[0];
+	const getReleaseYear = movie => movie.release_date ? movie.release_date.split('-')[0] : movie.movie.release_date.split('-')[0];
 
 	const getAdditionalInfo = () => {
 		return top.movieInTop.length > 3
@@ -33,12 +33,14 @@ const TopListItem: React.FC<ITopLIstItemProps> = ({ top }) => {
 	return (
 		<div className="top-page-item">
 			<div className="top-image-section">
-				<Image
-					src={top.topImageUrl}
-					defaultSrc={config.DEFAULT_TOP_IMAGE}
-					alt="top-image"
-					className="top-page-item-img"
-				/>
+				<NavLink to={`/tops/${top.id}`}>
+					<Image
+						src={top.topImageUrl}
+						defaultSrc={config.DEFAULT_TOP_IMAGE}
+						alt="top-image"
+						className="top-page-item-img"
+					/>
+				</NavLink>
 			</div>
 			<div className="top-main-section">
 				<NavLink to={`/tops/${top.id}`}>
@@ -47,17 +49,17 @@ const TopListItem: React.FC<ITopLIstItemProps> = ({ top }) => {
 
 				<div>
 					<ol>
-						{top.movieInTop.slice(0, 3).map(movie => (
+						{top.movieInTop.map(movie => (
 							<li key={movie.id}>
-								<NavLink to={`movies/${movie.movie.id}`}>
-									{movie.movie.title} ({getReleaseYear(movie)})
+								<NavLink to={`/movies/${movie.movie ? movie.movie.id : movie.id}`}>
+									{movie ? (movie.title || movie.movie.title) : null} ({getReleaseYear(movie)})
 								</NavLink>
 							</li>
 						))}
 					</ol>
 				</div>
 			</div>
-			<div className="top-secondary-section">
+			{top.user && <div className="top-secondary-section">
 				<NavLink to={`/user-page/${top.user.id}`}>
 					<div className="user-info">
 						<Image
@@ -75,6 +77,7 @@ const TopListItem: React.FC<ITopLIstItemProps> = ({ top }) => {
 					<div className="add-info">{getAdditionalInfo()}</div>
 				</NavLink>
 			</div>
+			}
 		</div>
 	);
 };

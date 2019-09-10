@@ -250,9 +250,7 @@ class StoryVoting extends React.Component<StoryVotingProps, StoryVotingState> {
 }
 
 const mapStateToProps = (rootState, props) => ({
-	...props,
-	fontColor: rootState.story.newStory.fontColor,
-	backgroundImage: rootState.story.newStory.image_url
+	...props
 });
 
 export default connect(mapStateToProps)(StoryVoting);

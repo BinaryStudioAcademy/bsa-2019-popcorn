@@ -72,6 +72,7 @@ const DragDrop: React.FC<IDragDropProps> = ({
 										</Draggable>
 									);
 								}
+								return null;
 							})}
 							{providedDroppable.placeholder}
 						</div>

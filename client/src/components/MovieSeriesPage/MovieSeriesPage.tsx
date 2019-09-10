@@ -105,7 +105,11 @@ const MovieSeriesPage: React.SFC<IProps> = props => {
 			/>
 			<MovieSeriesPageTabs mainPath={mainPath} />
 			<MovieSeriesPageTabBody
+				ownReview={ownReview}
+				setReview={setReview}
+				fetchReview={fetchReview}
 				mainPath={mainPath}
+				removeReviewSet={removeReviewSet}
 				movie={movie}
 				currentUser={{ avatar, id: userId, name: username }}
 				fetchAwards={fetchAwards}

@@ -17,11 +17,14 @@ const reorder = (list, startIndex, endIndex): any => {
 interface ITopConstructorProps {
 	moviesList: IMovie[];
 	saveTop: (movies: IMovie[]) => void;
+	closeTopEditor: () => void;
 }
 
 const TopConstructor: React.FC<ITopConstructorProps> = ({
 	saveTop,
-	moviesList
+	moviesList,
+	closeTopEditor
+
 }) => {
 	const [movies, setMovies] = useState([...moviesList, emptyInput()]);
 
@@ -67,6 +70,9 @@ const TopConstructor: React.FC<ITopConstructorProps> = ({
 				saveMovie={saveMovie}
 			/>
 			<div className="top-buttons-container">
+				<div className="top-buttons save-top-button hover" onClick={closeTopEditor}>
+					Cancel
+				</div>
 				<div className="top-buttons save-top-button hover" onClick={save}>
 					Save
 				</div>

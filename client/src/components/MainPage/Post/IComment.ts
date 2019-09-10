@@ -3,6 +3,7 @@ export default interface IComment {
 	user: {
 		name: string;
 		avatar: string;
+		id: string
 	};
 	commentDate: string;
 	text: string;

@@ -41,13 +41,17 @@
 		margin-right: 10px;
 	}
 	.movie-activity-container {
+		background-color: rgba(240, 248, 255, 0.425);
+		left: -10px;
 		display: flex;
 		justify-content: flex-end;
 		align-items: center;
-		width: 100%;
+		min-width: 350px;
 		word-wrap: break-word;
 		position: relative;
 		bottom: 50px;
+		box-sizing: border-box;
+		height: 38px;
 	}
 	.send-btn {
 		border: none;
@@ -175,6 +179,12 @@
 			'header'
 			'story';
 		width: 100%;
+
+		.user-link {
+			text-decoration: none;
+			display: inherit;
+			color: inherit;
+		}
 
 		header {
 			grid-area: header;

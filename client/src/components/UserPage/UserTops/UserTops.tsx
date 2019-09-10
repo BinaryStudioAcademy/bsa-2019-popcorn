@@ -49,7 +49,8 @@ const newTop = (): ITopItem => {
 		title: '',
 		moviesList: [],
 		topImageUrl: '',
-		isNewTop: true
+		isNewTop: true,
+		created_at: new Date()
 	};
 };
 

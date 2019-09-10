@@ -1,6 +1,6 @@
 @import '../../../../styles/variables.scss';
 
-$text-button-color: rgba(12, 81, 146, 1);
+$text-button-color: $text-secondary-color;
 
 .StarRating {
 	display: flex;
@@ -27,7 +27,7 @@ $text-button-color: rgba(12, 81, 146, 1);
 					position: absolute;
 					font-size: 10px;
 					opacity: 1;
-					top: -4px;
+					top: -7px;
 					right: -3px;
 					color: $text-secondary-color;
 				}
@@ -35,7 +35,7 @@ $text-button-color: rgba(12, 81, 146, 1);
 		}
 
 		&:hover .label-rate-this {
-			border-bottom: 1px solid $orange;
+			color: $text-base-color;
 		}
 
 		.label-rate-this {

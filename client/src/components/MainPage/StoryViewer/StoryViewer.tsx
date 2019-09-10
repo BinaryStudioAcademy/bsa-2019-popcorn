@@ -22,6 +22,7 @@ import WatchListIcon from '../../shared/WatchListIcon/WatchListIcon';
 import RateMovie from '../../shared/RateMovie/RateMovie';
 import { saveVotingReaction } from '../StoryList/story.redux/actions';
 import Moment from 'react-moment';
+import Image from '../../shared/Image/Image';
 
 
 interface IProps {
@@ -177,11 +178,15 @@ class StoryViewer extends PureComponent<IProps, IState> {
 								onClick={() => this.setState({ isReactionShown: false })}
 							>
 								<header>
-									<img
-										src={story.userInfo.image_url || config.DEFAULT_AVATAR}
-										alt=""
-									/>
-									<span className="username">{story.userInfo.name}</span>
+									<NavLink className="user-link" to={`/user-page/${story.userInfo.userId}`}>
+										<Image
+											src={story.userInfo.image_url}
+											defaultSrc={config.DEFAULT_AVATAR}
+											alt={story.userInfo.name} />
+									</NavLink>
+									<NavLink className="user-link" to={`/user-page/${story.userInfo.userId}`}>
+										<span className="username">{story.userInfo.name}</span>
+									</NavLink>
 									<Moment format="D MMM" local>
 										{String(story.created_at)}
 									</Moment>
@@ -190,9 +195,6 @@ class StoryViewer extends PureComponent<IProps, IState> {
 											{story.movieOption}
 										</span>
 									)}
-									<p className="ellipsis" onClick={this.toogleModal}>
-										<FontAwesomeIcon icon={faEllipsisH} />
-									</p>
 								</header>
 
 								{story.type === 'voting' && story.voting && (
@@ -300,7 +302,10 @@ class StoryViewer extends PureComponent<IProps, IState> {
 														</div>
 													</div>
 												)}
-												<span className="movie-activity-container">
+												{story.type && story.activity &&
+												<span
+													className="movie-activity-container"
+												>
 													{story.type && story.activity && (
 														<NavLink
 															to={'/' + story.type + 's/' + story.activityId}
@@ -320,6 +325,7 @@ class StoryViewer extends PureComponent<IProps, IState> {
 														<RateMovie movieId={story.movie.id} />
 													)}
 												</span>
+												}
 											</p>
 										</div>
 									</main>
