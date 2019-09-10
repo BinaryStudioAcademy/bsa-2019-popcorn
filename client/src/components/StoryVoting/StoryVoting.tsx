@@ -112,7 +112,7 @@ class StoryVoting extends React.Component<StoryVotingProps, StoryVotingState> {
 	}
 
 	createStoryVotingOptions() {
-		const allVotes = StoryVoting.calculateAllVotes();
+		const allVotes = this.calculateAllVotes();
 
 		return this.props.options.map((el, index) => {
 			if (index === 0) {
@@ -148,8 +148,12 @@ class StoryVoting extends React.Component<StoryVotingProps, StoryVotingState> {
 		});
 	}
 
-	static calculateAllVotes() {
-		return 0;
+	calculateAllVotes() {
+		let count = 0;
+		this.props.options.map(option => {
+			count += option ? option.votingOptionReactions.length : 0;
+		});
+		return count;
 	}
 
 	onSave = () => {

@@ -12,6 +12,9 @@ type StoryVotingOptionProps = {
 	saveVotingReaction?: (optionId: string) => any;
 };
 const calculatePercentage = (voted, allVotesCount) => {
+	if (!allVotesCount) {
+		return 0;
+	}
 	return Math.round((voted / allVotesCount) * 100 * 10) / 10;
 };
 
@@ -33,8 +36,7 @@ const StoryVotingOption = ({
 				{body}
 			</button>
 			<div className={'story-voting-option-percent'}>
-				{votingOptionReactions.length}%
-				{/*	calculatePercentage(voted, allVotesCount) || 0*/}
+				{calculatePercentage(votingOptionReactions.length, allVotesCount) || 0}%
 			</div>
 		</div>
 	);

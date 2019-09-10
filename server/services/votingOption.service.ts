@@ -31,8 +31,10 @@ export const setVotingReaction = async (
   votingId: string,
   { userId, optionId },
   next
-): Promise<{}> => {
-  return await getCustomRepository(
+): Promise<any> => {
+  const voting = await getCustomRepository(
     VotingOptionReactionRepository
   ).setVotingReaction(votingId, userId, optionId, next);
+  voting.options = await getVotingOptionByVotingId(votingId);
+  return voting;
 };

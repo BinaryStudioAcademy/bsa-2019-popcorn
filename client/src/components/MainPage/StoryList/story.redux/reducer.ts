@@ -17,6 +17,7 @@ import {
 } from './actionTypes';
 import INewStory from '../INewStory';
 import replaceFilmSearch from '../../../../helpers/replaceFilmSearch';
+import findIndexInArray from '../../../../helpers/findIndexInArray';
 
 const initialState: {
 	stories: any;
@@ -173,9 +174,14 @@ export default function(state = initialState, action) {
 				return state;
 			}
 
-			const index = state.stories.indexOf(
-				story => story.voting && story.voting.id === voting.id
-			);
+			let index = -1;
+			state.stories.forEach((story, i) => {
+				if (story.voting && story.voting.id === voting.id) {
+					index = i;
+				}
+			});
+
+			console.log(index, voting);
 
 			if (index === -1) {
 				return state;

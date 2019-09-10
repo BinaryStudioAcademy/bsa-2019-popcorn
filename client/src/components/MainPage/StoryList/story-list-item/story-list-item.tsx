@@ -29,7 +29,7 @@ class StoryListItem extends Component<IStoryListItemProps> {
 					this.props.openViewer(this.props.index);
 				}}
 			>
-				<div className="card" style={{ backgroundColor: backgroundColor }}>
+				<div className="card" style={{ backgroundColor }}>
 					<img
 						alt="avatar"
 						className="avatar avatar-story"

@@ -59,6 +59,7 @@ router
       votingOptionService
         .setVotingReaction(req.params.votingId, req.body, next) // req.body: {userId: string, optionId}
         .then(voting => {
+          console.log(voting);
           req.io.emit("new-voting-reaction", voting);
           res.send(voting);
         })

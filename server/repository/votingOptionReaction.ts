@@ -18,7 +18,7 @@ class VotingOptionReactionRepository extends Repository<VotingOptionReaction> {
         id: votingId
       });
       if (!voting) {
-        return next({ status: 404, message: "Voting  is not found" }, null);
+        return next({ status: 404, message: "Voting is not found" }, null);
       }
 
       const user = await getCustomRepository(UserRepository).findOne({
@@ -28,13 +28,36 @@ class VotingOptionReactionRepository extends Repository<VotingOptionReaction> {
         return next({ status: 404, message: "User is not found" }, null);
       }
 
-      await this.createQueryBuilder()
-        .where({ user, votingOption: { id: voting.id } })
-        .delete();
-      this.create({ id: uuid(), votingOption: { id: optionId }, user });
-      return await getCustomRepository(VotingRepository).getVotingById(
-        votingId
-      );
+      const reaction: VotingOptionReaction | undefined = await this.findOne({
+        where: {
+          user,
+          voting: { id: votingId }
+        },
+        relations: ["votingOption", "votingOption.voting"]
+      });
+
+      if (reaction) {
+        if (reaction.votingOption.id !== optionId) {
+          await this.save({
+            id: uuid(),
+            votingOption: { id: optionId },
+            user,
+            voting: { id: votingId }
+          });
+          await this.delete(reaction);
+        } else {
+          await this.delete(reaction);
+        }
+      } else {
+        await this.save({
+          id: uuid(),
+          votingOption: { id: optionId },
+          user,
+          voting: { id: votingId }
+        });
+      }
+
+      return voting;
     } catch (err) {
       return next({ status: err.status, message: err.message }, null);
     }
