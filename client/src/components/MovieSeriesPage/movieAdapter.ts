@@ -26,7 +26,8 @@ export default (movie: any): TMovie | any => {
 		overview: movie.overview,
 		budget: movie.budget,
 		vote_average: movie.rate,
-		video: `https://www.youtube.com/embed/${movie.video_link}`,
+		video:
+			movie.video_link && `https://www.youtube.com/embed/${movie.video_link}`,
 		hasVideo: !!movie.video_link,
 		messages: movie.messages,
 		imdb_id: movie.imdb_id,
