@@ -3,4 +3,42 @@
 .AdviceMeItem {
 	height: 400px;
 	border: 1px solid black;
+	padding: 20px;
+
+	.advice-me-header {
+		.movie-item-title-rating {
+			display: flex;
+			justify-content: space-between;
+			.movie-item-title {
+				font-size: $header-medium;
+				font-weight: 600;
+				line-height: 19px;
+				text-decoration: none;
+				color: $text-base-color;
+				transition: opacity 0.2s ease;
+				&:hover {
+					opacity: 0.8;
+				}
+				.movie-item-date {
+					font-weight: 400;
+					font-size: $base-font-size;
+				}
+			}
+			.StarRating {
+			}
+		}
+		.movie-item-duration-genres {
+			font-size: 15px;
+			.duration {
+				color: $text-secondary-color;
+			}
+			.border-element {
+				color: $text-secondary-color;
+				font-weight: 400;
+			}
+			.genres {
+				color: $text-secondary-color;
+			}
+		}
+	}
 }
