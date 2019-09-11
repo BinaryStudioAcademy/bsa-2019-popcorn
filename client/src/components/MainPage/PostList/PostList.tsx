@@ -5,13 +5,13 @@ import IComment from '../Post/IComment';
 import IPost from '../Post/IPost';
 import {
 	addNewComment,
+	addNewPost,
 	addNewReaction,
 	createComment,
 	createReaction,
 	deletePost,
 	deletePostFromList,
-	updatePost,
-	addNewPost
+	updatePost
 } from '../FeedBlock/FeedBlock.redux/actions';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
@@ -37,6 +37,7 @@ interface IProps {
 	deletePostFromList: (id: string) => any;
 	updatePost: (post: IPost) => any;
 	addNewPost: (post: IPost) => any;
+	updateUsersPosts?: () => any;
 }
 
 let wasAddedSockets = false;
@@ -141,7 +142,12 @@ const PostList = (props: IProps) => {
 							addNewReaction={props.addNewReaction}
 							userId={props.userId}
 							userRole={props.userRole}
-							deletePost={props.deletePost}
+							deletePost={(id: string, userId: string) => {
+								props.deletePost(id, userId);
+								if (props.updateUsersPosts) {
+									props.updateUsersPosts();
+								}
+							}}
 							setShowPostsConstructor={setShowPostsConstructor}
 						/>
 					);

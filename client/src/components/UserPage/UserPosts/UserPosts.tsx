@@ -52,7 +52,12 @@ const UserPosts: React.FC<IProps> = ({
 			{posts.length === 0 ? (
 				<div className="no-info-yet">No posts yet</div>
 			) : (
-				<PostList styleCustom={userPostStyle} type="userPosts" posts={posts} />
+				<PostList
+					styleCustom={userPostStyle}
+					type="userPosts"
+					posts={posts}
+					updateUsersPosts={() => getUsersPosts()}
+				/>
 			)}
 		</div>
 	);
