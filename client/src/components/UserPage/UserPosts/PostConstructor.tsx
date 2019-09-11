@@ -147,8 +147,7 @@ class PostConstructor extends React.Component<
 
 	getImageUrl(data: any) {
 		let imageUrl = '';
-		console.log('-------------- getImageUrl ----------------');
-		console.log(data);
+		
 		switch (data.type) {
 			case 'survey':
 				imageUrl = data.data.image || config.DEFAULT_SURVEY_IMAGE;
@@ -254,8 +253,7 @@ class PostConstructor extends React.Component<
 			this.state.top ||
 			this.state.survey ||
 			{};
-		console.log(data);
-		console.log(this.state.extraType);
+		
 		return (
 			<div className="post-constructor-modal">
 				<div
