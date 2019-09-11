@@ -60,6 +60,7 @@ $border-radius: 5px;
 		position: absolute;
 		top: 40px;
 		left: 40px;
+
 		button,
 		.color-picker-btn {
 			outline: none;
@@ -74,9 +75,13 @@ $border-radius: 5px;
 			font-family: Georgia, serif;
 			font-size: 2em;
 			font-weight: 600;
-			cursor: pointer;
 			&:hover {
+				cursor: pointer;
 				background-color: rgb(245, 245, 245);
+			}
+			&:hover:disabled {
+				cursor: default;
+				background-color: white;
 			}
 			svg {
 				width: 40%;
@@ -309,8 +314,4 @@ $border-radius: 5px;
 			margin-top: 20px;
 		}
 	}
-}
-.disabled {
-	pointer-events: none;
-	opacity: 0.4;
 }
