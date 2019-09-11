@@ -1,0 +1,18 @@
+[
+	{
+		"link": "/",
+		"label": "Home"
+	},
+	{
+		"link": "/events",
+		"label": "Events"
+	},
+	{
+		"link": "/surveys",
+		"label": "Surveys"
+	},
+	{
+		"link": "/tops",
+		"label": "Tops"
+	}
+]

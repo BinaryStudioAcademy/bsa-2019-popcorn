@@ -1,6 +1,7 @@
 import React from 'react';
 import './MainPageSidebar.scss';
 import { NavLink } from 'react-router-dom';
+import mainPageSidebarConfig from './mainPageSidebarConfig.json';
 
 interface IProps {
 	notifications: {
@@ -11,22 +12,22 @@ interface IProps {
 
 const MainPageSidebar = ({ notifications }: IProps) => {
 	return (
-		<div className="left-sidebar">
-			<div className="menu">
-				<div>
-					<NavLink to={'/'}>Home</NavLink>
-				</div>
-				<div>
-					<NavLink to={'/events/'}>Events</NavLink>
-				</div>
-				<div>
-					<NavLink to={'/surveys'}>Surveys</NavLink>
-				</div>
-				<div>
-					<NavLink to={'/tops'}>Tops</NavLink>
-				</div>
-			</div>
-		</div>
+		<nav className="left-sidebar">
+			<ul className="menu">
+				{mainPageSidebarConfig.map((tab, index) => (
+					<li key={index}>
+						<NavLink
+							exact={!index}
+							to={tab.link}
+							className="user-tab"
+							activeClassName="user-tab-active"
+						>
+							{tab.label}
+						</NavLink>
+					</li>
+				))}
+			</ul>
+		</nav>
 	);
 };
 
