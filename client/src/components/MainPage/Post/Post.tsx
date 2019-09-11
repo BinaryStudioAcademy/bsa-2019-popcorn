@@ -212,14 +212,9 @@ class Post extends Component<IPostProps, IPostState> {
 				{image_url && (
 					<img className="post-item-image" src={image_url} alt="post" />
 				)}
-				{description && (
-					<div className="post-body">{this.parseDescription(description)}</div>
-				)}
-				{content && <PostContent content={content} />}
 				{extraLink && (
 					<NavLink
 						to={`${extraLink}`}
-						style={{ textDecoration: 'none', color: '#122737' }}
 						className="extra-wrapper"
 					>
 						<Extra
@@ -231,6 +226,10 @@ class Post extends Component<IPostProps, IPostState> {
 						/>
 					</NavLink>
 				)}
+				{description && (
+					<div className="post-body">{this.parseDescription(description)}</div>
+				)}
+				{content && <PostContent content={content} />}
 				{reactionsShow}
 				<div className="post-item-action-buttons">
 					<div className="post-item-last-reaction">

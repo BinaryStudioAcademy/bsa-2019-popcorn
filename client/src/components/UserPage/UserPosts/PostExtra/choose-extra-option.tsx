@@ -11,6 +11,7 @@ import { fetchSurveys } from '../../UserSurveys/UserSurveys.redux/actions';
 import { getAllEvents } from '../../UserEvents/actions';
 import { fetchTops } from '../../UserTops/UserTops.redux/actions';
 import { connect } from 'react-redux';
+import Spinner from '../../../shared/Spinner';
 
 interface IProps {
 	option: string;
@@ -107,7 +108,7 @@ class ChooseExtraOption extends React.Component<IProps> {
 						</div>
 
 						<div className={'recent-created'}>
-							{data
+							{data.length !== 0
 								? data.map((item, i) => (
 										<p
 											key={item.id}
@@ -128,7 +129,7 @@ class ChooseExtraOption extends React.Component<IProps> {
 											</span>
 										</p>
 								  ))
-								: null}
+								: <Spinner />}
 						</div>
 					</div>
 				</div>

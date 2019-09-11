@@ -81,13 +81,22 @@
 	}
 
 	.post-body {
-		margin-top: 20px;
+		margin-top: 25px;
+		margin-bottom: 30px;
 	}
 
 	.tag-items {
 		padding: 0.5em 1em;
 		display: flex;
 		flex-wrap: wrap;
+	}
+
+	.extra-wrapper {
+		display: block;
+		width: 100%;
+		margin: 0;
+		text-decoration: none;
+		color: $text-base-color;
 	}
 }
 
@@ -113,6 +122,8 @@
 	height: 300px;
 	object-fit: contain;
 }
+
+
 
 .post-item-avatar {
 	width: 2.5em;
