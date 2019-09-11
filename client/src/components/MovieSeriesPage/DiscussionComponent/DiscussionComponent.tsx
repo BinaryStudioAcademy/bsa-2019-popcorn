@@ -5,6 +5,8 @@ import './DiscussionComponent.scss';
 import Moment from 'react-moment';
 import config from '../../../config';
 import { IDiscussionUser } from '../../UserPage/UserEvents/UserEvents.service';
+import ScrollToBottom from 'react-scroll-to-bottom';
+
 export interface IDiscussionMessage {
 	id: string;
 	text: string;
@@ -117,7 +119,7 @@ class DiscussionComponent extends Component<
 			user: { id, name, avatar }
 		};
 		let arr = this.state.messagesState;
-		arr.unshift(newMessageItem);
+		arr.push(newMessageItem);
 		this.setState(
 			{
 				messagesState: arr
@@ -140,7 +142,7 @@ class DiscussionComponent extends Component<
 
 		return (
 			<div className="user-discussion-component" id="scroller">
-				<div className="message-container" ref={this.discussionComponent}>
+				<ScrollToBottom className="message-container" ref={this.discussionComponent}>
 					{messages.map(message => {
 						const isMyMessage = message.user.id === this.props.currentUser.id;
 						return (
@@ -167,7 +169,7 @@ class DiscussionComponent extends Component<
 							</div>
 						);
 					})}
-				</div>
+				</ScrollToBottom>
 				<div className="message-item new-message-item" tabIndex={0} id="anchor">
 					<div className="message-body">
 						<div className="new-message">

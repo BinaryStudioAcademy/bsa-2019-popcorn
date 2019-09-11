@@ -35,7 +35,11 @@ a:focus {
 .user-discussion-component {
 	display: flex;
 	flex-direction: column;
-	justify-content: flex-start;
+	div {
+		display: flex;
+	flex-direction: column;
+		justify-self: flex-end;
+	}
 	color: $text-base-color;
 	font-family: $base-font-family;
 	justify-self: end;
@@ -45,8 +49,8 @@ a:focus {
 	border-radius: 4px;
 	.message-container {
 		padding-right: 5px;
-		overflow-y: scroll;
-		padding: 20px 28px 0px 20px;
+		height: 500px;
+		padding: 20px 10px 0px 10px;
 	}
 
 	.message-container::-webkit-scrollbar {
@@ -60,6 +64,8 @@ a:focus {
 	.message-item-reverse {
 		padding-right: 20px;
 		flex-direction: row-reverse;
+		margin-bottom: -10px;
+		align-self: flex-end;
 		.message-body {
 			margin-left: 0px !important;
 			.message-info {
@@ -79,7 +85,7 @@ a:focus {
 		align-items: center;
 		text-align: left;
 		margin-bottom: 15px;
-		width: 100%;
+		width: 90%;
 		border-radius: 4px;
 		img {
 			border: 1px solid $border-color;
