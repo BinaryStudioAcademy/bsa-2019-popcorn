@@ -154,7 +154,7 @@ class Post extends Component<IPostProps, IPostState> {
 						{reactions.length === 1 ? 'reaction' : 'reactions'}
 					</span>
 				) : (
-					<div>React</div>
+					<div>Like</div>
 				)}
 			</div>
 		);
