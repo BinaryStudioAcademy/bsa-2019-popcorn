@@ -77,7 +77,6 @@ export const getTopByTitle = async (title: string): Promise<Top[]> => {
     tops.map(async top => {
       const movieIds = top.movieInTop.map(movie => movie.movieId);
       const elasticResponse = await getByIdValues(movieIds);
-      console.log(elasticResponse);
       top.movieInTop = elasticResponse.hits.hits.map(movie => movie._source);
       return top;
     })
@@ -105,7 +104,6 @@ export const createTop = async (top: Top): Promise<Top> =>
 
 export const createUserTop = async (top: any): Promise<any> => {
   try {
-    console.log(top)
     const addedTop = {
       title: top.title,
       description: top.description || null,
@@ -142,8 +140,6 @@ export const updateTop = async (updatedTop: Top): Promise<Top> => {
 };
 
 export const updateUserTop = async (top: any): Promise<any> => {
-  console.log(top)
-  console.log(top.movieInTop)
   try {
     const moviesInTop = top.movieInTop.map(movie =>
       ({
@@ -153,7 +149,6 @@ export const updateUserTop = async (top: any): Promise<any> => {
       }))
     delete top.movieInTop;
     await getCustomRepository(TopRepository).save(top);
-    console.log(top.id);
     await getCustomRepository(MovieInTopRepository).deleteMoviesByTopId(top.id);
     await getCustomRepository(MovieInTopRepository).save(moviesInTop);
     return await getTopById(top.id);
