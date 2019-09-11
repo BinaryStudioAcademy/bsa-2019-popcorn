@@ -27,6 +27,7 @@ class MovieRateRepository extends Repository<MovieRate> {
       .createQueryBuilder("movieRate")
       .select("TRUNC(AVG(movieRate.rate),2)", "average")
       .addSelect("movieRate.movieId as movieId")
+      .addSelect("COUNT(movieRate.movieId)", "count")
       .where("movieRate.movieId IN(:...moviesId)", { moviesId })
       .groupBy("movieRate.movieId")
       .getRawMany();
