@@ -81,7 +81,7 @@ class PostConstructor extends React.Component<
 			item = props.newPost.top ||
 				props.newPost.event ||
 				props.newPost.survey || { title: '' };
-			}
+		}
 		this.state = {
 			image_url: '',
 			description: '',
@@ -106,7 +106,7 @@ class PostConstructor extends React.Component<
 						extraType:
 							props.newPost.extraLink &&
 							props.newPost.extraLink.split('/')[1].slice(0, -1)
-					}
+				  }
 				: {})
 		};
 		this.imageStateHandler = this.imageStateHandler.bind(this);
@@ -193,15 +193,20 @@ class PostConstructor extends React.Component<
 
 	onSaveCropped() {
 		if (this.cropper.current) {
-			const dataUrl = this.cropper.current.getCroppedCanvas().toBlob(blob => {
-				const data = new FormData();
-				data.append('file', blob);
-				uploadFile(data)
-					.then(({ imageUrl }) => {
-						this.imageStateHandler(imageUrl, true);
-					})
-					.catch(error => {});
-			});
+			this.cropper.current.getCroppedCanvas().toBlob(
+				blob => {
+					console.log(blob.size);
+					const data = new FormData();
+					data.append('file', blob);
+					uploadFile(data)
+						.then(({ imageUrl }) => {
+							this.imageStateHandler(imageUrl, true);
+						})
+						.catch(error => {});
+				},
+				'image/jpeg',
+				0.85
+			);
 		}
 	}
 
