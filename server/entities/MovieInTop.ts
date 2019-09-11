@@ -6,7 +6,7 @@ export class MovieInTop {
   @PrimaryGeneratedColumn("uuid")
   id: string;
 
-  @Column()
+  @Column({ nullable: true })
   comment: string;
 
   @Column()

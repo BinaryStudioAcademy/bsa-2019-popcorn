@@ -27,7 +27,7 @@ router
   )
   .get("/user/:id", (req, res, next) =>
     topService
-      .getTopsByUserId(req.params.id)
+      .getExtendedTops(req.params.id)
       .then((tops: Top[]) => res.send(tops))
       .catch(next)
   )

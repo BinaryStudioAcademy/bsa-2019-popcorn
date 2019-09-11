@@ -14,7 +14,7 @@ import {
 	updateTop,
 	deleteTop
 } from './UserTops.redux/actions';
-import { ITopItem, convertServerDataFormatToClient } from './UserTops.service';
+import { ITopItem } from './UserTops.service';
 
 export interface IUserTopsState {
 	topList: any;
@@ -47,7 +47,7 @@ const newTop = (): ITopItem => {
 	return {
 		id: Date.now().toString(),
 		title: '',
-		moviesList: [],
+		movieInTop: [],
 		topImageUrl: '',
 		isNewTop: true,
 		created_at: new Date()
@@ -59,7 +59,7 @@ class UserTops extends React.Component<IUserTopProps, IUserTopsState> {
 		if (state.isAction && !isEqual(props.topList, state.topList)) {
 			return {
 				...state,
-				topList: convertServerDataFormatToClient(props.topList)
+				topList: props.topList
 			};
 		}
 		return null;
@@ -112,6 +112,9 @@ class UserTops extends React.Component<IUserTopProps, IUserTopsState> {
 			this.props.addTop(addedTop);
 			this.setState({ isAction: true, isCreated: false });
 		} else {
+			updatedTopItem.movieInTop = updatedTopItem.movieInTop.filter(movie => movie.id && String(movie.id).indexOf("movie") === -1);
+			const movieSet = new Set(updatedTopItem.movieInTop);
+			updatedTopItem.movieInTop = Array.from(movieSet);
 			const updatedTop: any = Object.assign({}, updatedTopItem);
 			updatedTop.userId = this.props.userId;
 
