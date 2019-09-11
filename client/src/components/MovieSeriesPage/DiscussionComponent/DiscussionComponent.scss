@@ -41,15 +41,12 @@ a:focus {
 	justify-self: end;
 	max-height: 500px;
 	width: 100%;
-	border: 1px solid rgb(244, 248, 251);
-	box-shadow: 0 1px 4px 0 rgb(244, 248, 251);
-	padding: 10px;
+	border: 1px solid $border-color;
 	border-radius: 4px;
 	.message-container {
 		padding-right: 5px;
 		overflow-y: scroll;
 		padding: 20px 28px 0px 20px;
-		margin-bottom: 20px;
 	}
 
 	.message-container::-webkit-scrollbar {
@@ -70,13 +67,13 @@ a:focus {
 				margin-right: 35px;
 			}
 			.body {
-				margin-right: 30px;
+				margin-right: 20px;
 			}
 		}
 	}
 
 	.message-item {
-		box-shadow: 1px 1px 4px 1px rgb(244, 248, 251);
+		border: 1px solid $border-color;
 		padding: 5px;
 		display: flex;
 		align-items: center;
@@ -84,15 +81,14 @@ a:focus {
 		margin-bottom: 15px;
 		width: 100%;
 		border-radius: 4px;
-		padding-left: 10px;
 		img {
-			box-shadow: 1px 1px 4px 1px #f4f8fb;
+			border: 1px solid $border-color;
 			align-self: flex-start;
 			width: 35px;
 			height: auto;
 			margin-right: 10px;
 			border-radius: 50%;
-			margin: -5px -25px;
+			margin: -15px -25px;
 		}
 
 		.message-body {
@@ -166,6 +162,7 @@ a:focus {
 		box-shadow: 2px 2px 2px $input-shadow-color;
 		box-sizing: border-box;
 		border: 1px solid $border-color;
+		margin-bottom: 0;
 		.message-body {
 			padding-bottom: 0px;
 			margin-left: 0px;
