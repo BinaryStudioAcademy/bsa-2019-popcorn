@@ -4,7 +4,7 @@ import DragDrop from './DragDrop';
 import { IMovie } from '../../UserTops.service';
 import { uniqueId } from 'lodash';
 const emptyInput = () => {
-	return { title: '', id: uniqueId('movie'), comment: '' };
+	return { id: uniqueId('movie'), comment: '', movie: { title: '', } };
 };
 
 const reorder = (list, startIndex, endIndex): any => {

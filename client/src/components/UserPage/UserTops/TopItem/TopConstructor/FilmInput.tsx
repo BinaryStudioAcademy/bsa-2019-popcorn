@@ -25,10 +25,10 @@ const FilmInput: React.FC<IInputProps> = ({
 	fetchFilms,
 	last
 }) => {
-	const [title, setTitle] = useState(movie.title || '');
+	const [title, setTitle] = useState(movie.movie.title || '');
 	const [comment, setComment] = useState(movie.comment || '');
 	useEffect(() => {
-		if (movie.title === '') {
+		if (movie.movie.title === '') {
 			setTitle('');
 		}
 		if (movie.comment === '') {
@@ -49,7 +49,7 @@ const FilmInput: React.FC<IInputProps> = ({
 	function changeTitle({ newId, newTitle }) {
 		setTitle(newTitle);
 		setIsChoosenTitle(true);
-		saveMovie({ ...movie, title: newTitle, comment }, newId);
+		saveMovie({ ...movie, movie: { title: newTitle }, comment }, newId);
 		clearSearch();
 	}
 
@@ -57,7 +57,7 @@ const FilmInput: React.FC<IInputProps> = ({
 		<div key={movie.id} className="film-input-item ">
 			<input
 				onChange={e => {
-					saveMovie({ ...movie, title: e.target.value, comment });
+					saveMovie({ ...movie, movie: { title: e.target.value }, comment });
 					searchFilms(e.target.value);
 				}}
 				maxLength={140}
@@ -95,8 +95,8 @@ const FilmInput: React.FC<IInputProps> = ({
 							);
 						})
 					) : (
-						<span>Nothing was found</span>
-					)}
+							<span>Nothing was found</span>
+						)}
 				</div>
 			) : null}
 			<span>
