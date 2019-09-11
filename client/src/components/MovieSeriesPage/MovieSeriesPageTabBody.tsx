@@ -86,15 +86,6 @@ const MovieSeriesPageTabBody: React.SFC<IProps> = ({
 						);
 					}}
 				/>
-				<Route
-					path={`${mainPath}/statistics`}
-					render={() => (
-						<MovieSeriesStatistics
-							statistics={statistics}
-							fetchStatistics={() => fetchStatistics(movie.id)}
-						/>
-					)}
-				/>
 			</Switch>
 			<DiscussionComponent
 				entityId={movie.id}
