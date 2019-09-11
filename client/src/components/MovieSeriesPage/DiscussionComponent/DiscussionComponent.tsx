@@ -5,6 +5,7 @@ import './DiscussionComponent.scss';
 import Moment from 'react-moment';
 import config from '../../../config';
 import { IDiscussionUser } from '../../UserPage/UserEvents/UserEvents.service';
+import { NavLink } from 'react-router-dom';
 export interface IDiscussionMessage {
 	id: string;
 	text: string;
@@ -149,10 +150,12 @@ class DiscussionComponent extends Component<
 									'message-item-reverse'} `}
 								key={message.id}
 							>
-								<img
-									src={message.user.avatar || config.DEFAULT_AVATAR}
-									alt="userPhoto"
-								/>
+								<NavLink to={'/user-page/' + message.user.id}>
+									<img
+										src={message.user.avatar || config.DEFAULT_AVATAR}
+										alt="userPhoto"
+									/>
+								</NavLink>
 								<div className="message-body">
 									<div className="message-info">
 										<div className="name">{message.user.name}</div>
@@ -180,7 +183,7 @@ class DiscussionComponent extends Component<
 								onKeyPress={e => {
 									if (e.key === 'Enter') this.sendMessage();
 								}}
-							></textarea>
+							/>
 							<button
 								onClick={this.sendMessage}
 								disabled={this.state.inputIsEmpty}
