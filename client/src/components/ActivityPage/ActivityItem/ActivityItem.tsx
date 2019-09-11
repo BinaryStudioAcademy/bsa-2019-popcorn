@@ -5,6 +5,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faComments, faStar } from '@fortawesome/free-solid-svg-icons';
 import Moment from 'react-moment';
 import { getIcon } from '../../MainPage/Post/PostReaction/PostReaction';
+import Image from '../../shared/Image/Image';
+import config from '../../../config';
 type ActivityItemProps = {
 	activity: Activity;
 	readNotification?: (date: string) => void;
@@ -20,6 +22,7 @@ const generateIcon = type => {
 				/>
 			);
 		case 'review':
+		case 'follower':
 			return (
 				<FontAwesomeIcon
 					className="activity-icon activity-icon-review"
@@ -58,7 +61,7 @@ const ActivityItem = ({
 					</Moment>
 				</div>
 			</div>
-			<img className="activity-img" src={img} />
+			<Image src={img} defaultSrc={config.DEFAULT_AVATAR} className="activity-img" alt="avatar" />
 		</div>
 	);
 };
