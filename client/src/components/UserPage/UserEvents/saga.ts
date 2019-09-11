@@ -46,6 +46,10 @@ export function* saveEvent(action) {
 				id: action.payload.event.userId
 			}
 		});
+
+		yield put({
+			type: GET_All_EVENTS,
+		});
 	} catch (e) {
 		console.log('Error create event', e.message);
 	}
@@ -53,7 +57,7 @@ export function* saveEvent(action) {
 
 export function* updateEvent(action) {
 	try {
-		const data = yield call(webApi, {
+		yield call(webApi, {
 			endpoint: '/api/event',
 			method: 'PUT',
 			body: action.payload.event
@@ -74,7 +78,7 @@ export function* updateEvent(action) {
 export function* deleteEvent(action) {
 	const { id, currentUserId } = action.payload;
 	try {
-		const data = yield call(webApi, {
+		yield call(webApi, {
 			endpoint: '/api/event/' + id,
 			method: 'DELETE'
 		});
@@ -108,7 +112,7 @@ export function* fetchAllEvents() {
 export function* subscribeToEvent(action) {
 	const { status, userId, eventId } = action.payload;
 	try {
-		const response = yield call(webApi, {
+		yield call(webApi, {
 			endpoint: `/api/event/visitor`,
 			method: 'POST',
 			body: {

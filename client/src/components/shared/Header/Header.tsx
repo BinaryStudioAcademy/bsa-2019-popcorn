@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronDown } from '@fortawesome/free-solid-svg-icons';
 import './Header.scss';
@@ -71,39 +71,23 @@ class Header extends React.Component<IProps> {
 	render() {
 		const {
 			userInfo,
-			moviesSearch,
-			fetchFilms,
-			alreadySearch,
-			setMovieSeries,
 			unauthorize,
-			sendTokenToServer,
 			getUnreadNotifications,
-			setNotificitationIsRead,
-			unredNotifications,
 			chats,
 			setNotificationIsRead,
 			unreadNotifications,
-			firebase,
 			firebaseToken,
-			getFirebaseToken,
 			deleteFirebaseToken,
-			history
 		} = this.props;
 		const MOVIES_IN_CINEMA = 'Movies in cinema';
 		const MOVIE_TOPS = 'Movie tops';
 		const USER_MOVIE_TOPS = `${userInfo.name}'s Movie Lists`;
-		const NEW_TV_SERIES = 'New TV Series';
-		const TV_SERIES_TOPS = 'TV Series tops';
-		const USER_TV_SERIES_TOPS = `${userInfo.name}'s TV Series Lists`;
 		const POPULAR_MOVIES = 'Popular Movies';
 		const POPULAR_TV_SERIES = 'Popular TV Series';
 		const POPULAR_USERS = 'Popular Users';
 		const PROFILE = 'Profile';
 		const SETTINGS = 'Settings';
 		const LOGOUT = 'Logout';
-
-		const { avatar } = userInfo;
-
 		return (
 			<div className="header">
 				<NavLink to="/" className="header-logo-link">
@@ -196,7 +180,10 @@ class Header extends React.Component<IProps> {
 					}
 				</div>
 				<div className="user-info header-buttons hover">
-					<Image src={avatar} defaultSrc={config.DEFAULT_AVATAR} alt="avatar" />
+					<img
+						src={userInfo.avatar ? userInfo.avatar : config.DEFAULT_AVATAR}
+						alt="avatar"
+					/>
 					<span className="user-name">{userInfo.name}</span>
 					<div className="modal">
 						<Link
@@ -228,7 +215,6 @@ const HeaderWithFirebase = withFirebase(Header);
 
 const mapStateToProps = (rootState, props) => ({
 	...props,
-	userInfo: rootState.profile.profileInfo,
 	moviesSearch: rootState.movie.moviesSearch,
 	alreadySearch: rootState.movie.alreadySearch,
 	unredNotifications: rootState.notification.unredNotifications,

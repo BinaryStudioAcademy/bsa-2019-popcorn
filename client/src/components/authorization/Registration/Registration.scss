@@ -48,11 +48,18 @@ body {
 
 .form-group {
 	margin-bottom: 23px;
+
+	.lds-css {
+		width: 0;
+		margin: 0 auto;
+		z-index: 2;
+	}
 }
 
 .form-label {
 	display: block;
-
+	position: relative;
+	z-index: 1;
 	margin-bottom: 13px;
 }
 

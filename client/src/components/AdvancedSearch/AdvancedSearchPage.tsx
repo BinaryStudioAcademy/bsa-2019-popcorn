@@ -23,7 +23,7 @@ type userInfo = {
 
 interface IAdvancedSearchPage {
 	userInfo: userInfo;
-	movieList: null | Array<TMovie>;
+	movieList: null | TMovie[];
 	fetchFiltredMovies: (filters: any) => any;
 	setMovieSeries: (movie: any) => any;
 	loadMoreFiltredMovie: (size: number, from: number, filters: any) => any;
@@ -58,7 +58,6 @@ const MovieListRender = (
 		<MovieList
 			movies={movieList}
 			setMovieSeries={setMovieSeries}
-			twoColumns={true}
 			loadMoreMovie={loadMoreFiltredMovie}
 			filters={filters}
 		/>
@@ -77,8 +76,9 @@ const AdvancedSearchPage = ({
 	getGenres
 }: IAdvancedSearchPage) => {
 	let convertGenres = null;
-	let convertCast = null;
-	if (!genres) getGenres();
+	if (!genres) {
+		getGenres();
+	}
 	if (genres) {
 		convertGenres = genres.map(el => el.name);
 	}
@@ -88,7 +88,6 @@ const AdvancedSearchPage = ({
 				fetchFiltredMovies={fetchFiltredMovies}
 				setFilters={setFilters}
 				genres={convertGenres}
-				casts={convertCast}
 			/>
 			{showSpinner ? (
 				<Spinner />

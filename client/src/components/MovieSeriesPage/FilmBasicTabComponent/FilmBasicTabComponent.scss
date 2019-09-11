@@ -20,17 +20,23 @@
 	flex-direction: column;
 	justify-content: center;
 	margin-right: 20px;
+	font-size: 0;
 }
 
 .descriptionList {
 	list-style-type: none;
-	margin: 0;
+	margin-bottom: 20px;
 	padding: 0;
 }
 
 .descriptionItem {
 	display: grid;
 	grid-template-columns: 0.3fr 0.7fr;
+	margin-bottom: 5%;
+
+	&:last-child {
+		margin-bottom: 0;
+	}
 }
 
 .descriptionTitle {

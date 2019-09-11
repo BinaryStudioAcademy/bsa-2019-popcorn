@@ -47,29 +47,29 @@ class AdvancedSearchDatePicker extends React.Component<
 				<div className="date-picker-block">
 					<DatePicker
 						selected={this.state.dateRange.startDate}
-						selectsStart
+						selectsStart={true}
 						startDate={this.state.dateRange.startDate}
 						endDate={this.state.dateRange.endDate}
 						onChange={date => {
 							this.onChangeDate({ startDate: date });
 						}}
-						peekNextMonth
+						peekNextMonth={true}
 						dropdownMode="select"
 						dateFormat="MM/yyyy"
-						showMonthYearPicker
+						showMonthYearPicker={true}
 						placeholderText="Start year"
 					/>
 
 					<DatePicker
 						selected={this.state.dateRange.endDate}
-						selectsEnd
+						selectsEnd={true}
 						startDate={this.state.dateRange.startDate}
 						endDate={this.state.dateRange.endDate}
 						minDate={this.state.dateRange.startDate}
 						onChange={date => this.onChangeDate({ endDate: date })}
 						dropdownMode="select"
 						dateFormat="MM/yyyy"
-						showMonthYearPicker
+						showMonthYearPicker={true}
 						placeholderText="End year"
 					/>
 				</div>

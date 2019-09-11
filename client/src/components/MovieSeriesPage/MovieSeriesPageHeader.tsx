@@ -1,17 +1,13 @@
-import React, { useState, ObjectHTMLAttributes } from 'react';
+import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar as regularStar } from '@fortawesome/free-regular-svg-icons';
-import { faStar as solidStar } from '@fortawesome/free-solid-svg-icons';
-import StarRating from '../shared/StarRating/StarRating';
-import { IUserRate } from './MovieSeriesPage';
+import { faStar as solidStar, faEdit } from '@fortawesome/free-solid-svg-icons';
+import RateMovie from '../shared/RateMovie/RateMovie';
 import ReviewAddModal from '../MovieSeriesPage/MovieSeriesReviews/ReviewAddModal/ReviewAddModal';
 import TMovie from '../MovieSeriesPage/TMovie';
 
 interface IProps {
 	movie: TMovie;
-	userRate?: IUserRate;
-	setUserRate: (userRate: object) => any;
-	deleteUserRate: (userRate: any) => object;
 	ownReview: any;
 	fetchReview: (userId: string, movieID: string) => any;
 	userId: string;
@@ -31,8 +27,6 @@ interface IProps {
 
 const MovieSeriesPageHeader: React.FC<IProps> = ({
 	movie,
-	userRate,
-	setUserRate,
 	ownReview,
 	fetchReview,
 	userId,
@@ -42,11 +36,9 @@ const MovieSeriesPageHeader: React.FC<IProps> = ({
 	watchListStatus,
 	addMovieToWatchList,
 	deleteMovieFromWatchList,
-	watchListLoading,
-	deleteUserRate
+	watchListLoading
 }) => {
 	const [modal, setModal] = useState(false);
-	const rate: number = userRate ? +userRate.rate : 0;
 
 	const onModalClick = () => {
 		setModal(true);
@@ -105,11 +97,6 @@ const MovieSeriesPageHeader: React.FC<IProps> = ({
 					</span>
 					<div className="header-genres-review-own-rating">
 						<span className="header-genres">{movie.genres}</span>
-						<div className="header-review-own-rating-container">
-							<button className="review-button" onClick={() => onModalClick()}>
-								review
-							</button>
-						</div>
 					</div>
 				</div>
 				<div className="movie-rating-container">
@@ -128,12 +115,16 @@ const MovieSeriesPageHeader: React.FC<IProps> = ({
 						{Number(movie.vote_average) || 0}
 						<span className="max-rating">/10</span>
 					</div>
-					<StarRating
-						size={10}
-						setUserRate={setUserRate}
-						userRate={userRate}
-						deleteUserRate={deleteUserRate}
-					/>
+					<RateMovie movieId={movie.id} />
+					<div />
+					<div className="header-review-own-rating-container">
+						<div className="review-button" onClick={onModalClick}>
+						<FontAwesomeIcon
+							icon={faEdit}
+						/>
+							Write Review
+						</div>
+					</div>
 				</div>
 			</div>
 		</header>

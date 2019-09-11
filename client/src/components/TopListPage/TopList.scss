@@ -1,82 +1,81 @@
 @import '../../styles/variables.scss';
 
 .top-list-wrapper {
-	margin: 30px;
-	.top-page-item {
-		box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.37);
-		box-sizing: border-box;
-		border-radius: 2px;
-		padding: 10px 0;
-		height: 170px;
-		margin: 20px 0;
-		display: flex;
-		justify-content: space-between;
-		a {
-			text-decoration: none;
+	margin: 30px 120px;
+	
+}
+
+.top-page-item {
+	box-shadow: 0px 0px 11px rgba(0, 0, 0, 0.11);
+	box-sizing: border-box;
+	border-radius: 2px;
+	padding: 10px 0;
+	height: 170px;
+	margin: 20px 0;
+	display: flex;
+	justify-content: space-between;
+	a {
+		text-decoration: none;
+		color: $text-base-color;
+		&:visited {
 			color: $text-base-color;
-			&:visited {
-				color: $text-base-color;
-			}
-			&:hover {
-				color: lighten($text-base-color, 10%);
-			}
 		}
-		.top-image-section {
-			//   width: 35%;
-			margin: 10px 20px;
-			// text-align: center;
-
-			.top-page-item-img {
-				max-width: 220px;
-				// max-width: 100%;
-			}
+		&:hover {
+			color: lighten($text-base-color, 10%);
 		}
+	}
+	.top-image-section {
+		margin: 10px 20px;
+		overflow: hidden;
+		.top-page-item-img {
+			max-width: 220px;
+		}
+	}
 
-		.top-main-section {
-			width: 50%;
-			.top-title {
-				text-transform: uppercase;
-				font-size: 1.5em;
-				font-weight: 700;
-				margin-bottom: 10px;
-				padding-top: 5px;
-			}
-
-			ol {
-				li {
-					list-style-position: inside;
-				}
-			}
+	.top-main-section {
+		width: 50%;
+		.top-title {
+			text-transform: uppercase;
+			font-size: 1.5em;
+			font-weight: 700;
+			margin-bottom: 10px;
+			padding-top: 5px;
 		}
 
-		.top-secondary-section {
-			width: 25%;
-			padding-right: 20px;
-			padding-top: 10px;
+		ol {
+			li {
+				list-style-position: inside;
+			}
+		}
+	}
+
+	.top-secondary-section {
+		width: 25%;
+		padding-right: 20px;
+		padding-top: 10px;
+		display: flex;
+		flex-direction: column;
+		align-items: flex-end;
+		.add-info {
+			margin-top: 50px;
+			text-decoration: none;
+		}
+		.user-info {
+			margin-bottom: 10px;
 			display: flex;
-			flex-direction: column;
-			align-items: flex-end;
-			.add-info {
-				margin-top: 50px;
-				text-decoration: none;
+			align-items: center;
+			.user-name {
+				display: inline-block;
 			}
-			.user-info {
-				margin-bottom: 10px;
-				display: flex;
-				align-items: center;
-				.user-name {
-					display: inline-block;
-				}
-				img {
-					margin-right: 10px;
-					width: 30px;
-					border-radius: 20px;
-				}
+			img {
+				margin-right: 10px;
+				width: 30px;
+				border-radius: 20px;
 			}
-			.created-at {
-				color: $text-secondary-color;
-				font-size: 0.9em;
-			}
+		}
+		.created-at {
+			color: $text-secondary-color;
+			font-size: 0.9em;
 		}
 	}
 }

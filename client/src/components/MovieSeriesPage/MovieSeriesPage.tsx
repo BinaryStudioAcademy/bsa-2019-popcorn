@@ -12,24 +12,17 @@ import {
 	deleteMovieFromWatchList
 } from '../UserPage/UserWatchList/actions';
 import {
-	fetchUserRate,
 	fetchMovie,
-	setUserRate,
 	fetchReviewByMovieUserId as fetchReview,
 	setReview,
 	removeReviewSet,
 	fetchAwards,
 	fetchStatistics,
-	deleteUserRate,
 	fetchPostsByFilm
 } from './Movie.redux/actions';
 
 interface IProps {
 	fetchedMovie: any;
-	userRate: IUserRate;
-	setUserRate: (userRate: any) => object;
-	deleteUserRate: (userRate: any) => object;
-	fetchUserRate: (userId: string, movieId: string) => object;
 	fetchMovie: (movieId: string) => object;
 	fetchReview: (userId: string, movieId: string) => object;
 	setReview: (
@@ -57,20 +50,9 @@ interface IProps {
 	posts?: Array<any>;
 }
 
-export interface IUserRate {
-	id?: string;
-	movieId: string;
-	userId: string;
-	rate: string;
-}
-
 const MovieSeriesPage: React.SFC<IProps> = props => {
 	const {
 		fetchedMovie,
-		userRate,
-		setUserRate,
-		fetchUserRate,
-		deleteUserRate,
 		fetchMovie,
 		avatar,
 		userId,
@@ -98,10 +80,6 @@ const MovieSeriesPage: React.SFC<IProps> = props => {
 		fetchMovie(currentMovieId);
 		return <Spinner />;
 	}
-	if (!userRate || userRate.movieId != currentMovieId) {
-		fetchUserRate(userId, currentMovieId);
-		return <Spinner />;
-	}
 
 	if (!watchListStatus || watchListStatus.movieId != currentMovieId) {
 		fetchWatchListStatus(currentMovieId);
@@ -114,8 +92,6 @@ const MovieSeriesPage: React.SFC<IProps> = props => {
 		<div className="movie-series-page">
 			<MovieSeriesPageHeader
 				movie={movie}
-				userRate={userRate}
-				setUserRate={rateObj => setUserRate(rateObj)}
 				ownReview={ownReview}
 				fetchReview={fetchReview}
 				userId={userId}
@@ -126,11 +102,14 @@ const MovieSeriesPage: React.SFC<IProps> = props => {
 				addMovieToWatchList={addMovieToWatchList}
 				deleteMovieFromWatchList={deleteMovieFromWatchList}
 				watchListLoading={watchListLoading}
-				deleteUserRate={deleteUserRate}
 			/>
 			<MovieSeriesPageTabs mainPath={mainPath} />
 			<MovieSeriesPageTabBody
+				ownReview={ownReview}
+				setReview={setReview}
+				fetchReview={fetchReview}
 				mainPath={mainPath}
+				removeReviewSet={removeReviewSet}
 				movie={movie}
 				currentUser={{ avatar, id: userId, name: username }}
 				fetchAwards={fetchAwards}
@@ -146,7 +125,6 @@ const MovieSeriesPage: React.SFC<IProps> = props => {
 
 const mapStateToProps = (rootState, props) => ({
 	...props,
-	userRate: rootState.movie.userRate,
 	fetchedMovie: rootState.movie.fetchedMovie,
 	avatar: rootState.profile.profileInfo && rootState.profile.profileInfo.avatar,
 	userId: rootState.profile.profileInfo && rootState.profile.profileInfo.id,
@@ -161,9 +139,7 @@ const mapStateToProps = (rootState, props) => ({
 
 const mapDispatchToProps = dispatch => {
 	const actions = {
-		fetchUserRate,
 		fetchMovie,
-		setUserRate,
 		fetchReview,
 		setReview,
 		removeReviewSet,
@@ -172,7 +148,6 @@ const mapDispatchToProps = dispatch => {
 		deleteMovieFromWatchList,
 		fetchAwards,
 		fetchStatistics,
-		deleteUserRate,
 		fetchPostsByFilm
 	};
 	return bindActionCreators(actions, dispatch);

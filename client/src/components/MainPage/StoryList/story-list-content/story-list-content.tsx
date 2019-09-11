@@ -2,10 +2,12 @@ import StoryListItem from '../story-list-item/story-list-item';
 import React, { Component } from 'react';
 import StoryVoting from '../../../StoryVoting/StoryVoting';
 import config from '../../../../config';
+import { isEqual, sortBy } from 'lodash';
 
 interface IStoryListItem {
 	id: string;
 	caption: string;
+	created_at: Date;
 	image_url: string;
 	backgroundColor: string;
 	fontColor?: string;
@@ -36,17 +38,33 @@ interface IStoryListItem {
 }
 
 interface IStoryListItemsProps {
-	storyListItems: Array<IStoryListItem>;
+	storyListItems: IStoryListItem[];
 	openViewer: (number) => void;
 }
 
-class StoryListContent extends Component<IStoryListItemsProps> {
+interface IState {
+	storyListItems: IStoryListItem[];
+}
+
+class StoryListContent extends Component<IStoryListItemsProps, IState> {
 	constructor(props) {
 		super(props);
+		this.state = {
+			storyListItems: []
+		}
+	}
+
+	static getDerivedStateFromProps(props, state) {
+		if (Array.isArray(props.storyListItems) && !isEqual(sortBy(props.storyListItems), sortBy(state.storyListItems)) ) {
+			return {
+				storyListItems: props.storyListItems
+			}
+		}
+		return null;
 	}
 
 	render() {
-		const { storyListItems } = this.props;
+		const { storyListItems } = this.state;
 		const storyList = storyListItems.map((item, i) => {
 			if (item.type === 'voting' && item.voting) {
 				const voting = item.voting;

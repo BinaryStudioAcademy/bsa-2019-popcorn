@@ -21,17 +21,14 @@ export const uploadFile = req =>
       form.parse(req, function(err, fields, files): any {
         if (err) return reject(err);
         if (process.env.NODE_ENV === "production") {
-          base64Img.base64(path.resolve(files.file[0].path), function(
-            err,
-            data
-          ) {
+          base64Img.base64(path.resolve(files.file[0].path), (err, data) => {
             upload(data)
               .then(url => resolve(url))
               .catch(e => reject(e));
           });
         } else {
           if (files.file) {
-            let imageUrl = files.file[0].path;
+            const imageUrl = files.file[0].path;
             let url;
             url =
               imageUrl.indexOf("\\") !== -1
@@ -62,7 +59,9 @@ export const uploadFile = req =>
           const format = req.body.format.split("/").pop();
           const name = `public/files/${uuid()}.${format}`;
           fs.writeFile(name, req.body.base, "base64", err => {
-            if (err) return reject(err);
+            if (err) {
+              return reject(err);
+            }
             return resolve(name);
           });
         }

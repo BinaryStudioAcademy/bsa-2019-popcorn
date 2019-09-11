@@ -10,12 +10,12 @@ import { Redirect } from 'react-router';
 import SocketService from '../../../../services/socket.service';
 import INewStory from '../INewStory';
 import IVoting from '../IVoting';
-import TMovie from '../../../MovieSeriesPage/TMovie';
 
 interface IStoryListItem {
 	id: string;
 	caption: string;
 	image_url: string;
+	created_at: Date;
 	backgroundColor: string;
 	user: {
 		avatar: string;
@@ -42,7 +42,7 @@ interface IStoryListItem {
 }
 interface IProps {
 	scrollStep: number;
-	stories: null | Array<IStoryListItem>;
+	stories: null | IStoryListItem[];
 	fetchStories: () => any;
 	avatar: null | string;
 	newStory: INewStory;
@@ -57,13 +57,12 @@ interface IProps {
 	userId: string;
 	createVoting: (voting: IVoting) => any;
 	addStory: (story: any) => any;
-}
-
-interface IStoryListProps {
-	scrollStep: number;
-	stories: null | Array<IStoryListItem>;
-	fetchStories: () => any;
-	avatar: null | string;
+	setVoting: (voting: IVoting) => any;
+	saveVotingReaction: (
+		userId: string,
+		votingId: string,
+		optionId: string
+	) => any;
 }
 
 interface IState {
@@ -95,11 +94,12 @@ class StoryList extends Component<IProps, IState> {
 			modal: false
 		};
 		this.updateModal = this.handleUpdateModal.bind(this);
-		this.addSocketEvents(props.addStory);
+		this.addSocketEvents(props.addStory, props.setVoting);
 	}
 
-	addSocketEvents = addStory => {
+	addSocketEvents = (addStory, setVoting) => {
 		SocketService.on('new-story', addStory);
+		SocketService.on('new-voting-reaction', setVoting);
 	};
 
 	handleUpdateModal = (value: boolean) => {
@@ -139,8 +139,12 @@ class StoryList extends Component<IProps, IState> {
 
 	viewerIsShown = () => {
 		const { stories } = this.props;
-		if (!stories) return;
-		if (!this.state.isShownViewer) return null;
+		if (!stories) {
+			return;
+		}
+		if (!this.state.isShownViewer) {
+			return null;
+		}
 
 		const { currentStory } = this.state;
 		const mockStories = stories.map(story => ({
@@ -153,7 +157,7 @@ class StoryList extends Component<IProps, IState> {
 				name: story.user.name,
 				image_url: story.user.avatar
 			},
-			created_at: new Date(2019, 7, 13, 22)
+			created_at: story.created_at
 		}));
 
 		return (
@@ -206,7 +210,9 @@ class StoryList extends Component<IProps, IState> {
 						onMouseLeave={this.onMouseLeave}
 						onMouseMove={this.onMouseMove}
 						onClickCapture={event => {
-							if (this.state.class === 'active') event.stopPropagation();
+							if (this.state.class === 'active') {
+								event.stopPropagation();
+							}
 							this.setState({ isDown: false, class: '', isPopupShown: false });
 						}}
 					>

@@ -19,7 +19,7 @@ router
   )
   .get("/user/:id", (req, res, next) =>
     postService
-      .getPostsByUserId(req.params.id)
+      .getPosts(null, req.params.id)
       .then((posts: Post[]) => res.send(posts))
       .catch(next)
   )

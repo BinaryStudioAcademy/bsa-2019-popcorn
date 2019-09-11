@@ -8,7 +8,6 @@ import {
 } from './actionTypes';
 
 import webApi from '../../../../services/webApi.service';
-import config from '../../../../config';
 import { USER_POSTS } from '../../../UserPage/actionTypes';
 
 export function* fetchPosts(action) {

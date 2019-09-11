@@ -24,7 +24,11 @@ class UserRepository extends Repository<User> {
         if (!movie) {
           return;
         }
-        item.movie = { id: movie.id, name: movie.title };
+        item.movie = {
+          id: movie.id,
+          name: movie.title,
+          release_date: movie.release_date
+        };
       });
       if (!data.user) {
         throw new Error(`User with ${id} id is not found`);

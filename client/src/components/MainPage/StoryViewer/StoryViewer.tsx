@@ -1,5 +1,4 @@
 import React, { PureComponent } from 'react';
-import TimeAgo from 'react-time-ago';
 import StoryViewerModal from '../StoryViewerModal/StoryViewerModal';
 import StorySeenByModal from '../StorySeenByModal/StorySeenByModal';
 import './StoryViewer.scss';
@@ -19,6 +18,12 @@ import ChatInput from '../../ChatPage/Chat/ChatInput';
 import StoryReaction from './StoryReaction';
 import { createMessage } from '../../ChatPage/ChatPage.redux/actions';
 import { bindActionCreators } from 'redux';
+import WatchListIcon from '../../shared/WatchListIcon/WatchListIcon';
+import RateMovie from '../../shared/RateMovie/RateMovie';
+import { saveVotingReaction } from '../StoryList/story.redux/actions';
+import Moment from 'react-moment';
+import Image from '../../shared/Image/Image';
+
 
 interface IProps {
 	stories: Array<{
@@ -69,6 +74,11 @@ interface IProps {
 	closeViewer: () => void;
 	chats: any;
 	createMessage: (userId: string, chatId: string, body: any) => void;
+	saveVotingReaction: (
+		userId: string,
+		votingId: string,
+		optionId: string
+	) => any;
 }
 
 interface IState {
@@ -168,25 +178,36 @@ class StoryViewer extends PureComponent<IProps, IState> {
 								onClick={() => this.setState({ isReactionShown: false })}
 							>
 								<header>
-									<img
-										src={story.userInfo.image_url || config.DEFAULT_AVATAR}
-										alt=""
-									/>
-									<span className="username">{story.userInfo.name}</span>
-									<TimeAgo date={story.created_at} timeStyle="twitter" />
+									<NavLink className="user-link" to={`/user-page/${story.userInfo.userId}`}>
+										<Image
+											src={story.userInfo.image_url}
+											defaultSrc={config.DEFAULT_AVATAR}
+											alt={story.userInfo.name} />
+									</NavLink>
+									<NavLink className="user-link" to={`/user-page/${story.userInfo.userId}`}>
+										<span className="username">{story.userInfo.name}</span>
+									</NavLink>
+									<Moment format="D MMM" local>
+										{String(story.created_at)}
+									</Moment>
 									{story.movieOption && (
 										<span style={{ marginLeft: '5px' }}>
 											{story.movieOption}
 										</span>
 									)}
-									<p className="ellipsis" onClick={this.toogleModal}>
-										<FontAwesomeIcon icon={faEllipsisH} />
-									</p>
 								</header>
 
 								{story.type === 'voting' && story.voting && (
 									<div>
 										<StoryVoting
+											saveVotingReaction={optionId => {
+												const id = story.voting ? story.voting.id : '';
+												this.props.saveVotingReaction(
+													this.props.userId,
+													id,
+													optionId
+												);
+											}}
 											backgroundColor={story.backgroundColor}
 											header={story.voting.header}
 											options={story.voting.options}
@@ -282,13 +303,7 @@ class StoryViewer extends PureComponent<IProps, IState> {
 													</div>
 												)}
 												<span
-													style={{
-														display: 'flex',
-														justifyContent: 'center',
-														padding: '0 15px',
-														width: '100%',
-														wordWrap: 'break-word'
-													}}
+													className={(story.activity || story.movie) && "movie-activity-container"}
 												>
 													{story.type && story.activity && (
 														<NavLink
@@ -298,9 +313,15 @@ class StoryViewer extends PureComponent<IProps, IState> {
 														</NavLink>
 													)}
 													{story.movieId && story.movie && (
+														<WatchListIcon movieId={story.movie.id} />
+													)}
+													{story.movieId && story.movie && (
 														<NavLink to={'/movies/' + story.movie.id}>
 															{story.movie.title}
 														</NavLink>
+													)}
+													{story.movieId && story.movie && (
+														<RateMovie movieId={story.movie.id} />
 													)}
 												</span>
 											</p>
@@ -334,7 +355,8 @@ const mapStateToProps = (rootState, props) => ({
 });
 
 const actions = {
-	createMessage
+	createMessage,
+	saveVotingReaction
 };
 const mapDispatchToProps = dispatch => bindActionCreators(actions, dispatch);
 

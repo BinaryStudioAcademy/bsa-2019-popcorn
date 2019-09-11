@@ -1,8 +1,6 @@
 import React from 'react';
-import { IEvent } from './EventPage';
 import { Switch, Route } from 'react-router-dom';
 import About from './About/About';
-import Discussion from './Discussion/Discussion';
 import ParticipantList from './ParticipantList/ParticipantList';
 import {
 	IEventFormatClient,

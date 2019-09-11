@@ -48,7 +48,7 @@ const { notifications } = {
 type userInfo = {
 	id: string;
 	name: string;
-	image: string;
+	avatar: string;
 	any;
 };
 
@@ -65,6 +65,7 @@ interface IProps {
 	searchedEvent: IEventFormatDataBase;
 	getEventById: (eventId: string) => void;
 	subscibeToEvent: ({ eventId, userId, status }) => void;
+	avatar: string;
 }
 
 const MovieListRender = (
@@ -81,7 +82,6 @@ const MovieListRender = (
 		<MovieList
 			movies={movieList}
 			setMovieSeries={setMovieSeries}
-			twoColumns={true}
 			loadMoreMovie={loadMoreMovie}
 		/>
 	);
@@ -112,14 +112,14 @@ const Main = ({
 	getAllEvents,
 	searchedEvent,
 	getEventById,
-	subscibeToEvent
+	subscibeToEvent,
+	avatar
 }: IProps) => {
 	if (!isAuthorized || !localStorage.getItem('token')) {
 		return <Redirect to="/login" />;
 	}
 
 	new SocketService(userInfo.id);
-
 	return (
 		<div className={'main-wrap'}>
 			{isAuthorized ? <Header userInfo={userInfo} /> : null}

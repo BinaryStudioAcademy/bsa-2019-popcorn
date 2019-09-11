@@ -21,8 +21,12 @@ class MovieSeriesAwards extends Component<IMovieSeriesAwardsProps, {}> {
 	render() {
 		return this.props.awards ? (
 			<div className="movieAwards-wrapper">
-				{this.props.awards.map(item => (
-					<AwardItem title={item.award} nominations={item.titlesAwards[0]} />
+				{this.props.awards.map((item, index) => (
+					<AwardItem
+						key={index}
+						title={item.award}
+						nominations={item.titlesAwards[0]}
+					/>
 				))}
 			</div>
 		) : (

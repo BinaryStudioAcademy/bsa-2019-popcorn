@@ -2,7 +2,6 @@ import React from 'react';
 import PostList from '../PostList/PostList';
 import RecommendList from '../RecommendList/RecommendList';
 import './FeedBlock.scss';
-import TopList from '../TopList/TopList';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import Spinner from '../../shared/Spinner';

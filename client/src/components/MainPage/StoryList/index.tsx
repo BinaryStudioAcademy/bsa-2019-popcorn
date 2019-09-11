@@ -5,10 +5,12 @@ import {
 	createStory,
 	createVoting,
 	fetchStories,
+	saveCroppedImage,
 	saveImage,
 	saveMovie,
+	saveVotingReaction,
 	setCaption,
-	saveCroppedImage
+	setVoting
 } from './story.redux/actions';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
@@ -30,6 +32,7 @@ import CreateStoryFilm from './story-modal/create-story-film';
 interface IStoryListItem {
 	id: string;
 	caption: string;
+	created_at: Date;
 	image_url: string;
 	backgroundColor: string;
 	fontColor?: string;
@@ -61,7 +64,7 @@ interface IStoryListItem {
 
 interface IProps {
 	scrollStep: number;
-	stories: null | Array<IStoryListItem>;
+	stories: null | IStoryListItem[];
 	fetchStories: () => any;
 	avatar: null | string;
 	newStory: INewStory;
@@ -76,7 +79,7 @@ interface IProps {
 	userId: string;
 	createVoting: (voting: IVoting) => any;
 	addStory: (story: any) => any;
-	movies: null | Array<TMovie>;
+	movies: null | TMovie[];
 	fetchSearch: (title: string) => any;
 	title: string;
 	resetSearch: () => any;
@@ -84,6 +87,12 @@ interface IProps {
 	isLoading: boolean;
 	photoSaved: boolean;
 	saveCroppedImage: () => void;
+	setVoting: (voting: IVoting) => any;
+	saveVotingReaction: (
+		userId: string,
+		votingId: string,
+		optionId: string
+	) => any;
 }
 
 const ListBlock = ({ ...props }: IProps) => {
@@ -161,6 +170,8 @@ const mapStateToProps = (rootState, props) => ({
 });
 
 const actions = {
+	saveVotingReaction,
+	setVoting,
 	fetchStories,
 	setCaption,
 	saveImage,

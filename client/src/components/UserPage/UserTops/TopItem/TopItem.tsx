@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { NavLink } from 'react-router-dom';
 import './TopItem.scss';
 import { ReactComponent as CloseIcon } from '../../../../assets/icons/general/closeIcon.svg';
 import TopConstructor from './TopConstructor/TopConstructor';
-import { faImage } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { ITopItem } from '../UserTops.service';
+import TopListItem from '../../../TopListPage/TopListItem';
+import Moment from 'react-moment';
 
 interface ITopItemProps {
 	topItem: ITopItem;
@@ -28,13 +27,9 @@ const TopItem: React.FC<ITopItemProps> = ({
 	uploadImage,
 	uploadUrl,
 	urlForTop,
-	history
 }) => {
 	const [editTop, canEditTop] = useState(topItem.isNewTop || false);
 	const [title, setTitle] = useState(topItem.title);
-	// const [isOwnData] = useState(topItem.isOwnData);
-	// const [topImageUrl, setTopImageUrl] = useState(topItem.topImageUrl);
-	// const [isOwnData] = useState(topItem.isOwnData);
 	const [topImageUrl, setTopImageUrl] = useState(topItem.topImageUrl);
 	useEffect(() => {
 		if (urlForTop === topItem.id) {
@@ -67,7 +62,8 @@ const TopItem: React.FC<ITopItemProps> = ({
 
 	return (
 		<div>
-			<div className="top-item">
+			<div className="top-item"
+				style={editTop ? { gridTemplateRows: "60px 1fr" } : undefined}>
 				{editTop || topItem.moviesList.length === 0 ? (
 					<input
 						maxLength={140}
@@ -77,12 +73,10 @@ const TopItem: React.FC<ITopItemProps> = ({
 						value={title}
 					/>
 				) : (
-					<div className="top-item-title">
-						<NavLink to={`/tops/${topItem.id}`} className="link-reset">
-							{title}
-						</NavLink>
-					</div>
-				)}
+						<div >
+							<TopListItem top={{ ...topItem, movieInTop: topItem.moviesList, created_at: undefined }} />
+						</div>
+					)}
 				<input
 					name="image"
 					type="file"
@@ -96,23 +90,38 @@ const TopItem: React.FC<ITopItemProps> = ({
 						htmlFor={`${topItem.id}image`}
 						className="top-upload-image hover"
 					>
-						<FontAwesomeIcon icon={faImage} className="fontAwesomeIcon" />
+						Upload Image
 					</label>
 				)}
-				{isOwnData && (
-					<div className="edit-top hover" onClick={toogleEdit}>
+				{!editTop && isOwnData && (
+					<div className="edit-top hover"
+						onClick={toogleEdit}
+						style={editTop ? { alignSelf: "center" } : undefined}>
 						Edit
 					</div>
 				)}
-				{isOwnData && (
-					<div className="delete-top hover" onClick={() => deleteTop(topItem)}>
-						<CloseIcon className="close-icon" />
+				{!editTop && isOwnData && (
+					<div className="last">
+						{<Moment
+							format="ll"
+							local
+							className="created-at"
+							style={editTop ? { display: "none" } : undefined}>
+							{String(topItem.created_at)}
+						</Moment>
+						}
+						<div className="delete-top hover"
+							style={editTop ? { marginTop: "10px" } : undefined}
+							onClick={() => deleteTop(topItem)}>
+
+							<CloseIcon className="close-icon" />
+						</div>
 					</div>
 				)}
-				<img className="image-top" src={topImageUrl} alt="" />
+				{editTop && <img className="image-top" src={topImageUrl} alt="" />}
 			</div>
 			{(editTop || topItem.moviesList.length === 0) && (
-				<TopConstructor moviesList={topItem.moviesList} saveTop={saveTop} />
+				<TopConstructor moviesList={topItem.moviesList} saveTop={saveTop} closeTopEditor={toogleEdit} />
 			)}
 		</div>
 	);

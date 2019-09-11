@@ -23,7 +23,6 @@ export const getAwards = async imdbId =>
   await fetch(
     `https://www.myapifilms.com/imdb/idIMDB?idIMDB=${imdbId}&token=cabc05cf-742d-4549-8b35-a0aeddd1a49e&format=json&language=en-us&&awards=1`
   ).then(res => res.json());
-
 @EntityRepository(Movie)
 class MovieRepository extends Repository<Movie> {}
 

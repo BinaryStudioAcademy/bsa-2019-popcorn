@@ -37,7 +37,7 @@ interface IProps {
 	history: {
 		push: (path: string) => void;
 	};
-	movies: null | Array<TMovie>;
+	movies: null | TMovie[];
 	fetchSearch: (title: string) => any;
 	title: string;
 	resetSearch: () => any;
@@ -65,8 +65,17 @@ class getAddStoryPopupContent extends React.Component<IProps> {
 		extra: true
 	};
 
-	static valid({ image_url, backgroundColor, caption, type }: INewStory) {
-		return caption || type === 'voting';
+	static valid(
+		{ image_url, backgroundColor, caption, type }: INewStory,
+		photoSaved
+	) {
+		return caption && photoSaved === true && image_url
+			? true
+			: caption && photoSaved === false && image_url
+			? false
+			: caption && photoSaved === false && !image_url
+			? true
+			: false || type === 'voting';
 	}
 
 	//background picker
@@ -109,7 +118,10 @@ class getAddStoryPopupContent extends React.Component<IProps> {
 	render() {
 		const newStory = this.props.newStory;
 
-		const disabled = !getAddStoryPopupContent.valid(newStory);
+		const disabled = !getAddStoryPopupContent.valid(
+			newStory,
+			this.props.photoSaved
+		);
 
 		if (!this.state.open) return <Redirect to={'/'} />;
 		if (!this.state.extra) return <Redirect to={'/create/extra'} />;
@@ -139,7 +151,9 @@ class getAddStoryPopupContent extends React.Component<IProps> {
 						<div className="story-editor-btns">
 							<div
 								onClick={this.handleShowColorPicker}
-								className="color-picker-btn"
+								className={`color-picker-btn ${
+									newStory.image_url && !this.props.photoSaved ? 'disabled' : ''
+								}`}
 							>
 								<div
 									style={{ backgroundColor: this.props.backgroundColor }}
@@ -159,10 +173,19 @@ class getAddStoryPopupContent extends React.Component<IProps> {
 								</div>
 							) : null}
 
-							<button onClick={this.toggleInput}>T</button>
+							<button
+								onClick={this.toggleInput}
+								disabled={
+									newStory.image_url && !this.props.photoSaved ? true : false
+								}
+							>
+								T
+							</button>
 							<div
 								onClick={this.handleShowFontPicker}
-								className="color-picker-btn"
+								className={`color-picker-btn ${
+									newStory.image_url && !this.props.photoSaved ? 'disabled' : ''
+								}`}
 							>
 								<div
 									style={{ color: this.props.fontColor }}
@@ -185,7 +208,12 @@ class getAddStoryPopupContent extends React.Component<IProps> {
 								</div>
 							) : null}
 							<div className="color-picker-btn"></div>
-							<button onClick={addExtra}>
+							<button
+								onClick={addExtra}
+								disabled={
+									newStory.image_url && !this.props.photoSaved ? true : false
+								}
+							>
 								<FontAwesomeIcon icon={faPlus} />
 							</button>
 						</div>

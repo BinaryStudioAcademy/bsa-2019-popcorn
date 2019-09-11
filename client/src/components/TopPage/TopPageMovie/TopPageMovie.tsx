@@ -5,6 +5,7 @@ import { IMovie } from '../TopPage.service';
 
 import './MovieListItem.scss';
 import { NavLink } from 'react-router-dom';
+import WatchListIcon from '../../shared/WatchListIcon/WatchListIcon';
 
 interface ITopProps {
 	index: number;
@@ -30,6 +31,7 @@ const TopPageMovie: React.SFC<ITopProps> = ({ index, movie }) => {
 							alt="movie-poster"
 							className="movie-poster"
 						/>
+						<WatchListIcon movieId={movie.id} />
 					</NavLink>
 				</div>
 				<div className="movie-info">

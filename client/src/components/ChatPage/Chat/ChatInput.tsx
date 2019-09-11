@@ -26,11 +26,15 @@ const ChatInput: React.FC<IProps> = ({
 }) => {
 	const [message, changeMessage] = useState('');
 	const handleKeyPress = e => {
-		if (e.key === 'Enter') sendMessage();
+		if (e.key === 'Enter') {
+			sendMessage();
+		}
 	};
 
 	const sendMessage = () => {
-		if (message.trim() === '') return;
+		if (message.trim() === '') {
+			return;
+		}
 		changeMessage('');
 		if (!chatId) {
 			createChat(userId, story.userInfo.userId, {

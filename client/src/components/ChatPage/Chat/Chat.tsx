@@ -28,7 +28,9 @@ class Chat extends React.Component<IProps> {
 			this.props.fetchMessages(this.props.userId, this.props.match.params.id);
 		}
 
-		if (!this.props.chat.messages) return <Spinner />;
+		if (!this.props.chat.messages) {
+			return <Spinner />;
+		}
 
 		return (
 			<div>

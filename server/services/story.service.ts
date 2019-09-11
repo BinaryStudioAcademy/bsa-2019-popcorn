@@ -3,8 +3,7 @@ import { getCustomRepository } from "typeorm";
 import StoryRepository from "../repository/story.repository";
 import UserRepository from "../repository/user.repository";
 import { getVotingById } from "./voting.service";
-import { getMovieById } from "./movie.service";
-
+import { getMovieById, getMovieTitleById } from "./movie.service";
 import * as uuid from "uuid/v4";
 import { getSurveysById } from "./surveys.service";
 import { getEventById } from "./event.service";
@@ -13,7 +12,10 @@ import { getTopById } from "./top.service";
 export const getStories = async (): Promise<Story[]> => {
   let activity;
   const stories = (await getCustomRepository(StoryRepository).find({
-    relations: ["user"]
+    relations: ["user"],
+    order: {
+      created_at: 'ASC'
+    }
   })).reverse();
   return Promise.all(
     stories.map(async item => {
@@ -38,7 +40,7 @@ export const getStories = async (): Promise<Story[]> => {
           break;
       }
       if (story.movieId) {
-        story.movie = await getMovieById(story.movieId);
+        story.movie = await getMovieTitleById(story.movieId);
       }
 
       return story;

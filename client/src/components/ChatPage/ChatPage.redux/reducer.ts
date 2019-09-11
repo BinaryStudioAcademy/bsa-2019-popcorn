@@ -6,12 +6,10 @@ import {
 	ADD_MESSAGE_STORE,
 	DELETE_MESSAGE_STORE,
 	UPDATE_MESSAGE_STORE,
-	READ_MESSAGES,
 	ADD_UNREAD_MESSAGE,
 	READ_MESSAGES_STORE,
 	SET_CHAT
 } from './actionTypes';
-import chat from './saga';
 
 const initialState: {
 	chats: any;
@@ -130,7 +128,7 @@ export default function(state = initialState, action) {
 				}
 			};
 		case READ_MESSAGES_STORE:
-			const { chatId: id_chat, userId } = action.payload;
+			const { chatId: id_chat } = action.payload;
 			if (!state.chats[id_chat]) {
 				return { ...state };
 			}
