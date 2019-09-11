@@ -8,7 +8,7 @@ import {
 } from './actionTypes';
 
 const initialState = {
-	surveys: [],
+	surveys: undefined,
 	survey: {},
 	loading: true
 };

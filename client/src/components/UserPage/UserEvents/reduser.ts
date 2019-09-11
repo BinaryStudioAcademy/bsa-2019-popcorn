@@ -7,9 +7,16 @@ import {
 	UPDATE_USER_EVENT
 } from './actionsTypes';
 
-const initialState = {
-	userEvents: [],
-	allEvents: [],
+interface IStateEvents {
+	userEvents: undefined | [];
+	allEvents: undefined | [];
+	searchedEvent: any;
+	setSpinner: boolean;
+}
+
+const initialState: IStateEvents = {
+	userEvents: undefined,
+	allEvents: undefined,
 	searchedEvent: null,
 	setSpinner: true
 };

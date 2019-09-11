@@ -33,10 +33,10 @@ const BACK_TO_EVENTS_TEXT = 'Back to event';
 
 const EventList: React.FC<IProps> = props => {
 	const { getAllEvents, allEvents } = props;
-	const [events, setEvents] = useState([]);
+	const [events, setEvents] = useState();
 	const [openEventEditor, setOpenEventEditor] = useState(false);
 	useEffect(() => {
-		if (!events.length) {
+		if (!events) {
 			getAllEvents();
 			setEvents(allEvents);
 		}
@@ -47,10 +47,11 @@ const EventList: React.FC<IProps> = props => {
 	const saveEvent = (event: IEventFormatClient) => {
 		props.saveEvent(event);
 	};
-	if (!events.length) {
+	console.log(events);
+	if (!events) {
 		return <Spinner />;
 	}
-	if (allEvents.length !== events.length) {
+	if (events && allEvents.length !== events.length) {
 		setEvents(allEvents);
 	}
 	return (
