@@ -34,7 +34,7 @@ class AdvancedMovieSearch extends React.Component<
 			ratingValues: [],
 			yearValues: {
 				startDate: '1900-01-01',
-				endDate: this.convert(new Date())
+				endDate: '2019-01-01'
 			},
 			descriptionValue: '',
 			castValues: '',
@@ -91,13 +91,14 @@ class AdvancedMovieSearch extends React.Component<
 	};
 
 	convert(newDate) {
-		const year = newDate.getFullYear();
-		const mnth = ('0' + (newDate.getMonth() + 1)).slice(-2);
-		const day = ('0' + newDate.getDate()).slice(-2);
+		const year = newDate;
+		const mnth = '01';
+		const day = '01';
 		return [year, mnth, day].join('-');
 	}
 
 	handleYearChange = val => {
+		clearTimeout(this.timer);
 		const convertedVal = {
 			startDate: val.startDate
 				? this.convert(val.startDate)
