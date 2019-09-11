@@ -12,6 +12,7 @@ import {
 	FETCH_USER_REVIEWS_SUCCESS,
 	DELETE_REVIEW_BY_ID
 } from '../../UserPage/UserReviews/actionTypes';
+import { SET_RECOMMENDED_REACTION } from '../../MainPage/RecommendList/RecommendList.redux/actionTypes';
 
 export function* fetchMovieReviews(action) {
 	try {
@@ -72,9 +73,16 @@ export function* setReaction(action) {
 			method: 'POST',
 			body: { reviewId, isLike }
 		});
-
 		yield put({
 			type: SET_REACTION_SUCCESS,
+			payload: {
+				updatedReaction: response,
+				reviewId
+			}
+		});
+
+		yield put({
+			type: SET_RECOMMENDED_REACTION,
 			payload: {
 				updatedReaction: response,
 				reviewId
