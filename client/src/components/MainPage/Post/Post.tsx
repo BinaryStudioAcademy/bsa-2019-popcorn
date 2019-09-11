@@ -39,6 +39,7 @@ interface IReactItem {
 interface IPostState {
 	isModalShown: boolean;
 	hover: boolean;
+	showingAllComments: boolean;
 }
 
 class Post extends Component<IPostProps, IPostState> {
@@ -46,7 +47,8 @@ class Post extends Component<IPostProps, IPostState> {
 		super(props);
 		this.state = {
 			isModalShown: false,
-			hover: false
+			hover: false,
+			showingAllComments: false
 		};
 	}
 
@@ -162,6 +164,22 @@ class Post extends Component<IPostProps, IPostState> {
 		);
 	}
 
+	handleShowMoreComments = () => {
+		this.setState({ showingAllComments: !this.state.showingAllComments });
+	};
+
+	getOutputComments = (comments) => {
+		if (!comments || comments.length === 0) {
+			return false;
+		}
+
+		if (this.state.showingAllComments) {
+			return comments;
+		} else {
+			return comments.slice(0, 3);
+		}
+	}
+
 	render() {
 		const {
 			id,
@@ -175,7 +193,7 @@ class Post extends Component<IPostProps, IPostState> {
 			tags
 		} = this.props.post;
 		const createComment = this.props.createComment;
-
+		const outputComments = this.getOutputComments(comments);
 		const reactionsShow = this.state.hover ? (
 			<Reactions
 				onReactionClick={this.onReactionClick}
@@ -253,11 +271,16 @@ class Post extends Component<IPostProps, IPostState> {
 							/>
 						))}
 				</div>
-				{comments && comments.length ? (
+				{outputComments ? (
 					<div className="comments-wrp">
-						{comments.map(comment => (
+						{outputComments.map(comment => (
 							<Comment key={comment.id} commentItem={comment} />
 						))}
+						{comments && comments.length > 3 && (
+							<div className="more-comments" onClick={this.handleShowMoreComments}>
+								{this.state.showingAllComments ? 'Less comments...' : 'More comments...'}
+							</div>
+						)}
 					</div>
 				) : null}
 				{tags && (

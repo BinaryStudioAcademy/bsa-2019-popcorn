@@ -33,6 +33,13 @@
 		border-top: 1px $border-color solid;
 		margin: 0;
 		padding-top: 10px;
+
+		.more-comments {
+			padding: 0.3em 1em;
+			cursor: pointer;
+			color: $text-secondary-color;
+			font-size: 14px;
+		}
 	}
 
 	// .extra {
