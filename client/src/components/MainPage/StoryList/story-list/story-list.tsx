@@ -57,6 +57,12 @@ interface IProps {
 	userId: string;
 	createVoting: (voting: IVoting) => any;
 	addStory: (story: any) => any;
+	setVoting: (voting: IVoting) => any;
+	saveVotingReaction: (
+		userId: string,
+		votingId: string,
+		optionId: string
+	) => any;
 }
 
 interface IState {
@@ -88,11 +94,12 @@ class StoryList extends Component<IProps, IState> {
 			modal: false
 		};
 		this.updateModal = this.handleUpdateModal.bind(this);
-		this.addSocketEvents(props.addStory);
+		this.addSocketEvents(props.addStory, props.setVoting);
 	}
 
-	addSocketEvents = addStory => {
+	addSocketEvents = (addStory, setVoting) => {
 		SocketService.on('new-story', addStory);
+		SocketService.on('new-voting-reaction', setVoting);
 	};
 
 	handleUpdateModal = (value: boolean) => {

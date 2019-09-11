@@ -18,7 +18,7 @@ class AddComment extends React.Component<IAddCommentProps, { body: string }> {
 	};
 
 	onPublish = () => {
-		if (!this.props.createComment) {
+		if (!this.props.createComment || !this.state.body.trim()) {
 			return;
 		}
 		this.props.createComment(this.state.body);

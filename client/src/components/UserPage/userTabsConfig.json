@@ -24,10 +24,6 @@
 		"label": "Tops"
 	},
 	{
-		"link": "/lists",
-		"label": "Lists"
-	},
-	{
 		"link": "/watch-list",
 		"label": "Watch List"
 	}

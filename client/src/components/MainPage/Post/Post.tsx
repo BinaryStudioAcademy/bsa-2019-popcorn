@@ -100,11 +100,9 @@ class Post extends Component<IPostProps, IPostState> {
 		const post = this.props.post;
 		if (post.survey) {
 			return 'survey';
-		}
-		else if (post.top) {
+		} else if (post.top) {
 			return 'top';
-		}
-		else if (post.event) {
+		} else if (post.event) {
 			return 'event';
 		}
 		return 'Nothing';
@@ -144,17 +142,22 @@ class Post extends Component<IPostProps, IPostState> {
 
 	getReactionText() {
 		const { reactions } = this.props.post;
+		const count = reactions
+			.map(el => parseInt(el.count.toString()))
+			.reduce((a, b) => a + b, 0);
 		return (
 			<div className="post-item-reaction-text">
-				{reactions && reactions.length ?
+				{reactions && reactions.length ? (
 					<span>
-						<strong>{reactions.length} </strong>
+						<strong>{count} </strong>
 						&nbsp;
-					{reactions.length === 1 ? 'reaction' : 'reactions'}
+						{reactions.length === 1 ? 'reaction' : 'reactions'}
 					</span>
-					: <div>React</div>
-				}
-			</div>)
+				) : (
+					<div>React</div>
+				)}
+			</div>
+		);
 	}
 
 	render() {
@@ -197,36 +200,36 @@ class Post extends Component<IPostProps, IPostState> {
 								{String(createdAt)}
 							</Moment>
 						</div>
-
 					</Link>
 
-					{this.isOwnPost() && <button className="post-item-settings" onClick={this.toggleModal}>
-						<SettingIcon />
-					</button>}
+					{this.isOwnPost() && (
+						<button className="post-item-settings" onClick={this.toggleModal}>
+							<SettingIcon />
+						</button>
+					)}
 					{this.isModalShown()}
 				</div>
 				{image_url && (
 					<img className="post-item-image" src={image_url} alt="post" />
 				)}
-				{description && (
-					<div className="post-body">{this.parseDescription(description)}</div>
-				)}
-				{content && <PostContent content={content} />}
 				{extraLink && (
 					<NavLink
 						to={`${extraLink}`}
-						style={{ textDecoration: 'none', color: '#122737' }}
 						className="extra-wrapper"
 					>
 						<Extra
 							readyPost={true}
-							clearExtra={() => { }}
+							clearExtra={() => {}}
 							link={extraLink}
 							type={this.getType()}
 							data={this.props.post[this.getType()]}
 						/>
 					</NavLink>
 				)}
+				{description && (
+					<div className="post-body">{this.parseDescription(description)}</div>
+				)}
+				{content && <PostContent content={content} />}
 				{reactionsShow}
 				<div className="post-item-action-buttons">
 					<div className="post-item-last-reaction">

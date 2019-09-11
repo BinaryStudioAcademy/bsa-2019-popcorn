@@ -162,7 +162,7 @@ $header-letter-spacing: 0.9px;
 	.movie-series-page-tab-list {
 		list-style-type: none;
 		display: grid;
-		grid-template-columns: repeat(6, 12%);
+		grid-template-columns: repeat(5, 14%);
 		margin-top: $tab-list-space-top;
 
 		.movie-series-page-tab {

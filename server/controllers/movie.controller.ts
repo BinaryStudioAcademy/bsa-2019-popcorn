@@ -36,15 +36,6 @@ router
       .then((movie: Movie) => res.send(movie))
       .catch(next)
   )
-  .get(
-    "/:movieId/statistics",
-    (req: any, res: Response, next: NextFunction) => {
-      return movieService
-        .getMovieStatistics(req.params.movieId)
-        .then((response: any) => res.send(response))
-        .catch(next);
-    }
-  )
   .get("/:movieId/posts", (req: any, res: Response, next: NextFunction) => {
     return postService
       .getPosts(req.params.movieId)

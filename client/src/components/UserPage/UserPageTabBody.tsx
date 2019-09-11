@@ -133,15 +133,6 @@ const UserPageTabs: React.SFC<IProps> = ({
 					)}
 				/>
 				<Route
-					path={`${mainPath}/lists`}
-					component={() => (
-						<UserLists
-							selectedUserId={selectedProfileInfo.id}
-							isOwnData={isOwnData}
-						/>
-					)}
-				/>
-				<Route
 					path={`${mainPath}/watch-list`}
 					component={() => (
 						<UserWatchList

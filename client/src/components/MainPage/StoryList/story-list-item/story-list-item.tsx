@@ -13,8 +13,12 @@ interface IStoryListItemProps {
 	fontColor: string;
 	textPositionX?: number;
 	textPositionY?: number;
+	saveVotingReaction: (
+		userId: string,
+		votingId: string,
+		optionId: string
+	) => any;
 }
-
 class StoryListItem extends Component<IStoryListItemProps> {
 	render() {
 		const { imageUrl, name, avatar, backgroundColor } = this.props;
@@ -25,7 +29,7 @@ class StoryListItem extends Component<IStoryListItemProps> {
 					this.props.openViewer(this.props.index);
 				}}
 			>
-				<div className="card" style={{ backgroundColor: backgroundColor }}>
+				<div className="card" style={{ backgroundColor }}>
 					<img
 						alt="avatar"
 						className="avatar avatar-story"
