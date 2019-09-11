@@ -113,13 +113,16 @@ const Main = ({
 	searchedEvent,
 	getEventById,
 	subscibeToEvent,
-	avatar
+	avatar,
+	...props
 }: IProps) => {
 	if (!isAuthorized || !localStorage.getItem('token')) {
 		return <Redirect to="/login" />;
 	}
 
 	new SocketService(userInfo.id);
+
+	console.log(props);
 	return (
 		<div className={'main-wrap'}>
 			{isAuthorized ? <Header userInfo={userInfo} /> : null}
