@@ -145,7 +145,7 @@ class ContentSearch extends React.Component<IProps, IState> {
 						}
 
 						this.reset();
-						this.setState({ redirectAdvanceSearch: true });
+						this.setState({ redirectAdvanceSearch: true, type: defaultOption });
 					}}
 				>
 					{options.map(option => (
