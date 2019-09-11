@@ -9,6 +9,7 @@ import {
 interface IMovieTitles {
 	id: string;
 	title: string;
+	release_date: string;
 }
 
 const initialState = {
