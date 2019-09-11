@@ -38,37 +38,38 @@ const About: React.SFC<IProps> = ({ event }) => {
 			</div>
 			<div className="location">
 				<div className="location-info">
-					<div>
-						<FontAwesomeIcon className="icon" icon={faMapMarker} />
-						<span>
-							{event.location.lat} {event.location.lng}
-						</span>
-					</div>
-					<span
-						className="location-btn"
-						onClick={() => setLocationMap(prevLocationMap => !prevLocationMap)}
-					>
-						Show map
-					</span>
+					<MapComponent currentLocation={event.location} readOnly={true} />
+					{/*<div>*/}
+					{/*	<FontAwesomeIcon className="icon" icon={faMapMarker} />*/}
+					{/*	<span>*/}
+					{/*		{event.location.lat} {event.location.lng}*/}
+					{/*	</span>*/}
+					{/*</div>*/}
+					{/*<span*/}
+					{/*	className="location-btn"*/}
+					{/*	onClick={() => setLocationMap(prevLocationMap => !prevLocationMap)}*/}
+					{/*>*/}
+					{/*	Show map*/}
+					{/*</span>*/}
 				</div>
-				<Modal
-					open={locationMap}
-					onClose={() => setLocationMap(prevLocationMap => !prevLocationMap)}
-					showCloseIcon={false}
-					focusTrapped={false}
-					center
-					classNames={{
-						modal: 'modal-window'
-					}}
-				>
-					<MapComponent currentLocation={event.location} readOnly={true}/>
-					<button
-						className="modal-btn-close"
-						onClick={() => setLocationMap(prevLocationMap => !prevLocationMap)}
-					>
-						Close
-					</button>
-				</Modal>
+				{/*<Modal*/}
+				{/*	open={locationMap}*/}
+				{/*	onClose={() => setLocationMap(prevLocationMap => !prevLocationMap)}*/}
+				{/*	showCloseIcon={false}*/}
+				{/*	focusTrapped={false}*/}
+				{/*	center*/}
+				{/*	classNames={{*/}
+				{/*		modal: 'modal-window'*/}
+				{/*	}}*/}
+				{/*>*/}
+				{/*	<MapComponent currentLocation={event.location} readOnly={true}/>*/}
+				{/*	<button*/}
+				{/*		className="modal-btn-close"*/}
+				{/*		onClick={() => setLocationMap(prevLocationMap => !prevLocationMap)}*/}
+				{/*	>*/}
+				{/*		Close*/}
+				{/*	</button>*/}
+				{/*</Modal>*/}
 			</div>
 			<div className="details">
 				<FontAwesomeIcon className="icon" icon={faInfoCircle} />
