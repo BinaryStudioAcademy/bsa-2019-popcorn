@@ -143,8 +143,10 @@ class Post extends Component<IPostProps, IPostState> {
 	getReactionText() {
 		const { reactions } = this.props.post;
 		const count = reactions
-			.map(el => parseInt(el.count.toString()))
-			.reduce((a, b) => a + b, 0);
+			? reactions
+					.map(el => parseInt(el.count.toString()))
+					.reduce((a, b) => a + b, 0)
+			: undefined;
 		return (
 			<div className="post-item-reaction-text">
 				{reactions && reactions.length ? (
@@ -213,10 +215,7 @@ class Post extends Component<IPostProps, IPostState> {
 					<img className="post-item-image" src={image_url} alt="post" />
 				)}
 				{extraLink && (
-					<NavLink
-						to={`${extraLink}`}
-						className="extra-wrapper"
-					>
+					<NavLink to={`${extraLink}`} className="extra-wrapper">
 						<Extra
 							readyPost={true}
 							clearExtra={() => {}}
