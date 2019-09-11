@@ -1,6 +1,4 @@
 import React from 'react';
-import DatePicker from 'react-datepicker';
-import 'react-datepicker/dist/react-datepicker.css';
 import './AdvancedSearchDatePicker.scss';
 
 interface IAdvancedSearchDatePickerProps {
@@ -10,9 +8,11 @@ interface IAdvancedSearchDatePickerProps {
 
 interface IAdvancedSearchDatePickerState {
 	dateRange: {
-		startDate: Date | undefined;
-		endDate: Date | undefined;
+		startDate: string | undefined;
+		endDate: string | undefined;
 	};
+	startInputVal: string;
+	endInputVal: string;
 }
 
 class AdvancedSearchDatePicker extends React.Component<
@@ -25,15 +25,40 @@ class AdvancedSearchDatePicker extends React.Component<
 			dateRange: {
 				startDate: undefined,
 				endDate: undefined
-			}
+			},
+			startInputVal: '1900',
+			endInputVal: '2019'
 		};
+		this.onChangeStartDate = this.onChangeStartDate.bind(this);
+		this.onChangeEndDate = this.onChangeEndDate.bind(this);
 	}
 
-	onChangeDate(newDate) {
-		const dateRange = { ...this.state.dateRange, ...newDate };
+	onChangeStartDate(e) {
+		const value = e.target.value === '' ? '1900' : e.target.value;
+		const dateRange = {
+			startDate: value,
+			endDate: this.state.dateRange.endDate
+		};
 		this.setState(
 			{
 				...this.state,
+				startInputVal: value,
+				dateRange
+			},
+			() => this.props.onDateChange(dateRange)
+		);
+	}
+
+	onChangeEndDate(e) {
+		const value = e.target.value === '' ? '2019' : e.target.value;
+		const dateRange = {
+			startDate: this.state.dateRange.startDate,
+			endDate: value
+		};
+		this.setState(
+			{
+				...this.state,
+				endInputVal: value,
 				dateRange
 			},
 			() => this.props.onDateChange(dateRange)
@@ -45,32 +70,17 @@ class AdvancedSearchDatePicker extends React.Component<
 			<div className="advanced-movie-search-block">
 				<div className="input-header">{this.props.header}</div>
 				<div className="date-picker-block">
-					<DatePicker
-						selected={this.state.dateRange.startDate}
-						selectsStart={true}
-						startDate={this.state.dateRange.startDate}
-						endDate={this.state.dateRange.endDate}
-						onChange={date => {
-							this.onChangeDate({ startDate: date });
-						}}
-						peekNextMonth={true}
-						dropdownMode="select"
-						dateFormat="MM/yyyy"
-						showMonthYearPicker={true}
-						placeholderText="Start year"
+					<input
+						type="number"
+						max={this.state.endInputVal}
+						onChange={this.onChangeStartDate}
+						placeholder="Start year"
 					/>
-
-					<DatePicker
-						selected={this.state.dateRange.endDate}
-						selectsEnd={true}
-						startDate={this.state.dateRange.startDate}
-						endDate={this.state.dateRange.endDate}
-						minDate={this.state.dateRange.startDate}
-						onChange={date => this.onChangeDate({ endDate: date })}
-						dropdownMode="select"
-						dateFormat="MM/yyyy"
-						showMonthYearPicker={true}
-						placeholderText="End year"
+					<input
+						type="number"
+						min={this.state.startInputVal}
+						onChange={this.onChangeEndDate}
+						placeholder="End year"
 					/>
 				</div>
 			</div>
