@@ -11,20 +11,20 @@ import { faStar } from '@fortawesome/free-solid-svg-icons';
 import { fetchRecommended } from './RecommendList.redux/actions';
 import { NavLink } from 'react-router-dom';
 import { formatToClient } from '../../UserPage/UserEvents/UserEvents.service';
-import { setReaction } from '../../MovieSeriesPage/MovieSeriesReviews/actions';
+import { setRecommendedReaction } from './RecommendList.redux/actions';
 
 type RecommendList = {
 	recommended: any;
 	fetchRecommended: (userId: string) => any;
 	userId: string;
-	setReaction: (reviewId: string, isLike: boolean) => object;
+	setRecommendedReaction: (reviewId: string, isLike: boolean) => object;
 };
 
 const RecommendList = ({
 	recommended,
 	fetchRecommended,
 	userId,
-	setReaction
+	setRecommendedReaction
 }: RecommendList) => {
 	if (!recommended) {
 		fetchRecommended(userId);
@@ -72,7 +72,7 @@ const RecommendList = ({
 					<RecommendItemReview
 						review={recommended.reviews.review[0]}
 						currUserId={userId}
-						setReaction={setReaction}
+						setReaction={setRecommendedReaction}
 						movie={recommended.reviews.movie}
 					/>
 				</div>
@@ -89,7 +89,7 @@ const mapStateToProps = (rootState, props) => ({
 
 const actions = {
 	fetchRecommended,
-	setReaction
+	setRecommendedReaction
 };
 const mapDispatchToProps = dispatch => bindActionCreators(actions, dispatch);
 
