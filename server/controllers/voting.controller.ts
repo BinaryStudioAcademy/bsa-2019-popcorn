@@ -1,4 +1,4 @@
-import { Router } from "express";
+import { Request, Router } from "express";
 import * as votingService from "../services/voting.service";
 import * as votingOptionService from "../services/votingOption.service";
 import errorHandlerMiddleware from "../middlewares/error-handler.middleware";
@@ -52,11 +52,17 @@ router
       .then(result => res.send(result))
       .catch(next)
   )
-  .put("/options/:optionId/react", errorHandlerMiddleware, (req, res, next) =>
-    votingOptionService
-      .setVotingReaction(req.params.optionId, req.body, next) // req.body: {userId: string, isChosen: boolean}
-      .then(result => res.send(result))
-      .catch(next)
+  .put(
+    "/options/react/:votingId",
+    errorHandlerMiddleware,
+    (req: Request & { io: any }, res, next) =>
+      votingOptionService
+        .setVotingReaction(req.params.votingId, req.body, next) // req.body: {userId: string, optionId}
+        .then(voting => {
+          req.io.emit("new-voting-reaction", voting);
+          res.send(voting);
+        })
+        .catch(next)
   )
   .get("/user/:id", errorHandlerMiddleware, (req, res, next) =>
     votingService

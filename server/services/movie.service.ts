@@ -11,6 +11,7 @@ import { getCustomRepository } from "typeorm";
 import * as elasticRepository from "../repository/movieElastic.repository";
 import DiscussionRepository from "../repository/discussion.repository";
 import { ExtendedDiscussion, Discussion } from "models/DiscussionModel";
+import ReviewReactionRepository from "repository/reviewReaction.repository";
 
 export const getMovies = async ({ size, from }): Promise<any[]> => {
   let data = await elasticRepository.get(size, from);
@@ -43,6 +44,12 @@ export const getMovieAwards = async (imdbId: any): Promise<any> => {
   const awardList = await getAwards(imdbId);
   return awardList.data.movies[0].awards;
 };
+
+export const getMovieTitleById = async (movieId: string): Promise<any> => {
+  const data = await elasticRepository.getById(movieId);
+  const movie = data.hits.hits[0]._source;
+  return {id: movie.id, title: movie.title}
+}
 
 export const getMovieById = async (movieId: string): Promise<any> => {
   const data = await elasticRepository.getById(movieId);
