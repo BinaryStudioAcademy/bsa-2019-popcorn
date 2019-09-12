@@ -8,7 +8,8 @@ import {
 	DELETE_MOVIE_FROM_WATCH_LIST_SUCCESS,
 	DELETE_MOVIE_FROM_WATCH_LIST,
 	ADD_MOVIE_TO_WATCH_LIST,
-	FETCH_WATCH_LIST_IDS_SUCCESS
+	FETCH_WATCH_LIST_IDS_SUCCESS,
+	FETCH_WATCH_LIST_IDS
 } from './actionTypes';
 import movieAdapter from '../../MovieSeriesPage/movieAdapter';
 import config from '../../../config';
@@ -19,6 +20,7 @@ interface IReducer {
 	isLoading?: boolean;
 	watchListIds?: any[];
 	loadingOnMovie?: string;
+	firstLoading?: boolean;
 }
 
 const initialState: IReducer = {
@@ -26,7 +28,8 @@ const initialState: IReducer = {
 	watchListStatus: undefined,
 	isLoading: undefined,
 	watchListIds: undefined,
-	loadingOnMovie: undefined
+	loadingOnMovie: undefined,
+	firstLoading: undefined
 };
 
 export default (state = initialState, action) => {
@@ -46,10 +49,17 @@ export default (state = initialState, action) => {
 				watchListStatus: undefined
 			};
 
+		case FETCH_WATCH_LIST_IDS:
+			return {
+				...state,
+				firstLoading: true
+			};
+
 		case FETCH_WATCH_LIST_IDS_SUCCESS:
 			return {
 				...state,
-				watchListIds: action.payload.watchListIds
+				watchListIds: action.payload.watchListIds,
+				firstLoading: false
 			};
 
 		case MOVE_WATCH_ITEM_TO_WATCHED:

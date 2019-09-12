@@ -47,7 +47,7 @@ const MovieCardItem: React.FC<IProps> = ({ movie, setNewRateInfo }) => {
 						<div className="movie-item-rating">
 							<RateMovie updateTotalRate={updateTotalRate} movieId={movieId} />
 							<span className="movie-total-rating">
-								{rateInfo.average}
+								{+rateInfo.average.toString()}
 								<span className="max-rating">/10</span>
 							</span>
 						</div>

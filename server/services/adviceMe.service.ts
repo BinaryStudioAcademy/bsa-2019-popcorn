@@ -36,6 +36,10 @@ export const getAdviceMeList = async (userId: string, next) => {
     advice.rateInfo = rateInfo || {
       average: "0",
       movieId: advice.id,
+    const rateInfo = averageRates.find(rate => rate.movieid == advice.id);
+    advice.rateInfo = rateInfo || {
+      average: "0",
+      movieid: advice.id,
       count: "0"
     };
     return advice;

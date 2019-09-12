@@ -16,6 +16,7 @@ interface IProps {
 	loadingOnMovie?: string;
 	fetchWatchListIds: () => object;
 	watchListIds: any[];
+	firstWatchListLoading?: boolean;
 }
 
 const WatchListIcon: React.FC<IProps> = ({
@@ -25,10 +26,14 @@ const WatchListIcon: React.FC<IProps> = ({
 	watchListLoading,
 	loadingOnMovie,
 	watchListIds,
-	fetchWatchListIds
+	fetchWatchListIds,
+	firstWatchListLoading
 }) => {
-	if (!watchListIds) {
+	if (!watchListIds && !firstWatchListLoading) {
 		fetchWatchListIds();
+	}
+
+	if (!watchListIds) {
 		return null;
 	}
 
@@ -54,7 +59,7 @@ const WatchListIcon: React.FC<IProps> = ({
 						ev.preventDefault();
 						addMovieToWatchList(movieId);
 					}}
-					title="add to watch list"
+					title="Click to add movie to watch list"
 				/>
 			);
 		}
@@ -92,7 +97,8 @@ const mapStateToProps = (rootState, props) => ({
 	...props,
 	watchListIds: rootState.watchList.watchListIds,
 	watchListLoading: rootState.watchList.isLoading,
-	loadingOnMovie: rootState.watchList.loadingOnMovie
+	loadingOnMovie: rootState.watchList.loadingOnMovie,
+	firstWatchListLoading: rootState.watchList.firstLoading
 });
 
 const mapDispatchToProps = dispatch => {
