@@ -140,6 +140,7 @@ a:focus {
 				padding: 2% 2%;
 				justify-content: space-around;
 				textarea {
+					padding-left: 10px;
 					background-color: #fff;
 					resize: none;
 					margin-right: 10px;
@@ -147,21 +148,6 @@ a:focus {
 					height: 20px;
 					overflow-y: auto;
 					background-color: transparent;
-				}
-
-				button {
-					background-color: $button-background;
-					color: $white;
-					box-shadow: 0px 5px 12px $button-shadow-color;
-					border-radius: 15px;
-					width: 30px;
-					height: 30px;
-					border: none;
-					outline: none;
-					font-weight: bold;
-					&:hover {
-						background-color: rgb(216, 86, 0);
-					}
 				}
 			}
 		}
@@ -186,13 +172,53 @@ a:focus {
 	}
 
 	.new-message-item {
-		box-shadow: 2px 2px 2px $input-shadow-color;
 		box-sizing: border-box;
-		border: 1px solid $border-color;
-		margin-bottom: 0;
+		border: none;
+		border-radius: 0;
+		border-top: 1px solid $border-color;
+		margin: 0;
+		padding: 0;
+
+		width: 100%;
+		height: 50px;
+		* {
+			padding: 0;
+		}
 		.message-body {
-			padding-bottom: 0px;
-			margin-left: 0px;
+			padding: 0px;
+			margin: 0px;
+			height: 100%;
+
+			.new-message {
+				padding: 0;
+				height: 100%;
+				display: flex;
+				flex-direction: row;
+				align-items: center;
+				justify-content: space-between;
+				textarea {
+					width: 80%;
+					margin: 0;
+				}
+				.send-btn {
+					&:hover {
+						background-color: $background-gray;
+					}
+					cursor: pointer;
+					float: right;
+					height: 100%;
+					width: 50px;
+					margin: 0;
+					padding: 15px;
+					background-color: transparent;
+					outline: none;
+					border: none;
+					svg {
+						width: 100%;
+						height: 100%;
+					}
+				}
+			}
 		}
 		outline: none;
 	}

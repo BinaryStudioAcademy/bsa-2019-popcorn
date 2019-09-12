@@ -7,6 +7,8 @@ import config from '../../../config';
 import { IDiscussionUser } from '../../UserPage/UserEvents/UserEvents.service';
 import ScrollToBottom from 'react-scroll-to-bottom';
 import { NavLink } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPaperPlane } from '@fortawesome/free-solid-svg-icons';
 
 export interface IDiscussionMessage {
 	id: string;
@@ -189,8 +191,9 @@ class DiscussionComponent extends Component<
 							<button
 								onClick={this.sendMessage}
 								disabled={this.state.inputIsEmpty}
+								className="send-btn"
 							>
-								<SendLogo />
+								<FontAwesomeIcon icon={faPaperPlane} />
 							</button>
 						</div>
 					</div>
