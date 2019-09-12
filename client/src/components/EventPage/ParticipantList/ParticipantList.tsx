@@ -2,7 +2,11 @@ import React, { useEffect, useState } from 'react';
 import { IVisitor } from '../../UserPage/UserEvents/UserEvents.service';
 import config from '../../../config';
 import Image from '../../shared/Image/Image';
+
+
+
 import { NavLink, Redirect } from 'react-router-dom';
+
 
 interface IProps {
 	participants: IVisitor[];

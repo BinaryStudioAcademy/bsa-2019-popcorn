@@ -6,7 +6,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import SurveyShortAnswer from '../SurveyItems/SurveyShortAnswer/SurveyShortAnswer';
 import SurveyLinearScale from '../SurveyItems/SurveyLinearScale/SurveyLinearScale';
 import { faUsers } from '@fortawesome/free-solid-svg-icons';
-import ReactTimeAgo from 'react-time-ago';
 
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -27,6 +26,7 @@ interface IProps {
 		user: {
 			name: string;
 			image_link: string;
+			id: string;
 		};
 		participants: number;
 		questions: Array<{
@@ -181,8 +181,12 @@ class Survey extends PureComponent<IProps, IState> {
 				<form>
 					<div className="form-header" />
 					<div className="info">
-						<img src={user.image_link} alt="" />
-						<span>{user.name}</span>
+						<NavLink to={'/user-page/' + user.id}>
+							<img src={user.image_link} alt="" />
+						</NavLink>
+						<NavLink to={'/user-page/' + user.id}>
+							<span style={{ color: '#122737' }}>{user.name}</span>
+						</NavLink>
 						{/* <ReactTimeAgo date={created_at} timeStyle="twitter" locale="ru" /> */}
 						<span className="participants">
 							{participants} <FontAwesomeIcon icon={faUsers} />
