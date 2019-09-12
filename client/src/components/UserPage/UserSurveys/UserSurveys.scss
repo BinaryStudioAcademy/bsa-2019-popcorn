@@ -30,7 +30,6 @@
 
 			.survey-info {
 				margin-left: 20px;
-				max-width: 40%;
 			}
 			.survey-item-right {
 				display: flex;
@@ -54,10 +53,14 @@
 			.icon-users-survey {
 				margin-right: 10px;
 			}
-
+			.date-and-author {
+				display: flex;
+				flex-direction: column;
+			}
 			.creation-date {
 				font-size: 0.7em;
 				color: $text-secondary-color;
+				align-self: flex-end;
 			}
 			.survey-image-wrp {
 				width: 300px;

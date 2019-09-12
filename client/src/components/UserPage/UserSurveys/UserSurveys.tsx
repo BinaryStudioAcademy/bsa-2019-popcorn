@@ -247,7 +247,7 @@ class UserSurveys extends React.Component<IProps, IState> {
 														{String(survey.created_at)}
 													</Moment>
 												) : (
-													<div>
+													<div className="date-and-author">
 														<div className="creator-info">
 															<img
 																className="creator-avatar"

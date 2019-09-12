@@ -63,7 +63,8 @@ class UserSurveysNav extends React.Component<IProps, IState> {
 	static getDerivedStateFromProps(props, state) {
 		let newSurveys = [];
 		if (
-			window.location.pathname === `/user-page/${props.userInfo.id}/surveys`
+			window.location.pathname === `/user-page/${props.userInfo.id}/surveys` &&
+			props.surveys
 		) {
 			newSurveys = props.surveys.filter(el => el.user.id === props.userInfo.id);
 		} else {
