@@ -45,6 +45,7 @@ interface IProps {
 	fetchRestorePassword: (password: string, token: string) => any;
 	confirmChanges: (token: string) => any;
 	authWithSocial: (data: any) => any;
+	changesSuccess: boolean;
 }
 
 const Routing = ({
@@ -59,7 +60,8 @@ const Routing = ({
 	restoreMessage,
 	fetchRestorePassword,
 	authWithSocial,
-	confirmChanges
+	confirmChanges,
+	changesSuccess
 }: IProps) => {
 	const token = localStorage.getItem('token');
 	if (token && !isAuthorized) {
@@ -116,7 +118,9 @@ const Routing = ({
 				/>
 				<Route
 					path="/confirm/:token"
-					component={props => <ConfirmChange confirm={confirmChanges} />}
+					component={props => (
+						<ConfirmChange success={changesSuccess} confirm={confirmChanges} />
+					)}
 				/>
 				<Route path="/" component={Main} />
 				{/* Not found route */}
@@ -132,7 +136,8 @@ const mapStateToProps = (rootState, props) => ({
 	loginError: rootState.profile.loginError,
 	registerError: rootState.profile.registerError,
 	resetMessage: rootState.profile.resetMessage,
-	restoreMessage: rootState.profile.restoreMessage
+	restoreMessage: rootState.profile.restoreMessage,
+	changesSuccess: rootState.profile.changesSuccess
 });
 
 const actions = {
