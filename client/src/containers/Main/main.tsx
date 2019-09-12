@@ -37,7 +37,7 @@ import ChatPage from '../../components/ChatPage/ChatPage';
 import UserMovieList from '../../components/UserMovieList/UserMovieList';
 import ResultList from '../../components/shared/ContentSearch/ResultList';
 import Collections from '../../components/Collections/Collections';
-import AdviceMe from '../../components/shared/AdviceMe';
+import AdviceMe from '../../components/shared/AdviceMe/AdviceMe';
 import { fetchChats } from '../../components/ChatPage/ChatPage.redux/actions';
 
 const { notifications } = {
@@ -146,7 +146,7 @@ const Main = ({
 					<MainPageSidebar chats={chats} notifications={notifications} />
 				) : null}
 				<div
-				// style={{ width: 'calc(100vw - 205px)' }}
+				// style={{ width: 'calc(100vw - 205px)'
 				>
 					<Switch>
 						<Route exact path={[`/`, '/create*']} component={MainPage} />

@@ -1,4 +1,4 @@
-import { ITop } from "../../TopListPage/TopListItem";
+import { ITop } from '../../TopListPage/TopListItem';
 
 export interface ITopItem extends ITop {
 	isNewTop?: boolean;
@@ -11,5 +11,5 @@ export interface IMovie {
 		id?: string;
 		release_date?: string;
 		title: string;
-	}
+	};
 }

@@ -1,8 +1,16 @@
+@import '../../styles/variables.scss';
+
 .user-settings {
 	width: 45%;
 	min-width: 680px;
 }
 
+.confirm-message {
+	font-weight: bold;
+	padding: 10px;
+	text-align: center;
+	background-color: rgba(190, 190, 190, 0.466);
+}
 .settings-btn-wrapper {
 	width: 60%;
 	margin-left: auto;

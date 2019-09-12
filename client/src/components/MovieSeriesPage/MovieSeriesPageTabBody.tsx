@@ -53,7 +53,8 @@ const MovieSeriesPageTabBody: React.SFC<IProps> = ({
 					path={`${mainPath}/cast-crew`}
 					render={() => <StaffCast movie={movie} />}
 				/>
-				<Route path={`${mainPath}/reviews`}
+				<Route
+					path={`${mainPath}/reviews`}
 					render={() => (
 						<MovieSeriesReviews
 							ownReview={ownReview}

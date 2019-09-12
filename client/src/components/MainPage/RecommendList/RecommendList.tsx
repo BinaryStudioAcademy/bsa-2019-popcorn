@@ -30,7 +30,7 @@ const RecommendList = ({
 		fetchRecommended(userId);
 	}
 
-	if (recommended && !recommended.events.dateRange) {
+	if (recommended && recommended.events && !recommended.events.dateRange) {
 		recommended.events = formatToClient(recommended.events);
 	}
 

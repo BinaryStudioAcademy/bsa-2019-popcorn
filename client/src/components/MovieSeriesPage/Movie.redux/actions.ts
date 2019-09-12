@@ -16,7 +16,8 @@ import {
 	SET_FILTERS,
 	GET_GENRES,
 	FETCH_STATISTICS,
-	FETCH_POSTS_BY_FILM
+	FETCH_POSTS_BY_FILM,
+	SET_NEW_MOVIE_RATE_INFO
 } from './actionTypes';
 
 export const getGenres = (): any => {
@@ -181,3 +182,8 @@ export const fetchPostsByFilm = (movieId: string) => {
 		}
 	};
 };
+
+export const setNewRateInfo = (rateInfo: any) => ({
+	type: SET_NEW_MOVIE_RATE_INFO,
+	payload: { rateInfo }
+});

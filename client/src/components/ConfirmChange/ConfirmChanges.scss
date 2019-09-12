@@ -1,0 +1,13 @@
+.confirm-wrp {
+	margin: auto;
+	display: flex;
+	width: 100vw;
+	height: 100vh;
+	justify-content: center;
+	.confirm-txt-wrp {
+		display: flex;
+		align-items: center;
+		font-size: 48px;
+		text-align: center;
+	}
+}

@@ -3,30 +3,45 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import TMovie from '../../MovieSeriesPage/TMovie';
 import Spinner from '../Spinner';
-import MovieCardItem from './movieCardItem';
-import { fetchAdvice } from '../Header/actions';
+import MovieCardItem from './MovieCardItem/AdviceMeItem';
+import { fetchAdvice, setNewRateInfo } from '../Header/actions';
+import './AdviceMe.scss';
 
 interface IProps {
 	loading: boolean;
 	movieAdvice: TMovie[];
 	fetchAdvice: (userId: string) => any;
 	profileInfo: any;
+	setNewRateInfo: (rateInfo: string) => object;
 }
 
-const AdviceMe = (props: IProps) => {
-	const { loading, movieAdvice } = props;
-
+const AdviceMe: React.FC<IProps> = ({
+	fetchAdvice,
+	profileInfo,
+	loading,
+	movieAdvice,
+	setNewRateInfo
+}) => {
 	if (!loading && !movieAdvice) {
-		props.fetchAdvice(props.profileInfo.id);
+		fetchAdvice(profileInfo.id);
 		return null;
 	}
-	return loading ? (
-		<Spinner />
-	) : (
-		<div className={'movie-card-wrp'}>
-			{movieAdvice.map(movie => (
-				<MovieCardItem movie={movie} key={movie.id} />
-			))}
+
+	if (loading) {
+		return <Spinner />;
+	}
+
+	return (
+		<div className="AdviceMe">
+			<div className="advice-me-container">
+				{movieAdvice.map(movie => (
+					<MovieCardItem
+						setNewRateInfo={setNewRateInfo}
+						movie={movie}
+						key={movie.id}
+					/>
+				))}
+			</div>
 		</div>
 	);
 };
@@ -39,7 +54,8 @@ const mapStateToProps = (rootState, props) => ({
 });
 
 const actions = {
-	fetchAdvice
+	fetchAdvice,
+	setNewRateInfo
 };
 
 const mapDispatchToProps = dispatch => bindActionCreators(actions, dispatch);

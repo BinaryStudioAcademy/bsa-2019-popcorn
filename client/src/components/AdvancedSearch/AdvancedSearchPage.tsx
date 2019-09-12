@@ -7,7 +7,8 @@ import {
 	setMovieSeries,
 	loadMoreFiltredMovie,
 	setFilters,
-	getGenres
+	getGenres,
+	setNewRateInfo
 } from '../MovieSeriesPage/Movie.redux/actions';
 import TMovie from '../MovieSeriesPage/TMovie';
 import MovieList from '../MovieList/MovieList';
@@ -32,6 +33,7 @@ interface IAdvancedSearchPage {
 	showSpinner: boolean;
 	genres: any;
 	getGenres: () => any;
+	setNewRateInfo: any;
 }
 
 const MovieListRender = (
@@ -39,7 +41,8 @@ const MovieListRender = (
 	fetchFiltredMovies,
 	setMovieSeries,
 	loadMoreFiltredMovie,
-	filters
+	filters,
+	setNewRateInfo
 ) => {
 	if (!movieList) {
 		fetchFiltredMovies({
@@ -60,6 +63,7 @@ const MovieListRender = (
 			setMovieSeries={setMovieSeries}
 			loadMoreMovie={loadMoreFiltredMovie}
 			filters={filters}
+			setNewRateInfo={setNewRateInfo}
 		/>
 	);
 };
@@ -73,7 +77,8 @@ const AdvancedSearchPage = ({
 	filters,
 	showSpinner,
 	genres,
-	getGenres
+	getGenres,
+	setNewRateInfo
 }: IAdvancedSearchPage) => {
 	let convertGenres = null;
 	if (!genres) {
@@ -97,7 +102,8 @@ const AdvancedSearchPage = ({
 					fetchFiltredMovies,
 					setMovieSeries,
 					loadMoreFiltredMovie,
-					filters
+					filters,
+					setNewRateInfo
 				)
 			)}
 		</div>
@@ -119,7 +125,8 @@ const actions = {
 	setMovieSeries,
 	loadMoreFiltredMovie,
 	setFilters,
-	getGenres
+	getGenres,
+	setNewRateInfo
 };
 
 const mapDispatchToProps = dispatch => bindActionCreators(actions, dispatch);

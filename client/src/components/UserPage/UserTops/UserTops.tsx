@@ -112,7 +112,9 @@ class UserTops extends React.Component<IUserTopProps, IUserTopsState> {
 			this.props.addTop(addedTop);
 			this.setState({ isAction: true, isCreated: false });
 		} else {
-			updatedTopItem.movieInTop = updatedTopItem.movieInTop.filter(movie => movie.id && String(movie.id).indexOf("movie") === -1);
+			updatedTopItem.movieInTop = updatedTopItem.movieInTop.filter(
+				movie => movie.id && String(movie.id).indexOf('movie') === -1
+			);
 			const movieSet = new Set(updatedTopItem.movieInTop);
 			updatedTopItem.movieInTop = Array.from(movieSet);
 			const updatedTop: any = Object.assign({}, updatedTopItem);

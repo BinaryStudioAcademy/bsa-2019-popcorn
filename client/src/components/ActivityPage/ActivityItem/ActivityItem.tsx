@@ -61,7 +61,12 @@ const ActivityItem = ({
 					</Moment>
 				</div>
 			</div>
-			<Image src={img} defaultSrc={config.DEFAULT_AVATAR} className="activity-img" alt="avatar" />
+			<Image
+				src={img}
+				defaultSrc={config.DEFAULT_AVATAR}
+				className="activity-img"
+				alt="avatar"
+			/>
 		</div>
 	);
 };

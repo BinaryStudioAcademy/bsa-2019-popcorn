@@ -57,7 +57,7 @@ interface IProps {
 class Header extends React.Component<IProps> {
 	componentDidMount() {
 		if (this.props.firebaseToken === undefined) {
-			getFirebaseToken(this.props.firebase);
+			this.props.getFirebaseToken(this.props.firebase);
 		}
 	}
 	render() {

@@ -24,7 +24,6 @@ import { saveVotingReaction } from '../StoryList/story.redux/actions';
 import Moment from 'react-moment';
 import Image from '../../shared/Image/Image';
 
-
 interface IProps {
 	stories: Array<{
 		id: string;
@@ -178,13 +177,20 @@ class StoryViewer extends PureComponent<IProps, IState> {
 								onClick={() => this.setState({ isReactionShown: false })}
 							>
 								<header>
-									<NavLink className="user-link" to={`/user-page/${story.userInfo.userId}`}>
+									<NavLink
+										className="user-link"
+										to={`/user-page/${story.userInfo.userId}`}
+									>
 										<Image
 											src={story.userInfo.image_url}
 											defaultSrc={config.DEFAULT_AVATAR}
-											alt={story.userInfo.name} />
+											alt={story.userInfo.name}
+										/>
 									</NavLink>
-									<NavLink className="user-link" to={`/user-page/${story.userInfo.userId}`}>
+									<NavLink
+										className="user-link"
+										to={`/user-page/${story.userInfo.userId}`}
+									>
 										<span className="username">{story.userInfo.name}</span>
 									</NavLink>
 									<Moment format="D MMM" local>
@@ -302,7 +308,10 @@ class StoryViewer extends PureComponent<IProps, IState> {
 													</div>
 												)}
 												<span
-													className={(story.activity || story.movie) && "movie-activity-container"}
+													className={
+														(story.activity || story.movie) &&
+														'movie-activity-container'
+													}
 												>
 													{story.type && story.activity && (
 														<NavLink

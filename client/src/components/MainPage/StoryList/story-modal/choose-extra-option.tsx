@@ -83,7 +83,7 @@ class ChooseExtraOption extends React.Component<IProps, IState> {
 				/>
 			);
 		}
-		
+
 		const close = () => this.setState({ open: false });
 		const back = () => this.setState({ back: false });
 		const create = () => this.setState({ create: false });

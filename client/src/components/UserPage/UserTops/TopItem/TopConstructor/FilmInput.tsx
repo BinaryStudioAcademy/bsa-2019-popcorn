@@ -95,8 +95,8 @@ const FilmInput: React.FC<IInputProps> = ({
 							);
 						})
 					) : (
-							<span>Nothing was found</span>
-						)}
+						<span>Nothing was found</span>
+					)}
 				</div>
 			) : null}
 			<span>
