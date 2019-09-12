@@ -19,4 +19,7 @@ export class PostComments {
     onDelete: "CASCADE"
   })
   post: Post;
+
+  @Column({ nullable: true })
+  createdAt: Date;
 }

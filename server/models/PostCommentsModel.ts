@@ -6,4 +6,5 @@ export class PostCommentsModel {
   user: User;
   post: Post;
   text: string;
+  createdAt: Date;
 }

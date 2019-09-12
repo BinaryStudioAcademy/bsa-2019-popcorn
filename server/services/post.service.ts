@@ -141,7 +141,8 @@ export const createComment = async ({ userId, postId, text }) => {
     id: uuid(),
     user,
     post,
-    text
+    text,
+    createdAt: new Date()
   });
 };
 
