@@ -205,8 +205,6 @@ class UserSurveys extends React.Component<IProps, IState> {
 					<div className="survey-list">
 						{surveys.map((survey, i) => {
 							// add "if (isOwnData)" check when it will survey list with surveys of all users
-							console.log(survey);
-							const createDate = survey.created_at;
 							return (
 								<NavLink
 									key={i}
@@ -225,43 +223,22 @@ class UserSurveys extends React.Component<IProps, IState> {
 												alt="survey-image"
 											/>
 										</div>
-										<div className="survey-info">
-											<div className="survey-info-title">{survey.title}</div>
-											<div className="survey-info-description">
-												{survey.description}
+										<div className="survey-item-right">
+											<div className="survey-info">
+												<div className="survey-info-title">{survey.title}</div>
+												<div className="survey-info-description">
+													{survey.description}
+												</div>
+												<div className="survey-participants">
+													<FontAwesomeIcon
+														className="icon-users-survey"
+														icon={faUsers}
+													/>
+													{survey.participants} users participate
+												</div>
 											</div>
-											<div className="survey-participants">
-												<FontAwesomeIcon
-													className="icon-users-survey"
-													icon={faUsers}
-												/>
-												{survey.participants} users participate
-											</div>
-										</div>
-										<div className="survey-secondary-info">
-											{isOwnData ? (
-												<Moment
-													className="creation-date"
-													format=" D MMMM HH:mm "
-													local
-												>
-													{String(survey.created_at)}
-												</Moment>
-											) : (
-												<div>
-													<div className="creator-info">
-														<img
-															className="creator-avatar"
-															src={
-																survey.user.image_link
-																	? survey.user.image_link
-																	: config.DEFAULT_AVATAR
-															}
-														/>
-														<span className="creator-name">
-															{survey.user.name}
-														</span>
-													</div>
+											<div className="survey-secondary-info">
+												{isOwnData ? (
 													<Moment
 														className="creation-date"
 														format=" D MMMM HH:mm "
@@ -269,8 +246,31 @@ class UserSurveys extends React.Component<IProps, IState> {
 													>
 														{String(survey.created_at)}
 													</Moment>
-												</div>
-											)}
+												) : (
+													<div>
+														<div className="creator-info">
+															<img
+																className="creator-avatar"
+																src={
+																	survey.user.image_link
+																		? survey.user.image_link
+																		: config.DEFAULT_AVATAR
+																}
+															/>
+															<span className="creator-name">
+																{survey.user.name}
+															</span>
+														</div>
+														<Moment
+															className="creation-date"
+															format=" D MMMM HH:mm "
+															local
+														>
+															{String(survey.created_at)}
+														</Moment>
+													</div>
+												)}
+											</div>
 										</div>
 										{isOwnData ? (
 											<p className="buttons">
