@@ -169,7 +169,7 @@ class Post extends Component<IPostProps, IPostState> {
 		this.setState({ showingAllComments: !this.state.showingAllComments });
 	};
 
-	getOutputComments = (comments) => {
+	getOutputComments = comments => {
 		if (!comments || comments.length === 0) {
 			return false;
 		}
@@ -179,7 +179,7 @@ class Post extends Component<IPostProps, IPostState> {
 		} else {
 			return comments.slice(0, 3);
 		}
-	}
+	};
 
 	render() {
 		const {
@@ -276,8 +276,13 @@ class Post extends Component<IPostProps, IPostState> {
 							<Comment key={comment.id} commentItem={comment} />
 						))}
 						{comments && comments.length > 3 && (
-							<div className="more-comments" onClick={this.handleShowMoreComments}>
-								{this.state.showingAllComments ? 'Less comments...' : 'More comments...'}
+							<div
+								className="more-comments"
+								onClick={this.handleShowMoreComments}
+							>
+								{this.state.showingAllComments
+									? 'Less comments...'
+									: 'More comments...'}
 							</div>
 						)}
 					</div>
