@@ -70,7 +70,6 @@ export const getAdviceByList = async (list: any[]) => {
 
   const inList = () => {
     return movies.some(movie => {
-      console.log(movie.id, set.has(movie.id), set);
       return set.has(movie.id);
     });
   };
