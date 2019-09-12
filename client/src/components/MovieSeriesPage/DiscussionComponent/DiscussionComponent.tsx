@@ -5,7 +5,11 @@ import './DiscussionComponent.scss';
 import Moment from 'react-moment';
 import config from '../../../config';
 import { IDiscussionUser } from '../../UserPage/UserEvents/UserEvents.service';
+import ScrollToBottom from 'react-scroll-to-bottom';
 import { NavLink } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPaperPlane } from '@fortawesome/free-solid-svg-icons';
+
 export interface IDiscussionMessage {
 	id: string;
 	text: string;
@@ -118,7 +122,7 @@ class DiscussionComponent extends Component<
 			user: { id, name, avatar }
 		};
 		let arr = this.state.messagesState;
-		arr.unshift(newMessageItem);
+		arr.push(newMessageItem);
 		this.setState(
 			{
 				messagesState: arr
@@ -137,11 +141,11 @@ class DiscussionComponent extends Component<
 	}
 
 	render() {
-		const messages = this.state.messagesState;
+		const messages = [...this.state.messagesState].sort((a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime());
 
 		return (
 			<div className="user-discussion-component" id="scroller">
-				<div className="message-container" ref={this.discussionComponent}>
+				<ScrollToBottom className="message-container" ref={this.discussionComponent} followButtonClassName="to-bottom">
 					{messages.map(message => {
 						const isMyMessage = message.user.id === this.props.currentUser.id;
 						return (
@@ -150,15 +154,15 @@ class DiscussionComponent extends Component<
 									'message-item-reverse'} `}
 								key={message.id}
 							>
-								<NavLink to={'/user-page/' + message.user.id}>
 									<img
 										src={message.user.avatar || config.DEFAULT_AVATAR}
 										alt="userPhoto"
 									/>
-								</NavLink>
 								<div className="message-body">
 									<div className="message-info">
-										<div className="name">{message.user.name}</div>
+									<NavLink to={'/user-page/' + message.user.id}>
+<div className="name">{message.user.name}</div>								</NavLink>
+
 										<div className="date">
 											<Moment format=" D MMM HH:mm " local>
 												{String(message.createdAt)}
@@ -170,7 +174,7 @@ class DiscussionComponent extends Component<
 							</div>
 						);
 					})}
-				</div>
+				</ScrollToBottom>
 				<div className="message-item new-message-item" tabIndex={0} id="anchor">
 					<div className="message-body">
 						<div className="new-message">
@@ -187,8 +191,9 @@ class DiscussionComponent extends Component<
 							<button
 								onClick={this.sendMessage}
 								disabled={this.state.inputIsEmpty}
+								className="send-btn"
 							>
-								<SendLogo />
+								<FontAwesomeIcon icon={faPaperPlane} />
 							</button>
 						</div>
 					</div>

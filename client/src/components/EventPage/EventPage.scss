@@ -141,7 +141,20 @@ $orange: #fb8700;
 }
 
 .event-discussion {
-	padding: 0 150px;
+	padding: 0;
+	width: 100%;
+	.user-discussion-component {
+		width: 100%;
+		.message-item {
+			width: 60%;
+		}
+		.new-message-item {
+			width: 100%;
+			.new-message {
+				justify-content: space-between;
+			}
+		}
+	}
 	img {
 		width: 50px;
 	}
