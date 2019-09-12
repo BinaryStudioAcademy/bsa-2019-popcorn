@@ -19,6 +19,7 @@ import Image from '../../shared/Image/Image';
 import Extra from './../../UserPage/UserPosts/PostExtra/extra';
 import JsxParser from 'react-jsx-parser';
 import Moment from 'react-moment';
+import moment from 'moment';
 
 type IPostProps = {
 	post: IPost;
@@ -216,9 +217,7 @@ class Post extends Component<IPostProps, IPostState> {
 						)}
 						<div className="post-item-info">
 							<div className="post-item-author-name">{user.name}</div>
-							<Moment className="post-date" format=" D MMM HH:mm " local>
-								{String(createdAt)}
-							</Moment>
+							<div className="post-date">{moment(createdAt).fromNow()}</div>
 						</div>
 					</Link>
 
