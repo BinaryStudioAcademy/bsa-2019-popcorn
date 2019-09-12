@@ -137,6 +137,8 @@
 		span {
 			color: $text-base-color;
 			margin-left: 10px;
+			word-wrap: break-word;
+			width: 100px;
 		}
 
 		img {

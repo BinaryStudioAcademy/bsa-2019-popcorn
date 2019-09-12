@@ -301,29 +301,31 @@ class ProfileComponent extends Component<ProfileProps, IProfileComponentState> {
 							<div className="profileRow">
 								<p className="field">Favorite movies: </p>
 								<div className="content">
-									{favoriteLists.length > 0
-										? favoriteLists.map(item => {
-												return (
-													item.movie && (
-														<NavLink
-															to={'/movies/' + item.movie.id}
-															key={item.movie.id}
-														>
-															<p>
-																{item.movie.name}
-																<span className="release-date">
-																	{item.movie.release_date
-																		? ' (' +
-																		  item.movie.release_date.slice(0, 4) +
-																		  ')'
-																		: null}
-																</span>
-															</p>
-														</NavLink>
-													)
-												);
-										  })
-										: '-'}
+									<div className="favourite">
+										{favoriteLists.length > 0
+											? favoriteLists.map(item => {
+													return (
+														item.movie && (
+															<NavLink
+																to={'/movies/' + item.movie.id}
+																key={item.movie.id}
+															>
+																<p>
+																	{item.movie.name}
+																	<span className="release-date">
+																		{item.movie.release_date
+																			? ' (' +
+																			  item.movie.release_date.slice(0, 4) +
+																			  ')'
+																			: null}
+																	</span>
+																</p>
+															</NavLink>
+														)
+													);
+											  })
+											: '-'}
+									</div>
 								</div>
 							</div>
 						</div>
