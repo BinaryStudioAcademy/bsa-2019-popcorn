@@ -9,6 +9,6 @@ export default interface IVoting {
 	deltaPositionOptionBlockY: number;
 	options: Array<{
 		body: string;
-		voted: number;
+		votingOptionReactions: any[];
 	}>;
 }

@@ -11,6 +11,7 @@ import { fetchSurveys } from '../../UserSurveys/UserSurveys.redux/actions';
 import { getAllEvents } from '../../UserEvents/actions';
 import { fetchTops } from '../../UserTops/UserTops.redux/actions';
 import { connect } from 'react-redux';
+import Spinner from '../../../shared/Spinner';
 
 interface IProps {
 	option: string;
@@ -107,28 +108,30 @@ class ChooseExtraOption extends React.Component<IProps> {
 						</div>
 
 						<div className={'recent-created'}>
-							{data
-								? data.map((item, i) => (
-										<p
-											key={item.id}
-											className="option-item-wrapper"
-											onClick={() =>
-												this.setOption({
-													type: this.props.option,
-													data: item,
-													link:
-														option === 'survey'
-															? `/${option}-page/${item.id}`
-															: `/${option}s/${item.id}`
-												})
-											}
-										>
-											<span className="option-item" key={i}>
-												{item.title}
-											</span>
-										</p>
-								  ))
-								: null}
+							{data.length !== 0 ? (
+								data.map((item, i) => (
+									<p
+										key={item.id}
+										className="option-item-wrapper"
+										onClick={() =>
+											this.setOption({
+												type: this.props.option,
+												data: item,
+												link:
+													option === 'survey'
+														? `/${option}-page/${item.id}`
+														: `/${option}s/${item.id}`
+											})
+										}
+									>
+										<span className="option-item" key={i}>
+											{item.title}
+										</span>
+									</p>
+								))
+							) : (
+								<Spinner />
+							)}
 						</div>
 					</div>
 				</div>

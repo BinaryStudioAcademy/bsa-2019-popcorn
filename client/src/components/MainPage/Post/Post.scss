@@ -33,6 +33,13 @@
 		border-top: 1px $border-color solid;
 		margin: 0;
 		padding-top: 10px;
+
+		.more-comments {
+			padding: 0.3em 1em;
+			cursor: pointer;
+			color: $text-secondary-color;
+			font-size: 14px;
+		}
 	}
 
 	// .extra {
@@ -53,11 +60,11 @@
 	// 	}
 	// }
 
-	.post-date{
+	.post-date {
 		font-size: 10px;
 		color: $text-secondary-color;
 	}
-	
+
 	.comment-form {
 		margin: 0;
 		margin-top: 10px;
@@ -81,13 +88,22 @@
 	}
 
 	.post-body {
-		margin-top: 20px;
+		margin-top: 25px;
+		margin-bottom: 30px;
 	}
 
 	.tag-items {
 		padding: 0.5em 1em;
 		display: flex;
 		flex-wrap: wrap;
+	}
+
+	.extra-wrapper {
+		display: block;
+		width: 100%;
+		margin: 0;
+		text-decoration: none;
+		color: $text-base-color;
 	}
 }
 
@@ -210,5 +226,6 @@
 
 .movie-link {
 	text-decoration: none;
+	border-bottom: 2px solid orange;
 	color: #122737;
 }

@@ -8,7 +8,7 @@ import {
 import { Redirect } from 'react-router';
 import { connect } from 'react-redux';
 import { fetchSurveys } from '../../../UserPage/UserSurveys/UserSurveys.redux/actions';
-import { fetchTops } from '../../../UserPage/UserTops/UserTops.redux/actions';
+import { fetchTops } from '../../../TopListPage/TopListPage.redux/actions';
 import { getAllEvents } from '../../../UserPage/UserEvents/actions';
 
 interface IProps {
@@ -83,7 +83,7 @@ class ChooseExtraOption extends React.Component<IProps, IState> {
 				/>
 			);
 		}
-		
+
 		const close = () => this.setState({ open: false });
 		const back = () => this.setState({ back: false });
 		const create = () => this.setState({ create: false });
@@ -145,7 +145,7 @@ class ChooseExtraOption extends React.Component<IProps, IState> {
 
 const mapStateToProps = rootState => ({
 	survey: rootState.survey.surveys,
-	top: rootState.userTops.topList,
+	top: rootState.topList.tops,
 	currentUserId: rootState.profile.profileInfo.id,
 	event: rootState.events.allEvents
 });

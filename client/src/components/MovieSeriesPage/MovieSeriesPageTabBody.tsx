@@ -53,7 +53,8 @@ const MovieSeriesPageTabBody: React.SFC<IProps> = ({
 					path={`${mainPath}/cast-crew`}
 					render={() => <StaffCast movie={movie} />}
 				/>
-				<Route path={`${mainPath}/reviews`}
+				<Route
+					path={`${mainPath}/reviews`}
 					render={() => (
 						<MovieSeriesReviews
 							ownReview={ownReview}
@@ -85,15 +86,6 @@ const MovieSeriesPageTabBody: React.SFC<IProps> = ({
 							/>
 						);
 					}}
-				/>
-				<Route
-					path={`${mainPath}/statistics`}
-					render={() => (
-						<MovieSeriesStatistics
-							statistics={statistics}
-							fetchStatistics={() => fetchStatistics(movie.id)}
-						/>
-					)}
 				/>
 			</Switch>
 			<DiscussionComponent

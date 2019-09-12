@@ -13,7 +13,7 @@ export class EventComment {
   @PrimaryGeneratedColumn("uuid")
   id: string;
 
-  @ManyToOne(type => User, user => user.id)
+  @ManyToOne(type => User, user => user.id, { onDelete: "CASCADE" })
   @JoinColumn()
   user: User;
 

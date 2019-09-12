@@ -4,7 +4,7 @@ import { NavLink } from 'react-router-dom';
 import Moment from 'react-moment';
 import Image from '../shared/Image/Image';
 
-interface ITop {
+export interface ITop {
 	id: string;
 	title: string;
 	topImageUrl: string;
@@ -22,7 +22,15 @@ interface ITopLIstItemProps {
 }
 
 const TopListItem: React.FC<ITopLIstItemProps> = ({ top }) => {
-	const getReleaseYear = movie => movie.release_date ? movie.release_date.split('-')[0] : movie.movie.release_date.split('-')[0];
+	const getReleaseYear = movie => {
+		let date = null;
+		if (movie && movie.movie && movie.movie.release_date) {
+			date = movie.movie.release_date.split('-')[0];
+		} else if (movie && movie.release_date) {
+			date = movie.release_date.split('-')[0];
+		}
+		return date;
+	};
 
 	const getAdditionalInfo = () => {
 		return top.movieInTop.length > 3
@@ -49,35 +57,39 @@ const TopListItem: React.FC<ITopLIstItemProps> = ({ top }) => {
 
 				<div>
 					<ol>
-						{top.movieInTop.map(movie => (
+						{top.movieInTop.slice(0, 3).map(movie => (
 							<li key={movie.id}>
-								<NavLink to={`/movies/${movie.movie ? movie.movie.id : movie.id}`}>
-									{movie ? (movie.title || movie.movie.title) : null} ({getReleaseYear(movie)})
+								<NavLink
+									to={`/movies/${movie.movie ? movie.movie.id : movie.id}`}
+								>
+									{movie && movie.movie ? movie.movie.title : movie.title} (
+									{getReleaseYear(movie)})
 								</NavLink>
 							</li>
 						))}
 					</ol>
 				</div>
 			</div>
-			{top.user && <div className="top-secondary-section">
-				<NavLink to={`/user-page/${top.user.id}`}>
-					<div className="user-info">
-						<Image
-							src={top.user.avatar}
-							alt="user"
-							defaultSrc={config.DEFAULT_AVATAR}
-						/>
-						<span className="user-name">{top.user.name}</span>
-					</div>
-				</NavLink>
-				<Moment format="ll" local className="created-at">
-					{String(top.created_at)}
-				</Moment>
-				<NavLink to={`/tops/${top.id}`}>
-					<div className="add-info">{getAdditionalInfo()}</div>
-				</NavLink>
-			</div>
-			}
+			{top.user && (
+				<div className="top-secondary-section">
+					<NavLink to={`/user-page/${top.user.id}`}>
+						<div className="user-info">
+							<Image
+								src={top.user.avatar}
+								alt="user"
+								defaultSrc={config.DEFAULT_AVATAR}
+							/>
+							<span className="user-name">{top.user.name}</span>
+						</div>
+					</NavLink>
+					<Moment format="ll" local className="created-at">
+						{String(top.created_at)}
+					</Moment>
+					<NavLink to={`/tops/${top.id}`}>
+						<div className="add-info">{getAdditionalInfo()}</div>
+					</NavLink>
+				</div>
+			)}
 		</div>
 	);
 };

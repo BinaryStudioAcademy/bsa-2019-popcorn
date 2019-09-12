@@ -14,7 +14,8 @@ import {
 	RESTORE_ERROR,
 	RESTORE_OK,
 	SET_LOGIN_ERROR,
-	SET_REGISTER_ERROR
+	SET_REGISTER_ERROR,
+	FETCH_REGISTRATION
 } from '../authorization/actionTypes';
 
 import { fetchUser } from '../../redux/routines';
@@ -175,6 +176,12 @@ export default function(state = initialState, action) {
 				...state,
 				userPosts: [...postsForNewReact]
 			};
+		case FETCH_REGISTRATION:
+			return {
+				...state,
+				registerError: null
+			};
+
 		default:
 			return state;
 	}

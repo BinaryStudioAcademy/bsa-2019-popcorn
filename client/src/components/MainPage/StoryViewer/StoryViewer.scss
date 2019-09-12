@@ -26,7 +26,7 @@
 	}
 	.label-you {
 		display: none;
-	} 
+	}
 	.stars-container {
 		width: 350px !important;
 		top: -40px !important;
@@ -52,6 +52,10 @@
 		bottom: 50px;
 		box-sizing: border-box;
 		height: 38px;
+		a {
+			overflow: hidden;
+			text-overflow: ellipsis;
+		}
 	}
 	.send-btn {
 		border: none;

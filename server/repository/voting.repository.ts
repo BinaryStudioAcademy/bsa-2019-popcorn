@@ -55,7 +55,7 @@ class VotingRepository extends Repository<Voting> {
 
       return await this.findOne(id);
     } catch (err) {
-      return next({ status: err.status, message: err.message }, null);
+      throw err;
     }
   }
 

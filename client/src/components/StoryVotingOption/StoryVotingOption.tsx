@@ -6,27 +6,41 @@ type StoryVotingOptionProps = {
 	allVotesCount: number;
 	storyVotingOptionInfo: {
 		body: string;
-		voted: number;
+		votingOptionReactions: any[];
+		id?: string;
 	};
+	saveVotingReaction?: (optionId: string) => any;
 };
 const calculatePercentage = (voted, allVotesCount) => {
+	if (!allVotesCount) {
+		return 0;
+	}
 	return Math.round((voted / allVotesCount) * 100 * 10) / 10;
 };
 
 const StoryVotingOption = ({
-	storyVotingOptionInfo: { body, voted },
+	storyVotingOptionInfo: { body, votingOptionReactions, id = '' },
 	radius,
-	allVotesCount
+	allVotesCount,
+	saveVotingReaction
 }: StoryVotingOptionProps) => {
 	const borderStyle = { borderRadius: radius };
 
 	return (
-		<div className="story-voting-option">
-			<button style={borderStyle} className="story-voting-option-button">
+		<div className={'story-voting-option'}>
+			<button
+				style={borderStyle}
+				className="story-voting-option-button"
+				onClick={() => saveVotingReaction && saveVotingReaction(id)}
+			>
 				{body}
 			</button>
-			<div className="story-voting-option-percent">
-				{calculatePercentage(voted, allVotesCount) || 0}%
+			<div className={'story-voting-option-percent'}>
+				{calculatePercentage(
+					votingOptionReactions ? votingOptionReactions.length : 0,
+					allVotesCount
+				) || 0}
+				%
 			</div>
 		</div>
 	);

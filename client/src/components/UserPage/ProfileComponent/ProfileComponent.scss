@@ -24,10 +24,15 @@ h2 {
 		padding-top: 16px;
 		margin-right: 20px;
 		width: 200px;
-		height: 200px;
+		height: 216px;
 
 		.avatar-preview {
-			width: 100%;
+			width: 200px;
+			height: 200px;
+		}
+		.profile-avatar {
+			width: 200px;
+			height: 200px;
 		}
 		.upload-wrp {
 			width: 100%;
