@@ -39,7 +39,7 @@ const UserWatchList: React.FC<IProps> = ({
 	selectedUserId,
 	isOwnData
 }) => {
-	const [select, setSelect] = useState('TO_WATCH');
+	const [select, setSelect] = useState('ALL');
 
 	if (!watchList) {
 		fetchWatchList(selectedUserId);
