@@ -42,11 +42,11 @@ const TopItem: React.FC<ITopItemProps> = ({
 	}
 
 	function saveTop(movies: any[]) {
-		const moviesList = movies.filter(movie => movie.title.trim() !== '');
+		const movieInTop = movies.filter(movie => movie.movie.title.trim() !== '');
 		if (title.trim() === '') {
 			setTitle('New top');
 		}
-		saveUserTop({ ...topItem, moviesList, title, topImageUrl });
+		saveUserTop({ ...topItem, movieInTop, title, topImageUrl });
 		canEditTop(false);
 	}
 
@@ -64,7 +64,7 @@ const TopItem: React.FC<ITopItemProps> = ({
 		<div>
 			<div className="top-item"
 				style={editTop ? { gridTemplateRows: "60px 1fr" } : undefined}>
-				{editTop || topItem.moviesList.length === 0 ? (
+				{editTop || topItem.movieInTop.length === 0 ? (
 					<input
 						maxLength={140}
 						placeholder="Top name"
@@ -74,7 +74,7 @@ const TopItem: React.FC<ITopItemProps> = ({
 					/>
 				) : (
 						<div >
-							<TopListItem top={{ ...topItem, movieInTop: topItem.moviesList, created_at: undefined }} />
+							<TopListItem top={{ ...topItem, created_at: undefined, user: undefined }} />
 						</div>
 					)}
 				<input
@@ -120,8 +120,8 @@ const TopItem: React.FC<ITopItemProps> = ({
 				)}
 				{editTop && <img className="image-top" src={topImageUrl} alt="" />}
 			</div>
-			{(editTop || topItem.moviesList.length === 0) && (
-				<TopConstructor moviesList={topItem.moviesList} saveTop={saveTop} closeTopEditor={toogleEdit} />
+			{(editTop || topItem.movieInTop.length === 0) && (
+				<TopConstructor moviesList={topItem.movieInTop} saveTop={saveTop} closeTopEditor={toogleEdit} />
 			)}
 		</div>
 	);

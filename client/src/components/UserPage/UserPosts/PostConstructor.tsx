@@ -83,7 +83,7 @@ class PostConstructor extends React.Component<
 			item = props.newPost.top ||
 				props.newPost.event ||
 				props.newPost.survey || { title: '' };
-			}
+		}
 		this.state = {
 			image_url: '',
 			description: '',
@@ -108,7 +108,7 @@ class PostConstructor extends React.Component<
 						extraType:
 							props.newPost.extraLink &&
 							props.newPost.extraLink.split('/')[1].slice(0, -1)
-					}
+				  }
 				: {})
 		};
 		this.imageStateHandler = this.imageStateHandler.bind(this);
@@ -142,12 +142,14 @@ class PostConstructor extends React.Component<
 	}
 
 	isExtraType(extraType: string) {
-		return (extraType === 'survey' || extraType === 'event' || extraType === 'top');
+		return (
+			extraType === 'survey' || extraType === 'event' || extraType === 'top'
+		);
 	}
 
 	getImageUrl(data: any) {
 		let imageUrl = '';
-		
+
 		switch (data.type) {
 			case 'survey':
 				imageUrl = data.data.image || config.DEFAULT_SURVEY_IMAGE;
@@ -158,7 +160,8 @@ class PostConstructor extends React.Component<
 			case 'top':
 				imageUrl = data.data.topImageUrl || config.DEFAULT_TOP_IMAGE;
 				break;
-			default: imageUrl = this.state.image_url;
+			default:
+				imageUrl = this.state.image_url;
 				break;
 		}
 
@@ -223,21 +226,29 @@ class PostConstructor extends React.Component<
 
 	onSaveCropped() {
 		if (this.cropper.current) {
-			const dataUrl = this.cropper.current.getCroppedCanvas().toBlob(blob => {
-				const data = new FormData();
-				data.append('file', blob);
-				uploadFile(data)
-					.then(({ imageUrl }) => {
-						this.imageStateHandler(imageUrl, true);
-					})
-					.catch(error => {});
-			});
+			this.cropper.current.getCroppedCanvas().toBlob(
+				blob => {
+					console.log(blob.size);
+					const data = new FormData();
+					data.append('file', blob);
+					uploadFile(data)
+						.then(({ imageUrl }) => {
+							this.imageStateHandler(imageUrl, true);
+						})
+						.catch(error => {});
+				},
+				'image/jpeg',
+				0.85
+			);
 		}
 	}
 
 	addMovieCaption(movie, movieSearchTitle) {
 		const { description } = this.state;
-		const caption = `@${movie.id}{${movie.title}}`;
+		const caption = `@${movie.id}{${movie.title +
+			' (' +
+			movie.date.split('-')[0] +
+			')'}}`;
 		const newDescription = description.replace(`$${movieSearchTitle}`, caption);
 		this.setState({
 			description: newDescription,
@@ -253,7 +264,7 @@ class PostConstructor extends React.Component<
 			this.state.top ||
 			this.state.survey ||
 			{};
-		
+
 		return (
 			<div className="post-constructor-modal">
 				<div
@@ -290,25 +301,24 @@ class PostConstructor extends React.Component<
 							</div>
 						)}
 						{this.state.image_url &&
-						this.state.croppedSaved &&
-						!this.state.extraLink &&
-						 (
-							<div className="image-list-wrapper">
-								<div className="post-img-wrapper">
-									<img className="post-img" src={this.state.image_url} />
+							this.state.croppedSaved &&
+							!this.state.extraLink && (
+								<div className="image-list-wrapper">
+									<div className="post-img-wrapper">
+										<img className="post-img" src={this.state.image_url} />
+									</div>
+									<div className="card-wrapper">
+										<button className="button-image">
+											<ImageUploader
+												icon={faPlus}
+												isIcon={true}
+												imageHandler={uploadFile}
+												imageStateHandler={this.imageStateHandler}
+											/>
+										</button>
+									</div>
 								</div>
-								<div className="card-wrapper">
-									<button className="button-image">
-										<ImageUploader
-											icon={faPlus}
-											isIcon={true}
-											imageHandler={uploadFile}
-											imageStateHandler={this.imageStateHandler}
-										/>
-									</button>
-								</div>
-							</div>
-						)}
+							)}
 						{this.state.extraLink && (
 							<>
 								{this.state.croppedSaved && (
@@ -319,7 +329,7 @@ class PostConstructor extends React.Component<
 										className={'extra-poster'}
 									/>
 								)}
-								
+
 								<Extra
 									link={this.state.extraLink}
 									data={data}

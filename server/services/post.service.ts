@@ -84,7 +84,7 @@ export const getPosts = async (
       if (allPost.top) {
         allPost.top.movieInTop = await getMovieInTop(post.top.id);
       }
-      allPost.comments = (await getComments(post)).reverse();
+      allPost.comments = await getComments(post);
       allPost.reactions = await getReactions(post);
 
       return allPost;
