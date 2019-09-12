@@ -1,11 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import './EventPage.scss';
-import { formatToClient, IEventFormatClient } from '../UserPage/UserEvents/UserEvents.service';
+import {
+	formatToClient,
+	IEventFormatClient
+} from '../UserPage/UserEvents/UserEvents.service';
 import EventItem from '../UserPage/UserEvents/EventItem/EventItem';
 import Spinner from '../shared/Spinner';
 import CreateExtraBtn from '../shared/CreateExtraBtn';
 import UserEventsEditor from '../UserPage/UserEvents/UserEventsEditor/UserEventsEditor';
-import { saveEvent} from '../UserPage/UserEvents/actions';
+import { saveEvent } from '../UserPage/UserEvents/actions';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
@@ -42,7 +45,7 @@ const EventList: React.FC<IProps> = props => {
 		}
 	});
 	const editEvent = () => {
-		setOpenEventEditor(!openEventEditor)
+		setOpenEventEditor(!openEventEditor);
 	};
 	const saveEvent = (event: IEventFormatClient) => {
 		props.saveEvent(event);
@@ -67,14 +70,16 @@ const EventList: React.FC<IProps> = props => {
 						saveEvent={saveEvent}
 						id={props.currentUserId}
 					/>
-				) : 
+				) : (
 					<div>
-				{events.map(unformattedEvent => {
-					const event = formatToClient(unformattedEvent);
-					return <EventItem event={event} key={event.id} isOwnEvent={false} />;
-				})}
-				</div>
-				}
+						{events.map(unformattedEvent => {
+							const event = formatToClient(unformattedEvent);
+							return (
+								<EventItem event={event} key={event.id} isOwnEvent={false} />
+							);
+						})}
+					</div>
+				)}
 			</div>
 		</div>
 	);
@@ -83,7 +88,7 @@ const EventList: React.FC<IProps> = props => {
 const mapStateToProps = (state, props) => {
 	return {
 		...props,
-		currentUserId: state.profile.profileInfo.id,
+		currentUserId: state.profile.profileInfo.id
 	};
 };
 

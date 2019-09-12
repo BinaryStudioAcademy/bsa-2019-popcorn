@@ -6,7 +6,7 @@ import { getRandomFromArray, getRandomNumber } from "../helpers/random.helper";
 import { User } from "../models/UserModel";
 import { getCustomRepository } from "typeorm";
 import UserRepository from "../repository/user.repository";
-import { getWatched } from "./watch.service";
+import { getAllUserWatch, getWatched } from "./watch.service";
 import { getMovieVideoLinkById } from "../repository/movie.repository";
 import MovieRateRepository from "../repository/movieRate.repository";
 
@@ -17,7 +17,6 @@ const movieFromList = (movies: any[], list: any[]): boolean => {
   return list.some(
     movieItem =>
       movies.filter(movie => {
-        console.log(movieItem.id);
         return movie.id === movieItem.id;
       }).length !== 0
   );
@@ -58,13 +57,32 @@ export const getAdviceMovie = async (userId: string, next) => {
   if (user && user.id !== userId) {
     return getRandomMovie(amount);
   }
-  const list = (await getWatched(user.id, next)).sort((elem1, elem2) => {
+  const list = (await getAllUserWatch(user.id, next)).sort((elem1, elem2) => {
     return elem2.movie.vote_average - elem1.movie.vote_average;
   });
 
-  return list.length >= 3
-    ? await getMoviesFromList(list, minimalRating, amount)
-    : await getRandomMovie(amount);
+  return getAdviceByList(list);
+};
+
+export const getAdviceByList = async (list: any[]) => {
+  const set = new Set();
+  list.forEach(elem => set.add(elem.id));
+
+  const inList = () => {
+    return movies.some(movie => {
+      return set.has(movie.id);
+    });
+  };
+
+  let movies;
+  do {
+    movies =
+      list.length >= 3
+        ? await getMoviesFromList(list, minimalRating, amount)
+        : await getRandomMovie(amount);
+  } while (inList());
+
+  return movies;
 };
 
 const getRandomMovie = async amountOfMovie => {
