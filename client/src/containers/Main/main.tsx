@@ -118,7 +118,8 @@ const Main = ({
 	subscibeToEvent,
 	avatar,
 	chats,
-	fetchChats
+	fetchChats,
+	...props
 }: IProps) => {
 	if (!isAuthorized || !localStorage.getItem('token')) {
 		return <Redirect to="/login" />;
@@ -129,6 +130,8 @@ const Main = ({
 	}
 
 	new SocketService(userInfo.id);
+
+	console.log(props);
 	return (
 		<div className={'main-wrap'}>
 			{isAuthorized ? <Header userInfo={userInfo} /> : null}

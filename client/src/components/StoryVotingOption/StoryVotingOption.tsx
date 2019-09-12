@@ -36,7 +36,11 @@ const StoryVotingOption = ({
 				{body}
 			</button>
 			<div className={'story-voting-option-percent'}>
-				{calculatePercentage(votingOptionReactions.length, allVotesCount) || 0}%
+				{calculatePercentage(
+					votingOptionReactions ? votingOptionReactions.length : 0,
+					allVotesCount
+				) || 0}
+				%
 			</div>
 		</div>
 	);

@@ -85,7 +85,7 @@ a:focus {
 		width: 100%;
 		border-radius: 4px;
 		padding-left: 10px;
-		img {
+		a {
 			box-shadow: 1px 1px 4px 1px #f4f8fb;
 			align-self: flex-start;
 			width: 35px;
@@ -93,6 +93,10 @@ a:focus {
 			margin-right: 10px;
 			border-radius: 50%;
 			margin: -5px -25px;
+		}
+
+		img {
+			width: 35px;
 		}
 
 		.message-body {
