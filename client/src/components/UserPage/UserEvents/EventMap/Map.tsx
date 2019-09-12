@@ -178,7 +178,7 @@ class MapComponent extends React.Component<IProps, IState> {
 							>
 								<Feature
 									coordinates={currentLocation}
-									draggable={true}
+									draggable={!this.props.readOnly}
 									onDragEnd={this.onDragEnd}
 								/>
 							</Layer>
