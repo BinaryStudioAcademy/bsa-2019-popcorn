@@ -1,4 +1,4 @@
-const btnLinkHtml = (href, text) =>  `
+const btnLinkHtml = (href, text) => `
 	<a
 		style='
 			display: inline-block;
@@ -22,7 +22,7 @@ const btnLinkHtml = (href, text) =>  `
 `;
 
 export const confirmEmailChange = (token, confirmUrl) => {
-	return `
+  return `
 		<div
 			style='
 				text-align: center;	
@@ -36,13 +36,13 @@ export const confirmEmailChange = (token, confirmUrl) => {
 			>
 				You requested for a email change, please click the button to confirm it.
 			</p>
-			${btnLinkHtml(confirmUrl(token), 'Confirm')}
+			${btnLinkHtml(confirmUrl(token), "Confirm")}
 		</div>
 	`;
 };
 
 export const confirmPasswordChange = (token, confirmUrl) => {
-	return `
+  return `
 		<div
 			style='
 				text-align: center;	
@@ -56,7 +56,7 @@ export const confirmPasswordChange = (token, confirmUrl) => {
 			>
 				You requested for a password change, please click the button to confirm it.
 			</p>
-			${btnLinkHtml(confirmUrl(token), 'Confirm')}
+			${btnLinkHtml(confirmUrl(token), "Confirm")}
 		</div>
 	`;
 };
@@ -124,7 +124,9 @@ export const welcome = () => {
 						color: #000;
 					'
 				>
-					Please, go to <a href='${process.env.FRONTEND_HOST}'>link</a> for confirm registration.
+					Please, go to <a href='${
+            process.env.FRONTEND_HOST
+          }'>link</a> for confirm registration.
 				</p>
 
 				<p

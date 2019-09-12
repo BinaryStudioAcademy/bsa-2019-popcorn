@@ -14,7 +14,9 @@ export const getExtendedTops = async (userId?: string): Promise<Top[]> => {
       created_at: "DESC"
     }
   };
-  if (userId) { options.where = { userId }; }
+  if (userId) {
+    options.where = { userId };
+  }
   const tops = await getCustomRepository(TopRepository).find(options);
 
   return await getMoviesInTops(tops, ["id", "title", "release_date"], 100);
@@ -114,24 +116,20 @@ export const createUserTop = async (top: any): Promise<any> => {
     const createdTop: Top = await getCustomRepository(TopRepository).save(
       addedTop
     );
-    const moviesInTop = top.movieInTop.map(movie =>
-      ({
-        topId: createdTop.id,
-        comment: movie.comment,
-        movieId: movie.id
-
-      }))
+    const moviesInTop = top.movieInTop.map(movie => ({
+      topId: createdTop.id,
+      comment: movie.comment,
+      movieId: movie.id
+    }));
 
     await getCustomRepository(MovieInTopRepository).save(moviesInTop);
     return await getTopById(createdTop.id);
-  }
-  catch (e) {
-    console.log(e)
+  } catch (e) {
+    console.log(e);
   }
 };
 
 export const updateTop = async (updatedTop: Top): Promise<Top> => {
-
   let top: Top = await getCustomRepository(TopRepository).findOne(
     updatedTop.id
   );
@@ -141,20 +139,18 @@ export const updateTop = async (updatedTop: Top): Promise<Top> => {
 
 export const updateUserTop = async (top: any): Promise<any> => {
   try {
-    const moviesInTop = top.movieInTop.map(movie =>
-      ({
-        topId: top.id,
-        comment: movie.comment,
-        movieId: Number.isInteger(movie.id) ? movie.id : movie.movieId
-      }))
+    const moviesInTop = top.movieInTop.map(movie => ({
+      topId: top.id,
+      comment: movie.comment,
+      movieId: Number.isInteger(movie.id) ? movie.id : movie.movieId
+    }));
     delete top.movieInTop;
     await getCustomRepository(TopRepository).save(top);
     await getCustomRepository(MovieInTopRepository).deleteMoviesByTopId(top.id);
     await getCustomRepository(MovieInTopRepository).save(moviesInTop);
     return await getTopById(top.id);
-  }
-  catch (e) {
-    console.log(e)
+  } catch (e) {
+    console.log(e);
   }
 };
 

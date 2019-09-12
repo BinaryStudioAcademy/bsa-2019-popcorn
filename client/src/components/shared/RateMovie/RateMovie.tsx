@@ -11,6 +11,7 @@ interface IProps {
 	saveUserRate: (userRate: any) => object;
 	deleteUserRate: (userRate: any) => object;
 	currentUserId: string;
+	updateTotalRate?: (prevUserRate: any, rate: any) => any;
 }
 
 interface IUserRate {
@@ -26,7 +27,8 @@ const RateMovie: React.FC<IProps> = ({
 	movieId,
 	saveUserRate,
 	deleteUserRate,
-	currentUserId
+	currentUserId,
+	updateTotalRate
 }) => {
 	if (!userRates) {
 		fetchUserRates();
@@ -45,6 +47,7 @@ const RateMovie: React.FC<IProps> = ({
 			userRate={userRate}
 			currentUserId={currentUserId}
 			movieId={movieId}
+			updateTotalRate={updateTotalRate}
 		/>
 	);
 };

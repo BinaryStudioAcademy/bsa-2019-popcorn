@@ -4,7 +4,7 @@ import DragDrop from './DragDrop';
 import { IMovie } from '../../UserTops.service';
 import { uniqueId } from 'lodash';
 const emptyInput = () => {
-	return { id: uniqueId('movie'), comment: '', movie: { title: '', } };
+	return { id: uniqueId('movie'), comment: '', movie: { title: '' } };
 };
 
 const reorder = (list, startIndex, endIndex): any => {
@@ -24,7 +24,6 @@ const TopConstructor: React.FC<ITopConstructorProps> = ({
 	saveTop,
 	moviesList,
 	closeTopEditor
-
 }) => {
 	const [movies, setMovies] = useState([...moviesList, emptyInput()]);
 
@@ -70,7 +69,10 @@ const TopConstructor: React.FC<ITopConstructorProps> = ({
 				saveMovie={saveMovie}
 			/>
 			<div className="top-buttons-container">
-				<div className="top-buttons save-top-button hover" onClick={closeTopEditor}>
+				<div
+					className="top-buttons save-top-button hover"
+					onClick={closeTopEditor}
+				>
 					Cancel
 				</div>
 				<div className="top-buttons save-top-button hover" onClick={save}>
