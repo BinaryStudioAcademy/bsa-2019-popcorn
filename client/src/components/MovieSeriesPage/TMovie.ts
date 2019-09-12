@@ -17,6 +17,7 @@ type TMovie = {
 	messages: IDiscussionMessage[];
 	hasVideo: boolean;
 	imdb_id: string;
+	rateInfo?: any;
 };
 
 export default TMovie;

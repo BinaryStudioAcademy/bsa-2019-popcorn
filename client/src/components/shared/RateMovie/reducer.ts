@@ -2,11 +2,13 @@ import {
 	FETCH_USER_RATES_SUCCESS,
 	SAVE_USER_RATE,
 	SAVE_USER_RATE_SUCCESS,
-	DELETE_USER_RATE_SUCCESS
+	DELETE_USER_RATE_SUCCESS,
+	FETCH_USER_RATES
 } from './actionTypes';
 
 interface IReducerState {
 	userRates?: IUserRate[];
+	isLoading?: boolean;
 }
 
 interface IUserRate {
@@ -17,15 +19,24 @@ interface IUserRate {
 }
 
 const initialState: IReducerState = {
-	userRates: undefined
+	userRates: undefined,
+	isLoading: undefined
 };
 
 export default (state = initialState, action) => {
 	switch (action.type) {
+		case FETCH_USER_RATES: {
+			return {
+				...state,
+				isLoading: true
+			};
+		}
+
 		case FETCH_USER_RATES_SUCCESS:
 			return {
 				...state,
-				userRates: action.payload.userRates
+				userRates: action.payload.userRates,
+				isLoading: false
 			};
 
 		case SAVE_USER_RATE_SUCCESS:

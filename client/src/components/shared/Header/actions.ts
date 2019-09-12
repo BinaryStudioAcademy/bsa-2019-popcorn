@@ -5,7 +5,8 @@ import {
 	SET_NOTIFICATION_IS_READ,
 	GET_FIREBASE_TOKEN,
 	DELETE_FIREBASE_TOKEN,
-	FETCH_ADVICE
+	FETCH_ADVICE,
+	SET_NEW_RATE_INFO
 } from './actionTypes';
 
 export const fetchFilms = (text: string) => {
@@ -68,3 +69,8 @@ export const fetchAdvice = (userId: string) => {
 		}
 	};
 };
+
+export const setNewRateInfo = (rateInfo: any) => ({
+	type: SET_NEW_RATE_INFO,
+	payload: { rateInfo }
+});

@@ -83,7 +83,7 @@ class UserEvents extends React.Component<IProps, IState> {
 		const ownEvents: IEventFormatClient[] = [];
 		const subscribeEvents: IEventFormatClient[] = [];
 
-		userEvents.forEach(event => {
+		userEvents && userEvents.forEach(event => {
 			event.userId === currentUserId
 				? ownEvents.push(formatToClient(event))
 				: subscribeEvents.push(formatToClient(event));

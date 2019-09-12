@@ -37,7 +37,8 @@ import ChatPage from '../../components/ChatPage/ChatPage';
 import UserMovieList from '../../components/UserMovieList/UserMovieList';
 import ResultList from '../../components/shared/ContentSearch/ResultList';
 import Collections from '../../components/Collections/Collections';
-import AdviceMe from '../../components/shared/AdviceMe';
+import AdviceMe from '../../components/shared/AdviceMe/AdviceMe';
+import { fetchChats } from '../../components/ChatPage/ChatPage.redux/actions';
 
 const { notifications } = {
 	notifications: {
@@ -66,6 +67,8 @@ interface IProps {
 	getEventById: (eventId: string) => void;
 	subscibeToEvent: ({ eventId, userId, status }) => void;
 	avatar: string;
+	chats: any;
+	fetchChats: (userId: string) => void;
 }
 
 const MovieListRender = (
@@ -100,103 +103,111 @@ const allSurveysRender = props => {
 const EventPageRender = props => <EventPage {...props} />;
 const EventListRender = props => <EventList {...props} />;
 
-const Main = ({
-	isAuthorized,
-	userInfo,
-	movieList,
-	fetchMovieList,
-	setMovieSeries,
-	movieSeries,
-	loadMoreMovie,
-	allEvents,
-	getAllEvents,
-	searchedEvent,
-	getEventById,
-	subscibeToEvent,
-	avatar
-}: IProps) => {
-	if (!isAuthorized || !localStorage.getItem('token')) {
-		return <Redirect to="/login" />;
+class Main extends React.Component<IProps> {
+	componentDidMount() {
+		if (this.props.userInfo) {
+			this.props.fetchChats(this.props.userInfo.id);
+		}
 	}
 
-	new SocketService(userInfo.id);
-	return (
-		<div className={'main-wrap'}>
-			{isAuthorized ? <Header userInfo={userInfo} /> : null}
-			<div
-				className={
-					window.location.pathname === '/advanced-search'
-						? 'main-page-search'
-						: 'main-page'
-				}
-			>
-				{window.location.pathname !== '/advanced-search' ? (
-					<MainPageSidebar notifications={notifications} />
-				) : null}
+	render() {
+		const {
+			isAuthorized,
+			userInfo,
+			movieList,
+			fetchMovieList,
+			setMovieSeries,
+			loadMoreMovie,
+			allEvents,
+			getAllEvents,
+			searchedEvent,
+			getEventById,
+			subscibeToEvent,
+			chats
+		} = this.props;
+
+		if (!isAuthorized || !localStorage.getItem('token')) {
+			return <Redirect to="/login" />;
+		}
+		new SocketService(userInfo.id);
+		return (
+			<div className={'main-wrap'}>
+				{isAuthorized ? <Header userInfo={userInfo} /> : null}
 				<div
-				// style={{ width: 'calc(100vw - 205px)' }}
+					className={
+						window.location.pathname === '/advanced-search'
+							? 'main-page-search'
+							: 'main-page'
+					}
 				>
-					<Switch>
-						<Route exact path={[`/`, '/create*']} component={MainPage} />
-						<Route path={`/user-page/:id`} component={UserPage} />
-						<Route
-							path={'/settings'}
-							render={() => <SettingsPage mainPath={'/settings'} />}
-						/>
-						<Route path={'/content-search'} component={ResultList} />
-						<Route
-							path={`/events/:id`}
-							render={props =>
-								EventPageRender({
-									...props,
-									searchedEvent,
-									getEventById,
-									currentUser: userInfo,
-									subscibeToEvent
-								})
-							}
-						/>
-						<Route
-							path={`/events`}
-							render={props =>
-								EventListRender({ ...props, allEvents, getAllEvents })
-							}
-						/>
-						<Route path={`/advanced-search`} component={AdvancedSearchPage} />
-						<Route path={`/survey-page/:id`} component={SurveyPage} />
-						<Route path={`/admin-panel-page`} component={AdminPanelPage} />
-						<Route
-							path={`/movies/:id`}
-							render={props => MovieSeriesRender(props)}
-						/>
-						<Route
-							path={`/movies`}
-							render={() =>
-								MovieListRender(
-									movieList,
-									fetchMovieList,
-									setMovieSeries,
-									loadMoreMovie
-								)
-							}
-						/>
-						<Route
-							path={`/surveys`}
-							render={() => allSurveysRender(userInfo)}
-						/>
-						<Route exact path={`/tops`} render={() => <TopList />} />
-						<Route path={`/tops/:id`} component={TopPage} />
-						<Route path={`/chat`} component={ChatPage} />
-						<Route path={`/movie-list/:id`} component={UserMovieList} />
-						<Route path={`/collections`} component={Collections} />
-						<Route path={'/adviceMe'} component={AdviceMe} />
-						<Route path={`/*`} exact component={NotFound} />
-					</Switch>
+					{window.location.pathname !== '/advanced-search' ? (
+						<MainPageSidebar chats={chats} notifications={notifications} />
+					) : null}
+					<div
+					// style={{ width: 'calc(100vw - 205px)'
+					>
+						<Switch>
+							<Route exact path={[`/`, '/create*']} component={MainPage} />
+							<Route path={`/user-page/:id`} component={UserPage} />
+							<Route
+								path={'/settings'}
+								render={() => <SettingsPage mainPath={'/settings'} />}
+							/>
+							<Route path={'/content-search'} component={ResultList} />
+							<Route
+								path={`/events/:id`}
+								render={props =>
+									EventPageRender({
+										...props,
+										searchedEvent,
+										getEventById,
+										currentUser: userInfo,
+										subscibeToEvent
+									})
+								}
+							/>
+							<Route
+								path={`/events`}
+								render={props =>
+									EventListRender({ ...props, allEvents, getAllEvents })
+								}
+							/>
+							<Route path={`/advanced-search`} component={AdvancedSearchPage} />
+							<Route path={`/survey-page/:id`} component={SurveyPage} />
+							<Route path={`/admin-panel-page`} component={AdminPanelPage} />
+							<Route
+								path={`/movies/:id`}
+								render={props => MovieSeriesRender(props)}
+							/>
+							<Route
+								path={`/movies`}
+								render={() =>
+									MovieListRender(
+										movieList,
+										fetchMovieList,
+										setMovieSeries,
+										loadMoreMovie
+									)
+								}
+							/>
+							<Route
+								path={`/surveys`}
+								render={() => allSurveysRender(userInfo)}
+							/>
+							<Route exact path={`/tops`} render={() => <TopList />} />
+							<Route path={`/tops/:id`} component={TopPage} />
+							<Route path={`/chat`} component={ChatPage} />
+							<Route path={`/movie-list/:id`} component={UserMovieList} />
+							<Route path={`/collections`} component={Collections} />
+							<Route path={'/adviceMe'} component={AdviceMe} />
+							<Route path={`/*`} exact component={NotFound} />
+						</Switch>
+					</div>
 				</div>
 			</div>
-		</div>
-	);
-};
+		);
+	}
+}
 
 const mapStateToProps = (rootState, props) => ({
 	...props,
@@ -205,7 +216,8 @@ const mapStateToProps = (rootState, props) => ({
 	movieList: rootState.movie.movieList,
 	movieSeries: rootState.movie.movieSeries,
 	allEvents: rootState.events.allEvents,
-	searchedEvent: rootState.events.searchedEvent
+	searchedEvent: rootState.events.searchedEvent,
+	chats: rootState.chat.chats
 });
 
 const actions = {
@@ -214,7 +226,8 @@ const actions = {
 	loadMoreMovie,
 	getAllEvents,
 	getEventById,
-	subscibeToEvent
+	subscibeToEvent,
+	fetchChats
 };
 
 const mapDispatchToProps = dispatch => bindActionCreators(actions, dispatch);

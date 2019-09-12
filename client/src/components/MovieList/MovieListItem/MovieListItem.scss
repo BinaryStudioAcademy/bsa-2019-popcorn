@@ -1,22 +1,19 @@
 @import '../../../styles/variables';
 .movie-list {
-	.movie-item { 
+	.movie-item {
 		display: flex;
 		flex-direction: column;
 		padding-top: 0;
 		padding-bottom: 0;
-		&:hover .movie-poster{
-			transform: scale(1.02)
+		&:hover .movie-poster-wrp {
+			transform: scale(1.02);
 		}
 		.movie-poster-wrp {
 			width: 100%;
 			height: 285px;
 			margin-bottom: 10px;
-			.movie-poster {
-				transition: all linear .1s;
-				border-radius: 20px;
-				box-shadow: 2px 2px 10px 1px rgba(0, 0, 0, 0.411);
-			}
+			transition: all linear 0.1s;
+			box-shadow: 2px 2px 10px 1px rgba(0, 0, 0, 0.411);
 		}
 		.movie-info {
 			padding: 0;
@@ -27,17 +24,17 @@
 				text-transform: uppercase;
 				overflow: hidden;
 				text-overflow: ellipsis;
-				white-space: nowrap; 
+				white-space: nowrap;
 			}
 			.movie-duration {
-				color: rgba($text-base-color, .7);
+				color: rgba($text-base-color, 0.7);
 				text-transform: uppercase;
 				font-weight: 700;
 				line-height: 15px;
 			}
 			.movie-header {
 				display: flex;
-				justify-content: flex-start;
+
 				.movie-title {
 					text-transform: none;
 					font-weight: 600;
@@ -45,16 +42,32 @@
 					max-width: 80%;
 					overflow: hidden;
 					text-overflow: ellipsis;
-					white-space: nowrap; 
+					white-space: nowrap;
 				}
 				.movie-year {
-					background-color: rgba($border-color, .1);
-					font-weight: 400;
-					margin-left: 10px;
-					border-radius: 10px;
-					padding: 0 5px;
-					font-size: .9em;
-					height: 30px
+					line-height: 33px;
+					font-weight: 300;
+					margin-left: 5px;
+					font-size: 0.8em;
+				}
+			}
+			.movie-footer {
+				display: flex;
+				.StarRating {
+					margin-left: 5px;
+					margin-top: -6px;
+					position: relative;
+					width: 24px;
+					height: 24px;
+					padding-left: 0;
+					.user-rating-value {
+						position: static;
+						display: none;
+					}
+				}
+				.stars-container {
+					right: 25px;
+					top: -8px;
 				}
 			}
 		}
@@ -113,18 +126,39 @@
 			}
 		}
 
-		.movie-duration {
-			svg {
-				margin-left: 15px;
-				height: 15px;
-			}
-		}
-
 		.movie-cast {
 			font-size: $base-font-size;
 			overflow: hidden;
 			white-space: nowrap;
 			text-overflow: ellipsis;
+		}
+	}
+	.movie-item-rating {
+		display: flex;
+		align-items: center;
+		padding: 0;
+		margin: 0;
+		margin-top: -7px;
+
+		.movie-total-rating {
+			font-size: 0.9em;
+		}
+
+		.max-rating {
+			font-size: 0.8em;
+			margin-top: -2px;
+			color: $text-secondary-color;
+		}
+		.StarRating {
+			.user-rating-value {
+				position: static;
+				display: none;
+			}
+		}
+		.stars-container {
+			.star-item {
+				padding-top: 5px;
+			}
 		}
 	}
 }

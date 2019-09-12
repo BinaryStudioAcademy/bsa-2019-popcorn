@@ -101,6 +101,10 @@ a:focus {
 		margin-left: 25px;
 		width: 80%;
 		border-radius: 4px;
+		a {
+			color: $text-base-color;
+			cursor: pointer;
+		}
 		&:first-of-type {
 			margin-top: 20px;
 		}

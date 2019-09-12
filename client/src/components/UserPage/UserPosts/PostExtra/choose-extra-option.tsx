@@ -11,6 +11,7 @@ import { fetchSurveys } from '../../UserSurveys/UserSurveys.redux/actions';
 import { getAllEvents } from '../../UserEvents/actions';
 import { fetchTops } from '../../UserTops/UserTops.redux/actions';
 import { connect } from 'react-redux';
+import Spinner from '../../../shared/Spinner';
 
 interface IProps {
 	option: string;
@@ -55,23 +56,23 @@ class ChooseExtraOption extends React.Component<IProps> {
 	render() {
 		const {
 			option,
-			survey = [],
-			userEvents = [],
-			topList = [],
+			survey,
+			userEvents,
+			topList,
 			loading
 		} = this.props;
 
-		let data: any = [];
+		let data: any = null;
 
 		switch (this.props.option) {
 			case 'survey':
-				data = [...survey];
+				data = survey ? [...survey] : survey;
 				break;
 			case 'event':
-				data = [...userEvents];
+				data = userEvents ? [...userEvents] : userEvents;
 				break;
 			case 'top':
-				data = [...topList];
+				data = topList ? [...topList] : topList;
 				break;
 		}
 
@@ -91,7 +92,7 @@ class ChooseExtraOption extends React.Component<IProps> {
 			);
 		}
 		const create = () => this.setState({ create: false });
-
+		console.log(data);
 		return (
 			<div className={'post-constructor-modal'}>
 				<div className="postconstr-wrp postconstr-wrp--option">
@@ -128,7 +129,7 @@ class ChooseExtraOption extends React.Component<IProps> {
 											</span>
 										</p>
 								  ))
-								: null}
+								: <Spinner />}
 						</div>
 					</div>
 				</div>

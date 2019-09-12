@@ -36,7 +36,7 @@
 
 .activity-icon {
 	font-size: 2em;
-	margin-right: 1em;
+	margin-right: 0.6em;
 }
 .activity-icon-default {
 	margin-right: 1em;
@@ -51,6 +51,9 @@
 .activity-text {
 	color: $text-base-color;
 	font-size: $base-font-size;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	width: 250px;
 }
 
 .activity-date {

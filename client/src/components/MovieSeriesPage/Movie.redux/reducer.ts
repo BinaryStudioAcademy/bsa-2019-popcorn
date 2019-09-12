@@ -20,7 +20,8 @@ import {
 	SET_GENRES,
 	FETCH_STATISTICS,
 	FETCH_STATISTICS_SUCCESS,
-	FETCH_POSTS_BY_FILM_SUCCESS
+	FETCH_POSTS_BY_FILM_SUCCESS,
+	SET_NEW_MOVIE_RATE_INFO
 } from './actionTypes';
 import TMovie from '../TMovie';
 import movieAdapter from '../movieAdapter';
@@ -237,6 +238,25 @@ export default function(state = initialState, action) {
 			return {
 				...state,
 				posts: [...postsForNewReact]
+			};
+
+		case SET_NEW_MOVIE_RATE_INFO:
+			const prevMovies: any[] =
+				(state.movieSearchInAdvancedSearch && [
+					...(state.movieSearchInAdvancedSearch as any)
+				]) ||
+				[];
+			const { rateInfo } = action.payload;
+			prevMovies.forEach((movieItem, index) => {
+				if (movieItem.id == rateInfo.movieid) {
+					const newMovie = { ...movieItem };
+					newMovie.rateInfo = rateInfo;
+					prevMovies.splice(index, 1, newMovie);
+				}
+			});
+			return {
+				...state,
+				movieSearchInAdvancedSearch: [...prevMovies]
 			};
 		default:
 			return state;

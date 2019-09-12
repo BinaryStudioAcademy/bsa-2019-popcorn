@@ -26,7 +26,7 @@ const TopItem: React.FC<ITopItemProps> = ({
 	deleteTop,
 	uploadImage,
 	uploadUrl,
-	urlForTop,
+	urlForTop
 }) => {
 	const [editTop, canEditTop] = useState(topItem.isNewTop || false);
 	const [title, setTitle] = useState(topItem.title);
@@ -42,11 +42,11 @@ const TopItem: React.FC<ITopItemProps> = ({
 	}
 
 	function saveTop(movies: any[]) {
-		const moviesList = movies.filter(movie => movie.title.trim() !== '');
+		const movieInTop = movies.filter(movie => movie.movie.title.trim() !== '');
 		if (title.trim() === '') {
 			setTitle('New top');
 		}
-		saveUserTop({ ...topItem, moviesList, title, topImageUrl });
+		saveUserTop({ ...topItem, movieInTop, title, topImageUrl });
 		canEditTop(false);
 	}
 
@@ -62,9 +62,11 @@ const TopItem: React.FC<ITopItemProps> = ({
 
 	return (
 		<div>
-			<div className="top-item"
-				style={editTop ? { gridTemplateRows: "60px 1fr" } : undefined}>
-				{editTop || topItem.moviesList.length === 0 ? (
+			<div
+				className="top-item"
+				style={editTop ? { gridTemplateRows: '60px 1fr' } : undefined}
+			>
+				{editTop || topItem.movieInTop.length === 0 ? (
 					<input
 						maxLength={140}
 						placeholder="Top name"
@@ -73,10 +75,12 @@ const TopItem: React.FC<ITopItemProps> = ({
 						value={title}
 					/>
 				) : (
-						<div >
-							<TopListItem top={{ ...topItem, movieInTop: topItem.moviesList, created_at: undefined }} />
-						</div>
-					)}
+					<div>
+						<TopListItem
+							top={{ ...topItem, created_at: undefined, user: undefined }}
+						/>
+					</div>
+				)}
 				<input
 					name="image"
 					type="file"
@@ -94,34 +98,43 @@ const TopItem: React.FC<ITopItemProps> = ({
 					</label>
 				)}
 				{!editTop && isOwnData && (
-					<div className="edit-top hover"
+					<div
+						className="edit-top hover"
 						onClick={toogleEdit}
-						style={editTop ? { alignSelf: "center" } : undefined}>
+						style={editTop ? { alignSelf: 'center' } : undefined}
+					>
 						Edit
 					</div>
 				)}
 				{!editTop && isOwnData && (
 					<div className="last">
-						{<Moment
-							format="ll"
-							local
-							className="created-at"
-							style={editTop ? { display: "none" } : undefined}>
-							{String(topItem.created_at)}
-						</Moment>
+						{
+							<Moment
+								format="ll"
+								local
+								className="created-at"
+								style={editTop ? { display: 'none' } : undefined}
+							>
+								{String(topItem.created_at)}
+							</Moment>
 						}
-						<div className="delete-top hover"
-							style={editTop ? { marginTop: "10px" } : undefined}
-							onClick={() => deleteTop(topItem)}>
-
+						<div
+							className="delete-top hover"
+							style={editTop ? { marginTop: '10px' } : undefined}
+							onClick={() => deleteTop(topItem)}
+						>
 							<CloseIcon className="close-icon" />
 						</div>
 					</div>
 				)}
 				{editTop && <img className="image-top" src={topImageUrl} alt="" />}
 			</div>
-			{(editTop || topItem.moviesList.length === 0) && (
-				<TopConstructor moviesList={topItem.moviesList} saveTop={saveTop} closeTopEditor={toogleEdit} />
+			{(editTop || topItem.movieInTop.length === 0) && (
+				<TopConstructor
+					moviesList={topItem.movieInTop}
+					saveTop={saveTop}
+					closeTopEditor={toogleEdit}
+				/>
 			)}
 		</div>
 	);

@@ -30,7 +30,7 @@ import {
 	SET_REGISTER_ERROR,
 	AUTH_WITH_SOCIAL
 } from '../authorization/actionTypes';
-import { CONFIRM_CHANGES } from '../ConfirmChange/actionTypes';
+import { CONFIRM_CHANGES, CHANGES_SUCCESS } from '../ConfirmChange/actionTypes';
 import webApi from '../../services/webApi.service';
 
 export function* getSelectedUser(action) {
@@ -129,9 +129,12 @@ export function* confirmChanges(action) {
 			method: 'PUT',
 			endpoint: `/api/confirm/${action.payload.token}`
 		});
-
+		localStorage.removeItem('token');
 		yield put({
 			type: LOGOUT
+		});
+		yield put({
+			type: CHANGES_SUCCESS
 		});
 	} catch (e) {
 		console.log('user saga confirm', e);

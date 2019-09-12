@@ -11,6 +11,8 @@ interface IProps {
 	saveUserRate: (userRate: any) => object;
 	deleteUserRate: (userRate: any) => object;
 	currentUserId: string;
+	updateTotalRate?: (prevUserRate: any, rate: any) => any;
+	isLoading?: boolean;
 }
 
 interface IUserRate {
@@ -26,10 +28,15 @@ const RateMovie: React.FC<IProps> = ({
 	movieId,
 	saveUserRate,
 	deleteUserRate,
-	currentUserId
+	currentUserId,
+	updateTotalRate,
+	isLoading
 }) => {
-	if (!userRates) {
+	if (!userRates && !isLoading) {
 		fetchUserRates();
+	}
+
+	if (!userRates) {
 		return null;
 	}
 
@@ -45,6 +52,7 @@ const RateMovie: React.FC<IProps> = ({
 			userRate={userRate}
 			currentUserId={currentUserId}
 			movieId={movieId}
+			updateTotalRate={updateTotalRate}
 		/>
 	);
 };
@@ -52,7 +60,8 @@ const RateMovie: React.FC<IProps> = ({
 const mapStateToProps = (rootState, props) => ({
 	...props,
 	userRates: rootState.movieRate.userRates,
-	currentUserId: rootState.profile.profileInfo.id
+	currentUserId: rootState.profile.profileInfo.id,
+	isLoading: rootState.movieRate.isLoading
 });
 
 const mapDispatchToProps = dispatch => {

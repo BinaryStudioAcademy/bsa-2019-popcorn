@@ -6,6 +6,7 @@ import Moment from 'react-moment';
 import config from '../../../config';
 import { IDiscussionUser } from '../../UserPage/UserEvents/UserEvents.service';
 import ScrollToBottom from 'react-scroll-to-bottom';
+import { NavLink } from 'react-router-dom';
 
 export interface IDiscussionMessage {
 	id: string;
@@ -151,13 +152,15 @@ class DiscussionComponent extends Component<
 									'message-item-reverse'} `}
 								key={message.id}
 							>
-								<img
-									src={message.user.avatar || config.DEFAULT_AVATAR}
-									alt="userPhoto"
-								/>
+									<img
+										src={message.user.avatar || config.DEFAULT_AVATAR}
+										alt="userPhoto"
+									/>
 								<div className="message-body">
 									<div className="message-info">
-										<div className="name">{message.user.name}</div>
+									<NavLink to={'/user-page/' + message.user.id}>
+<div className="name">{message.user.name}</div>								</NavLink>
+
 										<div className="date">
 											<Moment format=" D MMM HH:mm " local>
 												{String(message.createdAt)}
@@ -182,7 +185,7 @@ class DiscussionComponent extends Component<
 								onKeyPress={e => {
 									if (e.key === 'Enter') this.sendMessage();
 								}}
-							></textarea>
+							/>
 							<button
 								onClick={this.sendMessage}
 								disabled={this.state.inputIsEmpty}

@@ -14,6 +14,7 @@ interface IProps {
 	deleteUserRate: (userRate: any) => object;
 	currentUserId: string;
 	movieId: string;
+	updateTotalRate?: (prevUserRate, userRate: any) => any;
 }
 
 interface IState {
@@ -45,6 +46,9 @@ class StarRating extends React.Component<IProps, IState> {
 			}}
 			title={`Click to rate: ${key + 1}`}
 			onClick={() => {
+				const prevUserRate = this.props.userRate && this.props.userRate.rate;
+				this.props.updateTotalRate &&
+					this.props.updateTotalRate(prevUserRate, key + 1);
 				this.setState({
 					...this.state,
 					showStarRate: false,
@@ -96,6 +100,9 @@ class StarRating extends React.Component<IProps, IState> {
 
 	onClickDeleteButton = ev => {
 		ev.preventDefault();
+		const prevUserRate = this.props.userRate && this.props.userRate.rate;
+		this.props.updateTotalRate &&
+			this.props.updateTotalRate(prevUserRate, null);
 		const { deleteUserRate, userRate } = this.props;
 		if (userRate) {
 			deleteUserRate(userRate);
