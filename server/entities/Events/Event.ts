@@ -41,7 +41,7 @@ export class Event {
   @Column()
   isPrivate: boolean;
 
-  @ManyToOne(type => User, user => user.id)
+  @ManyToOne(type => User, user => user.id, { onDelete: "CASCADE" })
   @JoinColumn()
   user: User;
 

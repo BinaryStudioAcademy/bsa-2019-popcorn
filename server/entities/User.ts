@@ -125,6 +125,8 @@ export class User {
   })
   followers: Follower[];
 
-  @OneToMany(type => FavoriteList, favoriteList => favoriteList.user)
+  @OneToMany(type => FavoriteList, favoriteList => favoriteList.user, {
+    onDelete: "CASCADE"
+  })
   favoriteLists: FavoriteList[];
 }
