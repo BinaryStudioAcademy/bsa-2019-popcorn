@@ -1,11 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import './EventPage.scss';
-import { formatToClient, IEventFormatClient } from '../UserPage/UserEvents/UserEvents.service';
+import {
+	formatToClient,
+	IEventFormatClient
+} from '../UserPage/UserEvents/UserEvents.service';
 import EventItem from '../UserPage/UserEvents/EventItem/EventItem';
 import Spinner from '../shared/Spinner';
 import CreateExtraBtn from '../shared/CreateExtraBtn';
 import UserEventsEditor from '../UserPage/UserEvents/UserEventsEditor/UserEventsEditor';
-import { saveEvent} from '../UserPage/UserEvents/actions';
+import { saveEvent } from '../UserPage/UserEvents/actions';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
@@ -33,24 +36,25 @@ const BACK_TO_EVENTS_TEXT = 'Back to event';
 
 const EventList: React.FC<IProps> = props => {
 	const { getAllEvents, allEvents } = props;
-	const [events, setEvents] = useState([]);
+	const [events, setEvents] = useState();
 	const [openEventEditor, setOpenEventEditor] = useState(false);
 	useEffect(() => {
-		if (!events.length) {
+		if (!events) {
 			getAllEvents();
 			setEvents(allEvents);
 		}
 	});
 	const editEvent = () => {
-		setOpenEventEditor(!openEventEditor)
+		setOpenEventEditor(!openEventEditor);
 	};
 	const saveEvent = (event: IEventFormatClient) => {
 		props.saveEvent(event);
 	};
-	if (!events.length) {
+	console.log(events);
+	if (!events) {
 		return <Spinner />;
 	}
-	if (allEvents.length !== events.length) {
+	if (events && allEvents.length !== events.length) {
 		setEvents(allEvents);
 	}
 	return (
@@ -66,14 +70,16 @@ const EventList: React.FC<IProps> = props => {
 						saveEvent={saveEvent}
 						id={props.currentUserId}
 					/>
-				) : 
+				) : (
 					<div>
-				{events.map(unformattedEvent => {
-					const event = formatToClient(unformattedEvent);
-					return <EventItem event={event} key={event.id} isOwnEvent={false} />;
-				})}
-				</div>
-				}
+						{events.map(unformattedEvent => {
+							const event = formatToClient(unformattedEvent);
+							return (
+								<EventItem event={event} key={event.id} isOwnEvent={false} />
+							);
+						})}
+					</div>
+				)}
 			</div>
 		</div>
 	);
@@ -82,7 +88,7 @@ const EventList: React.FC<IProps> = props => {
 const mapStateToProps = (state, props) => {
 	return {
 		...props,
-		currentUserId: state.profile.profileInfo.id,
+		currentUserId: state.profile.profileInfo.id
 	};
 };
 

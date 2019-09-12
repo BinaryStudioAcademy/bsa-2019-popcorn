@@ -12,7 +12,6 @@ const PostEditModal = (props: IPostEditProps) => {
 	return (
 		<div className="post-modal-container">
 			<div className="post-modal">
-				<button>Copy link</button>
 				{props.isOwn && (
 					<button
 						onClick={() => {

@@ -1,6 +1,10 @@
 @import '../../../styles/variables.scss';
 @import url('https://rsms.me/inter/inter.css');
 
+.all-surveys {
+	margin-left: 350px;
+	margin-right: 350px;
+}
 .userSurveys {
 	display: flex;
 	flex-direction: column;
@@ -20,15 +24,59 @@
 		.survey-list-item {
 			width: 100%;
 			display: flex;
-			justify-content: space-between;
-			align-items: center;
 			box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.37);
 			padding: 20px;
+			position: relative;
 
-			span {
-				width: 70%;
-				text-overflow: ellipsis;
-				overflow: hidden;
+			.survey-info {
+				margin-left: 20px;
+				max-width: 40%;
+			}
+			.survey-item-right {
+				display: flex;
+				justify-content: space-between;
+				width: 100%;
+			}
+			.creator-info {
+				display: flex;
+
+				.creator-avatar {
+					width: 30px;
+					height: 30px;
+					border-radius: 50%;
+				}
+
+				.creator-name {
+					margin-left: 10px;
+					align-self: center;
+				}
+			}
+			.icon-users-survey {
+				margin-right: 10px;
+			}
+
+			.creation-date {
+				font-size: 0.7em;
+				color: $text-secondary-color;
+			}
+			.survey-image-wrp {
+				width: 300px;
+				img {
+					width: 100%;
+				}
+			}
+
+			.survey-participants {
+				font-size: $base-font-size;
+			}
+
+			.survey-info-title {
+				font-weight: 700;
+				font-size: 1.4em;
+			}
+			.survey-info-description {
+				margin: 10px 0;
+				color: rgba(18, 39, 55, 0.7);
 			}
 
 			&:hover {
@@ -36,28 +84,26 @@
 			}
 
 			.buttons {
-				min-width: 190px;
 				text-align: center;
+				position: absolute;
+				bottom: 20px;
+				right: 20px;
 			}
 
 			button {
-				margin-left: 10px;
-				margin-bottom: 2px;
-				background-color: $button-background;
-				color: $white;
-				box-shadow: 0px 5px 12px $button-shadow-color;
-				border: none;
-				padding: 7px;
-				height: 43px;
-				border-radius: 55px;
-				cursor: pointer;
-				width: 105px;
-				border: none;
+				display: block;
 				outline: none;
-				font-size: $menu-font-size;
-				font-weight: bold;
+				border: 1px solid rgba(0, 0, 0, 0.11);
+				background-color: white;
+				cursor: pointer;
+				border-radius: 3px;
+				transition: box-shadow 0.3s ease, border-color 0.4s ease;
+				padding: 3px 10px;
+				color: #00000099;
+				font-size: 15px;
+
 				&:hover {
-					background-color: rgb(216, 86, 0);
+					border-color: rgba(0, 0, 0, 0.05);
 				}
 			}
 

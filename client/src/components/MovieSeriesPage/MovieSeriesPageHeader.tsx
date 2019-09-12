@@ -68,7 +68,7 @@ const MovieSeriesPageHeader: React.FC<IProps> = ({
 			<div
 				className={`watch-list-icon add-to-watch-list`}
 				onClick={() => addMovieToWatchList(movieId)}
-				title="add to watch list"
+				title="Click to add movie to watch list"
 			/>
 		);
 	};
@@ -119,9 +119,7 @@ const MovieSeriesPageHeader: React.FC<IProps> = ({
 					<div />
 					<div className="header-review-own-rating-container">
 						<div className="review-button" onClick={onModalClick}>
-						<FontAwesomeIcon
-							icon={faEdit}
-						/>
+							<FontAwesomeIcon icon={faEdit} />
 							Write Review
 						</div>
 					</div>

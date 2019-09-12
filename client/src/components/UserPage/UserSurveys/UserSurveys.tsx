@@ -1,11 +1,14 @@
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTrashAlt } from '@fortawesome/free-solid-svg-icons';
+import { faTrashAlt, faUsers } from '@fortawesome/free-solid-svg-icons';
 import { isEqual } from 'lodash';
 import { NavLink } from 'react-router-dom';
+import Image from '../../shared/Image/Image';
 import CreateExtraBtn from '../../shared/CreateExtraBtn';
 import './UserSurveys.scss';
 import Spinner from '../../shared/Spinner';
+import config from '../../../config';
+import Moment from 'react-moment';
 
 interface ISurvey {
 	id: string;
@@ -13,6 +16,7 @@ interface ISurvey {
 	title: string;
 	type: string;
 	description: string;
+	image: string;
 	user_id: string;
 	user: {
 		name: string;
@@ -188,7 +192,11 @@ class UserSurveys extends React.Component<IProps, IState> {
 						Back to story
 					</button>
 				)}
-				<div className="userSurveys">
+				<div
+					className={`userSurveys ${
+						window.location.pathname === '/surveys' ? 'all-surveys' : ''
+					}`}
+				>
 					{isOwnData || window.location.pathname === '/surveys' ? (
 						<NavLink to={`${mainPath}/create`}>
 							<CreateExtraBtn handleClick={() => {}} body={'Create survey'} />
@@ -208,17 +216,70 @@ class UserSurveys extends React.Component<IProps, IState> {
 									}
 								>
 									<div className="survey-list-item">
-										<span>{survey.title}</span>
+										<div className="survey-image-wrp">
+											<Image
+												src={survey.image}
+												defaultSrc={config.DEFAULT_SURVEY_IMAGE}
+												alt="survey-image"
+											/>
+										</div>
+										<div className="survey-item-right">
+											<div className="survey-info">
+												<div className="survey-info-title">{survey.title}</div>
+												<div className="survey-info-description">
+													{survey.description}
+												</div>
+												<div className="survey-participants">
+													<FontAwesomeIcon
+														className="icon-users-survey"
+														icon={faUsers}
+													/>
+													{survey.participants} users participate
+												</div>
+											</div>
+											<div className="survey-secondary-info">
+												{isOwnData ? (
+													<Moment
+														className="creation-date"
+														format=" D MMMM HH:mm "
+														local
+													>
+														{String(survey.created_at)}
+													</Moment>
+												) : (
+													<div>
+														<div className="creator-info">
+															<img
+																className="creator-avatar"
+																src={
+																	survey.user.image_link
+																		? survey.user.image_link
+																		: config.DEFAULT_AVATAR
+																}
+															/>
+															<span className="creator-name">
+																{survey.user.name}
+															</span>
+														</div>
+														<Moment
+															className="creation-date"
+															format=" D MMMM HH:mm "
+															local
+														>
+															{String(survey.created_at)}
+														</Moment>
+													</div>
+												)}
+											</div>
+										</div>
 										{isOwnData ? (
 											<p className="buttons">
-												{this.typeSurveyBttn(survey)}
 												<button
-													className="delete-bttn"
 													onClick={event => {
 														this.showModal(event, i);
 													}}
 												>
-													<FontAwesomeIcon icon={faTrashAlt} />
+													Delete
 												</button>
 											</p>
 										) : null}

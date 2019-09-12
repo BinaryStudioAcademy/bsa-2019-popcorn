@@ -54,25 +54,19 @@ class ChooseExtraOption extends React.Component<IProps> {
 	}
 
 	render() {
-		const {
-			option,
-			survey = [],
-			userEvents = [],
-			topList = [],
-			loading
-		} = this.props;
+		const { option, survey, userEvents, topList, loading } = this.props;
 
-		let data: any = [];
+		let data: any = null;
 
 		switch (this.props.option) {
 			case 'survey':
-				data = [...survey];
+				data = survey ? [...survey] : survey;
 				break;
 			case 'event':
-				data = [...userEvents];
+				data = userEvents ? [...userEvents] : userEvents;
 				break;
 			case 'top':
-				data = [...topList];
+				data = topList ? [...topList] : topList;
 				break;
 		}
 
@@ -92,7 +86,7 @@ class ChooseExtraOption extends React.Component<IProps> {
 			);
 		}
 		const create = () => this.setState({ create: false });
-
+		console.log(data);
 		return (
 			<div className={'post-constructor-modal'}>
 				<div className="postconstr-wrp postconstr-wrp--option">
@@ -108,7 +102,7 @@ class ChooseExtraOption extends React.Component<IProps> {
 						</div>
 
 						<div className={'recent-created'}>
-							{data.length !== 0 ? (
+							{data ? (
 								data.map((item, i) => (
 									<p
 										key={item.id}
