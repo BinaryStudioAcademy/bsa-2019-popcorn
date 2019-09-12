@@ -3,9 +3,10 @@ export default interface IComment {
 	user: {
 		name: string;
 		avatar: string;
-		id: string
+		id: string;
 	};
 	commentDate: string;
 	text: string;
 	parentId?: string;
+	createdAt: string;
 }

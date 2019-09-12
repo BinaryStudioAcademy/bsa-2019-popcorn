@@ -19,6 +19,7 @@ import { SeedMovieRate1567392463875 } from "./1567392463875-SeedMovieRate";
 import { SeedMovieList1567632579430 } from "./1567632579430-SeedMovieList";
 import { Fix1568132364606 } from "./1568132364606-Fix";
 import { VotingReactions1568133381781 } from "./1568133381781-VotingReactions";
+import { AddCommentDate1568293218945 } from "./1568293218945-AddCommentDate";
 
 export default [
   SeedUsers1565158741121,
@@ -41,7 +42,8 @@ export default [
   SeedMovieRate1567392463875,
   SeedMovieList1567632579430,
   Fix1568132364606,
-  VotingReactions1568133381781
+  VotingReactions1568133381781,
+  AddCommentDate1568293218945
 ];
 //to create new migration run in this folder: typeorm migration:create -n <name>
 // then import this migration hear and export in array below

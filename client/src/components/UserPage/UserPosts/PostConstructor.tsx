@@ -350,7 +350,7 @@ class PostConstructor extends React.Component<
 									onSelectMovie={movie =>
 										this.addMovieCaption(movie, movieSearchTitle)
 									}
-									elasticProperties={['id', 'title']}
+									elasticProperties={['id', 'title', 'release_date']}
 								/>
 							</div>
 						)}
