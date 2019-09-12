@@ -116,7 +116,7 @@ class Post extends Component<IPostProps, IPostState> {
 		const res = arr.map(str =>
 			str.replace(
 				/(.+)\{(.+)\}/,
-				'<Link className={"movie-link"} to={"/movies/$1"}>$2</Link>'
+				'<Link className={"movie-link-post"} to={"/movies/$1"}>$2</Link>'
 			)
 		);
 		return <JsxParser components={{ Link }} jsx={`<p>${res.join('')}</p>`} />;
