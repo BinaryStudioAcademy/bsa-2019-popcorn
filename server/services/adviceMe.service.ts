@@ -17,7 +17,6 @@ const movieFromList = (movies: any[], list: any[]): boolean => {
   return list.some(
     movieItem =>
       movies.filter(movie => {
-        console.log(movieItem.id);
         return movie.id === movieItem.id;
       }).length !== 0
   );
@@ -32,10 +31,10 @@ export const getAdviceMeList = async (userId: string, next) => {
     MovieRateRepository
   ).getRatesByMoviesId(moviesId);
   adviceMovies = adviceMovies.map(advice => {
-    const rateInfo = averageRates.find(rate => rate.movieId === advice.id);
+    const rateInfo = averageRates.find(rate => rate.movieid === advice.id);
     advice.rateInfo = rateInfo || {
       average: "0",
-      movieId: advice.id,
+      movieid: advice.id,
       count: "0"
     };
     return advice;
@@ -62,7 +61,6 @@ export const getAdviceMovie = async (userId: string, next) => {
     return elem2.movie.vote_average - elem1.movie.vote_average;
   });
 
-  console.log(list);
   return getAdviceByList(list);
 };
 
