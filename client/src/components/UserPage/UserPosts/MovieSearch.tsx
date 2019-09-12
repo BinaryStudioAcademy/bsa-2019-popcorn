@@ -68,7 +68,7 @@ const MovieSearch: React.FC<IProps> = ({
 				onClick={() => onClickMovieItem(item.id, item.title, item.release_date)}
 			>
 				{' '}
-				{item.title}
+				{item.title} {item.release_date ? item.release_date.slice(0, 4) : ''}
 			</div>
 		));
 	};
