@@ -138,11 +138,11 @@ class DiscussionComponent extends Component<
 	}
 
 	render() {
-		const messages = this.state.messagesState;
+		const messages = [...this.state.messagesState].sort((a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime());
 
 		return (
 			<div className="user-discussion-component" id="scroller">
-				<ScrollToBottom className="message-container" ref={this.discussionComponent}>
+				<ScrollToBottom className="message-container" ref={this.discussionComponent} followButtonClassName="to-bottom">
 					{messages.map(message => {
 						const isMyMessage = message.user.id === this.props.currentUser.id;
 						return (

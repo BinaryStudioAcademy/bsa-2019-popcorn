@@ -50,7 +50,20 @@ a:focus {
 	.message-container {
 		padding-right: 5px;
 		height: 500px;
-		padding: 20px 10px 0px 10px;
+		padding: 0;
+	}
+
+	.to-bottom {
+		background-color: transparent;
+		margin-bottom: 10px;
+		border-radius: 0;
+		border: solid $orange;
+		border-width: 0 3px 3px 0;
+		transform: rotate(45deg);
+		-webkit-transform: rotate(45deg);
+		&:hover {
+			background-color: transparent;
+		}
 	}
 
 	.message-container::-webkit-scrollbar {
@@ -62,7 +75,7 @@ a:focus {
 		border-radius: 10px;
 	}
 	.message-item-reverse {
-		padding-right: 20px;
+		margin-right: 25px;
 		flex-direction: row-reverse;
 		margin-bottom: -10px;
 		align-self: flex-end;
@@ -85,8 +98,12 @@ a:focus {
 		align-items: center;
 		text-align: left;
 		margin-bottom: 15px;
-		width: 90%;
+		margin-left: 25px;
+		width: 80%;
 		border-radius: 4px;
+		&:first-of-type {
+			margin-top: 20px;
+		}
 		img {
 			border: 1px solid $border-color;
 			align-self: flex-start;
