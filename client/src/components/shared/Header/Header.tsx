@@ -50,12 +50,15 @@ interface IProps {
 	firebase?: any;
 	firebaseToken: string | null | undefined;
 	getFirebaseToken: (firebase: any) => void;
+	chats: any;
+	fetchChats: (userId: string) => void;
 	history: any;
 	fetchAdvice: (userId: string) => any;
 }
 
 class Header extends React.Component<IProps> {
 	componentDidMount() {
+		this.props.fetchChats(this.props.userInfo.id);
 		if (this.props.firebaseToken === undefined) {
 			getFirebaseToken(this.props.firebase);
 		}
@@ -143,7 +146,8 @@ const actions = {
 	setNotificationIsRead,
 	getFirebaseToken,
 	deleteFirebaseToken,
-	fetchAdvice
+	fetchAdvice,
+	fetchChats
 };
 
 const mapDispatchToProps = dispatch => bindActionCreators(actions, dispatch);
