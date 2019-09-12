@@ -1,7 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { IVisitor } from '../../UserPage/UserEvents/UserEvents.service';
 import config from '../../../config';
 import Image from '../../shared/Image/Image';
+import { NavLink, Redirect } from 'react-router-dom';
+
 interface IProps {
 	participants: IVisitor[];
 	status: string;
@@ -26,16 +28,18 @@ const ParticipantList: React.FC<IProps> = ({ participants, status }) => {
 	return (
 		<div className="participant-list">
 			{sortedParticipantsByStatus.map(participant => (
-				<div key={participant.id}>
-					<div className="participant-avatar">
-						<Image
-							src={participant.user.avatar}
-							defaultSrc={config.DEFAULT_AVATAR}
-							alt={participant.user.name}
-						/>
+				<NavLink to={'/user-page/' + participant.user.id}>
+					<div key={participant.id}>
+						<div className="participant-avatar">
+							<Image
+								src={participant.user.avatar}
+								defaultSrc={config.DEFAULT_AVATAR}
+								alt={participant.user.name}
+							/>
+						</div>
+						<div className="participant-name">{participant.user.name}</div>
 					</div>
-					<div className="participant-name">{participant.user.name}</div>
-				</div>
+				</NavLink>
 			))}
 		</div>
 	);
