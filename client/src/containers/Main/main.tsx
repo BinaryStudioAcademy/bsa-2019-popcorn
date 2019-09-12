@@ -105,7 +105,9 @@ const EventListRender = props => <EventList {...props} />;
 
 class Main extends React.Component<IProps> {
 	componentDidMount() {
-		this.props.fetchChats(this.props.userInfo.id);
+		if (this.props.userInfo) {
+			this.props.fetchChats(this.props.userInfo.id);
+		}
 	}
 
 	render() {
