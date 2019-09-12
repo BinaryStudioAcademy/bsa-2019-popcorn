@@ -18,8 +18,8 @@ class SurveyPage extends React.Component<ISurveyPageProps> {
 	}
 
 	render() {
-		const { loading = true, survey, profileInfo } = this.props;
-
+		const { loading = true, survey } = this.props;
+		
 		return (
 			<>
 				{loading ? (
@@ -27,15 +27,7 @@ class SurveyPage extends React.Component<ISurveyPageProps> {
 				) : (
 					<div>
 						<Survey
-							surveyInfo={{
-								...survey,
-								user_id: profileInfo.id,
-								user: {
-									name: profileInfo.name,
-									image_link: profileInfo.avatar,
-									id: profileInfo.id
-								}
-							}}
+							surveyInfo={survey}
 							isPreview={false}
 						/>
 					</div>

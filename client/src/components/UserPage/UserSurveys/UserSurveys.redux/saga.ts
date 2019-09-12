@@ -125,15 +125,15 @@ function* getSurveyById(action) {
 			method: 'GET',
 			endpoint: '/api/surveys/' + action.payload.id
 		});
-
+		
 		const surveys = [data];
 
 		if (data) {
 			setArrangementInSurveys(surveys);
 		}
-
+		
 		const formattedData = transformDataToProps(surveys);
-
+		
 		if (data)
 			yield put({
 				type: SET_SURVEY_BYID,

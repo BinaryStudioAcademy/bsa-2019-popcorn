@@ -94,6 +94,7 @@ class SurveysRepository extends Repository<Surveys> {
           ]
         }
       );
+      
       if (!surveys) {
         return { status: 404, message: "Surveys is not found" };
       }
@@ -116,7 +117,7 @@ class SurveysRepository extends Repository<Surveys> {
       if (!user) {
         return next({ status: 404, message: "User is not found" }, null);
       }
-
+      
       return await this.find({
         where: { user },
         order: {
