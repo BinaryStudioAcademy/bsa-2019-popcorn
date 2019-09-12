@@ -9,7 +9,7 @@ export class MovieRate {
   @Column()
   userId: string;
 
-  @ManyToOne(type => User, user => user.id)
+  @ManyToOne(type => User, user => user.id, { onDelete: "CASCADE" })
   user: User;
 
   @Column()

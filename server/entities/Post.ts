@@ -36,7 +36,7 @@ export class Post {
   @Column({ nullable: true })
   extraLink: string;
 
-  @ManyToOne(type => User, user => user.id)
+  @ManyToOne(type => User, user => user.id, { onDelete: "CASCADE" })
   user: User;
 
   @Column()
