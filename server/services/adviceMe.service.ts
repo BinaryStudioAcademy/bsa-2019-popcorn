@@ -8,6 +8,7 @@ import { getCustomRepository } from "typeorm";
 import UserRepository from "../repository/user.repository";
 import { getWatched } from "./watch.service";
 import { getMovieVideoLinkById } from "../repository/movie.repository";
+import MovieRateRepository from "../repository/movieRate.repository";
 
 const minimalRating = "5";
 const amount = 3;
@@ -25,11 +26,16 @@ const movieFromList = (movies: any[], list: any[]): boolean => {
 export const getAdviceMeList = async (userId: string, next) => {
   const movies = await getAdviceMovie(userId, next);
 
-  let adviceMovies = await addVideoLinkToMovies(movies);
-
-  // while(movieFromList(adviceMovies, movies)){
-  //   adviceMovies = await addVideoLinkToMovies(movies);
-  // }
+  let adviceMovies: any[] = await addVideoLinkToMovies(movies);
+  const moviesId = adviceMovies.map(adviceItem => adviceItem.id);
+  const averageRates: any[] = await getCustomRepository(
+    MovieRateRepository
+  ).getRatesByMoviesId(moviesId);
+  adviceMovies = adviceMovies.map(advice => {
+    const rateInfo = averageRates.find(rate => rate.movieid == advice.id);
+    advice.rateInfo = rateInfo;
+    return advice;
+  });
 
   return adviceMovies;
 };
