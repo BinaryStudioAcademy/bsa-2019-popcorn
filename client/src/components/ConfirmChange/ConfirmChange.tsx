@@ -12,7 +12,6 @@ class ConfirmChange extends React.Component<IConfirmChangesProps> {
 		this.props.confirm(token);
 	}
 	render() {
-		console.log(this.props.success);
 		return this.props.success ? (
 			<Redirect to="/login" />
 		) : (
