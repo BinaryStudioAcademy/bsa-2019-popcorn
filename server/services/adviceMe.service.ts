@@ -6,7 +6,7 @@ import { getRandomFromArray, getRandomNumber } from "../helpers/random.helper";
 import { User } from "../models/UserModel";
 import { getCustomRepository } from "typeorm";
 import UserRepository from "../repository/user.repository";
-import { getWatched } from "./watch.service";
+import { getAllUserWatch, getWatched } from "./watch.service";
 import { getMovieVideoLinkById } from "../repository/movie.repository";
 import MovieRateRepository from "../repository/movieRate.repository";
 
@@ -32,8 +32,12 @@ export const getAdviceMeList = async (userId: string, next) => {
     MovieRateRepository
   ).getRatesByMoviesId(moviesId);
   adviceMovies = adviceMovies.map(advice => {
-    const rateInfo = averageRates.find(rate => rate.movieid == advice.id);
-    advice.rateInfo = rateInfo;
+    const rateInfo = averageRates.find(rate => rate.movieId === advice.id);
+    advice.rateInfo = rateInfo || {
+      average: "0",
+      movieId: advice.id,
+      count: "0"
+    };
     return advice;
   });
 
@@ -54,13 +58,34 @@ export const getAdviceMovie = async (userId: string, next) => {
   if (user && user.id !== userId) {
     return getRandomMovie(amount);
   }
-  const list = (await getWatched(user.id, next)).sort((elem1, elem2) => {
+  const list = (await getAllUserWatch(user.id, next)).sort((elem1, elem2) => {
     return elem2.movie.vote_average - elem1.movie.vote_average;
   });
 
-  return list.length >= 3
-    ? await getMoviesFromList(list, minimalRating, amount)
-    : await getRandomMovie(amount);
+  console.log(list);
+  return getAdviceByList(list);
+};
+
+export const getAdviceByList = async (list: any[]) => {
+  const set = new Set();
+  list.forEach(elem => set.add(elem.id));
+
+  const inList = () => {
+    return movies.some(movie => {
+      console.log(movie.id, set.has(movie.id), set);
+      return set.has(movie.id);
+    });
+  };
+
+  let movies;
+  do {
+    movies =
+      list.length >= 3
+        ? await getMoviesFromList(list, minimalRating, amount)
+        : await getRandomMovie(amount);
+  } while (inList());
+
+  return movies;
 };
 
 const getRandomMovie = async amountOfMovie => {
