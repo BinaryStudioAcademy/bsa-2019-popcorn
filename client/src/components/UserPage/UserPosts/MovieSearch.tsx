@@ -25,6 +25,7 @@ interface IProps {
 interface IMovieTitle {
 	id: string;
 	title: string;
+	release_date: string;
 }
 
 let timerId;
@@ -64,7 +65,7 @@ const MovieSearch: React.FC<IProps> = ({
 			<div
 				key={item.id}
 				className="movie-search-label"
-				onClick={() => onClickMovieItem(item.id, item.title)}
+				onClick={() => onClickMovieItem(item.id, item.title, item.release_date)}
 			>
 				{' '}
 				{item.title}
@@ -72,8 +73,8 @@ const MovieSearch: React.FC<IProps> = ({
 		));
 	};
 
-	const onClickMovieItem = (movieId, title) => {
-		onSelectMovie({ id: movieId, title });
+	const onClickMovieItem = (movieId, title, release) => {
+		onSelectMovie({ id: movieId, title, date: release });
 	};
 	if (inputData.length === 0 && searchData) {
 		actionDeleteSearchData();

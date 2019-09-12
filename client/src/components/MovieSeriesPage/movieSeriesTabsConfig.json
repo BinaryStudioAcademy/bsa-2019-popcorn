@@ -1,26 +1,22 @@
 [
-    {
-        "link": "",
-        "label": "Basic"
-    },
-    {
-        "link": "/cast-crew",
-        "label": "Cast/Crew"
-    },
-    {
-        "link": "/reviews",
-        "label": "Reviews"
-    },
-    {
-        "link": "/posts",
-        "label": "Posts"
-    },
-    {
-        "link": "/awards",
-        "label": "Awards"
-    },
-    {
-        "link": "/statistics",
-        "label": "Statistics"
-    }
+	{
+		"link": "",
+		"label": "Basic"
+	},
+	{
+		"link": "/cast-crew",
+		"label": "Cast/Crew"
+	},
+	{
+		"link": "/reviews",
+		"label": "Reviews"
+	},
+	{
+		"link": "/posts",
+		"label": "Posts"
+	},
+	{
+		"link": "/awards",
+		"label": "Awards"
+	}
 ]

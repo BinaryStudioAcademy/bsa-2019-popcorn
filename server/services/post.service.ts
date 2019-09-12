@@ -41,7 +41,7 @@ const getExtra = async (post: any) => {
 const getMovieInTop = async (topId: string) => {
   const top = await topService.getTopById(topId);
   return top.movieInTop;
-}
+};
 
 export const createPost = async (post: any): Promise<Post> => {
   post = await getExtra(post);
@@ -59,7 +59,10 @@ export const createPost = async (post: any): Promise<Post> => {
   return createdPost;
 };
 
-export const getPosts = async (movieId: string = null, userId: string = null): Promise<any[]> => {
+export const getPosts = async (
+  movieId: string = null,
+  userId: string = null
+): Promise<any[]> => {
   const options: FindManyOptions = {
     relations: ["user", "top", "survey", "event"],
     where: {},

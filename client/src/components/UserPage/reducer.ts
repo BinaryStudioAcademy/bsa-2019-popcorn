@@ -14,9 +14,10 @@ import {
 	RESTORE_ERROR,
 	RESTORE_OK,
 	SET_LOGIN_ERROR,
-	SET_REGISTER_ERROR
+	SET_REGISTER_ERROR,
+	FETCH_REGISTRATION
 } from '../authorization/actionTypes';
-
+import { CHANGES_SUCCESS } from '../ConfirmChange/actionTypes';
 import { fetchUser } from '../../redux/routines';
 import {
 	ADD_NEW_REACTION,
@@ -36,7 +37,8 @@ const initialState = {
 	error: null,
 	selectedProfileInfo: null,
 	croppedSaved: false,
-	userAvatar: ''
+	userAvatar: '',
+	changesSuccess: false
 };
 
 const ok_message = 'Check your email';
@@ -62,6 +64,12 @@ export default function(state = initialState, action) {
 			return {
 				...state,
 				uploadUrl: action.payload.uploadUrl
+			};
+		}
+		case CHANGES_SUCCESS: {
+			return {
+				...state,
+				changesSuccess: true
 			};
 		}
 		case SAVE_CROPPED:
@@ -175,6 +183,12 @@ export default function(state = initialState, action) {
 				...state,
 				userPosts: [...postsForNewReact]
 			};
+		case FETCH_REGISTRATION:
+			return {
+				...state,
+				registerError: null
+			};
+
 		default:
 			return state;
 	}

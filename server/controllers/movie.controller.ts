@@ -2,7 +2,7 @@ import { NextFunction, Request, Response, Router } from "express";
 import * as movieService from "../services/movie.service";
 import { Movie } from "../models/MovieModel";
 import errorHandlerMiddleware from "../middlewares/error-handler.middleware";
-import { getAdviceMovie } from "../services/adviceMe.service";
+import { getAdviceMeList } from "../services/adviceMe.service";
 import * as postService from "../services/post.service";
 
 const router = Router();
@@ -35,15 +35,6 @@ router
       .getMovieById(req.params.id)
       .then((movie: Movie) => res.send(movie))
       .catch(next)
-  )
-  .get(
-    "/:movieId/statistics",
-    (req: any, res: Response, next: NextFunction) => {
-      return movieService
-        .getMovieStatistics(req.params.movieId)
-        .then((response: any) => res.send(response))
-        .catch(next);
-    }
   )
   .get("/:movieId/posts", (req: any, res: Response, next: NextFunction) => {
     return postService
@@ -124,7 +115,7 @@ router
       .catch(next);
   })
   .get("/adviceMe/:userId", (req: any, res: Response, next: NextFunction) => {
-    getAdviceMovie(req.params.userId, next)
+    getAdviceMeList(req.params.userId, next)
       .then(movies => res.send(movies))
       .catch(next);
   });

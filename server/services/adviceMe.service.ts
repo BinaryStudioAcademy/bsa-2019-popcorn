@@ -7,9 +7,47 @@ import { User } from "../models/UserModel";
 import { getCustomRepository } from "typeorm";
 import UserRepository from "../repository/user.repository";
 import { getWatched } from "./watch.service";
+import { getMovieVideoLinkById } from "../repository/movie.repository";
+import MovieRateRepository from "../repository/movieRate.repository";
 
-const minimalRating = "6";
+const minimalRating = "5";
 const amount = 3;
+
+const movieFromList = (movies: any[], list: any[]): boolean => {
+  return list.some(
+    movieItem =>
+      movies.filter(movie => {
+        console.log(movieItem.id);
+        return movie.id === movieItem.id;
+      }).length !== 0
+  );
+};
+
+export const getAdviceMeList = async (userId: string, next) => {
+  const movies = await getAdviceMovie(userId, next);
+
+  let adviceMovies: any[] = await addVideoLinkToMovies(movies);
+  const moviesId = adviceMovies.map(adviceItem => adviceItem.id);
+  const averageRates: any[] = await getCustomRepository(
+    MovieRateRepository
+  ).getRatesByMoviesId(moviesId);
+  adviceMovies = adviceMovies.map(advice => {
+    const rateInfo = averageRates.find(rate => rate.movieid == advice.id);
+    advice.rateInfo = rateInfo;
+    return advice;
+  });
+
+  return adviceMovies;
+};
+
+const addVideoLinkToMovies = async (movies: any) =>
+  Promise.all(
+    movies.map(async movie => {
+      const video_link = await getMovieVideoLinkById(movie.id);
+      movie.video_link = video_link;
+      return movie;
+    })
+  );
 
 export const getAdviceMovie = async (userId: string, next) => {
   const user: User = await getCustomRepository(UserRepository).findOne(userId);
@@ -20,9 +58,8 @@ export const getAdviceMovie = async (userId: string, next) => {
     return elem2.movie.vote_average - elem1.movie.vote_average;
   });
 
-  console.log(list.length);
   return list.length >= 3
-    ? await getMoviesFromList(list, minimalRating)
+    ? await getMoviesFromList(list, minimalRating, amount)
     : await getRandomMovie(amount);
 };
 
@@ -34,21 +71,33 @@ const getRandomMovie = async amountOfMovie => {
   return getRandomFromArray(movies, amountOfMovie);
 };
 
-const getMoviesFromList = async (list: any[], rating: string) => {
+const getMoviesFromList = async (
+  list: any[],
+  rating: string,
+  amountOfMovie: number
+) => {
+  console.log(list);
   return await Promise.all(
-    list.splice(0, amount).map(async movie => await movieByGenre(movie, rating))
+    list[getRandomNumber(0, list.length / 2 - 1)].map(
+      async movie => await movieByGenre(movie, rating, amountOfMovie)
+    )
   );
 };
 
-const movieByGenre = async (list: any, rating: string) => {
+const movieByGenre = async (
+  list: any,
+  rating: string,
+  amountOfMovie: number
+) => {
   let genres = "";
   if (list.movie.genres) {
-    genres = JSON.parse(list.movie.genres)[0].name;
+    const parsed = JSON.parse(list.movie.genres);
+    genres = parsed ? parsed[0].name : "";
   }
 
   const movies = (
     (await getByGTRatingAndGenre(rating, genres)) || []
   ).hits.hits.map(movie => movie._source);
 
-  return movies[getRandomNumber(0, movies.length - 1)];
+  getRandomFromArray(movies, amountOfMovie);
 };

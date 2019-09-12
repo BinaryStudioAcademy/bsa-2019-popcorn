@@ -44,6 +44,12 @@ export const getMovieAwards = async (imdbId: any): Promise<any> => {
   return awardList.data.movies[0].awards;
 };
 
+export const getMovieTitleById = async (movieId: string): Promise<any> => {
+  const data = await elasticRepository.getById(movieId);
+  const movie = data.hits.hits[0]._source;
+  return { id: movie.id, title: movie.title };
+};
+
 export const getMovieById = async (movieId: string): Promise<any> => {
   const data = await elasticRepository.getById(movieId);
   const movie = data.hits.hits[0]._source;

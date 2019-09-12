@@ -61,7 +61,7 @@ class PostStoryEditor extends React.Component<
 > {
 	private textarea = React.createRef<HTMLTextAreaElement>();
 	private cropper = React.createRef<Cropper>();
-	
+
 	constructor(props: IPostStoryEditorProps) {
 		super(props);
 		this.state = {
@@ -106,17 +106,21 @@ class PostStoryEditor extends React.Component<
 	onSave() {
 		this.props.saveAfterCrop();
 		if (this.cropper.current) {
-			this.cropper.current.getCroppedCanvas().toBlob(blob => {
-				const data = new FormData();
-				data.append('file', blob);
-				uploadFile(data)
-					.then(({ imageUrl }) => {
-						this.imageStateHandler(imageUrl);
-					})
-					.catch(error => {
-						this.setState({ isUploading: false, errorMsg: error.message });
-					});
-			});
+			this.cropper.current.getCroppedCanvas().toBlob(
+				blob => {
+					const data = new FormData();
+					data.append('file', blob);
+					uploadFile(data)
+						.then(({ imageUrl }) => {
+							this.imageStateHandler(imageUrl);
+						})
+						.catch(error => {
+							this.setState({ isUploading: false, errorMsg: error.message });
+						});
+				},
+				'image/jpeg',
+				0.85
+			);
 		}
 	}
 
@@ -177,7 +181,8 @@ class PostStoryEditor extends React.Component<
 				>
 					{this.props.newStory.image_url && (
 						<div>
-							{this.props.newStory.image_url.includes('tmdb.org') && this.onSave()}
+							{this.props.newStory.image_url.includes('tmdb.org') &&
+								this.onSave()}
 							{!this.props.photoSaved && (
 								<Cropper
 									className="cropper"

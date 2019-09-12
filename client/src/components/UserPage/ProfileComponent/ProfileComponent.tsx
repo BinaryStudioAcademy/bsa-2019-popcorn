@@ -215,7 +215,6 @@ class ProfileComponent extends Component<ProfileProps, IProfileComponentState> {
 							<img
 								className="profile-avatar"
 								src={avatar || config.DEFAULT_AVATAR}
-								style={{ width: '100%', height: '100%' }}
 								alt=""
 							/>
 							{isOwnData && (

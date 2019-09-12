@@ -28,11 +28,13 @@ export const deleteVotingOptionById = async (id: string, next): Promise<{}> => {
 };
 
 export const setVotingReaction = async (
-  optionId: string,
-  { userId, isChosen },
+  votingId: string,
+  { userId, optionId },
   next
-): Promise<{}> => {
-  return await getCustomRepository(
+): Promise<any> => {
+  const voting = await getCustomRepository(
     VotingOptionReactionRepository
-  ).setVotingReaction(optionId, userId, isChosen, next);
+  ).setVotingReaction(votingId, userId, optionId, next);
+  voting.options = await getVotingOptionByVotingId(votingId);
+  return voting;
 };

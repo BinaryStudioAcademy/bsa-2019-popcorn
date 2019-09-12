@@ -16,24 +16,28 @@
 			position: relative;
 			.review-item-header-profile {
 				display: flex;
-				.profile-avatar {
-					font-size: 0;
-					img {
-						width: 30px;
-						height: 30px;
-						border-radius: 50%;
-					}
-				}
-
-				.profile-name-wrapper {
-					margin-left: 10px;
+				.user-link {
 					display: flex;
-					flex-direction: column;
+					.profile-avatar {
+						font-size: 0;
+						img {
+							width: 30px;
+							height: 30px;
+							border-radius: 50%;
+						}
+					}
 
-					.profile-name {
-						font-weight: 600;
-						font-size: 1.3em;
-						margin-bottom: 3px;
+					.profile-name-wrapper {
+						margin-left: 10px;
+						display: flex;
+						flex-direction: column;
+
+						.profile-name {
+							font-weight: 600;
+							font-size: 1.3em;
+							margin-bottom: 3px;
+							color: $text-base-color;
+						}
 					}
 				}
 				.to-movie-page-link {

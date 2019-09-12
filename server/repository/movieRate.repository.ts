@@ -22,6 +22,16 @@ class MovieRateRepository extends Repository<MovieRate> {
       .orderBy("rate", "ASC")
       .getRawMany();
   }
+  async getRatesByMoviesId(moviesId: string[]): Promise<MovieRate[]> {
+    return await getCustomRepository(MovieRateRepository)
+      .createQueryBuilder("movieRate")
+      .select("TRUNC(AVG(movieRate.rate),2)", "average")
+      .addSelect("movieRate.movieId as movieId")
+      .addSelect("COUNT(movieRate.movieId)", "count")
+      .where("movieRate.movieId IN(:...moviesId)", { moviesId })
+      .groupBy("movieRate.movieId")
+      .getRawMany();
+  }
   async getAverageStatisticsByMovieId(movieId: string): Promise<MovieRate[]> {
     return await getCustomRepository(MovieRateRepository)
       .createQueryBuilder("movieRate")

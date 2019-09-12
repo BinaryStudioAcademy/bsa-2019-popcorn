@@ -11,7 +11,6 @@ interface IProps {
 	updateEmail: (userId: string, email: string) => void;
 	updatePassword: (userId: string, password: string) => void;
 	deleteUser: (userId: string) => void;
-	loading: boolean;
 }
 
 interface IState {
@@ -27,6 +26,8 @@ interface IState {
 	PasswordNewPassword: string;
 	PasswordNewPasswordFocus: boolean;
 	PasswordNewPasswordError: string;
+	EmailConfirmMessage: string;
+	PasswordConfirmMessage: string;
 }
 
 interface IErrorPasswordMessage {
@@ -53,7 +54,9 @@ class AccountPreferences extends React.Component<IProps, IState> {
 			PasswordCurrPasswordError: '',
 			PasswordNewPassword: '',
 			PasswordNewPasswordFocus: false,
-			PasswordNewPasswordError: ''
+			PasswordNewPasswordError: '',
+			EmailConfirmMessage: '',
+			PasswordConfirmMessage: ''
 		};
 
 		this.errorPasswordMessage = {
@@ -61,6 +64,7 @@ class AccountPreferences extends React.Component<IProps, IState> {
 			length: 'Password must be at least 6 characters',
 			correct: 'Password is incorrect'
 		};
+		this.updateEmail = this.updateEmail.bind(this);
 	}
 
 	validateEmail = (email: string) => {
@@ -100,6 +104,12 @@ class AccountPreferences extends React.Component<IProps, IState> {
 
 		const { updateEmail } = this.props;
 		updateEmail(userId, EmailnewEmail);
+		this.setState({
+			...this.state,
+			EmailnewEmail: '',
+			EmailCurrPassword: '',
+			EmailConfirmMessage: 'Confirmation letter was sent to your new email!!!'
+		});
 	}
 
 	updatePassword(ev) {
@@ -121,6 +131,12 @@ class AccountPreferences extends React.Component<IProps, IState> {
 
 		const { updatePassword } = this.props;
 		updatePassword(userId, PasswordNewPassword);
+		this.setState({
+			...this.state,
+			PasswordNewPassword: '',
+			PasswordCurrPassword: '',
+			PasswordConfirmMessage: 'Confirmation letter was sent to your email!!!'
+		});
 	}
 
 	deleteAccount(ev) {
@@ -130,7 +146,6 @@ class AccountPreferences extends React.Component<IProps, IState> {
 	}
 
 	render() {
-		const { loading } = this.props;
 		const { email } = this.props.profileInfo;
 		const {
 			EmailnewEmailError,
@@ -138,9 +153,7 @@ class AccountPreferences extends React.Component<IProps, IState> {
 			PasswordCurrPasswordError,
 			PasswordNewPasswordError
 		} = this.state;
-		return loading ? (
-			<Spinner />
-		) : (
+		return (
 			<div className={'survey settings'}>
 				<form className={'settings-form'}>
 					<div className={'question-container settings-container'}>
@@ -207,6 +220,11 @@ class AccountPreferences extends React.Component<IProps, IState> {
 						</div>
 						{EmailCurrPasswordError && (
 							<p className={'error-message'}>{EmailCurrPasswordError}</p>
+						)}
+						{this.state.EmailConfirmMessage && (
+							<p className={`confirm-message`}>
+								{this.state.EmailConfirmMessage}
+							</p>
 						)}
 						<div className="settings-btn-wrapper">
 							<button
@@ -278,6 +296,11 @@ class AccountPreferences extends React.Component<IProps, IState> {
 						{PasswordNewPasswordError && (
 							<p className={'error-message'}>{PasswordNewPasswordError}</p>
 						)}
+						{this.state.PasswordConfirmMessage && (
+							<p className={`confirm-message`}>
+								{this.state.PasswordConfirmMessage}
+							</p>
+						)}
 						<div className="settings-btn-wrapper">
 							<button
 								className="settings-btn"
@@ -311,8 +334,7 @@ class AccountPreferences extends React.Component<IProps, IState> {
 
 const mapStateToProps = (rootState, props) => ({
 	...props,
-	profileInfo: rootState.profile.profileInfo,
-	loading: rootState.profile.loading
+	profileInfo: rootState.profile.profileInfo
 });
 const actions = {
 	updateEmail,

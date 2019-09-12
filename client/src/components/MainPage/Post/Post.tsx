@@ -19,6 +19,7 @@ import Image from '../../shared/Image/Image';
 import Extra from './../../UserPage/UserPosts/PostExtra/extra';
 import JsxParser from 'react-jsx-parser';
 import Moment from 'react-moment';
+import moment from 'moment';
 
 type IPostProps = {
 	post: IPost;
@@ -39,6 +40,7 @@ interface IReactItem {
 interface IPostState {
 	isModalShown: boolean;
 	hover: boolean;
+	showingAllComments: boolean;
 }
 
 class Post extends Component<IPostProps, IPostState> {
@@ -46,7 +48,8 @@ class Post extends Component<IPostProps, IPostState> {
 		super(props);
 		this.state = {
 			isModalShown: false,
-			hover: false
+			hover: false,
+			showingAllComments: false
 		};
 	}
 
@@ -100,11 +103,9 @@ class Post extends Component<IPostProps, IPostState> {
 		const post = this.props.post;
 		if (post.survey) {
 			return 'survey';
-		}
-		else if (post.top) {
+		} else if (post.top) {
 			return 'top';
-		}
-		else if (post.event) {
+		} else if (post.event) {
 			return 'event';
 		}
 		return 'Nothing';
@@ -115,7 +116,7 @@ class Post extends Component<IPostProps, IPostState> {
 		const res = arr.map(str =>
 			str.replace(
 				/(.+)\{(.+)\}/,
-				'<Link className={"movie-link"} to={"/movies/$1"}>$2</Link>'
+				'<Link className={"movie-link-post"} to={"/movies/$1"}>$2</Link>'
 			)
 		);
 		return <JsxParser components={{ Link }} jsx={`<p>${res.join('')}</p>`} />;
@@ -144,18 +145,41 @@ class Post extends Component<IPostProps, IPostState> {
 
 	getReactionText() {
 		const { reactions } = this.props.post;
+		const count = reactions
+			? reactions
+					.map(el => parseInt(el.count.toString()))
+					.reduce((a, b) => a + b, 0)
+			: undefined;
 		return (
 			<div className="post-item-reaction-text">
-				{reactions && reactions.length ?
+				{reactions && reactions.length ? (
 					<span>
-						<strong>{reactions.length} </strong>
+						<strong>{count} </strong>
 						&nbsp;
-					{reactions.length === 1 ? 'reaction' : 'reactions'}
+						{reactions.length === 1 ? 'reaction' : 'reactions'}
 					</span>
-					: <div>React</div>
-				}
-			</div>)
+				) : (
+					<div>Like</div>
+				)}
+			</div>
+		);
 	}
+
+	handleShowMoreComments = () => {
+		this.setState({ showingAllComments: !this.state.showingAllComments });
+	};
+
+	getOutputComments = comments => {
+		if (!comments || comments.length === 0) {
+			return false;
+		}
+
+		if (this.state.showingAllComments) {
+			return comments;
+		} else {
+			return comments.slice(0, 3);
+		}
+	};
 
 	render() {
 		const {
@@ -170,7 +194,7 @@ class Post extends Component<IPostProps, IPostState> {
 			tags
 		} = this.props.post;
 		const createComment = this.props.createComment;
-
+		const outputComments = this.getOutputComments(comments);
 		const reactionsShow = this.state.hover ? (
 			<Reactions
 				onReactionClick={this.onReactionClick}
@@ -193,40 +217,35 @@ class Post extends Component<IPostProps, IPostState> {
 						)}
 						<div className="post-item-info">
 							<div className="post-item-author-name">{user.name}</div>
-							<Moment className="post-date" format=" D MMM HH:mm " local>
-								{String(createdAt)}
-							</Moment>
+							<div className="post-date">{moment(createdAt).fromNow()}</div>
 						</div>
-
 					</Link>
 
-					{this.isOwnPost() && <button className="post-item-settings" onClick={this.toggleModal}>
-						<SettingIcon />
-					</button>}
+					{this.isOwnPost() && (
+						<button className="post-item-settings" onClick={this.toggleModal}>
+							<SettingIcon />
+						</button>
+					)}
 					{this.isModalShown()}
 				</div>
 				{image_url && (
 					<img className="post-item-image" src={image_url} alt="post" />
 				)}
-				{description && (
-					<div className="post-body">{this.parseDescription(description)}</div>
-				)}
-				{content && <PostContent content={content} />}
 				{extraLink && (
-					<NavLink
-						to={`${extraLink}`}
-						style={{ textDecoration: 'none', color: '#122737' }}
-						className="extra-wrapper"
-					>
+					<NavLink to={`${extraLink}`} className="extra-wrapper">
 						<Extra
 							readyPost={true}
-							clearExtra={() => { }}
+							clearExtra={() => {}}
 							link={extraLink}
 							type={this.getType()}
 							data={this.props.post[this.getType()]}
 						/>
 					</NavLink>
 				)}
+				{description && (
+					<div className="post-body">{this.parseDescription(description)}</div>
+				)}
+				{content && <PostContent content={content} />}
 				{reactionsShow}
 				<div className="post-item-action-buttons">
 					<div className="post-item-last-reaction">
@@ -251,11 +270,21 @@ class Post extends Component<IPostProps, IPostState> {
 							/>
 						))}
 				</div>
-				{comments && comments.length ? (
+				{outputComments ? (
 					<div className="comments-wrp">
-						{comments.map(comment => (
+						{outputComments.map(comment => (
 							<Comment key={comment.id} commentItem={comment} />
 						))}
+						{comments && comments.length > 3 && (
+							<div
+								className="more-comments"
+								onClick={this.handleShowMoreComments}
+							>
+								{this.state.showingAllComments
+									? 'Less comments...'
+									: 'More comments...'}
+							</div>
+						)}
 					</div>
 				) : null}
 				{tags && (

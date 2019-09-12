@@ -20,6 +20,7 @@ import { createMessage } from '../../ChatPage/ChatPage.redux/actions';
 import { bindActionCreators } from 'redux';
 import WatchListIcon from '../../shared/WatchListIcon/WatchListIcon';
 import RateMovie from '../../shared/RateMovie/RateMovie';
+import { saveVotingReaction } from '../StoryList/story.redux/actions';
 import Moment from 'react-moment';
 import Image from '../../shared/Image/Image';
 
@@ -72,6 +73,11 @@ interface IProps {
 	closeViewer: () => void;
 	chats: any;
 	createMessage: (userId: string, chatId: string, body: any) => void;
+	saveVotingReaction: (
+		userId: string,
+		votingId: string,
+		optionId: string
+	) => any;
 }
 
 interface IState {
@@ -171,13 +177,20 @@ class StoryViewer extends PureComponent<IProps, IState> {
 								onClick={() => this.setState({ isReactionShown: false })}
 							>
 								<header>
-									<NavLink className="user-link" to={`/user-page/${story.userInfo.userId}`}>
+									<NavLink
+										className="user-link"
+										to={`/user-page/${story.userInfo.userId}`}
+									>
 										<Image
 											src={story.userInfo.image_url}
 											defaultSrc={config.DEFAULT_AVATAR}
-											alt={story.userInfo.name} />
+											alt={story.userInfo.name}
+										/>
 									</NavLink>
-									<NavLink className="user-link" to={`/user-page/${story.userInfo.userId}`}>
+									<NavLink
+										className="user-link"
+										to={`/user-page/${story.userInfo.userId}`}
+									>
 										<span className="username">{story.userInfo.name}</span>
 									</NavLink>
 									<Moment format="D MMM" local>
@@ -188,14 +201,19 @@ class StoryViewer extends PureComponent<IProps, IState> {
 											{story.movieOption}
 										</span>
 									)}
-									<p className="ellipsis" onClick={this.toogleModal}>
-										<FontAwesomeIcon icon={faEllipsisH} />
-									</p>
 								</header>
 
 								{story.type === 'voting' && story.voting && (
 									<div>
 										<StoryVoting
+											saveVotingReaction={optionId => {
+												const id = story.voting ? story.voting.id : '';
+												this.props.saveVotingReaction(
+													this.props.userId,
+													id,
+													optionId
+												);
+											}}
 											backgroundColor={story.backgroundColor}
 											header={story.voting.header}
 											options={story.voting.options}
@@ -260,7 +278,6 @@ class StoryViewer extends PureComponent<IProps, IState> {
 												width: '280px',
 												maxWidth: '350px',
 												maxHeight: '100px',
-												wordBreak: 'break-all',
 												overflowWrap: 'break-word',
 												whiteSpace: 'pre-line'
 											}}
@@ -291,7 +308,10 @@ class StoryViewer extends PureComponent<IProps, IState> {
 													</div>
 												)}
 												<span
-													className="movie-activity-container"
+													className={
+														(story.activity || story.movie) &&
+														'movie-activity-container'
+													}
 												>
 													{story.type && story.activity && (
 														<NavLink
@@ -343,7 +363,8 @@ const mapStateToProps = (rootState, props) => ({
 });
 
 const actions = {
-	createMessage
+	createMessage,
+	saveVotingReaction
 };
 const mapDispatchToProps = dispatch => bindActionCreators(actions, dispatch);
 

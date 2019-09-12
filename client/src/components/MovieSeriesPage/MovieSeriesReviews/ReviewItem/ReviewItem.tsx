@@ -113,23 +113,23 @@ class ReviewItem extends React.Component<IProps, IState> {
 				<div className="review-item">
 					<div className="review-item-header">
 						<div className="review-item-header-profile">
-							<div className="profile-avatar">
-								<Image
-									src={user.avatar}
-									alt={user.name}
-									defaultSrc={config.DEFAULT_AVATAR}
-								/>
-							</div>
-							<div className="profile-name-wrapper">
-								<div className="profile-name">
-									{user.name}
+							<NavLink className="user-link" to={`/user-page/${user.id}`}>
+								<div className="profile-avatar">
+									<Image
+										src={user.avatar}
+										alt={user.name}
+										defaultSrc={config.DEFAULT_AVATAR}
+									/>
 								</div>
-								<div className="profile-review-date">
-									<Moment format=" D MMM HH:mm " local>
-										{String(created_at)}
-									</Moment>
+								<div className="profile-name-wrapper">
+									<div className="profile-name">{user.name}</div>
+									<div className="profile-review-date">
+										<Moment format=" D MMM HH:mm " local>
+											{String(created_at)}
+										</Moment>
+									</div>
 								</div>
-							</div>
+							</NavLink>
 							{isRecommended && movie ? (
 								<NavLink
 									className="to-movie-page-link"

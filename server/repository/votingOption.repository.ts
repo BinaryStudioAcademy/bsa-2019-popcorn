@@ -4,6 +4,8 @@ import { getCustomRepository } from "typeorm";
 import { VotingOption } from "../models/VotingOptionModel";
 import VotingRepository from "./voting.repository";
 import { Voting } from "../models/VotingModel";
+import { VotingOptionReaction } from "../models/VotingOptionReaction";
+import VotingOptionReactionRepository from "./votingOptionReaction";
 
 @EntityRepository(VotingOptionEntity)
 class VotingOptionRepository extends Repository<VotingOption> {
@@ -27,7 +29,16 @@ class VotingOptionRepository extends Repository<VotingOption> {
       if (!voting) {
         return next({ status: 404, message: "Voting is not found" }, null);
       }
-      return await this.find({ voting });
+      const options: VotingOption[] = await this.find({ voting });
+
+      return await Promise.all(
+        options.map(async votingOption => {
+          votingOption.votingOptionReactions = await getCustomRepository(
+            VotingOptionReactionRepository
+          ).find({ votingOption });
+          return votingOption;
+        })
+      );
     } catch (err) {
       return next({ status: err.status, message: err.message }, null);
     }

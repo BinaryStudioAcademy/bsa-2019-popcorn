@@ -33,7 +33,7 @@ export default function(state = initialState, action) {
 			}
 			const post = posts[index];
 			if (!post.comments) post.comments = [comment];
-			else post.comments.push(comment);
+			else post.comments.unshift(comment);
 			return {
 				...state,
 				posts: [...posts]

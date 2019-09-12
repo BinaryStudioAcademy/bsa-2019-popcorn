@@ -5,6 +5,7 @@ import './DiscussionComponent.scss';
 import Moment from 'react-moment';
 import config from '../../../config';
 import { IDiscussionUser } from '../../UserPage/UserEvents/UserEvents.service';
+import { NavLink } from 'react-router-dom';
 export interface IDiscussionMessage {
 	id: string;
 	text: string;
@@ -78,14 +79,16 @@ class DiscussionComponent extends Component<
 	}
 
 	sendMessage = () => {
-		if (!this.newMessage.current) return;
+		if (!this.newMessage.current) {
+			return;
+		}
 		const { currentUser, entityId, entityIdName } = this.props;
 		const id = currentUser.id;
 		const name = currentUser.name;
 		const avatar = currentUser.avatar;
 		const text = this.newMessage.current.value;
 
-		let createdAt = this.getDateString();
+		const createdAt = this.getDateString();
 		const dataMessage = {
 			user: { id, name, avatar },
 			text,
@@ -98,13 +101,15 @@ class DiscussionComponent extends Component<
 		this.setState({
 			inputIsEmpty: true
 		});
-		SocketService.emit('send-message-to-discussion', dataMessage);
-		this.addMessage(dataMessage);
+		if (dataMessage.text.trim()) {
+			SocketService.emit('send-message-to-discussion', dataMessage);
+			this.addMessage(dataMessage);
+		}
 	};
 
 	addMessage = ({ user: { id, name, avatar }, text, createdAt }) => {
 		const isMyMessage = id === this.props.currentUser.id;
-		
+
 		avatar = avatar || config.DEFAULT_AVATAR;
 		let newMessageItem = {
 			id: (Math.random() * (9000 - 1) + 1).toString(),
@@ -145,15 +150,15 @@ class DiscussionComponent extends Component<
 									'message-item-reverse'} `}
 								key={message.id}
 							>
-								<img
-									src={message.user.avatar || config.DEFAULT_AVATAR}
-									alt="userPhoto"
-								/>
+								<NavLink to={'/user-page/' + message.user.id}>
+									<img
+										src={message.user.avatar || config.DEFAULT_AVATAR}
+										alt="userPhoto"
+									/>
+								</NavLink>
 								<div className="message-body">
 									<div className="message-info">
-										<div className="name">
-											{message.user.name}
-										</div>
+										<div className="name">{message.user.name}</div>
 										<div className="date">
 											<Moment format=" D MMM HH:mm " local>
 												{String(message.createdAt)}
@@ -178,7 +183,7 @@ class DiscussionComponent extends Component<
 								onKeyPress={e => {
 									if (e.key === 'Enter') this.sendMessage();
 								}}
-							></textarea>
+							/>
 							<button
 								onClick={this.sendMessage}
 								disabled={this.state.inputIsEmpty}

@@ -37,7 +37,8 @@ import ChatPage from '../../components/ChatPage/ChatPage';
 import UserMovieList from '../../components/UserMovieList/UserMovieList';
 import ResultList from '../../components/shared/ContentSearch/ResultList';
 import Collections from '../../components/Collections/Collections';
-import AdviceMe from '../../components/shared/AdviceMe';
+import AdviceMe from '../../components/shared/AdviceMe/AdviceMe';
+import { fetchChats } from '../../components/ChatPage/ChatPage.redux/actions';
 
 const { notifications } = {
 	notifications: {
@@ -66,6 +67,8 @@ interface IProps {
 	getEventById: (eventId: string) => void;
 	subscibeToEvent: ({ eventId, userId, status }) => void;
 	avatar: string;
+	chats: any;
+	fetchChats: (userId: string) => void;
 }
 
 const MovieListRender = (
@@ -113,13 +116,22 @@ const Main = ({
 	searchedEvent,
 	getEventById,
 	subscibeToEvent,
-	avatar
+	avatar,
+	chats,
+	fetchChats,
+	...props
 }: IProps) => {
 	if (!isAuthorized || !localStorage.getItem('token')) {
 		return <Redirect to="/login" />;
 	}
 
+	if (!chats) {
+		fetchChats(userInfo.id);
+	}
+
 	new SocketService(userInfo.id);
+
+	console.log(props);
 	return (
 		<div className={'main-wrap'}>
 			{isAuthorized ? <Header userInfo={userInfo} /> : null}
@@ -131,10 +143,10 @@ const Main = ({
 				}
 			>
 				{window.location.pathname !== '/advanced-search' ? (
-					<MainPageSidebar notifications={notifications} />
+					<MainPageSidebar chats={chats} notifications={notifications} />
 				) : null}
 				<div
-				// style={{ width: 'calc(100vw - 205px)' }}
+				// style={{ width: 'calc(100vw - 205px)'
 				>
 					<Switch>
 						<Route exact path={[`/`, '/create*']} component={MainPage} />
@@ -205,7 +217,8 @@ const mapStateToProps = (rootState, props) => ({
 	movieList: rootState.movie.movieList,
 	movieSeries: rootState.movie.movieSeries,
 	allEvents: rootState.events.allEvents,
-	searchedEvent: rootState.events.searchedEvent
+	searchedEvent: rootState.events.searchedEvent,
+	chats: rootState.chat.chats
 });
 
 const actions = {
@@ -214,7 +227,8 @@ const actions = {
 	loadMoreMovie,
 	getAllEvents,
 	getEventById,
-	subscibeToEvent
+	subscibeToEvent,
+	fetchChats
 };
 
 const mapDispatchToProps = dispatch => bindActionCreators(actions, dispatch);
