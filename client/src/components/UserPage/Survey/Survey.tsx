@@ -12,6 +12,8 @@ import { bindActionCreators } from 'redux';
 import { postAnswers } from '../UserSurveys/UserSurveys.redux/actions';
 import { transformAnswers } from './Survey.service';
 import Spinner from '../../shared/Spinner';
+import Image from '../../shared/Image/Image';
+import config from '../../../config';
 import { NavLink } from 'react-router-dom';
 
 interface IProps {
@@ -167,6 +169,7 @@ class Survey extends PureComponent<IProps, IState> {
 		const { surveyInfo } = this.props;
 		const {
 			user,
+			user_id,
 			created_at,
 			participants,
 			title,
@@ -174,17 +177,21 @@ class Survey extends PureComponent<IProps, IState> {
 			questions,
 			image
 		} = surveyInfo;
-
+		
 		return (
 			<div className="survey">
 				<div className="survey-background" />
 				<form>
 					<div className="form-header" />
 					<div className="info">
-						<NavLink to={'/user-page/' + user.id}>
-							<img src={user.image_link} alt="" />
+						<NavLink to={'/user-page/' + user_id}>
+							<Image
+								src={user.image_link}
+								defaultSrc={config.DEFAULT_AVATAR}
+								alt="user-avatar"
+							/>
 						</NavLink>
-						<NavLink to={'/user-page/' + user.id}>
+						<NavLink to={'/user-page/' + user_id}>
 							<span style={{ color: '#122737' }}>{user.name}</span>
 						</NavLink>
 						{/* <ReactTimeAgo date={created_at} timeStyle="twitter" locale="ru" /> */}
