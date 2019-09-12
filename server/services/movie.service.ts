@@ -31,7 +31,21 @@ export const getFiltredMovies = async (
 ): Promise<any[]> => {
   let data = await elasticRepository.getFiltred(size, from, filters);
   data = data.hits.hits;
-  return data.map(movie => movie._source);
+  let movies = data.map(movie => movie._source);
+  const moviesId = movies.map(movie => movie.id);
+  const averageRates: any[] = await getCustomRepository(
+    MovieRateRepository
+  ).getRatesByMoviesId(moviesId);
+  movies = movies.map(movie => {
+    const rateInfo = averageRates.find(rate => rate.movieid == movie.id);
+    movie.rateInfo = rateInfo || {
+      average: "0",
+      count: "0",
+      movieid: movie.id
+    };
+    return movie;
+  });
+  return movies;
 };
 
 export const getMoviesGenres = async (): Promise<any[]> => {

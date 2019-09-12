@@ -17,6 +17,7 @@ interface IMovieListProps {
 	twoColumns?: boolean;
 	loadMoreMovie?: (size: number, from: number, filters?: any) => any;
 	filters?: any;
+	setNewRateInfo?: any;
 }
 
 const filter = { from: 50, size: 50 };
@@ -28,7 +29,8 @@ const MovieList: React.FC<IMovieListProps> = ({
 	saveMovie,
 	twoColumns = false,
 	loadMoreMovie,
-	filters
+	filters,
+	setNewRateInfo
 }) => {
 	if (!movies) return <div>Any movie in list</div>;
 	const movieListItems = movies.map(movie => {
@@ -38,6 +40,7 @@ const MovieList: React.FC<IMovieListProps> = ({
 				movie={movie}
 				setMovieSeries={setMovieSeries}
 				saveMovie={saveMovie}
+				setNewRateInfo={setNewRateInfo}
 			/>
 		);
 	});
