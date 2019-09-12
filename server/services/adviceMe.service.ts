@@ -9,13 +9,29 @@ import UserRepository from "../repository/user.repository";
 import { getWatched } from "./watch.service";
 import { getMovieVideoLinkById } from "../repository/movie.repository";
 
-const minimalRating = "6";
+const minimalRating = "5";
 const amount = 3;
+
+const movieFromList = (movies: any[], list: any[]): boolean => {
+  return list.some(
+    movieItem =>
+      movies.filter(movie => {
+        console.log(movieItem.id);
+        return movie.id === movieItem.id;
+      }).length !== 0
+  );
+};
 
 export const getAdviceMeList = async (userId: string, next) => {
   const movies = await getAdviceMovie(userId, next);
 
-  return addVideoLinkToMovies(movies);
+  let adviceMovies = await addVideoLinkToMovies(movies);
+
+  // while(movieFromList(adviceMovies, movies)){
+  //   adviceMovies = await addVideoLinkToMovies(movies);
+  // }
+
+  return adviceMovies;
 };
 
 const addVideoLinkToMovies = async (movies: any) =>
@@ -37,7 +53,7 @@ export const getAdviceMovie = async (userId: string, next) => {
   });
 
   return list.length >= 3
-    ? await getMoviesFromList(list, minimalRating)
+    ? await getMoviesFromList(list, minimalRating, amount)
     : await getRandomMovie(amount);
 };
 
@@ -49,21 +65,33 @@ const getRandomMovie = async amountOfMovie => {
   return getRandomFromArray(movies, amountOfMovie);
 };
 
-const getMoviesFromList = async (list: any[], rating: string) => {
+const getMoviesFromList = async (
+  list: any[],
+  rating: string,
+  amountOfMovie: number
+) => {
+  console.log(list);
   return await Promise.all(
-    list.splice(0, amount).map(async movie => await movieByGenre(movie, rating))
+    list[getRandomNumber(0, list.length / 2 - 1)].map(
+      async movie => await movieByGenre(movie, rating, amountOfMovie)
+    )
   );
 };
 
-const movieByGenre = async (list: any, rating: string) => {
+const movieByGenre = async (
+  list: any,
+  rating: string,
+  amountOfMovie: number
+) => {
   let genres = "";
   if (list.movie.genres) {
-    genres = JSON.parse(list.movie.genres)[0].name;
+    const parsed = JSON.parse(list.movie.genres);
+    genres = parsed ? parsed[0].name : "";
   }
 
   const movies = (
     (await getByGTRatingAndGenre(rating, genres)) || []
   ).hits.hits.map(movie => movie._source);
 
-  return movies[getRandomNumber(0, movies.length - 1)];
+  getRandomFromArray(movies, amountOfMovie);
 };
