@@ -66,10 +66,8 @@
 					}
 				}
 				.stars-container {
-					margin: 0;
-					padding: 0;
-					right: 24px;
-					top: -6px;
+					right: 25px;
+					top: -8px;
 				}
 			}
 		}
@@ -133,6 +131,34 @@
 			overflow: hidden;
 			white-space: nowrap;
 			text-overflow: ellipsis;
+		}
+	}
+	.movie-item-rating {
+		display: flex;
+		align-items: center;
+		padding: 0;
+		margin: 0;
+		margin-top: -7px;
+
+		.movie-total-rating {
+			font-size: 0.9em;
+		}
+
+		.max-rating {
+			font-size: 0.8em;
+			margin-top: -2px;
+			color: $text-secondary-color;
+		}
+		.StarRating {
+			.user-rating-value {
+				position: static;
+				display: none;
+			}
+		}
+		.stars-container {
+			.star-item {
+				padding-top: 5px;
+			}
 		}
 	}
 }

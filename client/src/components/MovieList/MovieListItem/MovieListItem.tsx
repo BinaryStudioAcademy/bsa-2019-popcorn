@@ -7,20 +7,31 @@ import TMovie from '../../MovieSeriesPage/TMovie';
 import getFilmDuration from '../../../helpers/getFilmDuration';
 import WatchListIcon from '../../shared/WatchListIcon/WatchListIcon';
 import RateMovie from '../../shared/RateMovie/RateMovie';
+import getTotalMovieRate from '../../../helpers/getTotalMovieRate';
 
 interface IMovieListItemProps {
 	movie: TMovie;
 	key: string;
 	setMovieSeries?: (movie: any) => any;
 	saveMovie?: (movie: TMovie) => any;
+	setNewRateInfo?: any;
 }
 
 const MovieListItem: React.FC<IMovieListItemProps> = ({
 	movie,
 	setMovieSeries,
-	saveMovie
+	saveMovie,
+	setNewRateInfo
 }) => {
 	const duration = getFilmDuration(movie.runtime);
+	const updateTotalRate = (prevUserRate, userRate) => {
+		const newRateInfo = getTotalMovieRate(
+			movie.rateInfo,
+			prevUserRate,
+			userRate
+		);
+		setNewRateInfo(newRateInfo);
+	};
 	return (
 		<NavLink
 			to={`/movies/${movie.id}`}
@@ -69,7 +80,18 @@ const MovieListItem: React.FC<IMovieListItemProps> = ({
 					<div className="movie-genre">{movie.genres}</div>
 					<div className="movie-footer">
 						{duration && <div className="movie-duration">{duration}</div>}
-						<RateMovie movieId={movie.id} />
+						{setNewRateInfo && (
+							<div className="movie-item-rating">
+								<RateMovie
+									updateTotalRate={updateTotalRate}
+									movieId={movie.id}
+								/>
+								<span className="movie-total-rating">
+									{+movie.rateInfo.average.toString()}
+									<span className="max-rating">/10</span>
+								</span>
+							</div>
+						)}
 					</div>
 				</div>
 			</div>
