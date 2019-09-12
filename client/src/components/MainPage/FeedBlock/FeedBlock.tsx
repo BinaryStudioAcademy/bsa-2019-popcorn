@@ -28,10 +28,8 @@ interface IProps {
 }
 
 const FeedBlock = (props: IProps) => {
-	if (!props.posts) {
+	if (!props.posts && !props.stories) {
 		props.fetchPosts();
-	}
-	if (!props.stories) {
 		props.fetchStories();
 	}
 	return props.posts && props.stories ? (
