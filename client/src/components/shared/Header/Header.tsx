@@ -65,7 +65,7 @@ class Header extends React.Component<IProps> {
 	componentDidMount() {
 		this.props.fetchChats(this.props.userInfo.id);
 		if (this.props.firebaseToken === undefined) {
-			getFirebaseToken(this.props.firebase);
+			this.props.getFirebaseToken(this.props.firebase);
 		}
 	}
 	render() {
