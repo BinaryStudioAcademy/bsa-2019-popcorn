@@ -151,7 +151,10 @@ class StoryVoting extends React.Component<StoryVotingProps, StoryVotingState> {
 	calculateAllVotes() {
 		let count = 0;
 		this.props.options.map(option => {
-			count += option ? option.votingOptionReactions.length : 0;
+			count +=
+				option && option.votingOptionReactions
+					? option.votingOptionReactions.length
+					: 0;
 		});
 		return count;
 	}
