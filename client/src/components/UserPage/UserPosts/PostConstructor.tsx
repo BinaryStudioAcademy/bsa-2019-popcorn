@@ -62,7 +62,9 @@ export interface INewPost {
 
 class PostConstructor extends React.Component<
 	IPostConstructorProps,
-	INewPost & { event?: any; top?: any; survey?: any }
+	INewPost & { event?: any; top?: any; survey?: any } & {
+		shownDescription: string;
+	}
 > {
 	static findMovie(str: string) {
 		let find = str.match(/\$(.+)(.*?)(\s*?)/g);
@@ -87,6 +89,7 @@ class PostConstructor extends React.Component<
 		this.state = {
 			image_url: '',
 			description: '',
+			shownDescription: '',
 			title: 'test title',
 			userId: this.props.userId,
 			extraLink: '',
@@ -185,7 +188,8 @@ class PostConstructor extends React.Component<
 		const title = PostConstructor.findMovie(value);
 		this.setState({
 			...this.state,
-			[keyword]: value,
+			description: value,
+			shownDescription: value,
 			movieSearchTitle: title || null
 		});
 	}
@@ -228,7 +232,6 @@ class PostConstructor extends React.Component<
 		if (this.cropper.current) {
 			this.cropper.current.getCroppedCanvas().toBlob(
 				blob => {
-					console.log(blob.size);
 					const data = new FormData();
 					data.append('file', blob);
 					uploadFile(data)
@@ -244,14 +247,19 @@ class PostConstructor extends React.Component<
 	}
 
 	addMovieCaption(movie, movieSearchTitle) {
-		const { description } = this.state;
+		const { description, shownDescription } = this.state;
 		const caption = `@${movie.id}{${movie.title +
 			' (' +
 			movie.date.split('-')[0] +
 			')'}}`;
 		const newDescription = description.replace(`$${movieSearchTitle}`, caption);
+		const newShownDescription = shownDescription.replace(
+			`$${movieSearchTitle}`,
+			movie.title
+		);
 		this.setState({
 			description: newDescription,
+			shownDescription: newShownDescription,
 			movieSearchTitle: null
 		});
 	}
@@ -340,7 +348,7 @@ class PostConstructor extends React.Component<
 						)}
 						<textarea
 							placeholder="Create new post..."
-							value={this.state.description}
+							value={this.state.shownDescription}
 							onChange={e => this.onChangeData(e.target.value, 'description')}
 						/>
 						{movieSearchTitle && (
