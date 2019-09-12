@@ -4,15 +4,23 @@
 		"label": "Home"
 	},
 	{
+		"link": "/chat",
+		"label": "Messages"
+	},
+	{
 		"link": "/events",
 		"label": "Events"
+	},
+	{
+		"link": "/tops",
+		"label": "Tops"
 	},
 	{
 		"link": "/surveys",
 		"label": "Surveys"
 	},
 	{
-		"link": "/tops",
-		"label": "Tops"
+		"link": "/adviceMe",
+		"label": "Advise Me"
 	}
 ]
