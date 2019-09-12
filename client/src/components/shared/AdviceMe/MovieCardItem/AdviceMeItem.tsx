@@ -7,12 +7,14 @@ import WatchListIcon from '../../WatchListIcon/WatchListIcon';
 import { NavLink } from 'react-router-dom';
 import RateMovie from '../../RateMovie/RateMovie';
 import VideoPlayer from '../../VideoPlayer/VideoPlayer';
+import getTotalMovieRate from '../../../../helpers/getTotalMovieRate';
 
 interface IProps {
 	movie: TMovie;
+	setNewRateInfo: (rateInfo: any) => object;
 }
 
-const MovieCardItem: React.FC<IProps> = ({ movie }) => {
+const MovieCardItem: React.FC<IProps> = ({ movie, setNewRateInfo }) => {
 	const {
 		id: movieId,
 		release_date,
@@ -22,8 +24,14 @@ const MovieCardItem: React.FC<IProps> = ({ movie }) => {
 		title,
 		runtime,
 		genres,
-		overview
+		overview,
+		rateInfo
 	} = movie;
+
+	const updateTotalRate = (prevUserRate, userRate) => {
+		const newRateInfo = getTotalMovieRate(rateInfo, prevUserRate, userRate);
+		setNewRateInfo(newRateInfo);
+	};
 
 	return (
 		<div className="AdviceMeItem">
@@ -37,9 +45,9 @@ const MovieCardItem: React.FC<IProps> = ({ movie }) => {
 							</span>
 						</NavLink>
 						<div className="movie-item-rating">
-							<RateMovie movieId={movieId} />
+							<RateMovie updateTotalRate={updateTotalRate} movieId={movieId} />
 							<span className="movie-total-rating">
-								10
+								{rateInfo.average}
 								<span className="max-rating">/10</span>
 							</span>
 						</div>

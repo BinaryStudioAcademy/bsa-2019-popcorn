@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import TMovie from '../../MovieSeriesPage/TMovie';
 import Spinner from '../Spinner';
 import MovieCardItem from './MovieCardItem/AdviceMeItem';
-import { fetchAdvice } from '../Header/actions';
+import { fetchAdvice, setNewRateInfo } from '../Header/actions';
 import './AdviceMe.scss';
 
 interface IProps {
@@ -12,13 +12,15 @@ interface IProps {
 	movieAdvice: TMovie[];
 	fetchAdvice: (userId: string) => any;
 	profileInfo: any;
+	setNewRateInfo: (rateInfo: string) => object;
 }
 
 const AdviceMe: React.FC<IProps> = ({
 	fetchAdvice,
 	profileInfo,
 	loading,
-	movieAdvice
+	movieAdvice,
+	setNewRateInfo
 }) => {
 	if (!loading && !movieAdvice) {
 		fetchAdvice(profileInfo.id);
@@ -33,7 +35,11 @@ const AdviceMe: React.FC<IProps> = ({
 		<div className="AdviceMe">
 			<div className="advice-me-container">
 				{movieAdvice.map(movie => (
-					<MovieCardItem movie={movie} key={movie.id} />
+					<MovieCardItem
+						setNewRateInfo={setNewRateInfo}
+						movie={movie}
+						key={movie.id}
+					/>
 				))}
 			</div>
 		</div>
@@ -48,7 +54,8 @@ const mapStateToProps = (rootState, props) => ({
 });
 
 const actions = {
-	fetchAdvice
+	fetchAdvice,
+	setNewRateInfo
 };
 
 const mapDispatchToProps = dispatch => bindActionCreators(actions, dispatch);

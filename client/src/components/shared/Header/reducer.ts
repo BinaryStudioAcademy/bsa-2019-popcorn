@@ -3,7 +3,8 @@ import {
 	GET_FIREBASE_TOKEN_SUCCESS,
 	SET_FIREBASE_TOKEN_UNDEFINED,
 	FETCH_ADVICE,
-	SET_ADVICE
+	SET_ADVICE,
+	SET_NEW_RATE_INFO
 } from './actionTypes';
 import movieAdapter from '../../MovieSeriesPage/movieAdapter';
 
@@ -11,7 +12,7 @@ const initialState = {
 	unreadNotifications: [],
 	firebaseToken: undefined,
 	loading: false,
-	movieAdvice: null
+	movieAdvice: undefined
 };
 
 export default (state = initialState, action) => {
@@ -43,6 +44,23 @@ export default (state = initialState, action) => {
 				loading: false,
 				movieAdvice: (action.payload.movieAdvice || []).map(movieAdapter)
 			};
+
+		case SET_NEW_RATE_INFO:
+			const prevAdvice: any[] =
+				(state.movieAdvice && [...(state.movieAdvice as any)]) || [];
+			const { rateInfo } = action.payload;
+			prevAdvice.forEach((advice, index) => {
+				if (advice.id == rateInfo.movieid) {
+					const newAdviceItem = { ...advice };
+					newAdviceItem.rateInfo = rateInfo;
+					prevAdvice.splice(index, 1, newAdviceItem);
+				}
+			});
+			return {
+				...state,
+				movieAdvice: [...prevAdvice]
+			};
+
 		default:
 			return state;
 	}
