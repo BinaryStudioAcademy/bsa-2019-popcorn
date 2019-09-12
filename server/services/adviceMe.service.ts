@@ -31,7 +31,7 @@ export const getAdviceMeList = async (userId: string, next) => {
     MovieRateRepository
   ).getRatesByMoviesId(moviesId);
   adviceMovies = adviceMovies.map(advice => {
-    const rateInfo = averageRates.find(rate => rate.movieid === advice.id);
+    const rateInfo = averageRates.find(rate => rate.movieid == advice.id);
     advice.rateInfo = rateInfo || {
       average: "0",
       movieid: advice.id,
