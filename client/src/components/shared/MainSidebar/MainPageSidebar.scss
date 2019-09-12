@@ -2,7 +2,7 @@
 @import url('https://rsms.me/inter/inter.css');
 
 .left-sidebar {
-	padding-top: 88px;
+	padding-top: 72px;
 	display: flex;
 	flex-direction: column;
 	background-color: $background-gray;
@@ -40,16 +40,30 @@
 	}
 
 	.menu {
-		div {
+		li {
 			display: flex;
 			align-items: center;
 			margin-bottom: 19px;
 			height: 23px;
 			margin-left: 72px;
+			position: relative;
+
+			& .main-page-tab-active::after {
+				content: '';
+				position: absolute;
+				bottom: 0px;
+				left: -4px;
+				width: 100px;
+				height: 2px;
+				border-bottom: 2px solid $orange;
+			}
 
 			a {
 				text-decoration: none;
 				color: $text-base-color;
+				position: relative;
+				padding: 2px;
+				overflow: hidden;
 			}
 
 			p:hover {
@@ -63,6 +77,16 @@
 			svg {
 				position: absolute;
 				left: 43px;
+			}
+
+			.unread-message {
+				position: absolute;
+				right: 50px;
+				top: 0px;
+				width: 10px;
+				height: 10px;
+				background-color: $orange;
+				border-radius: 5px;
 			}
 
 			.notifications {
