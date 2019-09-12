@@ -2,15 +2,17 @@ import React from 'react';
 import './MainPageSidebar.scss';
 import { NavLink } from 'react-router-dom';
 import mainPageSidebarConfig from './mainPageSidebarConfig.json';
+import { hasUnreadMessages } from '../Header/header.service';
 
 interface IProps {
 	notifications: {
 		newMessages: number;
 		newEvents: number;
 	};
+	chats: any[];
 }
 
-const MainPageSidebar = ({ notifications }: IProps) => {
+const MainPageSidebar = ({ notifications, chats }: IProps) => {
 	return (
 		<nav className="left-sidebar">
 			<ul className="menu">
@@ -19,11 +21,14 @@ const MainPageSidebar = ({ notifications }: IProps) => {
 						<NavLink
 							exact={!index}
 							to={tab.link}
-							className="user-tab"
-							activeClassName="user-tab-active"
+							className="main-page-tab"
+							activeClassName="main-page-tab-active"
 						>
 							{tab.label}
 						</NavLink>
+						{tab.link === '/chat' && hasUnreadMessages(chats) && (
+							<div className="unread-message"></div>
+						)}
 					</li>
 				))}
 			</ul>
