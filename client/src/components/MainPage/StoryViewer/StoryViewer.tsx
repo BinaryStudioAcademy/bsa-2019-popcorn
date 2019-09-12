@@ -272,7 +272,6 @@ class StoryViewer extends PureComponent<IProps, IState> {
 												width: '280px',
 												maxWidth: '350px',
 												maxHeight: '100px',
-												wordBreak: 'break-all',
 												overflowWrap: 'break-word',
 												whiteSpace: 'pre-line'
 											}}
