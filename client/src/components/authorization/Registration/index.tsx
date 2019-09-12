@@ -232,11 +232,21 @@ class Registration extends React.Component<IProps, IState> {
 							</NavLink>
 							<i className="icon icon-arrow-right"> > </i>
 							<div style={{ marginTop: 20 }}>
-								<a href={`${config.API_URL}/api/auth/google`}>
-									<GoogleButton/>
+								<a
+									href={`${window.location.href.replace(
+										'/registration',
+										''
+									)}/api/auth/google`}
+								>
+									<GoogleButton />
 								</a>
-								<a href={`${config.API_URL}/api/auth/facebook`}>
-									<FacebookButton/>
+								<a
+									href={`${window.location.href.replace(
+										'/registration',
+										''
+									)}/api/auth/facebook`}
+								>
+									<FacebookButton />
 								</a>
 							</div>
 						</div>

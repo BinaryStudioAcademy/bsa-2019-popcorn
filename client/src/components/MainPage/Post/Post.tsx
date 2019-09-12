@@ -19,6 +19,7 @@ import Image from '../../shared/Image/Image';
 import Extra from './../../UserPage/UserPosts/PostExtra/extra';
 import JsxParser from 'react-jsx-parser';
 import Moment from 'react-moment';
+import moment from 'moment';
 
 type IPostProps = {
 	post: IPost;
@@ -158,7 +159,7 @@ class Post extends Component<IPostProps, IPostState> {
 						{reactions.length === 1 ? 'reaction' : 'reactions'}
 					</span>
 				) : (
-					<div>React</div>
+					<div>Like</div>
 				)}
 			</div>
 		);
@@ -168,7 +169,7 @@ class Post extends Component<IPostProps, IPostState> {
 		this.setState({ showingAllComments: !this.state.showingAllComments });
 	};
 
-	getOutputComments = (comments) => {
+	getOutputComments = comments => {
 		if (!comments || comments.length === 0) {
 			return false;
 		}
@@ -178,7 +179,7 @@ class Post extends Component<IPostProps, IPostState> {
 		} else {
 			return comments.slice(0, 3);
 		}
-	}
+	};
 
 	render() {
 		const {
@@ -216,9 +217,7 @@ class Post extends Component<IPostProps, IPostState> {
 						)}
 						<div className="post-item-info">
 							<div className="post-item-author-name">{user.name}</div>
-							<Moment className="post-date" format=" D MMM HH:mm " local>
-								{String(createdAt)}
-							</Moment>
+							<div className="post-date">{moment(createdAt).fromNow()}</div>
 						</div>
 					</Link>
 
@@ -277,8 +276,13 @@ class Post extends Component<IPostProps, IPostState> {
 							<Comment key={comment.id} commentItem={comment} />
 						))}
 						{comments && comments.length > 3 && (
-							<div className="more-comments" onClick={this.handleShowMoreComments}>
-								{this.state.showingAllComments ? 'Less comments...' : 'More comments...'}
+							<div
+								className="more-comments"
+								onClick={this.handleShowMoreComments}
+							>
+								{this.state.showingAllComments
+									? 'Less comments...'
+									: 'More comments...'}
 							</div>
 						)}
 					</div>

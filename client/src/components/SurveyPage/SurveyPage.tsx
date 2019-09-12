@@ -32,7 +32,8 @@ class SurveyPage extends React.Component<ISurveyPageProps> {
 								user_id: profileInfo.id,
 								user: {
 									name: profileInfo.name,
-									image_link: profileInfo.avatar
+									image_link: profileInfo.avatar,
+									id: profileInfo.id
 								}
 							}}
 							isPreview={false}

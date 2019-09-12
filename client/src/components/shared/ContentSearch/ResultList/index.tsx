@@ -102,14 +102,11 @@ class ResultList extends React.Component<IProps, IState> {
 			case 'survey':
 				return this.getView(elem.data, 'survey', data =>
 					data.map(survey => (
-						<NavLink
-							key={survey.id}
-							to={`/user-page/${survey.user.id}/survey/${survey.id}`}
-						>
+						<NavLink key={survey.id} to={`/survey-page/${survey.id}`}>
 							<Extra
 								clearExtra={data => null}
 								data={survey}
-								link={`/user-page/${survey.user.id}/survey/${survey.id}`}
+								link={`/survey-page/${survey.id}`}
 								type={'survey'}
 								readyPost={true}
 							/>
