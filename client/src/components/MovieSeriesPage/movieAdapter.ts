@@ -33,6 +33,7 @@ export default (movie: any): TMovie | any => {
 		imdb_id: movie.imdb_id,
 		cast: JSON.parse(movie.cast || '[]'),
 		mainCast: getMainCast(JSON.parse(movie.cast || '[]').slice(0, 3)),
-		crew: movie.crew
+		crew: movie.crew,
+		rateInfo: movie.rateInfo
 	};
 };
