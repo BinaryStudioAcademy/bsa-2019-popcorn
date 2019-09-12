@@ -5,6 +5,7 @@ import IComment from '../Post/IComment';
 import config from '../../../config';
 import Image from '../../shared/Image/Image';
 import { NavLink } from 'react-router-dom';
+import moment from 'moment';
 
 type ICommentProps = {
 	commentItem: IComment;
@@ -37,28 +38,34 @@ class Comment extends Component<ICommentProps, ICommentState> {
 							? 'comment-item comment-item-reply'
 							: 'comment-item'
 					}
-
-				>{comment.user && (
-					<NavLink className="user-link" to={`/user-page/${comment.user.id}`}>
-						<Image
-							src={comment.user.avatar}
-							className="post-item-avatar"
-							defaultSrc={config.DEFAULT_AVATAR}
-							alt="author"
-						/>
-					</NavLink>
-				)}
+				>
+					{comment.user && (
+						<NavLink className="user-link" to={`/user-page/${comment.user.id}`}>
+							<Image
+								src={comment.user.avatar}
+								className="post-item-avatar"
+								defaultSrc={config.DEFAULT_AVATAR}
+								alt="author"
+							/>
+						</NavLink>
+					)}
 
 					<p className="comment-text">
-						<NavLink className="user-link" to={`/user-page/${comment.user.id}`}>
-							<strong>{comment.user.name}</strong>
-						</NavLink>
-						{comment.parentId && <i> {comment.parentId}, </i>} {comment.text}
+						<div>
+							<NavLink
+								className="user-link"
+								to={`/user-page/${comment.user.id}`}
+							>
+								<strong>{comment.user.name}</strong>
+							</NavLink>
+							{comment.parentId && <i> {comment.parentId}, </i>} {comment.text}
+						</div>
+						<p className="comment-date">
+							{moment(comment.createdAt).fromNow()}{' '}
+						</p>
 					</p>
-
-					<p className="comment-date">{comment.commentDate} </p>
-				</div >
-			</div >
+				</div>
+			</div>
 		);
 	}
 }

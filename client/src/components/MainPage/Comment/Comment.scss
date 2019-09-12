@@ -1,38 +1,45 @@
-@import "../../../styles/variables.scss";
+@import '../../../styles/variables.scss';
 
 .comment-item {
-  padding: 0.3em 1em;
-  font-size: $post-font-size;
-  display: flex;
-  align-items: center;
-  a {
-    display: contents;
-  }
-  .user-link {
-    text-decoration: none;
-    color: inherit;
-    // display: inline;
-  }
-  img {
-    width: 30px;
-    height: 30px;
-    margin-right: 5px;
-  }
-  .comment-date {
-    margin-top: 4px;
-    text-transform: uppercase;
-    display: flex;
-    color: rgba(18, 39, 55, 0.5);
-    button {
-      margin-left: auto;
-      font: inherit;
-      color: inherit;
-      text-transform: inherit;
-    }
-  }
+	padding: 0.3em 1em;
+	font-size: $post-font-size;
+	display: flex;
+	align-items: center;
+	a {
+		display: contents;
+	}
+	.user-link {
+		text-decoration: none;
+		color: inherit;
+		// display: inline;
+	}
+	img {
+		width: 30px;
+		height: 30px;
+		margin-right: 5px;
+	}
+	.comment-text {
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+	}
 }
 .comment-item-reply {
-  margin: 0.3em 1em;
-  padding: 0 1em;
-  border-left: 3px solid #cccccc;
+	margin: 0.3em 1em;
+	padding: 0 1em;
+	border-left: 3px solid #cccccc;
+}
+
+.comment-date {
+	margin-bottom: 6px;
+	font-size: 0.6em;
+	text-transform: uppercase;
+	display: flex;
+	color: rgba(18, 39, 55, 0.5);
+	button {
+		margin-left: auto;
+		font: inherit;
+		color: inherit;
+		text-transform: inherit;
+	}
 }
