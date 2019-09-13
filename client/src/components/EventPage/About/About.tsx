@@ -20,6 +20,16 @@ const About: React.SFC<IProps> = ({ event }) => {
 
 	return (
 		<div className="about-event">
+			{event.location.lat && event.location.lng ? (
+				<div className="location-info">
+					<MapComponent
+						zoom={[13]}
+						currentLocation={event.location}
+						readOnly={true}
+					/>
+				</div>
+			) : null}
+
 			{event.dateRange ? (
 				<div className="date">
 					<FontAwesomeIcon className="icon" icon={faClock} />
@@ -36,13 +46,6 @@ const About: React.SFC<IProps> = ({ event }) => {
 							</Moment>
 						) : null}
 					</span>
-				</div>
-			) : null}
-			{event.location.lat && event.location.lng ? (
-				<div className="location">
-					<div className="location-info">
-						<MapComponent currentLocation={event.location} readOnly={true} />
-					</div>
 				</div>
 			) : null}
 			{event.description ? (

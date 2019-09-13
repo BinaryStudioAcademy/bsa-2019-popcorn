@@ -68,6 +68,7 @@ export interface IProps {
 	onLocationChanged?: (newCord: { lat: number; lng: number }) => void;
 	currentLocation?: { lat: number | undefined; lng: number | undefined } | null;
 	readOnly?: boolean;
+	zoom?: [number];
 }
 
 class MapComponent extends React.Component<IProps, IState> {
@@ -93,6 +94,9 @@ class MapComponent extends React.Component<IProps, IState> {
 	};
 
 	private onSelectItem = (index: number) => {
+		if (this.props.readOnly) {
+			return;
+		}
 		const selected = this.state.options[index];
 		const [lng, lat] = selected.center;
 		if (this.props.onLocationChanged)
@@ -156,6 +160,7 @@ class MapComponent extends React.Component<IProps, IState> {
 					containerStyle={mapStyle}
 					center={center || currentLocation || [30, 50]}
 					onClick={this.onMapClick}
+					zoom={this.props.zoom ? this.props.zoom : [11]}
 				>
 					{(selected && (
 						<Layer
@@ -165,7 +170,7 @@ class MapComponent extends React.Component<IProps, IState> {
 						>
 							<Feature
 								coordinates={selected.center}
-								draggable={true}
+								draggable={this.props.readOnly ? false : true}
 								onDragEnd={this.onDragEnd}
 							/>
 						</Layer>
@@ -178,7 +183,7 @@ class MapComponent extends React.Component<IProps, IState> {
 							>
 								<Feature
 									coordinates={currentLocation}
-									draggable={!this.props.readOnly}
+									draggable={this.props.readOnly ? false : true}
 									onDragEnd={this.onDragEnd}
 								/>
 							</Layer>

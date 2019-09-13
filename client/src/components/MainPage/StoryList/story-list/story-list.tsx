@@ -94,13 +94,18 @@ class StoryList extends Component<IProps, IState> {
 			modal: false
 		};
 		this.updateModal = this.handleUpdateModal.bind(this);
-		this.addSocketEvents(props.addStory, props.setVoting);
+		this.addSocketEvents();
 	}
 
-	addSocketEvents = (addStory, setVoting) => {
-		SocketService.on('new-story', addStory);
-		SocketService.on('new-voting-reaction', setVoting);
+	addSocketEvents = () => {
+		SocketService.on('new-story', this.props.addStory);
+		SocketService.on('new-voting-reaction', this.props.setVoting);
 	};
+
+	componentWillUnmount(): void {
+		SocketService.off('new-story', this.props.setVoting);
+		SocketService.off('new-voting-reaction', this.props.setVoting);
+	}
 
 	handleUpdateModal = (value: boolean) => {
 		this.setState({ isPopupShown: value });

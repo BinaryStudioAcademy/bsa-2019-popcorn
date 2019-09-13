@@ -139,32 +139,34 @@ class ProfileEditor extends Component<
 				<div className="profileRow">
 					<p className="field fav-movies">Favorite movies:</p>
 					<div className="content">
-						{favoriteMovies.map(item => {
-							return (
-								item && (
-									<NavLink key={item.id} to={'/movies/' + item.id}>
-										<p>
-											{item.name}
-											<span className="release-date">
-												{item.release_date
-													? ' (' + item.release_date.slice(0, 4) + ')'
-													: null}
-											</span>
-											<button
-												className="delete-movie"
-												onClick={e => this.onDeleteFavoriteMovie(e, item.id)}
-											>
-												<FontAwesomeIcon
-													className="icon"
-													icon={faTimesCircle}
-												/>
-											</button>
-										</p>
-									</NavLink>
-								)
-							);
-						})}
-						<div style={{ width: '100%', marginTop: '15px' }}>
+						<div className="favourite">
+							{favoriteMovies.map(item => {
+								return (
+									item && (
+										<NavLink key={item.id} to={'/movies/' + item.id}>
+											<p>
+												{item.name}
+												<span className="release-date">
+													{item.release_date
+														? ' (' + item.release_date.slice(0, 4) + ')'
+														: null}
+												</span>
+												<button
+													className="delete-movie"
+													onClick={e => this.onDeleteFavoriteMovie(e, item.id)}
+												>
+													<FontAwesomeIcon
+														className="icon"
+														icon={faTimesCircle}
+													/>
+												</button>
+											</p>
+										</NavLink>
+									)
+								);
+							})}
+						</div>
+						<div style={{ width: '100%', marginTop: '15px', display: 'block' }}>
 							<MovieSearch
 								onSelectMovie={movie => this.onAddFavoriteMovie(movie)}
 								elasticProperties={['id', 'title', 'release_date']}
