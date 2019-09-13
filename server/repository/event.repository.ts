@@ -12,6 +12,7 @@ class EventRepository extends Repository<Event> {
       .addSelect(["cuser.name", "cuser.avatar", "cuser.id"])
       .leftJoin("visitors.user", "user")
       .addSelect(["user.name", "user.avatar", "user.id"])
+      .orderBy("start_date", "DESC")
       .getMany();
   }
 

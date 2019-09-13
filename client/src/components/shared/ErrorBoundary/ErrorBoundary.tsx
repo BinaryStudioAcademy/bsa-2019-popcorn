@@ -30,7 +30,7 @@ class ErrorBoundary extends PureComponent<{}, IState> {
 					<div className="error-main">
 						<h2 className="error-title">Aaaah! Something went wrong !</h2>
 						<p className="error-description">
-							Brace Your self till we get the error fixed. You may also refresh
+							Brace yourself till we get the error fixed. You may also refresh
 							the page or try again later
 						</p>
 						<details className="error-details">

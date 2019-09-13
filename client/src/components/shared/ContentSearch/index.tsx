@@ -13,7 +13,7 @@ const options = [
 	'survey',
 	'top',
 	'user',
-	'advance movie search   '
+	'advanced movie search   '
 ];
 const defaultOption = options[0];
 const whiteList = [
@@ -145,7 +145,7 @@ class ContentSearch extends React.Component<IProps, IState> {
 						}
 
 						this.reset();
-						this.setState({ redirectAdvanceSearch: true });
+						this.setState({ redirectAdvanceSearch: true, type: defaultOption });
 					}}
 				>
 					{options.map(option => (
