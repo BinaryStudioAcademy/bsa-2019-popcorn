@@ -17,6 +17,10 @@ class SocketService {
 		SocketService._socket.emit('leaveRoom', room);
 	}
 
+	static off(name: string, callback: (data: any) => any) {
+		SocketService._socket.off(name, callback);
+	}
+
 	private static _socket;
 
 	constructor(userId: string) {
