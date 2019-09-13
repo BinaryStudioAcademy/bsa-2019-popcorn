@@ -201,7 +201,8 @@ class StoryVoting extends React.Component<StoryVotingProps, StoryVotingState> {
 					style={{
 						backgroundColor: backgroundColor,
 						backgroundImage: `url(${this.props.backImage ||
-							this.props.backgroundImage})`
+							this.props.backgroundImage ||
+							this.props.image_url})`
 					}}
 				>
 					<Draggable

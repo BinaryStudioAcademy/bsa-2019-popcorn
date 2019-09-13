@@ -157,6 +157,7 @@ class StoryViewer extends PureComponent<IProps, IState> {
 
 	render() {
 		const { stories } = this.props;
+		console.log(stories[0].image_url);
 		return (
 			<div className="story-viewer">
 				<p className="left-arrow" onClick={this.goToPrevStory}>
@@ -228,7 +229,7 @@ class StoryViewer extends PureComponent<IProps, IState> {
 											backColor={story.voting.backColor}
 											userId={this.props.currentUser.userId}
 											inEditor={false}
-											image_url={story.voting.backImage || ''}
+											image_url={story.voting.backImage || story.image_url}
 										/>
 										{this.props.userId !== story.userInfo.userId && (
 											<div className="story-reaction-wrp">
