@@ -9,7 +9,7 @@ import {
 import { Redirect } from 'react-router';
 import { fetchSurveys } from '../../UserSurveys/UserSurveys.redux/actions';
 import { getAllEvents } from '../../UserEvents/actions';
-import { fetchTops } from '../../UserTops/UserTops.redux/actions';
+import { fetchTops } from '../../../TopListPage/TopListPage.redux/actions';
 import { connect } from 'react-redux';
 import Spinner from '../../../shared/Spinner';
 
@@ -139,7 +139,7 @@ const mapStateToProps = rootState => ({
 	loading: rootState.survey.loading,
 	userEvents: rootState.events.allEvents,
 	userInfo: rootState.profile.profileInfo,
-	topList: rootState.userTops.topList
+	topList: rootState.topList.tops
 });
 
 const mapDispatchToProps = {

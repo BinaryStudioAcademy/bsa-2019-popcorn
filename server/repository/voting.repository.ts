@@ -2,7 +2,7 @@ import { EntityRepository, Repository } from "typeorm";
 import { Voting } from "../models/VotingModel";
 import { Voting as VotingEntity } from "../entities/Voting";
 import UserRepository from "./user.repository";
-import { getCustomRepository } from "typeorm";
+import { getCustomRepository, getRepository } from "typeorm";
 import { VotingOption } from "../models/VotingOptionModel";
 import VotingOptionRepository from "./votingOption.repository";
 
@@ -48,13 +48,19 @@ class VotingRepository extends Repository<Voting> {
 
   async getVotingById(id: string, next?) {
     try {
-      const voting = await this.findOne(id);
+      const voting = await getRepository(VotingEntity)
+        .createQueryBuilder("voting")
+        .leftJoinAndSelect("voting.votingOptions", "options")
+        .leftJoinAndSelect("options.votingOptionReactions", "votingOptionReactions")
+        .where("voting.id = :id", { id })
+        .getOne();
       if (!voting) {
         return next({ status: 404, message: "Voting is not found" }, null);
       }
 
-      return await this.findOne(id);
+      return voting;
     } catch (err) {
+      console.log(err)
       throw err;
     }
   }

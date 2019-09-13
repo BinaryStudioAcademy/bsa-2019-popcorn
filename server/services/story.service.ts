@@ -11,12 +11,12 @@ import { getTopById } from "./top.service";
 
 export const getStories = async (): Promise<Story[]> => {
   let activity;
-  const stories = (await getCustomRepository(StoryRepository).find({
+  const stories = await getCustomRepository(StoryRepository).find({
     relations: ["user"],
     order: {
-      created_at: 'ASC'
+      created_at: 'DESC'
     }
-  })).reverse();
+  });
   return Promise.all(
     stories.map(async item => {
       const story: any = { ...item };
@@ -25,7 +25,7 @@ export const getStories = async (): Promise<Story[]> => {
           story.voting = await getVotingById(story.activityId);
           break;
         case "survey":
-          activity = await getSurveysById(story.activityId, () => {});
+          activity = await getSurveysById(story.activityId, () => { });
           story.activity = activity.title;
           break;
         case "event":
