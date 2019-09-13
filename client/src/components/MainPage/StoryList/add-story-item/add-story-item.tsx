@@ -9,7 +9,7 @@ class AddStoryItem extends Component<IAddStoryItemProps> {
 	render() {
 		const { avatar, onOpenPopupClick } = this.props;
 		return (
-			<div className="add-story-wrapper">
+			<div className="add-story-wrapper" title="Add new story">
 				<div className="card-wrapper" onClick={onOpenPopupClick}>
 					<img
 						alt="user-avatar"
