@@ -22,5 +22,9 @@
 	{
 		"link": "/advise-me",
 		"label": "Advise Me"
+	},
+	{
+		"link": "/advanced-search",
+		"label": "Advanced search"
 	}
 ]

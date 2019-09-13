@@ -13,7 +13,6 @@ const options = [
 	'survey',
 	'top',
 	'user',
-	'advanced movie search   '
 ];
 const defaultOption = options[0];
 const whiteList = [
