@@ -35,7 +35,10 @@ const TopList: React.FC<ITopLIstProps> = props => {
 		<TopListItem top={props.passedTop} />
 	);
 
-	return <div className="top-list-wrapper">{topListItems}</div>;
+	return (
+		<div className="top-list-wrapper">
+			{topListItems}
+		</div>);
 };
 
 const mapStateToProps = (rootState, props) => ({
