@@ -8,12 +8,12 @@
 		"label": "Messages"
 	},
 	{
-		"link": "/events",
-		"label": "Events"
-	},
-	{
 		"link": "/tops",
 		"label": "Tops"
+	},
+	{
+		"link": "/events",
+		"label": "Events"
 	},
 	{
 		"link": "/surveys",
@@ -25,6 +25,6 @@
 	},
 	{
 		"link": "/advanced-search",
-		"label": "Advanced search"
+		"label": "Movies"
 	}
 ]
