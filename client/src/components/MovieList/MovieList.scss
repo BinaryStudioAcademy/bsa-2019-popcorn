@@ -44,7 +44,8 @@
 		}
 		&:disabled {
 			cursor: default;
-			background-color: rgba($button-background, 0.7);
+			background-color: rgba($button-background, 0.3);
+			box-shadow: none;
 		}
 	}
 }
