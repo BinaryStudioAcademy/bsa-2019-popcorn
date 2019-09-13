@@ -62,9 +62,7 @@ export interface INewPost {
 
 class PostConstructor extends React.Component<
 	IPostConstructorProps,
-	INewPost & { event?: any; top?: any; survey?: any } & {
-		shownDescription: string;
-	}
+	INewPost & { event?: any; top?: any; survey?: any }
 > {
 	static findMovie(str: string) {
 		let find = str.match(/\$(.+)(.*?)(\s*?)/g);
@@ -89,7 +87,6 @@ class PostConstructor extends React.Component<
 		this.state = {
 			image_url: '',
 			description: '',
-			shownDescription: '',
 			title: 'test title',
 			userId: this.props.userId,
 			extraLink: '',
@@ -188,8 +185,7 @@ class PostConstructor extends React.Component<
 		const title = PostConstructor.findMovie(value);
 		this.setState({
 			...this.state,
-			description: value,
-			shownDescription: value,
+			[keyword]: value,
 			movieSearchTitle: title || null
 		});
 	}
@@ -247,19 +243,15 @@ class PostConstructor extends React.Component<
 	}
 
 	addMovieCaption(movie, movieSearchTitle) {
-		const { description, shownDescription } = this.state;
+		const { description } = this.state;
 		const caption = `@${movie.id}{${movie.title +
 			' (' +
 			movie.date.split('-')[0] +
 			')'}}`;
 		const newDescription = description.replace(`$${movieSearchTitle}`, caption);
-		const newShownDescription = shownDescription.replace(
-			`$${movieSearchTitle}`,
-			movie.title
-		);
+
 		this.setState({
 			description: newDescription,
-			shownDescription: newShownDescription,
 			movieSearchTitle: null
 		});
 	}
@@ -348,7 +340,7 @@ class PostConstructor extends React.Component<
 						)}
 						<textarea
 							placeholder="Create new post..."
-							value={this.state.shownDescription}
+							value={this.state.description}
 							onChange={e => this.onChangeData(e.target.value, 'description')}
 						/>
 						{movieSearchTitle && (
