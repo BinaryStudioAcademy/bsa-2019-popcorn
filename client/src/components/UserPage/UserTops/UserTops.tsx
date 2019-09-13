@@ -97,7 +97,7 @@ class UserTops extends React.Component<IUserTopProps, IUserTopsState> {
 			const { topList } = this.state;
 
 			this.setState({
-				topList: [...topList, newTop()],
+				topList: [newTop(), ...topList],
 				isCreated: true,
 				isAction: false
 			});
@@ -142,29 +142,33 @@ class UserTops extends React.Component<IUserTopProps, IUserTopsState> {
 		}
 
 		return (
-			<div className="user-tops">
-				{url_callback && (
-					<button onClick={redirect} className={'btn'}>
-						Back to story
-					</button>
-				)}
-				{this.props.isOwnData && (
-					<CreateExtraBtn handleClick={this.createTop} body={'Create top'} />
-				)}
-
-				{topList.map((topItem: ITopItem) => (
-					<TopItem
-						key={topItem.id}
-						saveUserTop={this.saveUserTop}
-						topItem={topItem}
-						isOwnData={this.props.isOwnData}
-						deleteTop={this.deleteTop}
-						uploadUrl={this.props.uploadUrl}
-						urlForTop={this.props.urlForTop}
-						uploadImage={this.props.uploadImage}
-					/>
-				))}
-			</div>
+			<>
+				<div className="user-tops">
+					{url_callback && (
+						<button onClick={redirect} className={'btn'}>
+							Back to story
+						</button>
+					)}
+					{this.props.isOwnData && (
+						<CreateExtraBtn handleClick={this.createTop} body={'Create top'} />
+					)}
+					{topList.map((topItem: ITopItem) => (
+						<TopItem
+							key={topItem.id}
+							saveUserTop={this.saveUserTop}
+							topItem={topItem}
+							isOwnData={this.props.isOwnData}
+							deleteTop={this.deleteTop}
+							uploadUrl={this.props.uploadUrl}
+							urlForTop={this.props.urlForTop}
+							uploadImage={this.props.uploadImage}
+						/>
+					))}
+				</div>
+				{topList.length === 0 ? (
+					<div className="no-info-yet">No tops yet</div>
+				) : null}
+			</>
 		);
 	}
 }

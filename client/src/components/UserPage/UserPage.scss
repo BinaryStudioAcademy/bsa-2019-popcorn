@@ -46,9 +46,9 @@ $user-tab-list-space-top: $user-tab-space + $user-tab-active-line;
 }
 
 .no-info-yet {
-	margin-top: 200px;
-	font-size: $header-large;
-	margin-bottom: auto;
+	margin: 30px 0;
+	font-size: 18px;
 	text-align: center;
+	font-style: italic;
 	color: $text-secondary-color;
 }

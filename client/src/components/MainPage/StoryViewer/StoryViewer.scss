@@ -139,7 +139,7 @@
 	.left-arrow {
 		align-self: stretch;
 		display: grid;
-		grid-template-rows: 50% 50%;
+		grid-template-rows: 341px 50%;
 		grid-template-areas:
 			'.'
 			'arrow';
@@ -153,7 +153,7 @@
 	.stories-right-icons {
 		align-self: stretch;
 		display: grid;
-		grid-template-rows: 50% 50%;
+		grid-template-rows: 341px 50%;
 
 		.right-arrow {
 			margin-top: 0;

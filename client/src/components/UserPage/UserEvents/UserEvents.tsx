@@ -116,7 +116,7 @@ class UserEvents extends React.Component<IProps, IState> {
 								</div>
 								<div className="event-list-container">
 									{ownEvents.length === 0 ? (
-										<div className="event-show-warning">
+										<div className="no-info-yet">
 											No events yet. You can create
 										</div>
 									) : (
@@ -130,7 +130,7 @@ class UserEvents extends React.Component<IProps, IState> {
 						</div>
 						<div className="event-list-container">
 							{subscribeEvents.length === 0 ? (
-								<div className="event-show-warning">No events yet</div>
+								<div className="no-info-yet">No events yet</div>
 							) : (
 								this.renderEventList(subscribeEvents, null)
 							)}

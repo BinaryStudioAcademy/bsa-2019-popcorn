@@ -35,7 +35,7 @@ const TopItem: React.FC<ITopItemProps> = ({
 		if (urlForTop === topItem.id) {
 			setTopImageUrl(uploadUrl);
 		}
-	}, [uploadUrl]);
+	}, [topItem.id, uploadUrl, urlForTop]);
 
 	function toogleEdit() {
 		canEditTop(!editTop);

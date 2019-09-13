@@ -257,7 +257,7 @@ class UserSurveys extends React.Component<IProps, IState> {
 																		: config.DEFAULT_AVATAR
 																}
 															/>
-															<div className='author-date'>
+															<div className="author-date">
 																<span className="creator-name">
 																	{survey.user.name}
 																</span>
@@ -292,6 +292,9 @@ class UserSurveys extends React.Component<IProps, IState> {
 					</div>
 					{this.modalIsShown()}
 				</div>
+				{surveys.length === 0 ? (
+					<div className="no-info-yet">No surveys yet</div>
+				) : null}
 			</div>
 		);
 	}
