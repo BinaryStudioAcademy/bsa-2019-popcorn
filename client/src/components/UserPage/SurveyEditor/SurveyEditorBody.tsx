@@ -113,18 +113,19 @@ const SurveyEditorBody: React.FC<IProps> = (props: IProps) => {
 					}}
 				/>
 				<Route
-					path={`${mainPath}/responses/`}
-					render={() => <SurveyStatistics questions={surveyInfo.questions}/>}
+					path={`${mainPath}/responses/individual`}
+					render={() => <SurveyIndividual surveyInfo={surveyInfo} />}
 				/>
-					<Route
+				<Route
+					path={`${mainPath}/responses/`}
+					render={() => <SurveyStatistics questions={surveyInfo.questions} />}
+				/>
+				<Route
 					exact
 					path={`${mainPath}/responses/statistics`}
 					render={() => <SurveyStatistics questions={surveyInfo.questions} />}
 				/>
-				<Route
-					path={`${mainPath}/responses/individual`}
-					render={() => <SurveyIndividual surveyInfo={surveyInfo} />}
-				/>
+
 			</Switch>
 		</div>
 	);

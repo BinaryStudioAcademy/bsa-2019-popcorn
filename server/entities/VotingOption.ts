@@ -19,6 +19,9 @@ export class VotingOption {
   @ManyToOne(type => Voting, { onDelete: "CASCADE" })
   voting: Voting;
 
+  @Column()
+  votingId: string;
+
   @OneToMany(
     type => VotingOptionReaction,
     votingOptionReaction => votingOptionReaction.votingOption

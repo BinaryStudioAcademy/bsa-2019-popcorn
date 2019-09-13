@@ -79,6 +79,12 @@ export function* fetchFiltredMovieList(action) {
 		});
 	} catch (e) {
 		console.log('movie saga fetchMovieList:', e.message);
+		yield put({
+			type: SET_FILTRED_MOVIE_LIST,
+			payload: {
+				movies: null
+			}
+		});
 	}
 }
 
