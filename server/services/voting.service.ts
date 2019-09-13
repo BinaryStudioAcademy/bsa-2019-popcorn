@@ -41,7 +41,8 @@ export const createVoting = async ({
 
 export const getVotingById = async (id: string): Promise<any> => {
   const voting = await getCustomRepository(VotingRepository).getVotingById(id);
-  voting.options = await getVotingOptionByVotingId(voting.id);
+  voting.options = voting.votingOptions;
+  delete voting.votingOptions;
   return voting;
 };
 
