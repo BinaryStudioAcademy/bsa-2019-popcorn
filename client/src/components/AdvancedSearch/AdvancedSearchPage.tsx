@@ -55,7 +55,7 @@ const MovieListRender = (
 			crewValues: [],
 			durationValues: []
 		});
-		return <Spinner />;
+		return <div>Not found</div>;
 	}
 
 	return (
