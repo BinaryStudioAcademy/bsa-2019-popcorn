@@ -5,7 +5,7 @@ import storyReducer from '../components/MainPage/StoryList/story.redux/reducer';
 import feedReducer from '../components/MainPage/FeedBlock/FeedBlock.redux/reducer';
 import eventsReducer from '../components/UserPage/UserEvents/reduser';
 import userTopsReducer from '../components/UserPage/UserTops/UserTops.redux/reducer';
-import adminPanelReducer from '../components/AdminPanelPage/AdminPanelPage.redux/reducer';
+// import adminPanelReducer from '../components/AdminPanelPage/AdminPanelPage.redux/reducer';
 import surveyReducer from '../components/UserPage/UserSurveys/UserSurveys.redux/reducer';
 import reviewReducer from '../components/MovieSeriesPage/MovieSeriesReviews/reducer';
 import topListReducer from '../components/TopListPage/TopListPage.redux/reducer';
@@ -29,7 +29,7 @@ export default combineReducers({
 	feed: feedReducer,
 	events: eventsReducer,
 	userTops: userTopsReducer,
-	adminPanel: adminPanelReducer,
+	// adminPanel: adminPanelReducer,
 	survey: surveyReducer,
 	review: reviewReducer,
 	topList: topListReducer,

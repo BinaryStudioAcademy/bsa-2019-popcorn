@@ -39,76 +39,165 @@ interface IProps {
 }
 
 const AdminPanelPage: React.FC<IProps> = props => {
-	const [activeEntity, setActiveEntity] = useState();
+	// const [activeEntity, setActiveEntity] = useState();
+	//
+	// const deleteEntityItem = e => {
+	// 	if (e.target.classList.contains('entity-data-btn')) {
+	// 		const id = e.currentTarget.dataset.itemId;
+	// 		const deleteEntity = `delete${activeEntity[0].toUpperCase() +
+	// 			activeEntity.slice(1)}`;
+	//
+	// 		props[deleteEntity](id);
+	// 	}
+	// };
+	//
+	// if (activeEntity && !props[activeEntity]) {
+	// 	const fetchEntity = `fetch${activeEntity[0].toUpperCase() +
+	// 		activeEntity.slice(1)}`;
+	// 	props[fetchEntity]();
+	// }
 
-	const deleteEntityItem = e => {
-		if (e.target.classList.contains('entity-data-btn')) {
-			const id = e.currentTarget.dataset.itemId;
-			const deleteEntity = `delete${activeEntity[0].toUpperCase() +
-				activeEntity.slice(1)}`;
+	// console.group();
+	// console.log(activeEntity);
+	// console.log(props[activeEntity]);
+	// console.groupEnd();
 
-			props[deleteEntity](id);
-		}
-	};
-
-	if (activeEntity && !props[activeEntity]) {
-		const fetchEntity = `fetch${activeEntity[0].toUpperCase() +
-			activeEntity.slice(1)}`;
-		props[fetchEntity]();
+	return <span />;
+	{
+		/*<div className="admin-panel-page">*/
 	}
-
-	console.group();
-	console.log(activeEntity);
-	console.log(props[activeEntity]);
-	console.groupEnd();
-
-	return (
-		<div className="admin-panel-page">
-			<div className="entity-list">
-				{entitiesConfig.map((entity, index) => (
-					<label className="entity-item" key={index}>
-						<input
-							type="radio"
-							name="entity"
-							value={entity.name}
-							onChange={e => setActiveEntity(e.target.value)}
-						/>
-						<span>{entity.label}</span>
-					</label>
-				))}
-			</div>
-			{activeEntity && !props[activeEntity] ? (
-				<span className="entity-data-warning">Loading...</span>
-			) : null}
-			{activeEntity && props[activeEntity] && props[activeEntity].length ? (
-				<table className="entity-data">
-					<thead>
-						<tr>
-							{Object.keys(props[activeEntity][0]).map((key, index) => (
-								<th key={index}>{key}</th>
-							))}
-						</tr>
-					</thead>
-					<tbody>
-						{props[activeEntity].map((item, index) => (
-							<tr key={index} data-item-id={item.id} onClick={deleteEntityItem}>
-								{Object.keys(item).map((key, index) => (
-									<td className="entity-data-value" key={index}>
-										{typeof item[key] === 'object' ? 'ref' : item[key]}
-									</td>
-								))}
-								<td>
-									<button className="entity-data-btn">delete</button>
-								</td>
-							</tr>
-						))}
-					</tbody>
-				</table>
-			) : activeEntity && props[activeEntity] && !props[activeEntity].length ? (
-				<span className="entity-data-warning">Empty data</span>
-			) : null}
-		</div>
-	);
+	{
+		/*	<div className="entity-list">*/
+	}
+	{
+		/*		{entitiesConfig.map((entity, index) => (*/
+	}
+	{
+		/*			<label className="entity-item" key={index}>*/
+	}
+	{
+		/*				<input*/
+	}
+	{
+		/*					type="radio"*/
+	}
+	{
+		/*					name="entity"*/
+	}
+	{
+		/*					value={entity.name}*/
+	}
+	{
+		/*					onChange={e => setActiveEntity(e.target.value)}*/
+	}
+	{
+		/*				/>*/
+	}
+	{
+		/*				<span>{entity.label}</span>*/
+	}
+	{
+		/*			</label>*/
+	}
+	{
+		/*		))}*/
+	}
+	{
+		/*	</div>*/
+	}
+	{
+		/*	{activeEntity && !props[activeEntity] ? (*/
+	}
+	{
+		/*		<span className="entity-data-warning">Loading...</span>*/
+	}
+	{
+		/*	) : null}*/
+	}
+	{
+		/*	{activeEntity && props[activeEntity] && props[activeEntity].length ? (*/
+	}
+	{
+		/*		<table className="entity-data">*/
+	}
+	{
+		/*			<thead>*/
+	}
+	{
+		/*				<tr>*/
+	}
+	{
+		/*					{Object.keys(props[activeEntity][0]).map((key, index) => (*/
+	}
+	{
+		/*						<th key={index}>{key}</th>*/
+	}
+	{
+		/*					))}*/
+	}
+	{
+		/*				</tr>*/
+	}
+	{
+		/*			</thead>*/
+	}
+	{
+		/*			<tbody>*/
+	}
+	{
+		/*				{props[activeEntity].map((item, index) => (*/
+	}
+	{
+		/*					<tr key={index} data-item-id={item.id} onClick={deleteEntityItem}>*/
+	}
+	{
+		/*						{Object.keys(item).map((key, index) => (*/
+	}
+	{
+		/*							<td className="entity-data-value" key={index}>*/
+	}
+	{
+		/*								{typeof item[key] === 'object' ? 'ref' : item[key]}*/
+	}
+	{
+		/*							</td>*/
+	}
+	{
+		/*						))}*/
+	}
+	{
+		/*						<td>*/
+	}
+	{
+		/*							<button className="entity-data-btn">delete</button>*/
+	}
+	{
+		/*						</td>*/
+	}
+	{
+		/*					</tr>*/
+	}
+	{
+		/*				))}*/
+	}
+	{
+		/*			</tbody>*/
+	}
+	{
+		/*		</table>*/
+	}
+	{
+		/*	) : activeEntity && props[activeEntity] && !props[activeEntity].length ? (*/
+	}
+	{
+		/*		<span className="entity-data-warning">Empty data</span>*/
+	}
+	{
+		/*	) : null}*/
+	}
+	{
+		/*</div>*/
+	}
 };
 
 const mapStateToProps = (rootState, props) => ({

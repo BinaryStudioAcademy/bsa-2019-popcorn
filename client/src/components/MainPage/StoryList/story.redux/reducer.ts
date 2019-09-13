@@ -5,6 +5,7 @@ import {
 	DISPLAY_FONT_PICKER,
 	DISPLAY_INPUT,
 	DISPLAY_PICKER,
+	FETCH_STORIES,
 	RESET_NEW_STORY,
 	SAVE_CROPPED_IMAGE,
 	SAVE_MOVIE,
@@ -21,6 +22,7 @@ import findIndexInArray from '../../../../helpers/findIndexInArray';
 
 const initialState: {
 	stories: any;
+	loading: boolean;
 	newStory: INewStory;
 	cursorPosition: { start: number; end: number };
 	title: string;
@@ -30,6 +32,7 @@ const initialState: {
 	isShownInput: boolean;
 } = {
 	stories: null,
+	loading: false,
 	newStory: {
 		image_url: null,
 		caption: '',
@@ -54,7 +57,13 @@ export default function(state = initialState, action) {
 		case SET_STORIES:
 			return {
 				...state,
-				stories: action.payload.stories
+				stories: action.payload.stories,
+				loading: false
+			};
+		case FETCH_STORIES:
+			return {
+				...state,
+				loading: true
 			};
 		case SET_CAPTION_NEWSTORY:
 			return {

@@ -25,11 +25,16 @@ interface IProps {
 	createComment: (userId: string, text: string, postId: string) => any;
 	addNewComment: (comment: IComment) => any;
 	addNewReaction?: (reactions: IReaction[], postId: string) => any;
+	loadingPosts: boolean;
+	loadingStories: boolean;
 }
 
 const FeedBlock = (props: IProps) => {
-	if (!props.posts && !props.stories) {
+	if (!props.loadingPosts && !props.posts) {
 		props.fetchPosts();
+	}
+
+	if (!props.loadingStories && !props.stories) {
 		props.fetchStories();
 	}
 	return props.posts && props.stories ? (
@@ -52,6 +57,8 @@ const FeedBlock = (props: IProps) => {
 const mapStateToProps = (rootState, props) => ({
 	...props,
 	posts: rootState.feed.posts,
+	loadingPosts: rootState.feed.loading,
+	loadingStories: rootState.story.loading,
 	stories: rootState.story.stories
 });
 
