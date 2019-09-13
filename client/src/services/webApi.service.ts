@@ -11,6 +11,7 @@ interface IRequestInit {
 }
 
 export default async (args: IRequestInit) => {
+	console.log(args.endpoint);
 	try {
 		const res: Response = await fetch(getUrl(args), getArgs(args));
 
