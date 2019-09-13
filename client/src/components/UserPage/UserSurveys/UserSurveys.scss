@@ -34,6 +34,7 @@
 
 			.survey-info {
 				margin-left: 20px;
+				margin-right: 5px;
 			}
 			.survey-item-right {
 				display: flex;
@@ -47,11 +48,12 @@
 					width: 30px;
 					height: 30px;
 					border-radius: 50%;
+					margin-right: 10px;
 				}
 
-				.creator-name {
-					margin-left: 10px;
-					align-self: center;
+				.author-date {
+					display: flex;
+					flex-direction: column;
 				}
 			}
 			.icon-users-survey {
@@ -60,11 +62,12 @@
 			.date-and-author {
 				display: flex;
 				flex-direction: column;
+				width: 160px;
 			}
 			.creation-date {
+				margin-top: 5px;
 				font-size: 0.7em;
 				color: $text-secondary-color;
-				align-self: flex-end;
 			}
 			.survey-image-wrp {
 				width: 300px;

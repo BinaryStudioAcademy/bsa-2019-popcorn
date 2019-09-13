@@ -257,17 +257,19 @@ class UserSurveys extends React.Component<IProps, IState> {
 																		: config.DEFAULT_AVATAR
 																}
 															/>
-															<span className="creator-name">
-																{survey.user.name}
-															</span>
+															<div className='author-date'>
+																<span className="creator-name">
+																	{survey.user.name}
+																</span>
+																<Moment
+																	className="creation-date"
+																	format=" D MMMM HH:mm "
+																	local
+																>
+																	{String(survey.created_at)}
+																</Moment>
+															</div>
 														</div>
-														<Moment
-															className="creation-date"
-															format=" D MMMM HH:mm "
-															local
-														>
-															{String(survey.created_at)}
-														</Moment>
 													</div>
 												)}
 											</div>
