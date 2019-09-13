@@ -41,6 +41,7 @@ interface IUserTopProps {
 	history?: {
 		push: (path: string) => any;
 	};
+	isLoading: boolean;
 }
 
 const newTop = (): ITopItem => {
@@ -137,7 +138,7 @@ class UserTops extends React.Component<IUserTopProps, IUserTopsState> {
 
 		const topList = this.state.topList;
 
-		if (!topList) {
+		if (!topList || this.props.isLoading) {
 			return <Spinner />;
 		}
 
@@ -174,7 +175,8 @@ const mapStateToProps = (rootState, props) => ({
 	userId: rootState.profile.profileInfo.id,
 	uploadUrl: rootState.userTops.uploadUrl,
 	urlForTop: rootState.userTops.urlForTop,
-	topList: rootState.userTops.topList
+	topList: rootState.userTops.topList,
+	isLoading: rootState.userTops.isLoading,
 });
 
 const actions = {

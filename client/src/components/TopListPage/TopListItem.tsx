@@ -43,6 +43,7 @@ const TopListItem: React.FC<ITopLIstItemProps> = ({ top }) => {
 			<div className="top-image-section">
 				<NavLink to={`/tops/${top.id}`}>
 					<Image
+						key={top.topImageUrl}
 						src={top.topImageUrl}
 						defaultSrc={config.DEFAULT_TOP_IMAGE}
 						alt="top-image"
@@ -75,6 +76,7 @@ const TopListItem: React.FC<ITopLIstItemProps> = ({ top }) => {
 					<NavLink to={`/user-page/${top.user.id}`}>
 						<div className="user-info">
 							<Image
+								key={top.user.id}
 								src={top.user.avatar}
 								alt="user"
 								defaultSrc={config.DEFAULT_AVATAR}

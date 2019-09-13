@@ -6,6 +6,7 @@ interface IStateTops {
 	alreadySearch: boolean;
 	elasticSearchMovies: any;
 	topList: any;
+	isLoading: boolean;
 }
 
 const initialState: IStateTops = {
@@ -14,10 +15,11 @@ const initialState: IStateTops = {
 	alreadySearch: false,
 	elasticSearchMovies: null,
 	// topList: new Array()
-	topList: undefined
+	topList: undefined,
+	isLoading: false
 };
 
-export default function(state = initialState, action) {
+export default function (state = initialState, action) {
 	switch (action.type) {
 		case ActionTypes.SET_TOP_IMAGE: {
 			const { uploadUrl, topId } = action.payload;
@@ -60,7 +62,8 @@ export default function(state = initialState, action) {
 
 			return {
 				...state,
-				topList: [...updatedTopList]
+				topList: [...updatedTopList],
+				isLoading:false
 			};
 		}
 		case ActionTypes.DELETE_TOP_SUCCESS: {
@@ -70,7 +73,8 @@ export default function(state = initialState, action) {
 
 			return {
 				...state,
-				topList: [...newTopList]
+				topList: [...newTopList],
+				isLoading:false
 			};
 		}
 		case ActionTypes.FINISH_SEARCH_ELASTIC_FILMS: {
@@ -79,6 +83,13 @@ export default function(state = initialState, action) {
 				elasticSearchMovies: [],
 				alreadySearch: false
 			};
+		}
+		case ActionTypes.DELETE_TOP:
+		case ActionTypes.UPDATE_TOP: {
+			return {
+				...state,
+				isLoading: true
+			}
 		}
 		default:
 			return state;

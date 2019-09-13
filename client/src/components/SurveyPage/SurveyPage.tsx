@@ -16,22 +16,27 @@ class SurveyPage extends React.Component<ISurveyPageProps> {
 	componentDidMount() {
 		this.props.getSurveyById(this.props.match.params.id);
 	}
+	componentDidUpdate() {
+		if (this.props.survey && (this.props.match.params.id !== this.props.survey.id)) {
+			this.props.getSurveyById(this.props.match.params.id);
+		}
+	}
 
 	render() {
 		const { loading = true, survey } = this.props;
-		
+
 		return (
 			<>
 				{loading ? (
 					<Spinner />
 				) : (
-					<div>
-						<Survey
-							surveyInfo={survey}
-							isPreview={false}
-						/>
-					</div>
-				)}
+						<div>
+							<Survey
+								surveyInfo={survey}
+								isPreview={false}
+							/>
+						</div>
+					)}
 			</>
 		);
 	}

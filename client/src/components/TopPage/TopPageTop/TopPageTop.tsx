@@ -16,6 +16,7 @@ const TopPageTop: React.SFC<ITopProps> = ({ top }) => {
 		<div className="top">
 			<div className="top-poster-wrp">
 				<Image
+					key={top.id}
 					src={top.topImageUrl}
 					defaultSrc={config.DEFAULT_TOP_IMAGE}
 					alt="top-image"
@@ -30,6 +31,7 @@ const TopPageTop: React.SFC<ITopProps> = ({ top }) => {
 				>
 					<div className="top-author">
 						<Image
+							key={top.user.id}
 							src={top.user.avatar}
 							defaultSrc={config.DEFAULT_AVATAR}
 							alt="user-avatar"
