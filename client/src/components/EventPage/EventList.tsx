@@ -43,14 +43,13 @@ const EventList: React.FC<IProps> = props => {
 			getAllEvents();
 			setEvents(allEvents);
 		}
-	});
+	}, [events, getAllEvents, allEvents]);
 	const editEvent = () => {
 		setOpenEventEditor(!openEventEditor);
 	};
 	const saveEvent = (event: IEventFormatClient) => {
 		props.saveEvent(event);
 	};
-	console.log(events);
 	if (!events) {
 		return <Spinner />;
 	}
