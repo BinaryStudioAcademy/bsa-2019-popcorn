@@ -3,6 +3,7 @@ import { fetchTops } from './TopListPage.redux/actions';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import Spinner from '../shared/Spinner';
+import CreateExtraBtn from '../shared/CreateExtraBtn'
 import TopListItem from './TopListItem';
 import './TopList.scss';
 
@@ -35,7 +36,11 @@ const TopList: React.FC<ITopLIstProps> = props => {
 		<TopListItem top={props.passedTop} />
 	);
 
-	return <div className="top-list-wrapper">{topListItems}</div>;
+	return (
+		<div className="top-list-wrapper">
+			<CreateExtraBtn handleClick={() => {}} body={'Create top'} />
+			{topListItems}
+		</div>);
 };
 
 const mapStateToProps = (rootState, props) => ({
