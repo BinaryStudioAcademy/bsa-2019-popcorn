@@ -251,7 +251,6 @@
 		.save-btn {
 			height: 43px;
 			border-radius: 55px;
-			width: 100px;
 			border: none;
 			outline: none;
 			font-size: $header-medium;
@@ -262,6 +261,8 @@
 			margin-bottom: 20px;
 			margin-top: 20px;
 			margin-right: 20px;
+			padding: 0 40px;
+			cursor: pointer;
 			&:hover {
 				background-color: rgb(216, 86, 0);
 			}

@@ -1,7 +1,8 @@
 .event-item {
 	padding: 10px;
 	background: #fff;
-	border: 1px solid rgba(0, 0, 0, 0.11);
+	box-shadow: 0px 0px 11px rgba(0, 0, 0, 0.11);
+	border-radius: 2px;
 	box-sizing: border-box;
 	margin: 20px 0;
 
@@ -107,10 +108,6 @@
 						margin-right: 10px;
 						color: #00000099;
 						font-size: 15px;
-
-						&:hover {
-							border-color: rgba(0, 0, 0, 0.05);
-						}
 					}
 				}
 			}

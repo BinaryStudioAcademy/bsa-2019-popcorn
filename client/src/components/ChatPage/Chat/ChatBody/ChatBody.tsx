@@ -42,6 +42,12 @@ class ChatBody extends React.Component<IProps, IState> {
 	render() {
 		let tmpDate = '';
 		const { messages, userId } = this.props;
+		if ( !messages || messages.length === 0 ) {
+			return <div className="chat-body no-messages">
+				There are no messages yet. Write the first message!
+			</div>
+		} 
+
 		return (
 			<ScrollToBottom className="chat-body" followButtonClassName="to-bottom">
 				{messages.map((message, i) => {

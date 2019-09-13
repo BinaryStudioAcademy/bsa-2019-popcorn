@@ -43,12 +43,11 @@ class Login extends React.Component<IProps, IState, IValues> {
 
 	linkToRegistration() {
 		return (
-			<div className="form-hint">
-				Already have an account? &nbsp;
+			<div className="form-hint already-account-hint">
+				Already have an account?&nbsp;
 				<NavLink to={'/registration'} className="form-hint-link">
 					Register
 				</NavLink>
-				<i className="icon icon-arrow-right">></i>
 			</div>
 		);
 	}
@@ -74,7 +73,7 @@ class Login extends React.Component<IProps, IState, IValues> {
 							className="form-input-error"
 						/>
 					</label>
-					<label className="form-label">
+					<label className="form-label form-label-password">
 						<Field
 							name="password"
 							type="password"
@@ -91,6 +90,11 @@ class Login extends React.Component<IProps, IState, IValues> {
 							className="form-input-error"
 						/>
 					</label>
+					<div className="form-hint forget-password-hint">
+						<NavLink to={'/reset'} className="form-hint-link">
+							Forget password?
+						</NavLink>
+					</div>
 					<div className="form-btn-wrapper">
 						<button
 							type="submit"
@@ -143,12 +147,6 @@ class Login extends React.Component<IProps, IState, IValues> {
 						);
 					}}
 				/>
-				<div className="form-hint">
-					<NavLink to={'/reset'} className="form-hint-link">
-						Forget password?
-					</NavLink>
-					<i className="icon icon-arrow-right" />
-				</div>
 				{this.linkToRegistration()}
 				<div style={{ marginTop: 20 }}>
 					<a

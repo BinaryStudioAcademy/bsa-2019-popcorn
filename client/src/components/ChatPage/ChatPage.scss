@@ -124,6 +124,14 @@
 				margin-left: 10px;
 			}
 		}
+		.no-messages {
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			font-size: 1.2em !important;
+			color: $text-secondary-color;
+			font-weight: 600;
+		}
 		.chat-body {
 			height: 500px;
 			overflow: auto;

@@ -48,10 +48,10 @@
 		.watch-items-container {
 			margin-top: 30px;
 			width: 100%;
-			display: grid;
-			grid-template-columns: repeat(auto-fill, minmax(220px, 230px));
-			grid-column-gap: 10px;
+			display: flex;
+			justify-content: space-between;
 			align-items: center;
+			flex-wrap: wrap;
 		}
 	}
 }

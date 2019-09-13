@@ -3,14 +3,19 @@ import {
 	ADD_NEW_POST,
 	ADD_NEW_REACTION,
 	DELETE_POST_FROM_LIST,
+	FETCH_POSTS,
 	SET_POSTS,
 	UPDATE_POST
 } from './actionTypes';
 import findIndexInArray from '../../../../helpers/findIndexInArray';
 import IPost from '../../Post/IPost';
 
-const initialState: { posts: null | IPost[] } = {
-	posts: null
+const initialState: {
+	posts: null | IPost[];
+	loading?: any;
+} = {
+	posts: null,
+	loading: false
 };
 
 export default function(state = initialState, action) {
@@ -18,7 +23,13 @@ export default function(state = initialState, action) {
 		case SET_POSTS:
 			return {
 				...state,
-				posts: action.payload.posts
+				posts: action.payload.posts,
+				loading: false
+			};
+		case FETCH_POSTS:
+			return {
+				...state,
+				loading: true
 			};
 		case ADD_NEW_COMMENT:
 			if (!state.posts) {
@@ -32,19 +43,26 @@ export default function(state = initialState, action) {
 				return state;
 			}
 			const post = posts[index];
-			if (!post.comments) post.comments = [comment];
-			else post.comments.unshift(comment);
+			if (!post.comments) {
+				post.comments = [comment];
+			} else {
+				post.comments.unshift(comment);
+			}
 			return {
 				...state,
 				posts: [...posts]
 			};
 		case ADD_NEW_REACTION:
-			if (!state.posts) return state;
+			if (!state.posts) {
+				return state;
+			}
 			const postsForNewReact = [...state.posts];
 			const { reactions, postId } = action.payload;
 
 			const i = findIndexInArray(postsForNewReact, 'id', postId);
-			if (i === -1) return state;
+			if (i === -1) {
+				return state;
+			}
 			const postForNewReact = postsForNewReact[i];
 			postForNewReact.reactions = [...reactions];
 

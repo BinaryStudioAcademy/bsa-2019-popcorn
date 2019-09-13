@@ -225,12 +225,11 @@ class Registration extends React.Component<IProps, IState> {
 								</Form>
 							)}
 						/>
-						<div className="form-hint">
+						<div className="form-hint already-account-hint">
 							Already have an account? &nbsp;
 							<NavLink to={'/login'} className="form-hint-link">
 								Login
 							</NavLink>
-							<i className="icon icon-arrow-right"> > </i>
 							<div style={{ marginTop: 20 }}>
 								<a
 									href={`${window.location.href.replace(
