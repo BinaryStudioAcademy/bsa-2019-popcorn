@@ -1,3 +1,5 @@
+@import '../../../styles/variables.scss';
+
 * {
 	box-sizing: border-box;
 }
@@ -124,7 +126,7 @@ body {
 
 	display: inline-flex;
 
-	min-width: 174px;
+	width: 100%;
 	height: 36px;
 	margin: 0;
 	padding: 0;
@@ -168,16 +170,28 @@ body {
 }
 
 .form-hint-link {
-	text-decoration: underline;
-	text-transform: uppercase;
+	text-decoration: none;
+	text-transform: none;
 
-	color: #000;
+	font-weight: 600;
+	color: $orange;
+	font-size: 14px;
 }
 
-.form-hint-link:hover {
-	text-decoration: underline;
+.forget-password-hint {
+	text-align: left;
+	margin-bottom: 5px;
+}
+
+.already-account-hint {
+	text-align: left;
 }
 
 .register-error {
 	text-align: center;
+}
+
+
+.form-label-password {
+	margin-bottom: 5px;
 }
