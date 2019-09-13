@@ -69,11 +69,11 @@ class getAddStoryPopupContent extends React.Component<IProps> {
 		{ image_url, backgroundColor, caption, type }: INewStory,
 		photoSaved
 	) {
-		return caption && photoSaved === true && image_url
+		return photoSaved === true && image_url
 			? true
-			: caption && photoSaved === false && image_url
+			: photoSaved === false && image_url
 			? false
-			: caption && photoSaved === false && !image_url
+			: photoSaved === false && !image_url
 			? true
 			: false || type === 'voting';
 	}
