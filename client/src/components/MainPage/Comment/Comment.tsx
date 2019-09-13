@@ -61,7 +61,9 @@ class Comment extends Component<ICommentProps, ICommentState> {
 							{comment.parentId && <i> {comment.parentId}, </i>} {comment.text}
 						</div>
 						<p className="comment-date">
-							{moment(comment.createdAt).fromNow()}{' '}
+							{moment(comment.createdAt).isValid()
+								? moment(comment.createdAt).fromNow()
+								: ''}{' '}
 						</p>
 					</p>
 				</div>
