@@ -68,21 +68,27 @@ export const getAdviceByList = async (list: any[]) => {
   const set = new Set();
   list.forEach(elem => set.add(elem.id));
 
-  const inList = () => {
-    return movies.some(movie => {
-      return set.has(movie.id);
-    });
-  };
+  const fetchMovies = async () => {
+    let movies;
 
-  let movies;
-  do {
     movies =
       list.length >= 3
         ? await getMoviesFromList(list, minimalRating, amount)
         : await getRandomMovie(amount);
-  } while (inList());
 
-  return movies;
+    if (inList(movies)) {
+      return fetchMovies();
+    }
+
+    return movies;
+  };
+  const inList = adviceMovie => {
+    return adviceMovie.some(movie => {
+      return set.has(movie.id);
+    });
+  };
+
+  return fetchMovies();
 };
 
 const getRandomMovie = async amountOfMovie => {
@@ -98,11 +104,10 @@ const getMoviesFromList = async (
   rating: string,
   amountOfMovie: number
 ) => {
-  console.log(list);
-  return await Promise.all(
-    list[getRandomNumber(0, list.length / 2 - 1)].map(
-      async movie => await movieByGenre(movie, rating, amountOfMovie)
-    )
+  return await movieByGenre(
+    list[getRandomNumber(0, list.length - 1)],
+    rating,
+    amountOfMovie
   );
 };
 
@@ -121,5 +126,5 @@ const movieByGenre = async (
     (await getByGTRatingAndGenre(rating, genres)) || []
   ).hits.hits.map(movie => movie._source);
 
-  getRandomFromArray(movies, amountOfMovie);
+  return getRandomFromArray(movies, amountOfMovie);
 };
