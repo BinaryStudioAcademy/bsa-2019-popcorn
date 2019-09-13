@@ -157,7 +157,7 @@ class StoryViewer extends PureComponent<IProps, IState> {
 
 	render() {
 		const { stories } = this.props;
-		console.log(stories[0].image_url);
+
 		return (
 			<div className="story-viewer">
 				<p className="left-arrow" onClick={this.goToPrevStory}>
