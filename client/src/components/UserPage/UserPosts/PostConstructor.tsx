@@ -289,13 +289,13 @@ class PostConstructor extends React.Component<
 								<span onClick={this.onSaveCropped}>
 									<FontAwesomeIcon
 										icon={faCheckCircle}
-										className="fontAwesomeIcon"
+										className="fontAwesomeIcon cropperSettingsIcon"
 									/>
 								</span>
 								<span onClick={this.onCancel}>
 									<FontAwesomeIcon
 										icon={faTimesCircle}
-										className={'fontAwesomeIcon'}
+										className={'fontAwesomeIcon cropperSettingsIcon'}
 									/>
 								</span>
 							</div>

@@ -196,7 +196,7 @@ class ProfileComponent extends Component<ProfileProps, IProfileComponentState> {
 							>
 								<FontAwesomeIcon
 									icon={faCheckCircle}
-									className="fontAwesomeIcon"
+									className="cropperSettingsIcon"
 								/>
 							</span>
 							<span
@@ -206,7 +206,7 @@ class ProfileComponent extends Component<ProfileProps, IProfileComponentState> {
 							>
 								<FontAwesomeIcon
 									icon={faTimesCircle}
-									className={'fontAwesomeIcon'}
+									className={'cropperSettingsIcon'}
 								/>
 							</span>
 						</div>

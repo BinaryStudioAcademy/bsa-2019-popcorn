@@ -5,3 +5,12 @@
 	height: 100%;
 	color: $text-base-color;
 }
+
+.cropperSettingsIcon {
+	margin: 5px 0;
+	font-size: 30px;
+	color: $text-base-color;
+	&:hover {
+		cursor: pointer;
+	}
+}
