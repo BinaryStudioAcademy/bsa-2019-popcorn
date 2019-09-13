@@ -86,7 +86,7 @@ class ChooseExtraOption extends React.Component<IProps> {
 			);
 		}
 		const create = () => this.setState({ create: false });
-		console.log(data);
+
 		return (
 			<div className={'post-constructor-modal'}>
 				<div className="postconstr-wrp postconstr-wrp--option">

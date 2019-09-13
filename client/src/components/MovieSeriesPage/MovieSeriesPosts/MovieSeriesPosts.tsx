@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import PostList from '../../MainPage/PostList/PostList';
+import './MovieSeriesPosts.scss';
 
 interface IProps {
 	fetchPostsByFilm: () => void;
