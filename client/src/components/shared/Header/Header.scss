@@ -12,9 +12,10 @@
 
 	.header-right {
 		display: grid;
-		grid-template-columns: 380px 56px 110px;
-		grid-gap: 70px;
+		grid-template-columns: 380px 56px 150px;
+		grid-gap: 30px;
 		align-items: center;
+		justify-content: flex-end;
 	}
 
 	.notifications-message {
@@ -109,7 +110,6 @@
 		font-size: $menu-font-size;
 		line-height: 17px;
 		align-items: center;
-		text-align: center;
 		letter-spacing: $base-letter-spacing;
 		color: $text-base-color;
 
@@ -127,7 +127,7 @@
 
 	.user-info {
 		display: grid;
-		grid-template-columns: 50px 1fr;
+		grid-template-columns: 35px 1fr;
 
 		&:nth-of-type(2) .modal,
 		&:nth-of-type(3) .modal {
@@ -143,8 +143,8 @@
 		}
 
 		img {
-			width: 50px;
-			height: 50px;
+			width: 35px;
+			height: 35px;
 			border-radius: 50%;
 		}
 	}
@@ -205,11 +205,12 @@
 
 	.notifications {
 		display: flex;
+		justify-content: flex-end;
 
 		.notify-icon {
 			display: grid;
-			margin-left: 21px;
 			justify-items: center;
+			width: 20px;
 		}
 
 		.message-icon {

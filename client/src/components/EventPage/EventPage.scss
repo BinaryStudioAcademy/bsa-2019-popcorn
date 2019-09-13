@@ -167,3 +167,10 @@ $orange: #fb8700;
 .disabled:hover {
 	cursor: default !important;
 }
+
+@media screen and(min-width: 1440px) {
+	.event-page-tabs {
+		width: 48%;
+		min-width: 550px;
+	}
+}
