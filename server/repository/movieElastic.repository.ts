@@ -125,9 +125,10 @@ export const getByTitle = async (title: string) => {
       method: "POST",
       body: JSON.stringify({
         query: {
-          fuzzy: {
+          match: {
             original_title: {
-              value: `${title}`
+              query: `${title}`,
+              "fuzziness": "auto",
             }
           }
         }
