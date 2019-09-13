@@ -199,7 +199,7 @@ class Main extends React.Component<IProps> {
 							<Route path={`/chat`} component={ChatPage} />
 							<Route path={`/movie-list/:id`} component={UserMovieList} />
 							<Route path={`/collections`} component={Collections} />
-							<Route path={'/adviceMe'} component={AdviceMe} />
+							<Route path={'/advise-me'} component={AdviceMe} />
 							<Route path={`/*`} exact component={NotFound} />
 						</Switch>
 					</div>
