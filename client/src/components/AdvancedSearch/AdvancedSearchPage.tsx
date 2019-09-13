@@ -57,6 +57,7 @@ const MovieListRender = (
 		});
 		return <Spinner />;
 	}
+
 	return (
 		<MovieList
 			movies={movieList}
