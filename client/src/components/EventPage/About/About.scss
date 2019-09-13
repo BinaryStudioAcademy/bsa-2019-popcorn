@@ -12,22 +12,19 @@ $input-letter-spacing: 0.5px;
 		margin-bottom: 15px;
 	}
 
-	.location {
-		margin-bottom: 15px;
+	.location-info {
+		width: 50%;
+		line-height: 22px;
+		align-self: center;
+		float: left;
+	}
 
-		.location-info {
-			display: flex;
-			justify-content: space-between;
-			line-height: 22px;
-		}
-
-		.location-btn {
-			display: block;
-			width: 100px;
-			cursor: pointer;
-			font-size: 14px;
-			color: blue;
-		}
+	.location-btn {
+		display: block;
+		width: 100px;
+		cursor: pointer;
+		font-size: 14px;
+		color: blue;
 	}
 
 	.icon {
