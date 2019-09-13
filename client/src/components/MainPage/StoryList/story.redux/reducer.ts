@@ -134,13 +134,29 @@ export default function(state = initialState, action) {
 				}
 			};
 		case ADD_STORY:
-			const stories = state.stories
-				? [action.payload.story, ...state.stories]
-				: [action.payload.story];
-			return {
-				...state,
-				stories
-			};
+			const stories = state.stories;
+			if (!stories) {
+				return state;
+			}
+
+			const indexOfNewStory = findIndexInArray(
+				stories,
+				'id',
+				action.payload.story.id
+			);
+
+			if (indexOfNewStory === -1) {
+				return {
+					...state,
+					stories: [action.payload.story, ...state.stories]
+				};
+			} else {
+				stories[indexOfNewStory] = action.payload.story;
+				return {
+					...state,
+					stories: [...stories]
+				};
+			}
 		case RESET_NEW_STORY:
 			return {
 				...state,
