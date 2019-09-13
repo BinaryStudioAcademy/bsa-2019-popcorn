@@ -11,6 +11,7 @@ import { bindActionCreators } from 'redux';
 import './Follow.scss';
 import Image from '../../../shared/Image/Image';
 import config from '../../../../config';
+import Spinner from '../../../shared/Spinner';
 
 interface IFollowProps {
 	userId: string;
@@ -86,7 +87,9 @@ const Follow: React.FC<IFollowProps> = props => {
 						props.followSystem[props.userId] &&
 						props.followSystem[props.userId][modalType]
 					) ? (
-						<div>Loading ...</div>
+						<div className="follow-spinner">
+							<Spinner />
+						</div>
 					) : (
 						<ul className="follow-list">
 							{props.followSystem[props.userId][modalType].map(follower => {

@@ -4,6 +4,14 @@
 	width: 100%;
 }
 
+.follow-spinner {
+	.spinner-wrp {
+		.lds-css {
+			z-index: 0;
+		}
+	}
+}
+
 .follow-counter-wrp {
 	width: 50%;
 	display: inline-block;
@@ -45,6 +53,7 @@
 	width: 400px;
 	height: 500px;
 	padding: 0;
+
 	&-close {
 		top: 6px;
 	}
