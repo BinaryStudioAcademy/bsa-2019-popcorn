@@ -5,6 +5,7 @@
 	font-size: $post-font-size;
 	display: flex;
 	align-items: center;
+
 	a {
 		display: contents;
 	}
@@ -22,6 +23,10 @@
 		display: flex;
 		flex-direction: column;
 		justify-content: center;
+		div {
+			word-wrap: break-word;
+			max-width: 100ch;
+		}
 	}
 }
 .comment-item-reply {

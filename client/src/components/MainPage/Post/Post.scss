@@ -23,7 +23,6 @@
 	line-height: 19px;
 	letter-spacing: $base-letter-spacing;
 	position: relative;
-	word-wrap: break-word;
 
 	> * {
 		margin: 0 25px;
@@ -90,6 +89,10 @@
 	.post-body {
 		margin-top: 25px;
 		margin-bottom: 30px;
+		p {
+			word-wrap: break-word;
+			max-width: 100ch;
+		}
 	}
 
 	.tag-items {
