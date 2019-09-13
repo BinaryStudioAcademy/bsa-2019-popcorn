@@ -19,7 +19,6 @@ const TopPage: React.SFC<ITopProps> = ({ match }) => {
 	const [top, setTop] = useState();
 	useEffect(() => {
 		if (top && match.params.id !== top.id) {
-			console.log("here2")
 			webApi({
 				method: 'GET',
 				endpoint: `/api/top/${match.params.id}`
