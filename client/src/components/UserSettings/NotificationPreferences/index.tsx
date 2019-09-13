@@ -17,10 +17,6 @@ interface IState {
 
 const emailPreferences = [
 	{
-		key: 'emailNotificationNews',
-		value: 'News'
-	},
-	{
 		key: 'emailNotificationUpdatesFromFollowed',
 		value: 'Updates from followed'
 	},

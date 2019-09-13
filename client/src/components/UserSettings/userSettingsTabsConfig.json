@@ -6,9 +6,5 @@
 	{
 		"link": "/notification",
 		"label": "Notification Preferences"
-	},
-	{
-		"link": "/privacy",
-		"label": "Privacy Settings"
 	}
 ]
