@@ -124,9 +124,6 @@ export const welcome = () => {
 						color: #000;
 					'
 				>
-					Please, go to <a href='${
-            process.env.FRONTEND_HOST
-          }'>link</a> for confirm registration.
 				</p>
 
 				<p
