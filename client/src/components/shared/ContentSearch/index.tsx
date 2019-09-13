@@ -139,7 +139,7 @@ class ContentSearch extends React.Component<IProps, IState> {
 					className="question-type"
 					value={type}
 					onChange={event => {
-						if (event.target.value !== 'advance movie search   ') {
+						if (event.target.value !== 'advanced movie search   ') {
 							return this.setState({ type: event.target.value });
 						}
 
