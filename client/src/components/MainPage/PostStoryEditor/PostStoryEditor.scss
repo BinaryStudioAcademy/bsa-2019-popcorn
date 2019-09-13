@@ -11,6 +11,23 @@
 	box-sizing: border-box;
 	flex: 1;
 
+	.activity {
+		position: relative;
+		padding-right: 25px !important;
+		max-height: 53px;
+		overflow: hidden;
+		white-space: nowrap;
+		text-overflow: ellipsis;
+		max-width: 100%;
+
+		span {
+			margin-left: 10px;
+			position: absolute;
+			top: 5px;
+			right: 5px;
+		}
+	}
+
 	img {
 		height: 100%;
 	}
