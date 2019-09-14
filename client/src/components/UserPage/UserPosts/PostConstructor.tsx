@@ -363,7 +363,7 @@ class PostConstructor extends React.Component<
 					</div>
 					<div className="save-wrp">
 						<button className="save-btn" onClick={ev => this.onSave(ev)}>
-							{this.props.newPost ? 'Edit Post' : 'Add Post'}
+							{'Share'}
 						</button>
 					</div>
 				</div>
