@@ -245,6 +245,16 @@ class ProfileComponent extends Component<ProfileProps, IProfileComponentState> {
 
 					{!isEditing ? (
 						<div className="ProfileInfo">
+							<div className="btn-group">
+								{this.props.userId !== id && (
+									<FollowButton className="follow-btn" />
+								)}
+								{this.props.userId !== id && (
+									<button className="chat-btn" onClick={this.onChatClick}>
+										Send message
+									</button>
+								)}
+							</div>
 							{isOwnData && (
 								<span onClick={this.onEdit}>
 									<FontAwesomeIcon
@@ -252,14 +262,6 @@ class ProfileComponent extends Component<ProfileProps, IProfileComponentState> {
 										className="fontAwesomeIcon edit-icon"
 									/>
 								</span>
-							)}
-							{this.props.userId !== id && (
-								<FollowButton className="follow-btn" />
-							)}
-							{this.props.userId !== id && (
-								<button className="chat-btn" onClick={this.onChatClick}>
-									Send message
-								</button>
 							)}
 							<div className="profileRow-username">
 								<span>{name}</span>
