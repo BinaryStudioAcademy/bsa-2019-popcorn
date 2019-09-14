@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Spinner from '../shared/Spinner';
 import { convertServerDataFormatToClient } from './TopPage.service';
 import TopPageTop from './TopPageTop/TopPageTop';
@@ -17,7 +17,16 @@ interface ITopProps {
 
 const TopPage: React.SFC<ITopProps> = ({ match }) => {
 	const [top, setTop] = useState();
-
+	useEffect(() => {
+		if (top && match.params.id !== top.id) {
+			webApi({
+				method: 'GET',
+				endpoint: `/api/top/${match.params.id}`
+			}).then(top => {
+				setTop(convertServerDataFormatToClient(top));
+			});
+		}
+	})
 	if (!top) {
 		webApi({
 			method: 'GET',

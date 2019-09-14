@@ -26,6 +26,7 @@ const TopPageMovie: React.SFC<ITopProps> = ({ index, movie }) => {
 					<NavLink to={`/movies/${movie.id}`}>
 						{' '}
 						<Image
+							key={movie.id}
 							src={movie.poster_path}
 							defaultSrc={config.DEFAULT_MOVIE_IMAGE}
 							alt="movie-poster"
