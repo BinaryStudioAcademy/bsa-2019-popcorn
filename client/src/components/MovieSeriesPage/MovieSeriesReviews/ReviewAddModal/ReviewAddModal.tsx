@@ -98,16 +98,6 @@ class ReviewAddModal extends React.Component<IProps, IState> {
 										alt="movie-poster"
 									/>
 									<div className="create-review-movie-title">{movie.title}</div>
-									<div className="movie-secondary-info">
-										<div className="create-review-duration">
-											<DurationIcon className="create-review-duration-icon" />
-											{getFilmDuration(movie.runtime)}
-										</div>
-										<div>
-											<FontAwesomeIcon className="icon-star" icon={faStar} />
-											{Number(movie.vote_average) ? movie.vote_average : 0}
-										</div>
-									</div>
 								</div>
 								<textarea
 									autoFocus={true}
@@ -138,7 +128,7 @@ class ReviewAddModal extends React.Component<IProps, IState> {
 										className="edit-button"
 										onClick={() => this.onSubmitModal()}
 									>
-										{usePut ? 'edit' : 'send'}
+										{usePut ? 'Edit' : 'Send'}
 									</div>
 									{showError && <div className="error-message">Empty area</div>}
 								</div>
