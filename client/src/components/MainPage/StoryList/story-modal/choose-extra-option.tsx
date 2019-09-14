@@ -10,6 +10,7 @@ import { connect } from 'react-redux';
 import { fetchSurveys } from '../../../UserPage/UserSurveys/UserSurveys.redux/actions';
 import { fetchTops } from '../../../TopListPage/TopListPage.redux/actions';
 import { getAllEvents } from '../../../UserPage/UserEvents/actions';
+import Spinner from '../../../shared/Spinner/index';
 
 interface IProps {
 	match: {
@@ -123,7 +124,7 @@ class ChooseExtraOption extends React.Component<IProps, IState> {
 						</div>
 
 						<div className={'recent-created'}>
-							{options &&
+							{options ?
 								options.map(item => (
 									<span
 										className="recent-created-item"
@@ -134,7 +135,8 @@ class ChooseExtraOption extends React.Component<IProps, IState> {
 									>
 										{item.title}
 									</span>
-								))}
+								)) : <Spinner />
+							}
 						</div>
 					</div>
 				</div>
