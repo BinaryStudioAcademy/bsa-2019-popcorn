@@ -51,7 +51,7 @@
 		"mapbox-gl": "^1.2.1",
 		"moment": "^2.24.0",
 		"moment-timezone": "^0.5.26",
-		"node-sass": "^4.12.0",
+		"node-sass": "^7.0.0",
 		"onchange": "^6.0.0",
 		"qs": "^6.7.0",
 		"query-string": "^6.8.3",
